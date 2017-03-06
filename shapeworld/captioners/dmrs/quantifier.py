@@ -40,7 +40,7 @@ class QuantifierDmrsCaptioner(DmrsCaptioner):
                 if mode <= 0.1:  # potentially non-existent combination for "no"
                     color = choice(self.color_names)
                 else:
-                    color = choice([str(entity.fill.color) for entity in world.entities])
+                    color = choice([str(entity.color) for entity in world.entities])
                 attribute = self.instantiate(DmrsCaptionerComponent.modifiers[color].instantiate())
             else:  # shape is [color] [shape]
                 mode -= 0.666
@@ -50,7 +50,7 @@ class QuantifierDmrsCaptioner(DmrsCaptioner):
                     color = choice(self.color_names)
                 else:
                     shape = choice([str(entity.shape) for entity in world.entities])
-                    color = choice([str(entity.fill.color) for entity in world.entities])
+                    color = choice([str(entity.color) for entity in world.entities])
                 attribute = self.instantiate(DmrsCaptionerComponent.nouns[shape].instantiate((DmrsCaptionerComponent.modifiers[color].instantiate(),)))
         else:
             mode -= 0.5
@@ -61,17 +61,17 @@ class QuantifierDmrsCaptioner(DmrsCaptioner):
                 if mode < 0.1:  # potentially non-existent combination for "no"
                     color = choice(self.color_names)
                 else:
-                    color = choice([str(entity.fill.color) for entity in world.entities if entity.shape == shape])
+                    color = choice([str(entity.color) for entity in world.entities if entity.shape == shape])
                 subject = DmrsCaptionerComponent.nouns[shape].instantiate(())
                 attribute = self.instantiate(DmrsCaptionerComponent.modifiers[color].instantiate())
             else:  # [color] shape is [shape]
                 mode -= 0.5
                 mode /= 0.5
-                color = choice([str(entity.fill.color) for entity in world.entities])
+                color = choice([str(entity.color) for entity in world.entities])
                 if mode < 0.1:  # potentially non-existent combination for "no"
                     shape = choice(self.shape_names)
                 else:
-                    shape = choice([str(entity.shape) for entity in world.entities if entity.fill.color == color])
+                    shape = choice([str(entity.shape) for entity in world.entities if entity.color == color])
                 subject = DmrsCaptionerComponent.nouns['shape'].instantiate((DmrsCaptionerComponent.modifiers[color].instantiate(),))
                 attribute = self.instantiate(DmrsCaptionerComponent.nouns[shape].instantiate(()))
         before = []

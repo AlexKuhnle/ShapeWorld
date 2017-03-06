@@ -1,4 +1,3 @@
-from collections import namedtuple
 from math import cos, pi, sqrt
 from random import choice, uniform
 from shapeworld.point import Point
@@ -10,34 +9,28 @@ cos18 = cos(0.1 * pi)
 cos45 = sqrt(2.0) / 2.0
 
 
-SquareShapeTuple = namedtuple('SquareShapeTuple', ('size_',))
-RectangleShapeTuple = namedtuple('RectangleShapeTuple', ('extent_',))
-TriangleShapeTuple = namedtuple('TriangleShapeTuple', ('extent_',))
-PentagonShapeTuple = namedtuple('PentagonShapeTuple', ('extent_',))
-CrossShapeTuple = namedtuple('CrossShapeTuple', ('size_',))
-CircleShapeTuple = namedtuple('CircleShapeTuple', ('size_',))
-SemicircleShapeTuple = namedtuple('SemicircleShapeTuple', ('size_',))
-EllipseShapeTuple = namedtuple('EllipseShapeTuple', ('extent_',))
-
-
 class Shape(object):
-    __slots__ = ()
+    __slots__ = ('extent',)
 
-    def __eq__(self, other):
-        if type(other) is str:
-            return str(self) == other
-        return self == other
+    def __init__(self, size):
+        assert isinstance(size, Point) and 0.0 < size < 1.0
+        self.extent = size / 2.0
 
     def __str__(self):
         raise NotImplementedError
+
+    def model(self):
+        return {'name': str(self), 'extent': self.extent.model()}
+
+    def __eq__(self, other):
+        if isinstance(other, str):
+            return str(self) == other
+        return isinstance(other, Shape) and str(self) == str(other)
 
     def __contains__(self, offset):
         raise NotImplementedError
 
     def distance(self, offset):
-        raise NotImplementedError
-
-    def extent(self):
         raise NotImplementedError
 
     def polygon(self):
@@ -48,11 +41,14 @@ class Shape(object):
 
     @staticmethod
     def random_instance(shapes, size_range, distortion_range):
-        return choice(shapes).random_instance(size_range=size_range, distortion_range=distortion_range)
+        return choice([Shape.shapes[shape] for shape in shapes]).random_instance(size_range, distortion_range)
 
 
 class WorldShape(Shape):
-    __slots__ = ()
+    __slots__ = ('extent',)
+
+    def __init__(self):
+        pass
 
     def __str__(self):
         return 'world'
@@ -62,9 +58,6 @@ class WorldShape(Shape):
 
     def distance(self, offset):
         return (abs(offset) - 0.5).positive().length()
-
-    def extent(self):
-        return Point(0.5, 0.5)
 
     def polygon(self):
         return (Point(-0.5, -0.5),
@@ -76,328 +69,303 @@ class WorldShape(Shape):
         return 1.0
 
 
-class SquareShape(Shape, SquareShapeTuple):
-    __slots__ = ()
+class SquareShape(Shape):
+    __slots__ = ('extent',)
 
-    def __new__(cls, size):
-        assert isinstance(size, float) and size > 0.0
-        return SquareShapeTuple.__new__(cls, size)
+    def __init__(self, size):
+        assert isinstance(size, float)
+        return super().__init__(Point(size, size))
 
     def __str__(self):
         return 'square'
 
     def __contains__(self, offset):
-        return abs(offset) <= self.size_
+        return abs(offset) <= self.extent
 
     def distance(self, offset):
-        return (abs(offset) - self.size_).positive().length()
-
-    def extent(self):
-        return Point(self.size_, self.size_)
+        return (abs(offset) - self.extent).positive().length()
 
     def polygon(self):
-        return (Point(-self.size_, -self.size_),
-                Point(self.size_, -self.size_),
-                Point(-self.size_, self.size_),
-                Point(self.size_, self.size_))
+        return (Point(-self.extent.x, -self.extent.y),
+                Point(self.extent.x, -self.extent.y),
+                Point(-self.extent.x, self.extent.y),
+                self.extent)
 
     def area(self):
-        return self.size_ * self.size_
+        return 4.0 * self.extent.x * self.extent.y
 
     @staticmethod
     def random_instance(size_range, distortion_range):
-        return SquareShape(size=uniform(*size_range))
+        return SquareShape(uniform(*size_range))
 
 
-class RectangleShape(Shape, RectangleShapeTuple):
-    __slots__ = ()
+class RectangleShape(Shape):
+    __slots__ = ('extent',)
 
-    def __new__(cls, extent):
-        assert isinstance(extent, Point) and extent > 0.0
-        return RectangleShapeTuple.__new__(cls, extent)
+    def __init__(self, size):
+        assert isinstance(size, Point)
+        return super().__init__(size)
 
     def __str__(self):
         return 'rectangle'
 
     def __contains__(self, offset):
-        return abs(offset) <= self.extent_
+        return abs(offset) <= self.extent
 
     def distance(self, offset):
-        return (abs(offset) - self.extent_).positive().length()
-
-    def extent(self):
-        return self.extent_
+        return (abs(offset) - self.extent).positive().length()
 
     def polygon(self):
-        return (Point(-self.extent_.x, -self.extent_.y),
-                Point(self.extent_.x, -self.extent_.y),
-                Point(-self.extent_.x, self.extent_.y),
-                self.extent_)
+        return (Point(-self.extent.x, -self.extent.y),
+                Point(self.extent.x, -self.extent.y),
+                Point(-self.extent.x, self.extent.y),
+                self.extent)
 
     def area(self):
-        return self.extent_.x * self.extent_.y
+        return 4.0 * self.extent.x * self.extent.y
 
     @staticmethod
     def random_instance(size_range, distortion_range):
         size = uniform(*size_range)
         distortion = uniform(*distortion_range)
-        return RectangleShape(extent=Point(size, size / distortion))
+        return RectangleShape(Point(size, size / distortion))
 
 
-class TriangleShape(Shape, TriangleShapeTuple):
-    __slots__ = ()
+class TriangleShape(Shape):
+    __slots__ = ('extent',)
 
-    def __new__(cls, size):
-        assert isinstance(size, float) and size > 0.0
-        return TriangleShapeTuple.__new__(cls, Point(size, size * sqrt34))
+    def __init__(self, size):
+        assert isinstance(size, float)
+        return super().__init__(Point(size, size * sqrt34))
 
     def __str__(self):
         return 'triangle'
 
     def __contains__(self, offset):
-        return offset.y >= -self.extent_.y and 2.0 * abs(offset.x) / self.extent_.x + offset.y / self.extent_.y <= 1.0
+        return offset.y >= -self.extent.y and 2.0 * abs(offset.x) / self.extent.x + offset.y / self.extent.y <= 1.0
 
     def distance(self, offset):
-        if offset.y < -self.extent_.y:
-            return (abs(offset) - self.extent_).positive().length()
+        if offset.y < -self.extent.y:
+            return (abs(offset) - self.extent).positive().length()
         else:
-            offset = Point(abs(offset.x), offset.y + self.extent_.y)
-            linear = min(max(offset.y - offset.x + self.extent_.x, 0.0) / (self.extent_.x + 2.0 * self.extent_.y), 1.0)
-            return Point(offset.x - (1.0 - linear) * self.extent_.x, offset.y - linear * 2.0 * self.extent_.y).positive().length()
-
-    def extent(self):
-        return self.extent_
+            offset = Point(abs(offset.x), offset.y + self.extent.y)
+            linear = min(max(offset.y - offset.x + self.extent.x, 0.0) / (self.extent.x + 2.0 * self.extent.y), 1.0)
+            return Point(offset.x - (1.0 - linear) * self.extent.x, offset.y - linear * 2.0 * self.extent.y).positive().length()
 
     def polygon(self):
-        return (Point(-self.extent_.x, -self.extent_.y),
-                Point(self.extent_.x, -self.extent_.y),
-                Point(0.0, self.extent_.y))
+        return (Point(-self.extent.x, -self.extent.y),
+                Point(self.extent.x, -self.extent.y),
+                Point(0.0, self.extent.y))
 
     def area(self):
-        return self.extent_.x * self.extent_.y * 0.5
+        return 2.0 * self.extent.x * self.extent.y
 
     @staticmethod
     def random_instance(size_range, distortion_range):
-        return TriangleShape(size=uniform(*size_range))  # for equilateral
+        return TriangleShape(uniform(*size_range))  # for equilateral
 
 
-class PentagonShape(Shape, PentagonShapeTuple):
-    __slots__ = ()
+class PentagonShape(Shape):
+    __slots__ = ('extent',)
 
-    def __new__(cls, size):
-        assert isinstance(size, float) and size > 0.0
-        return PentagonShapeTuple.__new__(cls, Point(size, size * cos18))
+    def __init__(self, size):
+        assert isinstance(size, float)
+        return super().__init__(Point(size, size * cos18))
 
     def __str__(self):
         return 'pentagon'
 
     def __contains__(self, offset):
-        return (offset.y >= -self.extent_.y and
-                (offset.y + self.extent_.y) >= ((abs(offset.x) - golden_ratio * self.extent_.x) / ((1.0 - golden_ratio) * self.extent_.x) * (golden_ratio * 2.0 * self.extent_.y)) and
-                (offset.y - (golden_ratio - 0.5) * 2.0 * self.extent_.y) <= ((1.0 - abs(offset.x) / self.extent_.x) * (1.0 - golden_ratio) * 2.0 * self.extent_.y))
+        return (offset.y >= -self.extent.y and
+                (offset.y + self.extent.y) >= ((abs(offset.x) - golden_ratio * self.extent.x) / ((1.0 - golden_ratio) * self.extent.x) * (golden_ratio * 2.0 * self.extent.y)) and
+                (offset.y - (golden_ratio - 0.5) * 2.0 * self.extent.y) <= ((1.0 - abs(offset.x) / self.extent.x) * (1.0 - golden_ratio) * 2.0 * self.extent.y))
 
     def distance(self, offset):
-        offset = Point(abs(offset.x), offset.y + self.extent_.y - golden_ratio * 2.0 * self.extent_.y)
+        offset = Point(abs(offset.x), offset.y + self.extent.y - golden_ratio * 2.0 * self.extent.y)
         if offset.y < 0.0:
-            y_length = golden_ratio * 2.0 * self.extent_.y
-            if offset.x < golden_ratio * self.extent_.x:
+            y_length = golden_ratio * 2.0 * self.extent.y
+            if offset.x < golden_ratio * self.extent.x:
                 return max(-offset.y - y_length, 0.0)
             else:
-                offset = Point(offset.x - golden_ratio * self.extent_.x, -offset.y)
-                x_length = (1.0 - golden_ratio) * self.extent_.x
+                offset = Point(offset.x - golden_ratio * self.extent.x, -offset.y)
+                x_length = (1.0 - golden_ratio) * self.extent.x
                 linear = min(max(offset.y - offset.x + x_length, 0.0) / (x_length + y_length), 1.0)
                 return Point(offset.x - (1.0 - linear) * x_length, offset.y - linear * y_length).positive().length()
         else:
-            y_length = (1.0 - golden_ratio) * 2.0 * self.extent_.y
-            linear = min(max(offset.y - offset.x + self.extent_.x, 0.0) / (self.extent_.x + y_length), 1.0)
-            return Point(offset.x - (1.0 - linear) * self.extent_.x, offset.y - linear * y_length).positive().length()
-
-    def extent(self):
-        return self.extent_
+            y_length = (1.0 - golden_ratio) * 2.0 * self.extent.y
+            linear = min(max(offset.y - offset.x + self.extent.x, 0.0) / (self.extent.x + y_length), 1.0)
+            return Point(offset.x - (1.0 - linear) * self.extent.x, offset.y - linear * y_length).positive().length()
 
     def polygon(self):
-        x_extent = golden_ratio * self.extent_.x
-        y_extent = golden_ratio * 2.0 * self.extent_.y - self.extent_.y
-        return (Point(-x_extent, -self.extent_.y),
-                Point(x_extent, -self.extent_.y),
-                Point(self.extent_.x, y_extent),
-                Point(0.0, self.extent_.y),
-                Point(-self.extent_.x, y_extent))
+        x_extent = golden_ratio * self.extent.x
+        y_extent = golden_ratio * 2.0 * self.extent.y - self.extent.y
+        return (Point(-x_extent, -self.extent.y),
+                Point(x_extent, -self.extent.y),
+                Point(self.extent.x, y_extent),
+                Point(0.0, self.extent.y),
+                Point(-self.extent.x, y_extent))
 
     def area(self):
-        return (4.0 * golden_ratio * golden_ratio * self.extent_.x * self.extent_.y +
-                2.0 * golden_ratio * (1.0 - golden_ratio) * self.extent_.x * self.extent_.y +
-                2.0 * (1.0 - golden_ratio) * self.extent_.x * self.extent_.y)
+        return (4.0 * golden_ratio * golden_ratio * self.extent.x * self.extent.y +
+                2.0 * golden_ratio * (1.0 - golden_ratio) * self.extent.x * self.extent.y +
+                2.0 * (1.0 - golden_ratio) * self.extent.x * self.extent.y)
 
     @staticmethod
     def random_instance(size_range, distortion_range):
-        return PentagonShape(size=uniform(*size_range))  # for equilateral
+        return PentagonShape(uniform(*size_range))  # for equilateral
 
 
-class CrossShape(Shape, CrossShapeTuple):
-    __slots__ = ()
+class CrossShape(Shape):
+    __slots__ = ('extent',)
 
-    def __new__(cls, size):
-        assert isinstance(size, float) and size > 0.0
-        return CrossShapeTuple.__new__(cls, size)
+    def __init__(self, size):
+        assert isinstance(size, float)
+        return super().__init__(Point(size, size))
 
     def __str__(self):
         return 'cross'
 
     def __contains__(self, offset):
         offset = abs(offset)
-        return offset <= self.size_ and not (offset - Point(self.size_ / 3.0, self.size_ / 3.0)).positive() > 0.0
+        return offset <= self.extent and not (offset - self.extent.x / 3.0).positive() > 0.0
 
     def distance(self, offset):
         offset = abs(offset)
         if offset.x > offset.y:
-            return (offset - Point(self.size_, self.size_ / 3.0)).positive().length()
+            return (offset - Point(self.extent.x, self.extent.y / 3.0)).positive().length()
         else:
-            return (offset - Point(self.size_ / 3.0, self.size_)).positive().length()
-
-    def extent(self):
-        return Point(self.size_, self.size_)
+            return (offset - Point(self.extent.x / 3.0, self.extent.y)).positive().length()
 
     def polygon(self):
-        return (Point(-self.size_, -self.size_ / 3.0),
-                Point(-self.size_ / 3.0, -self.size_),
-                Point(self.size_ / 3.0, -self.size_),
-                Point(self.size_, -self.size_ / 3.0),
-                Point(self.size_, self.size_ / 3.0),
-                Point(self.size_ / 3.0, self.size_),
-                Point(-self.size_ / 3.0, self.size_),
-                Point(-self.size_, self.size_ / 3.0))
+        return (Point(-self.extent.x, -self.extent.y / 3.0),
+                Point(-self.extent.x / 3.0, -self.extent.y),
+                Point(self.extent.x / 3.0, -self.extent.y),
+                Point(self.extent.x, -self.extent.y / 3.0),
+                Point(self.extent.x, self.extent.y / 3.0),
+                Point(self.extent.x / 3.0, self.extent.y),
+                Point(-self.extent.x / 3.0, self.extent.y),
+                Point(-self.extent.x, self.extent.y / 3.0))
 
     def area(self):
-        return self.size_ * self.size_ * 5.0 / 9.0
+        return 20.0 * self.extent.x * self.extent.y / 9.0
 
     @staticmethod
     def random_instance(size_range, distortion_range):
-        return CrossShape(size=uniform(*size_range))
+        return CrossShape(uniform(*size_range))
 
 
-class CircleShape(Shape, CircleShapeTuple):
-    __slots__ = ()
+class CircleShape(Shape):
+    __slots__ = ('extent',)
 
-    def __new__(cls, size):
-        assert isinstance(size, float) and size > 0.0
-        return CircleShapeTuple.__new__(cls, size)
+    def __init__(self, size):
+        assert isinstance(size, float)
+        return super().__init__(Point(size, size))
 
     def __str__(self):
         return 'circle'
 
     def __contains__(self, offset):
-        return offset.length() <= self.size_
+        return offset.length() <= self.extent.x
 
     def distance(self, offset):
-        return max(offset.length() - self.size_, 0.0)
-
-    def extent(self):
-        return Point(self.size_, self.size_)
+        return max(offset.length() - self.extent.x, 0.0)
 
     def polygon(self):
-        curve_extent = (1.0 - cos45) * self.size_
-        return (Point(-self.size_, -curve_extent),
-                Point(-curve_extent, -self.size_),
-                Point(curve_extent, -self.size_),
-                Point(self.size_, -curve_extent),
-                Point(self.size_, curve_extent),
-                Point(curve_extent, self.size_),
-                Point(-curve_extent, self.size_),
-                Point(-self.size_, curve_extent))
+        curve_extent = (1.0 - cos45) * self.extent.x
+        return (Point(-self.extent.x, -curve_extent),
+                Point(-curve_extent, -self.extent.y),
+                Point(curve_extent, -self.extent.y),
+                Point(self.extent.x, -curve_extent),
+                Point(self.extent.x, curve_extent),
+                Point(curve_extent, self.extent.y),
+                Point(-curve_extent, self.extent.y),
+                Point(-self.extent.x, curve_extent))
 
     def area(self):
-        return pi * self.size_ * self.size_
+        return pi * self.extent.x * self.extent.y
 
     @staticmethod
     def random_instance(size_range, distortion_range):
-        return CircleShape(size=uniform(*size_range))
+        return CircleShape(uniform(*size_range))
 
 
-class SemicircleShape(Shape, SemicircleShapeTuple):
-    __slots__ = ()
+class SemicircleShape(Shape):
+    __slots__ = ('extent',)
 
-    def __new__(cls, size):
-        assert isinstance(size, float) and size > 0.0
-        return SemicircleShapeTuple.__new__(cls, size)
+    def __init__(self, size):
+        assert isinstance(size, float)
+        return super().__init__(Point(size, size * 0.5))
 
     def __str__(self):
         return 'semicircle'
 
     def __contains__(self, offset):
-        offset += Point(0.0, self.size_ / 2.0)
-        return offset.length() <= self.size_ and offset.y >= 0.0
+        offset += Point(0.0, self.extent.y)
+        return offset.length() <= self.extent.x and offset.y >= 0.0
 
     def distance(self, offset):
-        offset += Point(0.0, self.size_ / 2.0)
+        offset += Point(0.0, self.extent.y)
         if offset.y < 0.0:
-            return (abs(offset) - Point(self.size_, 0.0)).positive().length()
+            return (abs(offset) - Point(self.extent.x, 0.0)).positive().length()
         else:
-            return max(offset.length() - self.size_, 0.0)
-
-    def extent(self):
-        return Point(self.size_, self.size_ / 2.0)
+            return max(offset.length() - self.extent.x, 0.0)
 
     def polygon(self):
-        y_extent = self.size_ / 2.0
-        curve_extent = (1.0 - cos45) * self.size_
-        return (Point(-self.size_, -y_extent),
-                Point(self.size_, -y_extent),
-                Point(self.size_, -y_extent + curve_extent),
-                Point(curve_extent, y_extent),
-                Point(-curve_extent, y_extent),
-                Point(-self.size_, -y_extent + curve_extent))
+        curve_extent = (1.0 - cos45) * self.extent.x
+        return (Point(-self.extent.x, -self.extent.y),
+                Point(self.extent.x, -self.extent.y),
+                Point(self.extent.x, -self.extent.y + curve_extent),
+                Point(curve_extent, self.extent.y),
+                Point(-curve_extent, self.extent.y),
+                Point(-self.extent.x, -self.extent.y + curve_extent))
 
     def area(self):
-        return pi * self.size_ * self.size_ / 2.0
+        return pi * self.extent.x * self.extent.y / 2.0
 
     @staticmethod
     def random_instance(size_range, distortion_range):
-        return SemicircleShape(size=uniform(*size_range))
+        return SemicircleShape(uniform(*size_range))
 
 
-class EllipseShape(Shape, EllipseShapeTuple):
-    __slots__ = ()
+class EllipseShape(Shape):
+    __slots__ = ('extent',)
 
-    def __new__(cls, extent):
-        assert isinstance(extent, Point) and extent > 0.0
-        return EllipseShapeTuple.__new__(cls, extent)
+    def __init__(self, size):
+        assert isinstance(size, Point)
+        return super().__init__(size)
 
     def __str__(self):
         return 'ellipse'
 
     def __contains__(self, offset):
-        return (offset / self.extent_).length() <= 1.0
+        return (offset / self.extent).length() <= 1.0
 
     def distance(self, offset):
-        direction = offset / self.extent_
+        direction = offset / self.extent
         direction_length = direction.length()
         if direction_length <= 1.0:
             return 0.0
-        return ((direction - direction / direction_length) * self.extent_).length()
-
-    def extent(self):
-        return self.extent_
+        return ((direction - direction / direction_length) * self.extent).length()
 
     def polygon(self):
-        curve_extent = (1.0 - cos45) * self.extent_
-        return (Point(-self.extent_.x, -curve_extent.y),
-                Point(-curve_extent.x, -self.extent_.y),
-                Point(curve_extent.x, -self.extent_.y),
-                Point(self.extent_.x, -curve_extent.y),
-                Point(self.extent_.x, curve_extent.y),
-                Point(curve_extent.x, self.extent_.y),
-                Point(-curve_extent.x, self.extent_.y),
-                Point(-self.extent_.x, curve_extent.y))
+        curve_extent = (1.0 - cos45) * self.extent
+        return (Point(-self.extent.x, -curve_extent.y),
+                Point(-curve_extent.x, -self.extent.y),
+                Point(curve_extent.x, -self.extent.y),
+                Point(self.extent.x, -curve_extent.y),
+                Point(self.extent.x, curve_extent.y),
+                Point(curve_extent.x, self.extent.y),
+                Point(-curve_extent.x, self.extent.y),
+                Point(-self.extent.x, curve_extent.y))
 
     def area(self):
-        return pi * self.extent_[0] * self.extent_[1]
+        return pi * self.extent.x * self.extent.y
 
     @staticmethod
     def random_instance(size_range, distortion_range):
         size = uniform(*size_range)
         distortion = uniform(*distortion_range)
-        return EllipseShape(extent=Point(size, size / distortion))
+        return EllipseShape(Point(size, size / distortion))
 
 
 Shape.shapes = {

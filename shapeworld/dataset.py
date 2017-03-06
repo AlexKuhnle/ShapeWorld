@@ -1,27 +1,39 @@
+from io import BytesIO
+import json
 import os
 from random import random, randrange
 import numpy as np
-
+from PIL import Image
 from shapeworld.world import World
+from shapeworld.archive import Archive
 
 
 class Dataset(object):
 
+    name = None
     value_types = None
     default_config = None
 
     def __init__(self, world_generator):
-        assert self.__class__.value_types is not None
+        assert self.__class__.name
+        assert self.__class__.value_types and all(value_type in ('int', 'float', 'vector', 'text', 'world', 'model') for value_type in self.__class__.value_types.values())
+        assert self.__class__.default_config
         self.world_generator = world_generator
 
     @staticmethod
-    def from_config(config=None, dataset_type=None, dataset_name=None, dataset_class=None):
+    def from_config(config=None, dataset_type=None, dataset_name=None, dataset_class=None):  # if type = 'load'...
+        load = (dataset_type == 'load') or (dataset_name == 'load')
         if config is not None:
             if isinstance(config, str):
+                if load and os.path.isdir(config):
+                    config = os.path.join(config, 'specification.json')
                 assert os.path.isfile(config)
                 with open(config, 'r') as filehandle:
-                    import json
                     config = json.load(fp=filehandle)
+        if load:
+            # load dataset with directory, then automatically find specification file
+            return LoadDataset(specification=config)
+        if config is not None:
             if 'type' in config:
                 dataset_type = config['type']
             if 'name' in config:
@@ -36,96 +48,315 @@ class Dataset(object):
         dataset = dataset_class(**config)
         return dataset
 
+    def __str__(self):
+        return self.__class__.name
+
+    @property
+    def value_types(self):
+        return self.__class__.value_types
+
     @property
     def world_size(self):
         return self.world_generator.world_size
 
     @property
-    def world_shape(self):
-        return (self.world_generator.world_size[0], self.world_generator.world_size[1], 3)
+    def text_size(self):
+        return None
 
-    def generate(self, n, mode=None):  # mode: None, 'train', 'validation', 'test'
+    @property
+    def word_ids(self):
+        return None
+
+    def specification(self):
+        return {'name': str(self),
+                'value_types': self.value_types,
+                'world_size': self.world_size,
+                'text_size': self.text_size,
+                'word_ids': self.word_ids}
+
+    @property
+    def world_shape(self):
+        return (self.world_size, self.world_size, 3)
+
+    @property
+    def text_shape(self):
+        return (self.text_size,) if self.text_size else None
+
+    @property
+    def vocabulary_size(self):
+        return len(self.word_ids)
+
+    @property
+    def vocabulary(self):
+        return list(self.word_ids.keys())
+
+    def generate(self, n, mode=None, noise=True, include_model=False):  # mode: None, 'train', 'validation', 'test'
         raise NotImplementedError
 
-    def iterate(self, n, mode=None):
+    def iterate(self, n, mode=None, noise=True, include_model=False):
         while True:
-            yield self.generate(n=n, mode=mode)
+            yield self.generate(n=n, mode=mode, noise=noise, include_model=include_model)
 
-    def serialize_data(self, directory, generated, predicted=None, additional=None):
-        assert not additional or all(name not in self.__class__.value_types for name in additional)
+    def serialize_data(self, directory, generated, predicted=None, additional=None, archive=None, tiff=False):
+        assert not additional or all(name not in self.value_types for name in additional)
         if os.path.isdir(directory):
             for root, dirs, files in os.walk(directory):
                 assert root == directory
                 assert not dirs
-                for file in files:
-                    path = os.path.join(root, file)
-                    os.remove(path=path)
+                assert not files
         else:
             os.makedirs(directory)
 
-        id2word = {word_id: word for word, word_id in self.word_ids.items()} if hasattr(self, 'word_ids') else None
-        for name in generated:
-            Dataset.serialize_value(name=name, value=generated[name], value_type=self.__class__.value_types[name], directory=directory, id2word=id2word)
-        if predicted:
-            for name in predicted:
-                Dataset.serialize_value(name='predicted_' + name, value=predicted[name], value_type=self.__class__.value_types[name], directory=directory, id2word=id2word)
-        if additional:
-            for name, (value, value_type) in additional.items():
-                Dataset.serialize_value(name=name, value=value, value_type=value_type, directory=directory, id2word=id2word)
+        id2word = [word for word, _ in sorted(self.word_ids.items(), key=(lambda kv: kv[1]))] if self.word_ids else None
+        temp_path = os.path.join(directory, 'temp')
+
+        with Archive(directory=directory, mode='w', archive=archive) as write_file:
+            for name in generated:
+                Dataset.serialize_value(value=generated[name], value_name=name, value_type=self.value_types[name], write_file=write_file, id2word=id2word, tiff=tiff, temp_path=temp_path)
+            if predicted:
+                for name in predicted:
+                    Dataset.serialize_value(value=predicted[name], value_name='predicted_' + name, value_type=self.value_types[name], write_file=write_file, id2word=id2word, tiff=tiff, temp_path=temp_path)
+            if additional:
+                for name, (value, value_type) in additional.items():
+                    Dataset.serialize_value(value=value, value_name=name, value_type=value_type, write_file=write_file, id2word=id2word, tiff=tiff, temp_path=temp_path)
 
     @staticmethod
-    def serialize_value(name, value, value_type, directory, id2word=None):
+    def serialize_value(value, value_name, value_type, write_file, id2word=None, tiff=False, temp_path=None):
         if value_type == 'int':
-            with open(os.path.join(directory, name + '.txt'), 'w') as filehandle:
-                filehandle.write('\n'.join(str(int(x)) for x in value) + '\n')
-        if value_type == 'index':
-            with open(os.path.join(directory, name + '.txt'), 'w') as filehandle:
-                for indices in value:
-                    filehandle.write(' '.join(str(n) for n, x in enumerate(indices) if x) + '\n')
-        elif value_type == 'image':
+            value = '\n'.join(str(int(x)) for x in value) + '\n'
+            write_file(value_name + '.txt', value)
+        elif value_type == 'float':
+            value = '\n'.join(str(float(x)) for x in value) + '\n'
+            write_file(value_name + '.txt', value)
+        elif value_type == 'vector':
+            value = '\n'.join(','.join(str(x) for x in vector) for vector in value) + '\n'
+            write_file(value_name + '.txt', value)
+        elif value_type == 'text':
+            assert id2word
+            value = '\n'.join(' '.join(id2word[word_id] for word_id in text) for text in value) + '\n'
+            write_file(value_name + '.txt', value)
+        elif value_type == 'world':
+            if tiff:
+                assert temp_path
+                from PIL import TiffImagePlugin
+                TiffImagePlugin.WRITE_LIBTIFF = True
             for n in range(len(value)):
                 image = World.get_image(world=value[n])
-                image.save(fp=os.path.join(directory, '{}{}.bmp'.format(name, n)), format='bmp')
+                if tiff:
+                    image.save(temp_path, format='tiff', compression='tiff_lzw')
+                    with open(temp_path, 'rb') as filehandle:
+                        image_bytes = filehandle.read()
+                    write_file('{}-{}.tiff'.format(value_name, n), image_bytes, binary=True)
+                else:
+                    image_bytes = BytesIO()
+                    image.save(image_bytes, format='bmp')
+                    write_file('{}-{}.bmp'.format(value_name, n), image_bytes.getvalue(), binary=True)
+                    image_bytes.close()
+            if tiff:
+                TiffImagePlugin.WRITE_LIBTIFF = False
+        elif value_type == 'model':
+            value = json.dumps(value)
+            write_file(value_name + '.json', value)
+
+    @staticmethod
+    def deserialize_value(value_name, value_type, read_file, word2id=None, tiff=False):
+        if value_type == 'int':
+            value = read_file(value_name + '.txt')
+            value = [int(x) for x in value.split()]
+            return value
+        elif value_type == 'float':
+            value = read_file(value_name + '.txt')
+            value = [float(x) for x in value.split()]
+            return value
+        elif value_type == 'vector':
+            value = read_file(value_name + '.txt')
+            value = [[float(x) for x in vector.split(',')] for vector in value.split()]
+            return value
         elif value_type == 'text':
-            with open(os.path.join(directory, name + '.txt'), 'w') as filehandle:
-                for word_ids in value:
-                    text = ' '.join(id2word[word_id] for word_id in word_ids if word_id > 0)
-                    filehandle.write(text + '\n')
+            assert word2id
+            value = read_file(value_name + '.txt')
+            value = [[word2id[word] for word in text.split(' ')] for text in value.split('\n')[:-1]]
+            return value
+        elif value_type == 'world':
+            if tiff:
+                from PIL import TiffImagePlugin
+                TiffImagePlugin.WRITE_LIBTIFF = True
+            value = []
+            n = 0
+            while True:
+                image_bytes = read_file('{}-{}.{}'.format(value_name, n, 'tiff' if tiff else 'bmp'), binary=True)
+                if image_bytes is None:
+                    break
+                image_bytes = BytesIO(image_bytes)
+                if tiff:
+                    image = Image.open(image_bytes)  # , format='tiff', compression='tiff_lzw')
+                else:
+                    image = Image.open(image_bytes)  # , format='bmp')
+                value.append(World.from_image(image))
+                n += 1
+            if tiff:
+                TiffImagePlugin.WRITE_LIBTIFF = False
+            return value
+        elif value_type == 'model':
+            value = read_file(value_name + '.json')
+            value = json.loads(value)
+            return value
+
+
+class LoadDataset(Dataset):
+
+    def __init__(self, specification, per_batch=True, batch_once=False):
+        assert not batch_once or per_batch
+        self._name = specification['name']
+        self._value_types = specification['value_types']
+        self._world_size = specification['world_size']
+        self._text_size = specification.get('text_size')
+        self._word_ids = specification.get('word_ids')
+        self.world_model = specification.get('world_model')
+        self.noise_range = specification.get('noise_range')
+        self.tiff = specification.get('tiff')
+        self.archive = specification.get('archive')
+        self.per_batch = specification.get('per_batch', per_batch)
+        self.batch_once = specification.get('batch_once', batch_once)
+
+        self.batches = dict()
+        directory = specification['directory']
+        assert os.path.isdir(directory)
+        for root, dirs, files in os.walk(directory):
+            if root == directory:
+                assert len(files) == 1 and 'specification.json' in files
+                assert len(dirs) == 3 and 'train' in dirs and 'validation' in dirs and 'test' in dirs
+            elif root[len(directory) + 1:] in ('train', 'validation', 'test'):
+                mode = root[len(directory) + 1:]
+                assert bool(dirs) != bool(files)
+                if dirs:
+                    assert all(d[:5] == 'batch' and d[5:].isdigit() for d in dirs)
+                    self.batches[mode] = [os.path.join(root, d) for d in dirs]
+                else:
+                    self.batches[mode] = [root]
+        assert self.batches
+        self.mode = None
+        self.values = {value_name: [] for value_name, value_type in self.value_types.items() if value_type != 'model' or self.world_model}
+        self.num_instances = 0
+
+    def __str__(self):
+        return 'Loaded({})'.format(self._name)
+
+    @property
+    def value_types(self):
+        return self._value_types
+
+    @property
+    def world_size(self):
+        return self._world_size
+
+    @property
+    def text_size(self):
+        return self._text_size
+
+    @property
+    def word_ids(self):
+        return self._word_ids
+
+    def zero_batch(self, n, include_model=False):
+        batch = dict()
+        for value_name, value_type in self.value_types.items():
+            if value_type == 'int':
+                batch[value_name] = np.zeros(shape=(n, 1), dtype=np.int32)
+            elif value_type == 'float':
+                batch[value_name] = np.zeros(shape=(n, 1), dtype=np.float32)
+            elif value_type == 'vector':
+                batch[value_name] = np.zeros(shape=(n, len(self.values[value_name][0])), dtype=np.float32)
+            elif value_type == 'text':
+                batch[value_name] = np.zeros(shape=(n, self.text_size), dtype=np.int32)
+            elif value_type == 'world':
+                batch[value_name] = np.zeros(shape=(n, self.world_size, self.world_size, 3), dtype=np.float32)
+            elif value_type == 'model' and include_model:
+                batch[value_name] = [None] * n
+        return batch
+
+    def generate(self, n, mode=None, noise=True, include_model=False):
+        assert noise or self.noise_range
+        assert not include_model or self.world_model
+        while not self.per_batch or self.mode != mode or self.num_instances < n:
+            if self.mode != mode:
+                self.mode = mode
+                self.values = {value_name: [] for value_name in self.values}
+            batches = self.batches[mode]
+            batch = randrange(len(batches))
+            batch_directory = batches.pop(batch) if self.batch_once else batches[batch]
+            self.num_instances = 0
+            with Archive(directory=batch_directory, mode='r', archive=self.archive) as read_file:
+                for value_name, value in self.values.items():
+                    value.extend(Dataset.deserialize_value(value_name=value_name, value_type=self.value_types[value_name], read_file=read_file, word2id=self.word_ids, tiff=self.tiff))
+                    if self.num_instances:
+                        assert len(value) == self.num_instances
+                    else:
+                        self.num_instances = len(value)
+            temp_path = os.path.join(batch_directory, 'temp')
+            if os.path.isfile(temp_path):
+                os.remove(temp_path)
+        batch = self.zero_batch(n, include_model=include_model)
+        for i in range(n):
+            index = randrange(self.num_instances)
+            self.num_instances -= 1
+            for value_name, value_type in self.value_types.items():
+                if value_type != 'model' or include_model:
+                    batch[value_name][i] = self.values[value_name].pop(index)
+        if noise and self.noise_range:
+            for value_name, value_type in self.value_types.items():
+                if value_type == 'world':
+                    noise = np.random.normal(loc=0.0, scale=self.noise_range, size=(n, self.world_size, self.world_size, 3))
+                    mask = (noise < -self.noise_range) + (noise > self.noise_range)
+                    while np.any(a=mask):
+                        noise -= mask * noise
+                        noise += mask * np.random.normal(loc=0.0, scale=self.noise_range, size=(n, self.world_size, self.world_size, 3))
+                        mask = (noise < -self.noise_range) + (noise > self.noise_range)
+                    worlds = batch[value_name]
+                    worlds += noise
+                    np.clip(worlds, a_min=0.0, a_max=1.0, out=worlds)
+        return batch
 
 
 class ClassificationDataset(Dataset):
 
-    value_types = {'world': 'image', 'class': 'int'}
+    value_types = {'world': 'world', 'world-model': 'model', 'classification': 'vector'}
     multi_class_flag = False
+    class_count_flag = False
 
-    def __init__(self, world_generator, class_count):
+    def __init__(self, world_generator, num_classes):
+        assert self.__class__.multi_class_flag or not self.__class__.class_count_flag
         super().__init__(world_generator)
-        self.class_count = class_count
+        self.num_classes = num_classes
 
-    def get_class(self, world):
+    def get_classes(self, world):  # iterable of classes
         raise NotImplementedError
 
-    def generate(self, n, mode=None):
-        worlds = np.zeros(shape=(n, self.world_size.x, self.world_size.y, 3), dtype=np.float32)
-        if self.__class__.multi_class_flag:
-            classes = np.zeros(shape=(n, self.class_count), dtype=np.float32)
-            for i in range(n):
-                world = self.world_generator(mode)
-                worlds[i] = world.get_world()
-                for c in self.get_class(world):
-                    classes[i][c] = 1.0
-        else:
-            classes = np.zeros(shape=(n, 1), dtype=np.int32)
-            for i in range(n):
-                world = self.world_generator(mode)
-                worlds[i] = world.get_world()
-                classes[i][0] = self.get_class(world)
-        return {'world': worlds, 'class': classes}
+    def generate(self, n, mode=None, noise=True, include_model=False):
+        worlds = np.zeros(shape=(n, self.world_size, self.world_size, 3), dtype=np.float32)
+        if include_model:
+            world_models = [None] * n
+        classification = np.zeros(shape=(n, self.num_classes), dtype=np.float32)
+        for i in range(n):
+            world = self.world_generator(mode)
+            if include_model:
+                world_models[i] = world.model()
+            worlds[i] = world.get_world(noise=noise)
+            for c in self.get_classes(world):
+                classification[i][c] += 1.0
+        assert np.all(...)
+        assert np.any(...)
+        generated = dict()
+        generated['world'] = worlds
+        if include_model:
+            generated['world-model'] = world_models
+        generated['classification'] = classification
+        return generated
 
 
 class CaptionAgreementDataset(Dataset):
 
-    value_types = {'world': 'image', 'caption': 'text', 'agreement': 'int'}
+    value_types = {'world': 'world', 'world-model': 'model', 'caption': 'text', 'caption-length': 'int', 'agreement': 'float'}
 
     def __init__(self, world_generator, world_captioner, incorrect_world_ratio=0.5, correct_ratio=0.5, train_correct_ratio=None, validation_correct_ratio=None, test_correct_ratio=None):
         super().__init__(world_generator)
@@ -137,24 +368,12 @@ class CaptionAgreementDataset(Dataset):
         self.test_correct_ratio = correct_ratio if test_correct_ratio is None else test_correct_ratio
 
     @property
-    def caption_size(self):
+    def text_size(self):
         return self.world_captioner.caption_size
-
-    @property
-    def caption_shape(self):
-        return (self.world_captioner.caption_size,)
 
     @property
     def word_ids(self):
         return self.world_captioner.word_ids
-
-    @property
-    def vocabulary_size(self):
-        return len(self.world_captioner.word_ids)
-
-    @property
-    def vocabulary(self):
-        return list(self.world_captioner.word_ids.keys())
 
     def generate_incorrect_world(self, world, caption, mode):
         if mode != 'train':
@@ -173,7 +392,7 @@ class CaptionAgreementDataset(Dataset):
             if caption.agreement(world) == 0.0:
                 return caption
 
-    def generate(self, n, mode=None):
+    def generate(self, n, mode=None, noise=True, include_model=False):
         if mode == 'train':
             correct_ratio = self.train_correct_ratio
         elif mode == 'validation':
@@ -182,8 +401,11 @@ class CaptionAgreementDataset(Dataset):
             correct_ratio = self.test_correct_ratio
         else:
             correct_ratio = self.correct_ratio
-        worlds = np.zeros(shape=(n, self.world_size.x, self.world_size.y, 3), dtype=np.float32)
-        captions = np.zeros(shape=(n, self.caption_size), dtype=np.int32)
+        worlds = np.zeros(shape=(n, self.world_size, self.world_size, 3), dtype=np.float32)
+        if include_model:
+            world_models = [None] * n
+        captions = np.zeros(shape=(n, self.text_size), dtype=np.int32)
+        caption_lengths = np.zeros(shape=(n, 1), dtype=np.int32)
         agreements = np.zeros(shape=(n, 1), dtype=np.float32)
         caption_list = []
         for i in range(n):
@@ -195,14 +417,24 @@ class CaptionAgreementDataset(Dataset):
                 world = self.generate_incorrect_world(world, caption, mode)
             else:
                 caption = self.generate_incorrect_caption(world, caption, mode)
-            worlds[i] = world.get_world()
+            if include_model:
+                world_models[i] = world.model()
+            worlds[i] = world.get_world(noise=noise)
             caption_list.append(caption)
         caption_list = self.world_captioner.realize(caption_list)
         for i, caption in enumerate(caption_list):
-            assert len(caption) <= self.caption_size
-            for j, word in enumerate(caption, start=(self.caption_size - len(caption))):
+            assert len(caption) <= self.text_size
+            for j, word in enumerate(caption):
                 captions[i][j] = self.word_ids[word]
-        return {'world': worlds, 'caption': captions, 'agreement': agreements}
+            caption_lengths[i][0] = len(caption)
+        generated = dict()
+        generated['world'] = worlds
+        if include_model:
+            generated['world-model'] = world_models
+        generated['caption'] = captions
+        generated['caption-length'] = caption_lengths
+        generated['agreement'] = agreements
+        return generated
 
 
 class MixerCaptionAgreementDataset(CaptionAgreementDataset):
@@ -240,7 +472,7 @@ class MixerCaptionAgreementDataset(CaptionAgreementDataset):
             dataset.world_captioner.caption_size = caption_size
             dataset.world_captioner.word_ids = word_ids
 
-    def generate(self, n, mode=None):
+    def generate(self, n, mode=None, noise=True, include_model=False):
         if mode == 'train':
             distribution = self.train_distribution
         elif mode == 'validation':
@@ -249,8 +481,11 @@ class MixerCaptionAgreementDataset(CaptionAgreementDataset):
             distribution = self.test_distribution
         else:
             distribution = self.distribution
-        worlds = np.zeros(shape=(n, self.world_size.x, self.world_size.y, 3), dtype=np.float32)
-        captions = np.zeros(shape=(n, self.caption_size), dtype=np.int32)
+        worlds = np.zeros(shape=(n, self.world_size, self.world_size, 3), dtype=np.float32)
+        if include_model:
+            world_models = [None] * n
+        captions = np.zeros(shape=(n, self.text_size), dtype=np.int32)
+        caption_lengths = np.zeros(shape=(n, 1), dtype=np.int32)
         agreements = np.zeros(shape=(n, 1), dtype=np.float32)
         for i in range(n):
             pick = random()
@@ -258,22 +493,26 @@ class MixerCaptionAgreementDataset(CaptionAgreementDataset):
             for dataset, prob in zip(self.datasets, distribution):
                 cumulative += prob
                 if pick < cumulative:
-                    generated = dataset.generate(n=1, mode=mode)
-                    worlds[i] = generated['world'][0]
-                    captions[i] = generated['caption'][0]
-                    agreements[i] = generated['agreement'][0]
                     break
-            else:
-                generated = self.datasets[-1].generate(n=1, mode=mode)
-                worlds[i] = generated['world'][0]
-                captions[i] = generated['caption'][0]
-                agreements[i] = generated['agreement'][0]
-        return {'world': worlds, 'caption': captions, 'agreement': agreements}
+            generated = self.datasets[-1].generate(n=1, mode=mode, noise=noise, include_model=include_model)
+            worlds[i] = generated['world'][0]
+            if include_model:
+                world_models[i] = generated['world-model'][0]
+            captions[i] = generated['caption'][0]
+            caption_lengths[i] = generated['caption-length'][0]
+            agreements[i] = generated['agreement'][0]
+        generated = dict()
+        generated['world'] = worlds
+        if include_model:
+            generated['world-model'] = world_models
+        generated['caption'] = captions
+        generated['caption-length'] = caption_lengths
+        generated['agreement'] = agreements
 
 
 class ComparisonDataset(Dataset):
 
-    value_types = {'reference': 'image', 'comparison': 'image', 'agreement': 'int'}
+    value_types = {'reference': 'world', 'reference-model': 'model', 'comparison': 'world', 'comparison-model': 'model', 'agreement': 'float'}
     correct_comparison_flag = None
     incorrect_comparison_flag = None
 
@@ -313,7 +552,7 @@ class ComparisonDataset(Dataset):
     def incorrect_comparison(self, reference, comparison):
         raise NotImplementedError
 
-    def generate(self, n, mode=None):
+    def generate(self, n, mode=None, noise=True, include_model=False):
         if mode == 'train':
             correct_ratio = self.train_correct_ratio
         elif mode == 'validation':
@@ -322,30 +561,45 @@ class ComparisonDataset(Dataset):
             correct_ratio = self.test_correct_ratio
         else:
             correct_ratio = self.correct_ratio
-        references = np.zeros(shape=(n, self.world_size.x, self.world_size.y, 3), dtype=np.float32)
-        comparisons = np.zeros(shape=(n, self.world_size.x, self.world_size.y, 3), dtype=np.float32)
+        references = np.zeros(shape=(n, self.world_size, self.world_size, 3), dtype=np.float32)
+        comparisons = np.zeros(shape=(n, self.world_size, self.world_size, 3), dtype=np.float32)
+        if include_model:
+            reference_models = [None] * n
+            comparison_models = [None] * n
         agreements = np.zeros(shape=(n, 1), dtype=np.float32)
         for i in range(n):
             reference = self.world_generator(mode)
-            references[i] = reference.get_world()
+            if include_model:
+                reference_models[i] = reference.model()
+            references[i] = reference.get_world(noise=noise)
             if random() < correct_ratio:
                 comparison = self.generate_correct_comparison(reference)
                 agreements[i][0] = 1.0
             else:
                 comparison = self.generate_incorrect_comparison(reference)
-            comparisons[i] = comparison.get_world()
-        return {'reference': references, 'comparison': comparisons, 'agreement': agreements}
+            if include_model:
+                comparison_models[i] = comparison.model()
+            comparisons[i] = comparison.get_world(noise=noise)
+        generated = dict()
+        generated['reference'] = references
+        generated['comparison'] = comparisons
+        if include_model:
+            generated['reference-model'] = reference_models
+            generated['comparison-model'] = comparison_models
+        generated['agreement'] = agreements
+        return generated
 
 
 class CommunicationDataset(Dataset):
 
-    value_types = {'alternative1': 'image', 'alternative2': 'image', 'reference': 'int'}
+    value_types = {'alternative1': 'world', 'alternative1-model': 'model', 'alternative2': 'world', 'alternative2-model': 'model', 'reference': 'int'}
     valid_alternative_flag = None
 
-    def __init__(self, world_generator, alternative_count=2):
+    def __init__(self, world_generator, num_alternatives=2):
         super().__init__(world_generator)
         assert self.__class__.valid_alternative_flag is not None
-        self.alternative_count = alternative_count
+        assert isinstance(num_alternatives, int) and num_alternatives >= 2
+        self.num_alternatives = num_alternatives
 
     def generate_alternative(self, reference, mode=None):
         if mode != 'train':
@@ -361,36 +615,30 @@ class CommunicationDataset(Dataset):
     def valid_alternative(self, reference, alternative):
         raise NotImplementedError
 
-    def generate(self, n, mode=None):
-        alternatives = [np.zeros(shape=(n, self.world_size.x, self.world_size.y, 3), dtype=np.float32) for _ in range(self.alternative_count)]
+    def generate(self, n, mode=None, noise=True, include_model=False):
+        alternatives = [np.zeros(shape=(n, self.world_size, self.world_size, 3), dtype=np.float32) for _ in range(self.num_alternatives)]
+        if include_model:
+            alternative_models = [[None] * n for _ in range(self.num_alternatives)]
         references = np.zeros(shape=(n, 1), dtype=np.int32)
         for i in range(n):
-            reference = randrange(self.alternative_count)
+            reference = randrange(self.num_alternatives)
             references[i] = reference
             world = self.world_generator(mode)
-            alternatives[reference][i] = world.get_world()
-            for alt in range(self.alternative_count):
+            if include_model:
+                alternative_models[reference][i] = world.model()
+            alternatives[reference][i] = world.get_world(noise=noise)
+            for alt in range(self.num_alternatives):
                 if alt == reference:
                     continue
                 alternative = self.generate_alternative(world, mode)
-                alternatives[alt][i] = alternative.get_world()
-        result = {'alternative' + str(alt + 1): alternatives[alt] for alt in range(self.alternative_count)}
-        result['reference'] = references
-        return result
-
-
-if __name__ == "__main__":
-    import argparse
-    parser = argparse.ArgumentParser(description='Generate example data')
-    parser.add_argument('-t', '--type', default='agreement', help='Dataset type')
-    parser.add_argument('-n', '--name', default='oneshape', help='Dataset name')
-    parser.add_argument('-c', '--config', default=None, help='Dataset configuration file')
-    parser.add_argument('-m', '--mode', default=None, choices=('train', 'validation', 'test'), help='Mode')
-    parser.add_argument('-i', '--instances', type=int, default=100, help='Number of instances')
-    parser.add_argument('-d', '--directory', default='examples', help='Directory for generated data')
-    args = parser.parse_args()
-
-    dataset = Dataset.from_config(config=args.config, dataset_type=args.type, dataset_name=args.name)
-    directory = os.path.join(args.directory, args.type, args.name)
-    generated = dataset.generate(n=args.instances, mode=args.mode)
-    dataset.serialize_data(directory=directory, generated=generated)
+                if include_model:
+                    alternative_models[alt][i] = alternative.model()
+                alternatives[alt][i] = alternative.get_world(noise=noise)
+        generated = dict()
+        generated['reference'] = references
+        for alt in range(self.num_alternatives):
+            alt_str = 'alternative' + str(alt + 1)
+            generated[alt_str] = alternatives[alt]
+            if include_model:
+                generated[alt_str + '-model'] = alternative_models[alt]
+        return generated

@@ -8,7 +8,8 @@ from pydmrs.components import Pred
 from pydmrs.core import Link, ListDmrs
 from pydmrs.graphlang.graphlang import parse_graphlang
 
-from shapeworld.caption import Caption, WorldCaptioner
+from shapeworld.caption import Caption
+from shapeworld.captioner import WorldCaptioner
 
 
 resources_directory = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', '..', 'resources')
@@ -280,15 +281,15 @@ class Modifier(DmrsCaptionerComponent):
                 return [entity for entity in entities if entity.shape in value]
         elif self.property == 'color':
             def agreeing_entities(entities):
-                return [entity for entity in entities if str(entity.fill.color) == value]
+                return [entity for entity in entities if str(entity.color) == value]
         elif self.property == 'shade-max':
             def agreeing_entities(entities):
                 # all same color?
                 max_entity = None
                 max_shade = -1.0
                 for entity in entities:
-                    if entity.fill.color.shade * value > max_shade:
-                        max_shade = entity.fill.color.shade * value
+                    if entity.color.shade * value > max_shade:
+                        max_shade = entity.color.shade * value
                         max_entity = entity
                 if max_entity is None:
                     return []
@@ -300,7 +301,7 @@ class Modifier(DmrsCaptionerComponent):
                 max_location = -1.0
                 for entity in entities:
                     if sum(entity.location * value) > max_location:
-                        max_location = entity.fill.color.shade * value
+                        max_location = entity.color.shade * value
                         max_entity = entity
                 if max_entity is None:
                     return []

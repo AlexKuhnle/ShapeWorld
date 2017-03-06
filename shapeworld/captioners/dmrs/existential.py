@@ -17,7 +17,7 @@ class ExistentialDmrsCaptioner(DmrsCaptioner):
     def caption_world(self, world):
         entity = choice(world.entities)
         shape = str(entity.shape)
-        color = str(entity.fill.color)
+        color = str(entity.color)
         rstr = DmrsCaptionerComponent.nouns[shape].instantiate((DmrsCaptionerComponent.modifiers[color].instantiate(),))
         body = self.instantiate()
         quantifier = DmrsCaptionerComponent.quantifiers['a'].instantiate(rstr, body)

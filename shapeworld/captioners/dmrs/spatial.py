@@ -33,7 +33,7 @@ class SpatialDmrsCaptioner(DmrsCaptioner):
 
     def caption_world(self, world):
         reference = choice(world.entities)
-        arg = DmrsCaptionerComponent.nouns[str(reference.shape)].instantiate((DmrsCaptionerComponent.modifiers[str(reference.fill.color)].instantiate(),))
+        arg = DmrsCaptionerComponent.nouns[str(reference.shape)].instantiate((DmrsCaptionerComponent.modifiers[str(reference.color)].instantiate(),))
         directions = ['left', 'right', 'up', 'down']
         direction = choice(directions)
         directions.remove(direction)
@@ -43,6 +43,6 @@ class SpatialDmrsCaptioner(DmrsCaptioner):
             directions.remove(direction)
             relation = self.instantiate(arg, direction)
         target = choice(relation.agreeing_entities(world.entities))
-        rstr = DmrsCaptionerComponent.nouns[str(target.shape)].instantiate((DmrsCaptionerComponent.modifiers[str(target.fill.color)].instantiate(),))
+        rstr = DmrsCaptionerComponent.nouns[str(target.shape)].instantiate((DmrsCaptionerComponent.modifiers[str(target.color)].instantiate(),))
         quantifier = DmrsCaptionerComponent.quantifiers['a'].instantiate(rstr, relation)
         return quantifier

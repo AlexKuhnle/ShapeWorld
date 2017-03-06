@@ -20,6 +20,9 @@ class Point(PointTuple):
     def __str__(self):
         return '({}/{})'.format(self.x, self.y)
 
+    def model(self):
+        return {'x': self.x, 'y': self.y}
+
     def __eq__(self, other):
         assert isinstance(other, float) or isinstance(other, int) or isinstance(other, bool) or isinstance(other, Point)
         if isinstance(other, Point):
@@ -218,20 +221,20 @@ class Point(PointTuple):
         assert size is None or isinstance(size, Point)
         if end is None:
             end = ceil(start)
-            start = Point(0, 0)
+            start = Point.izero
         else:
             start = floor(start)
             end = ceil(end)
         assert start <= end
         if size is None:
-            for x in range(start.x, end.x + 1):
-                for y in range(start.y, end.y + 1):
+            for x in range(start.x, end.x):
+                for y in range(start.y, end.y):
                     yield Point(x, y)
         else:
-            for x in range(start.x, end.x + 1):
-                for y in range(start.y, end.y + 1):
+            for x in range(start.x, end.x):
+                for y in range(start.y, end.y):
                     point = Point(x, y)
-                    yield point, Point(x / size[0], y / size[1])
+                    yield point, Point(x / size.x, y / size.y)
 
     @staticmethod
     def random_instance(topleft, bottomright):
@@ -242,6 +245,8 @@ Point.zero = Point(0.0, 0.0)
 Point.one = Point(1.0, 1.0)
 Point.half = Point(0.5, 0.5)
 
+Point.izero = Point(0, 0)
+Point.ione = Point(1, 1)
 Point.right = Point(1, 0)
 Point.top_right = Point(1, 1)
 Point.top = Point(0, 1)

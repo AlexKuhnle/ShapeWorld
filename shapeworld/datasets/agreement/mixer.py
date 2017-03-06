@@ -14,3 +14,4 @@ class MixerDataset(MixerCaptionAgreementDataset):
 
 
 dataset = MixerDataset
+MixerDataset.name = 'Mixer'
