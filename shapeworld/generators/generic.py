@@ -59,11 +59,11 @@ class GenericGenerator(WorldGenerator):
         n_entity = choice(self.entity_counts)
         if n_entity == 0:
             return world
-        shapes = GenericWorldGenerator.choose(self.shapes, self.shapes_range)
-        colors = GenericWorldGenerator.choose(self.colors, self.colors_range)
-        textures = GenericWorldGenerator.choose(self.textures, self.textures_range)
+        shapes = GenericGenerator.choose(self.shapes, self.shapes_range)
+        colors = GenericGenerator.choose(self.colors, self.colors_range)
+        textures = GenericGenerator.choose(self.textures, self.textures_range)
         n = 0
-        for _ in range(n_entity * GenericWorldGenerator.MAX_ATTEMPTS):
+        for _ in range(n_entity * GenericGenerator.MAX_ATTEMPTS):
             entity = Entity.random_instance(center=world.random_location(), shapes=shapes, size_range=self.size_range, distortion_range=self.distortion_range, rotation=self.rotation, colors=colors, shade_range=self.shade_range, textures=textures)
             n += world.add_entity(entity, boundary_tolerance=self.boundary_tolerance, collision_tolerance=self.collision_tolerance)
             if n >= n_entity:
@@ -79,11 +79,11 @@ class GenericGenerator(WorldGenerator):
         n_entity = choice(self.train_entity_counts)
         if n_entity == 0:
             return world
-        shapes = GenericWorldGenerator.choose(self.shapes, self.shapes_range)
-        colors = GenericWorldGenerator.choose(self.colors, self.colors_range)
-        textures = GenericWorldGenerator.choose(self.textures, self.textures_range)
+        shapes = GenericGenerator.choose(self.shapes, self.shapes_range)
+        colors = GenericGenerator.choose(self.colors, self.colors_range)
+        textures = GenericGenerator.choose(self.textures, self.textures_range)
         n = 0
-        for _ in range(n_entity * GenericWorldGenerator.MAX_ATTEMPTS):
+        for _ in range(n_entity * GenericGenerator.MAX_ATTEMPTS):
             entity = Entity.random_instance(center=world.random_location(), shapes=shapes, size_range=self.size_range, distortion_range=self.distortion_range, rotation=self.rotation, colors=colors, shade_range=self.shade_range, textures=textures)
             combination = (str(entity.shape), str(entity.color), str(entity.texture))
             if combination in self.validation_combinations or combination in self.test_combinations:
@@ -102,11 +102,11 @@ class GenericGenerator(WorldGenerator):
         n_entity = choice(self.validation_entity_counts)
         if n_entity == 0:
             return world
-        shapes = GenericWorldGenerator.choose(self.validation_shapes, self.shapes_range)
-        colors = GenericWorldGenerator.choose(self.validation_colors, self.colors_range)
-        textures = GenericWorldGenerator.choose(self.validation_textures, self.textures_range)
+        shapes = GenericGenerator.choose(self.validation_shapes, self.shapes_range)
+        colors = GenericGenerator.choose(self.validation_colors, self.colors_range)
+        textures = GenericGenerator.choose(self.validation_textures, self.textures_range)
         if self.validation_combinations:
-            for _ in range(GenericWorldGenerator.MAX_ATTEMPTS):
+            for _ in range(GenericGenerator.MAX_ATTEMPTS):
                 entity = Entity.random_instance(center=world.random_location(), rotation=self.rotation, size_range=self.size_range, distortion_range=self.distortion_range, shade_range=self.shade_range, combinations=self.validation_combinations)
                 if world.add_entity(entity, boundary_tolerance=self.boundary_tolerance, collision_tolerance=self.collision_tolerance):
                     break
@@ -115,7 +115,7 @@ class GenericGenerator(WorldGenerator):
             n = 1
         else:
             n = 0
-        for _ in range(n_entity * GenericWorldGenerator.MAX_ATTEMPTS):
+        for _ in range(n_entity * GenericGenerator.MAX_ATTEMPTS):
             entity = Entity.random_instance(center=world.random_location(), shapes=shapes, size_range=self.size_range, distortion_range=self.distortion_range, rotation=self.rotation, colors=colors, shade_range=self.shade_range, textures=textures)
             n += world.add_entity(entity, boundary_tolerance=self.boundary_tolerance, collision_tolerance=self.collision_tolerance)
             if n >= n_entity:
@@ -131,11 +131,11 @@ class GenericGenerator(WorldGenerator):
         n_entity = choice(self.test_entity_counts)
         if n_entity == 0:
             return world
-        shapes = GenericWorldGenerator.choose(self.test_shapes, self.shapes_range)
-        colors = GenericWorldGenerator.choose(self.test_colors, self.colors_range)
-        textures = GenericWorldGenerator.choose(self.test_textures, self.textures_range)
+        shapes = GenericGenerator.choose(self.test_shapes, self.shapes_range)
+        colors = GenericGenerator.choose(self.test_colors, self.colors_range)
+        textures = GenericGenerator.choose(self.test_textures, self.textures_range)
         if self.test_combinations:
-            for _ in range(GenericWorldGenerator.MAX_ATTEMPTS):
+            for _ in range(GenericGenerator.MAX_ATTEMPTS):
                 entity = Entity.random_instance(center=world.random_location(), rotation=self.rotation, size_range=self.size_range, distortion_range=self.distortion_range, shade_range=self.shade_range, combinations=self.test_combinations)
                 if world.add_entity(entity, boundary_tolerance=self.boundary_tolerance, collision_tolerance=self.collision_tolerance):
                     break
@@ -144,7 +144,7 @@ class GenericGenerator(WorldGenerator):
             n = 1
         else:
             n = 0
-        for _ in range(n_entity * GenericWorldGenerator.MAX_ATTEMPTS):
+        for _ in range(n_entity * GenericGenerator.MAX_ATTEMPTS):
             entity = Entity.random_instance(center=world.random_location(), shapes=shapes, size_range=self.size_range, distortion_range=self.distortion_range, rotation=self.rotation, colors=colors, shade_range=self.shade_range, textures=textures)
             n += world.add_entity(entity, boundary_tolerance=self.boundary_tolerance, collision_tolerance=self.collision_tolerance)
             if n >= n_entity:

@@ -1,4 +1,4 @@
-from shapeworld.generators.generic import GenericWorldGenerator
+from shapeworld.generators.generic import GenericGenerator
 
 
-__all__ = ['GenericWorldGenerator']
+__all__ = ['GenericGenerator']
