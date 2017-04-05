@@ -1,6 +1,15 @@
 ShapeWorld
 ==========
 
+**Getting started:**
+
+```
+git clone --recursive https://github.com/AlexKuhnle/ShapeWorld.git
+pip3 install -e ShapeWorld
+```
+
+
+
 - [About ShapeWorld](#about-shapeworld)
 - [Integration into Python code](#integration-into-python-code)
 - [Stand-alone data generation](#stand-alone-data-generation)
@@ -34,7 +43,7 @@ Integration into Python code
 The easiest way to use the ShapeWorld data in your Python 3 project is to directly call it from the code. Whenever a batch of training/evaluation instances is required, `dataset.generate(...)` is called with the respective arguments. This means that generation happens simultaneously to training/testing. Below an example of how to generate a batch of 128 training instances. See also the example models below.
 
 ```python
-from shapeworld.dataset import Dataset
+from shapeworld import Dataset
 
 dataset = Dataset.from_config(
     dataset_type='agreement',
@@ -62,29 +71,31 @@ The `shapeworld/generate.py` module provides options to generate ShapeWorld data
 
 The following command line arguments are available:
 
-* `--[d]irectory`:  Directory for generated data, should be non-existing or empty since it will be overwritten (default: `examples`)
+* `--[d]irectory`:  Directory for generated data with automatically created sub-directories, should be non-existing or empty since it will be overwritten
+* `--directory-[u]unmanaged`:  Directory for generated data, without automatically created sub-directories (default: `none`)
 * `--[a]rchive`:  Store generated data in archive, either `zip[:mode]` or `tar[:mode]` with one of `none`, `deflate` (only zip), `gzip` (only tar), `bzip2`, `lzma` (default: `none`)
-* `--[s]pecification`:  Dataset specification file, also stored as `specification.json` in the generation directory (default: `none`)
+* `--[A]ppend`:  Append to existing data, when used with --directory (default: `false`)
 * `--[t]ype`:  Dataset type (default: `agreement`)
 * `--[n]ame`:  Dataset name (default: `oneshape`)
 * `--[c]onfig`:  Dataset configuration file, otherwise use default configuration (default: `none`)
+* `--[p]arts`:  Number of files (instead of all in one file), either a number or a triple of numbers, like `100,10,10` (requires mode `none`), for `train`, `validation` and `test` respectively (default: `1`)
+* `--[i]nstances`:  Number of instances, per generated file (default: `100`)
 * `--[m]ode`:  Mode, one of `train`, `validation`, `test` (default: `none`)
-* `--[i]nstances`:  Number of instances, per generated batch (default: `100`)
-* `--[b]atches`:  Number of batches (instead of all in one file), either a number or a triple of numbers, like `100,10,10` (requires mode `none`), for `train`, `validation` and `test` respectively (default: `1`)
-* `--[w]orld-model`:  Include world model, as json file (default: `false`)
-* `--[p]ixel-noise-off`:  Turn pixel noise off (default: `false`)
-* `--ti[f]f`:  Store images in tiff format using LZW compression (default: `false`)
+* `--[W]orld-model`:  Include world model, as json file (default: `false`)
+* `--no-[P]ixel-noise`:  Do not infuse pixel noise (default: `false`)
+* `--captioner-[S]tatistics`:  Collect statistical data of captioner (default: `false`)
+* `--[T]iff`:  Store images in tiff format using LZW compression (default: `false`)
 
-When creating larger amounts of ShapeWorld data, it is advisable to store the data in a compressed archive (for example `-a tar:bz2`) and turn off the pixel noise (`-p`) for best compression results (using the tiff format (`-f`) has a similar effect). For instance, the following command line generates one million training instances of the `multishape` configuration included in this repository:
+When creating larger amounts of ShapeWorld data, it is advisable to store the data in a compressed archive (for example `-a tar:bz2`) and turn off the pixel noise (`-p`) for best compression results (using the tiff format (`-f`) has a similar effect). For instance, the following command line generates one million *training* instances of the `multishape` configuration file included in this repository:
 
 ```bash
-python3 shapeworld/generate.py -d [DIRECTORY] -a tar:bzip2 -c configs/agreement/multishape.json -m train -i 10000 -b 100 -w -p
+python3 generate.py -D [DIRECTORY] -a tar:bzip2 -c configs/agreement/multishape.json -m train -p 100 -i 10k -W -P
 ```
 
-For the purpose of this introduction, we generate a smaller amount of training, validation and test instances using the default configuration of the dataset:
+For the purpose of this introduction, we generate a smaller amount of *all* training, validation and test instances using the default configuration of the dataset:
 
 ```bash
-python3 shapeworld/generate.py -d examples/readme -a tar:bzip2 -t agreement -n multishape -i 128 -b 5,1,1 -p
+python3 generate.py -d examples/readme -a tar:bzip2 -t agreement -n multishape -p 5,1,1 -i 128 -P
 ```
 
 
@@ -92,14 +103,14 @@ python3 shapeworld/generate.py -d examples/readme -a tar:bzip2 -t agreement -n m
 Loading extracted data
 ----------------------
 
-Extracted data can be loaded and accessed with the same `Dataset` interface as before, just define either the `dataset_type` or `dataset_name` as `'load'` and either the directory or the specification file as `config`. However, to be able to do this, we need to extract all of training, validation and test data, as is done in the last command line. Note that we extracted pixel-noise-free instances - the noise will automatically be (re-)infused accordingly.
+Extracted data can be loaded and accessed with the same `Dataset` interface as before, just define the `dataset_name` as `'load'` and either the directory or the specification file as `config`. However, to be able to do this, we need to extract all of training, validation and test data, as is done in the last command line. Note that we extracted pixel-noise-free instances - the noise will automatically be (re-)infused accordingly.
 
 ```python
-from shapeworld.dataset import Dataset
+from shapeworld import Dataset
 
 dataset = Dataset.from_config(
-    dataset_type='load',
-    config='examples/readme')
+    dataset_name='load',
+    config='examples/readme/agreement/multishape')
 generated = dataset.generate(n=128, mode='train')
 ```
 
@@ -107,11 +118,11 @@ If you need to manually (re-)infuse the pixel noise later (for instance, because
 
 ```python
 import numpy as np
-from shapeworld.dataset import Dataset
+from shapeworld import Dataset
 
 dataset = Dataset.from_config(
-    dataset_type='load',
-    config='examples/readme')
+    dataset_name='load',
+    config='examples/readme/agreement/multishape')
 world_size = 64
 noise_range = 0.1
 generated = dataset.generate(n=128, mode='train', noise=False)
@@ -140,24 +151,29 @@ Example models
 
 The `models/` directory contains a few exemplary models, which can be either applied directly or used as basis to build more sophisticated models. For direct application, the following command line arguments are available:
 
+* `--[t]ype`:  Dataset type (default: `agreement`)
 * `--[n]ame`:  Dataset name (default: `oneshape`)
 * `--[c]onfig`:  Dataset configuration file, otherwise use default configuration (default: `none`)
+* `--[m]odel`:  Model, one in `models/[TYPE]/` (default: `cnn_lstm_mult`)
+* `--[l]earning-rate`:  Learning rate (default: `0.001`)
+* `--[d]ropout-rate`:  Dropout rate (default: `0.0`)
+* `--[b]atch-size`:  Batch size (default: `128`)
 * `--[i]terations`:  Number of training iterations (default: `1000`)
-* `--[e]valuation-frequency`:  Evaluation frequency (default: `100`)
-* `--[s]ave-frequency`:  Save frequency, when `--model-file` is given (default: `1000`)
-* `--[m]odel-file`:  Model file (default: `none`)
-* `--cs[v]-file`:  CSV file reporting the evaluation results throughout the learning process (default: `none`)
-* `--[r]estore`:  Restore model, requires `--model-file` (default: `false`)
-* `--[t]est`:  Test model without training, requires `--model-file` (default: `false`)
+* `--[e]valuation-size`:  Evaluation size (default: `1024`)
+* `--e[v]aluation-frequency`:  Evaluation frequency (default: `100`)
+* `--model-[f]ile`:  Model file (default: `none`)
+* `--[r]eport-file`:  CSV file reporting the evaluation results throughout the learning process (default: `none`)
+* `--[R]estore`:  Restore model, requires `--model-file` (default: `false`)
+* `--[E]valuate`:  Evaluate model without training, requires `--model-file` (default: `false`)
 
-For instance, the following command line trains an image caption agreement model:
+For instance, the following command line trains an image caption agreement model on the dataset specified by the `multishape` configuration file included in this repository:
 
 ```bash
-python3 models/agreement/cnn_lstm_fuse.py -n multishape -i 5000 -m models/agreement/my_model
+python3 evaluate.py -t agreement -n multishape -m cnn_bow_mult -i 5k
 ```
 
 The previously generated data can be loaded in the same way as was explained for loading the data in Python code:
 
 ```bash
-python3 models/agreement/cnn_lstm_fuse.py -n load -c examples/readme -i 5000 -m models/agreement/my_model
+python3 evaluate.py -t agreement -n load -c examples/readme/agreement/multishape -m cnn_bow_mult -i 10
 ```

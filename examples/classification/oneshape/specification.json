@@ -1,1 +1,0 @@
-{"value_types": {"classification": "vector", "world": "world", "world-model": "model"}, "directory": "examples/classification/oneshape", "world_model": true, "name": "OneShape", "tiff": false, "world_size": 64, "word_ids": null, "archive": null, "noise_range": null, "text_size": null}

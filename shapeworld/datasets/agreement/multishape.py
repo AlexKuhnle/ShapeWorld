@@ -1,14 +1,18 @@
 from shapeworld.dataset import CaptionAgreementDataset
-from shapeworld.generators.generic import GenericWorldGenerator
-from shapeworld.captioners.dmrs.existential import ExistentialDmrsCaptioner
+from shapeworld.generators import GenericGenerator
+from shapeworld.captioners import ExistentialCaptioner
 
 
 class MultiShapeDataset(CaptionAgreementDataset):
 
-    def __init__(self, world_size, world_color, noise_range, shapes, size_range, distortion_range, colors, shade_range, textures, rotation, entity_counts, train_entity_counts, validation_entity_counts, test_entity_counts, caption_size, words, correct_ratio, train_correct_ratio, validation_correct_ratio, test_correct_ratio, **kwargs):
+    def __init__(self, entity_counts, train_entity_counts, validation_entity_counts, test_entity_counts, caption_size, words, incorrect_caption_modes=None, hypernym_ratio=None, correct_ratio=None, train_correct_ratio=None, validation_correct_ratio=None, test_correct_ratio=None, world_size=None, world_color=None, shapes=None, colors=None, textures=None, rotation=None, size_range=None, distortion_range=None, shade_range=None, noise_range=None, collision_tolerance=None, boundary_tolerance=None, realizer=None, quantifier_tolerance=None, **kwargs):
+        world_generator = GenericGenerator(entity_counts, world_size, world_color, shapes, colors, textures, rotation, size_range, distortion_range, shade_range, noise_range, collision_tolerance, boundary_tolerance, train_entity_counts=train_entity_counts, validation_entity_counts=validation_entity_counts, test_entity_counts=test_entity_counts)
+        world_captioner = ExistentialCaptioner(world_generator.shapes, world_generator.colors, world_generator.textures, realizer=realizer, quantifier_tolerance=quantifier_tolerance, incorrect_modes=incorrect_caption_modes, hypernym_ratio=hypernym_ratio)
         super().__init__(
-            world_generator=GenericWorldGenerator(world_size, world_color, noise_range, shapes, size_range, distortion_range, colors, shade_range, textures, rotation, entity_counts, train_entity_counts=train_entity_counts, validation_entity_counts=validation_entity_counts, test_entity_counts=test_entity_counts),
-            world_captioner=ExistentialDmrsCaptioner(caption_size, words),
+            world_generator=world_generator,
+            world_captioner=world_captioner,
+            caption_size=caption_size,
+            words=words,
             incorrect_world_ratio=1.0,
             correct_ratio=correct_ratio,
             train_correct_ratio=correct_ratio,
@@ -17,26 +21,12 @@ class MultiShapeDataset(CaptionAgreementDataset):
 
 
 dataset = MultiShapeDataset
-MultiShapeDataset.name = 'MultiShape'
+MultiShapeDataset.dataset_name = 'multishape'
 MultiShapeDataset.default_config = {
-    'world_size': 64,
-    'world_color': 'black',
-    'noise_range': 0.1,
-    'shapes': ['square', 'rectangle', 'triangle', 'pentagon', 'cross', 'circle', 'semicircle', 'ellipse'],
-    'size_range': [0.2, 0.3],
-    'distortion_range': [2.0, 3.0],
-    'colors': ['black', 'red', 'green', 'blue', 'yellow', 'magenta', 'cyan', 'white'],
-    'shade_range': 0.5,
-    'textures': ['solid'],
-    'rotation': True,
     'entity_counts': [1, 2, 3, 4, 5, 6],
-    'train_entity_counts': [1, 2, 3, 4],
-    'validation_entity_counts': [5],
+    'train_entity_counts': [1, 2, 3, 5],
+    'validation_entity_counts': [4],
     'test_entity_counts': [6],
     'caption_size': 6,
-    'words': ['a', 'an', 'black', 'blue', 'circle', 'cross', 'cyan', 'ellipse', 'green', 'is', 'magenta', 'pentagon', 'rectangle', 'red', 'semicircle', 'square', 'there', 'triangle', 'white', 'yellow', '.'],
-    'correct_ratio': 0.5,
-    'train_correct_ratio': 0.33,
-    'validation_correct_ratio': 0.5,
-    'test_correct_ratio': 0.5
+    'words': ['a', 'an', 'black', 'blue', 'circle', 'cross', 'cyan', 'ellipse', 'green', 'is', 'magenta', 'pentagon', 'rectangle', 'red', 'semicircle', 'shape', 'square', 'there', 'triangle', 'white', 'yellow', '.']
 }
