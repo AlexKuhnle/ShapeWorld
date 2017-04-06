@@ -2,23 +2,14 @@ from math import sqrt
 import tensorflow as tf
 
 
-# model parameters
-sizes = (5, 3, 3)
-num_filters = (16, 32, 64)
-poolings = ('max', 'max', 'avg')
-embedding_size = 32
-lstm_size = 64
-hidden_dims = (512,)
-
-
-def model(world, caption, caption_length, agreement, dropouts, vocabulary_size):
+def model(world, caption, caption_length, agreement, dropouts, vocabulary_size, sizes=(5, 3, 3), nums_filters=(16, 32, 64), poolings=('max', 'max', 'avg'), embedding_size=32, lstm_size=64, hidden_dims=(512,), **kwargs):
 
     with tf.name_scope(name='cnn'):
         world_embedding = world
-        for size, num_filter, pooling in zip(sizes, num_filters, poolings):
-            weights = tf.Variable(initial_value=tf.random_normal(shape=(size, size, world_embedding.get_shape()[3].value, num_filter), stddev=sqrt(2.0 / world_embedding.get_shape()[3].value)))
+        for size, num_filters, pooling in zip(sizes, nums_filters, poolings):
+            weights = tf.Variable(initial_value=tf.random_normal(shape=(size, size, world_embedding.get_shape()[3].value, num_filters), stddev=sqrt(2.0 / world_embedding.get_shape()[3].value)))
             world_embedding = tf.nn.conv2d(input=world_embedding, filter=weights, strides=(1, 1, 1, 1), padding='SAME')
-            bias = tf.Variable(initial_value=tf.zeros(shape=(num_filter,)))
+            bias = tf.Variable(initial_value=tf.zeros(shape=(num_filters,)))
             world_embedding = tf.nn.bias_add(value=world_embedding, bias=bias)
             world_embedding = tf.nn.relu(features=world_embedding)
             if pooling == 'max':

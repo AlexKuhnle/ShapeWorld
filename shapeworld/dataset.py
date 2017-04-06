@@ -5,7 +5,7 @@ import os
 from random import random, randrange
 import numpy as np
 from PIL import Image
-from shapeworld.util import Archive, get_temp_filename
+from shapeworld import util
 from shapeworld.world import World
 
 
@@ -161,26 +161,25 @@ class Dataset(object):
     def close_captioner_statistics(self):
         pass
 
-    def serialize_data(self, directory, generated, predicted=None, additional=None, name=None, archive=None, tiff=False):
+    def serialize_data(self, directory, generated, predicted=None, additional=None, name=None, archive=None):
         assert not additional or all(name not in self.values for name in additional)
         if not os.path.isdir(directory):
             os.makedirs(directory)
 
         id2word = [word for word, _ in sorted(self.word_ids.items(), key=(lambda kv: kv[1]))] if self.word_ids else None
-        temp_path = os.path.join(directory, get_temp_filename())
 
-        with Archive(directory=directory, mode='w', name=name, archive=archive) as write_file:
+        with util.Archive(directory=directory, mode='w', name=name, archive=archive) as write_file:
             for name in generated:
-                Dataset.serialize_value(value=generated[name], value_name=name, value_type=self.values[name], write_file=write_file, id2word=id2word, tiff=tiff, temp_path=temp_path)
+                Dataset.serialize_value(value=generated[name], value_name=name, value_type=self.values[name], write_file=write_file, id2word=id2word)
             if predicted:
                 for name in predicted:
-                    Dataset.serialize_value(value=predicted[name], value_name='predicted_' + name, value_type=self.values[name], write_file=write_file, id2word=id2word, tiff=tiff, temp_path=temp_path)
+                    Dataset.serialize_value(value=predicted[name], value_name='predicted_' + name, value_type=self.values[name], write_file=write_file, id2word=id2word)
             if additional:
                 for name, (value, value_type) in additional.items():
-                    Dataset.serialize_value(value=value, value_name=name, value_type=value_type, write_file=write_file, id2word=id2word, tiff=tiff, temp_path=temp_path)
+                    Dataset.serialize_value(value=value, value_name=name, value_type=value_type, write_file=write_file, id2word=id2word)
 
     @staticmethod
-    def serialize_value(value, value_name, value_type, write_file, id2word=None, tiff=False, temp_path=None):
+    def serialize_value(value, value_name, value_type, write_file, id2word=None):
         if value_type == 'int':
             value = '\n'.join(str(int(x)) for x in value) + '\n'
             write_file(value_name + '.txt', value)
@@ -195,30 +194,18 @@ class Dataset(object):
             value = '\n'.join(' '.join(id2word[word_id] for word_id in text if word_id) for text in value) + '\n'
             write_file(value_name + '.txt', value)
         elif value_type == 'world':
-            if tiff:
-                assert temp_path
-                from PIL import TiffImagePlugin
-                TiffImagePlugin.WRITE_LIBTIFF = True
             for n in range(len(value)):
                 image = World.get_image(world=value[n])
-                if tiff:
-                    image.save(temp_path, format='tiff', compression='tiff_lzw')
-                    with open(temp_path, 'rb') as filehandle:
-                        image_bytes = filehandle.read()
-                    write_file('{}-{}.tiff'.format(value_name, n), image_bytes, binary=True)
-                else:
-                    image_bytes = BytesIO()
-                    image.save(image_bytes, format='bmp')
-                    write_file('{}-{}.bmp'.format(value_name, n), image_bytes.getvalue(), binary=True)
-                    image_bytes.close()
-            if tiff:
-                TiffImagePlugin.WRITE_LIBTIFF = False
+                image_bytes = BytesIO()
+                image.save(image_bytes, format='bmp')
+                write_file('{}-{}.bmp'.format(value_name, n), image_bytes.getvalue(), binary=True)
+                image_bytes.close()
         elif value_type == 'model':
             value = json.dumps(value)
             write_file(value_name + '.json', value)
 
     @staticmethod
-    def deserialize_value(value_name, value_type, read_file, word2id=None, tiff=False):
+    def deserialize_value(value_name, value_type, read_file, word2id=None):
         if value_type == 'int':
             value = read_file(value_name + '.txt')
             value = [int(x) for x in value.split()]
@@ -237,24 +224,16 @@ class Dataset(object):
             value = [[word2id[word] for word in text.split(' ')] for text in value.split('\n')[:-1]]
             return value
         elif value_type == 'world':
-            if tiff:
-                from PIL import TiffImagePlugin
-                TiffImagePlugin.WRITE_LIBTIFF = True
             value = []
             n = 0
             while True:
-                image_bytes = read_file('{}-{}.{}'.format(value_name, n, 'tiff' if tiff else 'bmp'), binary=True)
+                image_bytes = read_file('{}-{}.bmp'.format(value_name, n), binary=True)
                 if image_bytes is None:
                     break
                 image_bytes = BytesIO(image_bytes)
-                if tiff:
-                    image = Image.open(image_bytes)  # , format='tiff', compression='tiff_lzw')
-                else:
-                    image = Image.open(image_bytes)  # , format='bmp')
+                image = Image.open(image_bytes, format='bmp')
                 value.append(World.from_image(image))
                 n += 1
-            if tiff:
-                TiffImagePlugin.WRITE_LIBTIFF = False
             return value
         elif value_type == 'model':
             value = read_file(value_name + '.json')
@@ -276,7 +255,6 @@ class LoadedDataset(Dataset):
         self._world_size = specification['world_size']
         self.world_model = specification.get('world_model')
         self.noise_range = specification.get('noise_range')
-        self.tiff = specification.get('tiff')
         self.archive = specification.get('archive')
         self.per_part = True
         self.part_once = False
@@ -330,9 +308,9 @@ class LoadedDataset(Dataset):
             part = randrange(len(parts))
             directory, name = parts.pop(part) if self.part_once else parts[part]
             self.num_instances = 0
-            with Archive(directory=directory, mode='r', name=name, archive=self.archive) as read_file:
+            with util.Archive(directory=directory, mode='r', name=name, archive=self.archive) as read_file:
                 for value_name, value in self.loaded.items():
-                    value.extend(Dataset.deserialize_value(value_name=value_name, value_type=self.values[value_name], read_file=read_file, word2id=self.word_ids, tiff=self.tiff))
+                    value.extend(Dataset.deserialize_value(value_name=value_name, value_type=self.values[value_name], read_file=read_file, word2id=self.word_ids))
                     if self.num_instances:
                         assert len(value) == self.num_instances
                     else:
@@ -343,6 +321,8 @@ class LoadedDataset(Dataset):
             index = randrange(self.num_instances)
             self.num_instances -= 1
             for value_name, value_type in self.values.items():
+                if value_type == 'model' and not self.world_model:
+                    continue
                 value = self.loaded[value_name].pop(index)
                 if value_type == 'text':
                     batch[value_name][i][:len(value)] = value

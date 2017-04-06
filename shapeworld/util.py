@@ -1,6 +1,7 @@
 from collections import Counter
 from datetime import datetime
 from itertools import chain, combinations
+import json
 import os
 import shutil
 import tarfile
@@ -23,8 +24,14 @@ def parse_int_with_factor(string):
         return int(string)
 
 
-def get_temp_filename():
-    return str(datetime.datetime.now().timestamp())
+def parse_config(string):
+    assert string
+    if string[0] == '{':
+        if '\'' in string and '\"' not in string:
+            string = string.replace('\'', '\"')
+        return {key.replace('-', '_'): value for key, value in json.loads(string).items()}
+    else:
+        return string
 
 
 def powerset(values, min_num=None, max_num=None):
@@ -74,7 +81,7 @@ class Archive(object):
         assert archive in (None, 'zip', 'zip:none', 'zip:deflate', 'zip:bzip2', 'zip:lzma', 'tar', 'tar:none', 'tar:gzip', 'tar:bzip2', 'tar:lzma')
         self.archive = os.path.join(directory, name) if name else directory
         self.mode = mode
-        self.temp_path = os.path.join(directory, get_temp_filename())
+        self.temp_path = os.path.join(directory, str(datetime.now().timestamp()))
         if archive is None:
             self.archive_type = None
             os.mkdir(self.archive)

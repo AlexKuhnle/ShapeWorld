@@ -84,9 +84,8 @@ The following command line arguments are available:
 * `--[W]orld-model`:  Include world model, as json file (default: `false`)
 * `--no-[P]ixel-noise`:  Do not infuse pixel noise (default: `false`)
 * `--captioner-[S]tatistics`:  Collect statistical data of captioner (default: `false`)
-* `--[T]iff`:  Store images in tiff format using LZW compression (default: `false`)
 
-When creating larger amounts of ShapeWorld data, it is advisable to store the data in a compressed archive (for example `-a tar:bz2`) and turn off the pixel noise (`-p`) for best compression results (using the tiff format (`-f`) has a similar effect). For instance, the following command line generates one million *training* instances of the `multishape` configuration file included in this repository:
+When creating larger amounts of ShapeWorld data, it is advisable to store the data in a compressed archive (for example `-a tar:bz2`) and turn off the pixel noise (`-p`) for best compression results. For instance, the following command line generates one million *training* instances of the `multishape` configuration file included in this repository:
 
 ```bash
 python3 generate.py -D [DIRECTORY] -a tar:bzip2 -c configs/agreement/multishape.json -m train -p 100 -i 10k -W -P
@@ -157,6 +156,7 @@ The `models/` directory contains a few exemplary models, which can be either app
 * `--[m]odel`:  Model, one in `models/[TYPE]/` (default: `cnn_lstm_mult`)
 * `--[l]earning-rate`:  Learning rate (default: `0.001`)
 * `--[d]ropout-rate`:  Dropout rate (default: `0.0`)
+* `--[p]arameters`:  Model parameters (default: `none`)
 * `--[b]atch-size`:  Batch size (default: `128`)
 * `--[i]terations`:  Number of training iterations (default: `1000`)
 * `--[e]valuation-size`:  Evaluation size (default: `1024`)

@@ -17,16 +17,6 @@ def parse_triple(string):
     return tuple(util.parse_int_with_factor(x) for x in string.split(','))
 
 
-def parse_config(string):
-    assert string
-    if string[0] == '{':
-        if '\'' in string and '\"' not in string:
-            string = string.replace('\'', '\"')
-        return json.loads(string)
-    else:
-        return string
-
-
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Generate example data')
 
@@ -37,7 +27,7 @@ if __name__ == "__main__":
 
     parser.add_argument('-t', '--type', default='agreement', help='Dataset type')
     parser.add_argument('-n', '--name', default='oneshape', help='Dataset name')
-    parser.add_argument('-c', '--config', type=parse_config, default=None, help='Dataset configuration file')
+    parser.add_argument('-c', '--config', type=util.parse_config, default=None, help='Dataset configuration file')
 
     parser.add_argument('-p', '--parts', type=parse_triple, default=None, help='Number of parts')
     parser.add_argument('-i', '--instances', type=util.parse_int_with_factor, default=100, help='Number of instances (per part)')
@@ -47,7 +37,6 @@ if __name__ == "__main__":
     parser.add_argument('-P', '--no-pixel-noise', action='store_true', help='Do not infuse pixel noise')
     parser.add_argument('-S', '--captioner-statistics', action='store_true', help='Collect statistical data of captioner')
     # parser.add_argument('-v', '--values', default=None, help='Comma-separated list of values to include')
-    parser.add_argument('-T', '--tiff', action='store_true', help='Store images in tiff format using LZW compression')
     args = parser.parse_args()
 
     dataset = Dataset.from_config(config=args.config, dataset_type=args.type, dataset_name=args.name)
@@ -63,8 +52,6 @@ if __name__ == "__main__":
             specification['archive'] = args.archive
         if args.no_pixel_noise:
             specification['noise_range'] = dataset.world_generator.noise_range
-        if args.tiff:
-            specification['tiff'] = args.tiff
 
         directory = os.path.join(args.directory, dataset.type, dataset.name)
         modes = ('train', 'validation', 'test')
@@ -105,7 +92,7 @@ if __name__ == "__main__":
         sys.stdout.write('{} Generate {}{} data...\n'.format(datetime.now().strftime('%H:%M:%S'), dataset, ' ' + modes[0] if modes[0] else ''))
         sys.stdout.flush()
         generated = dataset.generate(n=args.instances, mode=modes[0], noise=(not args.no_pixel_noise), include_model=args.world_model)
-        dataset.serialize_data(directory=directories[0], generated=generated, archive=args.archive, tiff=args.tiff)
+        dataset.serialize_data(directory=directories[0], generated=generated, archive=args.archive)
         sys.stdout.write('{} Data generation completed!\n'.format(datetime.now().strftime('%H:%M:%S')))
         sys.stdout.flush()
     else:
@@ -119,7 +106,7 @@ if __name__ == "__main__":
             for part in range(num_parts):
                 before = datetime.now()
                 generated = dataset.generate(n=args.instances, mode=mode, noise=(not args.no_pixel_noise), include_model=args.world_model)
-                dataset.serialize_data(directory=directory, generated=generated, name='part{}'.format(start + part), archive=args.archive, tiff=args.tiff)
+                dataset.serialize_data(directory=directory, generated=generated, name='part{}'.format(start + part), archive=args.archive)
                 after = datetime.now()
                 sys.stdout.write('\r         {:.0f}%  {}/{}  (time per part: {})'.format((part + 1) * 100 / num_parts, part + 1, num_parts, str(after - before).split('.')[0]))
                 sys.stdout.flush()

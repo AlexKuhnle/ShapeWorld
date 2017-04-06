@@ -12,11 +12,12 @@ if __name__ == "__main__":
 
     parser.add_argument('-t', '--type', default='agreement', help='Dataset type')
     parser.add_argument('-n', '--name', default='oneshape', help='Dataset name')
-    parser.add_argument('-c', '--config', default=None, help='Dataset configuration file')
+    parser.add_argument('-c', '--config', type=util.parse_config, help='Dataset configuration file')
 
     parser.add_argument('-m', '--model', default='cnn_lstm_mult', help='Model')
     parser.add_argument('-l', '--learning-rate', type=float, default=0.001, help='Learning rate')
     parser.add_argument('-d', '--dropout-rate', type=float, default=0.0, help='Dropout rate')
+    parser.add_argument('-p', '--parameters', type=util.parse_config, default=None, help='Model parameters')
 
     parser.add_argument('-b', '--batch-size', type=util.parse_int_with_factor, default=128, help='Batch size')
     parser.add_argument('-i', '--iterations', type=util.parse_int_with_factor, default=1000, help='Iterations')
@@ -44,7 +45,8 @@ if __name__ == "__main__":
             agreement = tf.placeholder(dtype=tf.float32, shape=(None, 1))
             dropouts = list()
         feed_dict_assignment = {'world': world, 'caption': caption, 'caption-length': caption_length, 'agreement': agreement}
-        accuracy = module.model(world=world, caption=caption, caption_length=caption_length, agreement=agreement, dropouts=dropouts, vocabulary_size=dataset.vocabulary_size)
+        parameters = args.parameters or dict()
+        accuracy = module.model(world=world, caption=caption, caption_length=caption_length, agreement=agreement, dropouts=dropouts, vocabulary_size=dataset.vocabulary_size, **parameters)
 
     elif args.typpe == 'classification':
         with tf.name_scope(name='inputs'):

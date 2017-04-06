@@ -2,13 +2,7 @@ from math import sqrt
 import tensorflow as tf
 
 
-# model parameters
-embedding_size = 32
-lstm_size = 64
-hidden_dims = (512,)
-
-
-def model(world, caption, caption_length, agreement, dropouts, vocabulary_size):
+def model(world, caption, caption_length, agreement, dropouts, vocabulary_size, embedding_size=32, lstm_size=64, hidden_dims=(512,), **kwargs):
 
     with tf.name_scope(name='lstm'):
         embeddings = tf.Variable(initial_value=tf.random_normal(shape=(vocabulary_size, embedding_size), stddev=sqrt(embedding_size)))
