@@ -64,14 +64,15 @@ def cumulative_distribution(values):
 
 class Archive(object):
 
-    def __init__(self, directory, mode, archive=None):
+    def __init__(self, directory, mode, name=None, archive=None):
         assert mode == 'r' or mode == 'w'
         assert archive in (None, 'zip', 'zip:none', 'zip:deflate', 'zip:bzip2', 'zip:lzma', 'tar', 'tar:none', 'tar:gzip', 'tar:bzip2', 'tar:lzma')
-        self.directory = directory
+        self.archive = os.path.join(directory, name) if name else directory
         self.mode = mode
         self.temp_path = os.path.join(directory, 'temp')
         if archive is None:
             self.archive_type = None
+            os.mkdir(self.archive)
         elif archive[:3] == 'zip':
             self.archive_type = 'zip'
             if len(archive) == 3:
@@ -84,7 +85,9 @@ class Archive(object):
                 compression = zipfile.ZIP_BZIP2
             elif archive[4:] == 'lzma':
                 compression = zipfile.ZIP_LZMA
-            self.archive = zipfile.ZipFile(os.path.join(directory, 'data.zip'), mode, compression)
+            if not self.archive.endswith('.zip'):
+                self.archive += '.zip'
+            self.archive = zipfile.ZipFile(self.archive, mode, compression)
         elif archive[:3] == 'tar':
             self.archive_type = 'tar'
             if len(archive) == 3:
@@ -101,7 +104,9 @@ class Archive(object):
             elif archive[4:] == 'lzma':
                 mode += ':xz'
                 extension = '.lzma'
-            self.archive = tarfile.open(os.path.join(directory, 'data.tar' + extension), mode)
+            if not self.archive.endswith('.tar' + extension):
+                self.archive += '.tar' + extension
+            self.archive = tarfile.open(self.archive, mode)
 
     def close(self):
         if self.archive_type is not None:
@@ -121,7 +126,7 @@ class Archive(object):
 
     def read_file(self, filename, binary=False):
         if self.archive_type is None:
-            filename = os.path.join(self.directory, filename)
+            filename = os.path.join(self.archive, filename)
             if not os.path.isfile(filename):
                 return None
             with open(filename, 'rb' if binary else 'r') as filehandle:
@@ -149,7 +154,7 @@ class Archive(object):
 
     def write_file(self, filename, value, binary=False):
         if self.archive_type is None:
-            filename = os.path.join(self.directory, filename)
+            filename = os.path.join(self.archive, filename)
             with open(filename, 'wb' if binary else 'w') as filehandle:
                 filehandle.write(value)
         elif self.archive_type == 'zip':

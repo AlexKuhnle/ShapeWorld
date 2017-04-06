@@ -161,7 +161,7 @@ class Dataset(object):
     def close_captioner_statistics(self):
         pass
 
-    def serialize_data(self, directory, generated, predicted=None, additional=None, archive=None, tiff=False):
+    def serialize_data(self, directory, generated, predicted=None, additional=None, name=None, archive=None, tiff=False):
         assert not additional or all(name not in self.values for name in additional)
         if not os.path.isdir(directory):
             os.makedirs(directory)
@@ -169,7 +169,7 @@ class Dataset(object):
         id2word = [word for word, _ in sorted(self.word_ids.items(), key=(lambda kv: kv[1]))] if self.word_ids else None
         temp_path = os.path.join(directory, 'temp')
 
-        with Archive(directory=directory, mode='w', archive=archive) as write_file:
+        with Archive(directory=directory, mode='w', name=name, archive=archive) as write_file:
             for name in generated:
                 Dataset.serialize_value(value=generated[name], value_name=name, value_type=self.values[name], write_file=write_file, id2word=id2word, tiff=tiff, temp_path=temp_path)
             if predicted:
@@ -289,12 +289,13 @@ class LoadedDataset(Dataset):
                 assert len(dirs) == 3 and 'train' in dirs and 'validation' in dirs and 'test' in dirs
             elif root[len(directory) + 1:] in ('train', 'validation', 'test'):
                 mode = root[len(directory) + 1:]
-                assert bool(dirs) != bool(files)
                 if dirs:
                     assert all(d[:4] == 'part' and d[4:].isdigit() for d in dirs)
-                    self.parts[mode] = [os.path.join(root, d) for d in dirs]
+                    assert not files or (len(files) == 1 and files[0] == 'captioner_statistics.csv')
+                    self.parts[mode] = [(root, d) for d in dirs]
                 else:
-                    self.parts[mode] = [root]
+                    assert all(f[:4] == 'part' for f in files if f != 'captioner_statistics.csv')
+                    self.parts[mode] = [(root, f) for f in files if f != 'captioner_statistics.csv']
         assert self.parts
         self.mode = None
         self.loaded = {value_name: [] for value_name, value_type in self.values.items() if value_type != 'model' or self.world_model}
@@ -327,18 +328,15 @@ class LoadedDataset(Dataset):
                 self.loaded = {value_name: [] for value_name, value_type in self.values.items() if value_type != 'model' or self.world_model}
             parts = self.parts[mode]
             part = randrange(len(parts))
-            part_directory = parts.pop(part) if self.part_once else parts[part]
+            directory, name = parts.pop(part) if self.part_once else parts[part]
             self.num_instances = 0
-            with Archive(directory=part_directory, mode='r', archive=self.archive) as read_file:
+            with Archive(directory=directory, mode='r', name=name, archive=self.archive) as read_file:
                 for value_name, value in self.loaded.items():
                     value.extend(Dataset.deserialize_value(value_name=value_name, value_type=self.values[value_name], read_file=read_file, word2id=self.word_ids, tiff=self.tiff))
                     if self.num_instances:
                         assert len(value) == self.num_instances
                     else:
                         self.num_instances = len(value)
-            temp_path = os.path.join(part_directory, 'temp')
-            if os.path.isfile(temp_path):
-                os.remove(temp_path)
 
         batch = self.zero_batch(n, include_model=include_model)
         for i in range(n):

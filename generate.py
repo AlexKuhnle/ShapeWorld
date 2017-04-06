@@ -119,7 +119,7 @@ if __name__ == "__main__":
             for part in range(num_parts):
                 before = datetime.now()
                 generated = dataset.generate(n=args.instances, mode=mode, noise=(not args.no_pixel_noise), include_model=args.world_model)
-                dataset.serialize_data(directory=os.path.join(directory, 'part{}'.format(start + part)), generated=generated, archive=args.archive, tiff=args.tiff)
+                dataset.serialize_data(directory=directory, generated=generated, name='part{}'.format(start + part), archive=args.archive, tiff=args.tiff)
                 after = datetime.now()
                 sys.stdout.write('\r         {:.0f}%  {}/{}  (time per part: {})'.format((part + 1) * 100 / num_parts, part + 1, num_parts, str(after - before).split('.')[0]))
                 sys.stdout.flush()
