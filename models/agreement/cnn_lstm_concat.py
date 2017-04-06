@@ -1,6 +1,7 @@
 from math import sqrt
 import tensorflow as tf
 
+
 # model parameters
 sizes = (5, 3, 3)
 num_filters = (16, 32, 64)

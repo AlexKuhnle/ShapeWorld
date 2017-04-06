@@ -125,13 +125,12 @@ if __name__ == "__main__":
             # training
             sys.stdout.write('{} Train model...\n'.format(datetime.now().strftime('%H:%M:%S')))
             sys.stdout.flush()
+            before = datetime.now()
             for iteration in range(iteration_start, iteration_end + 1):
-                before = datetime.now()
                 generated = dataset.generate(n=args.batch_size, mode='train')
                 feed_dict = {placeholder: generated[value] for value, placeholder in feed_dict_assignment.items()}
                 feed_dict.update(zip(dropouts, (args.dropout_rate for _ in range(len(dropouts)))))
                 session.run(fetches=optimization, feed_dict=feed_dict)
-                after = datetime.now()
                 if iteration % args.evaluation_frequency == 0 or iteration == 1 or iteration == args.evaluation_frequency // 2 or iteration == iteration_end:
                     generated = dataset.generate(n=args.evaluation_size, mode='train')
                     feed_dict = {placeholder: generated[value] for value, placeholder in feed_dict_assignment.items()}
@@ -141,8 +140,10 @@ if __name__ == "__main__":
                     feed_dict = {placeholder: generated[value] for value, placeholder in feed_dict_assignment.items()}
                     feed_dict.update(zip(dropouts, (0.0 for _ in range(len(dropouts)))))
                     validation_loss, validation_accuracy = session.run(fetches=(loss, accuracy), feed_dict=feed_dict)
-                    sys.stdout.write('\r         {:.0f}%  {}/{}  training={:.3f}  validation={:.3f}  (time per batch: {})'.format(iteration * 100 / iteration_end, iteration, iteration_end, training_accuracy, validation_accuracy, str(after - before).split('.')[0]))
+                    after = datetime.now()
+                    sys.stdout.write('\r         {:.0f}%  {}/{}  training={:.3f}  validation={:.3f}  (time per evaluation iteration: {})'.format(iteration * 100 / iteration_end, iteration, iteration_end, training_accuracy, validation_accuracy, str(after - before).split('.')[0]))
                     sys.stdout.flush()
+                    before = datetime.now()
                     if args.report_file:
                         with open(args.report_file, 'a') as filehandle:
                             filehandle.write('{},{},{},{},{}\n'.format(iteration, training_loss, training_accuracy, validation_loss, validation_accuracy))

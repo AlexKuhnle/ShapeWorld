@@ -1,4 +1,5 @@
 from collections import Counter
+from datetime import datetime
 from itertools import chain, combinations
 import os
 import shutil
@@ -20,6 +21,10 @@ def parse_int_with_factor(string):
         return int(string[:-2]) * 1048576
     else:
         return int(string)
+
+
+def get_temp_filename():
+    return str(datetime.datetime.now().timestamp())
 
 
 def powerset(values, min_num=None, max_num=None):
@@ -69,7 +74,7 @@ class Archive(object):
         assert archive in (None, 'zip', 'zip:none', 'zip:deflate', 'zip:bzip2', 'zip:lzma', 'tar', 'tar:none', 'tar:gzip', 'tar:bzip2', 'tar:lzma')
         self.archive = os.path.join(directory, name) if name else directory
         self.mode = mode
-        self.temp_path = os.path.join(directory, 'temp')
+        self.temp_path = os.path.join(directory, get_temp_filename())
         if archive is None:
             self.archive_type = None
             os.mkdir(self.archive)

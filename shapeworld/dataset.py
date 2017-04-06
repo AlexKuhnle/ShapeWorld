@@ -5,7 +5,7 @@ import os
 from random import random, randrange
 import numpy as np
 from PIL import Image
-from shapeworld.util import Archive
+from shapeworld.util import Archive, get_temp_filename
 from shapeworld.world import World
 
 
@@ -167,7 +167,7 @@ class Dataset(object):
             os.makedirs(directory)
 
         id2word = [word for word, _ in sorted(self.word_ids.items(), key=(lambda kv: kv[1]))] if self.word_ids else None
-        temp_path = os.path.join(directory, 'temp')
+        temp_path = os.path.join(directory, get_temp_filename())
 
         with Archive(directory=directory, mode='w', name=name, archive=archive) as write_file:
             for name in generated:
@@ -343,12 +343,11 @@ class LoadedDataset(Dataset):
             index = randrange(self.num_instances)
             self.num_instances -= 1
             for value_name, value_type in self.values.items():
-                if value_type != 'model' or include_model:
-                    value = self.loaded[value_name].pop(index)
-                    if value_type == 'text':
-                        batch[value_name][i][:len(value)] = value
-                    else:
-                        batch[value_name][i] = value
+                value = self.loaded[value_name].pop(index)
+                if value_type == 'text':
+                    batch[value_name][i][:len(value)] = value
+                elif value_type != 'model' or include_model:
+                    batch[value_name][i] = value
         if noise and self.noise_range:
             for value_name, value_type in self.loaded.items():
                 if value_type == 'world':
