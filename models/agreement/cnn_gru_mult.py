@@ -2,7 +2,7 @@ from math import sqrt
 import tensorflow as tf
 
 
-def model(world, caption, caption_length, agreement, dropouts, vocabulary_size, sizes=(5, 3, 3), nums_filters=(16, 32, 64), poolings=('max', 'max', 'avg'), embedding_size=32, lstm_size=64, hidden_dims=(512,), **kwargs):
+def model(world, caption, caption_length, agreement, dropout, vocabulary_size, sizes=(5, 3, 3), nums_filters=(16, 32, 64), poolings=('max', 'max', 'avg'), embedding_size=32, gru_size=64, hidden_dims=(512,), **kwargs):
 
     with tf.name_scope(name='cnn'):
         world_embedding = world
@@ -17,19 +17,19 @@ def model(world, caption, caption_length, agreement, dropouts, vocabulary_size, 
             elif pooling == 'avg':
                 world_embedding = tf.nn.avg_pool(value=world_embedding, ksize=(1, 2, 2, 1), strides=(1, 2, 2, 1), padding='SAME')
         size = 1
-        for dim in world_embedding.get_shape()[1:]:
-            size *= dim.value
+        for dims in world_embedding.get_shape()[1:]:
+            size *= dims.value
         world_embedding = tf.reshape(tensor=world_embedding, shape=(-1, size))
 
     with tf.name_scope(name='lstm'):
         embeddings = tf.Variable(initial_value=tf.random_normal(shape=(vocabulary_size, embedding_size), stddev=sqrt(embedding_size)))
         embeddings = tf.nn.embedding_lookup(params=embeddings, ids=caption)
-        lstm = tf.contrib.rnn.GRUCell(num_units=lstm_size)
-        embeddings, state = tf.nn.dynamic_rnn(cell=lstm, inputs=embeddings, sequence_length=tf.squeeze(input=caption_length, axis=1), dtype=tf.float32)
+        gru = tf.contrib.rnn.GRUCell(num_units=gru_size)
+        embeddings, state = tf.nn.dynamic_rnn(cell=gru, inputs=embeddings, sequence_length=tf.squeeze(input=caption_length, axis=1), dtype=tf.float32)
         caption_embedding = embeddings[:, -1, :]
 
     with tf.name_scope(name='multiplication'):
-        scale = tf.Variable(initial_value=tf.random_normal(shape=(lstm_size, world_embedding.get_shape()[1].value), stddev=sqrt(2.0 / (lstm_size + world_embedding.get_shape()[1].value))))
+        scale = tf.Variable(initial_value=tf.random_normal(shape=(gru_size, world_embedding.get_shape()[1].value), stddev=sqrt(2.0 / (gru_size + world_embedding.get_shape()[1].value))))
         caption_embedding = tf.matmul(a=caption_embedding, b=scale)
         embedding = tf.multiply(x=world_embedding, y=caption_embedding)
 
@@ -40,8 +40,6 @@ def model(world, caption, caption_length, agreement, dropouts, vocabulary_size, 
             bias = tf.Variable(initial_value=tf.zeros(shape=(dim,)))
             embedding = tf.nn.bias_add(value=embedding, bias=bias)
             embedding = tf.nn.relu(features=embedding)
-            dropout = tf.placeholder(dtype=tf.float32, shape=())
-            dropouts.append(dropout)
             embedding = tf.nn.dropout(x=embedding, keep_prob=(1.0 - dropout))
 
     with tf.name_scope(name='agreement'):

@@ -35,8 +35,11 @@ class CaptionRealizer(object):
         else:
             return [(reltype,) for reltype in self.__class__.relations.keys()]
 
-    def get_quantifiers(self, qtypes=None, qranges=None):
-        if qtypes and qranges:
+    def get_quantifiers(self, qtypes=None, qranges=None, names=None):
+        if names:
+            assert not qtypes and not qranges
+            return [self.__class__.quantifier_by_name[name] for name in names]
+        elif qtypes and qranges:
             return [(qtype, qrange, value) for qtype in qtypes if qtype in self.__class__.quantifiers for qrange in qranges if qrange in self.__class__.quantifiers[qtype] for value in self.__class__.quantifiers[qtype][qrange].keys()]
         elif qtypes:
             return [(qtype, qrange, value) for qtype in qtypes if qtype in self.__class__.quantifications for qrange, quantifiers in self.__class__.quantifiers[qtype].items() for value in quantifiers.keys()]

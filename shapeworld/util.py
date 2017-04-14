@@ -3,7 +3,6 @@ from datetime import datetime
 from itertools import chain, combinations
 import json
 import os
-import shutil
 import tarfile
 import zipfile
 
@@ -26,10 +25,15 @@ def parse_int_with_factor(string):
 
 def parse_config(string):
     assert string
-    if string[0] == '{':
+    if string in ('none', 'None', 'null', 'Null'):
+        return None
+    elif string[0] == '{':
+        assert string[-1] == '}'
         if '\'' in string and '\"' not in string:
             string = string.replace('\'', '\"')
-        return {key.replace('-', '_'): value for key, value in json.loads(string).items()}
+        if '=' in string and ':' not in string:
+            string = string.replace('=', ':')
+        return json.loads(string)
     else:
         return string
 
@@ -81,10 +85,12 @@ class Archive(object):
         assert archive in (None, 'zip', 'zip:none', 'zip:deflate', 'zip:bzip2', 'zip:lzma', 'tar', 'tar:none', 'tar:gzip', 'tar:bzip2', 'tar:lzma')
         self.archive = os.path.join(directory, name) if name else directory
         self.mode = mode
-        self.temp_path = os.path.join(directory, str(datetime.now().timestamp()))
+        self.temp_directory = str(datetime.now().timestamp())
+        os.mkdir(self.temp_directory)
         if archive is None:
             self.archive_type = None
-            os.mkdir(self.archive)
+            if not os.path.isdir(self.archive):
+                os.mkdir(self.archive)
         elif archive[:3] == 'zip':
             self.archive_type = 'zip'
             if len(archive) == 3:
@@ -123,8 +129,7 @@ class Archive(object):
     def close(self):
         if self.archive_type is not None:
             self.archive.close()
-        if os.path.isfile(self.temp_path):
-            os.remove(self.temp_path)
+        os.rmdir(self.temp_directory)
 
     def __enter__(self):
         if self.mode == 'r':
@@ -158,10 +163,11 @@ class Archive(object):
                 fileinfo = self.archive.getmember(filename)
             except KeyError:
                 return None
-            self.archive.extract(member=fileinfo)
-            shutil.move(filename, self.temp_path)
-            with open(self.temp_path, 'rb' if binary else 'r') as filehandle:
+            self.archive.extract(member=fileinfo, path=self.temp_directory)
+            filepath = os.path.join(self.temp_directory, filename)
+            with open(filepath, 'rb' if binary else 'r') as filehandle:
                 value = filehandle.read()
+            os.remove(filepath)
             return value
 
     def write_file(self, filename, value, binary=False):
@@ -171,12 +177,16 @@ class Archive(object):
                 filehandle.write(value)
         elif self.archive_type == 'zip':
             if binary:
-                with open(self.temp_path, 'wb') as filehandle:
+                filepath = os.path.join(self.temp_directory, filename)
+                with open(filepath, 'wb') as filehandle:
                     filehandle.write(value)
-                self.archive.write(self.temp_path, filename)
+                self.archive.write(filepath, filename)
+                os.remove(filepath)
             else:
                 self.archive.writestr(filename, value)
         elif self.archive_type == 'tar':
-            with open(self.temp_path, 'wb' if binary else 'w') as filehandle:
+            filepath = os.path.join(self.temp_directory, filename)
+            with open(filepath, 'wb' if binary else 'w') as filehandle:
                 filehandle.write(value)
-            self.archive.add(self.temp_path, filename)
+            self.archive.add(filepath, filename)
+            os.remove(filepath)

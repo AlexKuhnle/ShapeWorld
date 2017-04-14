@@ -14,6 +14,9 @@ class Relation(Predicate):
         self.reltype = reltype
         self.reference = reference
 
+    def model(self):
+        return {'component': 'relation', 'reltype': self.reltype, 'reference': self.reference.model()}
+
     def agreeing_entities(self, entities):
         reference_entities = self.reference.agreeing_entities(entities=entities)
 

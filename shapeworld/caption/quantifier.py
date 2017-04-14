@@ -24,6 +24,9 @@ class Quantifier(Clause):
         self.restrictor = restrictor
         self.body = body
 
+    def model(self):
+        return {'component': 'quantifier', 'qtype': self.qtype, 'qrange': self.qrange, 'quantity': self.quantity, 'tolerance': self.tolerance, 'restrictor': self.restrictor.model(), 'body': self.body.model()}
+
     def agreement(self, world):
         entities = world['entities']
         restrictor_entities = self.restrictor.agreeing_entities(entities=entities)

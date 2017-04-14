@@ -17,6 +17,9 @@ class Proposition(Clause):
             self.clauses = tuple(clauses)
             self.connective = connective
 
+    def model(self):
+        return {'component': 'proposition', 'clauses': [clause.model() for clause in self.clauses], 'connective': self.connective}
+
     def agreement(self, world):
         if not self.connective:
             return self.clauses[0].agreement(world)

@@ -25,8 +25,8 @@ class ExistentialCaptioner(WorldCaptioner):
         if correct and len(world['entities']) == 0:
             return None
         entities = world['entities']
-        existing_shapes = [entity['shape']['name'] for entity in entities]
-        existing_colors = [entity['color']['name'] for entity in entities]
+        existing_shapes = {entity['shape']['name'] for entity in entities}
+        existing_colors = {entity['color']['name'] for entity in entities}
         # existing_textures = [entity['texture']['name'] for entity in entities]
         mode = 0
 
@@ -40,22 +40,26 @@ class ExistentialCaptioner(WorldCaptioner):
                     mode = 1
                     entity['shape']['name'] = choice(self.shapes)
                 elif r < self.incorrect_modes[1]:  # random existing shape
+                    if len(existing_shapes) == 1:
+                        continue
                     mode = 2
-                    entity['shape']['name'] = choice(existing_shapes)
+                    entity['shape']['name'] = choice([shape for shape in existing_shapes if shape != entity['shape']['name']])
                 elif r < self.incorrect_modes[2]:  # random color
                     mode = 3
                     entity['color']['name'] = choice(self.colors)
                 elif r < self.incorrect_modes[3]:  # random existing color
+                    if len(existing_colors) == 1:
+                        continue
                     mode = 4
-                    entity['color']['name'] = choice(existing_colors)
+                    entity['color']['name'] = choice([color for color in existing_colors if color != entity['color']['name']])
                 elif r < self.incorrect_modes[4]:  # random shape and color
                     mode = 5
                     entity['shape']['name'] = choice(self.shapes)
                     entity['color']['name'] = choice(self.colors)
                 elif r < self.incorrect_modes[5]:  # random existing shape and color
                     mode = 6
-                    entity['shape']['name'] = choice(existing_shapes)
-                    entity['color']['name'] = choice(existing_colors)
+                    entity['shape']['name'] = choice(list(existing_shapes))
+                    entity['color']['name'] = choice(list(existing_colors))
 
             noun = self.realizer.noun_for_entity(entity=entity)
             # relation = Relation(reltype='existence')

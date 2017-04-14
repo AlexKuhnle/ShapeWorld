@@ -33,13 +33,16 @@ if __name__ == "__main__":
     parser.add_argument('-i', '--instances', type=util.parse_int_with_factor, default=100, help='Number of instances (per part)')
     parser.add_argument('-m', '--mode', default=None, choices=('train', 'validation', 'test'), help='Mode')
 
-    parser.add_argument('-W', '--world-model', action='store_true', help='Include world model')
+    parser.add_argument('-M', '--include-models', action='store_true', help='Include world/caption models')
     parser.add_argument('-P', '--no-pixel-noise', action='store_true', help='Do not infuse pixel noise')
     parser.add_argument('-S', '--captioner-statistics', action='store_true', help='Collect statistical data of captioner')
     # parser.add_argument('-v', '--values', default=None, help='Comma-separated list of values to include')
     args = parser.parse_args()
 
     dataset = Dataset.from_config(config=args.config, dataset_type=args.type, dataset_name=args.name)
+    sys.stdout.write('{} {} dataset: {}\n'.format(datetime.now().strftime('%H:%M:%S'), dataset.type, dataset.name))
+    sys.stdout.write('         config: {}\n'.format(args.config))
+    sys.stdout.flush()
 
     if args.directory:
         assert not args.directory_unmanaged
@@ -47,11 +50,11 @@ if __name__ == "__main__":
         assert not args.parts or len(args.parts) == 3
 
         specification = dataset.specification()
-        specification['world_model'] = args.world_model
+        specification['include-models'] = args.include_models
         if args.archive:
             specification['archive'] = args.archive
         if args.no_pixel_noise:
-            specification['noise_range'] = dataset.world_generator.noise_range
+            specification['noise-range'] = dataset.world_generator.noise_range
 
         directory = os.path.join(args.directory, dataset.type, dataset.name)
         modes = ('train', 'validation', 'test')
@@ -89,9 +92,9 @@ if __name__ == "__main__":
         assert False
 
     if len(parts) == 1 and parts[0] == 1:
-        sys.stdout.write('{} Generate {}{} data...\n'.format(datetime.now().strftime('%H:%M:%S'), dataset, ' ' + modes[0] if modes[0] else ''))
+        sys.stdout.write('{} Generate {} {}{} data...\n'.format(datetime.now().strftime('%H:%M:%S'), dataset.type, dataset.name, ' ' + modes[0] if modes[0] else ''))
         sys.stdout.flush()
-        generated = dataset.generate(n=args.instances, mode=modes[0], noise=(not args.no_pixel_noise), include_model=args.world_model)
+        generated = dataset.generate(n=args.instances, mode=modes[0], noise=(not args.no_pixel_noise), include_models=args.include_models)
         dataset.serialize_data(directory=directories[0], generated=generated, archive=args.archive)
         sys.stdout.write('{} Data generation completed!\n'.format(datetime.now().strftime('%H:%M:%S')))
         sys.stdout.flush()
@@ -105,7 +108,7 @@ if __name__ == "__main__":
             sys.stdout.flush()
             for part in range(num_parts):
                 before = datetime.now()
-                generated = dataset.generate(n=args.instances, mode=mode, noise=(not args.no_pixel_noise), include_model=args.world_model)
+                generated = dataset.generate(n=args.instances, mode=mode, noise=(not args.no_pixel_noise), include_models=args.include_models)
                 dataset.serialize_data(directory=directory, generated=generated, name='part{}'.format(start + part), archive=args.archive)
                 after = datetime.now()
                 sys.stdout.write('\r         {:.0f}%  {}/{}  (time per part: {})'.format((part + 1) * 100 / num_parts, part + 1, num_parts, str(after - before).split('.')[0]))

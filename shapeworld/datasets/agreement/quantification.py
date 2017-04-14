@@ -5,9 +5,9 @@ from shapeworld.captioners import QuantificationCaptioner
 
 class QuantificationDataset(CaptionAgreementDataset):
 
-    def __init__(self, entity_counts, train_entity_counts, validation_entity_counts, test_entity_counts, shapes_range, colors_range, textures_range, caption_size, words, caption_modes=None, correct_ratio=None, train_correct_ratio=None, validation_correct_ratio=None, test_correct_ratio=None, world_size=None, world_color=None, shapes=None, colors=None, textures=None, rotation=None, size_range=None, distortion_range=None, shade_range=None, noise_range=None, collision_tolerance=None, boundary_tolerance=None, realizer=None, quantifier_tolerance=None, **kwargs):
+    def __init__(self, entity_counts, train_entity_counts, validation_entity_counts, test_entity_counts, shapes_range, colors_range, textures_range, caption_size, words, caption_modes=None, quantifiers=None, correct_ratio=None, train_correct_ratio=None, validation_correct_ratio=None, test_correct_ratio=None, world_size=None, world_color=None, shapes=None, colors=None, textures=None, rotation=None, size_range=None, distortion_range=None, shade_range=None, noise_range=None, collision_tolerance=None, boundary_tolerance=None, realizer=None, quantifier_tolerance=None, **kwargs):
         world_generator = GenericGenerator(entity_counts, world_size, world_color, shapes, colors, textures, rotation, size_range, distortion_range, shade_range, noise_range, collision_tolerance, boundary_tolerance, train_entity_counts=train_entity_counts, validation_entity_counts=validation_entity_counts, test_entity_counts=test_entity_counts, shapes_range=shapes_range, colors_range=colors_range, textures_range=textures_range)
-        world_captioner = QuantificationCaptioner(world_generator.shapes, world_generator.colors, world_generator.textures, realizer=realizer, quantifier_tolerance=quantifier_tolerance, modes=caption_modes)
+        world_captioner = QuantificationCaptioner(world_generator.shapes, world_generator.colors, world_generator.textures, realizer=realizer, quantifier_tolerance=quantifier_tolerance, modes=caption_modes, quantifiers=quantifiers)
         super().__init__(
             world_generator=world_generator,
             world_captioner=world_captioner,

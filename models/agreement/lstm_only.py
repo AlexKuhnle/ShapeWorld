@@ -2,7 +2,7 @@ from math import sqrt
 import tensorflow as tf
 
 
-def model(world, caption, caption_length, agreement, dropouts, vocabulary_size, embedding_size=32, lstm_size=64, hidden_dims=(512,), **kwargs):
+def model(world, caption, caption_length, agreement, dropout, vocabulary_size, embedding_size=32, lstm_size=64, hidden_dims=(512,), **kwargs):
 
     with tf.name_scope(name='lstm'):
         embeddings = tf.Variable(initial_value=tf.random_normal(shape=(vocabulary_size, embedding_size), stddev=sqrt(embedding_size)))
@@ -18,8 +18,6 @@ def model(world, caption, caption_length, agreement, dropouts, vocabulary_size, 
             bias = tf.Variable(initial_value=tf.zeros(shape=(dim,)))
             embedding = tf.nn.bias_add(value=embedding, bias=bias)
             embedding = tf.nn.relu(features=embedding)
-            dropout = tf.placeholder(dtype=tf.float32, shape=())
-            dropouts.append(dropout)
             embedding = tf.nn.dropout(x=embedding, keep_prob=(1.0 - dropout))
 
     with tf.name_scope(name='agreement'):

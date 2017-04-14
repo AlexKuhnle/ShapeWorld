@@ -41,8 +41,8 @@ class SpatialCaptioner(WorldCaptioner):
         if correct and len(world['entities']) <= 1:
             return None
         entities = world['entities']
-        existing_shapes = [entity['shape']['name'] for entity in entities]
-        existing_colors = [entity['color']['name'] for entity in entities]
+        existing_shapes = {entity['shape']['name'] for entity in entities}
+        existing_colors = {entity['color']['name'] for entity in entities}
         # existing_textures = [entity['texture']['name'] for entity in entities]
         mode = 0
 
@@ -70,33 +70,41 @@ class SpatialCaptioner(WorldCaptioner):
                     r -= self.incorrect_modes[0]
                     r /= self.incorrect_modes[1] - self.incorrect_modes[0]
                     if r < 0.5:
-                        ref_entity['shape']['name'] = choice(self.shapes)
+                        ref_entity['shape']['name'] = choice([shape for shape in self.shapes if shape != ref_entity['shape']['name']])
                     else:
-                        ref_entity['color']['name'] = choice(self.colors)
+                        ref_entity['color']['name'] = choice([color for color in self.colors if color != ref_entity['color']['name']])
                 elif r < self.incorrect_modes[2]:  # random existing reference attribute
                     mode = 3
                     r -= self.incorrect_modes[1]
                     r /= self.incorrect_modes[2] - self.incorrect_modes[1]
                     if r < 0.5:
-                        ref_entity['shape']['name'] = choice(existing_shapes)
+                        if len(existing_shapes) == 1:
+                            continue
+                        ref_entity['shape']['name'] = choice([shape for shape in existing_shapes if shape != ref_entity['shape']['name']])
                     else:
-                        ref_entity['color']['name'] = choice(existing_colors)
+                        if len(existing_colors) == 1:
+                            continue
+                        ref_entity['color']['name'] = choice([color for color in existing_colors if color != ref_entity['color']['name']])
                 elif r < self.incorrect_modes[3]:  # random argument attribute
                     mode = 4
                     r -= self.incorrect_modes[2]
                     r /= self.incorrect_modes[3] - self.incorrect_modes[2]
                     if r < 0.5:
-                        arg_entity['shape']['name'] = choice(self.shapes)
+                        arg_entity['shape']['name'] = choice([shape for shape in self.shapes if shape != arg_entity['shape']['name']])
                     else:
-                        arg_entity['color']['name'] = choice(self.colors)
+                        arg_entity['color']['name'] = choice([color for color in self.colors if color != arg_entity['color']['name']])
                 elif r < self.incorrect_modes[4]:  # random existing argument attribute
                     mode = 5
                     r -= self.incorrect_modes[3]
                     r /= self.incorrect_modes[4] - self.incorrect_modes[3]
                     if r < 0.5:
-                        arg_entity['shape']['name'] = choice(existing_shapes)
+                        if len(existing_shapes) == 1:
+                            continue
+                        arg_entity['shape']['name'] = choice([shape for shape in existing_shapes if shape != arg_entity['shape']['name']])
                     else:
-                        arg_entity['color']['name'] = choice(existing_colors)
+                        if len(existing_colors) == 1:
+                            continue
+                        arg_entity['color']['name'] = choice([color for color in existing_colors if color != arg_entity['color']['name']])
                 reference = self.realizer.noun_for_entity(entity=ref_entity)
                 relation = Relation(reltype=reltype, reference=reference)
                 argument = self.realizer.noun_for_entity(entity=arg_entity)

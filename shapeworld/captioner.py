@@ -33,7 +33,7 @@ class WorldCaptioner(object):
             caption = captioner(world, correct)
             if caption is not None:
                 return caption
-        assert False
+        return None
 
     def caption_world(self, world, correct):
         raise NotImplementedError

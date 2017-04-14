@@ -35,7 +35,7 @@ class WorldGenerator(object):
             world = generator()
             if world is not None:
                 return world
-        assert False
+        return None
 
     def generate_world(self):
         raise NotImplementedError

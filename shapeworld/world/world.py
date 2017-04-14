@@ -24,7 +24,7 @@ class World(Entity):
         self.entities = []
 
     def model(self):
-        return {'size': self.size.x, 'color': self.color.model(), 'noise_range': self.noise_range, 'entities': [entity.model() for entity in self.entities]}
+        return {'size': self.size.x, 'color': self.color.model(), 'noise-range': self.noise_range, 'entities': [entity.model() for entity in self.entities]}
 
     def copy(self, include_entities=True):
         copy = World(size=self.size.x, color=str(self.color), noise_range=self.noise_range)

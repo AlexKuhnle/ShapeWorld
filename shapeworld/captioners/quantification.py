@@ -9,13 +9,16 @@ class QuantificationCaptioner(WorldCaptioner):
     MAX_ATTEMPTS = 10
     statistics_header = 'correct,mode,quantifier'
 
-    def __init__(self, shapes, colors, textures, realizer=None, quantifier_tolerance=None, modes=None):
+    def __init__(self, shapes, colors, textures, realizer=None, quantifier_tolerance=None, modes=None, quantifiers=None):
         # ideally requires modifiers of all values for modtype 'shape', 'color', 'texture'
         super().__init__(realizer=realizer, quantifier_tolerance=quantifier_tolerance)
         self.modes = cumulative_distribution(modes or [1, 1, 1, 1, 1])
         # self.incorrect_modes = cumulative_distribution(
         #     incorrect_mode_distribution or [1, 1, 1, 1, 1, 1])
-        self.quantifiers = self.realizer.get_quantifiers()
+        if quantifiers:
+            self.quantifiers = self.realizer.get_quantifiers(names=quantifiers)
+        else:
+            self.quantifiers = self.realizer.get_quantifiers()
         self.shape_modifiers = [value for _, value in self.realizer.get_modifiers(modtypes=('shape',))]
         self.color_modifiers = [value for _, value in self.realizer.get_modifiers(modtypes=('color',))]
         # self.texture_modifiers = [value for _, value in self.realizer.get_modifiers(modtypes=('texture',))]

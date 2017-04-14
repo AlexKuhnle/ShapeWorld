@@ -15,6 +15,9 @@ class Modifier(Predicate):
             assert isinstance(value, tuple) or isinstance(value, list)
             self.value = tuple(value)
 
+    def model(self):
+        return {'component': 'modifier', 'modtype': self.modtype, 'value': list(self.value) if self.modtype in ('shapes', 'colors', 'textures', 'combinations') else self.value}
+
     def agreeing_entities(self, entities):
         if self.modtype == 'shape':
             return [entity for entity in entities if entity['shape']['name'] == self.value]

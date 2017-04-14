@@ -2,7 +2,7 @@ import os
 import re
 import subprocess
 from shapeworld import CaptionRealizer
-from shapeworld.caption import Clause, Predicate, Modifier, Relation, Noun, Quantifier, Proposition
+from shapeworld.caption import Predicate, Modifier, Noun, Relation, Quantifier, Proposition
 from shapeworld.realizers.dmrs.dmrs import ComposableDmrs
 
 
@@ -214,6 +214,15 @@ DmrsRealizer.quantifiers = {
     }
 
     # 'mixture'/'composition': ...
+}
+
+DmrsRealizer.quantifier_by_name = {
+    'no': ('relative', 'eq', 0.0),
+    'the': ('absolute', 'eq', 1),
+    'a': ('absolute', 'geq', 1),
+    'two': ('absolute', 'geq', 2),
+    'most': ('relative', 'geq', 0.6),
+    'all': ('relative', 'eq', 1.0)
 }
 
 DmrsRealizer.quantifier_requires_plural = {

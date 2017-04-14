@@ -13,7 +13,7 @@ class MultiShapeDataset(CaptionAgreementDataset):
             world_captioner=world_captioner,
             caption_size=caption_size,
             words=words,
-            incorrect_world_ratio=1.0,
+            incorrect_world_ratio=0.0,
             correct_ratio=correct_ratio,
             train_correct_ratio=correct_ratio,
             validation_correct_ratio=validation_correct_ratio,

@@ -23,7 +23,7 @@ About ShapeWorld
 
 ShapeWorld is a framework for specifying visual or multimodal datasets -- more precisely, *data generators*. It is based on the concept of *microworlds*, i.e. small and self-contained artificial scenarios consisting of colored shapes.
 
-The main motivation behind ShapeWorld is to provide a new testbed and methodology for multimodal deep learning models. It differs from standard evaluation datasets in two ways: Firstly, data is randomly sampled during training/evaluation according to constraints specified by the experimenter. Secondly, its focus of evaluation is on linguistic understanding capabilities of the type investigated by formal semantics. In this context, the ShapeWorld tasks can be thought of as unit-testing multimodal systems for specific linguistic generalization abilities -- similar to, for instance, the [bAbI tasks](https://research.fb.com/projects/babi/) of [Weston et al. (2015)](https://arxiv.org/abs/1502.05698) for text-only understanding.
+The main motivation behind ShapeWorld is to provide a new testbed and methodology for multimodal deep learning models. It differs from standard evaluation datasets in two ways: Firstly, data is randomly sampled during training/evaluation according to constraints specified by the experimenter. Secondly, its focus of evaluation is on linguistic understanding capabilities of the type investigated by formal semantics. In this context, the ShapeWorld tasks can be thought of as unit-testing multimodal models for specific linguistic generalization abilities -- similar to, for instance, the [bAbI tasks](https://research.fb.com/projects/babi/) of [Weston et al. (2015)](https://arxiv.org/abs/1502.05698) for text-only understanding.
 
 ![ShapeWorld](https://www.cl.cam.ac.uk/~aok25/files/shapeworld.png)
 
@@ -48,13 +48,14 @@ from shapeworld import Dataset
 dataset = Dataset.from_config(
     dataset_type='agreement',
     dataset_name='multishape')
-generated = dataset.generate(n=128, mode='train', include_model=True)
+generated = dataset.generate(n=128, mode='train', include_models=True)
 
-# given to the image caption agreement model
+# given to the image caption agreement system
 batch = (generated['world'], generated['caption'], generated['agreement'])
 
 # can be used for more specific evaluation
 world_model = generated['world-model']
+caption_model = generated['caption-model']
 ```
 
 
@@ -81,7 +82,7 @@ The following command line arguments are available:
 * `--[p]arts`:  Number of files (instead of all in one file), either a number or a triple of numbers, like `100,10,10` (requires mode `none`), for `train`, `validation` and `test` respectively (default: `1`)
 * `--[i]nstances`:  Number of instances, per generated file (default: `100`)
 * `--[m]ode`:  Mode, one of `train`, `validation`, `test` (default: `none`)
-* `--[W]orld-model`:  Include world model, as json file (default: `false`)
+* `--include-[M]odels`:  Include world/caption models, as json file (default: `false`)
 * `--no-[P]ixel-noise`:  Do not infuse pixel noise (default: `false`)
 * `--captioner-[S]tatistics`:  Collect statistical data of captioner (default: `false`)
 
@@ -146,7 +147,7 @@ for world in worlds:
 
 
 Example models
---------------
+---------------
 
 The `models/` directory contains a few exemplary models, which can be either applied directly or used as basis to build more sophisticated models. For direct application, the following command line arguments are available:
 
@@ -163,10 +164,10 @@ The `models/` directory contains a few exemplary models, which can be either app
 * `--e[v]aluation-frequency`:  Evaluation frequency (default: `100`)
 * `--model-[f]ile`:  Model file (default: `none`)
 * `--[r]eport-file`:  CSV file reporting the evaluation results throughout the learning process (default: `none`)
-* `--[R]estore`:  Restore model, requires `--model-file` (default: `false`)
-* `--[E]valuate`:  Evaluate model without training, requires `--model-file` (default: `false`)
+* `--[R]estore`:  Restore system, requires `--model-file` (default: `false`)
+* `--[E]valuate`:  Evaluate system without training, requires `--model-file` (default: `false`)
 
-For instance, the following command line trains an image caption agreement model on the dataset specified by the `multishape` configuration file included in this repository:
+For instance, the following command line trains an image caption agreement system on the dataset specified by the `multishape` configuration file included in this repository:
 
 ```bash
 python3 evaluate.py -t agreement -n multishape -m cnn_bow_mult -i 5k

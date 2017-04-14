@@ -2,7 +2,7 @@ from math import sqrt
 import tensorflow as tf
 
 
-def model(world, caption, caption_length, agreement, dropouts, vocabulary_size, sizes=(5, 3, 3), nums_filters=(16, 32, 64), poolings=('max', 'max', 'avg'), embedding_size=32, lstm_size=64, cbp_size=512, hidden_dims=(512,), **kwargs):
+def model(world, caption, caption_length, agreement, dropout, vocabulary_size, sizes=(5, 3, 3), nums_filters=(16, 32, 64), poolings=('max', 'max', 'avg'), embedding_size=32, lstm_size=64, cbp_size=8192, hidden_dims=(512,), attention_cbp_size=None, **kwargs):
 
     with tf.name_scope(name='cnn'):
         world_embedding = world
@@ -16,10 +16,6 @@ def model(world, caption, caption_length, agreement, dropouts, vocabulary_size, 
                 world_embedding = tf.nn.max_pool(value=world_embedding, ksize=(1, 2, 2, 1), strides=(1, 2, 2, 1), padding='SAME')
             elif pooling == 'avg':
                 world_embedding = tf.nn.avg_pool(value=world_embedding, ksize=(1, 2, 2, 1), strides=(1, 2, 2, 1), padding='SAME')
-        size = 1
-        for dim in world_embedding.get_shape()[1:]:
-            size *= dim.value
-        world_embedding = tf.reshape(tensor=world_embedding, shape=(-1, size))
 
     with tf.name_scope(name='lstm'):
         embeddings = tf.Variable(initial_value=tf.random_normal(shape=(vocabulary_size, embedding_size), stddev=sqrt(embedding_size)))
@@ -28,18 +24,35 @@ def model(world, caption, caption_length, agreement, dropouts, vocabulary_size, 
         embeddings, state = tf.nn.dynamic_rnn(cell=lstm, inputs=embeddings, sequence_length=tf.squeeze(input=caption_length, axis=1), dtype=tf.float32)
         caption_embedding = embeddings[:, -1, :]
 
+    if attention_cbp_size:
+        with tf.name_scope(name='attention-cbp'):
+            world_attention = compact_bilinear_pooling(xs=(world_embedding, tf.expand_dims(input=tf.expand_dims(input=caption_embedding, axis=1), axis=2)), size=attention_cbp_size)
+            weights = tf.Variable(initial_value=tf.random_normal(shape=(3, 3, attention_cbp_size, nums_filters[-1]), stddev=sqrt(2.0 / attention_cbp_size)))
+            world_attention = tf.nn.conv2d(input=world_attention, filter=weights, strides=(1, 1, 1, 1), padding='SAME')
+            world_attention = tf.nn.relu(features=world_attention)
+            weights = tf.Variable(initial_value=tf.random_normal(shape=(3, 3, nums_filters[-1], 1), stddev=sqrt(2.0 / nums_filters[-1])))
+            world_attention = tf.nn.conv2d(input=world_attention, filter=weights, strides=(1, 1, 1, 1), padding='SAME')
+            world_attention = tf.reshape(tensor=world_attention, shape=(-1, world_attention.get_shape()[1].value * world_attention.get_shape()[2].value, 1))
+            world_attention = tf.nn.softmax(logits=world_attention, dim=1)
+            world_embedding = tf.reshape(tensor=world_embedding, shape=(-1, world_embedding.get_shape()[1].value * world_embedding.get_shape()[2].value, nums_filters[-1]))
+            world_embedding = tf.multiply(x=world_embedding, y=world_attention)
+            world_embedding = tf.reduce_sum(input_tensor=world_embedding, axis=1)
+    else:
+        size = 1
+        for dims in world_embedding.get_shape()[1:]:
+            size *= dims.value
+        world_embedding = tf.reshape(tensor=world_embedding, shape=(-1, size))
+
     with tf.name_scope(name='cbp'):
         embedding = compact_bilinear_pooling(xs=(world_embedding, caption_embedding), size=cbp_size)
 
     with tf.name_scope(name='hidden'):
         for dim in hidden_dims:
-            weights = tf.Variable(initial_value=tf.random_normal(shape=(512, dim), stddev=sqrt(2.0 / 512)))
+            weights = tf.Variable(initial_value=tf.random_normal(shape=(cbp_size, dim), stddev=sqrt(2.0 / 512)))
             embedding = tf.matmul(a=embedding, b=weights)
             bias = tf.Variable(initial_value=tf.zeros(shape=(dim,)))
             embedding = tf.nn.bias_add(value=embedding, bias=bias)
             embedding = tf.nn.relu(features=embedding)
-            dropout = tf.placeholder(dtype=tf.float32, shape=())
-            dropouts.append(dropout)
             embedding = tf.nn.dropout(x=embedding, keep_prob=(1.0 - dropout))
 
     with tf.name_scope(name='agreement'):
@@ -76,8 +89,19 @@ def compact_bilinear_pooling(xs, size):
         sketch_matrix = tf.SparseTensor(indices=sketch_indices, values=sketch_values, dense_shape=(input_size, size))
         sketch_matrix = tf.sparse_reorder(sp_input=sketch_matrix)
 
-        x = tf.sparse_tensor_dense_matmul(sp_a=sketch_matrix, b=x, adjoint_a=True, adjoint_b=True)
-        x = tf.transpose(a=x)
+        if x.get_shape().ndims > 2:
+            shape = x.get_shape().as_list()[1:-1]
+            collapsed_size = 1
+            for dims in x.get_shape()[1:]:
+                collapsed_size *= dims.value
+            x = tf.reshape(tensor=x, shape=(-1, collapsed_size))
+            x = tf.sparse_tensor_dense_matmul(sp_a=sketch_matrix, b=x, adjoint_a=True, adjoint_b=True)
+            x = tf.transpose(a=x)
+            x = tf.reshape(tensor=x, shape=([-1] + shape + [size]))
+        else:
+            x = tf.sparse_tensor_dense_matmul(sp_a=sketch_matrix, b=x, adjoint_a=True, adjoint_b=True)
+            x = tf.transpose(a=x)
+            x = tf.reshape(tensor=x, shape=(-1, size))
         x = tf.complex(real=x, imag=0.0)
         x = tf.fft(input=x)
         if p is None:

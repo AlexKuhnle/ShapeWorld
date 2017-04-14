@@ -2,22 +2,22 @@ from math import sqrt
 import tensorflow as tf
 
 
-def model(world, caption, caption_length, agreement, dropouts, vocabulary_size, sizes=(5, 3, 3), num_filters=(16, 32), poolings=('max', 'max', 'avg'), embedding_size=32, co_attention_type='parallel', attention_size=64, hidden_dims=(512,), **kwargs):
-    # co_attention_type: 'parallel' or 'alternating'
+def model(world, caption, caption_length, agreement, dropout, vocabulary_size, sizes=(5, 3, 3), num_filters=(16, 32), poolings=('max', 'max', 'avg'), embedding_size=32, co_attention_type='parallel', attention_size=64, hidden_dims=(512,), **kwargs):
+    assert co_attention_type in ('parallel', 'alternating')
 
     with tf.name_scope(name='cnn'):
         world_embedding = world
-        for size, num_filter, pooling in zip(sizes, num_filters + (embedding_size,), poolings):
-            weights = tf.Variable(initial_value=tf.random_normal(shape=(size, size, world_embedding.get_shape()[3].value, num_filter), stddev=sqrt(2.0 / world_embedding.get_shape()[3].value)))
+        for size, num_filters, pooling in zip(sizes, num_filters + (embedding_size,), poolings):
+            weights = tf.Variable(initial_value=tf.random_normal(shape=(size, size, world_embedding.get_shape()[3].value, num_filters), stddev=sqrt(2.0 / world_embedding.get_shape()[3].value)))
             world_embedding = tf.nn.conv2d(input=world_embedding, filter=weights, strides=(1, 1, 1, 1), padding='SAME')
-            bias = tf.Variable(initial_value=tf.zeros(shape=(num_filter,)))
+            bias = tf.Variable(initial_value=tf.zeros(shape=(num_filters,)))
             world_embedding = tf.nn.bias_add(value=world_embedding, bias=bias)
             world_embedding = tf.nn.relu(features=world_embedding)
             if pooling == 'max':
                 world_embedding = tf.nn.max_pool(value=world_embedding, ksize=(1, 2, 2, 1), strides=(1, 2, 2, 1), padding='SAME')
             elif pooling == 'avg':
                 world_embedding = tf.nn.avg_pool(value=world_embedding, ksize=(1, 2, 2, 1), strides=(1, 2, 2, 1), padding='SAME')
-        world_embedding = tf.reshape(tensor=world_embedding, shape=(-1, world_embedding.get_shape()[1].value * world_embedding.get_shape()[2].value, num_filter))
+        world_embedding = tf.reshape(tensor=world_embedding, shape=(-1, world_embedding.get_shape()[1].value * world_embedding.get_shape()[2].value, num_filters))
 
     with tf.name_scope(name='word-embeddings'):
         embeddings = tf.Variable(initial_value=tf.random_normal(shape=(vocabulary_size, embedding_size), stddev=sqrt(embedding_size)))
@@ -33,8 +33,6 @@ def model(world, caption, caption_length, agreement, dropouts, vocabulary_size, 
         phrase_embeddings = tf.stack(values=(unigrams, bigrams, trigrams), axis=3)
         phrase_embeddings = tf.reduce_max(input_tensor=phrase_embeddings, axis=3)
         phrase_embeddings = tf.tanh(x=phrase_embeddings)
-        dropout = tf.placeholder(dtype=tf.float32, shape=())
-        dropouts.append(dropout)
         phrase_embeddings = tf.nn.dropout(x=phrase_embeddings, keep_prob=(1.0 - dropout))
 
     with tf.name_scope(name='sentence-lstm'):
@@ -43,22 +41,18 @@ def model(world, caption, caption_length, agreement, dropouts, vocabulary_size, 
 
     with tf.name_scope(name='co-attention'):
         if co_attention_type == 'parallel':
-            world_embedding_word, caption_embedding_word = parallel_attention(image_embeddings=world_embedding, text_embeddings=word_embeddings, attention_size=attention_size, dropouts=dropouts)
-            world_embedding_phrase, caption_embedding_phrase = parallel_attention(image_embeddings=world_embedding, text_embeddings=phrase_embeddings, attention_size=attention_size, dropouts=dropouts)
-            world_embedding_sentence, caption_embedding_sentence = parallel_attention(image_embeddings=world_embedding, text_embeddings=sentence_embeddings, attention_size=attention_size, dropouts=dropouts)
-        elif attention == 'alternating':
-            world_embedding_word, caption_embedding_word = alternating_attention(image_embeddings=world_embedding, text_embeddings=word_embeddings, attention_size=attention_size, dropouts=dropouts)
-            world_embedding_phrase, caption_embedding_phrase = alternating_attention(image_embeddings=world_embedding, text_embeddings=phrase_embeddings, attention_size=attention_size, dropouts=dropouts)
-            world_embedding_sentence, caption_embedding_sentence = alternating_attention(image_embeddings=world_embedding, text_embeddings=sentence_embeddings, attention_size=attention_size, dropouts=dropouts)
-        else:
-            assert False
+            world_embedding_word, caption_embedding_word = parallel_attention(image_embeddings=world_embedding, text_embeddings=word_embeddings, attention_size=attention_size, dropout=dropout)
+            world_embedding_phrase, caption_embedding_phrase = parallel_attention(image_embeddings=world_embedding, text_embeddings=phrase_embeddings, attention_size=attention_size, dropout=dropout)
+            world_embedding_sentence, caption_embedding_sentence = parallel_attention(image_embeddings=world_embedding, text_embeddings=sentence_embeddings, attention_size=attention_size, dropout=dropout)
+        elif co_attention_type == 'alternating':
+            world_embedding_word, caption_embedding_word = alternating_attention(image_embeddings=world_embedding, text_embeddings=word_embeddings, attention_size=attention_size, dropout=dropout)
+            world_embedding_phrase, caption_embedding_phrase = alternating_attention(image_embeddings=world_embedding, text_embeddings=phrase_embeddings, attention_size=attention_size, dropout=dropout)
+            world_embedding_sentence, caption_embedding_sentence = alternating_attention(image_embeddings=world_embedding, text_embeddings=sentence_embeddings, attention_size=attention_size, dropout=dropout)
 
     with tf.name_scope(name='combination'):
         # h^w = tanh(W_w * (q'^w + v'^w))
         weights = tf.Variable(initial_value=tf.truncated_normal(shape=(embedding_size, embedding_size), stddev=0.01))
         embedding = tf.add(x=world_embedding_word, y=caption_embedding_word)
-        dropout = tf.placeholder(dtype=tf.float32, shape=())
-        dropouts.append(dropout)
         embedding = tf.nn.dropout(x=embedding, keep_prob=(1.0 - dropout))
         embedding = tf.matmul(a=embedding, b=weights)
         embedding_word = tf.tanh(x=embedding)
@@ -66,8 +60,6 @@ def model(world, caption, caption_length, agreement, dropouts, vocabulary_size, 
         weights = tf.Variable(initial_value=tf.truncated_normal(shape=(2 * embedding_size, embedding_size), stddev=0.01))
         embedding = tf.add(x=world_embedding_phrase, y=caption_embedding_phrase)
         embedding = tf.concat(values=(embedding, embedding_word), axis=1)
-        dropout = tf.placeholder(dtype=tf.float32, shape=())
-        dropouts.append(dropout)
         embedding = tf.nn.dropout(x=embedding, keep_prob=(1.0 - dropout))
         embedding = tf.matmul(a=embedding, b=weights)
         embedding_phrase = tf.tanh(x=embedding)
@@ -75,8 +67,6 @@ def model(world, caption, caption_length, agreement, dropouts, vocabulary_size, 
         weights = tf.Variable(initial_value=tf.truncated_normal(shape=(2 * embedding_size, embedding_size), stddev=0.01))
         embedding = tf.add(x=world_embedding_sentence, y=caption_embedding_sentence)
         embedding = tf.concat(values=(embedding, embedding_phrase), axis=1)
-        dropout = tf.placeholder(dtype=tf.float32, shape=())
-        dropouts.append(dropout)
         embedding = tf.nn.dropout(x=embedding, keep_prob=(1.0 - dropout))
         embedding = tf.matmul(a=embedding, b=weights)
         embedding = tf.tanh(x=embedding)
@@ -91,8 +81,6 @@ def model(world, caption, caption_length, agreement, dropouts, vocabulary_size, 
             bias = tf.Variable(initial_value=tf.zeros(shape=(dim,)))
             embedding = tf.nn.bias_add(value=embedding, bias=bias)
             embedding = tf.nn.relu(features=embedding)
-            dropout = tf.placeholder(dtype=tf.float32, shape=())
-            dropouts.append(dropout)
             embedding = tf.nn.dropout(x=embedding, keep_prob=(1.0 - dropout))
 
     with tf.name_scope(name='agreement'):
@@ -111,7 +99,7 @@ def model(world, caption, caption_length, agreement, dropouts, vocabulary_size, 
     return accuracy
 
 
-def parallel_attention(image_embeddings, text_embeddings, attention_size, dropouts):
+def parallel_attention(image_embeddings, text_embeddings, attention_size, dropout):
     _, num_image_embeddings, image_embedding_size = image_embeddings.get_shape().as_list()
     _, num_text_embeddings, text_embedding_size = text_embeddings.get_shape().as_list()
     reduced_image_embeddings = tf.reshape(tensor=image_embeddings, shape=(-1, image_embedding_size))
@@ -137,8 +125,6 @@ def parallel_attention(image_embeddings, text_embeddings, attention_size, dropou
     image_attention = tf.matmul(a=transformed_text, b=affinity_matrix, transpose_a=True)
     image_attention = tf.add(x=image_attention, y=transformed_image)
     image_attention = tf.tanh(x=image_attention)
-    dropout = tf.placeholder(dtype=tf.float32, shape=())
-    dropouts.append(dropout)
     image_attention = tf.nn.dropout(x=image_attention, keep_prob=(1.0 - dropout))
     # a^v = softmax(w_hv * H^v)
     weights = tf.Variable(initial_value=tf.truncated_normal(shape=(attention_size, 1), stddev=0.01))
@@ -154,8 +140,6 @@ def parallel_attention(image_embeddings, text_embeddings, attention_size, dropou
     text_attention = tf.matmul(a=affinity_matrix, b=transformed_image)
     text_attention = tf.add(x=text_attention, y=transformed_text)
     text_attention = tf.tanh(x=text_attention)
-    dropout = tf.placeholder(dtype=tf.float32, shape=())
-    dropouts.append(dropout)
     text_attention = tf.nn.dropout(x=text_attention, keep_prob=(1.0 - dropout))
     # a^q = softmax(w_hq * H^q)
     weights = tf.Variable(initial_value=tf.truncated_normal(shape=(attention_size, 1), stddev=0.01))
@@ -170,7 +154,7 @@ def parallel_attention(image_embeddings, text_embeddings, attention_size, dropou
     return image_attention, text_attention
 
 
-def alternating_attention(image_embeddings, text_embeddings, attention_size, dropouts):
+def alternating_attention(image_embeddings, text_embeddings, attention_size, dropout):
     _, num_image_embeddings, image_embedding_size = image_embeddings.get_shape().as_list()
     _, num_text_embeddings, text_embedding_size = text_embeddings.get_shape().as_list()
     reduced_image_embeddings = tf.reshape(tensor=image_embeddings, shape=(-1, image_embedding_size))
@@ -181,8 +165,6 @@ def alternating_attention(image_embeddings, text_embeddings, attention_size, dro
     weights = tf.Variable(initial_value=tf.truncated_normal(shape=(text_embedding_size, attention_size), stddev=0.01))
     text_attention = tf.matmul(a=reduced_text_embeddings, b=weights)
     text_attention = tf.tanh(x=text_attention)
-    dropout = tf.placeholder(dtype=tf.float32, shape=())
-    dropouts.append(dropout)
     text_attention = tf.nn.dropout(x=text_attention, keep_prob=(1.0 - dropout))
     # a^q = softmax(w_hq * H)
     weights = tf.Variable(initial_value=tf.truncated_normal(shape=(attention_size, 1), stddev=0.01))
@@ -202,8 +184,6 @@ def alternating_attention(image_embeddings, text_embeddings, attention_size, dro
     image_attention = tf.matmul(a=reduced_image_embeddings, b=weights)
     image_attention = tf.add(x=image_attention, y=image_attention)
     image_attention = tf.tanh(x=image_attention)
-    dropout = tf.placeholder(dtype=tf.float32, shape=())
-    dropouts.append(dropout)
     image_attention = tf.nn.dropout(x=image_attention, keep_prob=(1.0 - dropout))
     # a^v = softmax(w_hv * H)
     weights = tf.Variable(initial_value=tf.truncated_normal(shape=(attention_size, 1), stddev=0.01))
@@ -223,8 +203,6 @@ def alternating_attention(image_embeddings, text_embeddings, attention_size, dro
     text_attention = tf.matmul(a=reduced_text_embeddings, b=weights)
     text_attention = tf.add(x=text_attention, y=text_attention)
     text_attention = tf.tanh(x=text_attention)
-    dropout = tf.placeholder(dtype=tf.float32, shape=())
-    dropouts.append(dropout)
     text_attention = tf.nn.dropout(x=text_attention, keep_prob=(1.0 - dropout))
     # a^q = softmax(w_hq * H)
     weights = tf.Variable(initial_value=tf.truncated_normal(shape=(attention_size, 1), stddev=0.01))

@@ -2,7 +2,7 @@ from math import sqrt
 import tensorflow as tf
 
 
-def model(world, caption, caption_length, agreement, dropouts, vocabulary_size, sizes=(5, 3, 3), nums_filters=(16, 32, 64), poolings=('max', 'max', 'avg'), embedding_size=32, lstm_size=64, hidden_dims=(512,), **kwargs):
+def model(world, caption, caption_length, agreement, dropout, vocabulary_size, sizes=(5, 3, 3), nums_filters=(16, 32, 64), poolings=('max', 'max', 'avg'), embedding_size=32, lstm_size=64, hidden_dims=(512,), **kwargs):
 
     with tf.name_scope(name='cnn'):
         world_embedding = world
@@ -17,8 +17,8 @@ def model(world, caption, caption_length, agreement, dropouts, vocabulary_size, 
             elif pooling == 'avg':
                 world_embedding = tf.nn.avg_pool(value=world_embedding, ksize=(1, 2, 2, 1), strides=(1, 2, 2, 1), padding='SAME')
         size = 1
-        for dim in world_embedding.get_shape()[1:]:
-            size *= dim.value
+        for dims in world_embedding.get_shape()[1:]:
+            size *= dims.value
         world_embedding = tf.reshape(tensor=world_embedding, shape=(-1, size))
 
     with tf.name_scope(name='lstm'):
@@ -40,8 +40,6 @@ def model(world, caption, caption_length, agreement, dropouts, vocabulary_size, 
             bias = tf.Variable(initial_value=tf.zeros(shape=(dim,)))
             embedding = tf.nn.bias_add(value=embedding, bias=bias)
             embedding = tf.nn.relu(features=embedding)
-            dropout = tf.placeholder(dtype=tf.float32, shape=())
-            dropouts.append(dropout)
             embedding = tf.nn.dropout(x=embedding, keep_prob=(1.0 - dropout))
 
     with tf.name_scope(name='agreement'):

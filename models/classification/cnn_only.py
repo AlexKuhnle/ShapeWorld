@@ -2,25 +2,14 @@ from math import sqrt
 import tensorflow as tf
 
 
-# model parameters
-sizes = (5, 3, 3)
-num_filters = (8, 16, 32)
-poolings = ('max', 'max', 'max')
-hidden_dims = (512,)
-hidden_dropouts = (0.0,)
-learning_rate = 0.001
-batch_size = 128
-evaluation_size = 1024
-
-
-def model(world, classification, dropouts, mode=None):
+def model(world, classification, dropout, mode=None, sizes=(5, 3, 3), nums_filters=(16, 32, 64), poolings=('max', 'max', 'avg'), hidden_dims=(512,), **kwargs):
 
     with tf.name_scope(name='cnn'):
         embedding = world
-        for size, num_filter, pooling in zip(sizes, num_filters, poolings):
-            weights = tf.Variable(initial_value=tf.random_normal(shape=(size, size, embedding.get_shape()[3].value, num_filter), stddev=sqrt(2.0 / embedding.get_shape()[3].value)))
+        for size, num_filters, pooling in zip(sizes, nums_filters, poolings):
+            weights = tf.Variable(initial_value=tf.random_normal(shape=(size, size, embedding.get_shape()[3].value, num_filters), stddev=sqrt(2.0 / embedding.get_shape()[3].value)))
             embedding = tf.nn.conv2d(input=embedding, filter=weights, strides=(1, 1, 1, 1), padding='SAME')
-            bias = tf.Variable(initial_value=tf.zeros(shape=(num_filter,)))
+            bias = tf.Variable(initial_value=tf.zeros(shape=(num_filters,)))
             embedding = tf.nn.bias_add(value=embedding, bias=bias)
             embedding = tf.nn.relu(features=embedding)
             if pooling == 'max':
@@ -39,8 +28,6 @@ def model(world, classification, dropouts, mode=None):
             bias = tf.Variable(initial_value=tf.zeros(shape=(dim,)))
             embedding = tf.nn.bias_add(value=embedding, bias=bias)
             embedding = tf.nn.relu(features=embedding)
-            dropout = tf.placeholder(dtype=tf.float32, shape=())
-            dropouts.append(dropout)
             embedding = tf.nn.dropout(x=embedding, keep_prob=(1.0 - dropout))
 
     with tf.name_scope(name='agreement'):

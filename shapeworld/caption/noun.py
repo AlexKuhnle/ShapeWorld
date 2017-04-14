@@ -17,6 +17,9 @@ class Noun(Predicate):
             assert all(isinstance(predicate, Predicate) for predicate in predicates)
             self.predicates = tuple(predicates)
 
+    def model(self):
+        return {'component': 'noun', 'predicates': [predicate.model() for predicate in self.predicates]}
+
     def agreeing_entities(self, entities):
         for predicate in self.predicates:
             entities = predicate.agreeing_entities(entities)
