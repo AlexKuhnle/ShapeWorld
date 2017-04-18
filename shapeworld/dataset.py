@@ -1,5 +1,5 @@
-from io import BytesIO
 from importlib import import_module
+from io import BytesIO
 import json
 import os
 from random import random, randrange
@@ -7,6 +7,61 @@ import numpy as np
 from PIL import Image
 from shapeworld import util
 from shapeworld.world import World
+
+
+def dataset(dtype=None, name=None, config=None):
+    # explain type = 'load', 'mixer', possibilities, e.g. with ',', or with ';'?
+    assert config is None or isinstance(config, dict) or isinstance(config, str)
+    assert dtype is None or isinstance(dtype, str)
+    assert name is None or isinstance(name, str)
+    load = name == 'load'
+    mix = name == 'mix'
+    assert not load or not mix
+    if config is not None:
+        if isinstance(config, str):
+            if mix and not os.path.isfile(config):
+                return MixerDataset(datasets=config.split(','))
+            if os.path.isdir(config):  # load or nothing
+                load = True
+                config = os.path.join(config, 'specification.json')
+            assert os.path.isfile(config)
+            directory = os.path.dirname(config)
+            with open(config, 'r') as filehandle:
+                config = json.load(fp=filehandle)
+            if load and 'directory' not in config:
+                config['directory'] = directory
+        config = {key.replace('-', '_'): value for key, value in config.items()}
+    if load:
+        dataset = LoadedDataset(specification=config)
+        assert dtype is None or dtype == dataset.type
+        return dataset
+    if mix:
+        dataset = MixerDataset(**config)
+        assert dtype is None or dtype == dataset.type
+        return dataset
+    if config is not None:
+        if 'type' in config:
+            if dtype is None:
+                dtype = config['type']
+            else:
+                assert dtype == config['type']
+        if 'name' in config:
+            if name is None:
+                name = config['name']
+            else:
+                assert name == config['name']
+    assert dtype and name
+    module = import_module('shapeworld.datasets.{}.{}'.format(dtype, name))
+    dclass = module.dataset
+    if config is None:
+        assert dclass.default_config is not None
+        config = dclass.default_config
+    else:
+        for key, value in dclass.default_config.items():
+            if key not in config:
+                config[key] = value
+    dataset = dclass(**config)
+    return dataset
 
 
 class Dataset(object):
@@ -25,62 +80,6 @@ class Dataset(object):
         self.vector_sizes = vector_sizes
         self.text_size = text_size
         self.word_ids = word_ids
-
-    @staticmethod
-    def from_config(config=None, dataset_type=None, dataset_name=None, dataset_class=None):
-        # explain type = 'load', 'mixer', possibilities, e.g. with ',', or with ';'?
-        assert config is None or isinstance(config, dict) or isinstance(config, str)
-        assert dataset_type is None or isinstance(dataset_type, str)
-        assert dataset_name is None or isinstance(dataset_name, str)
-        assert dataset_class is None or issubclass(dataset_class, Dataset)
-        load = dataset_name == 'load'
-        mix = dataset_name == 'mix'
-        assert not load or not mix
-        if config is not None:
-            if isinstance(config, str):
-                if mix and not os.path.isfile(config):
-                    return MixerDataset(datasets=config.split(','))
-                if os.path.isdir(config):  # load or nothing
-                    load = True
-                    config = os.path.join(config, 'specification.json')
-                assert os.path.isfile(config)
-                directory = os.path.dirname(config)
-                with open(config, 'r') as filehandle:
-                    config = json.load(fp=filehandle)
-                if load and 'directory' not in config:
-                    config['directory'] = directory
-            config = {key.replace('-', '_'): value for key, value in config.items()}
-        if load:
-            dataset = LoadedDataset(specification=config)
-            assert dataset_type is None or dataset_type == dataset.type
-            return dataset
-        if mix:
-            dataset = MixerDataset(**config)
-            assert dataset_type is None or dataset_type == dataset.type
-            return dataset
-        if config is not None:
-            if 'type' in config:
-                if dataset_type is None:
-                    dataset_type = config['type']
-                else:
-                    assert dataset_type == config['type']
-            if 'name' in config:
-                if dataset_name is None:
-                    dataset_name = config['name']
-                else:
-                    assert dataset_name == config['name']
-        assert dataset_type and dataset_name
-        module = import_module('shapeworld.datasets.{}.{}'.format(dataset_type, dataset_name))
-        dataset_class = module.dataset
-        if config is None:
-            assert dataset_class.default_config is not None
-            config = dataset_class.default_config
-        else:
-            for key, value in dataset_class.default_config.items():
-                if key not in config:
-                    config[key] = value
-        dataset = dataset_class(**config)
-        return dataset
 
     def __str__(self):
         return '{}-{}'.format(self.type, self.name)
@@ -130,7 +129,7 @@ class Dataset(object):
     def vocabulary(self):
         return list(self.word_ids.keys())
 
-    def zero_batch(self, n, include_models=False):
+    def zero_batch(self, n, include_model=False):
         batch = dict()
         for value_name, value_type in self.values.items():
             if value_type == 'int':
@@ -143,22 +142,22 @@ class Dataset(object):
                 batch[value_name] = np.zeros(shape=(n, self.text_size), dtype=np.int32)
             elif value_type == 'world':
                 batch[value_name] = np.zeros(shape=(n, self.world_size, self.world_size, 3), dtype=np.float32)
-            elif value_type == 'model' and include_models:
+            elif value_type == 'model' and include_model:
                 batch[value_name] = [None] * n
         return batch
 
-    def generate(self, n, mode=None, noise=True, include_models=False):  # mode: None, 'train', 'validation', 'test'
-        batch = self.zero_batch(n, include_models=include_models)
+    def generate(self, n, mode=None, noise=True, include_model=False):  # mode: None, 'train', 'validation', 'test'
+        batch = self.zero_batch(n, include_model=include_model)
         for i in range(n):
             world = self.world_generator(mode)
             batch['world'][i] = world.get_world(noise=noise)
-            if include_models:
+            if include_model:
                 batch['world-model'][i] = world.model()
         return batch
 
-    def iterate(self, n, mode=None, noise=True, include_models=False):
+    def iterate(self, n, mode=None, noise=True, include_model=False):
         while True:
-            yield self.generate(n=n, mode=mode, noise=noise, include_models=include_models)
+            yield self.generate(n=n, mode=mode, noise=noise, include_model=include_model)
 
     def collect_captioner_statistics(self, filehandle, append=False):
         pass
@@ -166,7 +165,7 @@ class Dataset(object):
     def close_captioner_statistics(self):
         pass
 
-    def serialize_data(self, directory, generated, predicted=None, additional=None, name=None, archive=None):
+    def serialize(self, directory, generated, predicted=None, additional=None, name=None, archive=None):
         assert not additional or all(name not in self.values for name in additional)
         if not os.path.isdir(directory):
             os.makedirs(directory)
@@ -252,13 +251,13 @@ class LoadedDataset(Dataset):
     dataset_type = 'loaded'
 
     def __init__(self, specification):
-        super().__init__(None, vector_sizes=specification.get('vector_sizes'), text_size=specification.get('text_size'), word_ids=specification.get('word_ids'))
+        super(LoadedDataset, self).__init__(None, vector_sizes=specification.get('vector_sizes'), text_size=specification.get('text_size'), word_ids=specification.get('word_ids'))
         # assert per_part or not part_once
         self._type = specification['dataset_type']
         self._name = specification['dataset_name']
         self._value_types = specification['value_types']
         self._world_size = specification['world_size']
-        self.include_models = specification.get('include_models')
+        self.include_model = specification.get('include_model')
         self.noise_range = specification.get('noise_range')
         self.archive = specification.get('archive')
         self.per_part = True
@@ -281,7 +280,7 @@ class LoadedDataset(Dataset):
                     self.parts[mode] = [(root, f) for f in files if f != 'captioner_statistics.csv']
         assert self.parts
         self.mode = None
-        self.loaded = {value_name: [] for value_name, value_type in self.values.items() if value_type != 'model' or self.include_models}
+        self.loaded = {value_name: [] for value_name, value_type in self.values.items() if value_type != 'model' or self.include_model}
         self.num_instances = 0
 
     @property
@@ -300,15 +299,15 @@ class LoadedDataset(Dataset):
     def world_size(self):
         return self._world_size
 
-    def generate(self, n, mode=None, noise=True, include_models=False):
+    def generate(self, n, mode=None, noise=True, include_model=False):
         assert noise or self.noise_range
-        assert not include_models or self.include_models
+        assert not include_model or self.include_model
         if not self.per_part:
             self.mode = None if mode else 'train'
         while self.mode != mode or self.num_instances < n:
             if self.mode != mode:
                 self.mode = mode
-                self.loaded = {value_name: [] for value_name, value_type in self.values.items() if value_type != 'model' or self.include_models}
+                self.loaded = {value_name: [] for value_name, value_type in self.values.items() if value_type != 'model' or self.include_model}
             parts = self.parts[mode]
             part = randrange(len(parts))
             directory, name = parts.pop(part) if self.part_once else parts[part]
@@ -321,17 +320,17 @@ class LoadedDataset(Dataset):
                     else:
                         self.num_instances = len(value)
 
-        batch = self.zero_batch(n, include_models=include_models)
+        batch = self.zero_batch(n, include_model=include_model)
         for i in range(n):
             index = randrange(self.num_instances)
             self.num_instances -= 1
             for value_name, value_type in self.values.items():
-                if value_type == 'model' and not self.include_models:
+                if value_type == 'model' and not self.include_model:
                     continue
                 value = self.loaded[value_name].pop(index)
                 if value_type == 'text':
                     batch[value_name][i][:len(value)] = value
-                elif value_type != 'model' or include_models:
+                elif value_type != 'model' or include_model:
                     batch[value_name][i] = value
         if noise and self.noise_range:
             for value_name, value_type in self.values.items():
@@ -358,7 +357,7 @@ class MixerDataset(Dataset):
         assert len(datasets) >= 1
         for n, dataset in enumerate(datasets):
             if not isinstance(dataset, Dataset):
-                datasets[n] = Dataset.from_config(config=dataset)
+                datasets[n] = Dataset.dataset(config=dataset)
         assert all(dataset.type == datasets[0].type for dataset in datasets)
         assert all(dataset.values == datasets[0].values for dataset in datasets)
         assert all(dataset.vector_sizes == datasets[0].vector_sizes for dataset in datasets)
@@ -372,7 +371,7 @@ class MixerDataset(Dataset):
         words = set(word for dataset in datasets for word in dataset.word_ids)
         words = sorted(words)
         word_ids = {words[n]: n for n in range(len(words))}
-        super().__init__(None, vector_sizes=datasets[0].vector_sizes, text_size=text_size, word_ids=word_ids)
+        super(MixerDataset, self).__init__(None, vector_sizes=datasets[0].vector_sizes, text_size=text_size, word_ids=word_ids)
         for dataset in datasets:
             dataset.text_size = text_size
             dataset.word_ids = word_ids
@@ -411,7 +410,7 @@ class MixerDataset(Dataset):
     def world_size(self):
         return self.datasets[0].world_size
 
-    def generate(self, n, mode=None, noise=True, include_models=False):
+    def generate(self, n, mode=None, noise=True, include_model=False):
         if mode == 'train':
             distribution = self.train_distribution
         elif mode == 'validation':
@@ -427,9 +426,9 @@ class MixerDataset(Dataset):
                 cumulative += prob
                 if pick < cumulative:
                     break
-            return dataset.generate(n=n, mode=mode, noise=noise, include_models=include_models)
+            return dataset.generate(n=n, mode=mode, noise=noise, include_model=include_model)
         else:
-            batch = self.zero_batch(n, include_models=include_models)
+            batch = self.zero_batch(n, include_model=include_model)
             for i in range(n):
                 pick = random()
                 cumulative = 0.0
@@ -437,7 +436,7 @@ class MixerDataset(Dataset):
                     cumulative += prob
                     if pick < cumulative:
                         break
-                generated = dataset.generate(n=1, mode=mode, noise=noise, include_models=include_models)
+                generated = dataset.generate(n=1, mode=mode, noise=noise, include_model=include_model)
                 for value_name, value_type in self.values.items():
                     value = generated[value_name][0]
                     if value_type == 'text':
@@ -458,7 +457,7 @@ class CaptionAgreementDataset(Dataset):
         words = sorted(words)
         word_ids = {words[n]: n + 1 for n in range(len(words))}
         word_ids[''] = 0
-        super().__init__(world_generator, text_size=caption_size, word_ids=word_ids)
+        super(CaptionAgreementDataset, self).__init__(world_generator, text_size=caption_size, word_ids=word_ids)
         self.world_captioner = world_captioner
         self.incorrect_world_ratio = incorrect_world_ratio if incorrect_world_ratio is not None else 0.5
         self.correct_ratio = correct_ratio if correct_ratio is not None else 0.5
@@ -487,7 +486,7 @@ class CaptionAgreementDataset(Dataset):
                 return caption
         return None
 
-    def generate(self, n, mode=None, noise=True, include_models=False):
+    def generate(self, n, mode=None, noise=True, include_model=False):
         if mode == 'train':
             correct_ratio = self.train_correct_ratio
         elif mode == 'validation':
@@ -496,7 +495,7 @@ class CaptionAgreementDataset(Dataset):
             correct_ratio = self.test_correct_ratio
         else:
             correct_ratio = self.correct_ratio
-        batch = self.zero_batch(n, include_models=include_models)
+        batch = self.zero_batch(n, include_model=include_model)
         captions = [None] * n
         for i in range(n):
             r = random()
@@ -527,7 +526,7 @@ class CaptionAgreementDataset(Dataset):
                     assert caption.agreement(world=world_model) == 0.0
                 batch['world'][i] = world.get_world(noise=noise)
                 captions[i] = caption
-                if include_models:
+                if include_model:
                     batch['world-model'][i] = world_model
                     batch['caption-model'][i] = caption.model()
                 break
@@ -557,18 +556,18 @@ class ClassificationDataset(Dataset):
 
     def __init__(self, world_generator, num_classes):
         assert self.__class__.multi_class_flag or not self.__class__.class_count_flag
-        super().__init__(world_generator, vector_sizes={'classification': num_classes})
+        super(ClassificationDataset, self).__init__(world_generator, vector_sizes={'classification': num_classes})
         self.num_classes = num_classes
 
     def get_classes(self, world):  # iterable of classes
         raise NotImplementedError
 
-    def generate(self, n, mode=None, noise=True, include_models=False):
-        batch = self.zero_batch(n, include_models=include_models)
+    def generate(self, n, mode=None, noise=True, include_model=False):
+        batch = self.zero_batch(n, include_model=include_model)
         for i in range(n):
             world = self.world_generator(mode)
             batch['world'][i] = world.get_world(noise=noise)
-            if include_models:
+            if include_model:
                 batch['world-model'][i] = world.model()
             c = None
             for c in self.get_classes(world):
@@ -588,7 +587,7 @@ class CommunicationDataset(Dataset):
     valid_alternative_flag = None
 
     def __init__(self, world_generator):  # , num_alternatives=2):
-        super().__init__(world_generator)
+        super(CommunicationDataset, self).__init__(world_generator)
         assert self.__class__.valid_alternative_flag is not None
         # assert isinstance(num_alternatives, int) and num_alternatives >= 2
         self.num_alternatives = 2
@@ -607,14 +606,14 @@ class CommunicationDataset(Dataset):
     def valid_alternative(self, reference, alternative):
         raise NotImplementedError
 
-    def generate(self, n, mode=None, noise=True, include_models=False):
-        batch = self.zero_batch(n, include_models=include_models)
+    def generate(self, n, mode=None, noise=True, include_model=False):
+        batch = self.zero_batch(n, include_model=include_model)
         for i in range(n):
             reference = randrange(self.num_alternatives)
             batch['reference'][i] = reference
             world = self.world_generator(mode)
             batch['alternative'][reference][i] = world.get_world(noise=noise)
-            if include_models:
+            if include_model:
                 batch['alternative-model'][reference][i] = world.model()
             for alt in range(self.num_alternatives):
                 if alt == reference:
@@ -622,7 +621,7 @@ class CommunicationDataset(Dataset):
                 alternative = self.generate_alternative(world, mode)
                 alt_str = 'alternative' + str(alt + 1)
                 batch[alt_str][i] = alternative.get_world(noise=noise)
-                if include_models:
+                if include_model:
                     batch[alt_str + '-model'][alt][i] = alternative.model()
         return batch
 
@@ -633,17 +632,17 @@ class CompositionDataset(Dataset):
     value_types = {'compound': 'world', 'compound-model': 'model', 'component1': 'world', 'component2': 'world', 'composition-type': 'vector'}
 
     def __init__(self, world_generator, num_types):
-        super().__init__(world_generator, vector_sizes={'composition-type': num_types})
+        super(CompositionDataset, self).__init__(world_generator, vector_sizes={'composition-type': num_types})
 
     def get_components(self, world):
         raise NotImplementedError
 
-    def generate(self, n, mode=None, noise=True, include_models=False):
-        batch = self.zero_batch(n, include_models=include_models)
+    def generate(self, n, mode=None, noise=True, include_model=False):
+        batch = self.zero_batch(n, include_model=include_model)
         for i in range(n):
             compound = self.world_generator(mode)
             batch['compound'][i] = compound.get_world(noise=noise)
-            if include_models:
+            if include_model:
                 batch['compound-model'][i] = compound.model()
             component1, component2, composition_type = self.get_components(world=compound)
             batch['component1'][i] = component1.get_world(noise=noise)
@@ -660,7 +659,7 @@ class ComparisonDataset(Dataset):
     incorrect_comparison_flag = None
 
     def __init__(self, world_generator, correct_ratio, train_correct_ratio=None, validation_correct_ratio=None, test_correct_ratio=None):
-        super().__init__(world_generator)
+        super(ComparisonDataset, self).__init__(world_generator)
         assert self.__class__.correct_comparison_flag is not None and self.__class__.incorrect_comparison_flag is not None
         self.correct_ratio = correct_ratio
         self.train_correct_ratio = correct_ratio if train_correct_ratio is None else train_correct_ratio
@@ -695,7 +694,7 @@ class ComparisonDataset(Dataset):
     def incorrect_comparison(self, reference, comparison):
         raise NotImplementedError
 
-    def generate(self, n, mode=None, noise=True, include_models=False):
+    def generate(self, n, mode=None, noise=True, include_model=False):
         if mode == 'train':
             correct_ratio = self.train_correct_ratio
         elif mode == 'validation':
@@ -704,11 +703,11 @@ class ComparisonDataset(Dataset):
             correct_ratio = self.test_correct_ratio
         else:
             correct_ratio = self.correct_ratio
-        batch = self.zero_batch(n, include_models=include_models)
+        batch = self.zero_batch(n, include_model=include_model)
         for i in range(n):
             reference = self.world_generator(mode)
             batch['reference'][i] = reference.get_world(noise=noise)
-            if include_models:
+            if include_model:
                 batch['reference-model'][i] = reference.model()
             if random() < correct_ratio:
                 comparison = self.generate_correct_comparison(reference)
@@ -716,6 +715,6 @@ class ComparisonDataset(Dataset):
             else:
                 comparison = self.generate_incorrect_comparison(reference)
             batch['comparison'][i] = comparison.get_world(noise=noise)
-            if include_models:
+            if include_model:
                 batch['comparison-model'][i] = comparison.model()
         return batch

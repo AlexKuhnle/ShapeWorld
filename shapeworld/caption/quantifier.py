@@ -1,3 +1,4 @@
+from __future__ import division
 from shapeworld.caption import Clause, Predicate
 
 
@@ -82,7 +83,7 @@ class Quantifier(Clause):
             elif self.qrange == 'leq':
                 if len(body_entities) / len(restrictor_entities) <= self.quantity:
                     return 1.0
-                elif len((body_entities) / len(restrictor_entities)) - self.quantity > self.tolerance:
+                elif len(body_entities) / len(restrictor_entities) - self.quantity > self.tolerance:
                     return 0.0
                 else:
                     return 0.5

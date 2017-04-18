@@ -14,7 +14,7 @@ class ExistentialCaptioner(WorldCaptioner):
         # requires relation 'existence'
         # requires quantifier ('absolute', 'geq', 1)
         # requires caption 'none'
-        super().__init__(realizer=realizer, quantifier_tolerance=quantifier_tolerance)
+        super(ExistentialCaptioner, self).__init__(realizer=realizer, quantifier_tolerance=quantifier_tolerance)
         self.shapes = shapes
         self.colors = colors
         self.textures = textures

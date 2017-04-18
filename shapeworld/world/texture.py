@@ -26,7 +26,7 @@ class SolidTexture(Texture):
     __slots__ = ()
 
     def __init__(self):
-        return super().__init__()
+        return super(SolidTexture, self).__init__()
 
     def __str__(self):
         return 'solid'

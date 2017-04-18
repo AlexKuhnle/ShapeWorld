@@ -21,7 +21,7 @@ class Color(object):
             shaded_rgb = rgb
         if rgb == shaded_rgb:
             self.shade = 0.0
-        self.shaded_rgb = np.asarray(shaded_rgb, dtype=np.float32)
+        self.shaded_rgb = np.array(object=shaded_rgb, dtype=np.float32)
 
     def __str__(self):
         return self.name

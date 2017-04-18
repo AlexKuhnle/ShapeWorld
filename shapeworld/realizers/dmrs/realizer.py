@@ -9,7 +9,7 @@ from shapeworld.realizers.dmrs.dmrs import ComposableDmrs
 class DmrsRealizer(CaptionRealizer):
 
     def __init__(self):
-        super().__init__()
+        super(DmrsRealizer, self).__init__()
         directory = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'resources')
         self.ace_path = os.path.join(directory, 'ace')
         self.erg_path = os.path.join(directory, 'erg-shapeworld.dat')

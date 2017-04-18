@@ -8,7 +8,7 @@ class OneShapeDataset(CaptionAgreementDataset):
     def __init__(self, validation_combinations, test_combinations, caption_size, words, incorrect_caption_modes=None, hypernym_ratio=None, correct_ratio=None, train_correct_ratio=None, validation_correct_ratio=None, test_correct_ratio=None, world_size=None, world_color=None, shapes=None, colors=None, textures=None, rotation=None, size_range=None, distortion_range=None, shade_range=None, noise_range=None, collision_tolerance=None, boundary_tolerance=None, realizer=None, quantifier_tolerance=None, **kwargs):
         world_generator = GenericGenerator([1], world_size, world_color, shapes, colors, textures, rotation, size_range, distortion_range, shade_range, noise_range, collision_tolerance, boundary_tolerance, validation_combinations=validation_combinations, test_combinations=test_combinations)
         world_captioner = ExistentialCaptioner(world_generator.shapes, world_generator.colors, world_generator.textures, realizer=realizer, quantifier_tolerance=quantifier_tolerance, incorrect_modes=incorrect_caption_modes, hypernym_ratio=hypernym_ratio)
-        super().__init__(
+        super(OneShapeDataset, self).__init__(
             world_generator=world_generator,
             world_captioner=world_captioner,
             caption_size=caption_size,

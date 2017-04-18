@@ -3,7 +3,7 @@ from datetime import datetime
 from importlib import import_module
 import os
 import sys
-from shapeworld import Dataset, util
+from shapeworld import dataset, util
 
 
 if __name__ == "__main__":
@@ -32,7 +32,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # dataset
-    dataset = Dataset.from_config(config=args.config, dataset_type=args.type, dataset_name=args.name)
+    dataset = dataset(dtype=args.type, name=args.name, config=args.config)
     sys.stdout.write('{} {} dataset: {}\n'.format(datetime.now().strftime('%H:%M:%S'), dataset.type, dataset.name))
     sys.stdout.write('         config: {}\n'.format(args.config))
     sys.stdout.flush()
@@ -92,7 +92,7 @@ if __name__ == "__main__":
         if args.model_file:
             saver = tf.train.Saver()
         if args.restore or args.evaluate:
-            sys.stdout.write('{} Restore model...\n'.format(datetime.now().strftime('%H:%M:%S')))
+            sys.stdout.write('{} restore model...\n'.format(datetime.now().strftime('%H:%M:%S')))
             sys.stdout.flush()
             assert args.model_file
             saver.restore(session, args.model_file)
@@ -104,7 +104,7 @@ if __name__ == "__main__":
                     iteration_start = int(value) + 1
         else:
             # initialize
-            sys.stdout.write('{} Initialize model...\n'.format(datetime.now().strftime('%H:%M:%S')))
+            sys.stdout.write('{} initialize model...\n'.format(datetime.now().strftime('%H:%M:%S')))
             sys.stdout.flush()
             session.run(fetches=tf.global_variables_initializer())
             if args.model_file:
@@ -121,7 +121,7 @@ if __name__ == "__main__":
 
         if args.evaluate:
             # evaluation
-            sys.stdout.write('{} Evaluate model...\n'.format(datetime.now().strftime('%H:%M:%S')))
+            sys.stdout.write('{} evaluate model...\n'.format(datetime.now().strftime('%H:%M:%S')))
             sys.stdout.write('         ')
             sys.stdout.flush()
             generated = dataset.generate(n=args.evaluation_size, mode='train')
@@ -139,27 +139,27 @@ if __name__ == "__main__":
             feed_dict[dropout] = 0.0
             test_accuracy = session.run(fetches=accuracy, feed_dict=feed_dict)
             sys.stdout.write('  test={:.3f}\n'.format(test_accuracy))
-            sys.stdout.write('{} Evaluation finished!\n'.format(datetime.now().strftime('%H:%M:%S')))
+            sys.stdout.write('{} evaluation finished!\n'.format(datetime.now().strftime('%H:%M:%S')))
             sys.stdout.flush()
 
         else:
             # training
-            sys.stdout.write('{} Train model...\n'.format(datetime.now().strftime('%H:%M:%S')))
+            sys.stdout.write('{} train model...\n'.format(datetime.now().strftime('%H:%M:%S')))
             sys.stdout.flush()
             before = datetime.now()
             for iteration in range(iteration_start, iteration_end + 1):
                 generated = dataset.generate(n=args.batch_size, mode='train')
                 feed_dict = {placeholder: generated[value] for value, placeholder in feed_dict_assignment.items()}
 
-
-
+                # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
                 if args.model == 'nmn2':
-                    instances = [module.parse_model(caption, world) for caption, world in zip(generated['caption-model'], generated['world'])]
+                    generated = dataset.generate(n=args.batch_size, mode='train', include_model=True)
+                    feed_dict = {placeholder: generated[value] for value, placeholder in feed_dict_assignment.items()}
+                    instances = [module.parse_model(caption, world, dataset.vocabulary) for caption, world in zip(generated['caption-model'], generated['world'])]
                     feed_dict[module.compiler.loom_input_tensor] = module.compiler.build_loom_input_batched(examples=instances, batch_size=128)
 
-
-
+                # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
                 feed_dict[dropout] = args.dropout_rate
                 session.run(fetches=optimization, feed_dict=feed_dict)
@@ -179,9 +179,9 @@ if __name__ == "__main__":
                     if args.report_file:
                         with open(args.report_file, 'a') as filehandle:
                             filehandle.write('{},{},{},{},{}\n'.format(iteration, training_loss, training_accuracy, validation_loss, validation_accuracy))
-            sys.stdout.write('\n{} Model training finished!\n'.format(datetime.now().strftime('%H:%M:%S')))
+            sys.stdout.write('\n{} model training finished!\n'.format(datetime.now().strftime('%H:%M:%S')))
             sys.stdout.flush()
             if args.model_file:
                 saver.save(session, args.model_file)
-                sys.stdout.write('{} Model saved.\n'.format(datetime.now().strftime('%H:%M:%S')))
+                sys.stdout.write('{} model saved.\n'.format(datetime.now().strftime('%H:%M:%S')))
                 sys.stdout.flush()

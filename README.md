@@ -27,7 +27,7 @@ The main motivation behind ShapeWorld is to provide a new testbed and methodolog
 
 ![ShapeWorld](https://www.cl.cam.ac.uk/~aok25/files/shapeworld.png)
 
-The code is written in Python 3. The data can either be obtained within a Python 3 module as [NumPy](http://www.numpy.org/) arrays, and hence integrates into deep learning projects based on common frameworks like [TensorFlow](https://www.tensorflow.org/) or [Theano](http://deeplearning.net/software/theano/), or it can be extracted into separate files. Both options are described further below. For language generation, the Python package [pydmrs](https://github.com/delph-in/pydmrs) [(Copestake et al., 2016)](http://www.lrec-conf.org/proceedings/lrec2016/pdf/634_Paper.pdf) is required.
+The code is written in Python 3 (but should be compatible to Python 2). The data can either be obtained within a Python module as [NumPy](http://www.numpy.org/) arrays, and hence integrates into deep learning projects based on common frameworks like [TensorFlow](https://www.tensorflow.org/) or [Theano](http://deeplearning.net/software/theano/), or it can be extracted into separate files. Both options are described further below. For language generation, the Python package [pydmrs](https://github.com/delph-in/pydmrs) [(Copestake et al., 2016)](http://www.lrec-conf.org/proceedings/lrec2016/pdf/634_Paper.pdf) is required.
 
 **The ShapeWorld framework is still under active development.**
 
@@ -40,15 +40,13 @@ Contact: aok25 (at) cam.ac.uk
 Integration into Python code
 ----------------------------
 
-The easiest way to use the ShapeWorld data in your Python 3 project is to directly call it from the code. Whenever a batch of training/evaluation instances is required, `dataset.generate(...)` is called with the respective arguments. This means that generation happens simultaneously to training/testing. Below an example of how to generate a batch of 128 training instances. See also the example models below.
+The easiest way to use the ShapeWorld data in your Python project is to directly call it from the code. Whenever a batch of training/evaluation instances is required, `dataset.generate(...)` is called with the respective arguments. This means that generation happens simultaneously to training/testing. Below an example of how to generate a batch of 128 training instances. See also the example models below.
 
 ```python
-from shapeworld import Dataset
+from shapeworld import dataset
 
-dataset = Dataset.from_config(
-    dataset_type='agreement',
-    dataset_name='multishape')
-generated = dataset.generate(n=128, mode='train', include_models=True)
+dataset = dataset(dtype='agreement', name='multishape')
+generated = dataset.generate(n=128, mode='train', include_model=True)
 
 # given to the image caption agreement system
 batch = (generated['world'], generated['caption'], generated['agreement'])
@@ -65,7 +63,7 @@ Stand-alone data generation
 
 The `shapeworld/generate.py` module provides options to generate ShapeWorld data in separate files via the command line. Use cases include:
 
-* for using the ShapeWorld data for deep learning projects based on other programming languages than Python 3, like [Torch](http://torch.ch/),
+* for using the ShapeWorld data for deep learning projects based on other programming languages than Python, like [Torch](http://torch.ch/),
 * for quicker pre-evaluation of models in development stage -- however, it is one of the important principles of the ShapeWorld evaluation methodology and hence recommended to use newly generated data for the final evaluation phase,
 * for manual investigation of the generated data,
 * for entirely different applications like, e.g., a user study.
@@ -82,20 +80,20 @@ The following command line arguments are available:
 * `--[p]arts`:  Number of files (instead of all in one file), either a number or a triple of numbers, like `100,10,10` (requires mode `none`), for `train`, `validation` and `test` respectively (default: `1`)
 * `--[i]nstances`:  Number of instances, per generated file (default: `100`)
 * `--[m]ode`:  Mode, one of `train`, `validation`, `test` (default: `none`)
-* `--include-[M]odels`:  Include world/caption models, as json file (default: `false`)
+* `--include-[M]odel`:  Include world/caption model, as json file (default: `false`)
 * `--no-[P]ixel-noise`:  Do not infuse pixel noise (default: `false`)
 * `--captioner-[S]tatistics`:  Collect statistical data of captioner (default: `false`)
 
 When creating larger amounts of ShapeWorld data, it is advisable to store the data in a compressed archive (for example `-a tar:bz2`) and turn off the pixel noise (`-p`) for best compression results. For instance, the following command line generates one million *training* instances of the `multishape` configuration file included in this repository:
 
 ```bash
-python3 generate.py -D [DIRECTORY] -a tar:bzip2 -c configs/agreement/multishape.json -m train -p 100 -i 10k -W -P
+python generate.py -D [DIRECTORY] -a tar:bzip2 -c configs/agreement/multishape.json -m train -p 100 -i 10k -W -P
 ```
 
 For the purpose of this introduction, we generate a smaller amount of *all* training, validation and test instances using the default configuration of the dataset:
 
 ```bash
-python3 generate.py -d examples/readme -a tar:bzip2 -t agreement -n multishape -p 5,1,1 -i 128 -P
+python generate.py -d examples/readme -a tar:bzip2 -t agreement -n multishape -p 5,1,1 -i 128 -P
 ```
 
 
@@ -106,23 +104,19 @@ Loading extracted data
 Extracted data can be loaded and accessed with the same `Dataset` interface as before, just define the `dataset_name` as `'load'` and either the directory or the specification file as `config`. However, to be able to do this, we need to extract all of training, validation and test data, as is done in the last command line. Note that we extracted pixel-noise-free instances - the noise will automatically be (re-)infused accordingly.
 
 ```python
-from shapeworld import Dataset
+from shapeworld import dataset
 
-dataset = Dataset.from_config(
-    dataset_name='load',
-    config='examples/readme/agreement/multishape')
+dataset = dataset(name='load', config='examples/readme/agreement/multishape')
 generated = dataset.generate(n=128, mode='train')
 ```
 
-If you need to manually (re-)infuse the pixel noise later (for instance, because you want to load the data from another programming language), a procedure equivalent to the one used in the ShapeWorld framework can be used, which in Python 3 code looks the following:
+If you need to manually (re-)infuse the pixel noise later (for instance, because you want to load the data from another programming language), a procedure equivalent to the one used in the ShapeWorld framework can be used, which in Python code looks the following:
 
 ```python
 import numpy as np
-from shapeworld import Dataset
+from shapeworld import dataset
 
-dataset = Dataset.from_config(
-    dataset_name='load',
-    config='examples/readme/agreement/multishape')
+dataset = dataset(name='load', config='examples/readme/agreement/multishape')
 world_size = 64
 noise_range = 0.1
 generated = dataset.generate(n=128, mode='train', noise=False)
@@ -170,11 +164,11 @@ The `models/` directory contains a few exemplary models, which can be either app
 For instance, the following command line trains an image caption agreement system on the dataset specified by the `multishape` configuration file included in this repository:
 
 ```bash
-python3 evaluate.py -t agreement -n multishape -m cnn_bow_mult -i 5k
+python evaluate.py -t agreement -n multishape -m cnn_bow_mult -i 5k
 ```
 
 The previously generated data can be loaded in the same way as was explained for loading the data in Python code:
 
 ```bash
-python3 evaluate.py -t agreement -n load -c examples/readme/agreement/multishape -m cnn_bow_mult -i 10
+python evaluate.py -t agreement -n load -c examples/readme/agreement/multishape -m cnn_bow_mult -i 10
 ```

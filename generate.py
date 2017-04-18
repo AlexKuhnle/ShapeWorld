@@ -4,7 +4,7 @@ import json
 import os
 import shutil
 import sys
-from shapeworld import Dataset, util
+from shapeworld import dataset, util
 
 
 def parse_triple(string):
@@ -33,13 +33,13 @@ if __name__ == "__main__":
     parser.add_argument('-i', '--instances', type=util.parse_int_with_factor, default=100, help='Number of instances (per part)')
     parser.add_argument('-m', '--mode', default=None, choices=('train', 'validation', 'test'), help='Mode')
 
-    parser.add_argument('-M', '--include-models', action='store_true', help='Include world/caption models')
+    parser.add_argument('-M', '--include-model', action='store_true', help='Include world/caption model')
     parser.add_argument('-P', '--no-pixel-noise', action='store_true', help='Do not infuse pixel noise')
     parser.add_argument('-S', '--captioner-statistics', action='store_true', help='Collect statistical data of captioner')
     # parser.add_argument('-v', '--values', default=None, help='Comma-separated list of values to include')
     args = parser.parse_args()
 
-    dataset = Dataset.from_config(config=args.config, dataset_type=args.type, dataset_name=args.name)
+    dataset = dataset(dtype=args.type, name=args.name, config=args.config)
     sys.stdout.write('{} {} dataset: {}\n'.format(datetime.now().strftime('%H:%M:%S'), dataset.type, dataset.name))
     sys.stdout.write('         config: {}\n'.format(args.config))
     sys.stdout.flush()
@@ -50,7 +50,7 @@ if __name__ == "__main__":
         assert not args.parts or len(args.parts) == 3
 
         specification = dataset.specification()
-        specification['include-models'] = args.include_models
+        specification['include-model'] = args.include_model
         if args.archive:
             specification['archive'] = args.archive
         if args.no_pixel_noise:
@@ -92,24 +92,24 @@ if __name__ == "__main__":
         assert False
 
     if len(parts) == 1 and parts[0] == 1:
-        sys.stdout.write('{} Generate {} {}{} data...\n'.format(datetime.now().strftime('%H:%M:%S'), dataset.type, dataset.name, ' ' + modes[0] if modes[0] else ''))
+        sys.stdout.write('{} generate {} {}{} data...\n'.format(datetime.now().strftime('%H:%M:%S'), dataset.type, dataset.name, ' ' + modes[0] if modes[0] else ''))
         sys.stdout.flush()
-        generated = dataset.generate(n=args.instances, mode=modes[0], noise=(not args.no_pixel_noise), include_models=args.include_models)
-        dataset.serialize_data(directory=directories[0], generated=generated, archive=args.archive)
-        sys.stdout.write('{} Data generation completed!\n'.format(datetime.now().strftime('%H:%M:%S')))
+        generated = dataset.generate(n=args.instances, mode=modes[0], noise=(not args.no_pixel_noise), include_model=args.include_model)
+        dataset.serialize(directory=directories[0], generated=generated, archive=args.archive)
+        sys.stdout.write('{} data generation completed!\n'.format(datetime.now().strftime('%H:%M:%S')))
         sys.stdout.flush()
     else:
         for mode, directory, num_parts, start in zip(modes, directories, parts, start_part):
             if args.captioner_statistics:
                 filehandle = open(os.path.join(directory, 'captioner_statistics.csv'), 'a' if args.append else 'w')
                 dataset.collect_captioner_statistics(filehandle=filehandle, append=args.append)
-            sys.stdout.write('{} Generate {}{} data...\n'.format(datetime.now().strftime('%H:%M:%S'), dataset, ' ' + mode if mode else ''))
+            sys.stdout.write('{} generate {}{} data...\n'.format(datetime.now().strftime('%H:%M:%S'), dataset, ' ' + mode if mode else ''))
             sys.stdout.write('         0%  0/{}  (time per part: n/a)'.format(num_parts))
             sys.stdout.flush()
             for part in range(num_parts):
                 before = datetime.now()
-                generated = dataset.generate(n=args.instances, mode=mode, noise=(not args.no_pixel_noise), include_models=args.include_models)
-                dataset.serialize_data(directory=directory, generated=generated, name='part{}'.format(start + part), archive=args.archive)
+                generated = dataset.generate(n=args.instances, mode=mode, noise=(not args.no_pixel_noise), include_model=args.include_model)
+                dataset.serialize(directory=directory, generated=generated, name='part{}'.format(start + part), archive=args.archive)
                 after = datetime.now()
                 sys.stdout.write('\r         {:.0f}%  {}/{}  (time per part: {})'.format((part + 1) * 100 / num_parts, part + 1, num_parts, str(after - before).split('.')[0]))
                 sys.stdout.flush()
@@ -117,5 +117,5 @@ if __name__ == "__main__":
             sys.stdout.flush()
             if args.captioner_statistics:
                 dataset.close_captioner_statistics()
-        sys.stdout.write('{} Data generation completed!\n'.format(datetime.now().strftime('%H:%M:%S')))
+        sys.stdout.write('{} data generation completed!\n'.format(datetime.now().strftime('%H:%M:%S')))
         sys.stdout.flush()

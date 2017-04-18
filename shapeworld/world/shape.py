@@ -1,6 +1,7 @@
+from __future__ import division
 from math import cos, pi, sqrt
 from random import choice, uniform
-from shapeworld.world.point import Point
+from shapeworld.util import Point
 
 
 golden_ratio = sqrt(5.0) / 2.0 - 0.5
@@ -71,7 +72,7 @@ class SquareShape(Shape):
 
     def __init__(self, size):
         assert isinstance(size, float)
-        return super().__init__(Point(size, size))
+        return super(SquareShape, self).__init__(Point(size, size))
 
     def __str__(self):
         return 'square'
@@ -104,7 +105,7 @@ class RectangleShape(Shape):
 
     def __init__(self, size):
         assert isinstance(size, Point)
-        return super().__init__(size)
+        return super(RectangleShape, self).__init__(size)
 
     def __str__(self):
         return 'rectangle'
@@ -139,7 +140,7 @@ class TriangleShape(Shape):
 
     def __init__(self, size):
         assert isinstance(size, float)
-        return super().__init__(Point(size, size * sqrt34))
+        return super(TriangleShape, self).__init__(Point(size, size * sqrt34))
 
     def __str__(self):
         return 'triangle'
@@ -176,7 +177,7 @@ class PentagonShape(Shape):
 
     def __init__(self, size):
         assert isinstance(size, float)
-        return super().__init__(Point(size, size * cos18))
+        return super(PentagonShape, self).__init__(Point(size, size * cos18))
 
     def __str__(self):
         return 'pentagon'
@@ -229,7 +230,7 @@ class CrossShape(Shape):
 
     def __init__(self, size):
         assert isinstance(size, float)
-        return super().__init__(Point(size, size))
+        return super(CrossShape, self).__init__(Point(size, size))
 
     def __str__(self):
         return 'cross'
@@ -271,7 +272,7 @@ class CircleShape(Shape):
 
     def __init__(self, size):
         assert isinstance(size, float)
-        return super().__init__(Point(size, size))
+        return super(CircleShape, self).__init__(Point(size, size))
 
     def __str__(self):
         return 'circle'
@@ -309,7 +310,7 @@ class SemicircleShape(Shape):
 
     def __init__(self, size):
         assert isinstance(size, float)
-        return super().__init__(Point(size, size * 0.5))
+        return super(SemicircleShape, self).__init__(Point(size, size * 0.5))
 
     def __str__(self):
         return 'semicircle'
@@ -350,7 +351,7 @@ class EllipseShape(Shape):
 
     def __init__(self, size):
         assert isinstance(size, Point)
-        return super().__init__(size)
+        return super(EllipseShape, self).__init__(size)
 
     def __str__(self):
         return 'ellipse'

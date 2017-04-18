@@ -1,6 +1,7 @@
+from __future__ import division
 from math import cos, pi, sin
 from random import choice, random
-from shapeworld.world.point import Point
+from shapeworld.util import Point
 from shapeworld.world.shape import Shape
 from shapeworld.world.color import Color
 from shapeworld.world.texture import Texture
@@ -54,7 +55,7 @@ class Entity(object):
         self.bottomright = bottomright + center
 
     def draw(self, world, world_size):
-        shift = 2.0 / world_size
+        shift = Point(2.0 / world_size.x, 2.0 / world_size.y)
         scale = 1.0 + 2.0 * shift
         topleft = (((self.topleft + 0.5 * shift) / scale) * world_size).max(Point.izero)
         bottomright = (((self.bottomright + 1.5 * shift) / scale) * world_size).min(world_size)
@@ -92,7 +93,7 @@ class Entity(object):
         topleft *= world_size
         bottomright *= world_size
         granularity = 1.0 / world_size.x / world_size.y
-        collision = 0
+        collision = 0.0
         if ratio:
             for _, point in Point.range(topleft, bottomright, world_size - Point.ione):
                 if ((point - self.center) in self) and ((point - other.center) in other):
@@ -129,7 +130,7 @@ class Entity(object):
         topleft *= world_size
         bottomright *= world_size
         granularity = 1.0 / world_size.x / world_size.y
-        collision = 0
+        collision = 0.0
         if ratio:
             for _, point in Point.range(topleft, bottomright, world_size - Point.ione):
                 if ((point - self.center) not in self) and ((point - other.center) in other):

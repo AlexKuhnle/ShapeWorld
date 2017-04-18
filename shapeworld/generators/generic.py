@@ -8,7 +8,7 @@ class GenericGenerator(WorldGenerator):
     MAX_ATTEMPTS = 10
 
     def __init__(self, entity_counts, world_size=None, world_color=None, shapes=None, colors=None, textures=None, rotation=None, size_range=None, distortion_range=None, shade_range=None, noise_range=None, collision_tolerance=None, boundary_tolerance=None, train_entity_counts=None, validation_entity_counts=None, test_entity_counts=None, validation_combinations=None, test_combinations=None, shapes_range=None, colors_range=None, textures_range=None):
-        super().__init__(world_size, world_color, shapes, colors, textures, rotation, size_range, distortion_range, shade_range, noise_range, collision_tolerance, boundary_tolerance)
+        super(GenericGenerator, self).__init__(world_size, world_color, shapes, colors, textures, rotation, size_range, distortion_range, shade_range, noise_range, collision_tolerance, boundary_tolerance)
 
         # assert world_color not random
         assert entity_counts and all(isinstance(n, int) and n >= 0 for n in entity_counts)

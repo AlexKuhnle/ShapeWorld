@@ -11,7 +11,7 @@ class QuantificationCaptioner(WorldCaptioner):
 
     def __init__(self, shapes, colors, textures, realizer=None, quantifier_tolerance=None, modes=None, quantifiers=None):
         # ideally requires modifiers of all values for modtype 'shape', 'color', 'texture'
-        super().__init__(realizer=realizer, quantifier_tolerance=quantifier_tolerance)
+        super(QuantificationCaptioner, self).__init__(realizer=realizer, quantifier_tolerance=quantifier_tolerance)
         self.modes = cumulative_distribution(modes or [1, 1, 1, 1, 1])
         # self.incorrect_modes = cumulative_distribution(
         #     incorrect_mode_distribution or [1, 1, 1, 1, 1, 1])

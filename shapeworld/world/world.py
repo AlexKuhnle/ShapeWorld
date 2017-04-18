@@ -1,8 +1,7 @@
 import numpy as np
 from PIL import Image
-from shapeworld.util import toposort
+from shapeworld.util import toposort, Point
 from shapeworld.world import Entity
-from shapeworld.world.point import Point
 from shapeworld.world.shape import WorldShape
 from shapeworld.world.color import Color
 from shapeworld.world.texture import SolidTexture
@@ -16,7 +15,7 @@ class World(Entity):
         assert isinstance(size, int) and size > 0
         assert isinstance(color, str) and color in Color.colors
         assert isinstance(noise_range, float) and 0.0 <= noise_range <= 1.0
-        super().__init__(WorldShape(), Color(color, Color.colors[color], 0.0), SolidTexture(), Point.half, 0.0)
+        super(World, self).__init__(WorldShape(), Color(color, Color.colors[color], 0.0), SolidTexture(), Point.half, 0.0)
         self.topleft = Point.zero
         self.bottomright = Point.one
         self.size = Point(size, size)
@@ -86,7 +85,7 @@ class World(Entity):
         if not color.any():
             world = np.zeros(shape=(self.size.x, self.size.y, 3), dtype=np.float32)
         else:
-            world = np.tile(A=np.asarray(a=color, dtype=np.float32), reps=(self.size.x, self.size.y, 1))
+            world = np.tile(A=np.array(object=color, dtype=np.float32), reps=(self.size.x, self.size.y, 1))
         self.draw(world=world, world_size=self.size)
         if noise and self.noise_range > 0.0:
             noise = np.random.normal(loc=0.0, scale=self.noise_range, size=(self.size.x, self.size.y, 3))
@@ -106,5 +105,5 @@ class World(Entity):
 
     @staticmethod
     def from_image(image):  # world matrix
-        world = (np.asarray(a=image, dtype=np.float32) / 255.0).transpose(1, 0, 2)
+        world = (np.array(object=image, dtype=np.float32) / 255.0).transpose(1, 0, 2)
         return world

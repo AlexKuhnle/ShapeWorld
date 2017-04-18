@@ -9,7 +9,7 @@ class ComposableDmrs(ListDmrs):
     __slots__ = ('nodes', 'links', 'index', 'top', 'anchors')
 
     def __init__(self, nodes=(), links=(), index=None, top=None):
-        super().__init__(nodes=nodes, links=links, index=index, top=top)
+        super(ComposableDmrs, self).__init__(nodes=nodes, links=links, index=index, top=top)
         self.anchors = dict()
 
     @staticmethod
