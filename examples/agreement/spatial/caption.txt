@@ -1,256 +1,256 @@
-a square is above a rectangle .
-a cyan circle is to the right of a blue shape .
-a blue ellipse is to the right of a green circle .
-a magenta rectangle is to the right of a green pentagon .
-a green semicircle is to the left of a yellow circle .
-a cyan semicircle is below a green square .
-a cross is to the right of a magenta shape .
-a cyan triangle is to the right of a triangle .
-a shape is above a shape .
-a shape is below a shape .
-a blue square is above a magenta shape .
-a yellow shape is below an ellipse .
-a blue cross is below a blue semicircle .
-a circle is to the right of a cyan circle .
-a cyan cross is below a green shape .
-a shape is above a yellow ellipse .
-a triangle is below a shape .
-a red semicircle is to the right of a yellow triangle .
-a yellow rectangle is to the left of a red rectangle .
-a magenta semicircle is to the left of a red square .
-a pentagon is to the left of a red shape .
-a yellow square is to the right of a green semicircle .
-a red semicircle is above a cyan shape .
-a square is below an ellipse .
-a rectangle is to the left of a shape .
-a magenta semicircle is below an ellipse .
-a green ellipse is to the right of a circle .
-a white square is above a red cross .
-a magenta triangle is to the right of a green shape .
-a red pentagon is to the right of a cyan shape .
-a circle is above a magenta pentagon .
-a red circle is to the right of a square .
-a yellow rectangle is above a semicircle .
-a white shape is below a white shape .
-a green shape is to the left of a green square .
-a yellow triangle is to the left of a white shape .
-a green shape is above a shape .
-a shape is above a cyan square .
-a red square is to the left of a red cross .
-a cross is above a green shape .
-a red shape is below a shape .
-a shape is below a square .
-a red rectangle is to the left of a shape .
-a triangle is below a shape .
-a magenta semicircle is below a blue square .
-a shape is below a white cross .
-a red semicircle is to the left of a rectangle .
-a green circle is to the right of a circle .
-a cyan square is to the right of a shape .
-a red square is to the left of a blue semicircle .
-a yellow rectangle is below a green shape .
-a cyan rectangle is above a yellow cross .
-a green rectangle is to the right of a cyan shape .
-a cyan ellipse is to the left of a green pentagon .
-a semicircle is below a cross .
-a magenta shape is below a red circle .
-a white circle is to the right of a shape .
-an ellipse is above a shape .
-a white pentagon is to the left of a rectangle .
-a yellow triangle is to the left of a yellow cross .
-a yellow shape is to the right of a red pentagon .
-a red shape is above a red ellipse .
-a square is to the right of a blue cross .
-a blue square is above a yellow square .
-a magenta rectangle is below a red semicircle .
-a red shape is to the right of a shape .
-a cyan pentagon is to the right of a blue ellipse .
-a red cross is below a shape .
-a cyan pentagon is to the right of a pentagon .
-a blue triangle is to the right of a magenta semicircle .
-a magenta triangle is to the left of a blue shape .
-a square is to the right of a yellow square .
-a red cross is above a cyan pentagon .
-a red square is to the right of a magenta pentagon .
-a yellow pentagon is to the right of a blue shape .
-a shape is below a red semicircle .
-a yellow rectangle is to the left of a yellow triangle .
-a blue pentagon is below a yellow pentagon .
-a red ellipse is to the left of a blue cross .
-a red shape is below a cross .
-a yellow square is above a green shape .
-a cyan pentagon is to the right of a red shape .
-a yellow circle is to the right of a pentagon .
-a green shape is below a magenta ellipse .
-a green cross is below a magenta shape .
-a cyan circle is below a shape .
-a white semicircle is above a shape .
-a cross is above a blue shape .
-a red cross is below a yellow triangle .
-a semicircle is above a white square .
-an ellipse is to the left of a red square .
-a red ellipse is to the left of a blue square .
-a white square is to the right of a red shape .
-a blue square is below an ellipse .
-a circle is below a red semicircle .
-a pentagon is to the right of a magenta cross .
-a green cross is to the right of a square .
-a yellow semicircle is above a green square .
-a magenta cross is to the left of a shape .
-a shape is to the left of a magenta pentagon .
-a rectangle is to the left of a shape .
-a green shape is below a red shape .
-a white circle is below a semicircle .
-a red shape is to the right of a rectangle .
-a green pentagon is to the right of a green triangle .
-a shape is above a circle .
-a shape is to the left of a yellow square .
-a blue pentagon is to the left of a cross .
-a green shape is to the left of a red shape .
-an ellipse is below a magenta shape .
-a blue cross is below a cross .
-a pentagon is to the left of a magenta rectangle .
-a rectangle is above a blue semicircle .
-a shape is to the left of a blue shape .
-an ellipse is to the right of a cyan ellipse .
-a magenta shape is to the right of a cyan square .
-a cyan square is to the left of a white triangle .
-a cyan shape is above a yellow shape .
-a blue pentagon is to the right of a shape .
-a cyan ellipse is below a red ellipse .
-a magenta shape is above a red shape .
-a red shape is above a red rectangle .
-a shape is above a green shape .
-a pentagon is to the right of a blue ellipse .
-a semicircle is above a blue shape .
-a yellow shape is to the left of a white shape .
-a yellow triangle is to the right of a cyan triangle .
-an ellipse is above a green circle .
-a cross is to the left of a cyan circle .
-a cyan circle is below a red ellipse .
-a cyan ellipse is to the left of a blue cross .
-a shape is to the left of a shape .
-a blue pentagon is below a pentagon .
-a shape is to the right of a red ellipse .
-a yellow triangle is below a magenta square .
-a pentagon is to the left of a cross .
-a cyan cross is below a white shape .
-a green pentagon is to the right of a blue pentagon .
-a red shape is to the right of a rectangle .
-a shape is to the left of a magenta semicircle .
-a semicircle is below a yellow semicircle .
-a shape is to the left of a blue semicircle .
-a cyan shape is above a magenta circle .
-a green rectangle is to the right of a green semicircle .
-a square is below a blue triangle .
-a magenta ellipse is below a circle .
-a cyan square is below a blue shape .
-a shape is below a shape .
-a yellow semicircle is to the right of a shape .
-a shape is to the right of a shape .
-a cyan circle is to the right of a magenta circle .
-a circle is below a magenta ellipse .
-a rectangle is to the left of a shape .
-a magenta semicircle is to the right of a rectangle .
-a blue shape is to the left of a shape .
-a magenta shape is to the right of a blue shape .
-a cyan shape is below a shape .
-a cyan circle is above a red rectangle .
-a cross is below a yellow shape .
-a shape is above a magenta shape .
-a blue shape is above a magenta ellipse .
+a shape is above a green square .
+a yellow ellipse is above a white triangle .
+a yellow pentagon is to the right of a shape .
+a yellow rectangle is above a rectangle .
+a green circle is to the left of a red triangle .
+a green triangle is to the left of a blue semicircle .
+a blue semicircle is to the right of a blue ellipse .
+a magenta shape is below a cyan pentagon .
+a yellow triangle is above a green square .
+a yellow shape is below a green square .
+a blue pentagon is above a shape .
+a blue rectangle is to the left of a blue cross .
+a shape is above a green pentagon .
+a shape is below a semicircle .
+a red rectangle is to the right of a cross .
+a yellow shape is below a yellow square .
+an ellipse is to the right of a white shape .
 a green cross is to the right of a white ellipse .
-a green ellipse is below a white shape .
-a magenta shape is above a white shape .
-a blue rectangle is below a blue shape .
-a white circle is to the right of a blue square .
-a shape is above a magenta shape .
-a circle is above a magenta shape .
-a white rectangle is above a circle .
-a green circle is to the right of a cyan square .
-a cross is below a yellow ellipse .
-a magenta semicircle is above a red semicircle .
-a square is to the right of a blue pentagon .
-a blue square is below a magenta pentagon .
-a magenta rectangle is to the right of a shape .
-a magenta shape is above a rectangle .
-a shape is to the left of a magenta ellipse .
-a shape is to the right of a shape .
-a shape is above a white shape .
-a square is to the right of a magenta circle .
-a shape is to the left of a red shape .
-a triangle is above a shape .
-a cross is above an ellipse .
-a cyan rectangle is to the right of a white semicircle .
-a magenta shape is below a shape .
-a white rectangle is to the left of a white pentagon .
-a red triangle is below a shape .
-a magenta square is to the left of a blue triangle .
-a rectangle is to the right of a circle .
-a semicircle is to the right of a blue shape .
-a white semicircle is to the right of a white shape .
-a yellow rectangle is above a magenta rectangle .
-a green ellipse is to the right of a shape .
-a cross is below a semicircle .
-a shape is above a blue semicircle .
-a blue cross is above a white pentagon .
-a yellow pentagon is above a red shape .
-a green square is below a cyan shape .
-a shape is below a circle .
-a green circle is to the left of a magenta shape .
-a blue triangle is to the right of a green ellipse .
-a cyan semicircle is to the right of a circle .
-a shape is above a green ellipse .
-a red square is below a blue semicircle .
-a green rectangle is to the left of a blue shape .
-a red rectangle is to the right of a rectangle .
-a blue circle is below a red pentagon .
-a cyan cross is to the left of a cyan circle .
-a white circle is to the left of a semicircle .
-a shape is below a white rectangle .
-a red ellipse is below a blue triangle .
-a shape is to the right of a pentagon .
-a cyan ellipse is below a magenta rectangle .
-a red shape is below a green ellipse .
-a cyan shape is to the left of a cyan pentagon .
-a red shape is to the right of a green semicircle .
-a pentagon is above a circle .
-a magenta rectangle is to the right of a red circle .
-a semicircle is to the left of a magenta shape .
-a green shape is to the right of a white shape .
-a shape is above a white cross .
-a blue shape is to the left of a green shape .
-a magenta circle is to the right of a shape .
-a shape is below a circle .
-a green shape is to the left of a semicircle .
-a shape is to the right of a square .
-a square is below a blue circle .
-a triangle is to the left of a cyan shape .
-an ellipse is to the left of a yellow pentagon .
-a circle is below a magenta square .
-a red rectangle is to the left of a white pentagon .
-a shape is above a white shape .
-a yellow semicircle is below an ellipse .
-a green shape is below a blue triangle .
-a blue ellipse is to the left of a red ellipse .
-a red shape is below a green ellipse .
-a cyan pentagon is to the left of a shape .
-a green shape is below a white cross .
-a yellow rectangle is to the right of a blue cross .
+a pentagon is to the left of a white triangle .
+a white shape is to the left of a shape .
 a shape is below a red pentagon .
-a cross is to the right of a cyan shape .
-a white ellipse is above a white shape .
-a blue shape is to the left of a blue rectangle .
-a cyan rectangle is to the right of a red square .
-a shape is to the left of a white circle .
-a magenta ellipse is above a circle .
-a cyan ellipse is below an ellipse .
-a yellow cross is above a white square .
-a pentagon is above a white shape .
-a circle is above a white triangle .
-a triangle is below a square .
-a cyan circle is above a red square .
-a white pentagon is above a cyan semicircle .
+a cyan circle is below a white circle .
+a white shape is to the right of a blue square .
+a red cross is below a red triangle .
+a white rectangle is to the right of a circle .
+a magenta circle is to the right of a blue pentagon .
+a pentagon is to the right of a magenta shape .
+a magenta semicircle is to the left of a semicircle .
+a green square is below a magenta semicircle .
+a shape is to the right of a cyan circle .
+a red shape is to the left of a green pentagon .
 a triangle is below a yellow pentagon .
-a cyan cross is to the left of a red triangle .
-a rectangle is below a cyan semicircle .
+a cross is to the right of a yellow cross .
+a green shape is below a blue pentagon .
+a magenta square is above a magenta shape .
+a shape is above a green shape .
+a blue rectangle is below a green shape .
+a circle is to the right of a green ellipse .
+a blue triangle is below a green triangle .
+a cyan rectangle is below a cyan square .
+a triangle is to the left of a cyan shape .
+a yellow circle is below a magenta shape .
+an ellipse is to the right of a blue shape .
+a green rectangle is to the right of a white shape .
+a shape is to the left of a cyan rectangle .
+a white shape is above a blue shape .
+a circle is to the left of a red semicircle .
+a green cross is to the left of a circle .
+a magenta shape is to the right of a blue circle .
+a shape is to the right of a circle .
+a white square is to the right of a green square .
+a green shape is above a red triangle .
+a magenta shape is to the right of a white shape .
+an ellipse is to the right of a blue cross .
+a blue circle is below a pentagon .
+a cross is below a red cross .
+a green square is above a cyan shape .
+a green triangle is below a yellow ellipse .
+a cyan shape is below a pentagon .
+a cyan triangle is above a green semicircle .
+a white shape is to the right of a magenta pentagon .
+a shape is to the left of a white semicircle .
+a red cross is above a red shape .
+a cyan square is to the right of a magenta shape .
+a semicircle is to the left of a yellow semicircle .
+a cyan square is to the left of a red rectangle .
+a green circle is below a cyan triangle .
+a shape is to the right of a rectangle .
+a magenta shape is above a yellow triangle .
+a shape is below a shape .
+a shape is below a yellow circle .
+a blue ellipse is to the right of a blue semicircle .
+a green shape is to the right of a shape .
+a white ellipse is to the right of an ellipse .
+a yellow shape is to the right of a red circle .
+a magenta ellipse is below a magenta square .
+a cyan shape is to the left of a shape .
+a shape is to the right of a blue shape .
+a green square is to the left of a red square .
+a yellow pentagon is to the left of a yellow pentagon .
+a magenta cross is below a blue cross .
+an ellipse is above a shape .
+a yellow shape is to the right of a yellow shape .
+a shape is above a cyan rectangle .
+a shape is above a yellow ellipse .
+a blue shape is above a blue ellipse .
+a cyan circle is below a shape .
+a blue rectangle is above a yellow rectangle .
+a triangle is to the left of a blue circle .
+a yellow semicircle is to the right of a green rectangle .
+a yellow cross is above a shape .
+a rectangle is above a white shape .
+a pentagon is above a red shape .
+a green shape is to the left of a shape .
+a cyan ellipse is to the right of an ellipse .
+a green triangle is above a white shape .
+a blue circle is below a yellow rectangle .
+a shape is to the right of a semicircle .
+a blue square is below a green semicircle .
+a green cross is below a yellow shape .
+a magenta rectangle is above a blue circle .
+a blue ellipse is to the right of a circle .
+a blue rectangle is to the right of a shape .
+a green shape is to the left of a cyan rectangle .
+a circle is to the right of a magenta shape .
+a yellow ellipse is to the right of an ellipse .
+a yellow semicircle is below a red shape .
+a triangle is above a magenta pentagon .
+a shape is to the left of a yellow shape .
+a yellow shape is to the left of a cross .
+a rectangle is below a red triangle .
+a magenta shape is to the left of a cyan circle .
+a shape is above a yellow rectangle .
+a cyan shape is to the left of a green pentagon .
+a cyan shape is to the right of a shape .
+a white shape is below a shape .
+a semicircle is below a white shape .
+a shape is to the left of a blue semicircle .
+a red circle is above a shape .
+a circle is to the right of a blue ellipse .
+a shape is to the right of a yellow semicircle .
+a white triangle is to the left of a shape .
+a semicircle is above a magenta rectangle .
+a pentagon is below a shape .
+a red shape is above a shape .
+a shape is above a cyan cross .
+a red cross is below a red shape .
+a magenta ellipse is below a magenta rectangle .
+a yellow square is above a green rectangle .
+a blue shape is below a blue square .
+a white rectangle is above a white shape .
+a green cross is above a red cross .
+a white circle is to the left of a magenta shape .
+a green semicircle is to the right of a white triangle .
+a magenta rectangle is to the right of a shape .
+a shape is below a pentagon .
+a shape is below a red square .
+a shape is below a yellow semicircle .
+a white shape is to the left of a white cross .
+a magenta shape is to the left of a green triangle .
+a green triangle is above a shape .
+a cross is below a shape .
+a circle is above a yellow circle .
+a semicircle is above a green square .
+a yellow rectangle is to the left of a green triangle .
+a blue circle is below a blue shape .
+a shape is to the right of a red triangle .
+a square is below a green ellipse .
+a blue pentagon is above a pentagon .
+a green cross is to the left of a shape .
+an ellipse is below a white ellipse .
+a square is to the right of a magenta shape .
+a shape is below a green semicircle .
+a white shape is to the left of a blue semicircle .
+a circle is above a rectangle .
+a red pentagon is to the right of a white cross .
+a cyan shape is above a shape .
+a triangle is below a magenta circle .
+a rectangle is to the left of a magenta circle .
+a green circle is above a circle .
+an ellipse is below a green shape .
+a yellow cross is above a shape .
+a pentagon is to the left of a shape .
+a shape is to the right of a rectangle .
+a shape is below a blue semicircle .
+a white triangle is above a rectangle .
+a yellow semicircle is to the left of a yellow triangle .
+a shape is to the left of a triangle .
+a white shape is to the right of a blue shape .
+a yellow semicircle is to the right of a shape .
+a shape is below a green pentagon .
+a circle is to the left of a white circle .
+a shape is below a magenta semicircle .
+a white triangle is above a shape .
+a circle is above a magenta semicircle .
+a white cross is to the left of a yellow cross .
+a triangle is to the left of a triangle .
+a magenta shape is to the left of a shape .
+a shape is to the left of a rectangle .
+a rectangle is to the right of a green shape .
+a white triangle is below a green triangle .
+a yellow ellipse is to the right of a circle .
+a green rectangle is above a cyan triangle .
+a yellow circle is to the left of a green cross .
+a yellow circle is to the left of a shape .
+a cyan rectangle is to the right of a blue circle .
+a yellow ellipse is to the left of a yellow shape .
+a magenta cross is to the right of a blue cross .
+a shape is below a yellow triangle .
+a cyan pentagon is below a shape .
+a triangle is to the left of a shape .
+a green triangle is to the left of a shape .
+a magenta square is to the right of a square .
+a circle is below a red semicircle .
+a white rectangle is above an ellipse .
+a white ellipse is to the right of a shape .
+a white shape is below a red rectangle .
+a cyan semicircle is to the right of a red circle .
+a white shape is above a semicircle .
+a white triangle is above a green shape .
+a shape is above a red circle .
+a green pentagon is below a magenta square .
+a shape is to the left of a cross .
+a circle is below a red shape .
+a red triangle is above a shape .
+a shape is to the left of a blue semicircle .
+a magenta square is below a blue shape .
+a white shape is to the right of a red triangle .
+a white pentagon is above a red rectangle .
+a yellow triangle is above a yellow semicircle .
+a circle is to the right of a blue semicircle .
+a triangle is above a magenta shape .
+a pentagon is to the right of a blue circle .
+a green pentagon is below a cyan shape .
+a blue triangle is above a shape .
+a shape is to the right of a white triangle .
+a yellow rectangle is below a green square .
+a yellow pentagon is to the right of a shape .
+a blue shape is to the right of a shape .
+a yellow pentagon is above a shape .
+a rectangle is below a red circle .
+a semicircle is below a green semicircle .
+a yellow ellipse is below a cyan pentagon .
+a shape is to the right of a cyan shape .
+a magenta ellipse is to the left of a shape .
+a shape is to the right of a magenta shape .
+a shape is to the right of a shape .
+a shape is to the right of a blue shape .
+a blue rectangle is below a blue shape .
+a cyan circle is below a green shape .
+a cyan square is to the right of a blue ellipse .
+a red cross is to the left of a shape .
+a green semicircle is above a red shape .
+a blue ellipse is below a blue semicircle .
+a circle is to the left of a yellow semicircle .
+a magenta cross is to the left of a white semicircle .
+a green semicircle is below a yellow pentagon .
+a rectangle is below a shape .
+a white circle is below a shape .
+a white semicircle is to the right of a yellow pentagon .
+a cyan rectangle is above a cyan ellipse .
+a blue rectangle is below a yellow shape .
+a green triangle is below a green shape .
+a cross is to the right of a cyan square .
+a cyan semicircle is to the left of a red shape .
+a white cross is below a yellow shape .
+a blue rectangle is to the left of a cross .
+a blue cross is above a semicircle .
+a magenta shape is to the right of a magenta shape .
+a triangle is below a cyan shape .
+a white shape is below a magenta triangle .
+a magenta ellipse is above a circle .
+a circle is below a yellow square .
+a blue rectangle is below a shape .
+a circle is to the left of a square .
+a shape is to the right of a yellow shape .

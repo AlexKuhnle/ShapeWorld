@@ -23,10 +23,10 @@ class World(Entity):
         self.entities = []
 
     def model(self):
-        return {'size': self.size.x, 'color': self.color.model(), 'noise-range': self.noise_range, 'entities': [entity.model() for entity in self.entities]}
+        return {'size': self.size.x, 'color': self.color.model(), 'noise_range': self.noise_range, 'entities': [entity.model() for entity in self.entities]}
 
     def copy(self, include_entities=True):
-        copy = World(size=self.size.x, color=str(self.color), noise_range=self.noise_range)
+        copy = World(size=self.size.x, color=str(self.color), noise=self.noise_range)
         if include_entities:
             for entity in self.entities:
                 copy.entities.append(entity.copy())
@@ -41,9 +41,9 @@ class World(Entity):
     def distance(self, offset):
         return self.shape.distance(offset)
 
-    def draw(self, world, world_size):
+    def draw(self, world_array, world_size):
         for entity in self.entities:
-            entity.draw(world=world, world_size=world_size)
+            entity.draw(world_array=world_array, world_size=world_size)
 
     def random_location(self):
         return Point.random_instance(Point.zero, Point.one)
@@ -80,30 +80,30 @@ class World(Entity):
         for n, entity in enumerate(self.entities):
             entity.id = n
 
-    def get_world(self, noise=True):
+    def get_array(self, noise=True):
         color = self.color.get_color()
         if not color.any():
-            world = np.zeros(shape=(self.size.x, self.size.y, 3), dtype=np.float32)
+            world_array = np.zeros(shape=(self.size.y, self.size.x, 3), dtype=np.float32)
         else:
-            world = np.tile(A=np.array(object=color, dtype=np.float32), reps=(self.size.x, self.size.y, 1))
-        self.draw(world=world, world_size=self.size)
+            world_array = np.tile(A=np.array(object=color, dtype=np.float32), reps=(self.size.x, self.size.y, 1))
+        self.draw(world_array=world_array, world_size=self.size)
         if noise and self.noise_range > 0.0:
-            noise = np.random.normal(loc=0.0, scale=self.noise_range, size=(self.size.x, self.size.y, 3))
+            noise = np.random.normal(loc=0.0, scale=self.noise_range, size=(self.size.y, self.size.x, 3))
             mask = (noise < -self.noise_range) + (noise > self.noise_range)
             while np.any(a=mask):
                 noise -= mask * noise
-                noise += mask * np.random.normal(loc=0.0, scale=self.noise_range, size=(self.size.x, self.size.y, 3))
+                noise += mask * np.random.normal(loc=0.0, scale=self.noise_range, size=(self.size.y, self.size.x, 3))
                 mask = (noise < -self.noise_range) + (noise > self.noise_range)
-            world += noise
-            np.clip(world, a_min=0.0, a_max=1.0, out=world)
-        return world
+            world_array += noise
+            np.clip(world_array, a_min=0.0, a_max=1.0, out=world_array)
+        return world_array
 
     @staticmethod
-    def get_image(world):  # world matrix
-        image = Image.fromarray(obj=(world * 255.0).astype(dtype=np.uint8).transpose(1, 0, 2), mode='RGB')
+    def get_image(world_array):
+        image = Image.fromarray(obj=(world_array * 255.0).astype(dtype=np.uint8), mode='RGB')
         return image
 
     @staticmethod
-    def from_image(image):  # world matrix
-        world = (np.array(object=image, dtype=np.float32) / 255.0).transpose(1, 0, 2)
-        return world
+    def from_image(image):
+        world_array = (np.array(object=image, dtype=np.float32) / 255.0)
+        return world_array

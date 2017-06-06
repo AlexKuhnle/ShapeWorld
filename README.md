@@ -52,8 +52,8 @@ generated = dataset.generate(n=128, mode='train', include_model=True)
 batch = (generated['world'], generated['caption'], generated['agreement'])
 
 # can be used for more specific evaluation
-world_model = generated['world-model']
-caption_model = generated['caption-model']
+world_model = generated['world_model']
+caption_model = generated['caption_model']
 ```
 
 
@@ -82,18 +82,19 @@ The following command line arguments are available:
 * `--[m]ode`:  Mode, one of `train`, `validation`, `test` (default: `none`)
 * `--include-[M]odel`:  Include world/caption model, as json file (default: `false`)
 * `--no-[P]ixel-noise`:  Do not infuse pixel noise (default: `false`)
+* `--[C]oncatenate-images`:  Concatenate images per part in one image (default: `false`)
 * `--captioner-[S]tatistics`:  Collect statistical data of captioner (default: `false`)
 
 When creating larger amounts of ShapeWorld data, it is advisable to store the data in a compressed archive (for example `-a tar:bz2`) and turn off the pixel noise (`-p`) for best compression results. For instance, the following command line generates one million *training* instances of the `multishape` configuration file included in this repository:
 
 ```bash
-python generate.py -D [DIRECTORY] -a tar:bzip2 -c configs/agreement/multishape.json -m train -p 100 -i 10k -W -P
+python generate.py -D [DIRECTORY] -a tar:bzip2 -c configs/agreement/multishape.json -m train -p 100 -i 10k -M -P -C
 ```
 
 For the purpose of this introduction, we generate a smaller amount of *all* training, validation and test instances using the default configuration of the dataset:
 
 ```bash
-python generate.py -d examples/readme -a tar:bzip2 -t agreement -n multishape -p 5,1,1 -i 128 -P
+python generate.py -d examples/readme -a tar:bzip2 -t agreement -n multishape -p 5,1,1 -i 128 -M -P -C
 ```
 
 
@@ -101,12 +102,12 @@ python generate.py -d examples/readme -a tar:bzip2 -t agreement -n multishape -p
 Loading extracted data
 ----------------------
 
-Extracted data can be loaded and accessed with the same `Dataset` interface as before, just define the `dataset_name` as `'load'` and either the directory or the specification file as `config`. However, to be able to do this, we need to extract all of training, validation and test data, as is done in the last command line. Note that we extracted pixel-noise-free instances - the noise will automatically be (re-)infused accordingly.
+Extracted data can be loaded and accessed with the same `Dataset` interface as before, just define the `config` argument as `'load([DIRECTORY])'`. However, to be able to do this, we need to extract all of training, validation and test data, as is done in the last command line. Note that we extracted pixel-noise-free instances - the noise will automatically be (re-)infused accordingly.
 
 ```python
 from shapeworld import dataset
 
-dataset = dataset(name='load', config='examples/readme/agreement/multishape')
+dataset = dataset(dtype='agreement', name='multishape', config='load(examples/readme)')
 generated = dataset.generate(n=128, mode='train')
 ```
 
@@ -116,7 +117,7 @@ If you need to manually (re-)infuse the pixel noise later (for instance, because
 import numpy as np
 from shapeworld import dataset
 
-dataset = dataset(name='load', config='examples/readme/agreement/multishape')
+dataset = dataset(dtype='agreement', name='multishape', config='load(examples/readme)')
 world_size = 64
 noise_range = 0.1
 generated = dataset.generate(n=128, mode='train', noise=False)

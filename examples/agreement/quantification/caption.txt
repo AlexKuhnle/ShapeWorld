@@ -1,256 +1,256 @@
-the shape is cyan .
-a shape is a circle .
-all shapes are cyan .
-two shapes are semicircles .
-most white shapes are pentagons .
-no shape is white .
-most shapes are blue pentagons .
-most shapes are magenta semicircles .
-no shape is white .
-no white shape is a rectangle .
-a shape is a yellow triangle .
-all shapes are rectangles .
-the shape is a red rectangle .
-all cyan shapes are crosses .
-no shape is a rectangle .
-no white shape is a triangle .
-two magenta shapes are rectangles .
-no cyan shape is an ellipse .
-most shapes are pentagons .
-two shapes are green squares .
-the cross is cyan .
-a shape is a cross .
-a shape is a rectangle .
-the shape is an ellipse .
-a white shape is a triangle .
-a shape is a cyan semicircle .
-two shapes are squares .
-a shape is a white rectangle .
-two rectangles are blue .
-no shape is red .
-a cross is yellow .
-most shapes are squares .
-no triangle is magenta .
-a cyan shape is a cross .
-all magenta shapes are circles .
-a shape is yellow .
-all blue shapes are rectangles .
-the ellipse is white .
-most shapes are yellow .
-two blue shapes are rectangles .
-a shape is a cyan semicircle .
-a shape is blue .
-two shapes are yellow semicircles .
-most shapes are triangles .
-a semicircle is yellow .
-two shapes are blue rectangles .
-a shape is a green semicircle .
-the shape is blue .
-most shapes are cyan .
-a shape is a red ellipse .
-the shape is a rectangle .
-most shapes are crosses .
-two shapes are green rectangles .
-a shape is blue .
-the shape is a white semicircle .
-two shapes are blue squares .
-a shape is a circle .
-no cyan shape is a triangle .
-all squares are cyan .
-two rectangles are white .
-no cyan shape is a circle .
-most shapes are red .
-the shape is a semicircle .
-a shape is a green pentagon .
-most pentagons are magenta .
-a shape is a magenta pentagon .
-most yellow shapes are circles .
-two shapes are circles .
-two shapes are magenta .
-a shape is a red pentagon .
-the green shape is a cross .
-the shape is cyan .
-two green shapes are crosses .
-the magenta shape is a pentagon .
-the cyan shape is a cross .
-all shapes are green circles .
-the shape is a blue cross .
-two white shapes are circles .
-two shapes are green .
-a shape is a white ellipse .
-no circle is cyan .
-two shapes are blue .
-no shape is a red rectangle .
-most rectangles are red .
-a shape is a rectangle .
-the shape is a blue ellipse .
-no rectangle is yellow .
-all red shapes are semicircles .
-two shapes are green squares .
-no shape is a cross .
-a blue shape is a triangle .
-most shapes are triangles .
-a shape is a white square .
-two pentagons are red .
-a shape is a circle .
-most shapes are pentagons .
-no shape is a magenta cross .
-two semicircles are yellow .
-a white shape is a cross .
-all shapes are cyan .
-two shapes are squares .
-two shapes are triangles .
-all ellipses are yellow .
-most cyan shapes are semicircles .
-all shapes are blue circles .
-the shape is green .
-two shapes are green .
-two circles are white .
-all shapes are red .
-all red shapes are triangles .
-the shape is an ellipse .
-a cyan shape is a semicircle .
+no cyan shape is a rectangle .
+a rectangle is yellow .
+all shapes are yellow .
+a yellow shape is an ellipse .
+a shape is a cyan ellipse .
+two red shapes are semicircles .
 all shapes are squares .
-no ellipse is magenta .
-all blue shapes are triangles .
-two shapes are blue .
-two green shapes are ellipses .
-a shape is a rectangle .
-most shapes are circles .
-two shapes are yellow rectangles .
-no shape is a rectangle .
-the cross is red .
-most shapes are yellow circles .
-most shapes are triangles .
-all shapes are crosses .
-two shapes are blue .
-the shape is a green rectangle .
-all semicircles are magenta .
-no shape is a yellow square .
-a shape is a circle .
-no shape is cyan .
-a shape is blue .
-two yellow shapes are triangles .
-no shape is red .
-all crosses are white .
-no yellow shape is a pentagon .
-no shape is a blue pentagon .
-two magenta shapes are pentagons .
-two pentagons are magenta .
-the shape is a green ellipse .
-no shape is a square .
-the shape is white .
-the cross is white .
-an ellipse is red .
-no square is blue .
-most shapes are green .
-the shape is yellow .
-two cyan shapes are crosses .
-a shape is yellow .
-no shape is a red square .
-a shape is a cross .
-most shapes are magenta ellipses .
-all shapes are green pentagons .
+a shape is red .
+no red shape is a cross .
+all ellipses are magenta .
+two white shapes are rectangles .
 most magenta shapes are rectangles .
-two shapes are red .
-two ellipses are blue .
-a shape is yellow .
-most shapes are green .
-two shapes are magenta .
-no triangle is cyan .
-no shape is a green triangle .
-no shape is a semicircle .
-two blue shapes are rectangles .
-no shape is a triangle .
-a shape is white .
-two shapes are cyan rectangles .
-the shape is a cyan rectangle .
-all pentagons are white .
-the cyan shape is a rectangle .
-all shapes are green .
-two pentagons are white .
-no cyan shape is a cross .
-most semicircles are red .
-all shapes are ellipses .
-the rectangle is red .
-no shape is a cyan rectangle .
-a shape is a cyan semicircle .
-two shapes are cyan .
-no shape is a yellow triangle .
-two shapes are rectangles .
-the shape is white .
-the shape is a triangle .
-most shapes are squares .
-the shape is a white pentagon .
-the red shape is a pentagon .
-all blue shapes are triangles .
-all cyan shapes are ellipses .
-no shape is green .
-the shape is yellow .
-most magenta shapes are crosses .
-all shapes are ellipses .
-a cross is red .
-all shapes are blue pentagons .
-all pentagons are yellow .
-a cyan shape is a triangle .
-the circle is yellow .
-most shapes are squares .
-most shapes are green .
-no cross is blue .
-two shapes are yellow .
-a shape is a green circle .
-the shape is red .
-the triangle is green .
-all shapes are semicircles .
-the shape is magenta .
-all green shapes are ellipses .
-no triangle is yellow .
-two shapes are yellow rectangles .
-the cyan shape is a circle .
-the cyan shape is a square .
-no blue shape is a cross .
-no magenta shape is a pentagon .
-no square is magenta .
-two shapes are cyan .
-two crosses are blue .
-no pentagon is blue .
-no rectangle is red .
-most magenta shapes are semicircles .
-two semicircles are yellow .
-the yellow shape is a cross .
-all shapes are ellipses .
-a shape is a yellow semicircle .
-two shapes are yellow rectangles .
-the shape is red .
-two shapes are red triangles .
-a shape is an ellipse .
-no square is cyan .
-most shapes are semicircles .
-most shapes are green triangles .
-the shape is a blue triangle .
-a shape is yellow .
-a shape is blue .
-no semicircle is magenta .
-a shape is white .
-all shapes are red squares .
-all shapes are blue circles .
-no yellow shape is a pentagon .
-no semicircle is red .
+no green shape is a circle .
+the ellipse is magenta .
+all blue shapes are rectangles .
+two shapes are blue .
+two shapes are circles .
+all ellipses are cyan .
+a shape is red .
+no shape is magenta .
+most shapes are ellipses .
+no circle is white .
+most shapes are cyan .
+no cyan shape is an ellipse .
+the white shape is an ellipse .
+all pentagons are magenta .
+a rectangle is magenta .
 two blue shapes are circles .
+most shapes are blue .
+two shapes are blue .
+most magenta shapes are circles .
+no shape is green .
+all shapes are cyan .
+the shape is red .
+all green shapes are crosses .
+no shape is magenta .
+most shapes are magenta circles .
+most shapes are crosses .
+no shape is a magenta rectangle .
+two green shapes are pentagons .
+no green shape is a rectangle .
+the semicircle is cyan .
+two cyan shapes are circles .
+a shape is a white square .
+no pentagon is red .
+a shape is a magenta rectangle .
+all cyan shapes are triangles .
+all white shapes are crosses .
+the shape is a rectangle .
+no shape is a square .
+no circle is yellow .
+no shape is a triangle .
+all shapes are triangles .
+the shape is a blue pentagon .
+most shapes are magenta .
+two shapes are semicircles .
+the green shape is an ellipse .
+the shape is a magenta pentagon .
+two semicircles are white .
+two shapes are yellow .
+the green shape is a rectangle .
+two shapes are white .
+all magenta shapes are pentagons .
+a semicircle is magenta .
+the shape is a white rectangle .
+the shape is a green circle .
+most squares are white .
 the shape is a circle .
-a shape is a white semicircle .
-most shapes are semicircles .
-an ellipse is yellow .
-two shapes are crosses .
-most shapes are magenta semicircles .
-two triangles are yellow .
-no magenta shape is a cross .
-most shapes are pentagons .
-the pentagon is yellow .
-no red shape is a circle .
-a shape is a red semicircle .
-a shape is blue .
-two shapes are pentagons .
-a triangle is blue .
+no shape is magenta .
+a shape is a triangle .
+a shape is a cross .
+all shapes are crosses .
+no ellipse is red .
+no shape is a cyan pentagon .
+the shape is a white ellipse .
+the shape is a square .
+two circles are red .
+the shape is red .
+all shapes are squares .
+two shapes are yellow .
+no magenta shape is a semicircle .
+no shape is white .
+most shapes are rectangles .
+the shape is a green square .
+all shapes are green .
+all shapes are white .
+two yellow shapes are crosses .
+a blue shape is an ellipse .
+the shape is a square .
+most shapes are cyan .
+the circle is blue .
+two shapes are cyan rectangles .
+a shape is a cyan cross .
+no shape is yellow .
+all shapes are yellow .
+the pentagon is blue .
+no shape is a yellow triangle .
+all shapes are squares .
+a shape is a yellow cross .
+the shape is a circle .
+all shapes are blue .
+the cyan shape is a semicircle .
+two shapes are magenta triangles .
+all circles are white .
+the white shape is an ellipse .
+two shapes are red .
+most shapes are yellow crosses .
+no red shape is a semicircle .
+the red shape is a circle .
+two shapes are white .
+two shapes are white .
+the yellow shape is a cross .
+a shape is an ellipse .
+a shape is a rectangle .
+all shapes are green squares .
+the shape is a pentagon .
+the green shape is a square .
+most ellipses are blue .
+a shape is a triangle .
+all shapes are magenta .
+a shape is an ellipse .
+all rectangles are cyan .
+the shape is cyan .
+the semicircle is magenta .
+the shape is an ellipse .
+all magenta shapes are ellipses .
+the green shape is an ellipse .
+the ellipse is white .
+most blue shapes are semicircles .
+the ellipse is magenta .
 the circle is red .
-the blue shape is a triangle .
+a shape is green .
+most green shapes are squares .
+most shapes are red rectangles .
+no semicircle is red .
+all triangles are cyan .
+a shape is a blue semicircle .
+all shapes are green triangles .
+a red shape is a semicircle .
+all shapes are ellipses .
+all circles are yellow .
+two shapes are crosses .
+all shapes are squares .
+most red shapes are circles .
+all shapes are rectangles .
+two rectangles are cyan .
+a shape is magenta .
+a shape is a cross .
+the shape is a rectangle .
+two shapes are green squares .
+two shapes are semicircles .
+no circle is white .
+the shape is white .
+no circle is red .
+the yellow shape is a semicircle .
+two squares are blue .
+a shape is a semicircle .
+all cyan shapes are circles .
+a shape is a square .
+all shapes are pentagons .
+a shape is a square .
+two shapes are yellow .
+all semicircles are cyan .
+no pentagon is yellow .
+most squares are magenta .
+the shape is a cyan semicircle .
+two shapes are squares .
+the semicircle is white .
+most shapes are circles .
+no shape is a red semicircle .
+most shapes are circles .
+the cyan shape is an ellipse .
+two rectangles are magenta .
+two shapes are cyan .
+all shapes are cyan rectangles .
+all shapes are yellow triangles .
+all shapes are yellow crosses .
+two blue shapes are semicircles .
+a circle is cyan .
+a shape is a cyan triangle .
+two shapes are yellow pentagons .
+the cyan shape is an ellipse .
+a shape is a yellow cross .
+a shape is an ellipse .
+all shapes are red .
+two blue shapes are ellipses .
+the shape is a magenta semicircle .
+all yellow shapes are semicircles .
+no shape is magenta .
+a shape is a cyan semicircle .
+no shape is a square .
+most shapes are white ellipses .
+the shape is a red cross .
+two shapes are yellow .
+two shapes are red .
+all blue shapes are semicircles .
+two shapes are crosses .
+most shapes are rectangles .
+the blue shape is an ellipse .
+most shapes are green .
+the shape is a rectangle .
+the semicircle is green .
+most pentagons are magenta .
+a shape is a magenta semicircle .
+the shape is a circle .
+no shape is a pentagon .
+all squares are white .
+most shapes are squares .
+the rectangle is yellow .
+two shapes are circles .
+no cyan shape is a circle .
+the magenta shape is a circle .
+no blue shape is a pentagon .
+two shapes are semicircles .
+the ellipse is red .
+no shape is a circle .
+a white shape is a cross .
+all shapes are crosses .
+no blue shape is a rectangle .
+no rectangle is blue .
+a shape is an ellipse .
+most shapes are semicircles .
+the semicircle is green .
+all shapes are yellow .
+two crosses are yellow .
+two shapes are ellipses .
+no magenta shape is a pentagon .
+no shape is a square .
+the shape is a blue rectangle .
+all shapes are rectangles .
+a shape is a yellow circle .
+two shapes are white .
+a white shape is a pentagon .
+a cyan shape is a rectangle .
+the yellow shape is an ellipse .
+all shapes are rectangles .
+a magenta shape is a circle .
+a shape is a cross .
+a shape is a magenta semicircle .
+no shape is a rectangle .
+a shape is white .
+all shapes are red .
+most shapes are cyan semicircles .
+no shape is a blue circle .
+no rectangle is white .
+the shape is a semicircle .
+two red shapes are crosses .
+most shapes are green semicircles .
+a shape is blue .
+no red shape is an ellipse .
+the shape is red .
+no shape is a green pentagon .
+the shape is a red ellipse .
+a shape is blue .
+all red shapes are circles .
+two magenta shapes are triangles .

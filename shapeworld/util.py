@@ -5,7 +5,7 @@ import json
 from math import ceil, floor, sqrt, trunc
 from operator import __truediv__
 import os
-from random import uniform
+from random import random, uniform
 import tarfile
 import time
 import zipfile
@@ -29,7 +29,7 @@ def parse_int_with_factor(string):
 
 def parse_config(string):
     assert string
-    if string in ('none', 'None', 'null', 'Null'):
+    if string.lower() in ('none', 'null'):
         return None
     elif string[0] == '{':
         assert string[-1] == '}'
@@ -80,6 +80,18 @@ def cumulative_distribution(values):
         return cdf
     else:
         assert False
+
+
+def sample(cumulative_distribution, items=None):
+    sample = random()
+    if items:
+        for item, prob in zip(items, cumulative_distribution):
+            if sample < prob:
+                return item
+    else:
+        for index, prob in enumerate(cumulative_distribution):
+            if sample < prob:
+                return index
 
 
 PointTuple = namedtuple('PointTuple', ('x', 'y'))
@@ -343,12 +355,14 @@ Point.directions_ext = (Point.right, Point.top_right, Point.top, Point.top_left,
 
 class Archive(object):
 
-    def __init__(self, directory, mode, name=None, archive=None):
+    def __init__(self, path, mode, archive=None):
         assert mode == 'r' or mode == 'w'
         assert archive in (None, 'zip', 'zip:none', 'zip:deflate', 'zip:bzip2', 'zip:lzma', 'tar', 'tar:none', 'tar:gzip', 'tar:bzip2', 'tar:lzma')
-        self.archive = os.path.join(directory, name) if name else directory
+        self.archive = path
         self.mode = mode
-        self.temp_directory = str(time.time())
+        if not os.path.isdir('/tmp/shapeworld'):
+            os.makedirs('/tmp/shapeworld')
+        self.temp_directory = os.path.join('/tmp/shapeworld', str(time.time()))
         os.mkdir(self.temp_directory)
         if archive is None:
             self.archive_type = None

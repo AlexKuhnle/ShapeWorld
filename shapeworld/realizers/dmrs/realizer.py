@@ -3,7 +3,10 @@ import re
 import subprocess
 from shapeworld import CaptionRealizer
 from shapeworld.caption import Predicate, Modifier, Noun, Relation, Quantifier, Proposition
-from shapeworld.realizers.dmrs.dmrs import ComposableDmrs
+from shapeworld.realizers.dmrs.dmrs import Dmrs
+
+from datetime import datetime
+import sys
 
 
 class DmrsRealizer(CaptionRealizer):
@@ -17,19 +20,21 @@ class DmrsRealizer(CaptionRealizer):
 
     def realize(self, captions):
         assert all(isinstance(caption, Proposition) for caption in captions)
-        ace = subprocess.Popen([self.ace_path, '-g', self.erg_path, '-1Te'], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        try:
+            ace = subprocess.Popen([self.ace_path, '-g', self.erg_path, '-1Te'], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        except Exception as e:
+            print(datetime.now().strftime('%H:%M:%S'))
+            print(e.strerror)
+            print(sys.exc_info()[0])
+            raise
         mrs = '\n'.join(self.proposition_dmrs(caption).get_mrs() for caption in captions) + '\n'
         stdout_data, stderr_data = ace.communicate(mrs.encode())
-        # for n, line in enumerate(stderr_data.decode('utf-8').splitlines()):
-        #     if not self.regex.match(line):
-        #         print(line)
-        #         print(self.proposition_dmrs(captions[n]).get_mrs())
-        assert all(self.regex.match(line) for line in stderr_data.decode('utf-8').splitlines())
+        assert all(self.regex.match(line) for line in stderr_data.decode('utf-8').splitlines()), '\n\n' + '\n'.join('{}\n{}\n{}\n'.format(line, '', self.proposition_dmrs(caption).get_mrs()) for line, caption in zip(stderr_data.decode('utf-8').splitlines(), captions) if not self.regex.match(line))  # self.proposition_dmrs(caption).dumps_xml()
         caption_strings = stdout_data.decode('utf-8').splitlines()
         assert len(caption_strings) == len(captions)
         for n, caption in enumerate(caption_strings):
             caption = caption.lower()
-            caption = caption.replace('.', ' .')
+            caption = caption.replace('.', ' .').replace(',', ' ,')
             captions[n] = caption.split()
         return captions
 
@@ -115,8 +120,9 @@ class DmrsRealizer(CaptionRealizer):
 
     def proposition_dmrs(self, proposition):
         assert len(proposition.clauses) >= 1
-        if len(proposition.clauses) == 1:
-            tag, dmrs = self.clause_dmrs(proposition.clauses[0])
+        clauses_dmrs = []
+        for clause in proposition.clauses:
+            tag, dmrs = self.clause_dmrs(clause)
             assert tag in ('modifier', 'noun', 'quantifier')
             if tag == 'modifier':
                 dmrs = DmrsRealizer.empty_predicate.compose(dmrs, {'noun': 'noun'})
@@ -125,54 +131,84 @@ class DmrsRealizer(CaptionRealizer):
             elif tag == 'noun':
                 dmrs = DmrsRealizer.empty_clause.compose(dmrs, {'noun': 'noun'})
                 dmrs = dmrs.compose(DmrsRealizer.empty_singular_quantifier, {'noun': 'rstr'})
+            clauses_dmrs.append(dmrs)
+        # connective = None?
+        if len(clauses_dmrs) == 1:
+            dmrs = clauses_dmrs[0]
         else:
             dmrs = DmrsRealizer.propositions[proposition.connective]
-            # better with first, between, last?
-            dmrs = dmrs.compose(self.clause_dmrs(proposition.clauses[-1]), {'arg2': 'rel'})
-            for clause in reversed(proposition.clauses[1:-1]):
-                dmrs = dmrs.compose(self.clause_dmrs(clause), {'arg1': 'rel'})
-                dmrs = DmrsRealizer.propositions[proposition.connective].compose(dmrs, {'arg2': 'con'})
-            dmrs = dmrs.compose(self.clause_dmrs(proposition.clauses[0]), {'arg1': 'rel'})
+            if isinstance(dmrs, Dmrs):
+                connective_dmrs = intermediate_dmrs = dmrs
+                first_dmrs = None
+            else:
+                connective_dmrs, intermediate_dmrs, first_dmrs = dmrs
+            dmrs = connective_dmrs.compose(clauses_dmrs[-1], {'arg2': 'rel'})
+            for clause_dmrs in reversed(clauses_dmrs[1:-1]):
+                dmrs = dmrs.compose(clause_dmrs, {'arg1': 'rel'})
+                dmrs = intermediate_dmrs.compose(dmrs, {'arg2': 'con'})
+            dmrs = dmrs.compose(clauses_dmrs[0], {'arg1': 'rel'})
+            if first_dmrs:
+                dmrs = dmrs.compose(first_dmrs, {'arg1': 'arg'})
         return dmrs
 
 
 realizer = DmrsRealizer
 
 
-DmrsRealizer.empty_predicate = ComposableDmrs.parse('[noun]:_shape_n_1 x[???+?]')
-DmrsRealizer.empty_relation = ComposableDmrs.parse('[noun]:pred x? <-1- ***[rel]:_be_v_id e[ppi--] -2-> [ref]:node')
-DmrsRealizer.adjective_relation = ComposableDmrs.parse('[noun]:pred x? <-1- ***[rel]:pred e[ppi--]')
-DmrsRealizer.empty_singular_quantifier = ComposableDmrs.parse('[quant]:_a_q --> [rstr]:pred x[?s???]')
-DmrsRealizer.empty_plural_quantifier = ComposableDmrs.parse('[quant]:udef_q --> [rstr]:pred x[?p???]')
-DmrsRealizer.empty_clause = ComposableDmrs.parse('[noun]:node <-1- ***[rel]:_be_v_there e[ppi--]')
+DmrsRealizer.empty_predicate = Dmrs.parse('[noun]:_shape_n_1 x[???+?]')
+DmrsRealizer.empty_relation = Dmrs.parse('[noun]:pred x? <-1- ***[rel]:_be_v_id e[ppi--] -2-> [ref]:node')
+DmrsRealizer.adjective_relation = Dmrs.parse('[noun]:pred x? <-1- ***[rel]:pred e[ppi--]')
+DmrsRealizer.empty_singular_quantifier = Dmrs.parse('[quant]:_a_q --> [rstr]:pred x[?s???]')
+DmrsRealizer.empty_plural_quantifier = Dmrs.parse('[quant]:udef_q --> [rstr]:pred x[?p???]')
+DmrsRealizer.empty_clause = Dmrs.parse('[noun]:node <-1- ***[rel]:_be_v_there e[ppi--]')
 
 
 DmrsRealizer.modifiers = {
     'shape': {
-        'square': ComposableDmrs.parse('[noun]:_square_n_1 x[???+?]'),
-        'rectangle': ComposableDmrs.parse('[noun]:_rectangle_n_1 x[???+?]'),
-        'triangle': ComposableDmrs.parse('[noun]:_triangle_n_1 x[???+?]'),
-        'pentagon': ComposableDmrs.parse('[noun]:_pentagon_n_1 x[???+?]'),
-        'cross': ComposableDmrs.parse('[noun]:_cross_n_1 x[???+?]'),
-        'circle': ComposableDmrs.parse('[noun]:_circle_n_1 x[???+?]'),
-        'semicircle': ComposableDmrs.parse('[noun]:_semicircle_n_1 x[???+?]'),
-        'ellipse': ComposableDmrs.parse('[noun]:_ellipse_n_1 x[???+?]')
+        'square': Dmrs.parse('[noun]:_square_n_1 x[???+?]'),
+        'rectangle': Dmrs.parse('[noun]:_rectangle_n_1 x[???+?]'),
+        'triangle': Dmrs.parse('[noun]:_triangle_n_1 x[???+?]'),
+        'pentagon': Dmrs.parse('[noun]:_pentagon_n_1 x[???+?]'),
+        'cross': Dmrs.parse('[noun]:_cross_n_1 x[???+?]'),
+        'circle': Dmrs.parse('[noun]:_circle_n_1 x[???+?]'),
+        'semicircle': Dmrs.parse('[noun]:_semicircle_n_1 x[???+?]'),
+        'ellipse': Dmrs.parse('[noun]:_ellipse_n_1 x[???+?]')
     },
 
     'color': {
-        'black': ComposableDmrs.parse('[mod]:_black_a_1 e? =1=> [noun]:node'),
-        'red': ComposableDmrs.parse('[mod]:_red_a_1 e? =1=> [noun]:node'),
-        'green': ComposableDmrs.parse('[mod]:_green_a_1 e? =1=> [noun]:node'),
-        'blue': ComposableDmrs.parse('[mod]:_blue_a_1 e? =1=> [noun]:node'),
-        'yellow': ComposableDmrs.parse('[mod]:_yellow_a_1 e? =1=> [noun]:node'),
-        'magenta': ComposableDmrs.parse('[mod]:_magenta_a_1 e? =1=> [noun]:node'),
-        'cyan': ComposableDmrs.parse('[mod]:_cyan_a_1 e? =1=> [noun]:node'),
-        'white': ComposableDmrs.parse('[mod]:_white_a_1 e? =1=> [noun]:node')
+        'black': Dmrs.parse('[mod]:_black_a_1 e? =1=> [noun]:node'),
+        'red': Dmrs.parse('[mod]:_red_a_1 e? =1=> [noun]:node'),
+        'green': Dmrs.parse('[mod]:_green_a_1 e? =1=> [noun]:node'),
+        'blue': Dmrs.parse('[mod]:_blue_a_1 e? =1=> [noun]:node'),
+        'yellow': Dmrs.parse('[mod]:_yellow_a_1 e? =1=> [noun]:node'),
+        'magenta': Dmrs.parse('[mod]:_magenta_a_1 e? =1=> [noun]:node'),
+        'cyan': Dmrs.parse('[mod]:_cyan_a_1 e? =1=> [noun]:node'),
+        'white': Dmrs.parse('[mod]:_white_a_1 e? =1=> [noun]:node')
     },
 
     'texture': {
-        'solid': ComposableDmrs.parse('[noun]:node')
+        'solid': Dmrs.parse('[noun]:node')
     }
+}
+
+DmrsRealizer.modifier_by_name = {
+    'square': ('shape', 'square'),
+    'rectangle': ('shape', 'rectangle'),
+    'triangle': ('shape', 'triangle'),
+    'pentagon': ('shape', 'pentagon'),
+    'cross': ('shape', 'cross'),
+    'circle': ('shape', 'circle'),
+    'semicircle': ('shape', 'semicircle'),
+    'ellipse': ('shape', 'ellipse'),
+    'black': ('color', 'black'),
+    'red': ('color', 'red'),
+    'green': ('color', 'green'),
+    'blue': ('color', 'blue'),
+    'yellow': ('color', 'yellow'),
+    'magenta': ('color', 'magenta'),
+    'cyan': ('color', 'cyan'),
+    'white': ('color', 'write'),
+    'solid': ('texture', 'solid')
 }
 
 DmrsRealizer.modifier_is_noun = {
@@ -183,33 +219,40 @@ DmrsRealizer.modifier_is_noun = {
 
 
 DmrsRealizer.relations = {
-    'left': ComposableDmrs.parse('[noun]:pred x? <-1- ***[rel]:_to_p e[ppi--] -2-> _left_n_of x[_s___] <-- _the_q; :_left_n_of -1-> [ref]:pred x[?s???]'),
-    'right': ComposableDmrs.parse('[noun]:pred x? <-1- ***[rel]:_to_p e[ppi--] -2-> _right_n_of x[_s___] <-- _the_q; :_right_n_of -1-> [ref]:pred x[?s???]'),
-    'above': ComposableDmrs.parse('[noun]:pred x? <-1- ***[rel]:_above_p e[ppi--] -2-> [ref]:pred x[?s???]'),
-    'below': ComposableDmrs.parse('[noun]:pred x? <-1- ***[rel]:_below_p e[ppi--] -2-> [ref]:pred x[?s???]')
+    'left': Dmrs.parse('[noun]:pred x? <-1- ***[rel]:_to_p e[ppi--] -2-> _left_n_of x[_s___] <-- _the_q; :_left_n_of -1-> [ref]:pred x[?s???]'),
+    'right': Dmrs.parse('[noun]:pred x? <-1- ***[rel]:_to_p e[ppi--] -2-> _right_n_of x[_s___] <-- _the_q; :_right_n_of -1-> [ref]:pred x[?s???]'),
+    'above': Dmrs.parse('[noun]:pred x? <-1- ***[rel]:_above_p e[ppi--] -2-> [ref]:pred x[?s???]'),
+    'below': Dmrs.parse('[noun]:pred x? <-1- ***[rel]:_below_p e[ppi--] -2-> [ref]:pred x[?s???]')
+}
+
+DmrsRealizer.relation_by_name = {
+    'left': ('left',),
+    'right': ('right',),
+    'above': ('above',),
+    'below': ('below',)
 }
 
 
 DmrsRealizer.quantifiers = {
     'absolute': {
         'eq': {
-            1: ComposableDmrs.parse('[quant]:_the_q --> [rstr]:pred x[?s???]'),  # False, True, 1, False
+            1: Dmrs.parse('[quant]:_the_q --> [rstr]:pred x[?s???]'),  # False, True, 1, False
         },
         'geq': {
-            1: ComposableDmrs.parse('[quant]:_a_q --> [rstr]:pred x[?s???]'),  # False, False, 1, False
-            # ComposableDmrs.parse('[quant]:_some_q --> [rstr]:pred x[?p???]')  # False, False, 1, True
-            2: ComposableDmrs.parse('[quant]:udef_q --> [rstr]:pred x[?p???] <=1= card(2) e')  # False
+            1: Dmrs.parse('[quant]:_a_q --> [rstr]:pred x[?s???]'),  # False, False, 1, False
+            # Dmrs.parse('[quant]:_some_q --> [rstr]:pred x[?p???]')  # False, False, 1, True
+            2: Dmrs.parse('[quant]:udef_q --> [rstr]:pred x[?p???] <=1= card(2) e')  # False
         }
     },
 
     'relative': {
         'eq': {
-            0.0: ComposableDmrs.parse('[quant]:_no_q --> [rstr]:pred x[?s???]'),  # False, True, 0, False
-            1.0: ComposableDmrs.parse('[quant]:_all_q --> [rstr]:pred x[?p???]')  # True, False, 1.0, True
-            # ComposableDmrs.parse('[quant]:_every_q --> [rstr]:pred x[?s???]')  # True, False, 1.0, False
+            0.0: Dmrs.parse('[quant]:_no_q --> [rstr]:pred x[?s???]'),  # False, True, 0, False
+            1.0: Dmrs.parse('[quant]:_all_q --> [rstr]:pred x[?p???]')  # True, False, 1.0, True
+            # Dmrs.parse('[quant]:_every_q --> [rstr]:pred x[?s???]')  # True, False, 1.0, False
         },
         'geq': {
-            0.6: ComposableDmrs.parse('[quant]:_most_q --> [rstr]:pred x[?p???]')  # True, True, 0.5, True
+            0.6: Dmrs.parse('[quant]:_most_q --> [rstr]:pred x[?p???]')  # True, True, 0.5, True
         }
     }
 
@@ -230,7 +273,8 @@ DmrsRealizer.quantifier_requires_plural = {
 }
 
 
-DmrsRealizer.captions = {
-    'and': ComposableDmrs.parse('[arg1]:node <-l- [con]:_and_c e[ppi--] -r-> [arg2]:node'),
-    'or': ComposableDmrs.parse('[arg1]:node <-l- [con]:_or_c e[ppi--] -r-> [arg2]:node')
+DmrsRealizer.propositions = {
+    'conjunction': Dmrs.parse('[arg1]:node <-l- ***[con]:_and_c e[ppi--] -r-> [arg2]:node'),
+    'disjunction': Dmrs.parse('[arg1]:node <-l- ***[con]:_or_c e[ppi--] -r-> [arg2]:node'),
+    'exclusive-disjunction': (Dmrs.parse('[arg1]:node <-l- ***[con]:_or_c e[ppi--] -r-> [arg2]:node'), Dmrs.parse('[arg1]:node <-l- ***[con]:_or_c e[ppi--] -r-> [arg2]:node'), Dmrs.parse('_either_a_also i =1=> [arg]:node'))  # Dmrs.parse('[arg1]:node <-l- ***[con]:implicit_conj e[ppi--] -r-> [arg2]:node')
 }

@@ -28,14 +28,9 @@ if __name__ == "__main__":
     parser.add_argument('-r', '--report-file', default=None, help='CSV file reporting the evaluation results')
     parser.add_argument('-R', '--restore', action='store_true', help='Restore model (requires --model-file)')
     parser.add_argument('-E', '--evaluate', action='store_true', help='Evaluate model without training (requires --model-file)')
+    parser.add_argument('-T', '--tf-records', action='store_true', help='TensorFlow queue with records (not compatible with --evaluate)')
     parser.add_argument('-V', '--verbose-tensorflow', action='store_true', help='TensorFlow verbosity')
     args = parser.parse_args()
-
-    # dataset
-    dataset = dataset(dtype=args.type, name=args.name, config=args.config)
-    sys.stdout.write('{} {} dataset: {}\n'.format(datetime.now().strftime('%H:%M:%S'), dataset.type, dataset.name))
-    sys.stdout.write('         config: {}\n'.format(args.config))
-    sys.stdout.flush()
 
     # import tensorflow
     if args.verbose_tensorflow:
@@ -44,20 +39,37 @@ if __name__ == "__main__":
         os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
     import tensorflow as tf
 
-    # model
-    module = import_module('models.{}.{}'.format(args.type, args.model))
-    sys.stdout.write('{} {} model: {}\n'.format(datetime.now().strftime('%H:%M:%S'), args.type, args.model))
-    sys.stdout.write('         parameters: {}\n'.format(args.parameters))
+    # import tf_util for TFRecords
+    if args.tf_records:
+        from shapeworld import tf_util
+        assert not args.evaluate
+
+    # information about dataset and model
+    sys.stdout.write('{time} {dtype} dataset: {name}\n'.format(time=datetime.now().strftime('%H:%M:%S'), dtype=args.type, name=args.name))
+    sys.stdout.write('         config: {config}\n'.format(config=args.config))
+    sys.stdout.write('{time} {dtype} model: {model}\n'.format(time=datetime.now().strftime('%H:%M:%S'), dtype=args.type, model=args.model))
+    sys.stdout.write('         parameters: {params}\n'.format(params=args.parameters))
     sys.stdout.flush()
 
+    dataset = dataset(dtype=args.type, name=args.name, config=args.config)
+    module = import_module('models.{}.{}'.format(args.type, args.model))
+
     if args.type == 'agreement':
-        with tf.name_scope(name='inputs'):
-            world = tf.placeholder(dtype=tf.float32, shape=((None,) + dataset.world_shape))
-            caption = tf.placeholder(dtype=tf.int32, shape=((None,) + dataset.text_shape))
-            caption_length = tf.placeholder(dtype=tf.int32, shape=(None, 1))
-            agreement = tf.placeholder(dtype=tf.float32, shape=(None, 1))
+        if args.tf_records:
+            batch = tf_util.batch_records(paths=dataset.parts['tf-records'], dataset=dataset, batch_size=args.batch_size, noise=dataset.noise_range)
+            world = batch['world']
+            caption = batch['caption']
+            caption_length = batch['caption_length']
+            agreement = batch['agreement']
             dropout = tf.placeholder(dtype=tf.float32, shape=())
-        feed_dict_assignment = {'world': world, 'caption': caption, 'caption-length': caption_length, 'agreement': agreement}
+        else:
+            with tf.name_scope(name='inputs'):
+                world = tf.placeholder(dtype=tf.float32, shape=((None,) + dataset.world_shape))
+                caption = tf.placeholder(dtype=tf.int32, shape=((None,) + dataset.vector_shape('caption')))
+                caption_length = tf.placeholder(dtype=tf.int32, shape=(None, 1))
+                agreement = tf.placeholder(dtype=tf.float32, shape=(None, 1))
+                dropout = tf.placeholder(dtype=tf.float32, shape=())
+            feed_dict_assignment = dict(world=world, caption=caption, caption_length=caption_length, agreement=agreement)
         parameters = args.parameters or dict()
         accuracy = module.model(world=world, caption=caption, caption_length=caption_length, agreement=agreement, dropout=dropout, vocabulary_size=dataset.vocabulary_size, **parameters)
 
@@ -66,25 +78,34 @@ if __name__ == "__main__":
             world = tf.placeholder(dtype=tf.float32, shape=((None,) + dataset.world_shape))
             classification = tf.placeholder(dtype=tf.float32, shape=(None,) + dataset.vector_shape('classification'))
             dropout = tf.placeholder(dtype=tf.float32, shape=())
-        feed_dict_assignment = {'world': world, 'classification': classification}
-        # if dataset.__class__.class_count_flag:
-        #     mode = 'count'
-        # elif dataset.__class__.multi_class_flag:
-        #     mode = 'multi'
-        # else:
+        feed_dict_assignment = dict(world=world, classification=classification)
         mode = None
         precision, recall = module.model(world=world, classification=classification, dropout=dropout, mode=mode)
         accuracy = recall
+
+    else:
+        assert False
 
     with tf.name_scope(name='optimization'):
         if args.weight_decay:
             for variable in tf.trainable_variables():
                 weight_decay_loss = args.weight_decay * tf.nn.l2_loss(t=variable)
                 tf.losses.add_loss(loss=weight_decay_loss)
-        loss = tf.losses.get_total_loss()
         optimizer = tf.train.AdamOptimizer(learning_rate=args.learning_rate)
-        grads_and_vars = optimizer.compute_gradients(loss=tf.losses.get_total_loss())
+        loss = tf.losses.get_total_loss()
+        grads_and_vars = optimizer.compute_gradients(loss=loss)
         optimization = optimizer.apply_gradients(grads_and_vars=grads_and_vars)
+
+
+    def get_feed_dict(batch_size, mode, dropout_rate):
+        if args.tf_records:
+            feed_dict = dict()
+        else:
+            generated = dataset.generate(n=batch_size, mode=mode)
+            feed_dict = {placeholder: generated[value] for value, placeholder in feed_dict_assignment.items()}
+        feed_dict[dropout] = dropout_rate
+        return feed_dict
+
 
     # tf session
     with tf.Session() as session:
@@ -92,10 +113,10 @@ if __name__ == "__main__":
         if args.model_file:
             saver = tf.train.Saver()
         if args.restore or args.evaluate:
-            sys.stdout.write('{} restore model...\n'.format(datetime.now().strftime('%H:%M:%S')))
+            sys.stdout.write('{time} restore model...\n'.format(time=datetime.now().strftime('%H:%M:%S')))
             sys.stdout.flush()
             assert args.model_file
-            saver.restore(session, args.model_file)
+            saver.restore(sess=session, save_path=args.model_file)
             if args.report_file:
                 with open(args.report_file, 'r') as filehandle:
                     for line in filehandle:
@@ -104,7 +125,7 @@ if __name__ == "__main__":
                     iteration_start = int(value) + 1
         else:
             # initialize
-            sys.stdout.write('{} initialize model...\n'.format(datetime.now().strftime('%H:%M:%S')))
+            sys.stdout.write('{time} initialize model...\n'.format(time=datetime.now().strftime('%H:%M:%S')))
             sys.stdout.flush()
             session.run(fetches=tf.global_variables_initializer())
             if args.model_file:
@@ -119,69 +140,52 @@ if __name__ == "__main__":
                     filehandle.write('iteration,train loss,train accuracy,validation loss,validation accuracy\n')
         iteration_end = iteration_start + args.iterations - 1
 
+        coordinator = tf.train.Coordinator()
+        queue_threads = tf.train.start_queue_runners(sess=session, coord=coordinator)
+
         if args.evaluate:
             # evaluation
-            sys.stdout.write('{} evaluate model...\n'.format(datetime.now().strftime('%H:%M:%S')))
+            sys.stdout.write('{time} evaluate model...\n'.format(time=datetime.now().strftime('%H:%M:%S')))
             sys.stdout.write('         ')
             sys.stdout.flush()
-            generated = dataset.generate(n=args.evaluation_size, mode='train')
-            feed_dict = {placeholder: generated[value] for value, placeholder in feed_dict_assignment.items()}
-            feed_dict[dropout] = 0.0
-            training_accuracy = session.run(fetches=accuracy, feed_dict=feed_dict)
-            sys.stdout.write('training={:.3f}'.format(training_accuracy))
-            generated = dataset.generate(n=args.evaluation_size, mode='validation')
-            feed_dict = {placeholder: generated[value] for value, placeholder in feed_dict_assignment.items()}
-            feed_dict[dropout] = 0.0
+            feed_dict = get_feed_dict(batch_size=args.evaluation_size, mode='train', dropout_rate=0.0)
+            train_accuracy = session.run(fetches=accuracy, feed_dict=feed_dict)
+            sys.stdout.write('train={accuracy:.3f}'.format(accuracy=train_accuracy))
+            feed_dict = get_feed_dict(batch_size=args.evaluation_size, mode='validation', dropout_rate=0.0)
             validation_accuracy = session.run(fetches=accuracy, feed_dict=feed_dict)
-            sys.stdout.write('  validation={:.3f}'.format(validation_accuracy))
-            generated = dataset.generate(n=args.evaluation_size, mode='test')
-            feed_dict = {placeholder: generated[value] for value, placeholder in feed_dict_assignment.items()}
-            feed_dict[dropout] = 0.0
+            sys.stdout.write('  validation={accuracy:.3f}'.format(accuracy=validation_accuracy))
+            feed_dict = get_feed_dict(batch_size=args.evaluation_size, mode='test', dropout_rate=0.0)
             test_accuracy = session.run(fetches=accuracy, feed_dict=feed_dict)
-            sys.stdout.write('  test={:.3f}\n'.format(test_accuracy))
-            sys.stdout.write('{} evaluation finished!\n'.format(datetime.now().strftime('%H:%M:%S')))
+            sys.stdout.write('  test={accuracy:.3f}\n'.format(accuracy=test_accuracy))
+            sys.stdout.write('{time} evaluation finished!\n'.format(time=datetime.now().strftime('%H:%M:%S')))
             sys.stdout.flush()
 
         else:
             # training
-            sys.stdout.write('{} train model...\n'.format(datetime.now().strftime('%H:%M:%S')))
+            sys.stdout.write('{time} train model...\n'.format(time=datetime.now().strftime('%H:%M:%S')))
             sys.stdout.flush()
             before = datetime.now()
             for iteration in range(iteration_start, iteration_end + 1):
-                generated = dataset.generate(n=args.batch_size, mode='train')
-                feed_dict = {placeholder: generated[value] for value, placeholder in feed_dict_assignment.items()}
-
-                # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-                if args.model == 'nmn2':
-                    generated = dataset.generate(n=args.batch_size, mode='train', include_model=True)
-                    feed_dict = {placeholder: generated[value] for value, placeholder in feed_dict_assignment.items()}
-                    instances = [module.parse_model(caption, world, dataset.vocabulary) for caption, world in zip(generated['caption-model'], generated['world'])]
-                    feed_dict[module.compiler.loom_input_tensor] = module.compiler.build_loom_input_batched(examples=instances, batch_size=128)
-
-                # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-                feed_dict[dropout] = args.dropout_rate
+                feed_dict = get_feed_dict(batch_size=args.batch_size, mode='train', dropout_rate=args.dropout_rate)
                 session.run(fetches=optimization, feed_dict=feed_dict)
                 if iteration % args.evaluation_frequency == 0 or iteration == 1 or iteration == args.evaluation_frequency // 2 or iteration == iteration_end:
-                    generated = dataset.generate(n=args.evaluation_size, mode='train')
-                    feed_dict = {placeholder: generated[value] for value, placeholder in feed_dict_assignment.items()}
-                    feed_dict[dropout] = 0.0
-                    training_loss, training_accuracy = session.run(fetches=(loss, accuracy), feed_dict=feed_dict)
-                    generated = dataset.generate(n=args.evaluation_size, mode='validation')
-                    feed_dict = {placeholder: generated[value] for value, placeholder in feed_dict_assignment.items()}
-                    feed_dict[dropout] = 0.0
+                    feed_dict = get_feed_dict(batch_size=args.evaluation_size, mode='train', dropout_rate=0.0)
+                    train_loss, train_accuracy = session.run(fetches=(loss, accuracy), feed_dict=feed_dict)
+                    feed_dict = get_feed_dict(batch_size=args.evaluation_size, mode='validation', dropout_rate=0.0)
                     validation_loss, validation_accuracy = session.run(fetches=(loss, accuracy), feed_dict=feed_dict)
                     after = datetime.now()
-                    sys.stdout.write('\r         {:.0f}%  {}/{}  training={:.3f}  validation={:.3f}  (time per evaluation iteration: {})'.format(iteration * 100 / iteration_end, iteration, iteration_end, training_accuracy, validation_accuracy, str(after - before).split('.')[0]))
+                    sys.stdout.write('\r         {completed:.0f}%  {iteration}/{iterations}  train={train:.3f}  validation={validation:.3f}  (time per evaluation iteration: {duration})'.format(completed=(iteration * 100 / iteration_end), iteration=iteration, iterations=iteration_end, train=train_accuracy, validation=validation_accuracy, duration=str(after - before).split('.')[0]))
                     sys.stdout.flush()
                     before = datetime.now()
                     if args.report_file:
                         with open(args.report_file, 'a') as filehandle:
-                            filehandle.write('{},{},{},{},{}\n'.format(iteration, training_loss, training_accuracy, validation_loss, validation_accuracy))
-            sys.stdout.write('\n{} model training finished!\n'.format(datetime.now().strftime('%H:%M:%S')))
+                            filehandle.write('{},{},{},{},{}\n'.format(iteration, train_loss, train_accuracy, validation_loss, validation_accuracy))
+            sys.stdout.write('\n{time} model training finished!\n'.format(time=datetime.now().strftime('%H:%M:%S')))
             sys.stdout.flush()
             if args.model_file:
-                saver.save(session, args.model_file)
-                sys.stdout.write('{} model saved.\n'.format(datetime.now().strftime('%H:%M:%S')))
+                saver.save(sess=session, save_path=args.model_file)
+                sys.stdout.write('{time} model saved.\n'.format(time=datetime.now().strftime('%H:%M:%S')))
                 sys.stdout.flush()
+
+        coordinator.request_stop()
+        coordinator.join(threads=queue_threads)

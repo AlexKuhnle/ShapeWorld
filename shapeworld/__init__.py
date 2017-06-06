@@ -1,8 +1,7 @@
-from shapeworld.generator import WorldGenerator
+from shapeworld.generator import WorldGenerator, GeneratorMixer
 from shapeworld.realizer import CaptionRealizer
-from shapeworld.captioner import WorldCaptioner
+from shapeworld.captioner import WorldCaptioner, CaptionerMixer
 from shapeworld.dataset import Dataset, dataset
-from shapeworld import util
 
 
-__all__ = ['WorldGenerator', 'WorldCaptioner', 'CaptionRealizer', 'Dataset', 'dataset', 'util']
+__all__ = ['WorldGenerator', 'GeneratorMixer', 'CaptionRealizer', 'WorldCaptioner', 'CaptionerMixer', 'Dataset', 'dataset']

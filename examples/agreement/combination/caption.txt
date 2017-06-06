@@ -1,0 +1,256 @@
+there is a triangle , and the triangle is blue .
+all shapes are red squares , or most shapes are red rectangles .
+there is a magenta shape , or a green shape is to the left of a pentagon .
+there is a cyan triangle , or there is a red triangle .
+there is a white ellipse , and the shape is a white ellipse .
+there is a white shape , or there is a red ellipse .
+there is a triangle , and a blue shape is a triangle .
+a cyan semicircle is to the right of a yellow square , or there is a cyan semicircle .
+most shapes are pentagons , or all shapes are cyan pentagons .
+there is a triangle , and there is a magenta shape .
+there is a magenta square , and a rectangle is to the left of a green shape .
+a magenta pentagon is above a magenta circle , and a shape is a pentagon .
+a white shape is to the left of a blue shape , or there is a green triangle .
+a magenta triangle is to the left of a green ellipse , or a green ellipse is to the right of a triangle .
+a magenta shape is to the left of a circle , or there is a red triangle .
+there is a green square , and a magenta shape is above a magenta rectangle .
+the triangle is cyan , and a rectangle is red .
+a shape is a semicircle , or a blue shape is below a semicircle .
+all triangles are white , or all blue shapes are circles .
+there is a green shape , and the shape is yellow .
+a yellow shape is to the left of a circle , and the shape is a circle .
+all shapes are white pentagons , or there is a red pentagon .
+all yellow shapes are crosses , and there is a cyan cross .
+there is a pentagon , and there is a pentagon .
+a shape is white , or a green cross is above a shape .
+no shape is an ellipse , or there is a red triangle .
+a circle is above a red circle , and a yellow circle is to the right of a circle .
+a blue semicircle is above a shape , or there is a yellow rectangle .
+there is a red ellipse , or there is a red shape .
+a red shape is to the right of a red ellipse , or a red triangle is to the right of an ellipse .
+there is a white cross , or there is a cyan cross .
+a triangle is above a cyan pentagon , or there is a blue shape .
+two shapes are squares , and a square is to the left of a blue shape .
+no circle is cyan , or there is a rectangle .
+there is a cyan shape , and there is a yellow rectangle .
+there is a green rectangle , and there is a triangle .
+there is a yellow circle , or there is a blue pentagon .
+two red shapes are rectangles , and two shapes are red .
+all squares are blue , and most red shapes are pentagons .
+a red ellipse is below a yellow rectangle , or a green ellipse is below a green cross .
+no shape is a red cross , or there is a red cross .
+there is a red square , and most circles are blue .
+an ellipse is to the left of a shape , and there is a magenta pentagon .
+a rectangle is below a green pentagon , or a green pentagon is below a cross .
+a shape is a red triangle , and most semicircles are blue .
+a cyan shape is a semicircle , and a cyan semicircle is above a yellow triangle .
+there is a red cross , and the shape is a magenta semicircle .
+a cyan shape is to the right of a green pentagon , or there is a cyan pentagon .
+the ellipse is yellow , and a yellow shape is an ellipse .
+most shapes are cyan , and most cyan shapes are ellipses .
+the ellipse is magenta , or an ellipse is magenta .
+there is a rectangle , or there is a green shape .
+a white ellipse is above a magenta shape , or no shape is a semicircle .
+there is a white triangle , or a yellow pentagon is to the right of a white triangle .
+there is a cyan pentagon , or there is a magenta triangle .
+most shapes are white , or a shape is to the left of a yellow rectangle .
+all shapes are blue crosses , or a cross is to the right of a triangle .
+most shapes are ellipses , or a blue shape is above a shape .
+the rectangle is red , and a magenta shape is above a red rectangle .
+no shape is white , and the white shape is a triangle .
+a red shape is below a red circle , and the yellow shape is a circle .
+there is a blue square , or a shape is a white circle .
+a green triangle is to the right of a green shape , or a green triangle is below a white circle .
+the shape is a red cross , or two shapes are squares .
+no shape is cyan , and there is a yellow triangle .
+there is a pentagon , and the shape is a blue pentagon .
+a rectangle is above a white circle , or there is a circle .
+there is a cyan rectangle , and a pentagon is below a shape .
+the cross is cyan , and a shape is below a cyan shape .
+there is a green square , or two shapes are white triangles .
+a triangle is below a yellow semicircle , or two semicircles are yellow .
+there is a red semicircle , or there is a triangle .
+there is a magenta rectangle , or most semicircles are red .
+a cyan cross is to the right of a shape , and most cyan shapes are crosses .
+there is a white ellipse , and no pentagon is red .
+the shape is a green semicircle , and a green shape is above a green cross .
+no pentagon is magenta , and there is a blue shape .
+a yellow square is above a blue rectangle , or there is a yellow circle .
+there is a blue ellipse , and a blue shape is a cross .
+there is a cyan shape , or a blue semicircle is below a magenta shape .
+there is a cyan shape , and a cyan shape is above a white ellipse .
+a cyan cross is to the right of a cyan semicircle , or there is a green pentagon .
+a shape is a white cross , or a cross is to the right of a white ellipse .
+there is a green rectangle , or there is a green rectangle .
+there is an ellipse , and there is a red cross .
+there is a semicircle , and a green shape is to the left of a red circle .
+there is a red square , and a cyan cross is to the right of a shape .
+there is a cross , or there is a yellow shape .
+a yellow triangle is to the left of a magenta triangle , and a magenta triangle is to the right of a shape .
+two shapes are blue crosses , or a blue shape is below a blue shape .
+no magenta shape is a rectangle , or a shape is magenta .
+a yellow pentagon is above a shape , or there is a green shape .
+most shapes are green , or a shape is a green pentagon .
+no pentagon is green , and two shapes are pentagons .
+there is a green cross , and a shape is a circle .
+there is a blue square , and a red square is below a shape .
+a blue cross is above an ellipse , or no green shape is an ellipse .
+a shape is a blue circle , and there is a magenta shape .
+a green triangle is below a green cross , and there is a magenta triangle .
+there is a red shape , or there is a magenta ellipse .
+no shape is white , or all shapes are squares .
+a cross is above an ellipse , and most shapes are green .
+there is a red shape , and there is a square .
+a shape is above a red shape , or there is a green circle .
+there is a red cross , and there is a cyan ellipse .
+no shape is blue , or a green shape is above a cross .
+there is a white shape , or no shape is a pentagon .
+a cyan shape is to the left of a cross , or a yellow shape is below a yellow semicircle .
+there is a cross , or there is a yellow cross .
+a shape is to the right of a shape , and there is a magenta shape .
+there is a yellow circle , or no yellow shape is a semicircle .
+most shapes are white , and there is a magenta cross .
+there is an ellipse , and there is a cyan shape .
+most shapes are squares , and a square is below a white square .
+all shapes are squares , or the shape is a square .
+a cyan shape is below a cyan rectangle , or no shape is a red rectangle .
+a white square is below a white square , and a white shape is above a white square .
+a magenta ellipse is above a yellow ellipse , or a yellow triangle is to the right of a magenta shape .
+a pentagon is above a magenta pentagon , and there is a blue triangle .
+a square is to the left of a white shape , or there is a cyan square .
+all shapes are cyan , or most shapes are ellipses .
+two red shapes are circles , or all shapes are red .
+the shape is a red triangle , and there is a white shape .
+the shape is white , and a white rectangle is to the right of a triangle .
+a red ellipse is above a rectangle , or there is a green shape .
+two semicircles are blue , and all semicircles are blue .
+there is a blue shape , and there is a blue pentagon .
+a magenta rectangle is below a white shape , and there is a rectangle .
+a yellow cross is below a blue shape , or no shape is a blue cross .
+there is a triangle , and there is a green shape .
+the shape is a cyan semicircle , or a cyan semicircle is above a yellow semicircle .
+a blue shape is below a white circle , or a pentagon is below a blue circle .
+a shape is white , and two shapes are blue .
+there is a green rectangle , or there is a blue triangle .
+a yellow circle is below a shape , and there is a yellow triangle .
+a triangle is below a magenta triangle , or no triangle is white .
+no circle is green , and a circle is above a magenta square .
+there is a white semicircle , or a shape is a green semicircle .
+there is a green circle , and a magenta circle is above a shape .
+a green ellipse is to the left of a green ellipse , or a circle is to the right of a blue circle .
+there is a blue rectangle , or a blue semicircle is above a blue pentagon .
+a blue shape is below a pentagon , and there is a pentagon .
+the shape is a square , and a shape is a rectangle .
+a red triangle is to the right of a red shape , and the semicircle is magenta .
+there is a circle , and a shape is a white rectangle .
+there is a green square , or the shape is a square .
+the shape is a pentagon , and there is a pentagon .
+there is a red square , or there is a magenta shape .
+the shape is a circle , and there is a cyan shape .
+a red square is to the right of a shape , or there is a cross .
+there is a yellow cross , and most shapes are red .
+a green square is above a shape , or no shape is a rectangle .
+a rectangle is to the right of a white triangle , and most shapes are magenta .
+most triangles are green , or a white triangle is above a green triangle .
+there is a magenta rectangle , or there is a white cross .
+a shape is magenta , and all shapes are red squares .
+there is a blue pentagon , or a white square is to the right of a yellow shape .
+a shape is to the left of a yellow rectangle , and a green triangle is above a yellow rectangle .
+the shape is a rectangle , and there is a pentagon .
+a shape is a green triangle , and a yellow rectangle is below a rectangle .
+a cyan shape is above a semicircle , or there is a rectangle .
+a shape is a circle , or there is a white shape .
+a shape is above a green rectangle , and there is a yellow shape .
+there is a yellow shape , and a red shape is to the left of a yellow ellipse .
+a yellow rectangle is to the left of a cyan square , or a yellow rectangle is below a square .
+there is a red circle , and no green shape is a cross .
+there is a cyan cross , and a square is cyan .
+a semicircle is to the left of a green shape , or a rectangle is above a white semicircle .
+there is a magenta cross , and there is a blue triangle .
+a yellow shape is above a yellow circle , and a yellow shape is below a shape .
+there is a green ellipse , and no semicircle is magenta .
+a white shape is above a green triangle , or there is a yellow triangle .
+there is a yellow shape , and all shapes are triangles .
+there is a blue ellipse , or an ellipse is below a blue ellipse .
+there is a semicircle , or two shapes are green .
+there is a white shape , and a blue shape is above a green ellipse .
+a yellow shape is to the left of a red shape , and there is a semicircle .
+a circle is to the right of a shape , or there is a cyan cross .
+a white semicircle is to the left of a shape , and two shapes are semicircles .
+there is a blue shape , or there is a blue rectangle .
+there is an ellipse , or no shape is an ellipse .
+a green rectangle is below a yellow circle , and a shape is above a shape .
+all shapes are white , or there is a cross .
+no shape is yellow , or there is a yellow cross .
+there is a green shape , or there is a green shape .
+there is a yellow shape , or a magenta semicircle is to the right of a red triangle .
+no cyan shape is a circle , and a yellow circle is below a cyan rectangle .
+a shape is cyan , or most magenta shapes are pentagons .
+all squares are blue , and there is a square .
+there is a white rectangle , or there is a red semicircle .
+a cyan rectangle is to the left of a shape , and a shape is a cyan rectangle .
+two semicircles are yellow , or no rectangle is cyan .
+most shapes are blue ellipses , or a pentagon is to the right of a red circle .
+a white shape is above a blue pentagon , or there is a magenta cross .
+a yellow pentagon is above a green circle , or a yellow pentagon is below a green circle .
+all shapes are pentagons , or the shape is magenta .
+the magenta shape is a rectangle , and there is an ellipse .
+there is a triangle , or there is a cyan shape .
+there is a cyan shape , or most rectangles are cyan .
+there is a magenta ellipse , or a semicircle is above a magenta semicircle .
+there is a square , and there is a square .
+two cyan shapes are ellipses , and there is a blue ellipse .
+a cyan circle is to the left of a cyan ellipse , and a yellow shape is above a cyan circle .
+there is a circle , and a magenta circle is to the right of a circle .
+a red shape is to the right of a red semicircle , and there is a square .
+there is a rectangle , and there is a rectangle .
+a yellow ellipse is to the left of a blue ellipse , and most ellipses are yellow .
+there is a semicircle , or the shape is green .
+a magenta cross is to the left of a blue shape , or there is a blue cross .
+no blue shape is a rectangle , or a rectangle is below a cross .
+a blue pentagon is above a red pentagon , and a red shape is above a blue ellipse .
+a shape is a cyan cross , and no shape is a white cross .
+there is a magenta circle , and two shapes are circles .
+a magenta shape is above a red square , and a red rectangle is above a green shape .
+a triangle is to the left of a yellow circle , and there is a triangle .
+a green shape is to the left of a red triangle , or there is a magenta cross .
+a yellow triangle is below a yellow pentagon , and there is a cyan shape .
+a green shape is above a yellow shape , and there is a yellow square .
+there is a magenta semicircle , or a white semicircle is below a white shape .
+a green pentagon is below a cyan pentagon , and the shape is yellow .
+a shape is a cyan rectangle , and there is a cyan square .
+a white shape is to the right of a white rectangle , or there is a yellow rectangle .
+a blue ellipse is above a blue rectangle , or there is a circle .
+there is a triangle , and a shape is a green semicircle .
+there is a white circle , and most shapes are white ellipses .
+there is a white cross , and most shapes are crosses .
+a green shape is a semicircle , and a green shape is above a red semicircle .
+there is a square , or a shape is a blue square .
+most white shapes are squares , or there is a green pentagon .
+there is a yellow triangle , and a red square is above a yellow triangle .
+two shapes are cyan , and there is a semicircle .
+a blue circle is to the left of a yellow rectangle , and a cyan triangle is to the left of a blue circle .
+there is a green cross , and there is a green cross .
+there is a magenta ellipse , or a yellow shape is above a yellow triangle .
+a green triangle is below a circle , and there is a white shape .
+two shapes are green circles , or there is a cyan circle .
+a shape is blue , or there is a green rectangle .
+a shape is green , or all green shapes are semicircles .
+there is a red semicircle , and there is a red semicircle .
+most white shapes are semicircles , or a rectangle is above a rectangle .
+a yellow shape is below a pentagon , and there is a red triangle .
+most shapes are cyan , and all rectangles are green .
+there is a blue semicircle , and a blue shape is below a semicircle .
+there is a blue circle , or there is a green circle .
+a white cross is to the left of a cyan shape , or the cross is white .
+there is a red pentagon , or the yellow shape is a cross .
+there is a cyan pentagon , or there is a yellow rectangle .
+there is a semicircle , and a shape is to the left of a shape .
+a yellow triangle is to the right of a cyan shape , and two magenta shapes are triangles .
+a yellow circle is below a cyan rectangle , or there is a green ellipse .
+a shape is a semicircle , and a cyan semicircle is below a shape .
+all magenta shapes are squares , and a cyan square is to the right of a square .
+there is a cross , and a cross is above a shape .
+there is a green rectangle , or there is a magenta semicircle .
+most shapes are red , or there is a yellow square .
+a white square is above a white pentagon , or a rectangle is to the right of a white pentagon .

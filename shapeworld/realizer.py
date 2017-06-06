@@ -23,14 +23,20 @@ class CaptionRealizer(object):
     def realize(self, captions):
         raise NotImplementedError
 
-    def get_modifiers(self, modtypes=None):
-        if modtypes:
+    def get_modifiers(self, modtypes=None, names=None):
+        if names:
+            assert not modtypes
+            return [self.__class__.modifier_by_name[name] for name in names]
+        elif modtypes:
             return [(modtype, value) for modtype in modtypes if modtype in self.__class__.modifiers for value in self.__class__.modifiers[modtype].keys()]
         else:
             return [(modtype, value) for modtype, modifiers in self.__class__.modifiers.items() for value in modifiers.keys()]
 
-    def get_relations(self, reltypes=None):
-        if reltypes:
+    def get_relations(self, reltypes=None, names=None):
+        if names:
+            assert not reltypes
+            return [self.__class__.relations_by_name[name] for name in names]
+        elif reltypes:
             return [(reltype,) for reltype in reltypes if reltype in self.__class__.relations]
         else:
             return [(reltype,) for reltype in self.__class__.relations.keys()]

@@ -13,7 +13,7 @@ class Proposition(Clause):
         else:
             assert isinstance(clauses, tuple) or isinstance(clauses, list)
             assert all(isinstance(clause, Clause) for clause in clauses)
-            assert connective in ('conjunction', 'disjunction')  # excl-disjunction, implication, conditional ???
+            assert connective in ('conjunction', 'disjunction', 'exclusive-disjunction')  # excl-disjunction, implication, conditional ???
             self.clauses = tuple(clauses)
             self.connective = connective
 
@@ -23,7 +23,9 @@ class Proposition(Clause):
     def agreement(self, world):
         if not self.connective:
             return self.clauses[0].agreement(world)
-        elif self.connective == 'and':
+        elif self.connective == 'conjunction':
             return min(clause.agreement(world) for clause in self.clauses)
-        elif self.connective == 'or':
+        elif self.connective == 'disjunction':
             return max(clause.agreement(world) for clause in self.clauses)
+        elif self.connective == 'exclusive-disjunction':
+            return float(sum(clause.agreement(world) > 0.5 for clause in self.clauses) == 1)

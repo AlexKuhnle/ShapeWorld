@@ -54,23 +54,23 @@ class Entity(object):
         self.topleft = topleft + center
         self.bottomright = bottomright + center
 
-    def draw(self, world, world_size):
+    def draw(self, world_array, world_size):
         shift = Point(2.0 / world_size.x, 2.0 / world_size.y)
         scale = 1.0 + 2.0 * shift
         topleft = (((self.topleft + 0.5 * shift) / scale) * world_size).max(Point.izero)
         bottomright = (((self.bottomright + 1.5 * shift) / scale) * world_size).min(world_size)
         color = self.color.get_color()
-        for coord, point in Point.range(topleft, bottomright, world_size - Point.ione):
+        for (x, y), point in Point.range(topleft, bottomright, world_size - Point.ione):
             point = point * scale - shift
             offset = point - self.center
             distance = self.distance(offset)
             if distance == 0.0:
                 # assert offset in self
-                world[coord] = self.texture.get_color(color, offset)
+                world_array[y, x] = self.texture.get_color(color, offset)
             else:
                 # assert offset not in self
                 distance = max(1.0 - distance * min(*world_size), 0.0)
-                world[coord] = distance * self.texture.get_color(color, offset) + (1.0 - distance) * world[coord]
+                world_array[y, x] = distance * self.texture.get_color(color, offset) + (1.0 - distance) * world_array[y, x]
 
     def overlaps(self, other):
         topleft1 = self.topleft
@@ -92,9 +92,9 @@ class Entity(object):
         topleft, bottomright = overlap
         topleft *= world_size
         bottomright *= world_size
-        granularity = 1.0 / world_size.x / world_size.y
-        collision = 0.0
         if ratio:
+            granularity = 1.0 / world_size.x / world_size.y
+            collision = 0.0
             for _, point in Point.range(topleft, bottomright, world_size - Point.ione):
                 if ((point - self.center) in self) and ((point - other.center) in other):
                     collision += granularity
@@ -103,8 +103,9 @@ class Entity(object):
             else:
                 return (collision / self.shape.area(), collision / other.shape.area())
         else:
+            min_distance = 1.0 / world_size.x
             for _, point in Point.range(topleft, bottomright, world_size - Point.ione):
-                if (self.distance(point - self.center) <= granularity) and (other.distance(point - other.center) <= granularity):
+                if (self.distance(point - self.center) <= min_distance) and (other.distance(point - other.center) <= min_distance):
                     return True
 
     def not_overlaps(self, other):

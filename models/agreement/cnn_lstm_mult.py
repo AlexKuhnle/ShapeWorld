@@ -22,7 +22,7 @@ def model(world, caption, caption_length, agreement, dropout, vocabulary_size, s
         world_embedding = tf.reshape(tensor=world_embedding, shape=(-1, size))
 
     with tf.name_scope(name='lstm'):
-        embeddings = tf.Variable(initial_value=tf.random_normal(shape=(vocabulary_size, embedding_size), stddev=sqrt(embedding_size)))
+        embeddings = tf.Variable(initial_value=tf.random_normal(shape=(vocabulary_size, embedding_size), stddev=sqrt(2.0 / embedding_size)))
         embeddings = tf.nn.embedding_lookup(params=embeddings, ids=caption)
         lstm = tf.contrib.rnn.LSTMCell(num_units=lstm_size)
         embeddings, state = tf.nn.dynamic_rnn(cell=lstm, inputs=embeddings, sequence_length=tf.squeeze(input=caption_length, axis=1), dtype=tf.float32)

@@ -8,34 +8,27 @@ from shapeworld.caption import Relation, Quantifier, Proposition
 
 class SpatialCaptioner(WorldCaptioner):
 
-    MAX_ATTEMPTS = 10
+    name = 'spatial'
     statistics_header = 'correct,mode,relation,ref-hypernym,arg-hypernym'
 
-    def __init__(self, shapes, colors, textures, realizer=None, quantifier_tolerance=None, incorrect_modes=None, hypernym_ratio=None):
+    def __init__(self, shapes, colors, textures, quantifier_tolerance=None, incorrect_distribution=None, hypernym_ratio=None):
         # ideally requires relations 'left', 'right', 'above', 'below'
         # requires quantifier ('absolute', 'geq', 1)
         # requires caption 'none'
-        super(SpatialCaptioner, self).__init__(realizer=realizer, quantifier_tolerance=quantifier_tolerance)
+        super(SpatialCaptioner, self).__init__(quantifier_tolerance=quantifier_tolerance)
         self.shapes = shapes
         self.colors = colors
         self.textures = textures
-        self.incorrect_modes = cumulative_distribution(incorrect_modes or [2, 1, 1, 1, 1])
+        self.incorrect_distribution = cumulative_distribution(incorrect_distribution or [2, 1, 1, 1, 1])
         self.hypernym_ratio = hypernym_ratio if hypernym_ratio is not None else 0.5
-        self.spatial_relations = [reltype[0] for reltype in self.realizer.get_relations(reltypes=('left', 'right', 'above', 'below'))]
+        self.spatial_relations = ('left', 'right', 'above', 'below')
 
-    def agreeing_arguments(self, entities):
-        ref_entity = choice(entities)
-        reference = self.realizer.noun_for_entity(entity=ref_entity)
-        shuffle(self.spatial_relations)
-        for reltype in self.spatial_relations:
-            relation = Relation(reltype=reltype, reference=reference)
-            if relation.agreeing_entities(entities=entities):
-                break
+    def set_realizer(self, realizer):
+        if super(SpatialCaptioner, self).set_realizer(realizer):
+            self.spatial_relations = [reltype[0] for reltype in realizer.get_relations(reltypes=self.spatial_relations)]
+            return True
         else:
-            assert False
-        arg_entity = choice(relation.agreeing_entities(entities))
-        argument = self.realizer.noun_for_entity(entity=arg_entity)
-        return ref_entity, reltype, arg_entity, reference, relation, argument
+            return False
 
     def caption_world(self, world, correct):
         if correct and len(world['entities']) <= 1:
@@ -47,13 +40,29 @@ class SpatialCaptioner(WorldCaptioner):
         mode = 0
 
         for _ in range(SpatialCaptioner.MAX_ATTEMPTS):
-            ref_entity, reltype, arg_entity, reference, relation, argument = self.agreeing_arguments(entities)
+            ref_entity = choice(entities)
+            reference = self.realizer.noun_for_entity(entity=ref_entity)
+            shuffle(self.spatial_relations)
+            for reltype in self.spatial_relations:
+                relation = Relation(reltype=reltype, reference=reference)
+                if relation.agreeing_entities(entities=entities):
+                    arg_entity = choice(relation.agreeing_entities(entities))
+                    argument = self.realizer.noun_for_entity(entity=arg_entity)
+                    break
+            else:
+                assert not correct
+                if random() < 0.5:
+                    ref_entity = choice(entities)
+                    arg_entity = {'shape': {'name': choice(self.shapes)}, 'color': {'name': choice(self.colors)}, 'texture': {'name': choice(self.textures)}}
+                else:
+                    arg_entity = choice(entities)
+                    ref_entity = {'shape': {'name': choice(self.shapes)}, 'color': {'name': choice(self.colors)}, 'texture': {'name': choice(self.textures)}}
 
             if not correct:
                 ref_entity = deepcopy(ref_entity)
                 arg_entity = deepcopy(arg_entity)
                 r = random()
-                if r < self.incorrect_modes[0]:  # swap spatial relation
+                if r < self.incorrect_distribution[0]:  # swap spatial relation
                     mode = 1
                     if reltype == 'left':
                         reltype = 'right'
@@ -65,18 +74,18 @@ class SpatialCaptioner(WorldCaptioner):
                         reltype = 'above'
                     if reltype not in self.spatial_relations:
                         continue
-                elif r < self.incorrect_modes[1]:  # random reference attribute
+                elif r < self.incorrect_distribution[1]:  # random reference attribute
                     mode = 2
-                    r -= self.incorrect_modes[0]
-                    r /= self.incorrect_modes[1] - self.incorrect_modes[0]
+                    r -= self.incorrect_distribution[0]
+                    r /= self.incorrect_distribution[1] - self.incorrect_distribution[0]
                     if r < 0.5:
                         ref_entity['shape']['name'] = choice([shape for shape in self.shapes if shape != ref_entity['shape']['name']])
                     else:
                         ref_entity['color']['name'] = choice([color for color in self.colors if color != ref_entity['color']['name']])
-                elif r < self.incorrect_modes[2]:  # random existing reference attribute
+                elif r < self.incorrect_distribution[2]:  # random existing reference attribute
                     mode = 3
-                    r -= self.incorrect_modes[1]
-                    r /= self.incorrect_modes[2] - self.incorrect_modes[1]
+                    r -= self.incorrect_distribution[1]
+                    r /= self.incorrect_distribution[2] - self.incorrect_distribution[1]
                     if r < 0.5:
                         if len(existing_shapes) == 1:
                             continue
@@ -85,18 +94,18 @@ class SpatialCaptioner(WorldCaptioner):
                         if len(existing_colors) == 1:
                             continue
                         ref_entity['color']['name'] = choice([color for color in existing_colors if color != ref_entity['color']['name']])
-                elif r < self.incorrect_modes[3]:  # random argument attribute
+                elif r < self.incorrect_distribution[3]:  # random argument attribute
                     mode = 4
-                    r -= self.incorrect_modes[2]
-                    r /= self.incorrect_modes[3] - self.incorrect_modes[2]
+                    r -= self.incorrect_distribution[2]
+                    r /= self.incorrect_distribution[3] - self.incorrect_distribution[2]
                     if r < 0.5:
                         arg_entity['shape']['name'] = choice([shape for shape in self.shapes if shape != arg_entity['shape']['name']])
                     else:
                         arg_entity['color']['name'] = choice([color for color in self.colors if color != arg_entity['color']['name']])
-                elif r < self.incorrect_modes[4]:  # random existing argument attribute
+                elif r < self.incorrect_distribution[4]:  # random existing argument attribute
                     mode = 5
-                    r -= self.incorrect_modes[3]
-                    r /= self.incorrect_modes[4] - self.incorrect_modes[3]
+                    r -= self.incorrect_distribution[3]
+                    r /= self.incorrect_distribution[4] - self.incorrect_distribution[3]
                     if r < 0.5:
                         if len(existing_shapes) == 1:
                             continue

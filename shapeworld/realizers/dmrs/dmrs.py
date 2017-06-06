@@ -4,23 +4,24 @@ from pydmrs.core import Link, ListDmrs
 from pydmrs.graphlang.graphlang import parse_graphlang
 
 
-class ComposableDmrs(ListDmrs):
+class Dmrs(ListDmrs):
+    # composable dmrs
 
     __slots__ = ('nodes', 'links', 'index', 'top', 'anchors')
 
     def __init__(self, nodes=(), links=(), index=None, top=None):
-        super(ComposableDmrs, self).__init__(nodes=nodes, links=links, index=index, top=top)
+        super(Dmrs, self).__init__(nodes=nodes, links=links, index=index, top=top)
         self.anchors = dict()
 
     @staticmethod
     def parse(string):
         anchors = dict()
-        dmrs = parse_graphlang(string, cls=ComposableDmrs, anchors=anchors)
+        dmrs = parse_graphlang(string, cls=Dmrs, anchors=anchors)
         dmrs.anchors = anchors
         return dmrs
 
     def compose(self, other, fusion):
-        assert isinstance(other, ComposableDmrs)
+        assert isinstance(other, Dmrs)
         composition = deepcopy(self)
         nodeid_mapping = dict()
         for anchor1, anchor2 in fusion.items():
@@ -47,7 +48,8 @@ class ComposableDmrs(ListDmrs):
         for node in self.iter_nodes():
             if type(node.pred) is Pred:
                 self.remove_node(node.nodeid)
-                self.remove_links(link for link in self.iter_links() if link.start == node.nodeid or link.end == node.nodeid)
+                # self.remove_links(link for link in self.iter_links() if link.start == node.nodeid or link.end == node.nodeid)
+                continue
             if node.sortinfo is None:
                 continue
             node.sortinfo = node.sortinfo.__class__(**{key: None if node.sortinfo[key] in ('u', '?') else node.sortinfo[key] for key in node.sortinfo if key != 'cvarsort'})
@@ -99,7 +101,7 @@ class ComposableDmrs(ListDmrs):
                 assert link.rargname not in args[link.start]
                 index += 1
                 args[link.start][link.rargname] = 'h' + str(index)
-                hcons[index] = link.end
+                hcons[index] = labels[link.end]
             elif link.post == 'HEQ':
                 args[link.start][link.rargname] = 'h' + str(labels[link.end])
             else:
