@@ -1,4 +1,4 @@
 [submodule "shapeworld/realizers/dmrs/pydmrs"]
 	path = shapeworld/realizers/dmrs/pydmrs
-	url = https://github.com/delph-in/pydmrs.git
+	url = https://github.com/delph-in/pydmrs
 	branch = python2
