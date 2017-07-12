@@ -1,32 +1,36 @@
 import numpy as np
 from PIL import Image
 from shapeworld.util import toposort, Point
-from shapeworld.world import Entity
+from shapeworld.world import Entity, Color
 from shapeworld.world.shape import WorldShape
-from shapeworld.world.color import Color
 from shapeworld.world.texture import SolidTexture
 
 
 class World(Entity):
 
-    __slots__ = ('size', 'noise_range', 'entities', 'shape', 'color', 'texture', 'center', 'rotation', 'rotation_sin', 'rotation_cos', 'topleft', 'bottomright')
+    __slots__ = ('size', 'entities', 'shape', 'color', 'texture', 'center', 'rotation', 'rotation_sin', 'rotation_cos', 'topleft', 'bottomright')
 
-    def __init__(self, size, color, noise_range):
+    def __init__(self, size, color):
         assert isinstance(size, int) and size > 0
         assert isinstance(color, str) and color in Color.colors
-        assert isinstance(noise_range, float) and 0.0 <= noise_range <= 1.0
         super(World, self).__init__(WorldShape(), Color(color, Color.colors[color], 0.0), SolidTexture(), Point.half, 0.0)
         self.topleft = Point.zero
         self.bottomright = Point.one
         self.size = Point(size, size)
-        self.noise_range = noise_range
         self.entities = []
 
     def model(self):
-        return {'size': self.size.x, 'color': self.color.model(), 'noise_range': self.noise_range, 'entities': [entity.model() for entity in self.entities]}
+        return {'size': self.size.x, 'color': self.color.model(), 'entities': [entity.model() for entity in self.entities]}
+
+    @staticmethod
+    def from_model(model):
+        world = World(size=model['size'], color=Color.from_model(model['color']))
+        for entity_model in model['entities']:
+            world.entities.append(Entity.from_model(entity_model))
+        return world
 
     def copy(self, include_entities=True):
-        copy = World(size=self.size.x, color=str(self.color), noise=self.noise_range)
+        copy = World(size=self.size.x, color=str(self.color))
         if include_entities:
             for entity in self.entities:
                 copy.entities.append(entity.copy())
@@ -50,16 +54,16 @@ class World(Entity):
 
     def add_entity(self, entity, boundary_tolerance=0.0, collision_tolerance=0.0):
         if boundary_tolerance:
-            if self.not_collides(entity, self.size, ratio=True) > boundary_tolerance:
+            if self.not_collides(entity, ratio=True, resolution=self.size) > boundary_tolerance:
                 return False
         else:
-            if self.not_collides(entity, self.size):
+            if self.not_collides(entity, resolution=self.size):
                 return False
         if collision_tolerance:
-            if any(entity.collides(other, self.size, ratio=True) > collision_tolerance for other in self.entities):
+            if any(entity.collides(other, ratio=True, resolution=self.size) > collision_tolerance for other in self.entities):
                 return False
         else:
-            if any(entity.collides(other, self.size) for other in self.entities):
+            if any(entity.collides(other, resolution=self.size) for other in self.entities):
                 return False
         entity.id = len(self.entities)
         self.entities.append(entity)
@@ -71,7 +75,7 @@ class World(Entity):
             entity1 = self.entities[n]
             for k in range(n + 1, len(self.entities)):
                 entity2 = self.entities[k]
-                c1, c2 = entity1.collides(entity2, self.size, ratio=True, symmetric=False)
+                c1, c2 = entity1.collides(entity2, ratio=True, symmetric=False, resolution=self.size)
                 if c2 > c1:
                     contained[n].add(k)
                 elif c1 > c2:
@@ -80,20 +84,20 @@ class World(Entity):
         for n, entity in enumerate(self.entities):
             entity.id = n
 
-    def get_array(self, noise=True):
+    def get_array(self, noise_range=None):
         color = self.color.get_color()
         if not color.any():
             world_array = np.zeros(shape=(self.size.y, self.size.x, 3), dtype=np.float32)
         else:
             world_array = np.tile(A=np.array(object=color, dtype=np.float32), reps=(self.size.x, self.size.y, 1))
         self.draw(world_array=world_array, world_size=self.size)
-        if noise and self.noise_range > 0.0:
-            noise = np.random.normal(loc=0.0, scale=self.noise_range, size=(self.size.y, self.size.x, 3))
-            mask = (noise < -self.noise_range) + (noise > self.noise_range)
+        if noise_range is not None and noise_range > 0.0:
+            noise = np.random.normal(loc=0.0, scale=noise_range, size=(self.size.y, self.size.x, 3))
+            mask = (noise < -noise_range) + (noise > noise_range)
             while np.any(a=mask):
                 noise -= mask * noise
-                noise += mask * np.random.normal(loc=0.0, scale=self.noise_range, size=(self.size.y, self.size.x, 3))
-                mask = (noise < -self.noise_range) + (noise > self.noise_range)
+                noise += mask * np.random.normal(loc=0.0, scale=noise_range, size=(self.size.y, self.size.x, 3))
+                mask = (noise < -noise_range) + (noise > noise_range)
             world_array += noise
             np.clip(world_array, a_min=0.0, a_max=1.0, out=world_array)
         return world_array
@@ -106,4 +110,7 @@ class World(Entity):
     @staticmethod
     def from_image(image):
         world_array = (np.array(object=image, dtype=np.float32) / 255.0)
+        if world_array.shape[2] == 4:
+            world_array = world_array[:, :, :3]
+        assert world_array.shape[2] == 3
         return world_array

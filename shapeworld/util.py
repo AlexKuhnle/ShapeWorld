@@ -42,6 +42,13 @@ def parse_config(string):
         return string
 
 
+def product(xs):
+    prod = 1
+    for x in xs:
+        prod *= x
+    return prod
+
+
 def powerset(values, min_num=None, max_num=None):
     values = list(values)
     min_num = min_num or 0
@@ -113,6 +120,10 @@ class Point(PointTuple):
 
     def model(self):
         return {'x': self.x, 'y': self.y}
+
+    @staticmethod
+    def from_model(model):
+        return Point(x=model['x'], y=model['y'])
 
     def __eq__(self, other):
         assert isinstance(other, float) or isinstance(other, int) or isinstance(other, bool) or isinstance(other, Point)
@@ -283,6 +294,9 @@ class Point(PointTuple):
     def length(self):
         return sqrt(self.x * self.x + self.y * self.y)
 
+    def sum(self):
+        return self.x + self.y
+
     def positive(self):
         if isinstance(self.x, bool):
             return Point(self.x, self.y)
@@ -325,6 +339,7 @@ class Point(PointTuple):
                 for y in range(int(start.y), int(end.y)):
                     yield Point(x, y)
         else:
+            size -= Point.ione
             for x in range(int(start.x), int(end.x)):
                 for y in range(int(start.y), int(end.y)):
                     point = Point(x, y)

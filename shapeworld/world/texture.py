@@ -11,6 +11,10 @@ class Texture(object):
     def model(self):
         return {'name': str(self)}
 
+    @staticmethod
+    def from_model(model):
+        return Texture.textures[model['name']]()
+
     def copy(self):
         raise NotImplementedError
 

@@ -7,7 +7,7 @@ class WorldGenerator(object):
     MAX_ATTEMPTS = 10
     name = None
 
-    def __init__(self, world_size=None, world_color=None, shapes=None, colors=None, textures=None, rotation=None, size_range=None, distortion_range=None, shade_range=None, noise_range=None, collision_tolerance=None, boundary_tolerance=None):
+    def __init__(self, world_size=None, world_color=None, shapes=None, colors=None, textures=None, rotation=None, size_range=None, distortion_range=None, shade_range=None, collision_tolerance=None, boundary_tolerance=None):
         assert self.__class__.name
         self.world_size = world_size or 64
         self.shapes = shapes or list(all_shapes.keys())
@@ -20,7 +20,6 @@ class WorldGenerator(object):
         self.size_range = size_range or (0.15, 0.3)
         self.distortion_range = distortion_range or (2.0, 3.0)  # greater than 1.0
         self.shade_range = shade_range or 0.5
-        self.noise_range = noise_range or 0.1
         self.collision_tolerance = collision_tolerance or 0.0
         self.boundary_tolerance = boundary_tolerance or 0.0
 
@@ -64,7 +63,7 @@ class GeneratorMixer(object):
         assert len(generators) >= 1
         assert all(generator.world_size == generators[0].world_size for generator in generators)
         self.generators = generators
-        super(GeneratorMixer, self).__init__(world_size=generators[0].world_size, world_color=generators[0].world_color, shapes=generators[0].shapes, colors=generators[0].colors, textures=generators[0].textures, rotation=generators[0].rotation, size_range=generators[0].size_range, distortion_range=generators[0].distortion_range, shade_range=generators[0].shade_range, noise_range=generators[0].noise_range, collision_tolerance=generators[0].collision_tolerance, boundary_tolerance=generators[0].boundary_tolerance)
+        super(GeneratorMixer, self).__init__(world_size=generators[0].world_size, world_color=generators[0].world_color, shapes=generators[0].shapes, colors=generators[0].colors, textures=generators[0].textures, rotation=generators[0].rotation, size_range=generators[0].size_range, distortion_range=generators[0].distortion_range, shade_range=generators[0].shade_range, collision_tolerance=generators[0].collision_tolerance, boundary_tolerance=generators[0].boundary_tolerance)
         assert not distribution or len(distribution) == len(generators)
         self.distribution = cumulative_distribution(distribution or [1] * len(generators))
         assert bool(train_distribution) == bool(validation_distribution) == bool(test_distribution)

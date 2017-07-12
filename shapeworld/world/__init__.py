@@ -10,4 +10,4 @@ all_colors = Color.colors
 all_textures = Texture.textures
 
 
-__all__ = ['World', 'Entity', 'all_shapes', 'all_colors', 'all_textures']
+__all__ = ['World', 'Entity', 'Shape', 'Color', 'Texture', 'all_shapes', 'all_colors', 'all_textures']

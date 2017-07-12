@@ -9,9 +9,14 @@ class QuantificationCaptioner(WorldCaptioner):
     name = 'quantification'
     statistics_header = 'correct,mode,quantifier'
 
-    def __init__(self, shapes, colors, textures, quantifier_tolerance=None, mode_distribution=None, quantifiers=None):
+    def __init__(self, shapes, colors, textures, quantifier_tolerance=None, qtypes=None, mode_distribution=None, quantifiers=None):
         # ideally requires modifiers of all values for modtype 'shape', 'color', 'texture'
         super(QuantificationCaptioner, self).__init__(quantifier_tolerance=quantifier_tolerance)
+        if qtypes is None:
+            self.qtypes = ('absolute', 'relative')
+        else:
+            assert all(qtype in ('absolute', 'relative') for qtype in qtypes)
+            self.qtypes = qtypes
         self.mode_distribution = cumulative_distribution(mode_distribution or [1, 1, 1, 1, 1])
         self.quantifiers = quantifiers
         # self.incorrect_distribution = cumulative_distribution(
@@ -19,10 +24,7 @@ class QuantificationCaptioner(WorldCaptioner):
 
     def set_realizer(self, realizer):
         if super(QuantificationCaptioner, self).set_realizer(realizer):
-            if self.quantifiers:
-                self.quantifiers = realizer.get_quantifiers(names=self.quantifiers)
-            else:
-                self.quantifiers = realizer.get_quantifiers()
+            self.quantifiers = realizer.get_quantifiers(qtypes=self.qtypes)
             self.shape_modifiers = [value for _, value in realizer.get_modifiers(modtypes=('shape',))]
             self.color_modifiers = [value for _, value in realizer.get_modifiers(modtypes=('color',))]
             # self.texture_modifiers = [value for _, value in self.realizer.get_modifiers(modtypes=('texture',))]
@@ -31,9 +33,9 @@ class QuantificationCaptioner(WorldCaptioner):
             return False
 
     def caption_world(self, world, correct):
-        existing_shapes = [entity['shape']['name'] for entity in world['entities']]
+        existing_shapes = {entity['shape']['name'] for entity in world['entities']}
         existing_shapes = [shape for shape in existing_shapes if shape in self.shape_modifiers]
-        existing_colors = [entity['color']['name'] for entity in world['entities']]
+        existing_colors = {entity['color']['name'] for entity in world['entities']}
         existing_colors = [color for color in existing_colors if color in self.color_modifiers]
         # existing_textures = [entity['texture']['name'] for entity in entities]
         # existing_textures = [texture for texture in existing_textures if texture in self.texture_modifiers]

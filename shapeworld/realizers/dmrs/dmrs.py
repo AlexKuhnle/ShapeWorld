@@ -35,13 +35,20 @@ class Dmrs(ListDmrs):
             node1 = deepcopy(other[nodeid2])
             node1.nodeid = None
             nodeid_mapping[nodeid2] = composition.add_node(node1)
+        links1 = set((link1.start, link1.end) for link1 in composition.iter_links())
         for link2 in other.iter_links():
-            link1 = Link(nodeid_mapping[link2.start], nodeid_mapping[link2.end], link2.rargname, link2.post)
-            composition.add_link(link1)
+            start = nodeid_mapping[link2.start]
+            end = nodeid_mapping[link2.end]
+            if (start, end) not in links1:
+                link1 = Link(start, end, link2.rargname, link2.post)
+                composition.add_link(link1)
         if composition.index is None and other.index is not None:
             composition.index = composition[nodeid_mapping[other.index.nodeid]]
         if composition.top is None and other.top is not None:
             composition.top = composition[nodeid_mapping[other.top.nodeid]]
+        for anchor in other.anchors:
+            if anchor not in composition.anchors:
+                composition.anchors[anchor] = composition[nodeid_mapping[other.anchors[anchor].nodeid]]
         return composition
 
     def get_mrs(self):
@@ -115,12 +122,12 @@ class Dmrs(ListDmrs):
             else:
                 intrinsic_string = '{} [ {} {}]'.format(variables[nodeid][0], variables[nodeid][1].cvarsort, ''.join('{}: {} '.format(feature.upper(), value.lower()) for feature, value in variables[nodeid][1].iter_specified()))
             args_string = ''.join('{}: {} '.format(role.upper(), arg) for role, arg in args[nodeid].items()) if nodeid in args else ''
-            elempred_string = '[ {}_rel LBL: h{} {}ARG0: {} {}]'.format(predicates[nodeid], labels[nodeid], carg_string, intrinsic_string, args_string)
+            elempred_string = '[ {}_rel<0:0> LBL: h{} {}ARG0: {} {}]'.format(predicates[nodeid], labels[nodeid], carg_string, intrinsic_string, args_string)
             elempreds.append(elempred_string)
 
         top_string = '' if self.top is None else 'TOP: h0 '
         index_string = '' if self.index is None else 'INDEX: {} '.format(variables[self.index.nodeid][0])
         eps_string = '  '.join(elempreds)
         hcons_string = ' '.join('h{} qeq h{}'.format(*qeq) for qeq in hcons.items())
-        mrs_string = '[ {}{}RELS: < {} > HCONS: < {} > ]'.format(top_string, index_string, eps_string, hcons_string)
+        mrs_string = '[ {}{}RELS: < {} > HCONS: < {} > ICONS: <  > ]'.format(top_string, index_string, eps_string, hcons_string)
         return mrs_string

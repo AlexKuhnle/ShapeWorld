@@ -72,6 +72,21 @@ def dataset(dtype=None, name=None, config=None):
     return dataset
 
 
+def alternatives_type(value_type):
+    if len(value_type) > 5 and value_type[:5] == 'alts(' and value_type[-1] == ')':
+        return value_type[5:-1], True
+    else:
+        return value_type, False
+
+
+def valid_value_type(value_type):
+    value_type, alts = alternatives_type(value_type=value_type)
+    if alts:
+        return value_type in ('int', 'float', 'vector(int)', 'vector(float)', 'text', 'model')
+    else:
+        return value_type in ('int', 'float', 'vector(int)', 'vector(float)', 'world', 'text', 'model')
+
+
 class Dataset(object):
 
     MAX_ATTEMPTS = 10
@@ -83,9 +98,16 @@ class Dataset(object):
     def __init__(self, world_size, vectors=None, words=None):
         assert self.__class__.dataset_name
         assert self.__class__.dataset_type
-        assert all(value_type in ('int', 'float', 'vector(int)', 'vector(float)', 'world', 'text', 'model') for value_type in self.__class__.dataset_values.values())
+        assert all(valid_value_type(value_type=value_type) for value_type in self.__class__.dataset_values.values())
+        assert 'alternatives' not in self.__class__.dataset_values or self.__class__.dataset_values['alternatives'] == 'int'
+        assert all(not alternatives_type(value_type=value_type)[1] for value_type in self.__class__.dataset_values.values()) or 'alternatives' in self.__class__.dataset_values
         self.world_size = world_size
         self.vectors = vectors
+        if words is not None and isinstance(words, list):
+            assert words is None or words == sorted(words)  # !!!
+            words = {words[n]: n + 1 for n in range(len(words))}
+            words[''] = 0
+            words['UNKNOWN'] = len(words)
         self.words = words
 
     def __str__(self):
@@ -113,7 +135,10 @@ class Dataset(object):
 
     @property
     def world_shape(self):
-        return (self.world_size, self.world_size, 3)
+        if isinstance(self.world_size, int):
+            return (self.world_size, self.world_size, 3)
+        else:
+            return (self.world_size[0], self.world_size[1], 3)
 
     def vector_shape(self, value_name):
         return (self.vectors.get(value_name),)
@@ -126,29 +151,42 @@ class Dataset(object):
     def vocabulary(self):
         return list(self.words.keys())
 
-    def zero_batch(self, n, include_model=False):
+    def zero_batch(self, n, include_model=False, alternatives=False):
         batch = dict()
         for value_name, value_type in self.values.items():
-            if value_type == 'int':
-                batch[value_name] = np.zeros(shape=(n, 1), dtype=np.int32)
-            elif value_type == 'float':
-                batch[value_name] = np.zeros(shape=(n, 1), dtype=np.float32)
-            elif value_type == 'vector(int)' or value_type == 'text':
-                batch[value_name] = np.zeros(shape=(n, self.vectors[value_name]), dtype=np.int32)
-            elif value_type == 'vector(float)':
-                batch[value_name] = np.zeros(shape=(n, self.vectors[value_name]), dtype=np.float32)
-            elif value_type == 'world':
-                batch[value_name] = np.zeros(shape=(n, self.world_size, self.world_size, 3), dtype=np.float32)
-            elif value_type == 'model' and include_model:
-                batch[value_name] = [None] * n
+            value_type, alts = alternatives_type(value_type=value_type)
+            if alternatives and alts:
+                if value_type == 'int':
+                    batch[value_name] = [[] for _ in range(n)]
+                elif value_type == 'float':
+                    batch[value_name] = [[] for _ in range(n)]
+                elif value_type == 'vector(int)' or value_type == 'text':
+                    batch[value_name] = [[np.zeros(shape=self.vector_shape(value_name), dtype=np.int32)] for _ in range(n)]
+                elif value_type == 'vector(float)':
+                    batch[value_name] = [[np.zeros(shape=self.vector_shape(value_name), dtype=np.float32)] for _ in range(n)]
+                elif value_type == 'model' and include_model:
+                    batch[value_name] = [[] for _ in range(n)]
+            else:
+                if value_type == 'int' and (value_name != 'alternatives' or alternatives):
+                    batch[value_name] = np.zeros(shape=(n,), dtype=np.int32)
+                elif value_type == 'float':
+                    batch[value_name] = np.zeros(shape=(n,), dtype=np.float32)
+                elif value_type == 'vector(int)' or value_type == 'text':
+                    batch[value_name] = np.zeros(shape=((n,) + self.vector_shape(value_name)), dtype=np.int32)
+                elif value_type == 'vector(float)':
+                    batch[value_name] = np.zeros(shape=((n,) + self.vector_shape(value_name)), dtype=np.float32)
+                elif value_type == 'world':
+                    batch[value_name] = np.zeros(shape=((n,) + self.world_shape), dtype=np.float32)
+                elif value_type == 'model' and include_model:
+                    batch[value_name] = [None] * n
         return batch
 
-    def generate(self, n, mode=None, noise=True, include_model=False):  # mode: None, 'train', 'validation', 'test'
+    def generate(self, n, mode=None, noise_range=None, include_model=False, alternatives=False):  # mode: None, 'train', 'validation', 'test'
         raise NotImplementedError()
 
-    def iterate(self, n, mode=None, noise=True, include_model=False):
+    def iterate(self, n, mode=None, noise_range=None, include_model=False, alternatives=False):
         while True:
-            yield self.generate(n=n, mode=mode, noise=noise, include_model=include_model)
+            yield self.generate(n=n, mode=mode, noise_range=noise_range, include_model=include_model, alternatives=alternatives)
 
     def collect_captioner_statistics(self, path, append=False):
         pass
@@ -172,18 +210,31 @@ class Dataset(object):
 
     @staticmethod
     def serialize_value(value, value_name, value_type, write_file, concat_worlds=False, id2word=None):
+        value_type, alts = alternatives_type(value_type=value_type)
         if value_type == 'int':
-            value = '\n'.join(str(int(x)) for x in value) + '\n'
+            if alts:
+                value = '\n'.join(';'.join(str(int(x)) for x in xs) for xs in value) + '\n'
+            else:
+                value = '\n'.join(str(int(x)) for x in value) + '\n'
             write_file(value_name + '.txt', value)
         elif value_type == 'float':
-            value = '\n'.join(str(float(x)) for x in value) + '\n'
+            if alts:
+                value = '\n'.join(';'.join(str(float(x)) for x in xs) for xs in value) + '\n'
+            else:
+                value = '\n'.join(str(float(x)) for x in value) + '\n'
             write_file(value_name + '.txt', value)
         elif value_type == 'vector(int)' or value_type == 'vector(float)':
-            value = '\n'.join(','.join(str(x) for x in vector) for vector in value) + '\n'
+            if alts:
+                value = '\n'.join(';'.join(','.join(str(x) for x in vector) for vector in vectors) for vectors in value) + '\n'
+            else:
+                value = '\n'.join(','.join(str(x) for x in vector) for vector in value) + '\n'
             write_file(value_name + '.txt', value)
         elif value_type == 'text':
             assert id2word
-            value = '\n'.join(' '.join(id2word[word_id] for word_id in text if word_id) for text in value) + '\n'
+            if alts:
+                value = '\n\n'.join('\n'.join(' '.join(id2word[word_id] for word_id in text if word_id) for text in texts) for texts in value) + '\n\n'
+            else:
+                value = '\n'.join(' '.join(id2word[word_id] for word_id in text if word_id) for text in value) + '\n'
             write_file(value_name + '.txt', value)
         elif value_type == 'world':
             if concat_worlds:
@@ -213,26 +264,42 @@ class Dataset(object):
 
     @staticmethod
     def deserialize_value(value_name, value_type, read_file, num_concat_worlds=0, word2id=None):
+        value_type, alts = alternatives_type(value_type=value_type)
         if value_type == 'int':
             value = read_file(value_name + '.txt')
-            value = [int(x) for x in value.split()]
+            if alts:
+                value = [[int(x) for x in xs.split(';')] for xs in value.split('\n')[:-1]]
+            else:
+                value = [int(x) for x in value.split('\n')[:-1]]
             return value
         elif value_type == 'float':
             value = read_file(value_name + '.txt')
-            value = [float(x) for x in value.split()]
+            if alts:
+                value = [[float(x) for x in xs.split(';')] for xs in value.split('\n')[:-1]]
+            else:
+                value = [float(x) for x in value.split('\n')[:-1]]
             return value
         elif value_type == 'vector(int)':
             value = read_file(value_name + '.txt')
-            value = [[int(x) for x in vector.split(',')] for vector in value.split()]
+            if alts:
+                value = [[[int(x) for x in vector.split(',')] for vector in vectors.split(';')] for vectors in value.split('\n')[:-1]]
+            else:
+                value = [[int(x) for x in vector.split(',')] for vector in value.split('\n')[:-1]]
             return value
         elif value_type == 'vector(float)':
             value = read_file(value_name + '.txt')
-            value = [[float(x) for x in vector.split(',')] for vector in value.split()]
+            if alts:
+                value = [[[float(x) for x in vector.split(',')] for vector in vectors.split(';')] for vectors in value.split('\n')[:-1]]
+            else:
+                value = [[float(x) for x in vector.split(',')] for vector in value.split('\n')[:-1]]
             return value
         elif value_type == 'text':
             assert word2id
             value = read_file(value_name + '.txt')
-            value = [[word2id[word] for word in text.split(' ')] for text in value.split('\n')[:-1]]
+            if alts:
+                value = [[[word2id[word] for word in text.split(' ')] for text in texts.split('\n')] for texts in value.split('\n\n')[:-1]]
+            else:
+                value = [[word2id[word] for word in text.split(' ')] for text in value.split('\n')[:-1]]
             return value
         elif value_type == 'world':
             if num_concat_worlds:
@@ -281,9 +348,8 @@ class LoadedDataset(Dataset):
         self._values = specification.pop('values')
         self.archive = specification.pop('archive', None)
         self.include_model = specification.pop('include_model', False)
-        self.noise_range = specification.pop('noise_range', None)
         self.num_concat_worlds = specification.pop('num_concat_worlds', 0)
-        self.specification = specification
+        self._specification = specification
         self.per_part = True
         self.part_once = False
 
@@ -319,13 +385,19 @@ class LoadedDataset(Dataset):
     def values(self):
         return self._values
 
+    def specification(self):
+        return self._specification
+
     def __getattr__(self, name):
-        if name in self.specification:
-            return self.specification[name]
+        if name in self._specification:
+            return self._specification[name]
         raise AttributeError()
 
-    def generate(self, n, mode=None, noise=True, include_model=False):
-        assert noise or self.noise_range
+    def get_records_paths(self):
+        assert 'tf-records' in self.parts
+        return self.parts['tf-records']
+
+    def generate(self, n, mode=None, noise_range=None, include_model=False, alternatives=False):
         assert not include_model or self.include_model
         if not self.per_part:
             self.mode = None if mode else 'train'
@@ -345,7 +417,7 @@ class LoadedDataset(Dataset):
                     else:
                         self.num_instances = len(value)
 
-        batch = self.zero_batch(n, include_model=include_model)
+        batch = self.zero_batch(n, include_model=include_model, alternatives=alternatives)
         for i in range(n):
             index = randrange(self.num_instances)
             self.num_instances -= 1
@@ -357,15 +429,15 @@ class LoadedDataset(Dataset):
                     batch[value_name][i][:len(value)] = value
                 elif value_type != 'model' or include_model:
                     batch[value_name][i] = value
-        if noise and self.noise_range:
+        if noise_range is not None and noise_range > 0.0:
             for value_name, value_type in self.values.items():
                 if value_type == 'world':
-                    noise = np.random.normal(loc=0.0, scale=self.noise_range, size=(n, self.world_size, self.world_size, 3))
-                    mask = (noise < -self.noise_range) + (noise > self.noise_range)
+                    noise = np.random.normal(loc=0.0, scale=noise_range, size=((n,) + self.world_shape))
+                    mask = (noise < -noise_range) + (noise > noise_range)
                     while np.any(a=mask):
                         noise -= mask * noise
-                        noise += mask * np.random.normal(loc=0.0, scale=self.noise_range, size=(n, self.world_size, self.world_size, 3))
-                        mask = (noise < -self.noise_range) + (noise > self.noise_range)
+                        noise += mask * np.random.normal(loc=0.0, scale=noise_range, size=((n,) + self.world_shape))
+                        mask = (noise < -noise_range) + (noise > noise_range)
                     worlds = batch[value_name]
                     worlds += noise
                     np.clip(worlds, a_min=0.0, a_max=1.0, out=worlds)
@@ -422,7 +494,7 @@ class DatasetMixer(Dataset):
     def world_size(self):
         return self.datasets[0].world_size
 
-    def generate(self, n, mode=None, noise=True, include_model=False):
+    def generate(self, n, mode=None, noise_range=None, include_model=False, alternatives=False):
         if mode is None:
             distribution = self.distribution
         if mode == 'train':
@@ -433,18 +505,59 @@ class DatasetMixer(Dataset):
             distribution = self.test_distribution
         if self.consistent_batches:
             dataset = sample(distribution, self.datasets)
-            return dataset.generate(n=n, mode=mode, noise=noise, include_model=include_model)
+            return dataset.generate(n=n, mode=mode, noise_range=noise_range, include_model=include_model, alternatives=alternatives)
         else:
-            batch = self.zero_batch(n, include_model=include_model)
+            batch = self.zero_batch(n, include_model=include_model, alternatives=alternatives)
             for i in range(n):
                 dataset = sample(distribution, self.datasets)
-                generated = dataset.generate(n=1, mode=mode, noise=noise, include_model=include_model)
+                generated = dataset.generate(n=1, mode=mode, noise_range=noise_range, include_model=include_model, alternatives=alternatives)
                 for value_name, value_type in self.values.items():
                     value = generated[value_name][0]
                     if value_type == 'text':
                         batch[value_name][i][:len(value)] = value
                     else:
                         batch[value_name][i] = value
+        return batch
+
+
+class ClassificationDataset(Dataset):
+
+    dataset_type = 'classification'
+    dataset_values = {'world': 'world', 'world_model': 'model', 'classification': 'vector(float)'}
+
+    def __init__(self, world_generator, num_classes, multi_class=False, class_count=False):
+        super(ClassificationDataset, self).__init__(world_size=world_generator.world_size, vectors=dict(classification=num_classes))
+        assert multi_class or not class_count
+        self.world_generator = world_generator
+        self.num_classes = num_classes
+        self.multi_class = multi_class
+        self.class_count = class_count
+
+    def specification(self):
+        specification = super(ClassificationDataset, self).specification()
+        specification['num_classes'] = self.num_classes
+        specification['multi_class'] = self.multi_class
+        specification['class_count'] = self.class_count
+        return specification
+
+    def get_classes(self, world):  # iterable of classes
+        raise NotImplementedError
+
+    def generate(self, n, mode=None, noise_range=None, include_model=False, alternatives=False):
+        batch = self.zero_batch(n, include_model=include_model, alternatives=alternatives)
+        for i in range(n):
+            world = self.world_generator(mode)
+            batch['world'][i] = world.get_array(noise_range=noise_range)
+            if include_model:
+                batch['world_model'][i] = world.model()
+            c = None
+            for c in self.get_classes(world):
+                if self.class_count:
+                    batch['classification'][i][c] += 1.0
+                else:
+                    batch['classification'][i][c] = 1.0
+            if not self.multi_class:
+                assert c is not None
         return batch
 
 
@@ -456,11 +569,7 @@ class CaptionAgreementDataset(Dataset):
     def __init__(self, world_generator, world_captioner, caption_size, words, incorrect_world_ratio=None, correct_ratio=None, train_correct_ratio=None, validation_correct_ratio=None, test_correct_ratio=None, caption_realizer=None):
         assert isinstance(caption_size, int) and caption_size > 0
         assert isinstance(words, list) and len(words) > 0
-        assert words == sorted(words)  # !!!
-        words = sorted(words)
-        words = {words[n]: n + 1 for n in range(len(words))}
-        words[''] = 0
-        super(CaptionAgreementDataset, self).__init__(world_size=world_generator.world_size, vectors={'caption': caption_size}, words=words)
+        super(CaptionAgreementDataset, self).__init__(world_size=world_generator.world_size, vectors=dict(caption=caption_size), words=words)
         self.world_generator = world_generator
         self.world_captioner = world_captioner
         self.caption_size = caption_size
@@ -497,7 +606,7 @@ class CaptionAgreementDataset(Dataset):
                 return caption
         return None
 
-    def generate(self, n, mode=None, noise=True, include_model=False):
+    def generate(self, n, mode=None, noise_range=None, include_model=False, alternatives=False):
         if mode == 'train':
             correct_ratio = self.train_correct_ratio
         elif mode == 'validation':
@@ -506,7 +615,7 @@ class CaptionAgreementDataset(Dataset):
             correct_ratio = self.test_correct_ratio
         else:
             correct_ratio = self.correct_ratio
-        batch = self.zero_batch(n, include_model=include_model)
+        batch = self.zero_batch(n, include_model=include_model, alternatives=alternatives)
         captions = [None] * n
         for i in range(n):
             r = random()
@@ -521,7 +630,7 @@ class CaptionAgreementDataset(Dataset):
                     if not caption:
                         continue
                     assert caption.agreement(world=world_model) == 1.0
-                    batch['agreement'][i][0] = 1.0
+                    batch['agreement'][i] = 1.0
                 else:
                     if (r - correct_ratio) / (1.0 - correct_ratio) < self.incorrect_world_ratio:
                         caption = self.world_captioner(world=world_model, correct=True, mode=mode)
@@ -535,7 +644,7 @@ class CaptionAgreementDataset(Dataset):
                         if not caption:
                             continue
                     assert caption.agreement(world=world_model) == 0.0
-                batch['world'][i] = world.get_array(noise=noise)
+                batch['world'][i] = world.get_array(noise_range=noise_range)
                 captions[i] = caption
                 if include_model:
                     batch['world_model'][i] = world_model
@@ -544,11 +653,13 @@ class CaptionAgreementDataset(Dataset):
             else:
                 raise Exception()
         captions = self.caption_realizer.realize(captions=captions)
+        unknown = self.words['UNKNOWN']
         for i, caption in enumerate(captions):
-            assert len(caption) <= self.caption_size
-            for j, word in enumerate(caption):
-                batch['caption'][i][j] = self.words[word]
-            batch['caption_length'][i][0] = len(caption)
+            assert len(caption) <= self.caption_size, (caption, len(caption))
+            for w, word in enumerate(caption):
+                assert word in self.words, word  # !!!!!!!!!!
+                batch['caption'][i][w] = self.words.get(word, unknown)
+            batch['caption_length'][i] = len(caption)
         return batch
 
     def collect_captioner_statistics(self, path, append=False):
@@ -556,47 +667,6 @@ class CaptionAgreementDataset(Dataset):
 
     def close_captioner_statistics(self):
         self.world_captioner.close_statistics()
-
-
-class ClassificationDataset(Dataset):
-
-    dataset_type = 'classification'
-    dataset_values = {'world': 'world', 'world_model': 'model', 'classification': 'vector(float)'}
-
-    def __init__(self, world_generator, num_classes, multi_class=False, class_count=False):
-        super(ClassificationDataset, self).__init__(world_size=world_generator.world_size, vectors={'classification': num_classes})
-        assert multi_class or not class_count
-        self.world_generator = world_generator
-        self.num_classes = num_classes
-        self.multi_class = multi_class
-        self.class_count = class_count
-
-    def specification(self):
-        specification = super(ClassificationDataset, self).specification()
-        specification['num_classes'] = self.num_classes
-        specification['multi_class'] = self.multi_class
-        specification['class_count'] = self.class_count
-        return specification
-
-    def get_classes(self, world):  # iterable of classes
-        raise NotImplementedError
-
-    def generate(self, n, mode=None, noise=True, include_model=False):
-        batch = self.zero_batch(n, include_model=include_model)
-        for i in range(n):
-            world = self.world_generator(mode)
-            batch['world'][i] = world.get_array(noise=noise)
-            if include_model:
-                batch['world_model'][i] = world.model()
-            c = None
-            for c in self.get_classes(world):
-                if self.class_count:
-                    batch['classification'][i][c] += 1.0
-                else:
-                    batch['classification'][i][c] = 1.0
-            if not self.multi_class:
-                assert c is not None
-        return batch
 
 
 class CommunicationDataset(Dataset):
@@ -626,13 +696,13 @@ class CommunicationDataset(Dataset):
     def valid_alternative(self, reference, alternative):
         raise NotImplementedError
 
-    def generate(self, n, mode=None, noise=True, include_model=False):
-        batch = self.zero_batch(n, include_model=include_model)
+    def generate(self, n, mode=None, noise_range=None, include_model=False, alternatives=False):
+        batch = self.zero_batch(n, include_model=include_model, alternatives=alternatives)
         for i in range(n):
             reference = randrange(self.num_alternatives)
             batch['reference'][i] = reference
             world = self.world_generator(mode)
-            batch['alternative'][reference][i] = world.get_array(noise=noise)
+            batch['alternative'][reference][i] = world.get_array(noise_range=noise_range)
             if include_model:
                 batch['alternative_model'][reference][i] = world.model()
             for alt in range(self.num_alternatives):
@@ -640,7 +710,7 @@ class CommunicationDataset(Dataset):
                     continue
                 alternative = self.generate_alternative(world, mode)
                 alt_str = 'alternative' + str(alt + 1)
-                batch[alt_str][i] = alternative.get_array(noise=noise)
+                batch[alt_str][i] = alternative.get_array(noise_range=noise_range)
                 if include_model:
                     batch[alt_str + '_model'][alt][i] = alternative.model()
         return batch
@@ -652,22 +722,22 @@ class CompositionDataset(Dataset):
     dataset_values = {'compound': 'world', 'compound_model': 'model', 'component1': 'world', 'component2': 'world', 'composition_type': 'int'}
 
     def __init__(self, world_generator, num_types):
-        super(CompositionDataset, self).__init__(world_size=world_generator.world_size, vectors={'composition-type': num_types})
+        super(CompositionDataset, self).__init__(world_size=world_generator.world_size, vectors=dict(composition_type=num_types))
         self.world_generator = world_generator
 
     def get_components(self, world):
         raise NotImplementedError
 
-    def generate(self, n, mode=None, noise=True, include_model=False):
-        batch = self.zero_batch(n, include_model=include_model)
+    def generate(self, n, mode=None, noise_range=None, include_model=False, alternatives=False):
+        batch = self.zero_batch(n, include_model=include_model, alternatives=alternatives)
         for i in range(n):
             compound = self.world_generator(mode)
-            batch['compound'][i] = compound.get_array(noise=noise)
+            batch['compound'][i] = compound.get_array(noise_range=noise_range)
             if include_model:
                 batch['compound_model'][i] = compound.model()
             component1, component2, composition_type = self.get_components(world=compound)
-            batch['component1'][i] = component1.get_array(noise=noise)
-            batch['component2'][i] = component2.get_array(noise=noise)
+            batch['component1'][i] = component1.get_array(noise_range=noise_range)
+            batch['component2'][i] = component2.get_array(noise_range=noise_range)
             batch['composition_type'][i] = composition_type
         return batch
 
@@ -716,7 +786,7 @@ class ComparisonDataset(Dataset):
     def incorrect_comparison(self, reference, comparison):
         raise NotImplementedError
 
-    def generate(self, n, mode=None, noise=True, include_model=False):
+    def generate(self, n, mode=None, noise_range=None, include_model=False, alternatives=False):
         if mode == 'train':
             correct_ratio = self.train_correct_ratio
         elif mode == 'validation':
@@ -725,18 +795,18 @@ class ComparisonDataset(Dataset):
             correct_ratio = self.test_correct_ratio
         else:
             correct_ratio = self.correct_ratio
-        batch = self.zero_batch(n, include_model=include_model)
+        batch = self.zero_batch(n, include_model=include_model, alternatives=alternatives)
         for i in range(n):
             reference = self.world_generator(mode)
-            batch['reference'][i] = reference.get_array(noise=noise)
+            batch['reference'][i] = reference.get_array(noise_range=noise_range)
             if include_model:
                 batch['reference_model'][i] = reference.model()
             if random() < correct_ratio:
                 comparison = self.generate_correct_comparison(reference)
-                batch['agreement'][i][0] = 1.0
+                batch['agreement'][i] = 1.0
             else:
                 comparison = self.generate_incorrect_comparison(reference)
-            batch['comparison'][i] = comparison.get_array(noise=noise)
+            batch['comparison'][i] = comparison.get_array(noise_range=noise_range)
             if include_model:
                 batch['comparison_model'][i] = comparison.model()
         return batch

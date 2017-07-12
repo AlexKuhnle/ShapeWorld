@@ -29,6 +29,10 @@ class Color(object):
     def model(self):
         return {'name': str(self), 'rgb': list(self.rgb), 'shade': self.shade}
 
+    @staticmethod
+    def from_model(model):
+        return Color(name=model['name'], rgb=Color.colors[model['name']], shade=model['shade'])
+
     def copy(self):
         return Color(name=self.name, rgb=self.rgb, shade=self.shade)
 

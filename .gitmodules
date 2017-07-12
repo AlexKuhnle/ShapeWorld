@@ -2,3 +2,6 @@
 	path = shapeworld/realizers/dmrs/pydmrs
 	url = https://github.com/delph-in/pydmrs
 	branch = python2
+[submodule "models/TFMacros"]
+	path = models/TFMacros
+	url = https://github.com/AlexKuhnle/TFMacros.git

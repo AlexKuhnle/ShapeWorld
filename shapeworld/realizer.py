@@ -37,9 +37,9 @@ class CaptionRealizer(object):
             assert not reltypes
             return [self.__class__.relations_by_name[name] for name in names]
         elif reltypes:
-            return [(reltype,) for reltype in reltypes if reltype in self.__class__.relations]
+            return [(reltype, value) for reltype in reltypes if reltype in self.__class__.relations for value in self.__class__.relations[reltype].keys()]
         else:
-            return [(reltype,) for reltype in self.__class__.relations.keys()]
+            return [(reltype, value) for reltype, relations in self.__class__.relations.items() for value in relations.keys()]
 
     def get_quantifiers(self, qtypes=None, qranges=None, names=None):
         if names:
@@ -48,7 +48,7 @@ class CaptionRealizer(object):
         elif qtypes and qranges:
             return [(qtype, qrange, value) for qtype in qtypes if qtype in self.__class__.quantifiers for qrange in qranges if qrange in self.__class__.quantifiers[qtype] for value in self.__class__.quantifiers[qtype][qrange].keys()]
         elif qtypes:
-            return [(qtype, qrange, value) for qtype in qtypes if qtype in self.__class__.quantifications for qrange, quantifiers in self.__class__.quantifiers[qtype].items() for value in quantifiers.keys()]
+            return [(qtype, qrange, value) for qtype in qtypes if qtype in self.__class__.quantifiers for qrange, quantifiers in self.__class__.quantifiers[qtype].items() for value in quantifiers.keys()]
         elif qranges:
             return [(qtype, qrange, value) for qtype, quantifiers in self.__class__.quantifiers.items() for qrange in qranges if qrange in quantifiers for value in quantifiers[qrange].keys()]
         else:

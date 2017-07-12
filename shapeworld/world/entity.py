@@ -2,9 +2,10 @@ from __future__ import division
 from math import cos, pi, sin
 from random import choice, random
 from shapeworld.util import Point
-from shapeworld.world.shape import Shape
-from shapeworld.world.color import Color
-from shapeworld.world.texture import Texture
+from shapeworld.world import Shape, Color, Texture
+
+
+default_resolution = Point(100, 100)
 
 
 class Entity(object):
@@ -28,6 +29,12 @@ class Entity(object):
 
     def model(self):
         return {'id': self.id, 'shape': self.shape.model(), 'color': self.color.model(), 'texture': self.texture.model(), 'center': self.center.model(), 'rotation': self.rotation}
+
+    @staticmethod
+    def from_model(model):
+        entity = Entity(shape=Shape.from_model(model['shape']), color=Color.from_model(model['color']), texture=Texture.from_model(model['texture']), center=Point.from_model(model['center']), rotation=model['rotation'])
+        entity.id = model['id']
+        return entity
 
     def copy(self):
         return Entity(shape=self.shape.copy(), color=self.color.copy(), texture=self.texture.copy(), center=self.center, rotation=self.rotation)
@@ -60,7 +67,7 @@ class Entity(object):
         topleft = (((self.topleft + 0.5 * shift) / scale) * world_size).max(Point.izero)
         bottomright = (((self.bottomright + 1.5 * shift) / scale) * world_size).min(world_size)
         color = self.color.get_color()
-        for (x, y), point in Point.range(topleft, bottomright, world_size - Point.ione):
+        for (x, y), point in Point.range(topleft, bottomright, world_size):
             point = point * scale - shift
             offset = point - self.center
             distance = self.distance(offset)
@@ -72,30 +79,27 @@ class Entity(object):
                 distance = max(1.0 - distance * min(*world_size), 0.0)
                 world_array[y, x] = distance * self.texture.get_color(color, offset) + (1.0 - distance) * world_array[y, x]
 
-    def overlaps(self, other):
+    def collides(self, other, ratio=False, symmetric=True, resolution=None):
+        if resolution is None:
+            resolution = default_resolution
         topleft1 = self.topleft
         bottomright1 = self.bottomright
         topleft2 = other.topleft
         bottomright2 = other.bottomright
         if bottomright1.x < topleft2.x or topleft1.x > bottomright2.x or bottomright1.y < topleft2.y or topleft1.y > bottomright2.y:
-            return None
-        else:
-            return topleft1.max(topleft2), bottomright1.min(bottomright2)
-
-    def collides(self, other, world_size, ratio=False, symmetric=True):
-        overlap = self.overlaps(other)
-        if not overlap:
             if ratio:
                 return 0.0 if symmetric else (0.0, 0.0)
             else:
                 return False
-        topleft, bottomright = overlap
-        topleft *= world_size
-        bottomright *= world_size
+        else:
+            topleft, bottomright = topleft1.max(topleft2), bottomright1.min(bottomright2)
+
+        topleft *= resolution
+        bottomright *= resolution
         if ratio:
-            granularity = 1.0 / world_size.x / world_size.y
+            granularity = 1.0 / resolution.x / resolution.y
             collision = 0.0
-            for _, point in Point.range(topleft, bottomright, world_size - Point.ione):
+            for _, point in Point.range(topleft, bottomright, resolution):
                 if ((point - self.center) in self) and ((point - other.center) in other):
                     collision += granularity
             if symmetric:
@@ -103,37 +107,34 @@ class Entity(object):
             else:
                 return (collision / self.shape.area(), collision / other.shape.area())
         else:
-            min_distance = 1.0 / world_size.x
-            for _, point in Point.range(topleft, bottomright, world_size - Point.ione):
+            min_distance = 1.0 / min(resolution.x, resolution.y)
+            for _, point in Point.range(topleft, bottomright, resolution):
                 if (self.distance(point - self.center) <= min_distance) and (other.distance(point - other.center) <= min_distance):
                     return True
 
-    def not_overlaps(self, other):
+    def not_collides(self, other, ratio=False, symmetric=True, resolution=None):
+        if resolution is None:
+            resolution = default_resolution
         topleft1 = self.topleft
         bottomright1 = self.bottomright
         topleft2 = other.topleft
         bottomright2 = other.bottomright
         if topleft1.x < topleft2.x and topleft1.y < topleft2.y and bottomright1.x > bottomright2.x and bottomright1.y > bottomright2.y:
-            return None
-        elif (bottomright1 - topleft1).length() < (bottomright2 - topleft2).length():
-            return topleft1, bottomright1
-        else:
-            return topleft2, bottomright2
-
-    def not_collides(self, other, world_size, ratio=False, symmetric=True):
-        not_overlap = self.not_overlaps(other)
-        if not not_overlap:
             if ratio:
                 return 0.0 if symmetric else (0.0, 0.0)
             else:
                 return False
-        topleft, bottomright = not_overlap
-        topleft *= world_size
-        bottomright *= world_size
-        granularity = 1.0 / world_size.x / world_size.y
+        elif (bottomright1 - topleft1).length() < (bottomright2 - topleft2).length():
+            topleft, bottomright = topleft1, bottomright1
+        else:
+            topleft, bottomright = topleft2, bottomright2
+
+        topleft *= resolution
+        bottomright *= resolution
+        granularity = 1.0 / resolution.x / resolution.y
         collision = 0.0
         if ratio:
-            for _, point in Point.range(topleft, bottomright, world_size - Point.ione):
+            for _, point in Point.range(topleft, bottomright, resolution):
                 if ((point - self.center) not in self) and ((point - other.center) in other):
                     collision += granularity
             if symmetric:
@@ -141,7 +142,7 @@ class Entity(object):
             else:
                 return (collision / self.shape.area(), collision / other.shape.area())
         else:
-            for c, point in Point.range(topleft, bottomright, world_size - Point.ione):
+            for c, point in Point.range(topleft, bottomright, resolution):
                 if (self.distance(point - self.center) > granularity) and (other.distance(point - other.center) <= granularity):
                     return True
 
