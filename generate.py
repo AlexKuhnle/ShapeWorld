@@ -7,13 +7,6 @@ import sys
 from shapeworld import dataset, util
 
 
-def parse_tuple(string):
-    assert string
-    if string[0] == '(' and string[-1] == ')':
-        string = string[1:-1]
-    return tuple(util.parse_int_with_factor(x) for x in string.split(','))
-
-
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Generate example data')
 
@@ -27,7 +20,7 @@ if __name__ == "__main__":
     parser.add_argument('-c', '--config', type=util.parse_config, default=None, help='Dataset configuration file')
 
     parser.add_argument('-m', '--mode', default=None, choices=('train', 'validation', 'test', 'tf-records'), help='Mode')
-    parser.add_argument('-f', '--files', type=parse_tuple, default=None, help='Number of files to split data into')
+    parser.add_argument('-f', '--files', type=util.parse_tuple, default=None, help='Number of files to split data into')
     parser.add_argument('-i', '--instances', type=util.parse_int_with_factor, default=100, help='Number of instances per file')
 
     parser.add_argument('-p', '--pixel-noise', type=float, default=0.0, help='Pixel noise range')
@@ -56,23 +49,23 @@ if __name__ == "__main__":
     if args.concatenate_images:
         specification['num_concat_worlds'] = args.instances
 
+    if args.files is None:
+        parts = (1, 1, 1) if args.mode is None else (1,)
+    else:
+        parts = args.files
     if args.unmanaged:
-        assert args.files is None or len(args.files) == 1
+        assert len(parts) == 1
         assert args.mode is not None
         directory = args.directory
         modes = (args.mode,)
         directories = (args.directory,)
         parts = args.files or (1,)
     else:
-        assert args.files is None or len(args.files) in (1, 3, 4)
-        assert (args.mode is not None) == (len(args.files) == 1)
+        assert len(parts) in (1, 3, 4)
+        assert (args.mode is not None) == (len(parts) == 1)
         directory = os.path.join(args.directory, dataset.type, dataset.name)
         specification_path = os.path.join(args.directory, '{}-{}.json'.format(dataset.type, dataset.name))
 
-    if args.mode is None:
-        parts = args.files or (1, 1, 1)
-    else:
-        parts = args.files or (1,)
     if len(parts) == 1:
         if args.mode == 'tf-records':
             from shapeworld import tf_util

@@ -10,9 +10,13 @@ def nlvr(directory, mode):
     for identifier, world_models, description, label in descriptions_iter(directory=directory, mode=mode):
         assert identifier not in descriptions
         descriptions[identifier] = (world_models, description, label)
+    counter = {identifier: 6 for identifier in descriptions}
     for identifier, worlds in images_iter(directory=directory, mode=mode):
+        counter[identifier] -= 1
         world_models, description, agreement = descriptions[identifier]
         yield worlds, world_models, description, agreement
+    assert all(count == 0 for count in counter.values())
+    print('NLVR finished')
 
 
 def images_iter(directory, mode):
@@ -24,16 +28,15 @@ def images_iter(directory, mode):
         else:
             assert not dirs
             for filename in files:
-                if filename[-6:] == '-0.png':  # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    assert filename[:len(mode) + 1] == mode + '-'
-                    identifier = filename[len(mode) + 1: -6]
-                    assert identifier[-2:] in ('-0', '-1', '-2', '-3')
-                    with open(os.path.join(root, filename), 'rb') as filehandle:
-                        image = np.array(object=Image.open(fp=filehandle))
-                        world1 = World.from_image(image[:, :100, :])
-                        world2 = World.from_image(image[:, 150:250, :])
-                        world3 = World.from_image(image[:, 300:, :])
-                    yield identifier, (world1, world2, world3)
+                assert filename[:len(mode) + 1] == mode + '-'
+                identifier = filename[len(mode) + 1: -6]
+                assert identifier[-2:] in ('-0', '-1', '-2', '-3')
+                with open(os.path.join(root, filename), 'rb') as filehandle:
+                    image = np.array(object=Image.open(fp=filehandle))
+                    world1 = World.from_image(image[:, :100, :])
+                    world2 = World.from_image(image[:, 150:250, :])
+                    world3 = World.from_image(image[:, 300:, :])
+                yield identifier, (world1, world2, world3)
 
 
 def descriptions_iter(directory, mode):

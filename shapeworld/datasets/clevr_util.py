@@ -4,10 +4,10 @@ from PIL import Image
 from shapeworld.world import World
 
 
-def clevr(directory, parts, mode):
-    worlds = images_iter(directory=directory, parts=parts, mode=mode)
-    world_models = scenes_iter(directory=directory, parts=parts, mode=mode)
-    questions_answers = questions_iter(directory=directory, parts=parts, mode=mode)
+def clevr(directory, mode, parts=None):
+    worlds = images_iter(directory=directory, mode=mode, parts=parts)
+    world_models = scenes_iter(directory=directory, mode=mode, parts=parts)
+    questions_answers = questions_iter(directory=directory, mode=mode, parts=parts)
     world = next(worlds)
     world_model = next(world_models)
     questions = list()
@@ -41,10 +41,13 @@ def clevr(directory, parts, mode):
         assert False
     except StopIteration:
         pass
+    print('CLEVR finished')
 
 
-def images_iter(directory, parts, mode):
-    split = ('val' if mode == 'validation' else mode) + parts[mode]
+def images_iter(directory, mode, parts=None):
+    split = 'val' if mode == 'validation' else mode
+    if parts is not None:
+        split += parts[mode]
     directory = os.path.join(directory, 'images', split)
     for root, dirs, files in os.walk(directory):
         assert root == directory
@@ -58,13 +61,28 @@ def images_iter(directory, parts, mode):
             yield world
 
 
-def scenes_iter(directory, parts, mode):
-    split = ('val' if mode == 'validation' else mode) + parts[mode]
+def scenes_iter(directory, mode, parts=None):
+    split = 'val' if mode == 'validation' else mode
+    if parts is not None:
+        split += parts[mode]
     path = os.path.join(directory, 'scenes', 'CLEVR_{}_scenes.json'.format(split))
     if os.path.isfile(path):
         with open(path, 'r') as filehandle:
-            chars = filehandle.read(11)
-            assert chars == '{"scenes": '
+            chars = filehandle.read(2)
+            assert chars == '{"'
+            chars = filehandle.read(1)
+            while chars != 's':
+                while filehandle.read(1) != '"':
+                    pass
+                chars = filehandle.read(3)
+                assert chars == ': {'
+                while filehandle.read(1) != '}':
+                    pass
+                chars = filehandle.read(3)
+                assert chars == ', "'
+                chars = filehandle.read(1)
+            chars = filehandle.read(8)
+            assert chars == 'cenes": '
             for n, scene_dict in enumerate(json_list_generator(fp=filehandle)):
                 directions = scene_dict['directions']
                 objects = scene_dict['objects']
@@ -75,12 +93,20 @@ def scenes_iter(directory, parts, mode):
                 assert scene_dict['image_filename'] == 'CLEVR_{}_{:0>6}.png'.format(split, n)
                 assert len(scene_dict) == 6
                 yield world_model
-            chars = filehandle.read(11)
-            assert chars == ', "info": {'
-            while filehandle.read(1) != '}':
-                pass
-            chars = filehandle.read()
+            chars = filehandle.read(1)
+            while chars == ',':
+                chars == filehandle.read(2)
+                assert chars == ' "'
+                while filehandle.read(1) != '"':
+                    pass
+                chars = filehandle.read(3)
+                assert chars == ': {'
+                while filehandle.read(1) != '}':
+                    pass
+                chars = filehandle.read(1)
             assert chars == '}'
+            chars = filehandle.read()
+            assert not chars
     else:
         directory = os.path.join(directory, 'images', split)
         for root, dirs, files in os.walk(directory):
@@ -91,12 +117,27 @@ def scenes_iter(directory, parts, mode):
 numbers = {'0': 'zero', '1': 'one', '2': 'two', '3': 'three', '4': 'four', '5': 'five', '6': 'six', '7': 'seven', '8': 'eight', '9': 'nine', '10': 'ten', '11': 'eleven', '12': 'twelve'}
 
 
-def questions_iter(directory, parts, mode):
-    split = ('val' if mode == 'validation' else mode) + parts[mode]
+def questions_iter(directory, mode, parts=None):
+    split = 'val' if mode == 'validation' else mode
+    if parts is not None:
+        split += parts[mode]
     path = os.path.join(directory, 'questions', 'CLEVR_{}_questions.json'.format(split))
     with open(path, 'r') as filehandle:
-        chars = filehandle.read(14)
-        assert chars == '{"questions": '
+        chars = filehandle.read(2)
+        assert chars == '{"'
+        chars = filehandle.read(1)
+        while chars != 'q':
+            while filehandle.read(1) != '"':
+                pass
+            chars = filehandle.read(3)
+            assert chars == ': {'
+            while filehandle.read(1) != '}':
+                pass
+            chars = filehandle.read(3)
+            assert chars == ', "'
+            chars = filehandle.read(1)
+        chars = filehandle.read(11)
+        assert chars == 'uestions": '
         image_index = 0
         for n, question_dict in enumerate(json_list_generator(fp=filehandle)):
             if image_index != question_dict['image_index']:
@@ -129,12 +170,20 @@ def questions_iter(directory, parts, mode):
             assert question_dict['image_filename'] == 'CLEVR_{}_{:0>6}.png'.format(split, image_index)
             assert len(question_dict) == 8 or (mode == 'test' and len(question_dict) == 5)
             yield image_index, question, question_model, answer
-        chars = filehandle.read(11)
-        assert chars == ', "info": {'
-        while filehandle.read(1) != '}':
-            pass
-        chars = filehandle.read()
+        chars = filehandle.read(1)
+        while chars == ',':
+            chars = filehandle.read(2)
+            assert chars == ' "'
+            while filehandle.read(1) != '"':
+                pass
+            chars = filehandle.read(3)
+            assert chars == ': {'
+            while filehandle.read(1) != '}':
+                pass
+            chars = filehandle.read(1)
         assert chars == '}'
+        chars = filehandle.read()
+        assert not chars
 
 
 def json_list_generator(fp):
@@ -148,7 +197,7 @@ def json_list_generator(fp):
     while True:
         char = fp.read(1)
         if not char:
-            break
+            assert False
         if char == '"':
             n = 1
             while chars[-n] == '\\':

@@ -23,9 +23,6 @@ class Color(object):
             self.shade = 0.0
         self.shaded_rgb = np.array(object=shaded_rgb, dtype=np.float32)
 
-    def __str__(self):
-        return self.name
-
     def model(self):
         return {'name': str(self), 'rgb': list(self.rgb), 'shade': self.shade}
 

@@ -5,7 +5,8 @@ class Texture(object):
 
     __slots__ = ()
 
-    def __str__(self):
+    @property
+    def name(self):
         raise NotImplementedError
 
     def model(self):
@@ -32,7 +33,8 @@ class SolidTexture(Texture):
     def __init__(self):
         return super(SolidTexture, self).__init__()
 
-    def __str__(self):
+    @property
+    def name(self):
         return 'solid'
 
     def copy(self):

@@ -21,7 +21,7 @@ class NLVRDataset(Dataset):
         self.nlvr = {mode: nlvr_util.nlvr(directory=directory, mode=mode) for mode in ('train', 'validation', 'test')}
 
     def generate(self, n, mode=None, noise_range=None, include_model=False, alternatives=False):
-        assert noise_range is None
+        assert noise_range is None or noise_range == 0.0
         batch = self.zero_batch(n, include_model=include_model, alternatives=alternatives)
         unknown = self.words['UNKNOWN']
         for i in range(n):

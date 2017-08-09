@@ -33,6 +33,7 @@ def dataset(dtype=None, name=None, config=None):
             directory = os.path.join(config, dtype, name)
             config = os.path.join(config, '{}-{}.json'.format(dtype, name))
         else:
+            print(config)
             assert os.path.isfile(config)
             directory = os.path.dirname(config)
         with open(config, 'r') as filehandle:
@@ -101,7 +102,10 @@ class Dataset(object):
         assert all(valid_value_type(value_type=value_type) for value_type in self.__class__.dataset_values.values())
         assert 'alternatives' not in self.__class__.dataset_values or self.__class__.dataset_values['alternatives'] == 'int'
         assert all(not alternatives_type(value_type=value_type)[1] for value_type in self.__class__.dataset_values.values()) or 'alternatives' in self.__class__.dataset_values
-        self.world_size = world_size
+        if isinstance(world_size, int):
+            self.world_size = world_size
+        else:
+            self.world_size = tuple(world_size)
         self.vectors = vectors
         if words is not None and isinstance(words, list):
             assert words is None or words == sorted(words)  # !!!
@@ -126,7 +130,11 @@ class Dataset(object):
         return self.__class__.dataset_values
 
     def specification(self):
-        specification = {'type': self.type, 'name': self.name, 'values': self.values, 'world_size': self.world_size}
+        specification = {'type': self.type, 'name': self.name, 'values': self.values}
+        if isinstance(self.world_size, int):
+            specification['world_size'] = self.world_size
+        else:
+            specification['world_size'] = list(self.world_size)
         if self.vectors:
             specification['vectors'] = self.vectors
         if self.words:
@@ -566,7 +574,7 @@ class CaptionAgreementDataset(Dataset):
     dataset_type = 'agreement'
     dataset_values = {'world': 'world', 'world_model': 'model', 'caption': 'text', 'caption_model': 'model', 'caption_length': 'int', 'agreement': 'float'}
 
-    def __init__(self, world_generator, world_captioner, caption_size, words, incorrect_world_ratio=None, correct_ratio=None, train_correct_ratio=None, validation_correct_ratio=None, test_correct_ratio=None, caption_realizer=None):
+    def __init__(self, world_generator, world_captioner, caption_size, words, incorrect_world_ratio=None, correct_ratio=None, train_correct_ratio=None, validation_correct_ratio=None, test_correct_ratio=None, caption_realizer=None, realizer_language=None):
         assert isinstance(caption_size, int) and caption_size > 0
         assert isinstance(words, list) and len(words) > 0
         super(CaptionAgreementDataset, self).__init__(world_size=world_generator.world_size, vectors=dict(caption=caption_size), words=words)
@@ -582,7 +590,7 @@ class CaptionAgreementDataset(Dataset):
             self.caption_realizer = caption_realizer
         else:
             assert caption_realizer is None or isinstance(caption_realizer, str)
-            self.caption_realizer = CaptionRealizer.from_name(name=(caption_realizer or 'dmrs'))
+            self.caption_realizer = CaptionRealizer.from_name(name=(caption_realizer or 'dmrs'), language=(realizer_language or 'english-1214'))
         self.world_captioner.set_realizer(self.caption_realizer)
 
     def generate_incorrect_world(self, caption, mode):
@@ -597,12 +605,12 @@ class CaptionAgreementDataset(Dataset):
                 return world, world_model
         return None, None
 
-    def generate_incorrect_caption(self, world, mode):
+    def generate_incorrect_caption(self, entities, mode):
         if mode != 'train':
             mode = None
         for _ in range(Dataset.MAX_ATTEMPTS):
-            caption = self.world_captioner(world, False, mode)
-            if caption and caption.agreement(world) == 0.0:
+            caption = self.world_captioner(entities=entities, correct=False, mode=mode)
+            if caption and caption.agreement(entities=entities) == 0.0:
                 return caption
         return None
 
@@ -626,24 +634,24 @@ class CaptionAgreementDataset(Dataset):
                     continue
                 world_model = world.model()
                 if correct:
-                    caption = self.world_captioner(world=world_model, correct=True, mode=mode)
+                    caption = self.world_captioner(entities=world.entities, correct=True, mode=mode)
                     if not caption:
                         continue
-                    assert caption.agreement(world=world_model) == 1.0
+                    assert caption.agreement(entities=world.entities) == 1.0
                     batch['agreement'][i] = 1.0
                 else:
                     if (r - correct_ratio) / (1.0 - correct_ratio) < self.incorrect_world_ratio:
-                        caption = self.world_captioner(world=world_model, correct=True, mode=mode)
+                        caption = self.world_captioner(entities=world.entities, correct=True, mode=mode)
                         if not caption:
                             continue
                         world, world_model = self.generate_incorrect_world(caption=caption, mode=mode)
                         if not world:
                             continue
                     else:
-                        caption = self.generate_incorrect_caption(world=world_model, mode=mode)
+                        caption = self.generate_incorrect_caption(entities=world.entities, mode=mode)
                         if not caption:
                             continue
-                    assert caption.agreement(world=world_model) == 0.0
+                    assert caption.agreement(entities=world.entities) == 0.0
                 batch['world'][i] = world.get_array(noise_range=noise_range)
                 captions[i] = caption
                 if include_model:
@@ -654,12 +662,21 @@ class CaptionAgreementDataset(Dataset):
                 raise Exception()
         captions = self.caption_realizer.realize(captions=captions)
         unknown = self.words['UNKNOWN']
+        missing_words = set()
+        max_caption_size = self.caption_size
         for i, caption in enumerate(captions):
-            assert len(caption) <= self.caption_size, (caption, len(caption))
+            if len(caption) > self.caption_size:
+                if len(caption) > max_caption_size:
+                    max_caption_size = len(caption)
+                continue
             for w, word in enumerate(caption):
-                assert word in self.words, word  # !!!!!!!!!!
+                if word not in self.words:
+                    missing_words.add(word)
+                    continue
                 batch['caption'][i][w] = self.words.get(word, unknown)
             batch['caption_length'][i] = len(caption)
+        assert not missing_words, 'Words missing in vocabulary: \'{}\''.format('\', \''.join(sorted(missing_words)))
+        assert max_caption_size <= self.caption_size, 'Caption size exceeds max size: {} > {}'.format(max_caption_size, self.caption_size)
         return batch
 
     def collect_captioner_statistics(self, path, append=False):

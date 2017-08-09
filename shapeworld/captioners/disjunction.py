@@ -10,18 +10,15 @@ class DisjunctionCaptioner(WorldCaptioner):
     statistics_header = 'correct,mode,captioner1,captioner2'
 
     def __init__(self, captioners, quantifier_tolerance=None, correct_distribution=None):
-        # requires connective 'conjunction'
         super(DisjunctionCaptioner, self).__init__(quantifier_tolerance=quantifier_tolerance)
         self.captioners = list(captioners)
         self.correct_distribution = cumulative_distribution(correct_distribution or [1, 1, 1])
 
     def set_realizer(self, realizer):
-        if super(DisjunctionCaptioner, self).set_realizer(realizer=realizer):
-            for captioner in self.captioners:
-                captioner.set_realizer(realizer=self.realizer)
-            return True
-        else:
-            return False
+        assert 'disjunction' in realizer.propositions
+        super(DisjunctionCaptioner, self).set_realizer(realizer=realizer)
+        for captioner in self.captioners:
+            captioner.set_realizer(realizer=self.realizer)
 
     def caption_world(self, world, correct):
         mode = 0

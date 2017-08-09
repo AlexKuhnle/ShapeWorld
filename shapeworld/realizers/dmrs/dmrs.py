@@ -1,7 +1,34 @@
-from copy import deepcopy
-from pydmrs.components import Pred
+import os
+import sys
+
+
+# dmrs sub-directory
+directory = os.path.dirname(os.path.realpath(__file__))
+
+# add pydmrs submodule to Python path
+sys.path.insert(1, os.path.join(directory, 'pydmrs'))
+
+
+from pydmrs.components import Pred, Sortinfo, EventSortinfo, InstanceSortinfo
 from pydmrs.core import Link, ListDmrs
 from pydmrs.graphlang.graphlang import parse_graphlang
+from pydmrs.mapping.paraphrase import paraphrase
+
+
+def event_sortinfo(features):
+    assert isinstance(features, tuple)
+    if features == ('sf', 'tense', 'mood', 'perf', 'prog'):
+        return EventSortinfo
+    else:
+        return type('EventSortinfo', bases=(Sortinfo,), dict=dict(cvarsort='e', __slots__=features))
+
+
+def instance_sortinfo(features):
+    assert isinstance(features, tuple)
+    if features == ('pers', 'num', 'gend', 'ind', 'pt'):
+        return InstanceSortinfo
+    else:
+        return type('InstanceSortinfo', bases=(Sortinfo,), dict=dict(cvarsort='x', __slots__=features))
 
 
 class Dmrs(ListDmrs):
@@ -20,62 +47,119 @@ class Dmrs(ListDmrs):
         dmrs.anchors = anchors
         return dmrs
 
-    def compose(self, other, fusion):
+    def compose(self, other, fusion=None, other_head=False, hierarchy=None):
         assert isinstance(other, Dmrs)
-        composition = deepcopy(self)
         nodeid_mapping = dict()
-        for anchor1, anchor2 in fusion.items():
-            node1 = composition.anchors[anchor1]
-            node2 = other.anchors[anchor2]
-            node1.unify(node2)
-            nodeid_mapping[node2.nodeid] = node1.nodeid
-        for nodeid2 in other:
+        # unify anchors
+        if fusion is None:
+            for anchor1 in self.anchors:
+                for anchor2 in other.anchors:
+                    if anchor1 != anchor2:
+                        continue
+                    node1 = self.anchors[anchor1]
+                    node2 = other.anchors[anchor2]
+                    node1.unify(node2, hierarchy=hierarchy)
+                    nodeid_mapping[node2.nodeid] = node1.nodeid
+        else:
+            for anchor1, anchor2 in fusion.items():
+                node1 = self.anchors[anchor1]
+                node2 = other.anchors[anchor2]
+                node1.unify(node2, hierarchy=hierarchy)
+                nodeid_mapping[node2.nodeid] = node1.nodeid
+        # add missing nodes, update node ids
+        for node2 in other.iter_nodes():
+            nodeid2 = node2.nodeid
             if nodeid2 in nodeid_mapping:
-                continue
-            node1 = deepcopy(other[nodeid2])
-            node1.nodeid = None
-            nodeid_mapping[nodeid2] = composition.add_node(node1)
-        links1 = set((link1.start, link1.end) for link1 in composition.iter_links())
+                node2.nodeid = nodeid_mapping[nodeid2]
+            else:
+                node2.nodeid = None
+                nodeid_mapping[nodeid2] = self.add_node(node2)
+        # add missing links, update existing links
+        links1 = set((link1.start, link1.end) for link1 in self.iter_links())
         for link2 in other.iter_links():
             start = nodeid_mapping[link2.start]
             end = nodeid_mapping[link2.end]
             if (start, end) not in links1:
                 link1 = Link(start, end, link2.rargname, link2.post)
-                composition.add_link(link1)
-        if composition.index is None and other.index is not None:
-            composition.index = composition[nodeid_mapping[other.index.nodeid]]
-        if composition.top is None and other.top is not None:
-            composition.top = composition[nodeid_mapping[other.top.nodeid]]
-        for anchor in other.anchors:
-            if anchor not in composition.anchors:
-                composition.anchors[anchor] = composition[nodeid_mapping[other.anchors[anchor].nodeid]]
-        return composition
+                self.add_link(link1)
+            if other_head and (start, end) in links1:
+                self.remove_link((start, end))
+                link1 = Link(start, end, link2.rargname, link2.post)
+                self.add_link(link1)
+        # update index and top
+        if other_head:
+            if other.index is None:
+                self.index = None
+            else:
+                self.index = self[other.index.nodeid]
+            if other.top is None:
+                self.top = None
+            else:
+                self.top = self[other.top.nodeid]
+        # set anchors
+        if other_head:
+            self.anchors = {anchor: self[node2.nodeid] for anchor, node2 in other.anchors.items()}
 
-    def get_mrs(self):
-        for node in self.iter_nodes():
+    def apply_paraphrases(self, paraphrases):
+        paraphrase(dmrs=self, paraphrases=paraphrases)
+
+    def remove_underspecifications(self):
+        for node in list(self.iter_nodes()):
             if type(node.pred) is Pred:
                 self.remove_node(node.nodeid)
-                # self.remove_links(link for link in self.iter_links() if link.start == node.nodeid or link.end == node.nodeid)
+                self.remove_links(link for link in self.iter_links() if link.start == node.nodeid or link.end == node.nodeid)
                 continue
-            if node.sortinfo is None:
-                continue
-            node.sortinfo = node.sortinfo.__class__(**{key: None if node.sortinfo[key] in ('u', '?') else node.sortinfo[key] for key in node.sortinfo if key != 'cvarsort'})
+            # TODO: remove underspecification in partially underspecified predicate
+            if node.sortinfo is not None:
+                node.sortinfo = node.sortinfo.__class__(**{key: None if node.sortinfo[key] in ('u', '?') else node.sortinfo[key] for key in node.sortinfo if key != 'cvarsort'})
+            if node.carg == '?':
+                node.carg = None
 
-        labels = dict(zip(self, range(1, len(self) + 1)))
-        redirected = []
+# [ _exactly_x_deg<0:7> LBL: h4 ARG0: e5 [ e ] ARG1: e6 [ e ] ]  
+# [ _exactly_x_deg_rel<0:0> LBL: h1 ARG0: e9 [ e ] ARG1: e8 ]  
+
+# [ udef_q<8:11> LBL: h7 ARG0: x3 [ x PERS: 3 NUM: sg ] RSTR: h8 BODY: h9 ]  
+# [ udef_q_rel<0:0> LBL: h1 ARG0: x7 RSTR: h12 ]  
+
+# [ card<8:11> LBL: h4 CARG: "1" ARG0: e6 ARG1: x3 ]  
+# [ card_rel<0:0> LBL: h2 CARG: "1" ARG0: e8 [ e ] ARG1: x7 ] 
+
+# [ _cyan_a_sw<12:16> LBL: h4 ARG0: e11 [ e ] ARG1: x3 ]  
+# [ _cyan_a_sw_rel<0:0> LBL: h2 ARG0: e10 [ e ] ARG1: x7 ]  
+
+# [ _rectangle_n_sw<17:26> LBL: h4 ARG0: x3 ]  
+# [ _rectangle_n_sw_rel<0:0> LBL: h2 ARG0: x7 [ x PERS: 3 NUM: sg ] ]  
+
+# [ _cyan_a_sw<30:35> LBL: h1 ARG0: e2 ARG1: x3 ] 
+# [ _cyan_a_sw_rel<0:0> LBL: h6 ARG0: e11 [ e SF: prop TENSE: pres MOOD: indicative PERF: - PROG: - ] ARG1: x7 ] 
+
+    def get_mrs(self):
+        # labels = dict(zip(self, range(1, len(self) + 1)))
+        # redirected = []
         quantifiers = dict()
+        labels = dict(zip(self, self))
         for link in self.iter_links():
             assert isinstance(link.start, int) and isinstance(link.end, int)
             assert isinstance(link.rargname, str) or (link.rargname is None and link.post == 'EQ')  # ('ARG1', 'ARG2', 'ARG3', 'ARG4', 'ARG', 'RSTR', 'BODY', 'L-INDEX', 'R-INDEX', 'L-HNDL', 'R-HNDL')
             assert link.post in ('NEQ', 'EQ', 'H', 'HEQ')
             if link.post == 'EQ':
                 upper, lower = (link.start, link.end) if link.start > link.end else (link.end, link.start)
-                while lower in redirected:
-                    lower = labels[lower]
-                labels[upper] = labels[lower]
-                redirected.append(upper)
+                labels[upper] = lower
+                # labels[upper] = labels[lower]
+                # redirected.append(upper)
             elif link.rargname == 'RSTR' and link.post == 'H':
                 quantifiers[link.start] = link.end
+        for upper, lower in labels.items():
+            lower_lower = labels[lower]
+            while lower_lower != lower:
+                lower = lower_lower
+                lower_lower = labels[lower]
+            labels[upper] = lower
+        lowest = sorted(labels.values())
+        labels = {nodeid: lowest.index(label) + 1 for nodeid, label in labels.items()}
+                # while lower in redirected:
+                #     print('>', lower, labels[lower])
+                #     lower = labels[lower]
 
         predicates = dict()
         cargs = dict()
@@ -93,7 +177,7 @@ class Dmrs(ListDmrs):
                 variables[node.nodeid] = (node.sortinfo.cvarsort + str(index), node.sortinfo)
 
         args = dict()
-        hcons = {0: self.top.nodeid}
+        hcons = {0: labels[self.top.nodeid]}
         for link in self.iter_links():
             if link.start not in args and link.rargname is not None:
                 args[link.start] = dict()

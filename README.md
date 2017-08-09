@@ -69,14 +69,14 @@ The following command line arguments are available:
 * `--[d]irectory`:  Directory for generated data, with automatically created sub-directories unless `--unmanaged`, hence should be non-existing or empty since it will be overwritten (**required**)
 * `--[a]rchive`:  Store generated data in (compressed) archives, either `zip[:mode]` or `tar[:mode]` with one of `none`, `deflate` (only zip), `gzip` (only tar), `bzip2`, `lzma` (default: `none`)
 * `--[A]ppend`:  Append to existing data (when used without `--unmanaged`)
-* '--[U]nmanaged':  Do not automatically create sub-directories (requires `--mode`)
+* `--[U]nmanaged`:  Do not automatically create sub-directories (requires `--mode`)
 
 * `--[t]ype`:  Dataset type (**required**)
 * `--[n]ame`:  Dataset name (**required**)
 * `--[c]onfig`:  Dataset configuration file, otherwise use default configuration
 
 * `--[m]ode`:  Mode, one of `train`, `validation`, `test`, `tf-records` (requires `--parts` is single number)
-* `--[f]iles`:  Number of files to split data into (instead of all in one file), either a number (requires `--mode`), or a tuple of 3 (or 4) numbers like `100,10,10` (without `--mode`), for (`tf-records`,) train`, `validation` and `test` data respectively (default: `1,1,1` or `1`)
+* `--[f]iles`:  Number of files to split data into (instead of all in one file), either a number (requires `--mode`), or a tuple of 3 (or 4) numbers like `100,10,10` (without `--mode`), for (`tf-records`,) train`, `validation` and `test` data respectively (default: `(1,1,1)` or `1`)
 * `--[i]nstances`:  Number of instances per file (default: `100`)
 
 * `--[p]ixel-noise`: Pixel noise range (default: `none`)
@@ -165,7 +165,7 @@ The `models/` directory contains a few exemplary models based on [TFMacros](http
 
 * `--[i]terations`:  Number of training iterations (default: `1000`)
 * `--[b]atch-size`:  Batch size (default: `128`)
-* `--e[v]aluation-frequency`:  Evaluation frequency (default: `100`)
+* `--evaluation-[f]requency`:  Evaluation frequency (default: `100`)
 * `--[e]valuation-size`:  Evaluation size (default: `1024`)
 * `--[r]eport-file`:  CSV file reporting the evaluation results throughout the learning process
 * `--[R]estore`:  Restore system, requires `--model-file` (default: `false`)
@@ -185,3 +185,59 @@ The previously generated data (here: TF records) can be loaded in the same way a
 ```bash
 python evaluate.py -t agreement -n multishape -c "load(examples/readme)" -m cnn_bow -i 10 -T
 ```
+
+
+<!--
+
+## CLEVR  and NLVR interface
+
+Roughly (75000, 6000, 6000).
+
+```bash
+git clone https://github.com/cornell-lic/nlvr.git
+
+python generate.py -d [SHAPEWORLD_DIRECTORY] -a tar:bzip2 -t nlvr_agreement -n nlvr -c "{directory=nlvr}" -f "(25,0,2,2)" -i 3k -M
+python generate.py -d [SHAPEWORLD_DIRECTORY] -a tar:bzip2 -t nlvr_agreement -n nlvr -c "{directory=nlvr}" -m train -f 25 -i 3k -M -A
+
+rm -r nlvr
+```
+
+-->
+
+
+
+
+<!--
+
+Exactly (70000, 15000, 15000)
+
+```bash
+wget https://s3-us-west-1.amazonaws.com/clevr/CLEVR_v1.0.zip
+unzip CLEVR_v1.0.zip
+rm CLEVR_v1.0.zip
+or
+wget https://s3-us-west-1.amazonaws.com/clevr/CLEVR_CoGenT_v1.0.zip
+unzip CLEVR_CoGenT_v1.0.zip
+rm CLEVR_CoGenT_v1.0.zip
+
+python generate.py -d [SHAPEWORLD_DIRECTORY] -a tar:bzip2 -t clevr_classification -n clevr -c "{directory=CLEVR_v1.0}" -f "(140,0,30,30)" -i 500 -M
+python generate.py -d [SHAPEWORLD_DIRECTORY] -a tar:bzip2 -t clevr_classification -n clevr -c "{directory=CLEVR_v1.0}" -m train -f 140 -i 500 -M -A
+
+rm -r CLEVR_v1.0
+or 
+rm -r CLEVR_CoGenT_v1.0
+
+
+
+python generate.py -d [SHAPEWORLD_DIRECTORY] -a tar:bzip2 -t clevr_classification -n clevr -c "{directory=CLEVR_CoGenT_v1.0,parts={train=A,validation=A,test=A}}" -f "(140,0,30,30)" -i 500 -M
+python generate.py -d [SHAPEWORLD_DIRECTORY] -a tar:bzip2 -t clevr_classification -n clevr -c "{directory=CLEVR_CoGenT_v1.0,parts={train=A,validation=A,test=A}}" -m train -f 140 -i 500 -M -A
+python generate.py -d [SHAPEWORLD_DIRECTORY] -a tar:bzip2 -t clevr_classification -n clevr -c "{directory=CLEVR_CoGenT_v1.0,parts={train=A,validation=B,test=B}}" -f "(0,30,30)" -i 500 -M
+
+or _answering
+
+
+(important: tag required to get both!)
+
+```
+
+-->

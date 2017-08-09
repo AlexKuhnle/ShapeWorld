@@ -27,17 +27,48 @@ def parse_int_with_factor(string):
         return int(string)
 
 
+def parse_tuple(string):
+    if ',' in string:
+        assert len(string) > 2 and string[0] == '(' and string[-1] == ')'
+        return tuple(parse_int_with_factor(x) for x in string[1:-1].split(','))
+    else:
+        return (int(string),)
+
+
 def parse_config(string):
     assert string
     if string.lower() in ('none', 'null'):
         return None
-    elif string[0] == '{':
-        assert string[-1] == '}'
-        if '\'' in string and '\"' not in string:
-            string = string.replace('\'', '\"')
+    if string[0] == '{' and string[-1] == '}':
         if '=' in string and ':' not in string:
-            string = string.replace('=', ':')
-        return json.loads(string)
+            values = list()
+            index = last_index = 1
+            depth = 0
+            while True:
+                comma = string.find(',', index, -1)
+                o = string.find('{', index, -1)
+                if depth > 0:
+                    c = string.find('}', index, -1)
+                    if 0 < o < c:
+                        index = o + 1
+                        depth += 1
+                    else:
+                        index = c + 1
+                        depth -= 1
+                elif 0 < o < comma:
+                    index = o + 1
+                    depth += 1
+                elif 0 < comma:
+                    index = comma
+                    values.append(tuple(string[last_index:index].split('=', 1)))
+                    index = last_index = comma + 1
+                else:
+                    values.append(tuple(string[last_index:-1].split('=', 1)))
+                    break
+            assert all(len(value) == 2 for value in values)
+            return {key: (parse_config(value) if value[0] == '{' else value) for key, value in values}
+        elif ':' in string:
+            return json.loads(string)
     else:
         return string
 
@@ -124,6 +155,10 @@ class Point(PointTuple):
     @staticmethod
     def from_model(model):
         return Point(x=model['x'], y=model['y'])
+
+    @property
+    def length(self):
+        return sqrt(self.x * self.x + self.y * self.y)
 
     def __eq__(self, other):
         assert isinstance(other, float) or isinstance(other, int) or isinstance(other, bool) or isinstance(other, Point)
@@ -290,9 +325,6 @@ class Point(PointTuple):
 
     def square(self):
         return Point(self.x * self.x, self.y * self.y)
-
-    def length(self):
-        return sqrt(self.x * self.x + self.y * self.y)
 
     def sum(self):
         return self.x + self.y

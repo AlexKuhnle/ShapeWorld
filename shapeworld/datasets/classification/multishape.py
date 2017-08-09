@@ -16,7 +16,7 @@ class MultiShapeDataset(ClassificationDataset):
             class_count=class_count)
 
     def get_classes(self, world):
-        return [self.world_generator.shapes.index(str(world.entities[0].shape)) * len(self.world_generator.colors) * len(self.world_generator.textures) + self.world_generator.colors.index(str(world.entities[0].color)) * len(self.world_generator.textures) + self.world_generator.textures.index(str(world.entities[0].texture)) for entity in world.entities]
+        return [self.world_generator.shapes.index(world.entities[0].shape.name) * len(self.world_generator.colors) * len(self.world_generator.textures) + self.world_generator.colors.index(world.entities[0].color.name) * len(self.world_generator.textures) + self.world_generator.textures.index(world.entities[0].texture.name) for entity in world.entities]
 
 
 dataset = MultiShapeDataset

@@ -1,256 +1,100 @@
-no square is yellow .
-most shapes are red .
-half of the shapes are blue .
-all shapes are cyan .
-no triangle is cyan .
-no shape is a cross .
-most shapes are cyan .
-no shape is red .
-half of the ellipses are white .
-no red shape is a square .
-all semicircles are green .
-all shapes are white rectangles .
-no shape is a semicircle .
-most shapes are white .
-half of the shapes are circles .
-all red shapes are semicircles .
-no shape is a yellow rectangle .
-no shape is a blue pentagon .
-no shape is a red square .
-no shape is a triangle .
-most ellipses are magenta .
-all semicircles are magenta .
-half of the yellow shapes are crosses .
-all ellipses are green .
-half of the shapes are blue triangles .
-no cross is cyan .
-half of the magenta shapes are rectangles .
-half of the shapes are triangles .
-no square is blue .
-most shapes are ellipses .
-half of the crosses are green .
-most shapes are green .
-most blue shapes are rectangles .
-half of the triangles are white .
-most magenta shapes are semicircles .
-no blue shape is an ellipse .
-no shape is a magenta semicircle .
-half of the yellow shapes are ellipses .
-most pentagons are green .
-no circle is green .
-no cyan shape is a rectangle .
-most shapes are blue semicircles .
-no shape is a white semicircle .
-no shape is a cyan semicircle .
-all shapes are semicircles .
-half of the shapes are blue .
-all pentagons are white .
-all shapes are squares .
-half of the shapes are pentagons .
-most blue shapes are crosses .
-half of the rectangles are yellow .
-all shapes are cyan .
-no shape is a red semicircle .
-most shapes are squares .
-no shape is a green pentagon .
-half of the shapes are blue pentagons .
-no cyan shape is a semicircle .
-half of the shapes are circles .
-half of the shapes are magenta circles .
-no cyan shape is a semicircle .
-all shapes are green .
-half of the shapes are white .
-half of the red shapes are triangles .
-no red shape is a square .
-half of the squares are cyan .
-all shapes are green .
-most crosses are cyan .
-no blue shape is a cross .
-no triangle is yellow .
-no triangle is cyan .
-no square is red .
-most shapes are ellipses .
-half of the semicircles are yellow .
-no yellow shape is a square .
-no shape is a green circle .
-most shapes are red .
-all shapes are magenta ellipses .
-most shapes are yellow .
-half of the yellow shapes are pentagons .
-no shape is a magenta triangle .
-most shapes are white .
-all green shapes are squares .
-half of the shapes are ellipses .
-most shapes are white circles .
-half of the shapes are squares .
-most shapes are squares .
-no shape is red .
-all crosses are green .
-most shapes are pentagons .
-all shapes are cyan squares .
-half of the yellow shapes are squares .
-no shape is a blue circle .
-all magenta shapes are ellipses .
-no cyan shape is an ellipse .
-half of the shapes are white pentagons .
-all shapes are semicircles .
-no shape is a pentagon .
-no shape is a blue rectangle .
-no red shape is a semicircle .
-most shapes are yellow .
-most crosses are white .
-no blue shape is a rectangle .
-no semicircle is red .
-no cross is white .
-half of the shapes are semicircles .
-half of the squares are magenta .
-no blue shape is a pentagon .
-all shapes are magenta circles .
-most shapes are red rectangles .
-all red shapes are ellipses .
-most shapes are circles .
-all squares are green .
-no shape is a blue square .
-all ellipses are cyan .
-half of the rectangles are green .
-all shapes are semicircles .
-no cross is green .
-most cyan shapes are pentagons .
-no rectangle is red .
-all triangles are white .
-no shape is magenta .
-half of the white shapes are circles .
-all squares are cyan .
-most shapes are cyan .
-most crosses are white .
-all shapes are cyan pentagons .
-no rectangle is yellow .
-all ellipses are white .
-no red shape is a cross .
-all shapes are semicircles .
-most pentagons are yellow .
-no shape is a yellow ellipse .
-all semicircles are cyan .
-no shape is a red rectangle .
-all shapes are circles .
-no triangle is white .
-half of the shapes are magenta triangles .
-no pentagon is blue .
-most yellow shapes are ellipses .
-most blue shapes are semicircles .
-all semicircles are magenta .
-no shape is a blue square .
-most shapes are cyan .
-half of the shapes are semicircles .
-all triangles are white .
-all shapes are triangles .
-half of the circles are cyan .
-no rectangle is red .
-most rectangles are cyan .
-half of the circles are cyan .
-no shape is a circle .
-no shape is a square .
-no blue shape is an ellipse .
-most shapes are ellipses .
-no white shape is a semicircle .
-no blue shape is a semicircle .
-all yellow shapes are semicircles .
-all yellow shapes are semicircles .
-half of the shapes are rectangles .
-most shapes are circles .
-half of the shapes are squares .
-most white shapes are ellipses .
-most shapes are ellipses .
-most shapes are yellow .
-most rectangles are yellow .
-most shapes are magenta .
-half of the yellow shapes are circles .
-most shapes are pentagons .
-all white shapes are circles .
-most shapes are cyan .
-most red shapes are semicircles .
-half of the shapes are red semicircles .
-most blue shapes are rectangles .
-all shapes are yellow squares .
-most shapes are circles .
-half of the shapes are pentagons .
-no ellipse is green .
-half of the red shapes are triangles .
-most white shapes are triangles .
-half of the shapes are green .
-all circles are green .
-all shapes are ellipses .
-half of the circles are green .
-no shape is a square .
-all shapes are squares .
-most shapes are magenta .
-most shapes are magenta .
-half of the shapes are yellow crosses .
-most shapes are triangles .
-no cyan shape is a pentagon .
-half of the shapes are ellipses .
-half of the crosses are blue .
-all semicircles are yellow .
-all shapes are triangles .
-all shapes are green .
-most white shapes are crosses .
-no circle is blue .
-all shapes are magenta .
-no rectangle is blue .
-all shapes are red .
-no cross is red .
-no shape is a yellow rectangle .
-most shapes are squares .
-no shape is a green circle .
-half of the shapes are white crosses .
-most shapes are blue circles .
+most red shapes are darker than a rectangle .
+no shape is farthest from a circle .
+most blue squares are to the right of a blue semicircle .
+half the semicircles are a shape .
+no white ellipse is white .
+no cyan shape is to the left of a shape .
+most red shapes are a shape .
+all blue circles are blue .
+all ellipses are a white ellipse .
+most yellow semicircles are a shape .
+most shapes are closest to a green rectangle .
+most red shapes are red .
+all cyan rectangles are a rectangle .
+half the yellow rectangles are below a white cross .
+most green ellipses are smaller than a green shape .
+half the cyan shapes are farthest from a rectangle .
+most cyan shapes are smaller than a blue triangle .
+half the magenta shapes are below a white cross .
+all white squares are lighter than a shape .
+no yellow circle is below a shape .
+all red shapes are farthest from a shape .
+most red shapes are a cross .
 no magenta shape is a pentagon .
-all shapes are ellipses .
+no red shape is cyan .
+most green pentagons are lighter than a white pentagon .
+all white squares are darker than a square .
+most yellow pentagons are below a blue shape .
+half the yellow shapes are bigger than a yellow shape .
+all green crosses are darker than a magenta shape .
+half the yellow triangles are bigger than a yellow shape .
+no rectangle is bigger than a rectangle .
+most green shapes are darker than a cyan pentagon .
+most green shapes are to the right of a yellow ellipse .
+no red shape is below a pentagon .
+half the green rectangles are smaller than a green shape .
+all blue crosses are blue .
+half the green ellipses are below a green ellipse .
+most shapes are lighter than a white square .
+half the cyan shapes are closest to a cyan shape .
+half the magenta circles are farthest from a magenta shape .
+half the cyan crosses are darker than a cyan cross .
+most green circles are to the left of a shape .
+no cyan triangle is to the left of a shape .
+no yellow shape is white .
+all red circles are a cyan circle .
+no magenta square is above a cyan rectangle .
+no green shape is red .
+half the magenta pentagons are closest to a red shape .
+no yellow circle is farthest from a yellow semicircle .
+most shapes are above a cyan pentagon .
 all rectangles are magenta .
-half of the rectangles are blue .
-half of the crosses are white .
-no shape is yellow .
-no shape is a triangle .
-half of the white shapes are rectangles .
-all shapes are rectangles .
-half of the shapes are white .
-no cyan shape is a square .
-no shape is magenta .
-most squares are blue .
-most shapes are yellow ellipses .
-no shape is a green square .
-all shapes are crosses .
-half of the green shapes are rectangles .
-half of the yellow shapes are crosses .
-no green shape is a semicircle .
-most shapes are blue .
-no shape is white .
-half of the shapes are green crosses .
-no ellipse is cyan .
-all magenta shapes are ellipses .
-most shapes are ellipses .
-no ellipse is red .
-all shapes are red .
-all shapes are magenta .
-no cyan shape is a cross .
-no square is magenta .
-most magenta shapes are triangles .
-no shape is blue .
-no cross is green .
-no rectangle is blue .
-all shapes are triangles .
-all shapes are magenta circles .
-most shapes are magenta ellipses .
-all shapes are magenta triangles .
-all shapes are cyan .
-no shape is a yellow semicircle .
-half of the crosses are green .
-no ellipse is yellow .
-no shape is a blue ellipse .
-all rectangles are magenta .
-no shape is a red circle .
-half of the triangles are magenta .
-no green shape is a circle .
-no green shape is a cross .
-half of the magenta shapes are circles .
-no rectangle is yellow .
+all white shapes are below a blue shape .
+all blue ellipses are green .
+half the cyan shapes are a red pentagon .
+no red pentagon is darker than a pentagon .
+most red shapes are an ellipse .
+no magenta pentagon is farthest from a red shape .
+half the cyan rectangles are smaller than a blue shape .
+half the green rectangles are bigger than a red shape .
+half the white triangles are bigger than a shape .
+most green shapes are a circle .
+all magenta rectangles are bigger than a shape .
+all green pentagons are green .
+no green circle is smaller than a shape .
+most green pentagons are to the left of a shape .
+most cyan ellipses are darker than a blue pentagon .
+no magenta shape is bigger than a red pentagon .
+half the cyan semicircles are farthest from a triangle .
+half the magenta ellipses are above a circle .
+half the white semicircles are to the right of a red shape .
+all red shapes are a square .
+half the shapes are darker than a red rectangle .
+most cyan shapes are cyan .
+half the red shapes are darker than a magenta ellipse .
+all green circles are a pentagon .
+most shapes are lighter than a cyan shape .
+no yellow rectangle is closest to a blue shape .
+no circle is a shape .
+half the cyan pentagons are darker than a cyan pentagon .
+all white shapes are to the right of a white square .
+half the yellow semicircles are to the left of a shape .
+no magenta circle is cyan .
+half the shapes are smaller than a rectangle .
+all green triangles are green .
+half the circles are above a red shape .
+no white ellipse is a green triangle .
+half the cyan shapes are to the right of a red pentagon .
+half the rectangles are below a yellow rectangle .
+half the yellow triangles are smaller than a red pentagon .
+most white rectangles are darker than a cyan square .
+half the red crosses are to the right of a blue ellipse .
+all white shapes are lighter than a magenta shape .
+most red shapes are to the left of a shape .
+all green squares are farthest from a blue pentagon .
+no green ellipse is a magenta ellipse .
+no cyan ellipse is magenta .
+most blue circles are farthest from a green pentagon .
+no magenta ellipse is above a shape .
+all shapes are smaller than a shape .
+no yellow square is closest to a yellow square .

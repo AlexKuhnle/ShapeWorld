@@ -1,34 +1,34 @@
-from shapeworld.caption import Predicate
+from shapeworld.caption import Predicate, Modifier
 
 
 class Noun(Predicate):
 
     # composed modifiers, red and green, square or circle
 
-    __slots__ = ('predicates',)
+    __slots__ = ('noun_modifier', 'modifiers')
 
-    def __init__(self, predicates=None):
-        if not predicates:
-            self.predicates = ()
-        elif isinstance(predicates, Predicate):
-            self.predicates = (predicates,)
+    def __init__(self, modifiers=None):
+        if not modifiers:
+            self.modifiers = ()
+        elif isinstance(modifiers, Modifier):
+            self.modifiers = (modifiers,)
         else:
-            assert isinstance(predicates, tuple) or isinstance(predicates, list)
-            assert all(isinstance(predicate, Predicate) for predicate in predicates)
-            self.predicates = tuple(predicates)
+            assert isinstance(modifiers, tuple) or isinstance(modifiers, list)
+            assert all(isinstance(modifier, Modifier) for modifier in modifiers)
+            self.modifiers = tuple(modifiers)
 
     def model(self):
-        return {'component': 'noun', 'predicates': [predicate.model() for predicate in self.predicates]}
+        return {'component': 'noun', 'modifiers': [modifier.model() for modifier in self.modifiers]}
 
     def agreeing_entities(self, entities):
-        for predicate in self.predicates:
-            entities = predicate.agreeing_entities(entities)
+        for modifier in self.modifiers:
+            entities = modifier.agreeing_entities(entities)
         return entities
 
     def disagreeing_entities(self, entities):
         disagreeing = []
-        for predicate in self.predicates:
-            for entity in predicate.disagreeing_entities(entities):
+        for modifier in self.modifiers:
+            for entity in modifier.disagreeing_entities(entities):
                 if entity not in disagreeing:
                     disagreeing.append(entity)
         return disagreeing

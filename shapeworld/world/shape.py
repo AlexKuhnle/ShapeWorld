@@ -18,7 +18,8 @@ class Shape(object):
         assert isinstance(size, Point) and 0.0 < size < 1.0
         self.size = size / 2.0
 
-    def __str__(self):
+    @property
+    def name(self):
         raise NotImplementedError
 
     def model(self):
@@ -37,6 +38,7 @@ class Shape(object):
     def distance(self, offset):
         raise NotImplementedError
 
+    @property
     def area(self):
         raise NotImplementedError
 
@@ -65,8 +67,9 @@ class WorldShape(Shape):
         return abs(offset) < 0.5
 
     def distance(self, offset):
-        return (abs(offset) - 0.5).positive().length()
+        return (abs(offset) - 0.5).positive().length
 
+    @property
     def area(self):
         return 1.0
 
@@ -79,7 +82,8 @@ class SquareShape(Shape):
             size = Point(size, size)
         return super(SquareShape, self).__init__(size=size)
 
-    def __str__(self):
+    @property
+    def name(self):
         return 'square'
 
     def copy(self):
@@ -89,8 +93,9 @@ class SquareShape(Shape):
         return abs(offset) <= self.size
 
     def distance(self, offset):
-        return (abs(offset) - self.size).positive().length()
+        return (abs(offset) - self.size).positive().length
 
+    @property
     def area(self):
         return 4.0 * self.size.x * self.size.y
 
@@ -111,7 +116,8 @@ class RectangleShape(Shape):
     def __init__(self, size):
         return super(RectangleShape, self).__init__(size)
 
-    def __str__(self):
+    @property
+    def name(self):
         return 'rectangle'
 
     def copy(self):
@@ -121,8 +127,9 @@ class RectangleShape(Shape):
         return abs(offset) <= self.size
 
     def distance(self, offset):
-        return (abs(offset) - self.size).positive().length()
+        return (abs(offset) - self.size).positive().length
 
+    @property
     def area(self):
         return 4.0 * self.size.x * self.size.y
 
@@ -147,7 +154,8 @@ class TriangleShape(Shape):
             size = Point(size, size * sqrt34)
         return super(TriangleShape, self).__init__(size=size)
 
-    def __str__(self):
+    @property
+    def name(self):
         return 'triangle'
 
     def copy(self):
@@ -158,12 +166,13 @@ class TriangleShape(Shape):
 
     def distance(self, offset):
         if offset.y < -self.size.y:
-            return (abs(offset) - self.size).positive().length()
+            return (abs(offset) - self.size).positive().length
         else:
             offset = Point(abs(offset.x), offset.y + self.size.y)
             linear = min(max(offset.y - offset.x + self.size.x, 0.0) / (self.size.x + 2.0 * self.size.y), 1.0)
-            return Point(offset.x - (1.0 - linear) * self.size.x, offset.y - linear * 2.0 * self.size.y).positive().length()
+            return Point(offset.x - (1.0 - linear) * self.size.x, offset.y - linear * 2.0 * self.size.y).positive().length
 
+    @property
     def area(self):
         return 2.0 * self.size.x * self.size.y
 
@@ -185,7 +194,8 @@ class PentagonShape(Shape):
             size = Point(size, size * cos18)
         return super(PentagonShape, self).__init__(size=size)
 
-    def __str__(self):
+    @property
+    def name(self):
         return 'pentagon'
 
     def copy(self):
@@ -206,12 +216,13 @@ class PentagonShape(Shape):
                 offset = Point(offset.x - golden_ratio * self.size.x, -offset.y)
                 x_length = (1.0 - golden_ratio) * self.size.x
                 linear = min(max(offset.y - offset.x + x_length, 0.0) / (x_length + y_length), 1.0)
-                return Point(offset.x - (1.0 - linear) * x_length, offset.y - linear * y_length).positive().length()
+                return Point(offset.x - (1.0 - linear) * x_length, offset.y - linear * y_length).positive().length
         else:
             y_length = (1.0 - golden_ratio) * 2.0 * self.size.y
             linear = min(max(offset.y - offset.x + self.size.x, 0.0) / (self.size.x + y_length), 1.0)
-            return Point(offset.x - (1.0 - linear) * self.size.x, offset.y - linear * y_length).positive().length()
+            return Point(offset.x - (1.0 - linear) * self.size.x, offset.y - linear * y_length).positive().length
 
+    @property
     def area(self):
         return (4.0 * golden_ratio * golden_ratio * self.size.x * self.size.y +
                 2.0 * golden_ratio * (1.0 - golden_ratio) * self.size.x * self.size.y +
@@ -239,7 +250,8 @@ class CrossShape(Shape):
             size = Point(size, size)
         return super(CrossShape, self).__init__(size=size)
 
-    def __str__(self):
+    @property
+    def name(self):
         return 'cross'
 
     def copy(self):
@@ -252,10 +264,11 @@ class CrossShape(Shape):
     def distance(self, offset):
         offset = abs(offset)
         if offset.x > offset.y:
-            return (offset - Point(self.size.x, self.size.y / 3.0)).positive().length()
+            return (offset - Point(self.size.x, self.size.y / 3.0)).positive().length
         else:
-            return (offset - Point(self.size.x / 3.0, self.size.y)).positive().length()
+            return (offset - Point(self.size.x / 3.0, self.size.y)).positive().length
 
+    @property
     def area(self):
         return 20.0 * self.size.x * self.size.y / 9.0
 
@@ -282,18 +295,20 @@ class CircleShape(Shape):
             size = Point(size, size)
         return super(CircleShape, self).__init__(size=size)
 
-    def __str__(self):
+    @property
+    def name(self):
         return 'circle'
 
     def copy(self):
         return CircleShape(size=(self.size.x * 2.0))
 
     def __contains__(self, offset):
-        return offset.length() <= self.size.x
+        return offset.length <= self.size.x
 
     def distance(self, offset):
-        return max(offset.length() - self.size.x, 0.0)
+        return max(offset.length - self.size.x, 0.0)
 
+    @property
     def area(self):
         return pi * self.size.x * self.size.y
 
@@ -321,7 +336,8 @@ class SemicircleShape(Shape):
             size = Point(size, size * 0.5)
         return super(SemicircleShape, self).__init__(size=size)
 
-    def __str__(self):
+    @property
+    def name(self):
         return 'semicircle'
 
     def copy(self):
@@ -329,15 +345,16 @@ class SemicircleShape(Shape):
 
     def __contains__(self, offset):
         offset += Point(0.0, self.size.y)
-        return offset.length() <= self.size.x and offset.y >= 0.0
+        return offset.length <= self.size.x and offset.y >= 0.0
 
     def distance(self, offset):
         offset += Point(0.0, self.size.y)
         if offset.y < 0.0:
-            return (abs(offset) - Point(self.size.x, 0.0)).positive().length()
+            return (abs(offset) - Point(self.size.x, 0.0)).positive().length
         else:
-            return max(offset.length() - self.size.x, 0.0)
+            return max(offset.length - self.size.x, 0.0)
 
+    @property
     def area(self):
         return pi * self.size.x * self.size.y / 2.0
 
@@ -361,22 +378,24 @@ class EllipseShape(Shape):
     def __init__(self, size):
         return super(EllipseShape, self).__init__(size)
 
-    def __str__(self):
+    @property
+    def name(self):
         return 'ellipse'
 
     def copy(self):
         return EllipseShape(size=(self.size * 2.0))
 
     def __contains__(self, offset):
-        return (offset / self.size).length() <= 1.0
+        return (offset / self.size).length <= 1.0
 
     def distance(self, offset):
         direction = offset / self.size
-        direction_length = direction.length()
+        direction_length = direction.length
         if direction_length <= 1.0:
             return 0.0
-        return ((direction - direction / direction_length) * self.size).length()
+        return ((direction - direction / direction_length) * self.size).length
 
+    @property
     def area(self):
         return pi * self.size.x * self.size.y
 

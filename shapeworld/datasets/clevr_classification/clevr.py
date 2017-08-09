@@ -9,7 +9,7 @@ class CLEVRDataset(Dataset):
     dataset_name = 'clevr'
     dataset_values = {'world': 'world', 'world_model': 'model', 'question': 'alts(text)', 'question_model': 'alts(model)', 'question_length': 'alts(int)', 'answer': 'alts(int)', 'alternatives': 'int'}
 
-    def __init__(self, directory, parts=dict(train='A', validation='A', test='A')):
+    def __init__(self, directory, parts=None):
         world_size = tuple(next(clevr_util.images_iter(directory=directory, parts=parts, mode='train')).shape[:2])
         self.question_size = 0
         unique_answers = set()
@@ -32,7 +32,7 @@ class CLEVRDataset(Dataset):
         return specification
 
     def generate(self, n, mode=None, noise_range=None, include_model=False, alternatives=False):
-        assert noise_range is None
+        assert noise_range is None or noise_range == 0.0
         batch = self.zero_batch(n, include_model=include_model, alternatives=alternatives)
         unknown = self.words['UNKNOWN']
         for i in range(n):

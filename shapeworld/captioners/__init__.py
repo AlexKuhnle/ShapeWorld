@@ -1,11 +1,11 @@
+from shapeworld.captioner import WorldCaptioner, CaptionerMixer
+from shapeworld.captioners.attributes_noun import AttributesNounCaptioner
+from shapeworld.captioners.attributes_relation import AttributesRelationCaptioner
+from shapeworld.captioners.spatial_relation import SpatialRelationCaptioner
+from shapeworld.captioners.comparison_relation import ComparisonRelationCaptioner
 from shapeworld.captioners.existential import ExistentialCaptioner
-from shapeworld.captioners.spatial import SpatialCaptioner
-from shapeworld.captioners.comparison import ComparisonCaptioner
-from shapeworld.captioners.quantification import QuantificationCaptioner
-from shapeworld.captioners.conjunction import ConjunctionCaptioner
-from shapeworld.captioners.disjunction import DisjunctionCaptioner
-
-from shapeworld.captioners.test import TestCaptioner
+from shapeworld.captioners.absolute_quantifier import AbsoluteQuantifierCaptioner
+from shapeworld.captioners.relative_quantifier import RelativeQuantifierCaptioner
 
 
-__all__ = ['ExistentialCaptioner', 'SpatialCaptioner', 'ComparisonCaptioner', 'QuantificationCaptioner', 'ConjunctionCaptioner', 'DisjunctionCaptioner', 'TestCaptioner']
+__all__ = ['WorldCaptioner', 'CaptionerMixer', 'AttributesNounCaptioner', 'AttributesRelationCaptioner', 'SpatialRelationCaptioner', 'ComparisonRelationCaptioner', 'ExistentialCaptioner', 'AbsoluteQuantifierCaptioner', 'RelativeQuantifierCaptioner']

@@ -103,9 +103,9 @@ class Entity(object):
                 if ((point - self.center) in self) and ((point - other.center) in other):
                     collision += granularity
             if symmetric:
-                return min(collision / self.shape.area(), collision / other.shape.area())
+                return min(collision / self.shape.area, collision / other.shape.area)
             else:
-                return (collision / self.shape.area(), collision / other.shape.area())
+                return (collision / self.shape.area, collision / other.shape.area)
         else:
             min_distance = 1.0 / min(resolution.x, resolution.y)
             for _, point in Point.range(topleft, bottomright, resolution):
@@ -124,7 +124,7 @@ class Entity(object):
                 return 0.0 if symmetric else (0.0, 0.0)
             else:
                 return False
-        elif (bottomright1 - topleft1).length() < (bottomright2 - topleft2).length():
+        elif (bottomright1 - topleft1).length < (bottomright2 - topleft2).length:
             topleft, bottomright = topleft1, bottomright1
         else:
             topleft, bottomright = topleft2, bottomright2
@@ -138,9 +138,9 @@ class Entity(object):
                 if ((point - self.center) not in self) and ((point - other.center) in other):
                     collision += granularity
             if symmetric:
-                return min(collision / self.shape.area(), collision / other.shape.area())
+                return min(collision / self.shape.area, collision / other.shape.area)
             else:
-                return (collision / self.shape.area(), collision / other.shape.area())
+                return (collision / self.shape.area, collision / other.shape.area)
         else:
             for c, point in Point.range(topleft, bottomright, resolution):
                 if (self.distance(point - self.center) > granularity) and (other.distance(point - other.center) <= granularity):

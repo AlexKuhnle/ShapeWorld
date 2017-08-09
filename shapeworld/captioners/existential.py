@@ -1,81 +1,56 @@
-from copy import deepcopy
-from random import choice, random, shuffle
-from shapeworld import WorldCaptioner
+from shapeworld import WorldCaptioner, util
 from shapeworld.util import cumulative_distribution
-from shapeworld.caption import Proposition
+from shapeworld.caption import Existential
+from shapeworld.captioners import AttributesNounCaptioner
 
 
 class ExistentialCaptioner(WorldCaptioner):
 
-    name = 'existential'
-    statistics_header = 'correct,mode,hypernym'
+    # modes
+    # 0: correct
+    # 1: incorrect subject
+    # 2: incorrect verb
 
-    def __init__(self, shapes, colors, textures, quantifier_tolerance=None, incorrect_distribution=None, hypernym_ratio=None):
-        # requires relation 'existence'
-        # requires quantifier ('absolute', 'geq', 1)
-        # requires caption 'none'
-        super(ExistentialCaptioner, self).__init__(quantifier_tolerance=quantifier_tolerance)
-        self.shapes = shapes
-        self.colors = colors
-        self.textures = textures
-        self.incorrect_distribution = cumulative_distribution(incorrect_distribution or [1, 1, 1, 1, 1, 1])
-        self.hypernym_ratio = hypernym_ratio if hypernym_ratio is not None else 0.5
+    name = 'generics'
+    statistics_header = 'mode'
 
-    def caption_world(self, world, correct):
-        if correct and len(world['entities']) == 0:
-            return None
-        entities = world['entities']
-        existing_shapes = {entity['shape']['name'] for entity in entities}
-        existing_colors = {entity['color']['name'] for entity in entities}
-        # existing_textures = [entity['texture']['name'] for entity in entities]
-        mode = 0
+    def __init__(self, subject_captioner=None, verb_captioner=None, incorrect_distribution=None):
+        super(ExistentialCaptioner, self).__init__()
+        self.subject_captioner = subject_captioner or AttributesNounCaptioner(hypernym_ratio=1.0)
+        self.verb_captioner = verb_captioner or AttributesNounCaptioner()
+        self.incorrect_distribution = cumulative_distribution(incorrect_distribution or [1, 1])
+
+    def set_realizer(self, realizer):
+        super(ExistentialCaptioner, self).set_realizer(realizer=realizer)
+        self.subject_captioner.set_realizer(realizer=realizer)
+        self.verb_captioner.set_realizer(realizer=realizer)
+
+    def caption_world(self, entities, correct):
+        if correct:
+            mode = 0
+        else:
+            mode = 1 + util.sample(self.incorrect_distribution)
 
         for _ in range(ExistentialCaptioner.MAX_ATTEMPTS):
-            entity = choice(entities)
 
-            if not correct:
-                entity = deepcopy(entity)
-                r = random()
-                if r < self.incorrect_distribution[0]:  # random shape
-                    mode = 1
-                    entity['shape']['name'] = choice(self.shapes)
-                elif r < self.incorrect_distribution[1]:  # random existing shape
-                    if len(existing_shapes) == 1:
-                        continue
-                    mode = 2
-                    entity['shape']['name'] = choice([shape for shape in existing_shapes if shape != entity['shape']['name']])
-                elif r < self.incorrect_distribution[2]:  # random color
-                    mode = 3
-                    entity['color']['name'] = choice(self.colors)
-                elif r < self.incorrect_distribution[3]:  # random existing color
-                    if len(existing_colors) == 1:
-                        continue
-                    mode = 4
-                    entity['color']['name'] = choice([color for color in existing_colors if color != entity['color']['name']])
-                elif r < self.incorrect_distribution[4]:  # random shape and color
-                    mode = 5
-                    entity['shape']['name'] = choice(self.shapes)
-                    entity['color']['name'] = choice(self.colors)
-                elif r < self.incorrect_distribution[5]:  # random existing shape and color
-                    mode = 6
-                    entity['shape']['name'] = choice(list(existing_shapes))
-                    entity['color']['name'] = choice(list(existing_colors))
+            if mode == 1:  # incorrect subject
+                subject = self.subject_captioner(entities=entities, correct=False)
+            else:
+                subject = self.subject_captioner(entities=entities, correct=True)
+            if subject is None:
+                continue
 
-            noun = self.realizer.noun_for_entity(entity=entity)
-            # relation = Relation(reltype='existence')
+            if mode == 2:  # incorrect verb
+                verb = self.verb_captioner(entities=entities, correct=False)
+            else:
+                verb = self.verb_captioner(entities=entities, correct=True)
+            if verb is None:
+                continue
 
-            if self.hypernym_ratio and random() < self.hypernym_ratio:
-                hypernyms = self.realizer.hypernyms_for_entity(entity=entity, noun=noun, include_universal=False)
-                shuffle(hypernyms)
-                for hypernym in hypernyms:
-                    caption = Proposition(clauses=hypernym)
-                    if caption.agreement(world=world) == float(correct):
-                        self.report(correct, mode, True)
-                        return caption
+            generic = Existential(subject=subject, verb=verb)
 
-            caption = Proposition(clauses=noun)
-            if caption.agreement(world=world) == float(correct):
-                self.report(correct, mode, False)
-                return caption
+            if generic.agreement(entities=entities) == float(correct):
+                self.report(mode)
+                return generic
 
         return None
