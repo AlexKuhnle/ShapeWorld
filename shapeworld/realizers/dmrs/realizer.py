@@ -1,11 +1,11 @@
-from copy import deepcopy
+import copy
 import json
 import os
 import re
 import subprocess
-from shapeworld import CaptionRealizer
 from shapeworld.caption import Modifier, Relation, Noun, Existential, Quantifier, Proposition
-from shapeworld.realizers.dmrs.dmrs import Dmrs, event_sortinfo, instance_sortinfo
+from shapeworld.realizers import CaptionRealizer
+from shapeworld.realizers.dmrs.dmrs import Dmrs, create_sortinfo
 
 
 def prepare_grammar(language):
@@ -52,14 +52,21 @@ class DmrsRealizer(CaptionRealizer):
         with open(os.path.join(directory, 'languages', language + '.json'), 'r') as filehandle:
             language = json.load(fp=filehandle)
 
-        if 'event_features' in language:
-            self.event_sortinfo = event_sortinfo(features=language['event_features'])
+        if 'sortinfos' in language:
+            sortinfo_classes = dict()
+            sortinfo_shortforms = dict()
+            for cvarsort, sortinfo in language['sortinfos'].items():
+                assert 'features' in sortinfo
+                sortinfo_class = create_sortinfo(cvarsort, tuple(sortinfo['features']))
+                sortinfo_classes[cvarsort] = sortinfo_class
+                if 'shortform' in sortinfo:
+                    shortform = sortinfo['shortform']
+                    assert all(feature in sortinfo_class.features for feature in shortform)
+                    assert all(len(key) == 1 and key not in '_?' for feature, kvs in shortform.items() for key in kvs)
+                    sortinfo_shortforms[cvarsort] = shortform
         else:
-            self.event_sortinfo = None
-        if 'instance_features' in language:
-            self.instance_sortinfo = instance_sortinfo(features=language['instance_features'])
-        else:
-            self.instance_sortinfo = None
+            sortinfo_classes = None
+            sortinfo_shortforms = None
 
         self.modifiers = {modtype: dict() for modtype in language['modifiers']}
         self.modifier_by_name = dict()
@@ -163,7 +170,7 @@ class DmrsRealizer(CaptionRealizer):
         assert all(self.regex.match(line) for line in stderr_data), '\n\n' + '\n'.join('{}\n{}\n{}\n'.format(line, dmrs.dumps_xml().decode(), mrs) for line, dmrs, mrs in zip(stderr_data, dmrs_list, mrs_list) if not self.regex.match(line)) + '\nFailures: {}\n'.format(len(captions) - int(stderr_data[-2][16:stderr_data[-2].index(' ', 16)]))  # self.proposition_dmrs(caption).dumps_xml()
         caption_strings = [line for line in stdout_data if line]
         assert len(caption_strings) == len(captions)
-        for n, caption in enumerate(caption_strings):
+        for n, (caption, dmrs, mrs) in enumerate(zip(caption_strings, dmrs_list, mrs_list)):
             caption = caption.lower()
             caption = caption.replace('.', ' .').replace(',', ' ,')
             captions[n] = caption.split()
@@ -173,9 +180,9 @@ class DmrsRealizer(CaptionRealizer):
         assert 'dmrs' in component
         if key:
             assert 'key' in component
-            return component['key'], deepcopy(component['dmrs'])  # choice if list?
+            return component['key'], copy.deepcopy(component['dmrs'])  # choice if list?
         else:
-            return deepcopy(component['dmrs'])  # choice if list?
+            return copy.deepcopy(component['dmrs'])  # choice if list?
 
     def modifier_dmrs(self, modifier):
         assert modifier.modtype in self.modifiers
@@ -227,33 +234,22 @@ class DmrsRealizer(CaptionRealizer):
     def proposition_dmrs(self, proposition):
         assert proposition.proptype in self.propositions
         dmrs = self.component_dmrs(self.propositions[proposition.proptype])
-        if proposition.proptype == 'modifier':
-            dmrs.compose(self.modifier_dmrs(proposition.clauses[0]), hierarchy=self.hierarchy)
-        elif proposition.proptype == 'noun':
-            dmrs.compose(self.noun_dmrs(proposition.clauses[0]), hierarchy=self.hierarchy)
-        elif proposition.proptype == 'relation':
-            dmrs.compose(self.relation_dmrs(proposition.clauses[0]), hierarchy=self.hierarchy)
-        elif proposition.proptype == 'existential':
-            dmrs.compose(self.existential_dmrs(proposition.clauses[0]), hierarchy=self.hierarchy)
-        elif proposition.proptype == 'quantifier':
-            dmrs.compose(self.quantifier_dmrs(proposition.clauses[0]), hierarchy=self.hierarchy)
+        clauses_dmrs = []
+        for clause in proposition.clauses:
+            clause_dmrs = self.clause_dmrs(clause)
+            clauses_dmrs.append(clause_dmrs)
+        if isinstance(dmrs, Dmrs):
+            intermediate_dmrs = dmrs
+            first_dmrs = None
         else:
-            clauses_dmrs = []
-            for clause in proposition.clauses:
-                clause_dmrs = self.clause_dmrs(clause)
-                clauses_dmrs.append(clause_dmrs)
-            if isinstance(dmrs, Dmrs):
-                intermediate_dmrs = dmrs
-                first_dmrs = None
-            else:
-                dmrs, intermediate_dmrs, first_dmrs = dmrs
-            dmrs.compose(clauses_dmrs[-1], fusion={'arg2': 'head'}, hierarchy=self.hierarchy)
-            for clause_dmrs in reversed(clauses_dmrs[1:-1]):
-                dmrs.compose(clause_dmrs, fusion={'arg1': 'head'}, hierarchy=self.hierarchy)
-                dmrs.compose(intermediate_dmrs, fusion={'arg2': 'con'}, other_head=True, hierarchy=self.hierarchy)
-            dmrs.compose(clauses_dmrs[0], fusion={'arg1': 'head'}, hierarchy=self.hierarchy)
-            if first_dmrs:
-                dmrs.compose(first_dmrs, fusion={'arg1': 'arg'}, hierarchy=self.hierarchy)
+            dmrs, intermediate_dmrs, first_dmrs = dmrs
+        dmrs.compose(clauses_dmrs[-1], fusion={'arg2': 'head'}, hierarchy=self.hierarchy)
+        for clause_dmrs in reversed(clauses_dmrs[1:-1]):
+            dmrs.compose(clause_dmrs, fusion={'arg1': 'head'}, hierarchy=self.hierarchy)
+            dmrs.compose(intermediate_dmrs, fusion={'arg2': 'con'}, other_head=True, hierarchy=self.hierarchy)
+        dmrs.compose(clauses_dmrs[0], fusion={'arg1': 'head'}, hierarchy=self.hierarchy)
+        if first_dmrs:
+            dmrs.compose(first_dmrs, fusion={'arg1': 'arg'}, hierarchy=self.hierarchy)
         return dmrs
 
     def clause_dmrs(self, clause):

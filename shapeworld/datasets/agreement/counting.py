@@ -51,6 +51,6 @@ CountingDataset.default_config = {
     'shapes_range': [2, 4],
     'colors_range': [2, 4],
     'textures_range': [1, 1],
-    'caption_size': 13,
-    'words': ['.', 'a', 'above', 'an', 'are', 'below', 'bigger', 'black', 'blue', 'both', 'circle', 'circles', 'closest', 'cross', 'crosses', 'cyan', 'darker', 'ellipse', 'ellipses', 'exactly', 'farthest', 'five', 'four', 'from', 'green', 'is', 'left', 'lighter', 'magenta', 'of', 'one', 'pentagon', 'pentagons', 'rectangle', 'rectangles', 'red', 'right', 'semicircle', 'semicircles', 'shape', 'shapes', 'smaller', 'square', 'squares', 'than', 'the', 'three', 'to', 'triangle', 'triangles', 'two', 'white', 'yellow']
+    'caption_size': 16,
+    'words': ['.', 'a', 'above', 'an', 'are', 'below', 'bigger', 'black', 'blue', 'both', 'circle', 'circles', 'closer', 'closest', 'cross', 'crosses', 'cyan', 'darker', 'ellipse', 'ellipses', 'exactly', 'farther', 'farthest', 'five', 'four', 'from', 'green', 'is', 'left', 'lighter', 'magenta', 'of', 'one', 'pentagon', 'pentagons', 'rectangle', 'rectangles', 'red', 'right', 'semicircle', 'semicircles', 'shape', 'shapes', 'smaller', 'square', 'squares', 'than', 'the', 'three', 'to', 'triangle', 'triangles', 'two', 'white', 'yellow']
 }

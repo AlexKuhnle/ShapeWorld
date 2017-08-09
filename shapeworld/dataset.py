@@ -6,9 +6,9 @@ import os
 from random import random, randrange
 import numpy as np
 from PIL import Image
-from shapeworld import CaptionRealizer
-from shapeworld.util import Archive, cumulative_distribution, sample
+from shapeworld import util
 from shapeworld.world import World
+from shapeworld.realizers import CaptionRealizer
 
 
 def dataset(dtype=None, name=None, config=None):
@@ -33,7 +33,6 @@ def dataset(dtype=None, name=None, config=None):
             directory = os.path.join(config, dtype, name)
             config = os.path.join(config, '{}-{}.json'.format(dtype, name))
         else:
-            print(config)
             assert os.path.isfile(config)
             directory = os.path.dirname(config)
         with open(config, 'r') as filehandle:
@@ -190,7 +189,7 @@ class Dataset(object):
         return batch
 
     def generate(self, n, mode=None, noise_range=None, include_model=False, alternatives=False):  # mode: None, 'train', 'validation', 'test'
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def iterate(self, n, mode=None, noise_range=None, include_model=False, alternatives=False):
         while True:
@@ -209,7 +208,7 @@ class Dataset(object):
 
         id2word = [word for word, _ in sorted(self.words.items(), key=(lambda kv: kv[1]))] if self.words else None
 
-        with Archive(path=path, mode='w', archive=archive) as write_file:
+        with util.Archive(path=path, mode='w', archive=archive) as write_file:
             for value_name, value in generated.items():
                 Dataset.serialize_value(value=value, value_name=value_name, value_type=self.values[value_name], write_file=write_file, concat_worlds=concat_worlds, id2word=id2word)
             if additional:
@@ -399,7 +398,7 @@ class LoadedDataset(Dataset):
     def __getattr__(self, name):
         if name in self._specification:
             return self._specification[name]
-        raise AttributeError()
+        raise AttributeError
 
     def get_records_paths(self):
         assert 'tf-records' in self.parts
@@ -417,7 +416,7 @@ class LoadedDataset(Dataset):
             part = randrange(len(parts))
             path = parts.pop(part) if self.part_once else parts[part]
             self.num_instances = 0
-            with Archive(path=path, mode='r', archive=self.archive) as read_file:
+            with util.Archive(path=path, mode='r', archive=self.archive) as read_file:
                 for value_name, value in self.loaded.items():
                     value.extend(Dataset.deserialize_value(value_name=value_name, value_type=self.values[value_name], read_file=read_file, num_concat_worlds=self.num_concat_worlds, word2id=self.words))
                     if self.num_instances:
@@ -479,12 +478,12 @@ class DatasetMixer(Dataset):
         self.datasets = datasets
         self.consistent_batches = consistent_batches
         assert not distribution or len(distribution) == len(datasets)
-        self.distribution = cumulative_distribution(distribution or [1] * len(datasets))
+        self.distribution = util.cumulative_distribution(distribution or [1] * len(datasets))
         assert bool(train_distribution) == bool(validation_distribution) == bool(test_distribution)
         assert not train_distribution or len(train_distribution) == len(validation_distribution) == len(test_distribution) == len(self.distribution)
-        self.train_distribution = cumulative_distribution(train_distribution) if train_distribution else self.distribution
-        self.validation_distribution = cumulative_distribution(validation_distribution) if validation_distribution else self.distribution
-        self.test_distribution = cumulative_distribution(test_distribution) if test_distribution else self.distribution
+        self.train_distribution = util.cumulative_distribution(train_distribution) if train_distribution else self.distribution
+        self.validation_distribution = util.cumulative_distribution(validation_distribution) if validation_distribution else self.distribution
+        self.test_distribution = util.cumulative_distribution(test_distribution) if test_distribution else self.distribution
 
     @property
     def type(self):
@@ -512,12 +511,12 @@ class DatasetMixer(Dataset):
         elif mode == 'test':
             distribution = self.test_distribution
         if self.consistent_batches:
-            dataset = sample(distribution, self.datasets)
+            dataset = util.sample(distribution, self.datasets)
             return dataset.generate(n=n, mode=mode, noise_range=noise_range, include_model=include_model, alternatives=alternatives)
         else:
             batch = self.zero_batch(n, include_model=include_model, alternatives=alternatives)
             for i in range(n):
-                dataset = sample(distribution, self.datasets)
+                dataset = util.sample(distribution, self.datasets)
                 generated = dataset.generate(n=1, mode=mode, noise_range=noise_range, include_model=include_model, alternatives=alternatives)
                 for value_name, value_type in self.values.items():
                     value = generated[value_name][0]
@@ -590,7 +589,7 @@ class CaptionAgreementDataset(Dataset):
             self.caption_realizer = caption_realizer
         else:
             assert caption_realizer is None or isinstance(caption_realizer, str)
-            self.caption_realizer = CaptionRealizer.from_name(name=(caption_realizer or 'dmrs'), language=(realizer_language or 'english-1214'))
+            self.caption_realizer = CaptionRealizer.from_name(name=(caption_realizer or 'dmrs'), language=(realizer_language or 'english'))
         self.world_captioner.set_realizer(self.caption_realizer)
 
     def generate_incorrect_world(self, caption, mode):

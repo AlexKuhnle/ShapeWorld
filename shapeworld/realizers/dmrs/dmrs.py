@@ -15,20 +15,15 @@ from pydmrs.graphlang.graphlang import parse_graphlang
 from pydmrs.mapping.paraphrase import paraphrase
 
 
-def event_sortinfo(features):
+def create_sortinfo(cvarsort, features):
+    assert len(cvarsort) == 1 and cvarsort != 'i'
     assert isinstance(features, tuple)
-    if features == ('sf', 'tense', 'mood', 'perf', 'prog'):
+    if cvarsort == 'e' and features == ('sf', 'tense', 'mood', 'perf', 'prog'):
         return EventSortinfo
-    else:
-        return type('EventSortinfo', bases=(Sortinfo,), dict=dict(cvarsort='e', __slots__=features))
-
-
-def instance_sortinfo(features):
-    assert isinstance(features, tuple)
-    if features == ('pers', 'num', 'gend', 'ind', 'pt'):
+    elif cvarsort == 'x' and features == ('pers', 'num', 'gend', 'ind', 'pt'):
         return InstanceSortinfo
     else:
-        return type('InstanceSortinfo', bases=(Sortinfo,), dict=dict(cvarsort='x', __slots__=features))
+        return type((cvarsort.upper() + 'Sortinfo'), (Sortinfo,), dict(cvarsort=cvarsort, __slots__=features))
 
 
 class Dmrs(ListDmrs):
@@ -41,9 +36,9 @@ class Dmrs(ListDmrs):
         self.anchors = dict()
 
     @staticmethod
-    def parse(string):
+    def parse(string, sortinfo_classes=None, sortinfo_shortforms=None):
         anchors = dict()
-        dmrs = parse_graphlang(string, cls=Dmrs, anchors=anchors)
+        dmrs = parse_graphlang(string, cls=Dmrs, anchors=anchors, sortinfo_classes=sortinfo_classes, sortinfo_shortforms=sortinfo_shortforms)
         dmrs.anchors = anchors
         return dmrs
 
@@ -206,7 +201,7 @@ class Dmrs(ListDmrs):
             else:
                 intrinsic_string = '{} [ {} {}]'.format(variables[nodeid][0], variables[nodeid][1].cvarsort, ''.join('{}: {} '.format(feature.upper(), value.lower()) for feature, value in variables[nodeid][1].iter_specified()))
             args_string = ''.join('{}: {} '.format(role.upper(), arg) for role, arg in args[nodeid].items()) if nodeid in args else ''
-            elempred_string = '[ {}_rel<0:0> LBL: h{} {}ARG0: {} {}]'.format(predicates[nodeid], labels[nodeid], carg_string, intrinsic_string, args_string)
+            elempred_string = '[ {}<0:0> LBL: h{} {}ARG0: {} {}]'.format(predicates[nodeid], labels[nodeid], carg_string, intrinsic_string, args_string)
             elempreds.append(elempred_string)
 
         top_string = '' if self.top is None else 'TOP: h0 '

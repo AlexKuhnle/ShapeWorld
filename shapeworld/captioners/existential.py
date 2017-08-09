@@ -1,7 +1,6 @@
-from shapeworld import WorldCaptioner, util
-from shapeworld.util import cumulative_distribution
+from shapeworld import util
 from shapeworld.caption import Existential
-from shapeworld.captioners import AttributesNounCaptioner
+from shapeworld.captioners import WorldCaptioner, AttributesNounCaptioner
 
 
 class ExistentialCaptioner(WorldCaptioner):
@@ -18,12 +17,14 @@ class ExistentialCaptioner(WorldCaptioner):
         super(ExistentialCaptioner, self).__init__()
         self.subject_captioner = subject_captioner or AttributesNounCaptioner(hypernym_ratio=1.0)
         self.verb_captioner = verb_captioner or AttributesNounCaptioner()
-        self.incorrect_distribution = cumulative_distribution(incorrect_distribution or [1, 1])
+        self.incorrect_distribution = util.cumulative_distribution(incorrect_distribution or [1, 1])
 
     def set_realizer(self, realizer):
-        super(ExistentialCaptioner, self).set_realizer(realizer=realizer)
+        if not super(ExistentialCaptioner, self).set_realizer(realizer=realizer):
+            return False
         self.subject_captioner.set_realizer(realizer=realizer)
         self.verb_captioner.set_realizer(realizer=realizer)
+        return True
 
     def caption_world(self, entities, correct):
         if correct:

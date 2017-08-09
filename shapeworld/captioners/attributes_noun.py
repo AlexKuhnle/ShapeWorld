@@ -1,8 +1,8 @@
 from itertools import combinations
 from random import choice, random
-from shapeworld import WorldCaptioner, util
-from shapeworld.util import cumulative_distribution
+from shapeworld import util
 from shapeworld.caption import Modifier, Noun
+from shapeworld.captioners import WorldCaptioner
 
 
 class AttributesNounCaptioner(WorldCaptioner):
@@ -30,7 +30,8 @@ class AttributesNounCaptioner(WorldCaptioner):
         self.incorrect_distribution = incorrect_distribution
 
     def set_realizer(self, realizer):
-        super(AttributesNounCaptioner, self).set_realizer(realizer)
+        if not super(AttributesNounCaptioner, self).set_realizer(realizer):
+            return False
         if self.shapes is None:
             self.shapes = list(realizer.modifiers.get('shape', ()))
         else:
@@ -46,9 +47,10 @@ class AttributesNounCaptioner(WorldCaptioner):
         assert self.shapes or self.colors or self.textures
         if self.incorrect_distribution is None:
             max_length = max(len(self.shapes), len(self.colors), len(self.textures))
-            self.incorrect_distribution = cumulative_distribution([len(self.shapes), len(self.shapes), len(self.colors), len(self.colors), len(self.textures), len(self.textures), max_length, max_length])
+            self.incorrect_distribution = util.cumulative_distribution([len(self.shapes), len(self.shapes), len(self.colors), len(self.colors), len(self.textures), len(self.textures), max_length, max_length])
         else:
-            self.incorrect_distribution = cumulative_distribution(self.incorrect_distribution)
+            self.incorrect_distribution = util.cumulative_distribution(self.incorrect_distribution)
+        return True
 
     def caption_world(self, entities, correct):
         if correct and len(entities) == 0:

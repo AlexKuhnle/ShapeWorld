@@ -1,6 +1,6 @@
 from random import choice, randint, randrange
 from shapeworld.world import Entity, World
-from shapeworld import WorldGenerator
+from shapeworld.generators import WorldGenerator
 
 
 class GenericGenerator(WorldGenerator):

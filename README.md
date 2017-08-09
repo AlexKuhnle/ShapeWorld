@@ -13,6 +13,7 @@ pip3 install -e ShapeWorld
 - [Integration into Python code](#integration-into-python-code)
 - [Stand-alone data generation](#stand-alone-data-generation)
 - [Loading extracted data](#loading-extracted-data)
+- [CLEVR and NLVR interface](#clevr-and-nlvr-interface)
 - [Example models](#example-models)
 
 
@@ -147,6 +148,63 @@ for world in worlds:
 
 
 
+## CLEVR and NLVR interface
+
+CLEVR can be obtained as follows (alternatively, replace `CLEVR_v1.0` with `CLEVR_CoGenT_v1.0` for the CLEVR CoGenT dataset):
+
+```bash
+wget https://s3-us-west-1.amazonaws.com/clevr/CLEVR_v1.0.zip
+unzip CLEVR_v1.0.zip
+rm CLEVR_v1.0.zip
+```
+
+ShapeWorld then provides a basic interface to load the CLEVR instances **in order of their appearance** in the dataset. It is hence recommended to *'pre-generate'* the entire dataset (70k training, 15k validation and 15k test instances) once through the ShapeWorld interface, either as `clevr_classification` or `clevr_answering` dataset type, and subsequently access it as you would load other pre-generated ShapeWorld datasets:
+
+```bash
+python generate.py -d [SHAPEWORLD_DIRECTORY] -a tar:bzip2 -t clevr_classification -n clevr -c "{directory=CLEVR_v1.0}" -f "(140,0,30,30)" -i 500 -M
+python generate.py -d [SHAPEWORLD_DIRECTORY] -a tar:bzip2 -t clevr_classification -n clevr -c "{directory=CLEVR_v1.0}" -m train -f 140 -i 500 -M -A
+rm -r CLEVR_v1.0
+```
+
+Accordingly, in the case of CLEVR CoGenT:
+
+```bash
+python generate.py -d [SHAPEWORLD_DIRECTORY] -a tar:bzip2 -t clevr_classification -n clevr -c "{directory=CLEVR_CoGenT_v1.0,parts={train=A,validation=A,test=A}}" -f "(140,0,30,30)" -i 500 -M
+python generate.py -d [SHAPEWORLD_DIRECTORY] -a tar:bzip2 -t clevr_classification -n clevr -c "{directory=CLEVR_CoGenT_v1.0,parts={train=A,validation=A,test=A}}" -m train -f 140 -i 500 -M -A
+python generate.py -d [SHAPEWORLD_DIRECTORY] -a tar:bzip2 -t clevr_classification -n clevr -c "{directory=CLEVR_CoGenT_v1.0,parts={train=A,validation=B,test=B}}" -f "(0,30,30)" -i 500 -M
+rm -r CLEVR_CoGenT_v1.0
+```
+
+As `clevr_classification` dataset, it provides:
+- a `'world'` and optional `'world_model'` value,
+- an integer `'alternatives'` value which gives the number of questions per image (usually 10),
+- a `'question'`, `'question_length'` and optional `'question_model'` value array/list containing the respective number of actual question values,
+- an `'answer'` integer array specifying the corresponding answers.
+
+As `clevr_answering` dataset, the last value is replaced by:
+- an `'answer'` and `'answer_length'` value array containing the corresponding answer values.
+
+Equivalently, NLVR can be obtained via:
+
+```bash
+git clone https://github.com/cornell-lic/nlvr.git
+```
+
+Again, one should *'pre-generate'* the entire dataset (75k training, 6k validation and 6k test instances) as `nlvr_agreement` dataset type, and subsequently access it via the ShapeWorld load interface:
+
+```bash
+python generate.py -d [SHAPEWORLD_DIRECTORY] -a tar:bzip2 -t nlvr_agreement -n nlvr -c "{directory=nlvr}" -f "(25,0,2,2)" -i 3k -M
+python generate.py -d [SHAPEWORLD_DIRECTORY] -a tar:bzip2 -t nlvr_agreement -n nlvr -c "{directory=nlvr}" -m train -f 25 -i 3k -M -A
+rm -r nlvr
+```
+
+The dataset provides:
+- `'world1'`, `'world2'`, `'world3'` and optional `'world_model1'`, `'world_model2'`, `'world_model3'` values,
+- a `'description'`, `'description_length'` and optional `'description_model'` values,
+- an `'agreement'` value.
+
+
+
 ## Example models
 
 The `models/` directory contains a few exemplary models based on [TFMacros](https://github.com/AlexKuhnle/TFMacros), my collection of TensorFlow macros. The script `evaluate.py` provides the following command line arguments to run these models:
@@ -185,59 +243,3 @@ The previously generated data (here: TF records) can be loaded in the same way a
 ```bash
 python evaluate.py -t agreement -n multishape -c "load(examples/readme)" -m cnn_bow -i 10 -T
 ```
-
-
-<!--
-
-## CLEVR  and NLVR interface
-
-Roughly (75000, 6000, 6000).
-
-```bash
-git clone https://github.com/cornell-lic/nlvr.git
-
-python generate.py -d [SHAPEWORLD_DIRECTORY] -a tar:bzip2 -t nlvr_agreement -n nlvr -c "{directory=nlvr}" -f "(25,0,2,2)" -i 3k -M
-python generate.py -d [SHAPEWORLD_DIRECTORY] -a tar:bzip2 -t nlvr_agreement -n nlvr -c "{directory=nlvr}" -m train -f 25 -i 3k -M -A
-
-rm -r nlvr
-```
-
--->
-
-
-
-
-<!--
-
-Exactly (70000, 15000, 15000)
-
-```bash
-wget https://s3-us-west-1.amazonaws.com/clevr/CLEVR_v1.0.zip
-unzip CLEVR_v1.0.zip
-rm CLEVR_v1.0.zip
-or
-wget https://s3-us-west-1.amazonaws.com/clevr/CLEVR_CoGenT_v1.0.zip
-unzip CLEVR_CoGenT_v1.0.zip
-rm CLEVR_CoGenT_v1.0.zip
-
-python generate.py -d [SHAPEWORLD_DIRECTORY] -a tar:bzip2 -t clevr_classification -n clevr -c "{directory=CLEVR_v1.0}" -f "(140,0,30,30)" -i 500 -M
-python generate.py -d [SHAPEWORLD_DIRECTORY] -a tar:bzip2 -t clevr_classification -n clevr -c "{directory=CLEVR_v1.0}" -m train -f 140 -i 500 -M -A
-
-rm -r CLEVR_v1.0
-or 
-rm -r CLEVR_CoGenT_v1.0
-
-
-
-python generate.py -d [SHAPEWORLD_DIRECTORY] -a tar:bzip2 -t clevr_classification -n clevr -c "{directory=CLEVR_CoGenT_v1.0,parts={train=A,validation=A,test=A}}" -f "(140,0,30,30)" -i 500 -M
-python generate.py -d [SHAPEWORLD_DIRECTORY] -a tar:bzip2 -t clevr_classification -n clevr -c "{directory=CLEVR_CoGenT_v1.0,parts={train=A,validation=A,test=A}}" -m train -f 140 -i 500 -M -A
-python generate.py -d [SHAPEWORLD_DIRECTORY] -a tar:bzip2 -t clevr_classification -n clevr -c "{directory=CLEVR_CoGenT_v1.0,parts={train=A,validation=B,test=B}}" -f "(0,30,30)" -i 500 -M
-
-or _answering
-
-
-(important: tag required to get both!)
-
-```
-
--->

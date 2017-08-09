@@ -1,8 +1,7 @@
 from random import choice
-from shapeworld import WorldCaptioner, util
-from shapeworld.util import cumulative_distribution
+from shapeworld import util
 from shapeworld.caption import Quantifier
-from shapeworld.captioners import AttributesNounCaptioner, AttributesRelationCaptioner
+from shapeworld.captioners import WorldCaptioner, AttributesNounCaptioner, AttributesRelationCaptioner
 
 
 class RelativeQuantifierCaptioner(WorldCaptioner):
@@ -20,15 +19,17 @@ class RelativeQuantifierCaptioner(WorldCaptioner):
         super(RelativeQuantifierCaptioner, self).__init__()
         self.restrictor_captioner = restrictor_captioner or AttributesNounCaptioner(hypernym_ratio=1.0)
         self.body_captioner = body_captioner or AttributesRelationCaptioner()
-        self.incorrect_distribution = cumulative_distribution(incorrect_distribution or [2, 1, 1])
+        self.incorrect_distribution = util.cumulative_distribution(incorrect_distribution or [2, 1, 1])
 
     def set_realizer(self, realizer):
+        if not super(RelativeQuantifierCaptioner, self).set_realizer(realizer):
+            return False
         assert 'relative' in realizer.quantifiers
-        super(RelativeQuantifierCaptioner, self).set_realizer(realizer)
         self.restrictor_captioner.set_realizer(realizer=realizer)
         self.body_captioner.set_realizer(realizer=realizer)
         self.quantifiers = list((qrange, quantity) for qrange, quantities in realizer.quantifiers['relative'].items() for quantity in quantities)
         assert self.quantifiers
+        return True
 
     def caption_world(self, entities, correct):
         qrange, quantity = choice(self.quantifiers)

@@ -1,9 +1,42 @@
 {
+    "sortinfos": {
+        "e": {
+            "features": ["sf", "tense", "mood", "perf", "prog"],
+            "shortform": {
+                "sf": {"p": "prop", "q": "ques", "o": "prop-or-ques", "c": "comm"},
+                "tense": {"u": "untensed", "t": "tensed", "p": "pres", "a": "past", "f": "fut"},
+                "mood": {"i": "indicative", "s": "subjunctive"},
+                "prog": {"b": "bool"}
+            }
+        },
+        "x": {
+            "features": ["pers", "num", "gend", "ind", "pt"],
+            "shortform": {
+                "pers": {"o": "1-or-3"},
+                "num": {"s": "sg", "p": "pl"},
+                "gend": {"o": "m-or-f"},
+                "pt": {"s": "std", "z": "zero", "r": "refl"}
+            }
+        }
+    },
+
+
     "modifiers": {
+        "empty": {"key": "shape", "dmrs": "[entity]:_shape_n_sw x?[pers=3]"},
         "relation": {"key": "relation-modifier", "dmrs": "[mod]:pred e[ppi--] =1=> [arg]:node"},
 
+        "shape": {
+            "square": {"key": "square", "dmrs": "[mod]:node =1=> [arg]:_square_n_sw x?[pers=3]"},
+            "rectangle": {"key": "rectangle", "dmrs": "[mod]:node =1=> [arg]:_rectangle_n_sw x?[pers=3]"},
+            "triangle": {"key": "triangle", "dmrs": "[mod]:node =1=> [arg]:_triangle_n_sw x?[pers=3]"},
+            "pentagon": {"key": "pentagon", "dmrs": "[mod]:node =1=> [arg]:_pentagon_n_sw x?[pers=3]"},
+            "cross": {"key": "cross", "dmrs": "[mod]:node =1=> [arg]:_cross_n_sw x?[pers=3]"},
+            "circle": {"key": "circle", "dmrs": "[mod]:node =1=> [arg]:_circle_n_sw x?[pers=3]"},
+            "semicircle": {"key": "semicircle", "dmrs": "[mod]:node =1=> [arg]:_semicircle_n_sw x?[pers=3]"},
+            "ellipse": {"key": "ellipse", "dmrs": "[mod]:node =1=> [arg]:_ellipse_n_sw x?[pers=3]"}
+        },
+
         "color": {
-            "black": {"key": "black", "dmrs": "[mod]:_black_a_sw e? =1=> [arg]:node"},
             "red": {"key": "red", "dmrs": "[mod]:_red_a_sw e? =1=> [arg]:node"},
             "green": {"key": "green", "dmrs": "[mod]:_green_a_sw e? =1=> [arg]:node"},
             "blue": {"key": "blue", "dmrs": "[mod]:_blue_a_sw e? =1=> [arg]:node"},
@@ -35,22 +68,6 @@
     },
 
 
-    "nouns": {
-        "empty": {"key": "shape", "dmrs": "[noun]:_shape_n_sw x?[p=3]"},
-
-        "shape": {
-            "square": {"key": "square", "dmrs": "[noun]:_square_n_sw x?[p=3]"},
-            "rectangle": {"key": "rectangle", "dmrs": "[noun]:_rectangle_n_sw x?[p=3]"},
-            "triangle": {"key": "triangle", "dmrs": "[noun]:_triangle_n_sw x?[p=3]"},
-            "pentagon": {"key": "pentagon", "dmrs": "[noun]:_pentagon_n_sw x?[p=3]"},
-            "cross": {"key": "cross", "dmrs": "[noun]:_cross_n_sw x?[p=3]"},
-            "circle": {"key": "circle", "dmrs": "[noun]:_circle_n_sw x?[p=3]"},
-            "semicircle": {"key": "semicircle", "dmrs": "[noun]:_semicircle_n_sw x?[p=3]"},
-            "ellipse": {"key": "ellipse", "dmrs": "[noun]:_ellipse_n_sw x?[p=3]"}
-        }
-    },
-
-
     "relations": {
         "modifier": {"key": "modifier-relation", "dmrs": "[rel,ref]:pred e?"},
         "noun": {"key": "noun-relation", "dmrs": "[rel]:_be_v_id e? -2-> [ref]:node <-- default_q"},
@@ -76,8 +93,8 @@
         },
 
         "proximity-rel": {
-            "-1": {"key": "closer", "dmrs": "[rel]:_close_a_to e? <=1= _to_p e -2-> [ref]:node <-- _a_q; :rel <=1= more_comp e -2-> [comp]:node <-- _a_q"},
-            "1": {"key": "farther", "dmrs": "[rel]:_far_a_from e? <=1= _from_p e -2-> [ref]:node <-- _a_q; :rel <=1= more_comp e -2-> [comp]:node <-- _a_q"}
+            "-1": {"key": "closer", "dmrs": "[rel]:_close_a_to e? -2-> [ref]:node <-- _a_q; :rel <=1= more_comp e -2-> [comp]:node <-- _a_q"},
+            "1": {"key": "farther", "dmrs": "[rel]:_far_a_from e? -2-> [ref]:node <-- _a_q; :rel <=1= more_comp e -2-> [comp]:node <-- _a_q"}
         },
 
         "size-rel": {
@@ -97,29 +114,36 @@
 
         "absolute": {
             "eq": {
-                "1": {"key": "the", "dmrs": "[quant]:_the_q --> [rstr]:pred x?[n=s] <-1- [body]:node"},
-                "2": {"key": "both", "dmrs": "[quant]:_both_q --> [rstr]:pred x?[n=p] <=1= card(2) e; :rstr <-1- [body]:node"},
-                "3": {"key": "the_three", "dmrs": "[quant]:_the_q --> [rstr]:pred x?[n=p] <=1= card(3) e; :rstr <-1- [body]:node"},
-                "4": {"key": "the_four", "dmrs": "[quant]:_the_q --> [rstr]:pred x?[n=p] <=1= card(4) e; :rstr <-1- [body]:node"},
-                "5": {"key": "the_five", "dmrs": "[quant]:_the_q --> [rstr]:pred x?[n=p] <=1= card(5) e; :rstr <-1- [body]:node"}
+                "1": {"key": "exactly_one", "dmrs": "[quant]:udef_q --> [rstr]:pred x[?s???] <=1= card(1) e <=1= _exactly_x_deg e; :rstr <-1- [body]:node"},
+                "2": {"key": "exactly_two", "dmrs": "[quant]:udef_q --> [rstr]:pred x[?p???] <=1= card(2) e <=1= _exactly_x_deg e; :rstr <-1- [body]:node"},
+                "3": {"key": "exactly_three", "dmrs": "[quant]:udef_q --> [rstr]:pred x[?p???] <=1= card(3) e <=1= _exactly_x_deg e; :rstr <-1- [body]:node"},
+                "4": {"key": "exactly_four", "dmrs": "[quant]:udef_q --> [rstr]:pred x[?p???] <=1= card(4) e <=1= _exactly_x_deg e; :rstr <-1- [body]:node"},
+                "5": {"key": "exactly_five", "dmrs": "[quant]:udef_q --> [rstr]:pred x[?p???] <=1= card(5) e <=1= _exactly_x_deg e; :rstr <-1- [body]:node"}
             },
             "geq": {
-                "1": {"key": "one", "dmrs": "[quant]:_a_q --> [rstr]:pred x?[n=s] <-1- [body]:node"},
-                "2": {"key": "two", "dmrs": "[quant]:udef_q --> [rstr]:pred x?[n=p] <=1= card(2) e; :rstr <-1- [body]:node"},
-                "3": {"key": "three", "dmrs": "[quant]:udef_q --> [rstr]:pred x?[n=p] <=1= card(3) e; :rstr <-1- [body]:node"},
-                "4": {"key": "four", "dmrs": "[quant]:udef_q --> [rstr]:pred x?[n=p] <=1= card(4) e; :rstr <-1- [body]:node"},
-                "5": {"key": "five", "dmrs": "[quant]:udef_q --> [rstr]:pred x?[n=p] <=1= card(5) e; :rstr <-1- [body]:node"}
+                "1": {"key": "a", "dmrs": "[quant]:_a_q --> [rstr]:pred x[?s???] <-1- [body]:node"},
+                "2": {"key": "two", "dmrs": "[quant]:udef_q --> [rstr]:pred x[?p???] <=1= card(2) e; :rstr <-1- [body]:node"},
+                "3": {"key": "three", "dmrs": "[quant]:udef_q --> [rstr]:pred x[?p???] <=1= card(3) e; :rstr <-1- [body]:node"},
+                "4": {"key": "four", "dmrs": "[quant]:udef_q --> [rstr]:pred x[?p???] <=1= card(4) e; :rstr <-1- [body]:node"},
+                "5": {"key": "five", "dmrs": "[quant]:udef_q --> [rstr]:pred x[?p???] <=1= card(5) e; :rstr <-1- [body]:node"}
+            },
+            "eq-all": {
+                "1": {"key": "the", "dmrs": "[quant]:_the_q --> [rstr]:pred x[?s???] <-1- [body]:node"},
+                "2": {"key": "both", "dmrs": "[quant]:_both_q --> [rstr]:pred x[?p???] <=1= card(2) e; :rstr <-1- [body]:node"},
+                "3": {"key": "the_three", "dmrs": "[quant]:_the_q --> [rstr]:pred x[?p???] <=1= card(3) e; :rstr <-1- [body]:node"},
+                "4": {"key": "the_four", "dmrs": "[quant]:_the_q --> [rstr]:pred x[?p???] <=1= card(4) e; :rstr <-1- [body]:node"},
+                "5": {"key": "the_five", "dmrs": "[quant]:_the_q --> [rstr]:pred x[?p???] <=1= card(5) e; :rstr <-1- [body]:node"}
             }
         },
 
         "relative": {
             "eq": {
-                "0.0": {"key": "no", "dmrs": "[quant]:_no_q --> [rstr]:pred x?[n=s] <-1- [body]:node"},
-                "0.5": {"key": "half", "dmrs": "[quant]:_half_q --> part_of x[3p___] -1-> [rstr]:pred x?[n=p] <-- _the_q; :part_of <-1- [body]:node"},
-                "1.0": {"key": "all", "dmrs": "[quant]:_all_q --> [rstr]:pred x?[n=p] <-1- [body]:node"}
+                "0.0": {"key": "no", "dmrs": "[quant]:_no_q --> [rstr]:pred x?[num=s] <-1- [body]:node"},
+                "0.5": {"key": "half", "dmrs": "[quant]:_half_q --> part_of x[3p___] -1-> [rstr]:pred x?[num=p] <-- _the_q; :part_of <-1- [body]:node"},
+                "1.0": {"key": "all", "dmrs": "[quant]:_all_q --> [rstr]:pred x?[num=p] <-1- [body]:node"}
             },
             "geq": {
-                "0.6": {"key": "most", "dmrs": "[quant]:_most_q --> [rstr]:pred x?[n=p] <-1- [body]:node"}
+                "0.6": {"key": "most", "dmrs": "[quant]:_most_q --> [rstr]:pred x?[num=p] <-1- [body]:node"}
             }
         }
     },
@@ -127,8 +151,8 @@
 
     "propositions": {
         "modifier": {"key": "modifier-proposition", "dmrs": "_a_q --> [arg]:_shape_n_sw x? <=1= [mod]:node; ***[head]:_be_v_there e[ppi--] -1-> :_shape_n_sw"},
-        "noun": {"key": "noun-proposition", "dmrs": "_a_q --> [noun]:pred x? <-1- ***[head]:_be_v_there e[ppi--]"},
-        "relation": {"key": "relation-proposition", "dmrs": "_a_q --> _shape_n_sw x[p=3] <-1- ***[head,rel]:pred e[ppi--]"},
+        "noun": {"key": "noun-proposition", "dmrs": "_a_q --> [entity]:pred x? <-1- ***[head]:_be_v_there e[ppi--]"},
+        "relation": {"key": "relation-proposition", "dmrs": "_a_q --> _shape_n_sw x[pers=3] <-1- ***[head,rel]:pred e[ppi--]"},
         "existential": {"key": "existential-proposition", "dmrs": "***[head,verb]:pred e[ppi--]"},
         "quantifier": {"key": "quantifier-proposition", "dmrs": "***[head,body]:pred e[ppi--]"},
 
@@ -139,14 +163,45 @@
 
 
     "hierarchy": {
-        "_shape_n_sw": ["_square_n_sw", "_rectangle_n_sw", "_triangle_n_sw", "_pentagon_n_sw", "_cross_n_sw", "_circle_n_sw", "_semicircle_n_sw", "_ellipse_n_sw"]
+        "_shape_n_sw": ["_square_n_sw", "_rectangle_n_sw", "_triangle_n_sw", "_pentagon_n_sw", "_cross_n_sw", "_circle_n_sw", "_semicircle_n_sw", "_ellipse_n_sw"],
+        "shape_n": ["_shape_n_sw", "_square_n_sw", "_rectangle_n_sw", "_triangle_n_sw", "_pentagon_n_sw", "_cross_n_sw", "_circle_n_sw", "_semicircle_n_sw", "_ellipse_n_sw"],
+        "color_a": ["_red_a_sw", "_green_a_sw", "_blue_a_sw", "_yellow_a_sw", "_magenta_a_sw", "_cyan_a_sw", "_white_a_sw"],
+        "default_q": ["_a_q", "udef_q"]
     },
 
 
     "post-processing": {
-        "red-black": {
-            "search": "[color]:_red_a_999 e? =1=> [shape]:_shape_n_sw x?",
-            "replace": "[color]:_black_a_sw e[ppi--] =1=> [shape]:_rectangle_n_sw x?"
+        "noun-to-verb1": {
+            "search": "[subj]:node <-1- node =1=> [obj]:pred x?",
+            "replace": "[subj]:node <-1- _be_v_id e[ppi--] -2-> [obj]:node <-- default_q"
+        },
+        "noun-to-verb2": {
+            "search": "[subj]:node <-1- ***node =1=> [obj]:pred x?",
+            "replace": "[subj]:node <-1- ***_be_v_id e[ppi--] -2-> [obj]:node <-- default_q"
+        },
+        "modifier-to-verb1": {
+            "search": "[subj]:node <-1- _be_v_id e[ppi--] -2-> _shape_n_sw x? <=1= [attr]:pred e?; :_shape_n_sw <-- default_q",
+            "replace": "[subj]:node <-1- [attr]:pred e[ppi--]"
+        },
+        "modifier-to-verb2": {
+            "search": "[subj]:node <-1- ***_be_v_id e[ppi--] -2-> _shape_n_sw x? <=1= [attr]:pred e?; :_shape_n_sw <-- default_q",
+            "replace": "[subj]:node <-1- ***[attr]:pred e[ppi--]"
+        },
+        "default-q-singular1": {
+            "search": "[subj]:pred x?[num=s] <-1- [cop]:_be_v_id e? -2-> [obj]:node <-- [quant]:default_q",
+            "replace": "[subj]:pred x? <-1- [cop]:_be_v_id e? -2-> [obj]:node <-- [quant]:_a_q"
+        },
+        "default-q-singular2": {
+            "search": "[subj]:pred x?[num=s] <-1- [cop]:_be_v_id e? -2-> [obj]:node <-- [quant]:default_q",
+            "replace": "[subj]:pred x? <-1- [cop]:_be_v_id e? -2-> [obj]:node <-- [quant]:_a_q"
+        },
+        "default-q-plural1": {
+            "search": "[subj]:pred x?[num=p] <-1- [cop]:_be_v_id e? -2-> [obj]:node <-- [quant]:default_q",
+            "replace": "[subj]:pred x? <-1- [cop]:_be_v_id e? -2-> [obj]:node <-- [quant]:udef_q"
+        },
+        "default-q-plural2": {
+            "search": "[subj]:pred x?[num=p] <-1- [cop]:_be_v_id e? -2-> [obj]:node <-- [quant]:default_q",
+            "replace": "[subj]:pred x? <-1- [cop]:_be_v_id e? -2-> [obj]:node <-- [quant]:udef_q"
         }
     }
 }

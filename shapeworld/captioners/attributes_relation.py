@@ -1,8 +1,8 @@
 from itertools import combinations
-from random import choice, random
-from shapeworld import WorldCaptioner, util
-from shapeworld.util import cumulative_distribution
+from random import choice
+from shapeworld import util
 from shapeworld.caption import Modifier, Noun, Relation
+from shapeworld.captioners import WorldCaptioner
 
 
 class AttributesRelationCaptioner(WorldCaptioner):
@@ -26,12 +26,13 @@ class AttributesRelationCaptioner(WorldCaptioner):
         self.shapes = shapes
         self.colors = colors
         self.textures = textures
-        self.type_distribution = cumulative_distribution(type_distribution or [1, 1, 1])
+        self.type_distribution = util.cumulative_distribution(type_distribution or [1, 1, 1])
         self.incorrect_distribution = incorrect_distribution
 
     def set_realizer(self, realizer):
+        if not super(AttributesRelationCaptioner, self).set_realizer(realizer):
+            return False
         assert 'modifier' in realizer.relations and 'noun' in realizer.relations
-        super(AttributesRelationCaptioner, self).set_realizer(realizer)
         if self.shapes is None:
             self.shapes = list(realizer.modifiers.get('shape', ()))
             self.modifiers = list(('shape', value) for value in realizer.modifiers.get('shape', ()))
@@ -53,9 +54,10 @@ class AttributesRelationCaptioner(WorldCaptioner):
         assert self.shapes or self.colors or self.textures
         if self.incorrect_distribution is None:
             max_length = max(len(self.shapes), len(self.colors), len(self.textures))
-            self.incorrect_distribution = cumulative_distribution([len(self.shapes), len(self.shapes), len(self.colors), len(self.colors), len(self.textures), len(self.textures), max_length, max_length])
+            self.incorrect_distribution = util.cumulative_distribution([len(self.shapes), len(self.shapes), len(self.colors), len(self.colors), len(self.textures), len(self.textures), max_length, max_length])
         else:
-            self.incorrect_distribution = cumulative_distribution(self.incorrect_distribution)
+            self.incorrect_distribution = util.cumulative_distribution(self.incorrect_distribution)
+        return True
 
     def caption_world(self, entities, correct):
         if correct and len(entities) == 0:

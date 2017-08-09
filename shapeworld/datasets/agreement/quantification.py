@@ -50,6 +50,6 @@ QuantificationDataset.default_config = {
     'shapes_range': [2, 4],
     'colors_range': [2, 4],
     'textures_range': [1, 1],
-    'caption_size': 13,
-    'words': ['.', 'a', 'above', 'all', 'an', 'are', 'below', 'bigger', 'black', 'blue', 'circle', 'circles', 'closest', 'cross', 'crosses', 'cyan', 'darker', 'ellipse', 'ellipses', 'farthest', 'from', 'green', 'half', 'is', 'left', 'lighter', 'magenta', 'most', 'no', 'of', 'one', 'pentagon', 'pentagons', 'rectangle', 'rectangles', 'red', 'right', 'semicircle', 'semicircles', 'shape', 'shapes', 'smaller', 'square', 'squares', 'than', 'the', 'to', 'triangle', 'triangles', 'white', 'yellow']
+    'caption_size': 15,
+    'words': ['.', 'a', 'above', 'all', 'an', 'are', 'below', 'bigger', 'black', 'blue', 'circle', 'circles', 'closer', 'closest', 'cross', 'crosses', 'cyan', 'darker', 'ellipse', 'ellipses', 'farther', 'farthest', 'from', 'green', 'half', 'is', 'left', 'lighter', 'magenta', 'most', 'no', 'of', 'one', 'pentagon', 'pentagons', 'rectangle', 'rectangles', 'red', 'right', 'semicircle', 'semicircles', 'shape', 'shapes', 'smaller', 'square', 'squares', 'than', 'the', 'to', 'triangle', 'triangles', 'white', 'yellow']
 }

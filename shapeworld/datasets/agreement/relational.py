@@ -1,7 +1,6 @@
-from shapeworld import CaptionerMixer
 from shapeworld.dataset import CaptionAgreementDataset
 from shapeworld.generators import GenericGenerator
-from shapeworld.captioners import AttributesNounCaptioner, SpatialRelationCaptioner, ComparisonRelationCaptioner, ExistentialCaptioner
+from shapeworld.captioners import CaptionerMixer, AttributesNounCaptioner, SpatialRelationCaptioner, ComparisonRelationCaptioner, ExistentialCaptioner
 
 
 class CombinationDataset(CaptionAgreementDataset):

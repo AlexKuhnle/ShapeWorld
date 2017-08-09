@@ -1,8 +1,7 @@
 from random import choice
-from shapeworld import WorldCaptioner, util
-from shapeworld.util import cumulative_distribution
+from shapeworld import util
 from shapeworld.caption import Relation
-from shapeworld.captioners import AttributesNounCaptioner
+from shapeworld.captioners import WorldCaptioner, AttributesNounCaptioner
 
 
 class ComparisonRelationCaptioner(WorldCaptioner):
@@ -23,16 +22,18 @@ class ComparisonRelationCaptioner(WorldCaptioner):
         super(ComparisonRelationCaptioner, self).__init__()
         self.reference_captioner = reference_captioner or AttributesNounCaptioner()
         self.relations = relations
-        self.incorrect_distribution = cumulative_distribution(incorrect_distribution or [1, 1, 1])
+        self.incorrect_distribution = util.cumulative_distribution(incorrect_distribution or [1, 1, 1])
 
     def set_realizer(self, realizer):
-        super(ComparisonRelationCaptioner, self).set_realizer(realizer)
+        if not super(ComparisonRelationCaptioner, self).set_realizer(realizer):
+            return False
         self.reference_captioner.set_realizer(realizer=realizer)
         if self.relations is None:
             self.relations = list((reltype, value) for reltype, values in realizer.relations.items() if reltype in ComparisonRelationCaptioner.comparison_reltypes for value in values)
         else:
             self.relations = list((reltype, value) for reltype, values in realizer.relations.items() if reltype in self.relations for value in values)
         assert self.relations
+        return True
 
     def caption_world(self, entities, correct):
         comparison, relative = choice(self.relations)
