@@ -13,7 +13,7 @@ def prepare_grammar(language):
     directory = os.path.dirname(os.path.realpath(__file__))
     # unpack grammar if used for the first time
     if not os.path.isfile(os.path.join(directory, 'resources', language + '.dat')):
-        assert os.path.isfile(os.path.join(directory, 'resources', language + '.dat.tar.gz'))
+        assert os.path.isfile(os.path.join(directory, 'resources', language + '.dat.gz'))
         import gzip
         with gzip.open(os.path.join(directory, 'resources', language + '.dat.gz'), 'rb') as gzip_filehandle:
             with open(os.path.join(directory, 'resources', language + '.dat'), 'wb') as filehandle:
