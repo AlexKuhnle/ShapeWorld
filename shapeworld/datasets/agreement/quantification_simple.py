@@ -23,7 +23,7 @@ class QuantificationDataset(CaptionAgreementDataset):
             validation_correct_ratio=validation_correct_ratio,
             test_correct_ratio=test_correct_ratio,
             caption_realizer=realizer,
-            realizer_language=language
+            language=language
         )
 
 

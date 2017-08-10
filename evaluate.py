@@ -12,11 +12,12 @@ if __name__ == "__main__":
 
     parser.add_argument('-t', '--type', help='Dataset type')
     parser.add_argument('-n', '--name', help='Dataset name')
+    parser.add_argument('-l', '--language', help='Dataset language')
     parser.add_argument('-c', '--config', type=util.parse_config, help='Dataset configuration file')
     parser.add_argument('-p', '--pixel-noise', type=float, default=0.1, help='Pixel noise range')
 
     parser.add_argument('-m', '--model', help='Model')
-    parser.add_argument('-l', '--learning-rate', type=float, default=0.0001, help='Learning rate')
+    parser.add_argument('-r', '--learning-rate', type=float, default=0.0001, help='Learning rate')
     parser.add_argument('-w', '--weight-decay', type=float, default=0.0, help='Weight decay')
     parser.add_argument('-d', '--dropout-rate', type=float, default=0.0, help='Dropout rate')
     parser.add_argument('-y', '--hyperparameters', type=util.parse_config, default=None, help='Model hyperparameters')
@@ -26,7 +27,7 @@ if __name__ == "__main__":
     parser.add_argument('-b', '--batch-size', type=util.parse_int_with_factor, default=128, help='Batch size')
     parser.add_argument('-f', '--evaluation-frequency', type=util.parse_int_with_factor, default=100, help='Evaluation frequency')
     parser.add_argument('-e', '--evaluation-size', type=util.parse_int_with_factor, default=1024, help='Evaluation batch size')
-    parser.add_argument('-r', '--report-file', default=None, help='CSV file reporting the evaluation results')
+    parser.add_argument('-o', '--report-file', default=None, help='CSV file reporting the evaluation results')
     parser.add_argument('-R', '--restore', action='store_true', help='Restore model (requires --model-file)')
     parser.add_argument('-E', '--evaluate', action='store_true', help='Evaluate model without training (requires --model-file)')
     parser.add_argument('-T', '--tf-records', action='store_true', help='TensorFlow queue with records (not compatible with --evaluate)')
@@ -58,7 +59,7 @@ if __name__ == "__main__":
         sys.stdout.flush()
 
     # dataset
-    dataset = dataset(dtype=args.type, name=args.name, config=args.config)
+    dataset = dataset(dtype=args.type, name=args.name, language=args.language, config=args.config)
     if args.tf_records:
         inputs = tf_util.batch_records(dataset=dataset, batch_size=args.batch_size, noise_range=args.pixel_noise)
     else:

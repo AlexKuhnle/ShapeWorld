@@ -22,8 +22,6 @@ pip3 install -e ShapeWorld
 
 ShapeWorld is a framework which allows to specify generators for abstract, visually grounded language data (or just visual data).
 
-more precisely, *data generators*. It is based on the concept of *microworlds*, i.e. small and self-contained artificial scenarios consisting of colored shapes.
-
 The main motivation behind ShapeWorld is to provide a new testbed and evaluation methodology for visually grounded language understanding, particularly aimed at deep learning models. It differs from standard evaluation datasets in two ways: Firstly, data is randomly sampled during training and evaluation according to constraints specified by the experimenter. Secondly, its focus of evaluation is on linguistic understanding capabilities of the type investigated by formal semantics. In this context, the ShapeWorld tasks can be thought of as unit-testing multimodal models for specific linguistic generalization abilities -- similar to, for instance, the [bAbI tasks](https://research.fb.com/projects/babi/) of [Weston et al. (2015)](https://arxiv.org/abs/1502.05698) for text-only understanding.
 
 The code is written in Python 3 (but should be compatible to Python 2). The data can either be obtained within a Python module as [NumPy](http://www.numpy.org/) arrays, and hence integrates into deep learning projects based on common frameworks like [TensorFlow](https://www.tensorflow.org/), [PyTorch](http://pytorch.org/) or [Theano](http://deeplearning.net/software/theano/), or it can be extracted into separate files. Both options are described further below. For language generation, the Python package [pydmrs](https://github.com/delph-in/pydmrs) [(Copestake et al., 2016)](http://www.lrec-conf.org/proceedings/lrec2016/pdf/634_Paper.pdf) is required.
@@ -72,8 +70,9 @@ The following command line arguments are available:
 * `--[A]ppend`:  Append to existing data (when used without `--unmanaged`)
 * `--[U]nmanaged`:  Do not automatically create sub-directories (requires `--mode`)
 
-* `--[t]ype`:  Dataset type (**required**)
+* `--[t]ype`:  Dataset type (default: `agreement`)
 * `--[n]ame`:  Dataset name (**required**)
+* `--[l]anguage`:  Dataset language, if available (default: `none`/`english`)
 * `--[c]onfig`:  Dataset configuration file, otherwise use default configuration
 
 * `--[m]ode`:  Mode, one of `train`, `validation`, `test`, `tf-records` (requires `--parts` is single number)
@@ -211,11 +210,12 @@ The `models/` directory contains a few exemplary models based on [TFMacros](http
 
 * `--[t]ype`:  Dataset type (**required**)
 * `--[n]ame`:  Dataset name (**required**)
+* `--[l]anguage`:  Dataset language, if available (default: `none`/`english`)
 * `--[c]onfig`:  Dataset configuration file, otherwise use default configuration
 * `--[p]ixel-noise`:  Pixel noise range (default: `0.1`)
 
 * `--[m]odel`:  Model, one in `models/[TYPE]/` (**required**)
-* `--[l]earning-rate`:  Learning rate (default: `0.0001`)
+* `--learning-[r]ate`:  Learning rate (default: `0.0001`)
 * `--[w]eight-decay`:  Weight decay (default: `0.0`)
 * `--[d]ropout-rate`:  Dropout rate (default: `0.0`)
 * `--h[y]perparameters`:  Model hyperparameters, otherwise use default parameters
@@ -225,7 +225,7 @@ The `models/` directory contains a few exemplary models based on [TFMacros](http
 * `--[b]atch-size`:  Batch size (default: `128`)
 * `--evaluation-[f]requency`:  Evaluation frequency (default: `100`)
 * `--[e]valuation-size`:  Evaluation size (default: `1024`)
-* `--[r]eport-file`:  CSV file reporting the evaluation results throughout the learning process
+* `--rep[o]rt-file`:  CSV file reporting the evaluation results throughout the learning process
 * `--[R]estore`:  Restore system, requires `--model-file` (default: `false`)
 * `--[E]valuate`:  Evaluate system without training, requires `--model-file` (default: `false`)
 * `--[T]f-records`:  Use TensorFlow records (not compatible with `--evaluate`)

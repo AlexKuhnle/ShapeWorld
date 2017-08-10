@@ -15,10 +15,10 @@ if __name__ == "__main__":
     parser.add_argument('-A', '--append', action='store_true', help='Append to existing data')
     parser.add_argument('-U', '--unmanaged', action='store_true', help='Do not automatically create sub-directories')
 
-    parser.add_argument('-t', '--type', help='Dataset type')
+    parser.add_argument('-t', '--type', default='agreement', help='Dataset type')
     parser.add_argument('-n', '--name', help='Dataset name')
+    parser.add_argument('-l', '--language', default=None, help='Dataset language')
     parser.add_argument('-c', '--config', type=util.parse_config, default=None, help='Dataset configuration file')
-    parser.add_argument('-l', '--language', default=None, help='Language')
 
     parser.add_argument('-m', '--mode', default=None, choices=('train', 'validation', 'test', 'tf-records'), help='Mode')
     parser.add_argument('-f', '--files', type=util.parse_tuple, default=None, help='Number of files to split data into')
@@ -64,8 +64,12 @@ if __name__ == "__main__":
     else:
         assert len(parts) in (1, 3, 4)
         assert (args.mode is not None) == (len(parts) == 1)
-        directory = os.path.join(args.directory, dataset.type, dataset.name)
-        specification_path = os.path.join(args.directory, '{}-{}.json'.format(dataset.type, dataset.name))
+        if dataset.language is None:
+            directory = os.path.join(args.directory, dataset.type, dataset.name)
+            specification_path = os.path.join(args.directory, '{}-{}.json'.format(dataset.type, dataset.name))
+        else:
+            directory = os.path.join(args.directory, '{}-{}'.format(dataset.type, dataset.language), dataset.name)
+            specification_path = os.path.join(args.directory, '{}-{}-{}.json'.format(dataset.type, dataset.language, dataset.name))
 
     if len(parts) == 1:
         if args.mode == 'tf-records':

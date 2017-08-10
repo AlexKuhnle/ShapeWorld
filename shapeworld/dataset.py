@@ -11,7 +11,7 @@ from shapeworld.world import World
 from shapeworld.realizers import CaptionRealizer
 
 
-def dataset(dtype=None, name=None, config=None, language=None):
+def dataset(dtype=None, name=None, language=None, config=None):
     # explain type = 'load', 'mixer', possibilities, e.g. with ',', or with ';'?
     assert config is None or isinstance(config, dict) or isinstance(config, str)
     assert dtype is None or isinstance(dtype, str)
@@ -30,8 +30,12 @@ def dataset(dtype=None, name=None, config=None, language=None):
             return DatasetMixer(datasets=config.split(','))
         if load and os.path.isdir(config):
             assert dtype and name
-            directory = os.path.join(config, dtype, name)
-            config = os.path.join(config, '{}-{}.json'.format(dtype, name))
+            if language is None:
+                directory = os.path.join(config, dtype, name)
+                config = os.path.join(config, '{}-{}.json'.format(dtype, name))
+            else:
+                directory = os.path.join(config, '{}-{}'.format(dtype, language), name)
+                config = os.path.join(config, '{}-{}-{}.json'.format(dtype, language, name))
         else:
             assert os.path.isfile(config)
             directory = os.path.dirname(config)
@@ -42,6 +46,8 @@ def dataset(dtype=None, name=None, config=None, language=None):
     if load:
         dataset = LoadedDataset(specification=config)
         assert dtype is None or dtype == dataset.type
+        assert name is None or name == dataset.name
+        assert language is None or language == dataset.language
         return dataset
     if mix:
         dataset = DatasetMixer(**config)
@@ -58,6 +64,11 @@ def dataset(dtype=None, name=None, config=None, language=None):
                 name = config['name']
             else:
                 assert name == config['name']
+        if 'language' in config:
+            if language is None:
+                language = config['language']
+            else:
+                assert language == config['language']
     assert dtype and name
     module = import_module('shapeworld.datasets.{}.{}'.format(dtype, name))
     dclass = module.dataset
@@ -125,6 +136,10 @@ class Dataset(object):
     @property
     def name(self):
         return self.__class__.dataset_name
+
+    @property
+    def language(self):
+        return None
 
     @property
     def values(self):
@@ -354,6 +369,7 @@ class LoadedDataset(Dataset):
         # assert per_part or not part_once
         self._type = specification.pop('type')
         self._name = specification.pop('name')
+        self._language = specification.pop('language')
         self._values = specification.pop('values')
         self.archive = specification.pop('archive', None)
         self.include_model = specification.pop('include_model', False)
@@ -389,6 +405,10 @@ class LoadedDataset(Dataset):
     @property
     def name(self):
         return self._name
+
+    @property
+    def language(self):
+        return self._language
 
     @property
     def values(self):
@@ -575,7 +595,7 @@ class CaptionAgreementDataset(Dataset):
     dataset_type = 'agreement'
     dataset_values = {'world': 'world', 'world_model': 'model', 'caption': 'text', 'caption_model': 'model', 'caption_length': 'int', 'agreement': 'float'}
 
-    def __init__(self, world_generator, world_captioner, caption_size, words, incorrect_world_ratio=None, correct_ratio=None, train_correct_ratio=None, validation_correct_ratio=None, test_correct_ratio=None, caption_realizer=None, realizer_language=None):
+    def __init__(self, world_generator, world_captioner, caption_size, words, incorrect_world_ratio=None, correct_ratio=None, train_correct_ratio=None, validation_correct_ratio=None, test_correct_ratio=None, caption_realizer=None, language=None):
         assert isinstance(caption_size, int) and caption_size > 0
         assert isinstance(words, list) and len(words) > 0
         super(CaptionAgreementDataset, self).__init__(world_size=world_generator.world_size, vectors=dict(caption=caption_size), words=words)
@@ -591,7 +611,7 @@ class CaptionAgreementDataset(Dataset):
             self.caption_realizer = caption_realizer
         else:
             assert caption_realizer is None or isinstance(caption_realizer, str)
-            self.caption_realizer = CaptionRealizer.from_name(name=(caption_realizer or 'dmrs'), language=(realizer_language or 'english'))
+            self.caption_realizer = CaptionRealizer.from_name(name=(caption_realizer or 'dmrs'), language=(language or 'english'))
         self.world_captioner.set_realizer(self.caption_realizer)
 
     def generate_incorrect_world(self, caption, mode):

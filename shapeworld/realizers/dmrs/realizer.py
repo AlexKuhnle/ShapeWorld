@@ -14,13 +14,10 @@ def prepare_grammar(language):
     # unpack grammar if used for the first time
     if not os.path.isfile(os.path.join(directory, 'resources', language + '.dat')):
         assert os.path.isfile(os.path.join(directory, 'resources', language + '.dat.tar.gz'))
-        import tarfile
-        with tarfile.open(os.path.join(directory, 'resources', language + '.dat.tar.gz'), 'r:gz') as filehandle:
-            try:
-                fileinfo = filehandle.getmember(language + '.dat')
-            except KeyError:
-                assert False
-            filehandle.extract(member=fileinfo)
+        import gzip
+        with gzip.open(os.path.join(directory, 'resources', language + '.dat.gz'), 'rb') as gzip_filehandle:
+            with open(os.path.join(directory, 'resources', language + '.dat'), 'wb') as filehandle:
+                filehandle.write(gzip_filehandle.read())
 
 
 int_regex = re.compile(pattern=r'^-?[0-9]+$')
@@ -42,8 +39,8 @@ def parse_string(string):
 class DmrsRealizer(CaptionRealizer):
 
     def __init__(self, language):
+        super(DmrsRealizer, self).__init__(language)
         prepare_grammar(language=language)
-        self.language = language
         directory = os.path.join(os.path.dirname(os.path.realpath(__file__)))
         self.ace_path = os.path.join(directory, 'resources', 'ace')
         self.erg_path = os.path.join(directory, 'resources', language + '.dat')
@@ -81,19 +78,6 @@ class DmrsRealizer(CaptionRealizer):
                 self.modifiers[modtype][value] = modifier
                 self.modifier_by_name[modifier['key']] = (modtype, value)
 
-        # self.nouns = {modtype: dict() for modtype in language['nouns']}
-        # self.noun_by_name = dict()
-        # for modtype, values in language['nouns'].items():
-        #     if modtype == 'empty':
-        #         values['dmrs'] = Dmrs.parse(values['dmrs'])
-        #         self.nouns[modtype] = values
-        #         continue
-        #     for value, noun in values.items():
-        #         value = parse_string(value)
-        #         noun['dmrs'] = Dmrs.parse(noun['dmrs'])
-        #         self.nouns[modtype][value] = noun
-        #         self.noun_by_name[noun['key']] = (modtype, value)
-
         self.relations = {reltype: dict() for reltype in language['relations']}
         self.relation_by_name = dict()
         for reltype, values in language['relations'].items():
@@ -121,8 +105,6 @@ class DmrsRealizer(CaptionRealizer):
                     quantifier['dmrs'] = Dmrs.parse(quantifier['dmrs'])
                     self.quantifiers[qtype][qrange][quantity] = quantifier
                     self.quantifier_by_name[quantifier['key']] = (qtype, qrange, quantity)
-
-        # self.singular_quantifiers = set(language['singular-quantifiers'])
 
         self.propositions = dict()
         self.proposition_by_name = dict()

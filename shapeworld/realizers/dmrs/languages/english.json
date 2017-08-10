@@ -114,25 +114,25 @@
 
         "absolute": {
             "eq": {
-                "1": {"key": "exactly_one", "dmrs": "[quant]:udef_q --> [rstr]:pred x[?s???] <=1= card(1) e <=1= _exactly_x_deg e; :rstr <-1- [body]:node"},
-                "2": {"key": "exactly_two", "dmrs": "[quant]:udef_q --> [rstr]:pred x[?p???] <=1= card(2) e <=1= _exactly_x_deg e; :rstr <-1- [body]:node"},
-                "3": {"key": "exactly_three", "dmrs": "[quant]:udef_q --> [rstr]:pred x[?p???] <=1= card(3) e <=1= _exactly_x_deg e; :rstr <-1- [body]:node"},
-                "4": {"key": "exactly_four", "dmrs": "[quant]:udef_q --> [rstr]:pred x[?p???] <=1= card(4) e <=1= _exactly_x_deg e; :rstr <-1- [body]:node"},
-                "5": {"key": "exactly_five", "dmrs": "[quant]:udef_q --> [rstr]:pred x[?p???] <=1= card(5) e <=1= _exactly_x_deg e; :rstr <-1- [body]:node"}
+                "1": {"key": "exactly_one", "dmrs": "[quant]:udef_q --> [rstr]:pred x[num=s] <=1= card(1) e <=1= _exactly_x_deg e; :rstr <-1- [body]:node"},
+                "2": {"key": "exactly_two", "dmrs": "[quant]:udef_q --> [rstr]:pred x[num=p] <=1= card(2) e <=1= _exactly_x_deg e; :rstr <-1- [body]:node"},
+                "3": {"key": "exactly_three", "dmrs": "[quant]:udef_q --> [rstr]:pred x[num=p] <=1= card(3) e <=1= _exactly_x_deg e; :rstr <-1- [body]:node"},
+                "4": {"key": "exactly_four", "dmrs": "[quant]:udef_q --> [rstr]:pred x[num=p] <=1= card(4) e <=1= _exactly_x_deg e; :rstr <-1- [body]:node"},
+                "5": {"key": "exactly_five", "dmrs": "[quant]:udef_q --> [rstr]:pred x[num=p] <=1= card(5) e <=1= _exactly_x_deg e; :rstr <-1- [body]:node"}
             },
             "geq": {
-                "1": {"key": "a", "dmrs": "[quant]:_a_q --> [rstr]:pred x[?s???] <-1- [body]:node"},
-                "2": {"key": "two", "dmrs": "[quant]:udef_q --> [rstr]:pred x[?p???] <=1= card(2) e; :rstr <-1- [body]:node"},
-                "3": {"key": "three", "dmrs": "[quant]:udef_q --> [rstr]:pred x[?p???] <=1= card(3) e; :rstr <-1- [body]:node"},
-                "4": {"key": "four", "dmrs": "[quant]:udef_q --> [rstr]:pred x[?p???] <=1= card(4) e; :rstr <-1- [body]:node"},
-                "5": {"key": "five", "dmrs": "[quant]:udef_q --> [rstr]:pred x[?p???] <=1= card(5) e; :rstr <-1- [body]:node"}
+                "1": {"key": "a", "dmrs": "[quant]:_a_q --> [rstr]:pred x[num=s] <-1- [body]:node"},
+                "2": {"key": "two", "dmrs": "[quant]:udef_q --> [rstr]:pred x[num=p] <=1= card(2) e; :rstr <-1- [body]:node"},
+                "3": {"key": "three", "dmrs": "[quant]:udef_q --> [rstr]:pred x[num=p] <=1= card(3) e; :rstr <-1- [body]:node"},
+                "4": {"key": "four", "dmrs": "[quant]:udef_q --> [rstr]:pred x[num=p] <=1= card(4) e; :rstr <-1- [body]:node"},
+                "5": {"key": "five", "dmrs": "[quant]:udef_q --> [rstr]:pred x[num=p] <=1= card(5) e; :rstr <-1- [body]:node"}
             },
             "eq-all": {
-                "1": {"key": "the", "dmrs": "[quant]:_the_q --> [rstr]:pred x[?s???] <-1- [body]:node"},
-                "2": {"key": "both", "dmrs": "[quant]:_both_q --> [rstr]:pred x[?p???] <=1= card(2) e; :rstr <-1- [body]:node"},
-                "3": {"key": "the_three", "dmrs": "[quant]:_the_q --> [rstr]:pred x[?p???] <=1= card(3) e; :rstr <-1- [body]:node"},
-                "4": {"key": "the_four", "dmrs": "[quant]:_the_q --> [rstr]:pred x[?p???] <=1= card(4) e; :rstr <-1- [body]:node"},
-                "5": {"key": "the_five", "dmrs": "[quant]:_the_q --> [rstr]:pred x[?p???] <=1= card(5) e; :rstr <-1- [body]:node"}
+                "1": {"key": "the", "dmrs": "[quant]:_the_q --> [rstr]:pred x[num=s] <-1- [body]:node"},
+                "2": {"key": "both", "dmrs": "[quant]:_both_q --> [rstr]:pred x[num=p] <=1= card(2) e; :rstr <-1- [body]:node"},
+                "3": {"key": "the_three", "dmrs": "[quant]:_the_q --> [rstr]:pred x[num=p] <=1= card(3) e; :rstr <-1- [body]:node"},
+                "4": {"key": "the_four", "dmrs": "[quant]:_the_q --> [rstr]:pred x[num=p] <=1= card(4) e; :rstr <-1- [body]:node"},
+                "5": {"key": "the_five", "dmrs": "[quant]:_the_q --> [rstr]:pred x[num=p] <=1= card(5) e; :rstr <-1- [body]:node"}
             }
         },
 
