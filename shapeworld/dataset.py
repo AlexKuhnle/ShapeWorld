@@ -11,7 +11,7 @@ from shapeworld.world import World
 from shapeworld.realizers import CaptionRealizer
 
 
-def dataset(dtype=None, name=None, config=None):
+def dataset(dtype=None, name=None, config=None, language=None):
     # explain type = 'load', 'mixer', possibilities, e.g. with ',', or with ';'?
     assert config is None or isinstance(config, dict) or isinstance(config, str)
     assert dtype is None or isinstance(dtype, str)
@@ -68,6 +68,8 @@ def dataset(dtype=None, name=None, config=None):
         for key, value in dclass.default_config.items():
             if key not in config:
                 config[key] = value
+    if language is not None:
+        config['language'] = language
     dataset = dclass(**config)
     return dataset
 

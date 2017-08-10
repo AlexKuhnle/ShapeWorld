@@ -18,6 +18,7 @@ if __name__ == "__main__":
     parser.add_argument('-t', '--type', help='Dataset type')
     parser.add_argument('-n', '--name', help='Dataset name')
     parser.add_argument('-c', '--config', type=util.parse_config, default=None, help='Dataset configuration file')
+    parser.add_argument('-l', '--language', default=None, help='Language')
 
     parser.add_argument('-m', '--mode', default=None, choices=('train', 'validation', 'test', 'tf-records'), help='Mode')
     parser.add_argument('-f', '--files', type=util.parse_tuple, default=None, help='Number of files to split data into')
@@ -30,7 +31,7 @@ if __name__ == "__main__":
     # parser.add_argument('-v', '--values', default=None, help='Comma-separated list of values to include')
     args = parser.parse_args()
 
-    dataset = dataset(dtype=args.type, name=args.name, config=args.config)
+    dataset = dataset(dtype=args.type, name=args.name, config=args.config, language=args.language)
     sys.stdout.write('{time} {dtype} dataset: {name}\n'.format(time=datetime.now().strftime('%H:%M:%S'), dtype=dataset.type, name=dataset.name))
     sys.stdout.write('         config: {config}\n'.format(config=args.config))
     sys.stdout.flush()
