@@ -46,24 +46,24 @@ Contact: aok25 (at) cam.ac.uk
 
 #### Caption agreement datasets
 
-- [Oneshape](examples/agreement/oneshape/data.html)
-- [Oneshape (simple)](examples/agreement/oneshape_simple/data.html)
-- [Multishape](examples/agreement/multishape/data.html)
-- [Multishape (simple)](examples/agreement/multishape_simple/data.html)
-- [Spatial](examples/agreement/spatial/data.html)
-- [Spatial (simple)](examples/agreement/spatial_simple/data.html)
-- [Relational](examples/agreement/relational/data.html)
-- [Counting](examples/agreement/counting/data.html)
-- [Counting (simple)](examples/agreement/counting_simple/data.html)
-- [Quantification](examples/agreement/quantification/data.html)
-- [Quantification (simple)](examples/agreement/quantification_simple/data.html)
-- [Combination](examples/agreement/combination/data.html)
+- [Oneshape](https://cdn.rawgit.com/AlexKuhnle/ShapeWorld/2932f4dd/examples/agreement/oneshape/data.html)
+- [Oneshape (simple)](https://cdn.rawgit.com/AlexKuhnle/ShapeWorld/2932f4dd/examples/agreement/oneshape_simple/data.html)
+- [Multishape](https://cdn.rawgit.com/AlexKuhnle/ShapeWorld/2932f4dd/examples/agreement/multishape/data.html)
+- [Multishape (simple)](https://cdn.rawgit.com/AlexKuhnle/ShapeWorld/2932f4dd/examples/agreement/multishape_simple/data.html)
+- [Spatial](https://cdn.rawgit.com/AlexKuhnle/ShapeWorld/2932f4dd/examples/agreement/spatial/data.html)
+- [Spatial (simple)](https://cdn.rawgit.com/AlexKuhnle/ShapeWorld/2932f4dd/examples/agreement/spatial_simple/data.html)
+- [Relational](https://cdn.rawgit.com/AlexKuhnle/ShapeWorld/2932f4dd/examples/agreement/relational/data.html)
+- [Counting](https://cdn.rawgit.com/AlexKuhnle/ShapeWorld/2932f4dd/examples/agreement/counting/data.html)
+- [Counting (simple)](https://cdn.rawgit.com/AlexKuhnle/ShapeWorld/2932f4dd/examples/agreement/counting_simple/data.html)
+- [Quantification](https://cdn.rawgit.com/AlexKuhnle/ShapeWorld/2932f4dd/examples/agreement/quantification/data.html)
+- [Quantification (simple)](https://cdn.rawgit.com/AlexKuhnle/ShapeWorld/2932f4dd/examples/agreement/quantification_simple/data.html)
+- [Combination](https://cdn.rawgit.com/AlexKuhnle/ShapeWorld/2932f4dd/examples/agreement/combination/data.html)
 
 #### Classification datasets
 
-- [Oneshape](examples/classification/oneshape/data.html)
-- [Multishape](examples/classification/multishape/data.html)
-- [Countshape](examples/classification/countshape/data.html)
+- [Oneshape](https://cdn.rawgit.com/AlexKuhnle/ShapeWorld/2932f4dd/examples/classification/oneshape/data.html)
+- [Multishape](https://cdn.rawgit.com/AlexKuhnle/ShapeWorld/2932f4dd/examples/classification/multishape/data.html)
+- [Countshape](https://cdn.rawgit.com/AlexKuhnle/ShapeWorld/2932f4dd/examples/classification/countshape/data.html)
 
 
 
