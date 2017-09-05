@@ -7,7 +7,7 @@ import sys
 from shapeworld import dataset, util
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Generate example data')
 
     parser.add_argument('-d', '--directory', help='Directory for generated data (with automatically created sub-directories, unless --unmanaged)')
@@ -21,18 +21,18 @@ if __name__ == "__main__":
     parser.add_argument('-c', '--config', type=util.parse_config, default=None, help='Dataset configuration file')
 
     parser.add_argument('-m', '--mode', default=None, choices=('train', 'validation', 'test', 'tf-records'), help='Mode')
-    parser.add_argument('-f', '--files', type=util.parse_tuple, default=None, help='Number of files to split data into')
+    parser.add_argument('-f', '--files', type=util.parse_tuple, default=(1,), help='Number of files to split data into')
     parser.add_argument('-i', '--instances', type=util.parse_int_with_factor, default=100, help='Number of instances per file')
 
     parser.add_argument('-p', '--pixel-noise', type=float, default=0.0, help='Pixel noise range')
     parser.add_argument('-M', '--include-model', action='store_true', help='Include world/caption model (as json file)')
     parser.add_argument('-C', '--concatenate-images', action='store_true', help='Concatenate images per part into one image file')
-    parser.add_argument('-S', '--captioner-statistics', action='store_true', help='Collect statistical data of captioner')
+    parser.add_argument('-H', '--html', action='store_true', help='Create HTML file showing the generated data')
     # parser.add_argument('-v', '--values', default=None, help='Comma-separated list of values to include')
     args = parser.parse_args()
 
-    dataset = dataset(dtype=args.type, name=args.name, config=args.config, language=args.language)
-    sys.stdout.write('{time} {dtype} dataset: {name}\n'.format(time=datetime.now().strftime('%H:%M:%S'), dtype=dataset.type, name=dataset.name))
+    dataset = dataset(dtype=args.type, name=args.name, language=args.language, config=args.config)
+    sys.stdout.write('{time} {dataset}\n'.format(time=datetime.now().strftime('%H:%M:%S'), dataset=dataset))
     sys.stdout.write('         config: {config}\n'.format(config=args.config))
     sys.stdout.flush()
 
@@ -50,13 +50,10 @@ if __name__ == "__main__":
     if args.concatenate_images:
         specification['num_concat_worlds'] = args.instances
 
-    if args.files is None:
-        parts = (1, 1, 1) if args.mode is None else (1,)
-    else:
-        parts = args.files
+    parts = args.files
+    args.unmanaged = args.unmanaged or (args.mode is None and len(parts) == 1)
     if args.unmanaged:
         assert len(parts) == 1
-        assert args.mode is not None
         directory = args.directory
         modes = (args.mode,)
         directories = (args.directory,)
@@ -100,8 +97,6 @@ if __name__ == "__main__":
         for subdir in directories:
             for root, dirs, files in os.walk(subdir):
                 if root == subdir:
-                    if 'captioner_statistics.csv' in files:
-                        files.remove('captioner_statistics.csv')
                     if dirs:
                         assert all(d[:4] == 'part' for d in dirs)
                         start_part += (max(int(d[4:]) for d in dirs),)
@@ -117,17 +112,17 @@ if __name__ == "__main__":
         start_part = (0,) * len(directories)
         if not args.unmanaged and os.path.isdir(directory):
             shutil.rmtree(directory)
-        os.makedirs(directory)
+            os.makedirs(directory)
+        elif not os.path.isdir(directory):
+            os.makedirs(directory)
         if not args.unmanaged:
             with open(specification_path, 'w') as filehandle:
                 filehandle.write(json.dumps(specification))
         if len(directories) > 1:
             for subdir in directories:
-                os.mkdir(subdir)
+                os.makedirs(subdir)
 
     for mode, directory, num_parts, start, tf_records_flag in zip(modes, directories, parts, start_part, tf_records_flags):
-        if args.captioner_statistics:
-            dataset.collect_captioner_statistics(path=os.path.join(directory, 'captioner_statistics.csv'), append=args.append)
         sys.stdout.write('{time} generate {dtype} {name}{mode} data...\n'.format(time=datetime.now().strftime('%H:%M:%S'), dtype=dataset.type, name=dataset.name, mode=(' ' + mode if mode else '')))
         sys.stdout.write('         0%  0/{parts}  (time per part: n/a)'.format(parts=num_parts))
         sys.stdout.flush()
@@ -139,17 +134,31 @@ if __name__ == "__main__":
                 path = os.path.join(directory, 'part{}'.format(start + part))
             generated = dataset.generate(n=args.instances, mode=mode, noise_range=args.pixel_noise, include_model=args.include_model, alternatives=True)
             if generated is None:
-                pass
+                assert False
             elif tf_records_flag:
                 tf_util.write_records(dataset=dataset, records=generated, path=path)
             else:
-                dataset.serialize(path=path, generated=generated, archive=args.archive, concat_worlds=args.concatenate_images)
+                dataset.serialize(path=path, generated=generated, archive=args.archive, concat_worlds=args.concatenate_images, html=args.html)
+            # if args.html and dataset.type == 'agreement':
+            #     captions = generated['caption']
+            #     agreements = generated['agreement']
+            #     html_content = list()
+            #     for n, (caption, agreement) in enumerate(zip(captions, agreements)):
+            #         html_content.append('<div class="{agreement}"><div class="world"><img src="{world}.bmp" alt="{world}.bmp"></div><div class="caption">{caption}</div></div>'.format(
+            #             agreement=('correct' if agreement == 1.0 else 'incorrect'),
+            #             world=('world-' + str(n)),
+            #             caption=' '.join(str(c) for c in caption)
+            #         ))
+            #     with open(os.path.join(path, 'data.html'), 'w') as filehandle:
+            #         filehandle.write('<!DOCTYPE html><html><head><style>.data{{width: 100%; height: 100%;}} .correct{{width: 100%; height: 64px; margin-top: 1px; margin-bottom: 1px; background-color: #77FF77;}} .incorrect{{width: 100%; height: 64px; margin-top: 1px; margin-bottom: 1px; background-color: #FF7777;}} .world{{display: inline-block; vertical-align: middle;}} .caption{{display: inline-block; vertical-align: middle; margin-left: 10px;}}</style><title>{dtype} {name}</title></head><body><div class="data">{data}</div></body></html>'.format(
+            #             dtype=dataset.type,
+            #             name=dataset.name,
+            #             data=''.join(html_content)
+            #         ))
             after = datetime.now()
             sys.stdout.write('\r         {completed:.0f}%  {part}/{parts}  (time per part: {duration})'.format(completed=((part) * 100 / num_parts), part=part, parts=num_parts, duration=str(after - before).split('.')[0]))
             sys.stdout.flush()
         sys.stdout.write('\n')
         sys.stdout.flush()
-        if args.captioner_statistics:
-            dataset.close_captioner_statistics()
     sys.stdout.write('{time} data generation completed!\n'.format(time=datetime.now().strftime('%H:%M:%S')))
     sys.stdout.flush()

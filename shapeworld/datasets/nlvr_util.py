@@ -16,7 +16,6 @@ def nlvr(directory, mode):
         world_models, description, agreement = descriptions[identifier]
         yield worlds, world_models, description, agreement
     assert all(count == 0 for count in counter.values())
-    print('NLVR finished')
 
 
 def images_iter(directory, mode):
@@ -50,11 +49,8 @@ def descriptions_iter(directory, mode):
             assert identifier[-2:] in ('-0', '-1', '-2', '-3')
             world_model1, world_model2, world_model3 = description_dict['structured_rep']
             description = description_dict['sentence'].lower()
-            if description[-1] == '.' and description[-2] != ' ':
-                description = description[:-1] + ' .'
-            else:
-                assert description[-1] != ' '
-                description += ' .'
+            if description[-1] != '.':
+                description += '.'
             agreement = description_dict['label']
             assert agreement in ('true', 'false')
             agreement = (agreement == 'true')

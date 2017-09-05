@@ -18,6 +18,9 @@ class Shape(object):
         assert isinstance(size, Point) and 0.0 < size < 1.0
         self.size = size / 2.0
 
+    def __eq__(self, other):
+        raise NotImplementedError
+
     @property
     def name(self):
         raise NotImplementedError
@@ -356,7 +359,7 @@ class SemicircleShape(Shape):
 
     @property
     def area(self):
-        return pi * self.size.x * self.size.y / 2.0
+        return pi * self.size.x * self.size.y
 
     def polygon(self):
         curve_size = (1.0 - cos45) * self.size.x

@@ -1,7 +1,7 @@
 from models.TFMacros.tf_macros import *
 
 
-def model(inputs, **parameters):
+def model(model, inputs, **parameters):
     world = (
         Input(name='world', shape=parameters['world_shape'], tensor=inputs.get('world')) >>
         ConvolutionalNet(sizes=(16, 32, 64), depths=(3, 3, 3)) >>

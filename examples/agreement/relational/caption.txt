@@ -1,100 +1,100 @@
-a shape is bigger than a shape .
-a cyan cross is closest to a pentagon .
-a yellow shape is smaller than a blue triangle .
-a blue shape is farther from a white shape than a red cross .
-a blue ellipse is farther from a cyan square than a shape .
-a green semicircle is farther from a blue ellipse than a cyan triangle .
-a yellow ellipse is farther from a white circle than a white circle .
-a shape is closer to a blue shape than a shape .
-a magenta ellipse is to the left of a cross .
-an ellipse is farther from a yellow circle than a cyan ellipse .
-a blue square is darker than a magenta ellipse .
+a green shape is to the right of a semicircle .
+a white shape is above a red shape .
+a blue rectangle is farther from a semicircle than a red shape .
+a blue ellipse is behind a cyan rectangle .
+a semicircle is closest to a square .
+a blue cross is above a yellow rectangle .
+a magenta triangle is in front of a blue shape .
+a blue shape is closer to a yellow triangle than a circle .
+a red rectangle is smaller than a magenta square .
+a cyan semicircle is smaller than a blue shape .
+a cyan cross is darker than a green cross .
+a blue square is darker than a red shape .
+a green square is darker than a red triangle .
+a cyan cross is in front of a blue circle .
+a green rectangle is behind a yellow cross .
+a square is bigger than a cyan shape .
+a red square is below a magenta square .
+a semicircle is lighter than a semicircle .
+a red rectangle is behind a triangle .
+a white square is in front of a yellow shape .
+a blue shape is bigger than a circle .
+a red semicircle is bigger than a magenta circle .
+a triangle is to the right of a cyan square .
+a white circle is behind a blue shape .
+a green pentagon is behind a yellow shape .
+a red shape is in front of a blue square .
+a magenta semicircle is closest to a triangle .
+a white rectangle is lighter than a white circle .
+a green shape is to the right of a magenta shape .
+a semicircle is to the left of a rectangle .
+a yellow shape is smaller than a blue pentagon .
+a blue rectangle is darker than a magenta shape .
+a triangle is closest to a cyan shape .
+a cross is to the right of a cyan ellipse .
+a blue ellipse is to the right of a magenta rectangle .
+a cross is closest to a cyan square .
+a white shape is lighter than a white triangle .
+a red shape is behind a pentagon .
+a blue cross is lighter than a red shape .
+a circle is darker than a magenta ellipse .
+a cyan circle is above a white circle .
+a rectangle is to the right of a cyan triangle .
+a semicircle is darker than a cyan pentagon .
+a white triangle is smaller than a blue shape .
+a cyan shape is closer to an ellipse than a blue ellipse .
+a blue cross is smaller than a green square .
+a green semicircle is darker than an ellipse .
+a red cross is in front of a red pentagon .
+a green shape is bigger than a red shape .
+a green shape is smaller than a yellow shape .
+a green circle is lighter than a magenta shape .
+a yellow shape is above a semicircle .
+a cross is bigger than a green shape .
+a magenta circle is lighter than a blue cross .
+a magenta rectangle is lighter than a square .
+a pentagon is below a blue pentagon .
+a green circle is behind a yellow triangle .
+a magenta semicircle is darker than a blue rectangle .
+a cross is bigger than a red cross .
+a yellow shape is smaller than a cross .
+a white rectangle is closer to a yellow rectangle than a magenta shape .
+a cyan pentagon is farther from a yellow shape than a yellow cross .
+a semicircle is above a circle .
+a cyan shape is above a cyan triangle .
+a cyan rectangle is darker than a yellow rectangle .
+a magenta triangle is closest to a white shape .
+a cyan pentagon is smaller than a blue shape .
+a yellow shape is in front of a magenta shape .
+a magenta square is above a cross .
+a yellow shape is bigger than a cross .
 a magenta shape is below a magenta shape .
-a square is bigger than a blue shape .
-a blue semicircle is closer to a white shape than a blue semicircle .
-a cyan circle is farther from a shape than a shape .
-a blue ellipse is closest to a yellow triangle .
-a shape is smaller than a shape .
-a shape is farther from a cross than a blue shape .
-a pentagon is bigger than a magenta semicircle .
-a white square is bigger than a yellow cross .
-a yellow shape is smaller than a shape .
-a shape is smaller than a shape .
-a blue triangle is closer to a shape than a yellow triangle .
-a red shape is darker than a yellow circle .
-a blue shape is smaller than a square .
-a blue shape is closer to a blue pentagon than a blue pentagon .
-a white square is darker than a semicircle .
-a shape is closer to a yellow semicircle than a blue circle .
-a red cross is closest to a shape .
-a shape is below a cyan ellipse .
-a red cross is farther from a rectangle than a shape .
-a shape is farther from a magenta semicircle than a shape .
-a circle is smaller than a yellow cross .
-a white shape is darker than a red shape .
-a white shape is farthest from a rectangle .
-a white semicircle is closest to a shape .
-a blue triangle is farther from a blue ellipse than a magenta triangle .
-a blue rectangle is closer to a cyan rectangle than a circle .
-a blue ellipse is lighter than a red shape .
-a magenta shape is above a red ellipse .
-a semicircle is smaller than a pentagon .
-a magenta cross is farther from a circle than a magenta rectangle .
-a blue shape is bigger than a white shape .
-a rectangle is bigger than a green rectangle .
-a circle is lighter than a cyan cross .
-a green pentagon is smaller than a cyan cross .
-a red shape is bigger than a yellow shape .
-a shape is farther from a rectangle than a yellow pentagon .
-a magenta triangle is darker than a cyan shape .
-a yellow pentagon is smaller than a square .
-a shape is below a white ellipse .
-a magenta triangle is closer to a cyan semicircle than a magenta rectangle .
-a yellow shape is smaller than a magenta square .
-a magenta circle is above a magenta square .
-a shape is farthest from a yellow pentagon .
-a shape is bigger than a green pentagon .
-a blue rectangle is farther from a triangle than a red rectangle .
-a magenta circle is closer to a red shape than a white circle .
-a magenta semicircle is farther from a triangle than a triangle .
-a shape is darker than a yellow rectangle .
-a shape is below a magenta shape .
-a red square is to the right of a cyan pentagon .
-a white shape is bigger than a semicircle .
-a green shape is farther from a magenta semicircle than a rectangle .
-a green ellipse is closer to a white cross than a blue circle .
-a white semicircle is closer to a shape than a yellow pentagon .
-a shape is bigger than a shape .
-a shape is smaller than a blue semicircle .
-a red square is farther from a white shape than a yellow pentagon .
-a red circle is smaller than a cyan shape .
-a green triangle is closer to a yellow semicircle than a yellow semicircle .
-a green triangle is closer to a blue shape than a shape .
-a magenta square is lighter than a triangle .
-a shape is farther from a white cross than a rectangle .
-a shape is bigger than a cyan rectangle .
-a yellow circle is bigger than a cyan cross .
-a red shape is lighter than a cyan square .
-a magenta circle is closer to a shape than a cyan circle .
-a magenta ellipse is lighter than a shape .
-a shape is darker than a rectangle .
-a cyan shape is darker than a yellow shape .
-a blue ellipse is farther from a cross than a red square .
-a cyan cross is lighter than a yellow square .
-a yellow rectangle is to the left of a circle .
-a green circle is closer to a red shape than a shape .
-a red semicircle is farthest from a blue shape .
-a cross is farthest from a shape .
-a shape is to the left of a blue cross .
-a semicircle is closer to a yellow semicircle than a shape .
-a magenta shape is farther from a red pentagon than a blue triangle .
-a blue ellipse is above an ellipse .
-a cyan ellipse is smaller than a white rectangle .
-a cyan cross is farthest from a shape .
-a triangle is bigger than a triangle .
-a pentagon is farther from a cyan rectangle than a cyan rectangle .
-a white shape is smaller than a magenta rectangle .
-a cross is darker than a blue shape .
-a yellow pentagon is farther from a red circle than a green pentagon .
-a square is farther from a white semicircle than a white triangle .
-a blue rectangle is darker than a shape .
+a green square is smaller than a red shape .
+a circle is lighter than a magenta circle .
+a yellow cross is smaller than a blue pentagon .
+a green shape is lighter than a magenta shape .
+a magenta circle is behind a blue shape .
+a red semicircle is lighter than a cyan circle .
+an ellipse is farther from a red pentagon than a yellow circle .
+a magenta square is darker than a magenta shape .
+a cyan cross is to the left of a triangle .
+a white shape is above a magenta ellipse .
+a white shape is bigger than a cyan shape .
+a magenta rectangle is below a pentagon .
+a magenta shape is in front of a cyan shape .
+a magenta ellipse is darker than a green semicircle .
+a white shape is below a square .
+a cyan pentagon is farther from a square than a blue triangle .
+a green cross is below a rectangle .
+a white square is above a semicircle .
+a red shape is in front of a blue square .
+a red square is darker than a green shape .
+a blue rectangle is to the right of a cyan cross .
+a semicircle is below a rectangle .
+a blue cross is smaller than a cyan shape .
+a triangle is bigger than an ellipse .
+a red semicircle is closest to a white shape .
+a cyan pentagon is closer to a blue circle than a magenta pentagon .
+a white circle is closest to a yellow cross .
+a green triangle is bigger than a green pentagon .
+a yellow shape is closer to a green shape than a red shape .

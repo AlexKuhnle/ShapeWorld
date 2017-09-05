@@ -10,9 +10,15 @@ class Predicate(Clause):
         raise NotImplementedError
 
     def agreement(self, entities):
-        if self.agreeing_entities(entities):
+        num_entities = len(entities)
+        num_agreeing = len(self.agreeing_entities(entities))
+        num_disagreeing = len(self.disagreeing_entities(entities))
+
+        if num_agreeing == num_entities:
+            return 2.0
+        elif num_agreeing > 0:
             return 1.0
-        elif len(self.disagreeing_entities(entities)) == len(entities):
-            return 0.0
+        elif num_disagreeing == num_entities:
+            return -1.0
         else:
-            return 0.5
+            return 0.0

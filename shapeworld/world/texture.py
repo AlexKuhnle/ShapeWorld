@@ -5,6 +5,9 @@ class Texture(object):
 
     __slots__ = ()
 
+    def __eq__(self, other):
+        raise NotImplementedError
+
     @property
     def name(self):
         raise NotImplementedError

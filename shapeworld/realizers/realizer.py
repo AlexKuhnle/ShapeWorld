@@ -3,12 +3,11 @@ from importlib import import_module
 
 class CaptionRealizer(object):
 
-    modifiers = None
-    relations = None
-    quantifiers = None
-
     def __init__(self, language):
         self.language = language
+        self.attributes = None
+        self.relations = None
+        self.quantifiers = None
 
     @staticmethod
     def from_name(name, language):

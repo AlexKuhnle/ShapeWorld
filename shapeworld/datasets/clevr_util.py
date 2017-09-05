@@ -41,7 +41,6 @@ def clevr(directory, mode, parts=None):
         assert False
     except StopIteration:
         pass
-    print('CLEVR finished')
 
 
 def images_iter(directory, mode, parts=None):
@@ -144,17 +143,8 @@ def questions_iter(directory, mode, parts=None):
                 image_index += 1
                 assert image_index == question_dict['image_index']
             question = question_dict['question'].lower()
-            if question[-1] == '?':
-                assert question[-2] != ' '
-                question = question[:-1] + ' ?'
-            else:
-                assert question[-1] != ' '
-                question += ' ?'
-            if ';' in question:
-                index = question.index(';')
-                assert question[index + 1] == ' '
-                assert question[index - 1] != ' '
-                question = question[:index] + ' ' + question[index:]
+            if question[-1] != '?':
+                question += '?'
             if mode == 'test':
                 question_model = dict()
                 answer = 'UNKNOWN'

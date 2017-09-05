@@ -6,65 +6,55 @@ from shapeworld.captioners import WorldCaptioner
 
 class ConjunctionCaptioner(WorldCaptioner):
 
-    # modes
+    # incorrect modes
     # 0: correct (both correct)
-    # 1: incorrect (first incorrect)
-    # 2: incorrect (second incorrect)
+    # 1: incorrect (second incorrect)
+    # 2: incorrect (first incorrect)
     # 3: incorrect (both incorrect)
 
-    name = 'conjunction'
-    statistics_header = 'correct,captioner1,captioner2,mode'
-
-    def __init__(self, captioners, incorrect_distribution=None):
-        super(ConjunctionCaptioner, self).__init__()
-        self.captioners = list(captioners)
-        self.incorrect_distribution = util.cumulative_distribution(incorrect_distribution or [1, 1, 1])
+    def __init__(self, captioners, incorrect_distribution=None, trivial_acceptance_rate=None):
+        super(ConjunctionCaptioner, self).__init__(internal_captioners=captioners, trivial_acceptance_rate=trivial_acceptance_rate)
+        self.incorrect_distribution = util.cumulative_distribution(util.value_or_default(incorrect_distribution, [1, 1, 1]))
 
     def set_realizer(self, realizer):
         if not super(ConjunctionCaptioner, self).set_realizer(realizer=realizer):
             return False
         assert 'conjunction' in realizer.propositions
-        for captioner in self.captioners:
-            captioner.set_realizer(realizer=realizer)
         return True
 
-    def caption_world(self, entities, correct):
-        captioner1 = choice(self.captioners)
-        captioner2 = choice(self.captioners)
+    def sample_values(self, mode, correct):
+        super(ConjunctionCaptioner, self).sample_values(mode=mode, correct=correct)
 
-        if correct:
-            mode = 0
-        else:
-            mode = 1 + util.sample(self.incorrect_distribution)
+        self.captioner1 = choice(self.internal_captioners)
+        self.captioner2 = choice(self.internal_captioners)
+        self.incorrect_mode = 0 if correct else 1 + util.sample(self.incorrect_distribution)
 
-        if (mode == 0) != correct:
+        if self.incorrect_mode == 0:  # both correct
+            self.captioner1.sample_values(mode=mode, correct=True)
+            self.captioner2.sample_values(mode=mode, correct=True)
+        elif self.incorrect_mode == 1:  # second incorrect
+            self.captioner1.sample_values(mode=mode, correct=True)
+            self.captioner2.sample_values(mode=mode, correct=False)
+        elif self.incorrect_mode == 2:  # first incorrect
+            self.captioner1.sample_values(mode=mode, correct=False)
+            self.captioner2.sample_values(mode=mode, correct=True)
+        elif self.incorrect_mode == 3:  # both incorrect
+            self.captioner1.sample_values(mode=mode, correct=False)
+            self.captioner2.sample_values(mode=mode, correct=False)
+
+    def model(self):
+        return util.merge_dicts(
+            dict1=super(ConjunctionCaptioner, self).model(),
+            dict2=dict(incorrect_mode=self.incorrect_mode, captioner1=self.captioner1.model(), captioner2=self.captioner2.model())
+        )
+
+    def caption_world(self, entities, relevant_entities):
+        clause1 = self.captioner1.caption_world(entities=entities, relevant_entities=relevant_entities)
+        if clause1 is None:
             return None
 
-        for _ in range(ConjunctionCaptioner.MAX_ATTEMPTS):
+        clause2 = self.captioner2.caption_world(entities=entities, relevant_entities=relevant_entities)
+        if clause2 is None:
+            return None
 
-            if mode == 0:  # both correct
-                clause1 = captioner1.caption_world(entities=entities, correct=True)
-                clause2 = captioner2.caption_world(entities=entities, correct=True)
-
-            elif mode == 1:  # first incorrect
-                clause1 = captioner1.caption_world(entities=entities, correct=False)
-                clause2 = captioner2.caption_world(entities=entities, correct=True)
-
-            elif mode == 2:  # second incorrect
-                clause1 = captioner1.caption_world(entities=entities, correct=True)
-                clause2 = captioner2.caption_world(entities=entities, correct=False)
-
-            elif mode == 3:  # both incorrect
-                clause1 = captioner1.caption_world(entities=entities, correct=False)
-                clause2 = captioner2.caption_world(entities=entities, correct=False)
-
-            if clause1 is None or clause2 is None:
-                continue
-
-            proposition = Proposition(proptype='conjunction', clauses=(clause1, clause2))
-
-            if proposition.agreement(entities=entities) == float(correct):
-                self.report(correct, str(captioner1), str(captioner2), mode)
-                return proposition
-
-        return None
+        return Proposition(proptype='conjunction', clauses=(clause1, clause2))

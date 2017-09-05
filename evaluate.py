@@ -7,7 +7,7 @@ from shapeworld import dataset, util
 from models.TFMacros.tf_macros import Model
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Evaluate')
 
     parser.add_argument('-t', '--type', help='Dataset type')
@@ -17,20 +17,22 @@ if __name__ == "__main__":
     parser.add_argument('-p', '--pixel-noise', type=float, default=0.1, help='Pixel noise range')
 
     parser.add_argument('-m', '--model', help='Model')
-    parser.add_argument('-r', '--learning-rate', type=float, default=0.0001, help='Learning rate')
+    parser.add_argument('-r', '--learning-rate', type=float, default=0.001, help='Learning rate')
     parser.add_argument('-w', '--weight-decay', type=float, default=0.0, help='Weight decay')
     parser.add_argument('-d', '--dropout-rate', type=float, default=0.0, help='Dropout rate')
     parser.add_argument('-y', '--hyperparameters', type=util.parse_config, default=None, help='Model hyperparameters')
-    parser.add_argument('-s', '--save-file', default=None, help='Model file storing the model parameters')
 
     parser.add_argument('-i', '--iterations', type=util.parse_int_with_factor, default=1000, help='Iterations')
     parser.add_argument('-b', '--batch-size', type=util.parse_int_with_factor, default=128, help='Batch size')
-    parser.add_argument('-f', '--evaluation-frequency', type=util.parse_int_with_factor, default=100, help='Evaluation frequency')
     parser.add_argument('-e', '--evaluation-size', type=util.parse_int_with_factor, default=1024, help='Evaluation batch size')
-    parser.add_argument('-o', '--report-file', default=None, help='CSV file reporting the evaluation results')
+    parser.add_argument('-f', '--evaluation-frequency', type=util.parse_int_with_factor, default=100, help='Evaluation frequency')
     parser.add_argument('-R', '--restore', action='store_true', help='Restore model (requires --model-file)')
     parser.add_argument('-E', '--evaluate', action='store_true', help='Evaluate model without training (requires --model-file)')
     parser.add_argument('-T', '--tf-records', action='store_true', help='TensorFlow queue with records (not compatible with --evaluate)')
+
+    parser.add_argument('--model-file', default=None, help='TensorFlow model file, storing the model computation graph and parameters')
+    parser.add_argument('--summary-file', default=None, help='TensorFlow summary file for TensorBoard, reporting variable values etc')
+    parser.add_argument('--report-file', default=None, help='CSV file reporting the evaluation results')
 
     parser.add_argument('-v', '--verbosity', type=int, choices=(0, 1, 2), default=1, help='Verbosity (0: nothing, 1: default, 2: TensorFlow)')
 
@@ -50,16 +52,18 @@ if __name__ == "__main__":
         from shapeworld import tf_util
         assert not args.evaluate
 
-    # information about dataset and model
-    if args.verbosity >= 1:
-        sys.stdout.write('{} {} dataset: {}\n'.format(datetime.now().strftime('%H:%M:%S'), args.type, args.name))
-        sys.stdout.write('         config: {}\n'.format(args.config))
-        sys.stdout.write('         {} model: {}\n'.format(args.type, args.model))
-        sys.stdout.write('         parameters: {}\n'.format(args.hyperparameters))
-        sys.stdout.flush()
-
     # dataset
     dataset = dataset(dtype=args.type, name=args.name, language=args.language, config=args.config)
+
+    # information about dataset and model
+    if args.verbosity >= 1:
+        sys.stdout.write('{time} {dataset}\n'.format(time=datetime.now().strftime('%H:%M:%S'), dataset=dataset))
+        sys.stdout.write('         config: {}\n'.format(args.config))
+        sys.stdout.write('         {} model: {}\n'.format(args.type, args.model))
+        sys.stdout.write('         hyperparameters: {}\n'.format(args.hyperparameters))
+        sys.stdout.flush()
+
+    # tf records
     if args.tf_records:
         inputs = tf_util.batch_records(dataset=dataset, batch_size=args.batch_size, noise_range=args.pixel_noise)
     else:
@@ -118,10 +122,14 @@ if __name__ == "__main__":
             if value != 'iteration':
                 iteration_start = int(value) + 1
     else:
-        if args.save_file:
-            model_file_dir = os.path.dirname(args.save_file)
+        if args.model_file:
+            model_file_dir = os.path.dirname(args.model_file)
             if not os.path.isdir(model_file_dir):
                 os.makedirs(model_file_dir)
+        if args.summary_file:
+            summary_file_dir = os.path.dirname(args.summary_file)
+            if not os.path.isdir(summary_file_dir):
+                os.makedirs(summary_file_dir)
         if args.report_file:
             report_file_dir = os.path.dirname(args.report_file)
             if not os.path.isdir(report_file_dir):
@@ -136,10 +144,15 @@ if __name__ == "__main__":
                 filehandle.write('\n')
     iteration_end = iteration_start + args.iterations - 1
 
-    with Model(model_file=args.save_file, name=args.model) as model:
+    with Model(name=args.model, learning_rate=args.learning_rate, weight_decay=args.weight_decay, model_file=args.model_file, summary_file=args.summary_file) as model:
         module = import_module('models.{}.{}'.format(args.type, args.model))
-        module.model(inputs=inputs, **parameters)
+        module.model(model=model, inputs=inputs, **parameters)
         model.finalize(restore=(args.restore or args.evaluate))
+
+        if args.verbosity >= 1:
+            sys.stdout.write('         parameters: {:,}\n'.format(model.num_parameters))
+            sys.stdout.write('         bytes: {:,}\n'.format(model.num_bytes))
+            sys.stdout.flush()
 
         if args.evaluate:
             if args.verbosity >= 1:

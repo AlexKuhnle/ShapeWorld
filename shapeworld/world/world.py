@@ -1,3 +1,4 @@
+from random import choice, random
 import numpy as np
 from PIL import Image
 from shapeworld.util import toposort, Point
@@ -8,16 +9,21 @@ from shapeworld.world.texture import SolidTexture
 
 class World(Entity):
 
-    __slots__ = ('size', 'entities', 'shape', 'color', 'texture', 'center', 'rotation', 'rotation_sin', 'rotation_cos', 'topleft', 'bottomright')
+    __slots__ = ('size', 'entities', 'shape', 'color', 'texture', 'center', 'rotation', 'rotation_sin', 'rotation_cos', 'relative_topleft', 'relative_bottomright', 'topleft', 'bottomright')
 
     def __init__(self, size, color):
         assert isinstance(size, int) and size > 0
         assert isinstance(color, str) and color in Color.colors
         super(World, self).__init__(WorldShape(), Color(color, Color.colors[color], 0.0), SolidTexture(), Point.half, 0.0)
+        self.relative_topleft = -Point.half
+        self.relative_bottomright = Point.half
         self.topleft = Point.zero
         self.bottomright = Point.one
         self.size = Point(size, size)
         self.entities = []
+
+    def __eq__(self, other):
+        raise NotImplementedError
 
     def model(self):
         return {'size': self.size.x, 'color': self.color.model(), 'entities': [entity.model() for entity in self.entities]}
@@ -49,23 +55,30 @@ class World(Entity):
         for entity in self.entities:
             entity.draw(world_array=world_array, world_size=world_size)
 
-    def random_location(self):
-        return Point.random_instance(Point.zero, Point.one)
+    def random_location(self, provoke_collision=False):
+        if provoke_collision and self.entities:
+            entity = choice(self.entities)
+            angle = Point.from_angle(angle=random())
+            return entity.center + angle * entity.shape.size * (0.75 + random())
+        else:
+            return Point.random_instance(Point.zero, Point.one)
 
     def add_entity(self, entity, boundary_tolerance=0.0, collision_tolerance=0.0):
-        if boundary_tolerance:
-            if self.not_collides(entity, ratio=True, resolution=self.size) > boundary_tolerance:
+        entity.id = len(self.entities)
+        if boundary_tolerance > 0.0:
+            if self.not_collides(entity, ratio=True, resolution=self.size)[1] > boundary_tolerance:
                 return False
         else:
             if self.not_collides(entity, resolution=self.size):
                 return False
-        if collision_tolerance:
-            if any(entity.collides(other, ratio=True, resolution=self.size) > collision_tolerance for other in self.entities):
-                return False
+        if collision_tolerance > 0.0:
+            for other in self.entities:
+                collision = entity.collides(other, ratio=True, symmetric=True, resolution=self.size)
+                if collision > collision_tolerance or (collision > 0.0 and entity.color.name == other.color.name):
+                    return False
         else:
             if any(entity.collides(other, resolution=self.size) for other in self.entities):
                 return False
-        entity.id = len(self.entities)
         self.entities.append(entity)
         return True
 
@@ -78,11 +91,13 @@ class World(Entity):
                 c1, c2 = entity1.collides(entity2, ratio=True, symmetric=False, resolution=self.size)
                 if c2 > c1:
                     contained[n].add(k)
-                elif c1 > c2:
+                elif c1 > c2 or c1 != 0.0:
                     contained[k].add(n)
-        self.entities = [self.entities[n] for n in toposort(partial_order=contained)]
+        sort_indices = toposort(partial_order=contained)
+        self.entities = [self.entities[n] for n in sort_indices]
         for n, entity in enumerate(self.entities):
             entity.id = n
+            entity.collisions = {sort_indices.index(i): c for i, c in entity.collisions.items()}
 
     def get_array(self, noise_range=None):
         color = self.color.get_color()
@@ -93,11 +108,11 @@ class World(Entity):
         self.draw(world_array=world_array, world_size=self.size)
         if noise_range is not None and noise_range > 0.0:
             noise = np.random.normal(loc=0.0, scale=noise_range, size=(self.size.y, self.size.x, 3))
-            mask = (noise < -noise_range) + (noise > noise_range)
+            mask = (noise < -2.0 * noise_range) + (noise > 2.0 * noise_range)
             while np.any(a=mask):
                 noise -= mask * noise
                 noise += mask * np.random.normal(loc=0.0, scale=noise_range, size=(self.size.y, self.size.x, 3))
-                mask = (noise < -noise_range) + (noise > noise_range)
+                mask = (noise < -2.0 * noise_range) + (noise > 2.0 * noise_range)
             world_array += noise
             np.clip(world_array, a_min=0.0, a_max=1.0, out=world_array)
         return world_array

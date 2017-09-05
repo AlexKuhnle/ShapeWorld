@@ -1,100 +1,100 @@
-both white pentagons are white .
-exactly two shapes are darker than a shape .
-a red shape is a semicircle .
-three squares are a square .
-two triangles are yellow .
-a pentagon is magenta .
-a green cross is darker than a shape .
-exactly one green cross is closest to a red shape .
-exactly four magenta ellipses are magenta .
-the four shapes are to the left of a cyan pentagon .
-five green circles are bigger than a magenta shape .
-exactly five shapes are farther from a magenta rectangle than a blue ellipse .
-the five triangles are darker than a green triangle .
-a red circle is to the right of a magenta pentagon .
-four shapes are lighter than a circle .
-two red rectangles are to the right of a yellow rectangle .
-the semicircle is farther from a yellow rectangle than a shape .
-exactly one white cross is darker than a blue cross .
-the circle is a circle .
-the three circles are closer to a cyan circle than a white shape .
-both semicircles are to the left of a green shape .
-exactly one magenta square is bigger than a yellow semicircle .
-the magenta triangle is a triangle .
-four shapes are a shape .
-three shapes are a shape .
-exactly one cyan triangle is bigger than a cyan triangle .
-a rectangle is bigger than a shape .
-exactly one pentagon is a blue pentagon .
-four yellow ellipses are bigger than a yellow ellipse .
-exactly four shapes are a magenta pentagon .
-exactly two blue triangles are a triangle .
-exactly two magenta pentagons are farther from a shape than a magenta shape .
-a shape is closer to a shape than a cross .
-both green shapes are darker than a red circle .
-two red shapes are above a red shape .
-exactly three magenta triangles are lighter than a green triangle .
-three white semicircles are a shape .
-three triangles are darker than a shape .
-the blue shape is smaller than a red square .
-a yellow ellipse is closer to a yellow ellipse than a yellow ellipse .
-a shape is bigger than a white triangle .
-the green shape is a semicircle .
-a cyan semicircle is below a cyan shape .
-two red circles are closer to a white circle than an ellipse .
-exactly four pentagons are closer to a circle than a magenta shape .
-the blue rectangle is bigger than a cyan shape .
-five circles are farther from a triangle than a shape .
-exactly two cyan crosses are bigger than a shape .
-a cross is bigger than a cross .
-three ellipses are an ellipse .
-exactly one shape is white .
-a semicircle is a semicircle .
-the shape is farther from a cyan rectangle than a rectangle .
-exactly three yellow pentagons are closest to a pentagon .
-a pentagon is bigger than a pentagon .
-both green triangles are farther from a white cross than a white cross .
-five cyan pentagons are darker than a shape .
-a white cross is smaller than a white cross .
-the three magenta circles are a semicircle .
-two shapes are to the right of a white cross .
-exactly two magenta ellipses are to the right of a shape .
-exactly one shape is lighter than a shape .
-exactly one magenta rectangle is bigger than a shape .
-the yellow ellipse is a triangle .
-the yellow circle is farther from a red square than a semicircle .
-three magenta circles are bigger than a white pentagon .
-four yellow shapes are smaller than a cross .
-three magenta shapes are a white rectangle .
-exactly two magenta triangles are magenta .
-exactly three pentagons are lighter than a red triangle .
-two shapes are a shape .
-exactly one shape is bigger than a blue cross .
-the four magenta pentagons are closest to a red shape .
-exactly five red shapes are to the right of a blue cross .
-exactly four cyan rectangles are bigger than a red shape .
-three yellow shapes are smaller than a white square .
-three blue pentagons are closer to a yellow triangle than a cyan pentagon .
-exactly four circles are red .
-the red square is below a cyan circle .
-four crosses are lighter than a cyan shape .
-the three rectangles are above a green circle .
-exactly three red shapes are a white rectangle .
-the three blue semicircles are farther from a blue semicircle than a triangle .
-the white circle is lighter than a white shape .
-both green shapes are green .
-two shapes are darker than a shape .
-the four white pentagons are a shape .
-the three cyan rectangles are a shape .
-exactly two white shapes are to the right of an ellipse .
-exactly five shapes are below a red rectangle .
-the three shapes are a shape .
-five red pentagons are a shape .
-four shapes are smaller than a triangle .
-a green pentagon is to the left of a cross .
-both rectangles are bigger than a yellow semicircle .
-a shape is a circle .
-a cyan pentagon is closer to a square than a triangle .
-four shapes are a shape .
-exactly one yellow triangle is to the left of a shape .
-five shapes are a shape .
+exactly four red circles are red .
+three blue triangles are blue .
+a cyan rectangle is closer to a cyan rectangle than a rectangle .
+exactly three yellow circles are to the left of a yellow circle .
+two red ellipses are below an ellipse .
+exactly two triangles are smaller than a magenta shape .
+exactly three green crosses are farther from a red shape than a green semicircle .
+the four white shapes are a triangle .
+exactly three cyan ellipses are lighter than a cyan ellipse .
+exactly two green ellipses are closer to a green shape than a green shape .
+exactly one white shape is bigger than a blue circle .
+two yellow triangles are lighter than a yellow shape .
+the four green crosses are green .
+exactly five crosses are closer to a red cross than a green cross .
+the four cyan ellipses are below a pentagon .
+exactly three yellow shapes are bigger than a yellow shape .
+exactly one ellipse is lighter than an ellipse .
+exactly four yellow triangles are white .
+four magenta crosses are a cross .
+both rectangles are cyan .
+exactly five circles are smaller than a blue pentagon .
+the three magenta squares are darker than a yellow cross .
+five yellow shapes are above a yellow shape .
+exactly two squares are to the right of a rectangle .
+four red circles are closer to a circle than a red circle .
+three triangles are above a white shape .
+exactly four cyan shapes are a circle .
+the four cyan shapes are smaller than a red cross .
+five circles are to the left of a cyan circle .
+five white shapes are closer to a white rectangle than a rectangle .
+exactly four rectangles are darker than a yellow shape .
+two red triangles are lighter than a white shape .
+the five squares are magenta .
+three crosses are above a cyan shape .
+exactly one white cross is smaller than a cross .
+exactly two green rectangles are above a green shape .
+the four blue shapes are a semicircle .
+exactly one blue rectangle is above a red triangle .
+exactly five crosses are to the right of a yellow shape .
+the four yellow semicircles are a blue semicircle .
+exactly five magenta shapes are darker than a blue semicircle .
+exactly three ellipses are darker than an ellipse .
+exactly one blue semicircle is darker than a blue semicircle .
+exactly five green shapes are a semicircle .
+the white triangle is to the left of a red shape .
+exactly four red shapes are to the left of a blue shape .
+the five red shapes are lighter than a circle .
+the cyan pentagon is a magenta rectangle .
+the three yellow semicircles are yellow .
+exactly one pentagon is red .
+exactly one yellow ellipse is darker than a cross .
+five green circles are a circle .
+exactly five cyan triangles are cyan .
+the three blue squares are a square .
+exactly four cyan shapes are below a cyan shape .
+both circles are cyan .
+the four squares are white .
+exactly four squares are bigger than a pentagon .
+exactly four cyan triangles are cyan .
+exactly four green crosses are a cross .
+exactly five squares are smaller than a white square .
+exactly two green rectangles are below a green rectangle .
+the three green rectangles are green .
+three green pentagons are lighter than a green pentagon .
+two triangles are blue .
+both green semicircles are blue .
+both ellipses are green .
+five green rectangles are darker than a green rectangle .
+both blue squares are a blue ellipse .
+two blue semicircles are closer to a blue semicircle than a blue semicircle .
+exactly two yellow shapes are bigger than a yellow shape .
+two rectangles are white .
+both triangles are blue .
+exactly one blue shape is to the right of a blue pentagon .
+a cross is lighter than a blue cross .
+exactly one cyan square is lighter than a cyan square .
+exactly one cyan square is lighter than a cyan square .
+the four white shapes are red .
+the four green shapes are to the right of a blue shape .
+exactly five red rectangles are a blue pentagon .
+exactly three pentagons are above a white pentagon .
+the five green pentagons are smaller than a square .
+exactly one blue triangle is farther from a red circle than a red semicircle .
+exactly five magenta shapes are smaller than a square .
+exactly three ellipses are farther from a blue semicircle than a blue ellipse .
+three blue squares are smaller than a blue square .
+exactly two crosses are to the left of a green shape .
+exactly one yellow shape is smaller than a yellow square .
+exactly two magenta ellipses are darker than a yellow ellipse .
+both yellow rectangles are to the left of a white square .
+both circles are a triangle .
+three rectangles are closer to a yellow shape than a yellow rectangle .
+exactly one green semicircle is a cyan cross .
+three cyan shapes are a triangle .
+two circles are lighter than a yellow square .
+five blue pentagons are blue .
+the four red semicircles are red .
+exactly one blue rectangle is farther from a blue rectangle than a blue rectangle .
+four crosses are darker than a magenta cross .
+exactly five semicircles are magenta .

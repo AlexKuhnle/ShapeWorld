@@ -1,100 +1,100 @@
-both semicircles are red .
-the cyan shape is a red rectangle .
-exactly two circles are a green pentagon .
-exactly four shapes are a cyan triangle .
-four squares are a shape .
-two shapes are a shape .
-a cyan shape is a white semicircle .
-exactly one shape is a cyan square .
-a shape is yellow .
-three cyan shapes are a triangle .
-the four red shapes are a red pentagon .
-the four white shapes are white .
-five blue shapes are a shape .
-exactly four crosses are a semicircle .
-exactly three triangles are a blue triangle .
-exactly two red shapes are a shape .
-exactly one triangle is a circle .
-the three green shapes are a shape .
-five yellow shapes are a shape .
-both ellipses are yellow .
-three shapes are a shape .
-a cross is a circle .
-three magenta shapes are a shape .
-both blue shapes are blue .
-four magenta shapes are a yellow circle .
-a shape is a square .
-exactly one cyan shape is a white ellipse .
-exactly three green shapes are green .
-a green shape is white .
-exactly one triangle is blue .
-the three circles are red .
-the five shapes are a shape .
-exactly three shapes are a yellow circle .
-the five crosses are a shape .
-three crosses are a white cross .
-the five shapes are a blue rectangle .
-exactly three shapes are white .
-three shapes are a shape .
-three crosses are a red triangle .
-three shapes are a shape .
-the four ellipses are a magenta rectangle .
-two shapes are a green square .
-the four blue shapes are a semicircle .
-exactly four green shapes are a blue circle .
-exactly four triangles are a square .
-exactly three pentagons are a cyan rectangle .
-the three shapes are a shape .
-exactly two red shapes are a blue ellipse .
-exactly one green shape is a green pentagon .
-four shapes are a shape .
-three triangles are a white triangle .
-exactly two shapes are a triangle .
-the pentagon is a shape .
-five green shapes are a triangle .
-exactly two white shapes are a shape .
-exactly one white shape is green .
-two shapes are a semicircle .
-exactly three shapes are cyan .
-exactly one shape is a red pentagon .
-exactly five shapes are a shape .
-two shapes are a pentagon .
-exactly five semicircles are a green cross .
-three shapes are green .
-two shapes are a white pentagon .
-the five ellipses are a magenta cross .
-three semicircles are green .
-exactly three shapes are blue .
-three shapes are a red semicircle .
-exactly one semicircle is yellow .
-four semicircles are red .
-the three shapes are blue .
-four shapes are white .
-the three red shapes are red .
-exactly four yellow shapes are a rectangle .
-four shapes are a circle .
-the three pentagons are a pentagon .
-both white shapes are a cyan ellipse .
-a white shape is a white triangle .
-two shapes are green .
-exactly four shapes are a pentagon .
-a pentagon is red .
-three circles are blue .
-exactly four magenta shapes are yellow .
-a shape is a triangle .
-a rectangle is a square .
-three shapes are a shape .
-both ellipses are yellow .
-two shapes are yellow .
-two triangles are a shape .
-exactly one shape is a cyan cross .
-exactly two shapes are yellow .
-exactly two pentagons are a green pentagon .
-exactly three shapes are a shape .
-exactly four pentagons are cyan .
-the four shapes are a square .
-the four magenta shapes are an ellipse .
-both shapes are a white square .
-three shapes are cyan .
-exactly one circle is white .
-the five cyan shapes are cyan .
+both blue shapes are a square .
+exactly two yellow shapes are an ellipse .
+three pentagons are cyan .
+exactly five cyan shapes are a green circle .
+exactly one pentagon is cyan .
+the four crosses are blue .
+exactly five green shapes are a rectangle .
+exactly three white shapes are a triangle .
+the three rectangles are green .
+a green shape is a magenta rectangle .
+both circles are green .
+a rectangle is a white semicircle .
+both yellow shapes are an ellipse .
+exactly one rectangle is green .
+four crosses are magenta .
+exactly four green shapes are a rectangle .
+exactly one cross is white .
+a green shape is a semicircle .
+the white shape is an ellipse .
+four cyan shapes are a semicircle .
+three crosses are a red square .
+exactly two magenta shapes are red .
+exactly two white shapes are a circle .
+the three triangles are yellow .
+the cyan shape is a semicircle .
+five cyan shapes are a rectangle .
+exactly two white shapes are a semicircle .
+exactly four green shapes are a square .
+five rectangles are white .
+five pentagons are an ellipse .
+exactly two squares are blue .
+exactly five yellow shapes are a rectangle .
+two white shapes are a semicircle .
+both yellow shapes are a circle .
+exactly three magenta shapes are a cross .
+the magenta shape is a circle .
+two cyan shapes are a cyan ellipse .
+the blue shape is a triangle .
+a magenta shape is a red square .
+both pentagons are a yellow semicircle .
+exactly two red shapes are a cross .
+exactly two white shapes are a pentagon .
+the four triangles are magenta .
+the cross is blue .
+exactly one blue shape is a cross .
+four white shapes are red .
+the blue shape is white .
+exactly three triangles are red .
+two white shapes are an ellipse .
+exactly three rectangles are blue .
+the five blue shapes are yellow .
+exactly four semicircles are cyan .
+the square is red .
+five magenta shapes are cyan .
+exactly three crosses are cyan .
+a green shape is a cross .
+the four green shapes are an ellipse .
+four cyan shapes are a circle .
+four magenta shapes are an ellipse .
+the four red shapes are a cross .
+the five green shapes are a circle .
+exactly three semicircles are a white circle .
+the four squares are a white cross .
+exactly two red shapes are an ellipse .
+the four crosses are a red ellipse .
+exactly one blue shape is a blue rectangle .
+the pentagon is a blue triangle .
+the four semicircles are white .
+exactly one ellipse is green .
+a triangle is red .
+the three semicircles are yellow .
+a cyan shape is a semicircle .
+exactly three triangles are cyan .
+the four cyan shapes are a cross .
+both cyan shapes are green .
+a semicircle is green .
+five circles are cyan .
+five ellipses are white .
+both white shapes are an ellipse .
+the blue shape is a rectangle .
+exactly two semicircles are cyan .
+three green shapes are a white cross .
+the three rectangles are green .
+exactly three ellipses are yellow .
+four white shapes are a circle .
+exactly three blue shapes are an ellipse .
+both yellow shapes are a circle .
+exactly two triangles are a green triangle .
+four circles are white .
+exactly four red shapes are a pentagon .
+five semicircles are red .
+four triangles are white .
+the cyan shape is a triangle .
+two squares are a rectangle .
+two semicircles are magenta .
+the cross is green .
+both cyan shapes are a pentagon .
+both white shapes are a semicircle .
+the three triangles are white .
+exactly one ellipse is blue .

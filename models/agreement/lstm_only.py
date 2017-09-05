@@ -1,7 +1,7 @@
 from models.TFMacros.tf_macros import *
 
 
-def model(inputs, **parameters):
+def model(model, inputs, **parameters):
     agreement = (
         (
             Input(name='caption', shape=parameters['caption_shape'], dtype='int', tensor=inputs.get('caption')) >>

@@ -21,4 +21,4 @@ class Proposition(Clause):
         elif self.proptype == 'disjunction':
             return max(clause.agreement(entities) for clause in self.clauses)
         elif self.proptype == 'exclusive-disjunction':
-            return float(sum(clause.agreement(entities) > 0.5 for clause in self.clauses) == 1)
+            return float(sum(clause.agreement(entities) > 0.0 for clause in self.clauses) == 1)

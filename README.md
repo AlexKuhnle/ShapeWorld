@@ -1,6 +1,6 @@
 # ShapeWorld
 
-**Getting started:**
+### Getting started
 
 ```bash
 git clone --recursive https://github.com/AlexKuhnle/ShapeWorld.git
@@ -8,13 +8,21 @@ pip3 install -e ShapeWorld
 ```
 
 
+### Recently added features
+
+- Generator option `-H` to create an HTML file displaying the generated data (e.g. see in (examples))
+- Various new and extended caption agreement datasets
+
+
+### Table of content
 
 - [About ShapeWorld](#about-shapeworld)
+- [Example data](#example-data)
 - [Integration into Python code](#integration-into-python-code)
 - [Stand-alone data generation](#stand-alone-data-generation)
 - [Loading extracted data](#loading-extracted-data)
 - [CLEVR and NLVR interface](#clevr-and-nlvr-interface)
-- [Example models](#example-models)
+- [Evaluation and example models](#evaluation-and-example-models)
 
 
 
@@ -31,6 +39,31 @@ The code is written in Python 3 (but should be compatible to Python 2). The data
 I am interested in hearing about any applications you plan to use the ShapeWorld data for. In particular, let me know if you have a great idea in mind that you are interested in investigating with such abstract data, but which the current setup does not allow to realize -- I am happy to collaboratively find a way to make it happen.
 
 Contact: aok25 (at) cam.ac.uk
+
+
+
+## Example data
+
+#### Caption agreement datasets
+
+- [Oneshape](examples/agreement/oneshape/data.html)
+- [Oneshape (simple)](examples/agreement/oneshape_simple/data.html)
+- [Multishape](examples/agreement/multishape/data.html)
+- [Multishape (simple)](examples/agreement/multishape_simple/data.html)
+- [Spatial](examples/agreement/spatial/data.html)
+- [Spatial (simple)](examples/agreement/spatial_simple/data.html)
+- [Relational](examples/agreement/relational/data.html)
+- [Counting](examples/agreement/counting/data.html)
+- [Counting (simple)](examples/agreement/counting_simple/data.html)
+- [Quantification](examples/agreement/quantification/data.html)
+- [Quantification (simple)](examples/agreement/quantification_simple/data.html)
+- [Combination](examples/agreement/combination/data.html)
+
+#### Classification datasets
+
+- [Oneshape](examples/classification/oneshape/data.html)
+- [Multishape](examples/classification/multishape/data.html)
+- [Countshape](examples/classification/countshape/data.html)
 
 
 
@@ -68,32 +101,32 @@ The following command line arguments are available:
 * `--[d]irectory`:  Directory for generated data, with automatically created sub-directories unless `--unmanaged`, hence should be non-existing or empty since it will be overwritten (**required**)
 * `--[a]rchive`:  Store generated data in (compressed) archives, either `zip[:mode]` or `tar[:mode]` with one of `none`, `deflate` (only zip), `gzip` (only tar), `bzip2`, `lzma` (default: `none`)
 * `--[A]ppend`:  Append to existing data (when used without `--unmanaged`)
-* `--[U]nmanaged`:  Do not automatically create sub-directories (requires `--mode`)
+* `--[U]nmanaged`:  Do not automatically create sub-directories (implied, if `--mode` not set and `--files` single number)
 
 * `--[t]ype`:  Dataset type (default: `agreement`)
 * `--[n]ame`:  Dataset name (**required**)
-* `--[l]anguage`:  Dataset language, if available (default: `none`/`english`)
+* `--[l]anguage`:  Dataset language, if available (default: `none`, i.e. English)
 * `--[c]onfig`:  Dataset configuration file, otherwise use default configuration
 
-* `--[m]ode`:  Mode, one of `train`, `validation`, `test`, `tf-records` (requires `--parts` is single number)
-* `--[f]iles`:  Number of files to split data into (instead of all in one file), either a number (requires `--mode`), or a tuple of 3 (or 4) numbers like `100,10,10` (without `--mode`), for (`tf-records`,) train`, `validation` and `test` data respectively (default: `(1,1,1)` or `1`)
+* `--[m]ode`:  Mode, one of `train`, `validation`, `test` or `tf-records`, requires `--files` to be a single number (default: `none`)
+* `--[f]iles`:  Number of files to split data into (instead of all in one file), either a number (requires `--mode`), or a tuple of 3 (or 4) numbers like `(100,10,10)` (without `--mode`), for (`tf-records`,) `train`, `validation` and `test` data respectively (default: `1`)
 * `--[i]nstances`:  Number of instances per file (default: `100`)
 
-* `--[p]ixel-noise`: Pixel noise range (default: `none`)
+* `--[p]ixel-noise`: Pixel noise range (default: `0.0`)
 * `--include-[M]odel`:  Include world/caption model (as json file)
 * `--[C]oncatenate-images`:  Concatenate images per part into one image file
-* `--captioner-[S]tatistics`:  Collect statistical data of captioner
+* `--[H]tml`:  Create HTML file (`data.html`) displaying the generated data
 
 When creating larger amounts of ShapeWorld data, it is advisable to store the data in a compressed archive (for example `-a tar:bz2`) and turn off the pixel noise (`-p`) for best compression results. For instance, the following command line generates one million *training* instances of the `multishape` configuration file included in this repository:
 
 ```bash
-python generate.py -D [DIRECTORY] -a tar:bzip2 -c configs/agreement/multishape.json -m train -f 100 -i 10k -M -S
+python generate.py -D [DIRECTORY] -a tar:bzip2 -c configs/agreement/multishape.json -m train -f 100 -i 10k -M
 ```
 
 For the purpose of this introduction, we generate a smaller amount of *all* training (TensorFlow records and raw), validation and test instances using the default configuration of the dataset:
 
 ```bash
-python generate.py -d examples/readme -a tar:bzip2 -t agreement -n multishape -f 5,5,1,1 -i 128 -M -S
+python generate.py -d examples/readme -a tar:bzip2 -t agreement -n multishape -f "(5,5,1,1)" -i 128 -M
 ```
 
 
@@ -133,14 +166,14 @@ for world in worlds:
         loc=0.0,
         scale=noise_range,
         size=dataset.world_shape)
-    mask = (noise < -noise_range) + (noise > noise_range)
+    mask = (noise < -2.0 * noise_range) + (noise > 2.0 * noise_range)
     while np.any(a=mask):
         noise -= mask * noise
         noise += mask * np.random.normal(
             loc=0.0,
             scale=noise_range,
             size=dataset.world_shape)
-        mask = (noise < -noise_range) + (noise > noise_range)
+        mask = (noise < -2.0 * noise_range) + (noise > 2.0 * noise_range)
     world += noise
     np.clip(world, a_min=0.0, a_max=1.0, out=world)
 ```
@@ -204,7 +237,7 @@ The dataset provides:
 
 
 
-## Example models
+## Evaluation and example models
 
 The `models/` directory contains a few exemplary models based on [TFMacros](https://github.com/AlexKuhnle/TFMacros), my collection of TensorFlow macros. The script `evaluate.py` provides the following command line arguments to run these models:
 
@@ -219,18 +252,22 @@ The `models/` directory contains a few exemplary models based on [TFMacros](http
 * `--[w]eight-decay`:  Weight decay (default: `0.0`)
 * `--[d]ropout-rate`:  Dropout rate (default: `0.0`)
 * `--h[y]perparameters`:  Model hyperparameters, otherwise use default parameters
-* `--[s]ave-file`:  File storing the model parameters
 
 * `--[i]terations`:  Number of training iterations (default: `1000`)
 * `--[b]atch-size`:  Batch size (default: `128`)
-* `--evaluation-[f]requency`:  Evaluation frequency (default: `100`)
 * `--[e]valuation-size`:  Evaluation size (default: `1024`)
-* `--rep[o]rt-file`:  CSV file reporting the evaluation results throughout the learning process
+* `--evaluation-[f]requency`:  Evaluation frequency (default: `100`)
 * `--[R]estore`:  Restore system, requires `--model-file` (default: `false`)
 * `--[E]valuate`:  Evaluate system without training, requires `--model-file` (default: `false`)
 * `--[T]f-records`:  Use TensorFlow records (not compatible with `--evaluate`)
 
+* `--model-file`:  TensorFlow model file, storing the model computation graph and parameters
+* `--summary-file`:  TensorFlow summary file for TensorBoard
+* `--report-file`:  CSV file reporting the evaluation results throughout the learning process
+
 * `--[v]erbosity`:  Verbosity, one of `0` (no messages), `1` (default), `2` (plus TensorFlow messages)
+
+
 
 For instance, the following command line trains an image caption agreement system on the dataset specified by the `multishape` configuration file included in this repository:
 

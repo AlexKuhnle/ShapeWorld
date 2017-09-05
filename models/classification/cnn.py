@@ -1,7 +1,7 @@
 from models.TFMacros.tf_macros import *
 
 
-def model(inputs, **parameters):
+def model(model, inputs, **parameters):
     assert not parameters.get('class_count', False)
     classification = (
         Input(name='world', shape=parameters['world_shape'], tensor=inputs.get('world')) >>

@@ -2,13 +2,20 @@ from __future__ import division
 from collections import Counter, namedtuple
 from itertools import chain, combinations
 import json
-from math import ceil, floor, sqrt, trunc
+from math import ceil, cos, floor, pi, sin, sqrt, trunc
 from operator import __truediv__
 import os
-from random import random, uniform
+from random import randint, random, randrange, uniform
 import tarfile
 import time
 import zipfile
+
+
+def value_or_default(value, default):
+    if value is None:
+        return default
+    else:
+        return value
 
 
 def parse_int_with_factor(string):
@@ -73,6 +80,14 @@ def parse_config(string):
         return string
 
 
+def string2tokens(string):
+    return string.lower().replace(', ', ' , ').replace('; ', ' ; ').replace('.', ' .').replace('?', ' ?').split()
+
+
+def tokens2string(tokens):
+    return ' '.join(tokens).replace(' , ', ', ').replace(' ; ', '; ').replace(' .', '.').replace(' ?', '?')
+
+
 def product(xs):
     prod = 1
     for x in xs:
@@ -85,6 +100,12 @@ def powerset(values, min_num=None, max_num=None):
     min_num = min_num or 0
     max_num = max_num or len(values)
     return chain.from_iterable(combinations(values, num) for num in range(min_num, max_num + 1))
+
+
+def merge_dicts(dict1, dict2):
+    merged = dict1.copy()
+    merged.update(dict2)
+    return merged
 
 
 # partial_order is dict: x -> set({>x})
@@ -132,6 +153,16 @@ def sample(cumulative_distribution, items=None):
                 return index
 
 
+def choice(available, count_range):
+    available = list(available)
+    count = min(randint(*count_range), len(available))
+    chosen = list()
+    for _ in range(count):
+        pick = randrange(len(available))
+        chosen.append(available.pop(pick))
+    return chosen
+
+
 PointTuple = namedtuple('PointTuple', ('x', 'y'))
 
 
@@ -145,6 +176,12 @@ class Point(PointTuple):
         if isinstance(y, str):
             y = float(y)
         return super(Point, cls).__new__(cls, x, y)
+
+    @staticmethod
+    def from_angle(angle):
+        assert isinstance(angle, float) and 0.0 <= angle < 1.0
+        angle = angle * 2.0 * pi
+        return Point(cos(angle), sin(angle))
 
     def __str__(self):
         return '({}/{})'.format(self.x, self.y)

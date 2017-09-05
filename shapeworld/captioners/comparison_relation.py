@@ -1,33 +1,29 @@
 from random import choice
 from shapeworld import util
 from shapeworld.caption import Relation
-from shapeworld.captioners import WorldCaptioner, AttributesNounCaptioner
+from shapeworld.captioners import WorldCaptioner, AttributesTypeCaptioner
 
 
 class ComparisonRelationCaptioner(WorldCaptioner):
 
-    # modes
+    # incorrect modes
     # 0: correct
     # 1: incorrect comparison relation
     # 2: inverse comparison
     # 3: incorrect reference
 
-    name = 'comparison_relation'
-    statistics_header = 'comparison,relative,mode'
-
     comparison_reltypes = ('size-rel', 'shade-rel')
 
-    def __init__(self, reference_captioner=None, relations=None, incorrect_distribution=None):
+    def __init__(self, reference_captioner=None, relations=None, incorrect_distribution=None, trivial_acceptance_rate=None):
         assert relations is None or all(reltype in ComparisonRelationCaptioner.comparison_reltypes for reltype in relations)
-        super(ComparisonRelationCaptioner, self).__init__()
-        self.reference_captioner = reference_captioner or AttributesNounCaptioner()
+        self.reference_captioner = util.value_or_default(reference_captioner, AttributesTypeCaptioner())
+        super(ComparisonRelationCaptioner, self).__init__(internal_captioners=(self.reference_captioner,), trivial_acceptance_rate=trivial_acceptance_rate)
         self.relations = relations
-        self.incorrect_distribution = util.cumulative_distribution(incorrect_distribution or [1, 1, 1])
+        self.incorrect_distribution = util.cumulative_distribution(util.value_or_default(incorrect_distribution, [1, 1, 1]))
 
     def set_realizer(self, realizer):
         if not super(ComparisonRelationCaptioner, self).set_realizer(realizer):
             return False
-        self.reference_captioner.set_realizer(realizer=realizer)
         if self.relations is None:
             self.relations = list((reltype, value) for reltype, values in realizer.relations.items() if reltype in ComparisonRelationCaptioner.comparison_reltypes for value in values)
         else:
@@ -35,37 +31,46 @@ class ComparisonRelationCaptioner(WorldCaptioner):
         assert self.relations
         return True
 
-    def caption_world(self, entities, correct):
-        comparison, relative = choice(self.relations)
+    def sample_values(self, mode, correct):
+        super(ComparisonRelationCaptioner, self).sample_values(mode=mode, correct=correct)
 
-        if correct:
-            mode = 0
-        else:
-            mode = 1 + util.sample(self.incorrect_distribution)
+        self.reltype, self.value = choice(self.relations)
+        self.incorrect_mode = 0 if correct else 1 + util.sample(self.incorrect_distribution)
 
-        if correct and len(entities) <= 1:
+        self.reference_captioner.sample_values(mode=mode, correct=(self.incorrect_mode != 3))  # 3: incorrect reference
+
+        if self.incorrect_mode == 1:  # 1: incorrect comparison relation
+            self.incorrect_relations = [(reltype, value) for reltype, value in self.relations if reltype != self.reltype or value != self.value]
+
+    def model(self):
+        return util.merge_dicts(
+            dict1=super(ComparisonRelationCaptioner, self).model(),
+            dict2=dict(reltype=self.reltype, value=self.value, incorrect_mode=self.incorrect_mode, reference_captioner=self.reference_captioner.model())
+        )
+
+    def caption_world(self, entities, relevant_entities):
+        if self.correct and len(entities) <= 1:
             return None
 
-        for _ in range(ComparisonRelationCaptioner.MAX_ATTEMPTS):
+        reference = self.reference_captioner(entities=entities)
+        if reference is None:
+            return None
 
-            if mode == 3:  # incorrect reference
-                reference = self.reference_captioner(entities=entities, correct=False)
-            else:
-                reference = self.reference_captioner(entities=entities, correct=True)
-            if reference is None:
-                continue
+        relation = Relation(reltype=self.reltype, value=self.value, reference=reference)
 
-            if mode == 2:  # inverse comparison
-                if comparison in Relation.ternary_relations:
-                    relation = Relation(reltype=comparison, value=(-relative), reference=reference, comparison=comparison)
-                else:
-                    relation = Relation(reltype=comparison, value=(-relative), reference=reference)
-
-            else:
-                relation = Relation(reltype=comparison, value=relative, reference=reference)
-
-            if relation.agreement(entities=entities) == float(correct):
-                self.report(comparison, relative, mode)
+        if self.incorrect_mode == 1:  # 1: incorrect comparison relation
+            if relation.agreement(entities=relevant_entities) > 0.0:
+                relation.reltype, relation.value = choice(self.incorrect_relations)
                 return relation
+            else:
+                return None
 
-        return None
+        elif self.incorrect_mode == 2:  # 2: inverse comparison
+            if relation.agreement(entities=relevant_entities) > 0.0:
+                relation.value = -relation.value
+                return relation
+            else:
+                return None
+
+        else:
+            return relation

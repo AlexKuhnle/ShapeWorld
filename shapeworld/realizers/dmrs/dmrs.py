@@ -135,7 +135,7 @@ class Dmrs(ListDmrs):
         labels = dict(zip(self, self))
         for link in self.iter_links():
             assert isinstance(link.start, int) and isinstance(link.end, int)
-            assert isinstance(link.rargname, str) or (link.rargname is None and link.post == 'EQ')  # ('ARG1', 'ARG2', 'ARG3', 'ARG4', 'ARG', 'RSTR', 'BODY', 'L-INDEX', 'R-INDEX', 'L-HNDL', 'R-HNDL')
+            assert link.rargname is not None or link.post == 'EQ'  # ('ARG1', 'ARG2', 'ARG3', 'ARG4', 'ARG', 'RSTR', 'BODY', 'L-INDEX', 'R-INDEX', 'L-HNDL', 'R-HNDL')
             assert link.post in ('NEQ', 'EQ', 'H', 'HEQ')
             if link.post == 'EQ':
                 upper, lower = (link.start, link.end) if link.start > link.end else (link.end, link.start)
@@ -201,7 +201,7 @@ class Dmrs(ListDmrs):
             else:
                 intrinsic_string = '{} [ {} {}]'.format(variables[nodeid][0], variables[nodeid][1].cvarsort, ''.join('{}: {} '.format(feature.upper(), value.lower()) for feature, value in variables[nodeid][1].iter_specified()))
             args_string = ''.join('{}: {} '.format(role.upper(), arg) for role, arg in args[nodeid].items()) if nodeid in args else ''
-            elempred_string = '[ {}<0:0> LBL: h{} {}ARG0: {} {}]'.format(predicates[nodeid], labels[nodeid], carg_string, intrinsic_string, args_string)
+            elempred_string = '[ {} LBL: h{} {}ARG0: {} {}]'.format(predicates[nodeid], labels[nodeid], carg_string, intrinsic_string, args_string)
             elempreds.append(elempred_string)
 
         top_string = '' if self.top is None else 'TOP: h0 '

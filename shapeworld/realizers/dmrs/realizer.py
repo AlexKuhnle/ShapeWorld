@@ -3,7 +3,8 @@ import json
 import os
 import re
 import subprocess
-from shapeworld.caption import Modifier, Relation, Noun, Existential, Quantifier, Proposition
+from shapeworld import util
+from shapeworld.caption import Attribute, Relation, EntityType, Existential, Quantifier, Proposition
 from shapeworld.realizers import CaptionRealizer
 from shapeworld.realizers.dmrs.dmrs import Dmrs, create_sortinfo
 
@@ -12,11 +13,11 @@ def prepare_grammar(language):
     # dmrs sub-directory
     directory = os.path.dirname(os.path.realpath(__file__))
     # unpack grammar if used for the first time
-    if not os.path.isfile(os.path.join(directory, 'resources', language + '.dat')):
-        assert os.path.isfile(os.path.join(directory, 'resources', language + '.dat.gz'))
+    if not os.path.isfile(os.path.join(directory, 'languages', language + '.dat')):
+        assert os.path.isfile(os.path.join(directory, 'languages', language + '.dat.gz'))
         import gzip
-        with gzip.open(os.path.join(directory, 'resources', language + '.dat.gz'), 'rb') as gzip_filehandle:
-            with open(os.path.join(directory, 'resources', language + '.dat'), 'wb') as filehandle:
+        with gzip.open(os.path.join(directory, 'languages', language + '.dat.gz'), 'rb') as gzip_filehandle:
+            with open(os.path.join(directory, 'languages', language + '.dat'), 'wb') as filehandle:
                 filehandle.write(gzip_filehandle.read())
 
 
@@ -43,7 +44,7 @@ class DmrsRealizer(CaptionRealizer):
         prepare_grammar(language=language)
         directory = os.path.join(os.path.dirname(os.path.realpath(__file__)))
         self.ace_path = os.path.join(directory, 'resources', 'ace')
-        self.erg_path = os.path.join(directory, 'resources', language + '.dat')
+        self.erg_path = os.path.join(directory, 'languages', language + '.dat')
         self.regex = re.compile(pattern=r'^(NOTE: [0-9]+ passive, [0-9]+ active edges in final generation chart; built [0-9]+ passives total. \[1 results\])|(NOTE: generated [0-9]+ / [0-9]+ sentences, avg [0-9]+k, time [0-9]+.[0-9]+s)|(NOTE: transfer did [0-9]+ successful unifies and [0-9]+ failed ones)$')
 
         with open(os.path.join(directory, 'languages', language + '.json'), 'r') as filehandle:
@@ -65,23 +66,23 @@ class DmrsRealizer(CaptionRealizer):
             sortinfo_classes = None
             sortinfo_shortforms = None
 
-        self.modifiers = {modtype: dict() for modtype in language['modifiers']}
-        self.modifier_by_name = dict()
-        for modtype, values in language['modifiers'].items():
-            if modtype == 'empty' or modtype == 'relation':
+        self.attributes = {attrtype: dict() for attrtype in language['attributes']}
+        self.attribute_by_name = dict()
+        for attrtype, values in language['attributes'].items():
+            if attrtype == 'empty' or attrtype == 'relation':
                 values['dmrs'] = Dmrs.parse(values['dmrs'])
-                self.modifiers[modtype] = values
+                self.attributes[attrtype] = values
                 continue
-            for value, modifier in values.items():
+            for value, attribute in values.items():
                 value = parse_string(value)
-                modifier['dmrs'] = Dmrs.parse(modifier['dmrs'])
-                self.modifiers[modtype][value] = modifier
-                self.modifier_by_name[modifier['key']] = (modtype, value)
+                attribute['dmrs'] = Dmrs.parse(attribute['dmrs'])
+                self.attributes[attrtype][value] = attribute
+                self.attribute_by_name[attribute['key']] = (attrtype, value)
 
         self.relations = {reltype: dict() for reltype in language['relations']}
         self.relation_by_name = dict()
         for reltype, values in language['relations'].items():
-            if reltype == 'modifier' or reltype == 'noun':
+            if reltype == 'attribute' or reltype == 'type':
                 values['dmrs'] = Dmrs.parse(values['dmrs'])
                 self.relations[reltype] = values
                 continue
@@ -109,14 +110,14 @@ class DmrsRealizer(CaptionRealizer):
         self.propositions = dict()
         self.proposition_by_name = dict()
         for connective, proposition in language['propositions'].items():
-            if connective in ('modifier', 'noun', 'relation', 'existential', 'quantifier'):
+            if connective in ('attribute', 'type', 'relation', 'existential', 'quantifier'):
                 proposition['dmrs'] = Dmrs.parse(proposition['dmrs'])
                 self.propositions[connective] = proposition
                 continue
-            if isinstance(proposition['dmrs'], str):
-                proposition['dmrs'] = Dmrs.parse(proposition['dmrs'])
-            else:
+            if isinstance(proposition['dmrs'], list):
                 proposition['dmrs'] = tuple(Dmrs.parse(dmrs) for dmrs in proposition['dmrs'])
+            else:
+                proposition['dmrs'] = Dmrs.parse(proposition['dmrs'])
             self.propositions[connective] = proposition
             self.proposition_by_name[proposition['key']] = connective
 
@@ -152,10 +153,8 @@ class DmrsRealizer(CaptionRealizer):
         assert all(self.regex.match(line) for line in stderr_data), '\n\n' + '\n'.join('{}\n{}\n{}\n'.format(line, dmrs.dumps_xml().decode(), mrs) for line, dmrs, mrs in zip(stderr_data, dmrs_list, mrs_list) if not self.regex.match(line)) + '\nFailures: {}\n'.format(len(captions) - int(stderr_data[-2][16:stderr_data[-2].index(' ', 16)]))  # self.proposition_dmrs(caption).dumps_xml()
         caption_strings = [line for line in stdout_data if line]
         assert len(caption_strings) == len(captions)
-        for n, (caption, dmrs, mrs) in enumerate(zip(caption_strings, dmrs_list, mrs_list)):
-            caption = caption.lower()
-            caption = caption.replace('.', ' .').replace(',', ' ,')
-            captions[n] = caption.split()
+        for n, caption in enumerate(caption_strings):
+            captions[n] = util.string2tokens(string=caption)
         return captions
 
     def component_dmrs(self, component, key=False):
@@ -166,50 +165,50 @@ class DmrsRealizer(CaptionRealizer):
         else:
             return copy.deepcopy(component['dmrs'])  # choice if list?
 
-    def modifier_dmrs(self, modifier):
-        assert modifier.modtype in self.modifiers
-        if modifier.modtype == 'relation':
-            dmrs = self.component_dmrs(self.modifiers['relation'])
-            dmrs.compose(self.relation_dmrs(modifier.value), fusion={'mod': 'rel'}, hierarchy=self.hierarchy)
+    def attribute_dmrs(self, attribute):
+        assert attribute.attrtype in self.attributes
+        if attribute.attrtype == 'relation':
+            dmrs = self.component_dmrs(self.attributes['relation'])
+            dmrs.compose(self.relation_dmrs(attribute.value), fusion={'attr': 'rel'}, hierarchy=self.hierarchy)
         else:
-            assert modifier.value in self.modifiers[modifier.modtype]
-            dmrs = self.component_dmrs(self.modifiers[modifier.modtype][modifier.value])
+            assert attribute.value in self.attributes[attribute.attrtype]
+            dmrs = self.component_dmrs(self.attributes[attribute.attrtype][attribute.value])
         return dmrs
 
-    def noun_dmrs(self, noun):
-        assert 'empty' in self.modifiers
-        dmrs = self.component_dmrs(self.modifiers['empty'])
-        for modifier in noun.modifiers:
-            dmrs.compose(self.modifier_dmrs(modifier), fusion={'entity': 'arg'}, hierarchy=self.hierarchy)
+    def type_dmrs(self, etype):
+        assert 'empty' in self.attributes
+        dmrs = self.component_dmrs(self.attributes['empty'])
+        for attribute in etype.attributes:
+            dmrs.compose(self.attribute_dmrs(attribute), fusion={'type': 'type'}, hierarchy=self.hierarchy)
         return dmrs
 
     def relation_dmrs(self, relation):
         assert relation.reltype in self.relations
-        if relation.reltype == 'modifier':
-            dmrs = self.component_dmrs(self.relations['modifier'])
-            dmrs.compose(self.modifier_dmrs(relation.value), fusion={'ref': 'mod'}, hierarchy=self.hierarchy)
-        elif relation.reltype == 'noun':
-            dmrs = self.component_dmrs(self.relations['noun'])
-            dmrs.compose(self.noun_dmrs(relation.value), fusion={'ref': 'entity'}, hierarchy=self.hierarchy)
+        if relation.reltype == 'attribute':
+            dmrs = self.component_dmrs(self.relations['attribute'])
+            dmrs.compose(self.attribute_dmrs(relation.value), fusion={'ref': 'type'}, hierarchy=self.hierarchy)
+        elif relation.reltype == 'type':
+            dmrs = self.component_dmrs(self.relations['type'])
+            dmrs.compose(self.type_dmrs(relation.value), fusion={'ref': 'type'}, hierarchy=self.hierarchy)
         else:
             assert relation.value in self.relations[relation.reltype]
             dmrs = self.component_dmrs(self.relations[relation.reltype][relation.value])
-            dmrs.compose(self.noun_dmrs(relation.reference), fusion={'ref': 'entity'}, hierarchy=self.hierarchy)
-            if relation.comparison is not None:
-                dmrs.compose(self.noun_dmrs(relation.comparison), fusion={'comp': 'entity'}, hierarchy=self.hierarchy)
+            dmrs.compose(self.type_dmrs(relation.reference), fusion={'ref': 'type'}, hierarchy=self.hierarchy)
+            if relation.reltype in Relation.ternary_relations:
+                dmrs.compose(self.type_dmrs(relation.comparison), fusion={'comp': 'type'}, hierarchy=self.hierarchy)
         return dmrs
 
     def existential_dmrs(self, existential):
         assert 'existential' in self.quantifiers
         dmrs = self.component_dmrs(self.quantifiers['existential'])
-        dmrs.compose(self.noun_dmrs(existential.subject), fusion={'subj': 'entity'}, hierarchy=self.hierarchy)
-        dmrs.compose(self.relation_dmrs(existential.verb), fusion={'verb': 'rel'}, hierarchy=self.hierarchy)
+        dmrs.compose(self.type_dmrs(existential.restrictor), fusion={'rstr': 'type'}, hierarchy=self.hierarchy)
+        dmrs.compose(self.relation_dmrs(existential.body), fusion={'body': 'rel'}, hierarchy=self.hierarchy)
         return dmrs
 
     def quantifier_dmrs(self, quantifier):
         assert quantifier.qtype in self.quantifiers and quantifier.qrange in self.quantifiers[quantifier.qtype] and quantifier.quantity in self.quantifiers[quantifier.qtype][quantifier.qrange]
         dmrs = self.component_dmrs(self.quantifiers[quantifier.qtype][quantifier.qrange][quantifier.quantity])
-        dmrs.compose(self.noun_dmrs(quantifier.restrictor), fusion={'rstr': 'entity'}, hierarchy=self.hierarchy)
+        dmrs.compose(self.type_dmrs(quantifier.restrictor), fusion={'rstr': 'type'}, hierarchy=self.hierarchy)
         dmrs.compose(self.relation_dmrs(quantifier.body), fusion={'body': 'rel'}, hierarchy=self.hierarchy)
         return dmrs
 
@@ -235,12 +234,12 @@ class DmrsRealizer(CaptionRealizer):
         return dmrs
 
     def clause_dmrs(self, clause):
-        if isinstance(clause, Modifier):
-            dmrs = self.component_dmrs(self.propositions['modifier'])
-            dmrs.compose(self.modifier_dmrs(clause), hierarchy=self.hierarchy)
-        elif isinstance(clause, Noun):
-            dmrs = self.component_dmrs(self.propositions['noun'])
-            dmrs.compose(self.noun_dmrs(clause), hierarchy=self.hierarchy)
+        if isinstance(clause, Attribute):
+            dmrs = self.component_dmrs(self.propositions['attribute'])
+            dmrs.compose(self.attribute_dmrs(clause), hierarchy=self.hierarchy)
+        elif isinstance(clause, EntityType):
+            dmrs = self.component_dmrs(self.propositions['type'])
+            dmrs.compose(self.type_dmrs(clause), hierarchy=self.hierarchy)
         elif isinstance(clause, Relation):
             dmrs = self.component_dmrs(self.propositions['relation'])
             dmrs.compose(self.relation_dmrs(clause), hierarchy=self.hierarchy)

@@ -68,8 +68,8 @@ def batch_records(dataset, batch_size, noise_range=None):
         #     exit(0)
         if noise_range is not None and noise_range > 0.0 and value_type == 'world':
             world = batch[value_name]
-            world += tf.truncated_normal(shape=((batch_size,) + dataset.world_shape), mean=0.0, stddev=noise_range)
-            world = tf.clip_by_value(t=world, clip_value_min=0.0, clip_value_max=1.0)
+            noise = tf.truncated_normal(shape=((batch_size,) + dataset.world_shape), mean=0.0, stddev=noise_range)
+            world = tf.clip_by_value(t=(world + noise), clip_value_min=0.0, clip_value_max=1.0)
             batch[value_name] = world
     if 'alternatives' in batch:
         batch.pop('alternatives')
