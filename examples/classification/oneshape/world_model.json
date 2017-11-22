@@ -1,1 +1,4102 @@
-[{"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8645d38>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.RectangleShape object at 0x7efde8643390>", "size": {"x": 0.07677667533949205, "y": 0.03168857952182447}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8645dc8>", "rgb": [1.0, 0.0, 1.0], "shade": -0.15154164322230543}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef360>"}, "center": {"x": 0.4164840414806419, "y": 0.5014991875145586}, "rotation": 0.8555023265962477}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8645e58>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.PentagonShape object at 0x7efdf9ac1fd0>", "size": {"x": 0.0701503710721525, "y": 0.06671696752869366}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8645ee8>", "rgb": [1.0, 1.0, 1.0], "shade": 0.0}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef380>"}, "center": {"x": 0.7203243330985134, "y": 0.6795552214670637}, "rotation": 0.09405689291659369}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8659090>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.SemicircleShape object at 0x7efdf7ef1860>", "size": {"x": 0.08318293615097044, "y": 0.04159146807548522}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8659168>", "rgb": [1.0, 0.0, 0.0], "shade": 0.0005911356851618102}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef360>"}, "center": {"x": 0.09533146102840284, "y": 0.7199613149595085}, "rotation": 0.29597895343197544}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde86592d0>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.CrossShape object at 0x7efdf9ac1fd0>", "size": {"x": 0.09492619734151081, "y": 0.09492619734151081}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde86593a8>", "rgb": [1.0, 1.0, 1.0], "shade": -0.21188351838398883}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef380>"}, "center": {"x": 0.8848079265252159, "y": 0.12269924968520962}, "rotation": 0.17450916777491532}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8659510>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.TriangleShape object at 0x7efdf7ef1860>", "size": {"x": 0.0781515138916407, "y": 0.0676811963743733}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde86595e8>", "rgb": [0.0, 0.0, 1.0], "shade": -0.13989187543635606}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef360>"}, "center": {"x": 0.654892838107215, "y": 0.666794274821597}, "rotation": 0.586038486881653}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8659750>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.SemicircleShape object at 0x7efdf9ac1fd0>", "size": {"x": 0.07265175943821071, "y": 0.03632587971910536}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8659828>", "rgb": [1.0, 1.0, 1.0], "shade": -0.05921507782055972}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef380>"}, "center": {"x": 0.5079530346695487, "y": 0.19896870990625326}, "rotation": 0.24896648027007007}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8659990>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.CircleShape object at 0x7efdf7ef1860>", "size": {"x": 0.06524015975325267, "y": 0.06524015975325267}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8659a68>", "rgb": [0.0, 1.0, 0.0], "shade": -0.021407945077888218}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef360>"}, "center": {"x": 0.40980233643843667, "y": 0.5603968334734214}, "rotation": 0.8220752375359641}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8659bd0>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.TriangleShape object at 0x7efdf9ac1fd0>", "size": {"x": 0.0972584708652986, "y": 0.08422830650257727}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8659ca8>", "rgb": [0.0, 1.0, 0.0], "shade": 0.17132863957353966}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef380>"}, "center": {"x": 0.19856729773259107, "y": 0.9201734112257082}, "rotation": 0.17580141663430848}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8659e10>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.RectangleShape object at 0x7efdf7ef1860>", "size": {"x": 0.07641097224659055, "y": 0.027205219411426115}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8659ee8>", "rgb": [0.0, 0.0, 1.0], "shade": 0.14039722152548756}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef360>"}, "center": {"x": 0.5563175306513011, "y": 0.27011175214232686}, "rotation": 0.2645229589916934}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde865f090>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.TriangleShape object at 0x7efdf9ac1fd0>", "size": {"x": 0.09894677711971028, "y": 0.08569042260826595}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde865f168>", "rgb": [0.0, 0.0, 1.0], "shade": -0.12965083750547993}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef380>"}, "center": {"x": 0.5435155136790929, "y": 0.2699547999901787}, "rotation": 0.4529325198286904}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde865f2d0>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.SemicircleShape object at 0x7efdf7ef1860>", "size": {"x": 0.09093810648213961, "y": 0.045469053241069805}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde865f3a8>", "rgb": [0.0, 1.0, 0.0], "shade": -0.05339300485472866}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef360>"}, "center": {"x": 0.20931860256433554, "y": 0.49393028969369956}, "rotation": 0.11961933565731098}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde865f510>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.TriangleShape object at 0x7efdf9ac17b8>", "size": {"x": 0.06708117604743312, "y": 0.058094002572813275}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde865f678>", "rgb": [1.0, 0.0, 1.0], "shade": 0.1902286424397883}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef390>"}, "center": {"x": 0.9392589045462624, "y": 0.2299555883048907}, "rotation": 0.25659837113637984}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde865f750>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.CircleShape object at 0x7efdf7ef1860>", "size": {"x": 0.08838897423192067, "y": 0.08838897423192067}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde865f828>", "rgb": [0.0, 1.0, 1.0], "shade": 0.11601856904846373}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef360>"}, "center": {"x": 0.7339789141728268, "y": 0.9065197830680808}, "rotation": 0.551966953325841}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde865f990>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.SemicircleShape object at 0x7efdf9ac17b8>", "size": {"x": 0.08723301778865841, "y": 0.043616508894329206}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde865fa68>", "rgb": [1.0, 1.0, 0.0], "shade": -0.09600925868019014}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef390>"}, "center": {"x": 0.43245467908926083, "y": 0.46230352284038134}, "rotation": 0.7997754402261745}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde865f828>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.CircleShape object at 0x7efdf7ef1860>", "size": {"x": 0.08255009042740057, "y": 0.08255009042740057}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde865faf8>", "rgb": [1.0, 1.0, 1.0], "shade": 0.0}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef360>"}, "center": {"x": 0.807137170507605, "y": 0.7908197463921102}, "rotation": 0.944402323635855}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde865fa68>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.SemicircleShape object at 0x7efde862cb70>", "size": {"x": 0.08694949888034592, "y": 0.04347474944017296}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde865fb88>", "rgb": [0.0, 1.0, 0.0], "shade": 0.3222523623413318}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef390>"}, "center": {"x": 0.5601150945622688, "y": 0.20327577601116997}, "rotation": 0.7752384520416362}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde865faf8>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.CrossShape object at 0x7efdf7ef1860>", "size": {"x": 0.061920837132901536, "y": 0.061920837132901536}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde865fc18>", "rgb": [1.0, 1.0, 0.0], "shade": -0.15173530459529452}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef360>"}, "center": {"x": 0.028551438577072874, "y": 0.9214224354446797}, "rotation": 0.19168041550218295}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde865fb88>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.TriangleShape object at 0x7efde862cb70>", "size": {"x": 0.07734783676836378, "y": 0.06698519156917508}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde865fca8>", "rgb": [0.0, 1.0, 1.0], "shade": -0.17648045845642238}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef390>"}, "center": {"x": 0.15830786380901585, "y": 0.20258753170460098}, "rotation": 0.10651962747648291}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde865fe10>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.SquareShape object at 0x7efdf7ef1860>", "size": {"x": 0.07598473433172477, "y": 0.07598473433172477}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde865fee8>", "rgb": [1.0, 0.0, 1.0], "shade": 0.07790190447378222}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef360>"}, "center": {"x": 0.8342215760300877, "y": 0.0653758362528628}, "rotation": 0.12839250600020635}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8136090>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.SemicircleShape object at 0x7efde862cb70>", "size": {"x": 0.08270770305416342, "y": 0.04135385152708171}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8136168>", "rgb": [0.0, 1.0, 1.0], "shade": 0.05126004870095206}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef390>"}, "center": {"x": 0.18701554063188697, "y": 0.7532094980728101}, "rotation": 0.9019940821051344}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde81362d0>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.PentagonShape object at 0x7efdf7ef1860>", "size": {"x": 0.06628292904989552, "y": 0.06303881159203246}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde81363a8>", "rgb": [1.0, 1.0, 0.0], "shade": -0.025812527781300058}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef360>"}, "center": {"x": 0.7375362888058422, "y": 0.2203817114496055}, "rotation": 0.3401979941393606}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8136510>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.EllipseShape object at 0x7efde862cb70>", "size": {"x": 0.08784053433825877, "y": 0.03326865844149334}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde81365e8>", "rgb": [1.0, 1.0, 1.0], "shade": 0.0}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef390>"}, "center": {"x": 0.2349888296297371, "y": 0.18489416694649463}, "rotation": 0.275955405871523}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8136750>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.EllipseShape object at 0x7efdf7ef1860>", "size": {"x": 0.07856849927276581, "y": 0.031720531759330796}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8136828>", "rgb": [1.0, 0.0, 0.0], "shade": -0.14951599624862033}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef360>"}, "center": {"x": 0.026386635649030432, "y": 0.8964162068051095}, "rotation": 0.45286461240165277}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8136990>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.CrossShape object at 0x7efde862cb70>", "size": {"x": 0.09945610779569766, "y": 0.09945610779569766}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8136a68>", "rgb": [1.0, 1.0, 1.0], "shade": -0.26258278520921585}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef390>"}, "center": {"x": 0.5257476938344139, "y": 0.9600961363800983}, "rotation": 0.4232932932188229}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8136bd0>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.RectangleShape object at 0x7efdf7ef1860>", "size": {"x": 0.07064009299751113, "y": 0.02774567792816117}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8136ca8>", "rgb": [1.0, 0.0, 0.0], "shade": -0.08833824353902515}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef360>"}, "center": {"x": 0.3761253330168022, "y": 0.6587428105988832}, "rotation": 0.7514184633920047}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8136e10>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.EllipseShape object at 0x7efde862cb70>", "size": {"x": 0.06299980626964297, "y": 0.02784365058325594}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8136ee8>", "rgb": [0.0, 1.0, 1.0], "shade": 0.16770384617017878}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef390>"}, "center": {"x": 0.07487008576892384, "y": 0.5063146665405734}, "rotation": 0.6628058927957525}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde813b090>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.SquareShape object at 0x7efdf7ef1860>", "size": {"x": 0.06092922877891681, "y": 0.06092922877891681}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde813b168>", "rgb": [0.0, 1.0, 1.0], "shade": -0.1813696803136733}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef360>"}, "center": {"x": 0.4973257904804327, "y": 0.20200932823520446}, "rotation": 0.3748717634550367}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde813b2d0>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.EllipseShape object at 0x7efde862cb70>", "size": {"x": 0.09163592313340899, "y": 0.045736129898763696}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde813b3a8>", "rgb": [1.0, 0.0, 0.0], "shade": -0.02813377291872395}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef390>"}, "center": {"x": 0.16411927728233422, "y": 0.062229040830447335}, "rotation": 0.5154037817299478}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde813b510>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.TriangleShape object at 0x7efdf7ef1860>", "size": {"x": 0.06591814532641489, "y": 0.05708678842302976}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde813b5e8>", "rgb": [1.0, 0.0, 0.0], "shade": -0.29125399835049925}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef360>"}, "center": {"x": 0.7973472921105571, "y": 0.6901874054394234}, "rotation": 0.17245189848375453}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde813b750>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.SquareShape object at 0x7efde862cb70>", "size": {"x": 0.06732989342963844, "y": 0.06732989342963844}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde813b828>", "rgb": [1.0, 1.0, 1.0], "shade": -0.13003514768849078}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef390>"}, "center": {"x": 0.04297826741500421, "y": 0.1814589543221985}, "rotation": 0.5470306210921592}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde813b990>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.CrossShape object at 0x7efdf7ef1860>", "size": {"x": 0.09853606491476123, "y": 0.09853606491476123}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde813ba68>", "rgb": [0.0, 1.0, 0.0], "shade": -0.009330350198960261}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef360>"}, "center": {"x": 0.6547840049703352, "y": 0.08236049827336323}, "rotation": 0.7316737878427441}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde813bbd0>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.RectangleShape object at 0x7efde862cb70>", "size": {"x": 0.07516818999659522, "y": 0.026930974725420952}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde813bca8>", "rgb": [0.0, 0.0, 1.0], "shade": -0.03286196606045124}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef390>"}, "center": {"x": 0.4188377591468522, "y": 0.8288600202897932}, "rotation": 0.2187195867062306}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde813be10>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.SemicircleShape object at 0x7efdf7ef1860>", "size": {"x": 0.07610423913988137, "y": 0.03805211956994069}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde813bee8>", "rgb": [0.0, 0.0, 1.0], "shade": -0.29213165253764}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef360>"}, "center": {"x": 0.16152953265902015, "y": 0.5834815375304734}, "rotation": 0.3523528128400528}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8141090>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.SemicircleShape object at 0x7efde862cb70>", "size": {"x": 0.05622188915183355, "y": 0.028110944575916775}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8141168>", "rgb": [1.0, 0.0, 1.0], "shade": -0.28265679347676487}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef390>"}, "center": {"x": 0.47738497584564243, "y": 0.2572993103969349}, "rotation": 0.6766756266463206}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde81412d0>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.SemicircleShape object at 0x7efdf7ef1860>", "size": {"x": 0.08790075947325628, "y": 0.04395037973662814}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde81413a8>", "rgb": [0.0, 1.0, 1.0], "shade": 0.05411285397355005}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef360>"}, "center": {"x": 0.08228810026044575, "y": 0.54943996456945}, "rotation": 0.05886594407145296}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8141510>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.EllipseShape object at 0x7efde862cb70>", "size": {"x": 0.06150793307657684, "y": 0.02285574388050423}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde81415e8>", "rgb": [0.0, 1.0, 1.0], "shade": 0.010464258138264817}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef390>"}, "center": {"x": 0.1405284249689689, "y": 0.10436366345454884}, "rotation": 0.6923150185496204}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8141750>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.CrossShape object at 0x7efdf7ef1860>", "size": {"x": 0.05528284953158854, "y": 0.05528284953158854}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8141828>", "rgb": [0.0, 0.0, 1.0], "shade": 0.193670955216608}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef360>"}, "center": {"x": 0.24532107484439236, "y": 0.5160805777506269}, "rotation": 0.4511822035883083}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8141990>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.SemicircleShape object at 0x7efde862cb70>", "size": {"x": 0.08241970798476876, "y": 0.04120985399238438}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8141a68>", "rgb": [1.0, 0.0, 1.0], "shade": 0.05817488779385092}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef390>"}, "center": {"x": 0.3562593039165509, "y": 0.8338450114920369}, "rotation": 0.7254697236093587}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8141bd0>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.EllipseShape object at 0x7efdf7ef1860>", "size": {"x": 0.06388062204987104, "y": 0.02960778687050431}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8141ca8>", "rgb": [1.0, 0.0, 0.0], "shade": 0.15593794908348124}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef360>"}, "center": {"x": 0.768955784126739, "y": 0.4265082432860131}, "rotation": 0.778482140982522}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8141e10>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.PentagonShape object at 0x7efde862cb70>", "size": {"x": 0.06164033802870161, "y": 0.05862344514883263}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8141ee8>", "rgb": [1.0, 1.0, 0.0], "shade": 0.06911274163740255}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef390>"}, "center": {"x": 0.6380462957789292, "y": 0.301369143007882}, "rotation": 0.9660067663172655}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8147090>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.CircleShape object at 0x7efdf7ef1860>", "size": {"x": 0.09377758571249563, "y": 0.09377758571249563}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8147168>", "rgb": [1.0, 1.0, 1.0], "shade": 0.0}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef360>"}, "center": {"x": 0.48368453754217344, "y": 0.7916633390242774}, "rotation": 0.15985093070819933}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde81472d0>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.CircleShape object at 0x7efde862cb70>", "size": {"x": 0.08142138988504408, "y": 0.08142138988504408}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde81473a8>", "rgb": [1.0, 0.0, 0.0], "shade": 0.01597159576239959}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef390>"}, "center": {"x": 0.633386544951069, "y": 0.2872760172702612}, "rotation": 0.23258655440846931}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8147510>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.TriangleShape object at 0x7efdf7ef1860>", "size": {"x": 0.07513586351748328, "y": 0.06506956654142092}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde81475e8>", "rgb": [1.0, 0.0, 0.0], "shade": -0.2489411396312973}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef360>"}, "center": {"x": 0.13027733515946738, "y": 0.388005714771409}, "rotation": 0.48570713677579425}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8147750>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.PentagonShape object at 0x7efde862cb70>", "size": {"x": 0.0994344697451669, "y": 0.09456780039549427}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8147828>", "rgb": [1.0, 0.0, 1.0], "shade": 0.11520825786227525}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef390>"}, "center": {"x": 0.22852076821740264, "y": 0.5047543554515969}, "rotation": 0.6948274813074282}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8147990>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.CircleShape object at 0x7efdf7ef1860>", "size": {"x": 0.07261603996704563, "y": 0.07261603996704563}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8147a68>", "rgb": [1.0, 0.0, 0.0], "shade": 0.26224515086461664}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef360>"}, "center": {"x": 0.11575289320706306, "y": 0.14822828170680857}, "rotation": 0.009229450985808518}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8147bd0>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.SemicircleShape object at 0x7efde862cb70>", "size": {"x": 0.09530246743562681, "y": 0.04765123371781341}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8147ca8>", "rgb": [1.0, 0.0, 0.0], "shade": -0.09373501699064737}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef390>"}, "center": {"x": 0.8543884653510753, "y": 0.8831424410839684}, "rotation": 0.014250983012102147}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8147e10>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.RectangleShape object at 0x7efdf7ef1860>", "size": {"x": 0.07216891510816059, "y": 0.025212637843104638}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8147ee8>", "rgb": [1.0, 0.0, 0.0], "shade": 0.11119792647306409}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef360>"}, "center": {"x": 0.763883222496075, "y": 0.48768784790626285}, "rotation": 0.904960314078606}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde814a090>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.RectangleShape object at 0x7efde862cb70>", "size": {"x": 0.0581624761174582, "y": 0.023661523452645886}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde814a168>", "rgb": [1.0, 0.0, 0.0], "shade": 0.29927850740059275}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef390>"}, "center": {"x": 0.936139175845681, "y": 0.9184298463664876}, "rotation": 0.3062601021441309}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde814a2d0>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.RectangleShape object at 0x7efdf7ef1860>", "size": {"x": 0.06154127271020524, "y": 0.02544312395030299}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde814a3a8>", "rgb": [1.0, 0.0, 1.0], "shade": 0.3297474778699222}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef360>"}, "center": {"x": 0.4476707399444044, "y": 0.9537311120211809}, "rotation": 0.9777240585071418}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde814a510>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.EllipseShape object at 0x7efde862cb70>", "size": {"x": 0.057622133729100855, "y": 0.020518580698271723}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde814a5e8>", "rgb": [1.0, 1.0, 0.0], "shade": 0.25474301179517417}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef390>"}, "center": {"x": 0.28763273998523897, "y": 0.8637890030121469}, "rotation": 0.5893296962829632}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde814a750>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.TriangleShape object at 0x7efdf7ef1860>", "size": {"x": 0.06989516215135523, "y": 0.060530986024706225}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde814a828>", "rgb": [0.0, 1.0, 0.0], "shade": -0.2206479232817261}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef360>"}, "center": {"x": 0.04040650247418187, "y": 0.43119861292902195}, "rotation": 0.3244826898127616}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde814a990>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.CrossShape object at 0x7efde862cb70>", "size": {"x": 0.09487836509750006, "y": 0.09487836509750006}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde814aa68>", "rgb": [0.0, 1.0, 0.0], "shade": 0.09283435385093536}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef390>"}, "center": {"x": 0.037334286718865406, "y": 0.37633444181085385}, "rotation": 0.3421691567651678}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde814abd0>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.SemicircleShape object at 0x7efdf7ef1860>", "size": {"x": 0.050407824778147564, "y": 0.025203912389073782}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde814aca8>", "rgb": [1.0, 0.0, 1.0], "shade": -0.1298276288204075}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef360>"}, "center": {"x": 0.07557691904488462, "y": 0.33630434164313106}, "rotation": 0.8234506328640294}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde814ae10>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.RectangleShape object at 0x7efde862cb70>", "size": {"x": 0.060647588685684484, "y": 0.022730776831593982}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde814aee8>", "rgb": [1.0, 1.0, 0.0], "shade": -0.0032885393813241836}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef390>"}, "center": {"x": 0.6546215991301442, "y": 0.03870462362904048}, "rotation": 0.10461506307557711}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8153090>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.SemicircleShape object at 0x7efdf7ef1860>", "size": {"x": 0.05986024546054139, "y": 0.029930122730270695}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8153168>", "rgb": [1.0, 1.0, 0.0], "shade": -0.008857238783864577}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef360>"}, "center": {"x": 0.4792285759407833, "y": 0.562307484183271}, "rotation": 0.3352407727158473}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde81532d0>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.CrossShape object at 0x7efde862cb70>", "size": {"x": 0.06589542982388025, "y": 0.06589542982388025}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde81533a8>", "rgb": [0.0, 1.0, 1.0], "shade": 0.23769210517140751}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef390>"}, "center": {"x": 0.1842786600370242, "y": 0.30293817304453285}, "rotation": 0.8432265774454621}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8153510>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.CrossShape object at 0x7efdf7ef1860>", "size": {"x": 0.08061172454340869, "y": 0.08061172454340869}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde81535e8>", "rgb": [1.0, 0.0, 1.0], "shade": -0.23050963217456635}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef360>"}, "center": {"x": 0.6751576937526568, "y": 0.14374739100317624}, "rotation": 0.442801352695371}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8153750>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.CircleShape object at 0x7efde862cb70>", "size": {"x": 0.07144823081716913, "y": 0.07144823081716913}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8153828>", "rgb": [0.0, 1.0, 0.0], "shade": -0.10731689398948865}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef390>"}, "center": {"x": 0.08596903599636496, "y": 0.8846291515998553}, "rotation": 0.15725809250998002}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8153990>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.TriangleShape object at 0x7efdf7ef1860>", "size": {"x": 0.09930830329380899, "y": 0.08600351345916843}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8153a68>", "rgb": [0.0, 0.0, 1.0], "shade": -0.24177121485287542}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef360>"}, "center": {"x": 0.7962524357584346, "y": 0.6120898142513259}, "rotation": 0.7349917825632907}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8153bd0>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.PentagonShape object at 0x7efde862cb70>", "size": {"x": 0.061374098085888194, "y": 0.05837023591632188}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8153ca8>", "rgb": [1.0, 1.0, 0.0], "shade": -0.014042579036498434}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef390>"}, "center": {"x": 0.7026591470198655, "y": 0.8272177187229907}, "rotation": 0.4931097265256086}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8153e10>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.SemicircleShape object at 0x7efdf7ef1860>", "size": {"x": 0.08119627924566512, "y": 0.04059813962283256}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8153ee8>", "rgb": [0.0, 1.0, 1.0], "shade": 0.014103244079334106}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef360>"}, "center": {"x": 0.20306844632446908, "y": 0.578175184334233}, "rotation": 0.7040983033814922}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8156090>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.TriangleShape object at 0x7efde862cb70>", "size": {"x": 0.09862867865103864, "y": 0.08541494125349137}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8156168>", "rgb": [0.0, 0.0, 1.0], "shade": 0.18572796736465727}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef390>"}, "center": {"x": 0.7925541715683071, "y": 0.8664173431049051}, "rotation": 0.2706856464003665}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde81562d0>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.CircleShape object at 0x7efdf7ef1860>", "size": {"x": 0.06529352601406754, "y": 0.06529352601406754}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde81563a8>", "rgb": [0.0, 1.0, 1.0], "shade": 0.08790339263296508}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef360>"}, "center": {"x": 0.2495586494470894, "y": 0.7096323207381467}, "rotation": 0.5038433093887744}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8156510>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.RectangleShape object at 0x7efde862cb70>", "size": {"x": 0.08741360105538762, "y": 0.03544993187211667}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde81565e8>", "rgb": [0.0, 1.0, 0.0], "shade": -0.14447144459665584}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef390>"}, "center": {"x": 0.6164389962939335, "y": 0.7096522385397578}, "rotation": 0.453687302112584}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8156750>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.RectangleShape object at 0x7efdf7ef1860>", "size": {"x": 0.0686311818890646, "y": 0.02401447103330149}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8156828>", "rgb": [1.0, 1.0, 0.0], "shade": -0.10316124414643386}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef360>"}, "center": {"x": 0.47817332471786766, "y": 0.8683427529976926}, "rotation": 0.5639688764222845}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8156990>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.RectangleShape object at 0x7efde862cb70>", "size": {"x": 0.08668205509669911, "y": 0.03656920836351848}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8156a68>", "rgb": [1.0, 0.0, 1.0], "shade": -0.22884609745939502}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef390>"}, "center": {"x": 0.7262684235140551, "y": 0.3795277299116836}, "rotation": 0.7197979099507801}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8156bd0>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.TriangleShape object at 0x7efdf7ef1860>", "size": {"x": 0.0919951522617358, "y": 0.07967013888368066}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8156ca8>", "rgb": [0.0, 0.0, 1.0], "shade": 0.0771223623369105}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef360>"}, "center": {"x": 0.8388117822953689, "y": 0.829835090227988}, "rotation": 0.9203027114594742}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8156e10>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.TriangleShape object at 0x7efde862cb70>", "size": {"x": 0.05268886683874188, "y": 0.045629897178965956}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8156ee8>", "rgb": [0.0, 1.0, 0.0], "shade": 0.20017706909638047}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef390>"}, "center": {"x": 0.2285506839673196, "y": 0.9302370034567441}, "rotation": 0.645763373088582}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde815b090>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.CrossShape object at 0x7efdf7ef1860>", "size": {"x": 0.07567412077609308, "y": 0.07567412077609308}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde815b168>", "rgb": [1.0, 1.0, 0.0], "shade": 0.1678710564688079}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef360>"}, "center": {"x": 0.4258242102818477, "y": 0.16356431759398105}, "rotation": 0.22107749575091562}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde815b2d0>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.CircleShape object at 0x7efde862cb70>", "size": {"x": 0.056764991058591285, "y": 0.056764991058591285}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde815b3a8>", "rgb": [1.0, 0.0, 1.0], "shade": 0.1731042221571428}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef390>"}, "center": {"x": 0.8653249558307167, "y": 0.778416135729197}, "rotation": 0.4280364809473026}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde815b510>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.SquareShape object at 0x7efdf7ef1860>", "size": {"x": 0.09183136958835772, "y": 0.09183136958835772}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde815b5e8>", "rgb": [0.0, 0.0, 1.0], "shade": -0.1930308368025364}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef360>"}, "center": {"x": 0.22166333032488772, "y": 0.3977704431312763}, "rotation": 0.815534002431764}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde815b750>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.SemicircleShape object at 0x7efde862cb70>", "size": {"x": 0.07796031866429053, "y": 0.03898015933214526}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde815b828>", "rgb": [0.0, 0.0, 1.0], "shade": -0.30272787071972623}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef390>"}, "center": {"x": 0.497428806279814, "y": 0.07396345802327553}, "rotation": 0.43250916301253184}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde815b990>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.SquareShape object at 0x7efdf7ef1860>", "size": {"x": 0.06311874391374718, "y": 0.06311874391374718}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde815ba68>", "rgb": [0.0, 1.0, 1.0], "shade": 0.13959511794458065}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef360>"}, "center": {"x": 0.6840969626567618, "y": 0.3423451163051391}, "rotation": 0.3413434811772581}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde815bbd0>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.TriangleShape object at 0x7efde862cb70>", "size": {"x": 0.05845449788149409, "y": 0.05062308013083753}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde815bca8>", "rgb": [1.0, 0.0, 1.0], "shade": -0.17141337941253357}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef390>"}, "center": {"x": 0.6609328756145364, "y": 0.38149711155203914}, "rotation": 0.14008930506330997}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde815be10>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.SquareShape object at 0x7efdf7ef1860>", "size": {"x": 0.06388044570800615, "y": 0.06388044570800615}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde815bee8>", "rgb": [0.0, 1.0, 1.0], "shade": 0.19786858633079427}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef360>"}, "center": {"x": 0.4728026202855715, "y": 0.8736385610285732}, "rotation": 0.19966204327905623}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8161090>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.TriangleShape object at 0x7efde862cb70>", "size": {"x": 0.06306527991522459, "y": 0.05461613450336102}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8161168>", "rgb": [0.0, 1.0, 0.0], "shade": 0.13656219491713445}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef390>"}, "center": {"x": 0.5051501921590501, "y": 0.5168118572295484}, "rotation": 0.017250262803628735}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde81612d0>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.SemicircleShape object at 0x7efdf7ef1860>", "size": {"x": 0.07297280052214489, "y": 0.036486400261072444}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde81613a8>", "rgb": [1.0, 1.0, 0.0], "shade": -0.14112902574932581}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef360>"}, "center": {"x": 0.5909794046024812, "y": 0.564014790931453}, "rotation": 0.8223351553367413}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8161510>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.CrossShape object at 0x7efde862cb70>", "size": {"x": 0.08897657140404265, "y": 0.08897657140404265}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde81615e8>", "rgb": [0.0, 1.0, 0.0], "shade": 0.0679934792407753}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef390>"}, "center": {"x": 0.20758554749989866, "y": 0.8549136466405636}, "rotation": 0.5855561095334811}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8161750>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.SquareShape object at 0x7efdf7ef1860>", "size": {"x": 0.07975318603885749, "y": 0.07975318603885749}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8161828>", "rgb": [0.0, 1.0, 1.0], "shade": -0.2966996711951166}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef360>"}, "center": {"x": 0.6654473127246746, "y": 0.43001938894317937}, "rotation": 0.27061056430065056}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8161990>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.CircleShape object at 0x7efde862cb70>", "size": {"x": 0.08150005647800782, "y": 0.08150005647800782}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8161a68>", "rgb": [1.0, 0.0, 1.0], "shade": -0.25684084364269444}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef390>"}, "center": {"x": 0.2633871883685933, "y": 0.5446437798419238}, "rotation": 0.20301075182508455}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8161bd0>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.SquareShape object at 0x7efdf7ef1860>", "size": {"x": 0.07474677745239634, "y": 0.07474677745239634}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8161ca8>", "rgb": [0.0, 0.0, 1.0], "shade": -0.08563337205429222}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef360>"}, "center": {"x": 0.754407733248137, "y": 0.28459446923744336}, "rotation": 0.26915770263604577}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8161e10>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.EllipseShape object at 0x7efde862cb70>", "size": {"x": 0.05845802008909503, "y": 0.022022550023117222}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8161ee8>", "rgb": [1.0, 1.0, 1.0], "shade": -0.08581299695385412}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef390>"}, "center": {"x": 0.7552178431722836, "y": 0.579478391892304}, "rotation": 0.31412302854407537}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8166090>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.TriangleShape object at 0x7efdf7ef1860>", "size": {"x": 0.06746524789920588, "y": 0.05842661855332702}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8166168>", "rgb": [0.0, 0.0, 1.0], "shade": 0.037034612973542165}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef360>"}, "center": {"x": 0.8425371272306262, "y": 0.550039500142604}, "rotation": 0.3257039541711414}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde81662d0>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.EllipseShape object at 0x7efde862cb70>", "size": {"x": 0.09232780708915017, "y": 0.038277061226748454}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde81663a8>", "rgb": [0.0, 1.0, 1.0], "shade": -0.3116309477156613}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef390>"}, "center": {"x": 0.03879485727857679, "y": 0.4835594303167867}, "rotation": 0.26687275740712}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8166510>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.TriangleShape object at 0x7efdf7ef1860>", "size": {"x": 0.057540057829083335, "y": 0.04983115181521184}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde81665e8>", "rgb": [1.0, 0.0, 0.0], "shade": 0.010382014539817479}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef360>"}, "center": {"x": 0.8893971096145994, "y": 0.45286250410673845}, "rotation": 0.8414169282434576}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8166750>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.CrossShape object at 0x7efde862cb70>", "size": {"x": 0.06721076913120133, "y": 0.06721076913120133}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8166828>", "rgb": [0.0, 1.0, 1.0], "shade": -0.25602219074973626}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef390>"}, "center": {"x": 0.5430774409873235, "y": 0.9639202947644565}, "rotation": 0.5413246108105066}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8166990>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.EllipseShape object at 0x7efdf7ef1860>", "size": {"x": 0.07650141746049831, "y": 0.036197877841099915}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8166a68>", "rgb": [0.0, 1.0, 1.0], "shade": 0.12626026242478228}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef360>"}, "center": {"x": 0.16575576684949533, "y": 0.19844830672348746}, "rotation": 0.9343093502636861}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8166bd0>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.PentagonShape object at 0x7efde862cba8>", "size": {"x": 0.07908739555982033, "y": 0.07521658290397952}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8166d38>", "rgb": [0.0, 0.0, 1.0], "shade": -0.16306000234571644}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef380>"}, "center": {"x": 0.47981994974551856, "y": 0.044877483741179613}, "rotation": 0.47673593885948773}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8166e10>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.SemicircleShape object at 0x7efdf7ef1860>", "size": {"x": 0.06273885371534305, "y": 0.03136942685767152}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8166ee8>", "rgb": [1.0, 0.0, 1.0], "shade": 0.17869451975574024}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef360>"}, "center": {"x": 0.9805023670434158, "y": 0.9613181617249636}, "rotation": 0.4457167678635696}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde816b090>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.CrossShape object at 0x7efde862cba8>", "size": {"x": 0.0801740051974826, "y": 0.0801740051974826}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde816b168>", "rgb": [1.0, 1.0, 0.0], "shade": -0.16744639013074036}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef380>"}, "center": {"x": 0.6234973523442842, "y": 0.7810023111774077}, "rotation": 0.5208978400907995}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde816b2d0>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.SemicircleShape object at 0x7efde862ca90>", "size": {"x": 0.07502896708432352, "y": 0.03751448354216176}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde816b438>", "rgb": [1.0, 1.0, 1.0], "shade": 0.0}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef390>"}, "center": {"x": 0.436968431101613, "y": 0.23381591801038637}, "rotation": 0.026410134623053527}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde816b510>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.CrossShape object at 0x7efdf7ef1860>", "size": {"x": 0.07499873627792827, "y": 0.07499873627792827}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde816b5e8>", "rgb": [1.0, 1.0, 1.0], "shade": 0.0}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef380>"}, "center": {"x": 0.1693771878537682, "y": 0.41157871658645795}, "rotation": 0.7737940060505274}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde816b750>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.PentagonShape object at 0x7efde862ca90>", "size": {"x": 0.06408661745882928, "y": 0.06094999514153434}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde816b828>", "rgb": [1.0, 1.0, 1.0], "shade": 0.0}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef390>"}, "center": {"x": 0.8256530015052538, "y": 0.09303159034167086}, "rotation": 0.9319960815273043}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde816b990>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.TriangleShape object at 0x7efdf7ef1860>", "size": {"x": 0.08631063671536979, "y": 0.07474720401232011}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde816ba68>", "rgb": [1.0, 1.0, 1.0], "shade": 0.0}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef380>"}, "center": {"x": 0.2282845560768696, "y": 0.18199538769087198}, "rotation": 0.25740503422248084}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde816bbd0>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.CircleShape object at 0x7efde862ca90>", "size": {"x": 0.09896504577246172, "y": 0.09896504577246172}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde816bca8>", "rgb": [0.0, 1.0, 0.0], "shade": 0.05372422065105506}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef390>"}, "center": {"x": 0.7123909278178574, "y": 0.8358901308562321}, "rotation": 0.5927084036414624}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde816be10>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.RectangleShape object at 0x7efdf7ef1860>", "size": {"x": 0.06907044100466633, "y": 0.029600434796910758}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde816bee8>", "rgb": [0.0, 1.0, 0.0], "shade": -0.32291834891873633}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef380>"}, "center": {"x": 0.33505323419188837, "y": 0.14033133711076862}, "rotation": 0.9427654894186362}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8170090>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.RectangleShape object at 0x7efde862ca90>", "size": {"x": 0.07909768630094689, "y": 0.03927116256519105}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8170168>", "rgb": [0.0, 1.0, 1.0], "shade": 0.27856299849988053}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef390>"}, "center": {"x": 0.5946221272720862, "y": 0.3217009928769211}, "rotation": 0.46008213856906865}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde81702d0>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.SquareShape object at 0x7efdf7ef1860>", "size": {"x": 0.052986991299098125, "y": 0.052986991299098125}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde81703a8>", "rgb": [1.0, 0.0, 0.0], "shade": 0.294930064869476}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef380>"}, "center": {"x": 0.0324958241131329, "y": 0.43706617650328505}, "rotation": 0.1114327845646591}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8170510>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.RectangleShape object at 0x7efde862ca90>", "size": {"x": 0.06826056419446175, "y": 0.0284023421917734}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde81705e8>", "rgb": [0.0, 1.0, 1.0], "shade": -0.24827396993307752}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef390>"}, "center": {"x": 0.9103106563555947, "y": 0.43298556820427225}, "rotation": 0.4435695929504557}]}, {"size": 64, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8170750>", "rgb": [0.0, 0.0, 0.0], "shade": 0.0}, "entities": [{"id": 0, "shape": {"name": "<shapeworld.world.shape.EllipseShape object at 0x7efdf7ef1860>", "size": {"x": 0.07900265738334492, "y": 0.029235064780519404}}, "color": {"name": "<shapeworld.world.color.Color object at 0x7efde8170828>", "rgb": [0.0, 1.0, 0.0], "shade": -0.16518108444691396}, "texture": {"name": "<shapeworld.world.texture.SolidTexture object at 0x7efdf9bef380>"}, "center": {"x": 0.944805209352062, "y": 0.3725764839295198}, "rotation": 0.5920885775245845}]}]
+[
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7473117678>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.6517770006091596,
+          "y": 0.7212534877023739
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7473117708>",
+          "rgb": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "shade": 0.36264234147485985
+        },
+        "id": 0,
+        "rotation": 0.8404093506042379,
+        "shape": {
+          "name": "<shapeworld.world.shape.CircleShape object at 0x7f7481c0f7f0>",
+          "size": {
+            "x": 0.12080141360857326,
+            "y": 0.12080141360857326
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2360>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7473117798>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.7121462319750289,
+          "y": 0.5417488681862045
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7473117828>",
+          "rgb": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "shade": 0.03444713641062427
+        },
+        "id": 0,
+        "rotation": 0.16477776666903354,
+        "shape": {
+          "name": "<shapeworld.world.shape.CrossShape object at 0x7f748458d320>",
+          "size": {
+            "x": 0.07600435846436562,
+            "y": 0.07600435846436562
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2380>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7473117708>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.2959069301778424,
+          "y": 0.15017580172912592
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f74731178b8>",
+          "rgb": [
+            0.0,
+            1.0,
+            1.0
+          ],
+          "shade": 0.14848604972404625
+        },
+        "id": 0,
+        "rotation": 0.6013841083361053,
+        "shape": {
+          "name": "<shapeworld.world.shape.SemicircleShape object at 0x7f7481c0f7f0>",
+          "size": {
+            "x": 0.1188454154853582,
+            "y": 0.0594227077426791
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2360>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7473117828>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.7660888978725229,
+          "y": 0.4815619565597431
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f74731179d8>",
+          "rgb": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "shade": 0.02583046414398779
+        },
+        "id": 0,
+        "rotation": 0.5566191692559523,
+        "shape": {
+          "name": "<shapeworld.world.shape.EllipseShape object at 0x7f7484581ac8>",
+          "size": {
+            "x": 0.11404015233526553,
+            "y": 0.05573022549560822
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2390>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f74731178b8>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.03109741291495982,
+          "y": 0.37499640243180854
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7473117948>",
+          "rgb": [
+            1.0,
+            0.0,
+            1.0
+          ],
+          "shade": -0.22218422160506468
+        },
+        "id": 0,
+        "rotation": 0.3928067780096721,
+        "shape": {
+          "name": "<shapeworld.world.shape.TriangleShape object at 0x7f7481c0f7f0>",
+          "size": {
+            "x": 0.05333200442748507,
+            "y": 0.04618687066894622
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2360>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f74731179d8>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.8439251591135928,
+          "y": 0.09358212607573724
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7473117b40>",
+          "rgb": [
+            1.0,
+            0.0,
+            1.0
+          ],
+          "shade": -0.13311587565031707
+        },
+        "id": 0,
+        "rotation": 0.7412890764633556,
+        "shape": {
+          "name": "<shapeworld.world.shape.TriangleShape object at 0x7f748458d320>",
+          "size": {
+            "x": 0.07771384880874181,
+            "y": 0.06730216729423344
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2380>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7473117948>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.739404875341679,
+          "y": 0.7381193498893609
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7473117c18>",
+          "rgb": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "shade": -0.07921375069075283
+        },
+        "id": 0,
+        "rotation": 0.2708338075335436,
+        "shape": {
+          "name": "<shapeworld.world.shape.CrossShape object at 0x7f74829b3b70>",
+          "size": {
+            "x": 0.06740738169494516,
+            "y": 0.06740738169494516
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2390>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7473117b40>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.8698455127258824,
+          "y": 0.07563381461108831
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7473117ab0>",
+          "rgb": [
+            1.0,
+            1.0,
+            0.0
+          ],
+          "shade": 0.3498649459413861
+        },
+        "id": 0,
+        "rotation": 0.4792312995117338,
+        "shape": {
+          "name": "<shapeworld.world.shape.CircleShape object at 0x7f748458d320>",
+          "size": {
+            "x": 0.07641180383645046,
+            "y": 0.07641180383645046
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2380>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7473117cf0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.3195254666186974,
+          "y": 0.21435961239071788
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7473117dc8>",
+          "rgb": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "shade": 0.11811133026131258
+        },
+        "id": 0,
+        "rotation": 0.8220161123834497,
+        "shape": {
+          "name": "<shapeworld.world.shape.SemicircleShape object at 0x7f74829b3b70>",
+          "size": {
+            "x": 0.06930912243540661,
+            "y": 0.03465456121770331
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2390>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7473117f30>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.4310216833863081,
+          "y": 0.17538684822570083
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c01048>",
+          "rgb": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "shade": 0.14622488821156798
+        },
+        "id": 0,
+        "rotation": 0.6297462590058885,
+        "shape": {
+          "name": "<shapeworld.world.shape.PentagonShape object at 0x7f748458d320>",
+          "size": {
+            "x": 0.12368339032862875,
+            "y": 0.11762989432951934
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2380>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c011b0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.6726748937253793,
+          "y": 0.5100417020087235
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c01288>",
+          "rgb": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "shade": 0.2100619710296214
+        },
+        "id": 0,
+        "rotation": 0.8916536851334609,
+        "shape": {
+          "name": "<shapeworld.world.shape.RectangleShape object at 0x7f74829b3b70>",
+          "size": {
+            "x": 0.12033552023114746,
+            "y": 0.04226737699451513
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2390>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c013f0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.17615033217902298,
+          "y": 0.28570154548579973
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c014c8>",
+          "rgb": [
+            1.0,
+            0.0,
+            1.0
+          ],
+          "shade": -0.21274460387579586
+        },
+        "id": 0,
+        "rotation": 0.6335781729496932,
+        "shape": {
+          "name": "<shapeworld.world.shape.EllipseShape object at 0x7f748458d320>",
+          "size": {
+            "x": 0.10837919241689303,
+            "y": 0.04068396189765426
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2380>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c01630>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.37175947154257527,
+          "y": 0.29318413802038845
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c01708>",
+          "rgb": [
+            1.0,
+            0.0,
+            1.0
+          ],
+          "shade": -0.14423877148730577
+        },
+        "id": 0,
+        "rotation": 0.9549562651227559,
+        "shape": {
+          "name": "<shapeworld.world.shape.TriangleShape object at 0x7f74829b3b70>",
+          "size": {
+            "x": 0.12449696931574107,
+            "y": 0.10781753812160352
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2390>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c01870>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.5224708573513012,
+          "y": 0.25346068602673555
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c01948>",
+          "rgb": [
+            0.0,
+            1.0,
+            1.0
+          ],
+          "shade": -0.34437327553505687
+        },
+        "id": 0,
+        "rotation": 0.7888396298087628,
+        "shape": {
+          "name": "<shapeworld.world.shape.SquareShape object at 0x7f748458d320>",
+          "size": {
+            "x": 0.10932069257800231,
+            "y": 0.10932069257800231
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2380>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c01ab0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.1324393675321729,
+          "y": 0.6930864039774679
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c01b88>",
+          "rgb": [
+            1.0,
+            1.0,
+            0.0
+          ],
+          "shade": -0.025830870703290227
+        },
+        "id": 0,
+        "rotation": 0.8523039952496727,
+        "shape": {
+          "name": "<shapeworld.world.shape.CircleShape object at 0x7f74829b3b70>",
+          "size": {
+            "x": 0.10562190721693587,
+            "y": 0.10562190721693587
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2390>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c01cf0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.8510837057567965,
+          "y": 0.6308142548475627
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c01dc8>",
+          "rgb": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "shade": -0.1859400063894029
+        },
+        "id": 0,
+        "rotation": 0.11447325237282824,
+        "shape": {
+          "name": "<shapeworld.world.shape.CircleShape object at 0x7f748458d320>",
+          "size": {
+            "x": 0.08557149852381588,
+            "y": 0.08557149852381588
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2380>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c01f30>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.10090348814389649,
+          "y": 0.07377477766700102
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c06048>",
+          "rgb": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "shade": -0.228126467481024
+        },
+        "id": 0,
+        "rotation": 0.9311902618951867,
+        "shape": {
+          "name": "<shapeworld.world.shape.SquareShape object at 0x7f74829b3b70>",
+          "size": {
+            "x": 0.06777592013726888,
+            "y": 0.06777592013726888
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2390>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c061b0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.14874674583136716,
+          "y": 0.5109935756300102
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c06288>",
+          "rgb": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "shade": 0.06827900703142152
+        },
+        "id": 0,
+        "rotation": 0.6781003988761947,
+        "shape": {
+          "name": "<shapeworld.world.shape.TriangleShape object at 0x7f748458d320>",
+          "size": {
+            "x": 0.07182768825062724,
+            "y": 0.062204602720152234
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2380>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c063f0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.18101396167637274,
+          "y": 0.31379337826501275
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c064c8>",
+          "rgb": [
+            0.0,
+            1.0,
+            1.0
+          ],
+          "shade": -0.3257077498415066
+        },
+        "id": 0,
+        "rotation": 0.7374981387000962,
+        "shape": {
+          "name": "<shapeworld.world.shape.RectangleShape object at 0x7f74829b3b70>",
+          "size": {
+            "x": 0.10188614585845462,
+            "y": 0.03653840714542764
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2390>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c06630>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.4123789896976642,
+          "y": 0.6095171806567343
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c06708>",
+          "rgb": [
+            1.0,
+            1.0,
+            0.0
+          ],
+          "shade": -0.008878176591385624
+        },
+        "id": 0,
+        "rotation": 0.6774858930366889,
+        "shape": {
+          "name": "<shapeworld.world.shape.TriangleShape object at 0x7f748458d320>",
+          "size": {
+            "x": 0.10370787414564905,
+            "y": 0.08981365358261147
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2380>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c06870>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.7182873619206954,
+          "y": 0.18593475439411433
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c06948>",
+          "rgb": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "shade": -0.03830420305424542
+        },
+        "id": 0,
+        "rotation": 0.06020760421804672,
+        "shape": {
+          "name": "<shapeworld.world.shape.CircleShape object at 0x7f74829b3b70>",
+          "size": {
+            "x": 0.0744731323492151,
+            "y": 0.0744731323492151
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2390>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c06ab0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.7199016219353768,
+          "y": 0.5866374561690373
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c06b88>",
+          "rgb": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "shade": -0.11579114534687232
+        },
+        "id": 0,
+        "rotation": 0.10397118677752393,
+        "shape": {
+          "name": "<shapeworld.world.shape.SquareShape object at 0x7f748458d320>",
+          "size": {
+            "x": 0.056806177146867774,
+            "y": 0.056806177146867774
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2380>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c06cf0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.19706697344230983,
+          "y": 0.2999138302167199
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c06dc8>",
+          "rgb": [
+            1.0,
+            1.0,
+            0.0
+          ],
+          "shade": 0.3531790032710747
+        },
+        "id": 0,
+        "rotation": 0.31175808849679765,
+        "shape": {
+          "name": "<shapeworld.world.shape.CircleShape object at 0x7f74829b3b70>",
+          "size": {
+            "x": 0.11732743339867155,
+            "y": 0.11732743339867155
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2390>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c06f30>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.2858016697674195,
+          "y": 0.5927300977070692
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c0a048>",
+          "rgb": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "shade": 0.13119612285743906
+        },
+        "id": 0,
+        "rotation": 0.6709738063130612,
+        "shape": {
+          "name": "<shapeworld.world.shape.RectangleShape object at 0x7f748458d320>",
+          "size": {
+            "x": 0.11481873092843788,
+            "y": 0.04110887489579845
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2380>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c0a1b0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.8553366319511599,
+          "y": 0.6837552297486864
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c0a288>",
+          "rgb": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "shade": -0.09779707365400048
+        },
+        "id": 0,
+        "rotation": 0.9529275981038965,
+        "shape": {
+          "name": "<shapeworld.world.shape.TriangleShape object at 0x7f74829b3b70>",
+          "size": {
+            "x": 0.07351357159365299,
+            "y": 0.06366462052302957
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2390>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c0a3f0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.07251758539108033,
+          "y": 0.4905773728110452
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c0a4c8>",
+          "rgb": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "shade": 0.20962908757912435
+        },
+        "id": 0,
+        "rotation": 0.5639197619923554,
+        "shape": {
+          "name": "<shapeworld.world.shape.TriangleShape object at 0x7f748458d320>",
+          "size": {
+            "x": 0.11696841008701148,
+            "y": 0.10129761457562791
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2380>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c0a630>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.4347340204351803,
+          "y": 0.2955217174971747
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c0a708>",
+          "rgb": [
+            1.0,
+            1.0,
+            0.0
+          ],
+          "shade": 0.2502913625175664
+        },
+        "id": 0,
+        "rotation": 0.8921679436326496,
+        "shape": {
+          "name": "<shapeworld.world.shape.TriangleShape object at 0x7f74829b3b70>",
+          "size": {
+            "x": 0.050347518004919434,
+            "y": 0.04360222960975464
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2390>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c0a870>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.8005556230381002,
+          "y": 0.8746501803096871
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c0a948>",
+          "rgb": [
+            1.0,
+            1.0,
+            0.0
+          ],
+          "shade": 0.11992921738309381
+        },
+        "id": 0,
+        "rotation": 0.49939765776178546,
+        "shape": {
+          "name": "<shapeworld.world.shape.PentagonShape object at 0x7f748458d320>",
+          "size": {
+            "x": 0.12337917822948914,
+            "y": 0.11734057143029679
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2380>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c0aab0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.10368304610640178,
+          "y": 0.2031654034882988
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c0ab88>",
+          "rgb": [
+            0.0,
+            1.0,
+            1.0
+          ],
+          "shade": -0.21504578363175622
+        },
+        "id": 0,
+        "rotation": 0.4990022955024528,
+        "shape": {
+          "name": "<shapeworld.world.shape.SquareShape object at 0x7f74829b3b70>",
+          "size": {
+            "x": 0.08726676723427579,
+            "y": 0.08726676723427579
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2390>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c0acf0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.31923378229500077,
+          "y": 0.6558935730569777
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c0adc8>",
+          "rgb": [
+            1.0,
+            1.0,
+            0.0
+          ],
+          "shade": 0.11320375460482812
+        },
+        "id": 0,
+        "rotation": 0.30280555979742585,
+        "shape": {
+          "name": "<shapeworld.world.shape.TriangleShape object at 0x7f748458d320>",
+          "size": {
+            "x": 0.0606660114967723,
+            "y": 0.052538307102483625
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2380>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c0af30>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.510241818213853,
+          "y": 0.926345965644525
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c0f048>",
+          "rgb": [
+            1.0,
+            0.0,
+            1.0
+          ],
+          "shade": -0.3996787869353595
+        },
+        "id": 0,
+        "rotation": 0.2517894566949329,
+        "shape": {
+          "name": "<shapeworld.world.shape.CrossShape object at 0x7f74829b3b70>",
+          "size": {
+            "x": 0.05554319606537507,
+            "y": 0.05554319606537507
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2390>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c0f1b0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.6898192327059359,
+          "y": 0.3882962792477036
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c0f288>",
+          "rgb": [
+            1.0,
+            0.0,
+            1.0
+          ],
+          "shade": 0.08812844251396228
+        },
+        "id": 0,
+        "rotation": 0.2327568031076096,
+        "shape": {
+          "name": "<shapeworld.world.shape.SquareShape object at 0x7f748458d320>",
+          "size": {
+            "x": 0.06106548506668316,
+            "y": 0.06106548506668316
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2380>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c0f3f0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.07404337331044131,
+          "y": 0.49610434163677986
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c0f4c8>",
+          "rgb": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "shade": -0.010975652628370976
+        },
+        "id": 0,
+        "rotation": 0.7375522782196793,
+        "shape": {
+          "name": "<shapeworld.world.shape.RectangleShape object at 0x7f74829b3b70>",
+          "size": {
+            "x": 0.10429633239084879,
+            "y": 0.04250657731193101
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2390>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c0f630>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.041612294110744186,
+          "y": 0.42859408609950567
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c0f708>",
+          "rgb": [
+            1.0,
+            1.0,
+            0.0
+          ],
+          "shade": 0.3333755319314834
+        },
+        "id": 0,
+        "rotation": 0.3041111871116604,
+        "shape": {
+          "name": "<shapeworld.world.shape.CrossShape object at 0x7f748458d320>",
+          "size": {
+            "x": 0.08187086807869448,
+            "y": 0.08187086807869448
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2380>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c0f870>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.9089116604834551,
+          "y": 0.31836218455763077
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c0f948>",
+          "rgb": [
+            1.0,
+            1.0,
+            0.0
+          ],
+          "shade": -0.16536455216890428
+        },
+        "id": 0,
+        "rotation": 0.39470678021774563,
+        "shape": {
+          "name": "<shapeworld.world.shape.TriangleShape object at 0x7f74829b3b70>",
+          "size": {
+            "x": 0.06977669461878136,
+            "y": 0.06042839013197359
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2390>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c0fab0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.3985835086187013,
+          "y": 0.1485343382476253
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c0fb88>",
+          "rgb": [
+            0.0,
+            1.0,
+            1.0
+          ],
+          "shade": -0.037420078661352656
+        },
+        "id": 0,
+        "rotation": 0.26274938486056865,
+        "shape": {
+          "name": "<shapeworld.world.shape.TriangleShape object at 0x7f748458d320>",
+          "size": {
+            "x": 0.05315660440846827,
+            "y": 0.046034969796653405
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2380>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c0fcf0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.0714198392469022,
+          "y": 0.46644374646918285
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c0fdc8>",
+          "rgb": [
+            1.0,
+            0.0,
+            1.0
+          ],
+          "shade": -0.34303465730399535
+        },
+        "id": 0,
+        "rotation": 0.3905181694244899,
+        "shape": {
+          "name": "<shapeworld.world.shape.CrossShape object at 0x7f74829b3b70>",
+          "size": {
+            "x": 0.09520997742024845,
+            "y": 0.09520997742024845
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2390>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c0ff30>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.20234902116367637,
+          "y": 0.30349939226475187
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c15048>",
+          "rgb": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "shade": -0.02733903782582441
+        },
+        "id": 0,
+        "rotation": 0.5214072761746461,
+        "shape": {
+          "name": "<shapeworld.world.shape.SemicircleShape object at 0x7f748458d320>",
+          "size": {
+            "x": 0.11421581023686632,
+            "y": 0.05710790511843316
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2380>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c151b0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.2956398404277105,
+          "y": 0.6250410488148191
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c15288>",
+          "rgb": [
+            0.0,
+            1.0,
+            1.0
+          ],
+          "shade": -0.3439435705182769
+        },
+        "id": 0,
+        "rotation": 0.18790392918948529,
+        "shape": {
+          "name": "<shapeworld.world.shape.PentagonShape object at 0x7f74829b3b70>",
+          "size": {
+            "x": 0.07515978344097153,
+            "y": 0.07148120180486855
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2390>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c153f0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.5725293385700331,
+          "y": 0.568094939896457
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c15558>",
+          "rgb": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "shade": 0.04743393104916328
+        },
+        "id": 0,
+        "rotation": 0.30027023887698046,
+        "shape": {
+          "name": "<shapeworld.world.shape.SquareShape object at 0x7f7484581ac8>",
+          "size": {
+            "x": 0.09799357046305093,
+            "y": 0.09799357046305093
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2360>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c15630>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.7250620230249768,
+          "y": 0.2841606343672949
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c15708>",
+          "rgb": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "shade": -0.02615730796043139
+        },
+        "id": 0,
+        "rotation": 0.3105095635245779,
+        "shape": {
+          "name": "<shapeworld.world.shape.EllipseShape object at 0x7f74829b3b70>",
+          "size": {
+            "x": 0.09198645835474083,
+            "y": 0.034824272730976845
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2390>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c15870>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.7138382247976967,
+          "y": 0.6222678193444255
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c15948>",
+          "rgb": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "shade": 0.2906357511738503
+        },
+        "id": 0,
+        "rotation": 0.044200443530376,
+        "shape": {
+          "name": "<shapeworld.world.shape.RectangleShape object at 0x7f7484581ac8>",
+          "size": {
+            "x": 0.06458992381339364,
+            "y": 0.029363406274655914
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2360>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c15ab0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.7990956704338521,
+          "y": 0.6581512972346776
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c15b88>",
+          "rgb": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "shade": 0.1031066500939917
+        },
+        "id": 0,
+        "rotation": 0.33627528755352243,
+        "shape": {
+          "name": "<shapeworld.world.shape.CrossShape object at 0x7f74829b3b70>",
+          "size": {
+            "x": 0.09781623217101405,
+            "y": 0.09781623217101405
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2390>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c15cf0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.43629610930644014,
+          "y": 0.8879873637966453
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c15dc8>",
+          "rgb": [
+            0.0,
+            1.0,
+            1.0
+          ],
+          "shade": 0.1535448200328115
+        },
+        "id": 0,
+        "rotation": 0.7182749137311434,
+        "shape": {
+          "name": "<shapeworld.world.shape.CrossShape object at 0x7f7484581ac8>",
+          "size": {
+            "x": 0.07691081359808112,
+            "y": 0.07691081359808112
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2360>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c15f30>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.13330773455900347,
+          "y": 0.768422801480398
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c190d8>",
+          "rgb": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "shade": -0.15054023973316016
+        },
+        "id": 0,
+        "rotation": 0.017110825761133985,
+        "shape": {
+          "name": "<shapeworld.world.shape.CrossShape object at 0x7f7481c0f7f0>",
+          "size": {
+            "x": 0.06841511047831297,
+            "y": 0.06841511047831297
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2380>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c191b0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.4623006830001585,
+          "y": 0.15650862795367404
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c19288>",
+          "rgb": [
+            0.0,
+            1.0,
+            1.0
+          ],
+          "shade": -0.1565779605855886
+        },
+        "id": 0,
+        "rotation": 0.5523069748372365,
+        "shape": {
+          "name": "<shapeworld.world.shape.CircleShape object at 0x7f7484581ac8>",
+          "size": {
+            "x": 0.05488783296375599,
+            "y": 0.05488783296375599
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2360>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c193f0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.5690674881771026,
+          "y": 0.23669257310799174
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c194c8>",
+          "rgb": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "shade": -0.3988491298984734
+        },
+        "id": 0,
+        "rotation": 0.22068006410315621,
+        "shape": {
+          "name": "<shapeworld.world.shape.PentagonShape object at 0x7f7481c0f7f0>",
+          "size": {
+            "x": 0.12369314214460927,
+            "y": 0.11763916885765334
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2380>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c19630>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.9056738478988495,
+          "y": 0.5509908883165573
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c19708>",
+          "rgb": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "shade": 0.2733768538609885
+        },
+        "id": 0,
+        "rotation": 0.9975096716720178,
+        "shape": {
+          "name": "<shapeworld.world.shape.SemicircleShape object at 0x7f7484581ac8>",
+          "size": {
+            "x": 0.06587775934472496,
+            "y": 0.03293887967236248
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2360>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c19870>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.7863595462493158,
+          "y": 0.1496802412133187
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c199d8>",
+          "rgb": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "shade": 0.04949205864226619
+        },
+        "id": 0,
+        "rotation": 0.5995372798889153,
+        "shape": {
+          "name": "<shapeworld.world.shape.EllipseShape object at 0x7f74829b3b70>",
+          "size": {
+            "x": 0.08367144229065919,
+            "y": 0.04076181294302048
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2390>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c19ab0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.8310954255059159,
+          "y": 0.7937081133575498
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c19b88>",
+          "rgb": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "shade": 0.37797910553393643
+        },
+        "id": 0,
+        "rotation": 0.8724364035301839,
+        "shape": {
+          "name": "<shapeworld.world.shape.EllipseShape object at 0x7f7484581ac8>",
+          "size": {
+            "x": 0.1010861104185143,
+            "y": 0.033888723982347255
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2360>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c19cf0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.6123053633365734,
+          "y": 0.8447622422680092
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c19e58>",
+          "rgb": [
+            0.0,
+            1.0,
+            1.0
+          ],
+          "shade": -0.19042799695407703
+        },
+        "id": 0,
+        "rotation": 0.2686232024210078,
+        "shape": {
+          "name": "<shapeworld.world.shape.SemicircleShape object at 0x7f7481c0f7f0>",
+          "size": {
+            "x": 0.07385747817370576,
+            "y": 0.03692873908685288
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2380>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c19f30>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.6925665768252859,
+          "y": 0.44136859444690535
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c20048>",
+          "rgb": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "shade": -0.11602999597350439
+        },
+        "id": 0,
+        "rotation": 0.9296215375220752,
+        "shape": {
+          "name": "<shapeworld.world.shape.EllipseShape object at 0x7f7484581ac8>",
+          "size": {
+            "x": 0.08600443277261177,
+            "y": 0.04159322550223031
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2360>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c201b0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.4660977062204732,
+          "y": 0.9400048463422507
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c20288>",
+          "rgb": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "shade": 0.2610436139173437
+        },
+        "id": 0,
+        "rotation": 0.16768666264136378,
+        "shape": {
+          "name": "<shapeworld.world.shape.EllipseShape object at 0x7f7481c0f7f0>",
+          "size": {
+            "x": 0.1157158031210166,
+            "y": 0.05248618932194847
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2380>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c203f0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.7852812567250349,
+          "y": 0.9658820883998912
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c204c8>",
+          "rgb": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "shade": 0.012339323291450027
+        },
+        "id": 0,
+        "rotation": 0.9705203344844632,
+        "shape": {
+          "name": "<shapeworld.world.shape.RectangleShape object at 0x7f7484581ac8>",
+          "size": {
+            "x": 0.09908129754405601,
+            "y": 0.03620632012600836
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2360>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c20630>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.3015759663211305,
+          "y": 0.6850169654287251
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c20708>",
+          "rgb": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "shade": 0.1826140327414311
+        },
+        "id": 0,
+        "rotation": 0.49040836163476886,
+        "shape": {
+          "name": "<shapeworld.world.shape.SemicircleShape object at 0x7f7481c0f7f0>",
+          "size": {
+            "x": 0.11359375852266168,
+            "y": 0.05679687926133084
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2380>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c20870>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.561669354354973,
+          "y": 0.3796894296271094
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c209d8>",
+          "rgb": [
+            1.0,
+            0.0,
+            1.0
+          ],
+          "shade": -0.290893696838714
+        },
+        "id": 0,
+        "rotation": 0.7429341834707863,
+        "shape": {
+          "name": "<shapeworld.world.shape.SquareShape object at 0x7f748458d320>",
+          "size": {
+            "x": 0.08047255348988419,
+            "y": 0.08047255348988419
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2390>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c20ab0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.6569593817700778,
+          "y": 0.6577775457795897
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c20b88>",
+          "rgb": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "shade": 0.0470437267286338
+        },
+        "id": 0,
+        "rotation": 0.9563249020721587,
+        "shape": {
+          "name": "<shapeworld.world.shape.CircleShape object at 0x7f7481c0f7f0>",
+          "size": {
+            "x": 0.060531072851638335,
+            "y": 0.060531072851638335
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2380>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c20cf0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.7023255006659315,
+          "y": 0.8407861358708216
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c20dc8>",
+          "rgb": [
+            1.0,
+            1.0,
+            0.0
+          ],
+          "shade": -0.09925280416003668
+        },
+        "id": 0,
+        "rotation": 0.5337150593412228,
+        "shape": {
+          "name": "<shapeworld.world.shape.CircleShape object at 0x7f748458d320>",
+          "size": {
+            "x": 0.07646597868130577,
+            "y": 0.07646597868130577
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2390>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c20f30>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.9305019482225649,
+          "y": 0.5940298893488498
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c240d8>",
+          "rgb": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "shade": 0.09341923247527914
+        },
+        "id": 0,
+        "rotation": 0.8985574968867542,
+        "shape": {
+          "name": "<shapeworld.world.shape.CircleShape object at 0x7f74829b3b70>",
+          "size": {
+            "x": 0.08530121567240917,
+            "y": 0.08530121567240917
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2360>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c241b0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.6622562064319781,
+          "y": 0.21630978057401673
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c24288>",
+          "rgb": [
+            1.0,
+            0.0,
+            1.0
+          ],
+          "shade": 0.06838680933956336
+        },
+        "id": 0,
+        "rotation": 0.4341627872533732,
+        "shape": {
+          "name": "<shapeworld.world.shape.CircleShape object at 0x7f748458d320>",
+          "size": {
+            "x": 0.0685107817476168,
+            "y": 0.0685107817476168
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2390>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c243f0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.3428968444255951,
+          "y": 0.41775457198131793
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c244c8>",
+          "rgb": [
+            1.0,
+            0.0,
+            1.0
+          ],
+          "shade": -0.21497112882523173
+        },
+        "id": 0,
+        "rotation": 0.007142903012946622,
+        "shape": {
+          "name": "<shapeworld.world.shape.TriangleShape object at 0x7f74829b3b70>",
+          "size": {
+            "x": 0.1169806565130511,
+            "y": 0.10130822029168379
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2360>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c24630>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.634525005563181,
+          "y": 0.35881173484728013
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c24708>",
+          "rgb": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "shade": -0.33969471167396925
+        },
+        "id": 0,
+        "rotation": 0.12499699769188577,
+        "shape": {
+          "name": "<shapeworld.world.shape.EllipseShape object at 0x7f748458d320>",
+          "size": {
+            "x": 0.06721750966407755,
+            "y": 0.02849001743437194
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2390>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c24870>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.5041336905211636,
+          "y": 0.7469219384893055
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c24948>",
+          "rgb": [
+            1.0,
+            0.0,
+            1.0
+          ],
+          "shade": -0.19738862378405606
+        },
+        "id": 0,
+        "rotation": 0.3409110657365315,
+        "shape": {
+          "name": "<shapeworld.world.shape.CircleShape object at 0x7f74829b3b70>",
+          "size": {
+            "x": 0.05041126518412287,
+            "y": 0.05041126518412287
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2360>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c24ab0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.48500404192328583,
+          "y": 0.8431071753102203
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c24b88>",
+          "rgb": [
+            0.0,
+            1.0,
+            1.0
+          ],
+          "shade": 0.08569990128851301
+        },
+        "id": 0,
+        "rotation": 0.579089669032227,
+        "shape": {
+          "name": "<shapeworld.world.shape.TriangleShape object at 0x7f748458d320>",
+          "size": {
+            "x": 0.12475577813045285,
+            "y": 0.10804167312986726
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2390>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c24cf0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.2649754973353309,
+          "y": 0.2855169841895059
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c24dc8>",
+          "rgb": [
+            1.0,
+            0.0,
+            1.0
+          ],
+          "shade": -0.1057246220815943
+        },
+        "id": 0,
+        "rotation": 0.9728045173755404,
+        "shape": {
+          "name": "<shapeworld.world.shape.RectangleShape object at 0x7f74829b3b70>",
+          "size": {
+            "x": 0.12345044505374625,
+            "y": 0.04875447274507794
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2360>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c24f30>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.11189915179831267,
+          "y": 0.6208811621978158
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c2a048>",
+          "rgb": [
+            0.0,
+            1.0,
+            1.0
+          ],
+          "shade": 0.305123517109683
+        },
+        "id": 0,
+        "rotation": 0.6716485785486609,
+        "shape": {
+          "name": "<shapeworld.world.shape.RectangleShape object at 0x7f748458d320>",
+          "size": {
+            "x": 0.09818042024788666,
+            "y": 0.036698119218195484
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2390>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c2a1b0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.7569863851934008,
+          "y": 0.9433765447953192
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c2a288>",
+          "rgb": [
+            1.0,
+            0.0,
+            1.0
+          ],
+          "shade": 0.10687626422099704
+        },
+        "id": 0,
+        "rotation": 0.23715749339260572,
+        "shape": {
+          "name": "<shapeworld.world.shape.RectangleShape object at 0x7f74829b3b70>",
+          "size": {
+            "x": 0.10996649585731377,
+            "y": 0.03883609268868184
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2360>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c2a3f0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.14632229777752304,
+          "y": 0.7029298413881574
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c2a4c8>",
+          "rgb": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "shade": -0.2520395715065077
+        },
+        "id": 0,
+        "rotation": 0.04629241552411534,
+        "shape": {
+          "name": "<shapeworld.world.shape.SquareShape object at 0x7f748458d320>",
+          "size": {
+            "x": 0.07638585041995641,
+            "y": 0.07638585041995641
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2390>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c2a630>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.7706665766348498,
+          "y": 0.255631052167443
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c2a798>",
+          "rgb": [
+            1.0,
+            1.0,
+            0.0
+          ],
+          "shade": -0.0640219383399201
+        },
+        "id": 0,
+        "rotation": 0.24023369528505634,
+        "shape": {
+          "name": "<shapeworld.world.shape.TriangleShape object at 0x7f7481c0f7f0>",
+          "size": {
+            "x": 0.051358674580786204,
+            "y": 0.044477916891658954
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2380>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c2a870>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.652605076616232,
+          "y": 0.9413615067466024
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c2a948>",
+          "rgb": [
+            1.0,
+            1.0,
+            0.0
+          ],
+          "shade": -0.3056046229341621
+        },
+        "id": 0,
+        "rotation": 0.6459157181164207,
+        "shape": {
+          "name": "<shapeworld.world.shape.EllipseShape object at 0x7f748458d320>",
+          "size": {
+            "x": 0.08504388557227008,
+            "y": 0.03423675141105707
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2390>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c2aab0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.9256794529211262,
+          "y": 0.18815275249042973
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c2ac18>",
+          "rgb": [
+            1.0,
+            0.0,
+            1.0
+          ],
+          "shade": -0.14782591092366185
+        },
+        "id": 0,
+        "rotation": 0.2551657193774469,
+        "shape": {
+          "name": "<shapeworld.world.shape.RectangleShape object at 0x7f74829b3b70>",
+          "size": {
+            "x": 0.10234088421599752,
+            "y": 0.03820527360045595
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2360>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c2acf0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.1871171623645187,
+          "y": 0.8600284940204307
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c2adc8>",
+          "rgb": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "shade": -0.35836863351578874
+        },
+        "id": 0,
+        "rotation": 0.5082490638283179,
+        "shape": {
+          "name": "<shapeworld.world.shape.SemicircleShape object at 0x7f748458d320>",
+          "size": {
+            "x": 0.10507371570774779,
+            "y": 0.052536857853873895
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2390>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c2af30>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.4117233344492972,
+          "y": 0.8540157530363157
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c2e048>",
+          "rgb": [
+            1.0,
+            1.0,
+            0.0
+          ],
+          "shade": -0.3230490795918212
+        },
+        "id": 0,
+        "rotation": 0.8283318296137473,
+        "shape": {
+          "name": "<shapeworld.world.shape.TriangleShape object at 0x7f74829b3b70>",
+          "size": {
+            "x": 0.08830300553972431,
+            "y": 0.07647264602791927
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2360>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c2e1b0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.5896552696670713,
+          "y": 0.8676234978638349
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c2e288>",
+          "rgb": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "shade": -0.016584740505384325
+        },
+        "id": 0,
+        "rotation": 0.4890346506239892,
+        "shape": {
+          "name": "<shapeworld.world.shape.SquareShape object at 0x7f748458d320>",
+          "size": {
+            "x": 0.08755570674509743,
+            "y": 0.08755570674509743
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2390>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c2e3f0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.21429323728870342,
+          "y": 0.1460085647727798
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c2e558>",
+          "rgb": [
+            1.0,
+            1.0,
+            0.0
+          ],
+          "shade": -0.1867944348544023
+        },
+        "id": 0,
+        "rotation": 0.1739609600209947,
+        "shape": {
+          "name": "<shapeworld.world.shape.PentagonShape object at 0x7f7481c0f7f0>",
+          "size": {
+            "x": 0.06978328504549496,
+            "y": 0.06636784797100012
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2380>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c2e630>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.8680250436243028,
+          "y": 0.9629196347797151
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c2e798>",
+          "rgb": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "shade": 0.06580002325525275
+        },
+        "id": 0,
+        "rotation": 0.45354219663285567,
+        "shape": {
+          "name": "<shapeworld.world.shape.CrossShape object at 0x7f7484581ac8>",
+          "size": {
+            "x": 0.11211907356441805,
+            "y": 0.11211907356441805
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2360>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c2e870>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.6722469466112923,
+          "y": 0.32684543306390723
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c2e9d8>",
+          "rgb": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "shade": -0.3895778591780571
+        },
+        "id": 0,
+        "rotation": 0.16825222841978005,
+        "shape": {
+          "name": "<shapeworld.world.shape.CircleShape object at 0x7f74829b3b70>",
+          "size": {
+            "x": 0.05551914664492326,
+            "y": 0.05551914664492326
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2390>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c2eab0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.016167790157360473,
+          "y": 0.87665242067829
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c2eb88>",
+          "rgb": [
+            1.0,
+            0.0,
+            1.0
+          ],
+          "shade": -0.19298211043390767
+        },
+        "id": 0,
+        "rotation": 0.7461961493366494,
+        "shape": {
+          "name": "<shapeworld.world.shape.EllipseShape object at 0x7f7484581ac8>",
+          "size": {
+            "x": 0.0929271141475311,
+            "y": 0.03705968116525675
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2360>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c2ecf0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.34867630593750343,
+          "y": 0.46511038672383587
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c2edc8>",
+          "rgb": [
+            0.0,
+            1.0,
+            1.0
+          ],
+          "shade": -0.028113247849236342
+        },
+        "id": 0,
+        "rotation": 0.013551226987662979,
+        "shape": {
+          "name": "<shapeworld.world.shape.TriangleShape object at 0x7f74829b3b70>",
+          "size": {
+            "x": 0.11935309773371111,
+            "y": 0.10336281465776073
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2390>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c2ef30>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.9104929481102969,
+          "y": 0.31049377476900997
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c32048>",
+          "rgb": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "shade": 0.0028826723255703126
+        },
+        "id": 0,
+        "rotation": 0.15411599187592728,
+        "shape": {
+          "name": "<shapeworld.world.shape.RectangleShape object at 0x7f7484581ac8>",
+          "size": {
+            "x": 0.12361441775986395,
+            "y": 0.054380369703770214
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2360>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c321b0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.2357953926096762,
+          "y": 0.7764231089452968
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c32288>",
+          "rgb": [
+            0.0,
+            1.0,
+            1.0
+          ],
+          "shade": 0.35070508020702745
+        },
+        "id": 0,
+        "rotation": 0.3736519139369976,
+        "shape": {
+          "name": "<shapeworld.world.shape.TriangleShape object at 0x7f74829b3b70>",
+          "size": {
+            "x": 0.10950411592861517,
+            "y": 0.09483334621313692
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2390>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c323f0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.6530591480016942,
+          "y": 0.2785440408786962
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c324c8>",
+          "rgb": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "shade": -0.04630059958377898
+        },
+        "id": 0,
+        "rotation": 0.887971196835735,
+        "shape": {
+          "name": "<shapeworld.world.shape.PentagonShape object at 0x7f7484581ac8>",
+          "size": {
+            "x": 0.08614133066977228,
+            "y": 0.08192527385582249
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2360>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c32630>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.675291005305918,
+          "y": 0.6409591912660695
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c32708>",
+          "rgb": [
+            1.0,
+            0.0,
+            1.0
+          ],
+          "shade": -0.17325363533012894
+        },
+        "id": 0,
+        "rotation": 0.7910998019450073,
+        "shape": {
+          "name": "<shapeworld.world.shape.TriangleShape object at 0x7f74829b3b70>",
+          "size": {
+            "x": 0.06420855833542373,
+            "y": 0.055606242658852015
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2390>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c32870>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.756379101428538,
+          "y": 0.0922177105480505
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c32948>",
+          "rgb": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "shade": 0.3569636816318633
+        },
+        "id": 0,
+        "rotation": 0.7219541660555382,
+        "shape": {
+          "name": "<shapeworld.world.shape.RectangleShape object at 0x7f7484581ac8>",
+          "size": {
+            "x": 0.09287632153259076,
+            "y": 0.04583908833590109
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2360>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c32ab0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.8868693152302666,
+          "y": 0.20971789698865229
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c32b88>",
+          "rgb": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "shade": -0.28563165126627615
+        },
+        "id": 0,
+        "rotation": 0.17734863122034683,
+        "shape": {
+          "name": "<shapeworld.world.shape.TriangleShape object at 0x7f74829b3b70>",
+          "size": {
+            "x": 0.0814390190866735,
+            "y": 0.07052825938834502
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2390>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c32cf0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.27938108835076714,
+          "y": 0.9070340657284837
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c32dc8>",
+          "rgb": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "shade": -0.006978846149051402
+        },
+        "id": 0,
+        "rotation": 0.7878911992499689,
+        "shape": {
+          "name": "<shapeworld.world.shape.SemicircleShape object at 0x7f7484581ac8>",
+          "size": {
+            "x": 0.09148180249928026,
+            "y": 0.04574090124964013
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2360>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c32f30>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.5220459150455729,
+          "y": 0.6074624265864037
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c37048>",
+          "rgb": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "shade": -0.008820993485769837
+        },
+        "id": 0,
+        "rotation": 0.18715550871357667,
+        "shape": {
+          "name": "<shapeworld.world.shape.CircleShape object at 0x7f74829b3b70>",
+          "size": {
+            "x": 0.08441978505640996,
+            "y": 0.08441978505640996
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2390>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c371b0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.45362371558952663,
+          "y": 0.26271590465024997
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c37288>",
+          "rgb": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "shade": -0.19442305086772282
+        },
+        "id": 0,
+        "rotation": 0.30779862277034054,
+        "shape": {
+          "name": "<shapeworld.world.shape.SquareShape object at 0x7f7484581ac8>",
+          "size": {
+            "x": 0.09261524468904091,
+            "y": 0.09261524468904091
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2360>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c373f0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.5717434673917015,
+          "y": 0.12640233838353399
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c374c8>",
+          "rgb": [
+            1.0,
+            1.0,
+            0.0
+          ],
+          "shade": 0.22684577193951663
+        },
+        "id": 0,
+        "rotation": 0.7448446680345729,
+        "shape": {
+          "name": "<shapeworld.world.shape.CircleShape object at 0x7f74829b3b70>",
+          "size": {
+            "x": 0.09419588030148524,
+            "y": 0.09419588030148524
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2390>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c37630>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.12142936312777297,
+          "y": 0.5085856733344825
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c37708>",
+          "rgb": [
+            1.0,
+            0.0,
+            1.0
+          ],
+          "shade": -0.2673751601824123
+        },
+        "id": 0,
+        "rotation": 0.18464861421145173,
+        "shape": {
+          "name": "<shapeworld.world.shape.CrossShape object at 0x7f7484581ac8>",
+          "size": {
+            "x": 0.08014081024774819,
+            "y": 0.08014081024774819
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2360>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c37870>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.45399952148038814,
+          "y": 0.2799046821723423
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c37948>",
+          "rgb": [
+            0.0,
+            1.0,
+            1.0
+          ],
+          "shade": -0.07424171575317945
+        },
+        "id": 0,
+        "rotation": 0.5287003200815922,
+        "shape": {
+          "name": "<shapeworld.world.shape.TriangleShape object at 0x7f74829b3b70>",
+          "size": {
+            "x": 0.11206164335624819,
+            "y": 0.09704822993634259
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2390>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c37ab0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.23513227730327058,
+          "y": 0.07823990697567607
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c37b88>",
+          "rgb": [
+            1.0,
+            0.0,
+            1.0
+          ],
+          "shade": 0.09464568274155044
+        },
+        "id": 0,
+        "rotation": 0.5745441122634886,
+        "shape": {
+          "name": "<shapeworld.world.shape.RectangleShape object at 0x7f7484581ac8>",
+          "size": {
+            "x": 0.06619387581421014,
+            "y": 0.027492677907355743
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2360>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c37cf0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.7360824931999248,
+          "y": 0.16479741374797052
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472c37dc8>",
+          "rgb": [
+            1.0,
+            1.0,
+            0.0
+          ],
+          "shade": 0.010250530053589973
+        },
+        "id": 0,
+        "rotation": 0.9896126858934547,
+        "shape": {
+          "name": "<shapeworld.world.shape.EllipseShape object at 0x7f74829b3b70>",
+          "size": {
+            "x": 0.10289489262387203,
+            "y": 0.04165310265290979
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2390>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472c37f30>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.5159316090292098,
+          "y": 0.508851035838253
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472bbe048>",
+          "rgb": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "shade": -0.039248545285331525
+        },
+        "id": 0,
+        "rotation": 0.8696894448735769,
+        "shape": {
+          "name": "<shapeworld.world.shape.RectangleShape object at 0x7f7484581ac8>",
+          "size": {
+            "x": 0.09907798572460311,
+            "y": 0.04313980466526226
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2360>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472bbe1b0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.5718686409958821,
+          "y": 0.6456567701542447
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472bbe288>",
+          "rgb": [
+            1.0,
+            1.0,
+            0.0
+          ],
+          "shade": 0.0012249903688194563
+        },
+        "id": 0,
+        "rotation": 0.9478546620135307,
+        "shape": {
+          "name": "<shapeworld.world.shape.CircleShape object at 0x7f74829b3b70>",
+          "size": {
+            "x": 0.07241588929908627,
+            "y": 0.07241588929908627
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2390>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472bbe3f0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.2558293229447902,
+          "y": 0.12687296626610578
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472bbe4c8>",
+          "rgb": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "shade": 0.19944251773706778
+        },
+        "id": 0,
+        "rotation": 0.005038223455304247,
+        "shape": {
+          "name": "<shapeworld.world.shape.CircleShape object at 0x7f7484581ac8>",
+          "size": {
+            "x": 0.0681173248644202,
+            "y": 0.0681173248644202
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2360>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472bbe630>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.18424855422462116,
+          "y": 0.8351982328488397
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472bbe708>",
+          "rgb": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "shade": -0.020264297516865665
+        },
+        "id": 0,
+        "rotation": 0.4959508559904211,
+        "shape": {
+          "name": "<shapeworld.world.shape.PentagonShape object at 0x7f74829b3b70>",
+          "size": {
+            "x": 0.05449629773080982,
+            "y": 0.05182905907084747
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2390>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472bbe870>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.46602104799766775,
+          "y": 0.7547541199974181
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472bbe9d8>",
+          "rgb": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "shade": 0.08503857243008557
+        },
+        "id": 0,
+        "rotation": 0.8986447472518336,
+        "shape": {
+          "name": "<shapeworld.world.shape.CrossShape object at 0x7f748458d320>",
+          "size": {
+            "x": 0.09925283117993777,
+            "y": 0.09925283117993777
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2380>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472bbeab0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.23547214942330486,
+          "y": 0.7828797572441265
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472bbeb88>",
+          "rgb": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "shade": -0.11370473601924043
+        },
+        "id": 0,
+        "rotation": 0.09118461466182726,
+        "shape": {
+          "name": "<shapeworld.world.shape.RectangleShape object at 0x7f74829b3b70>",
+          "size": {
+            "x": 0.09555017292295628,
+            "y": 0.032984940092337406
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2390>"
+        }
+      }
+    ],
+    "size": 64
+  },
+  {
+    "color": {
+      "name": "<shapeworld.world.color.Color object at 0x7f7472bbecf0>",
+      "rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "shade": 0.0
+    },
+    "entities": [
+      {
+        "center": {
+          "x": 0.4257688680008537,
+          "y": 0.9252876868763686
+        },
+        "color": {
+          "name": "<shapeworld.world.color.Color object at 0x7f7472bbee58>",
+          "rgb": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "shade": -0.37809250668570643
+        },
+        "id": 0,
+        "rotation": 0.8457005233206304,
+        "shape": {
+          "name": "<shapeworld.world.shape.CircleShape object at 0x7f7484581ac8>",
+          "size": {
+            "x": 0.09035667657412058,
+            "y": 0.09035667657412058
+          }
+        },
+        "texture": {
+          "name": "<shapeworld.world.texture.SolidTexture object at 0x7f74846b2360>"
+        }
+      }
+    ],
+    "size": 64
+  }
+]

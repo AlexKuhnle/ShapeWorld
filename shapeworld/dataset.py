@@ -73,12 +73,7 @@ def dataset(dtype=None, name=None, language=None, config=None):
     module = import_module('shapeworld.datasets.{}.{}'.format(dtype, name))
     dclass = module.dataset
     if config is None:
-        assert dclass.default_config is not None
-        config = dclass.default_config
-    else:
-        for key, value in dclass.default_config.items():
-            if key not in config:
-                config[key] = value
+        config = dict()
     if language is not None:
         config['language'] = language
     dataset = dclass(**config)
@@ -92,38 +87,24 @@ def alternatives_type(value_type):
         return value_type, False
 
 
-def valid_value_type(value_type):
-    value_type, alts = alternatives_type(value_type=value_type)
-    if alts:
-        return value_type in ('int', 'float', 'vector(int)', 'vector(float)', 'text', 'model')
-    else:
-        return value_type in ('int', 'float', 'vector(int)', 'vector(float)', 'world', 'text', 'model')
-
-
 class Dataset(object):
 
-    dataset_name = None
-    dataset_type = None
-    dataset_values = {'world': 'world', 'world_model': 'model'}
-    default_config = None
-
-    def __init__(self, world_size, vectors=None, words=None, language=None):
-        assert self.__class__.dataset_name
-        assert self.__class__.dataset_type
-        assert all(valid_value_type(value_type=value_type) for value_type in self.__class__.dataset_values.values())
-        assert 'alternatives' not in self.__class__.dataset_values or self.__class__.dataset_values['alternatives'] == 'int'
-        assert all(not alternatives_type(value_type=value_type)[1] for value_type in self.__class__.dataset_values.values()) or 'alternatives' in self.__class__.dataset_values
+    def __init__(self, world_size, vectors=None, vocabularies=None, language=None):
+        assert self.type and self.name
+        assert 'alternatives' not in self.values or self.values['alternatives'] == 'int'
+        assert all(not alternatives_type(value_type=value_type)[1] for value_type in self.values.values()) or 'alternatives' in self.values
         if isinstance(world_size, int):
             self.world_size = world_size
         else:
             self.world_size = tuple(world_size)
         self.vectors = vectors
-        if words is not None and isinstance(words, list):
-            assert words is None or words == sorted(words)  # !!!
-            words = {words[n]: n + 1 for n in range(len(words))}
-            words[''] = 0
-            words['[UNKNOWN]'] = len(words)
-        self.words = words
+        self.vocabularies = dict()
+        if vocabularies is not None:
+            for name, vocabulary in vocabularies.items():
+                vocabulary = {word: index for index, word in enumerate(vocabulary, 1) if word != '' and word != '[UNKNOWN]'}
+                vocabulary[''] = 0
+                vocabulary['[UNKNOWN]'] = len(vocabulary)
+                self.vocabularies[name] = vocabulary
         self.language = language
 
     def __str__(self):
@@ -133,16 +114,25 @@ class Dataset(object):
             return '{} {} ({})'.format(self.type, self.name, self.language)
 
     @property
-    def type(self):
-        return self.__class__.dataset_type
+    def name(self):
+        name = self.__class__.__name__
+        lowercase_name = list()
+        for n, char in enumerate(name):
+            if char.isupper():
+                if n > 0:
+                    lowercase_name.append('_')
+                lowercase_name.append(char.lower())
+            else:
+                lowercase_name.append(char)
+        return ''.join(lowercase_name)
 
     @property
-    def name(self):
-        return self.__class__.dataset_name
+    def type(self):
+        raise NotImplementedError
 
     @property
     def values(self):
-        return self.__class__.dataset_values
+        raise NotImplementedError
 
     def specification(self):
         specification = {'type': self.type, 'name': self.name, 'values': self.values}
@@ -152,8 +142,8 @@ class Dataset(object):
             specification['world_size'] = list(self.world_size)
         if self.vectors:
             specification['vectors'] = self.vectors
-        if self.words:
-            specification['words'] = self.words
+        if self.vocabularies:
+            specification['vocabularies'] = self.vocabularies
         if self.language:
             specification['language'] = self.language
         return specification
@@ -168,13 +158,17 @@ class Dataset(object):
     def vector_shape(self, value_name):
         return (self.vectors.get(value_name),)
 
-    @property
-    def vocabulary_size(self):
-        return len(self.words)
+    def vocabulary_size(self, value_type):
+        if self.vocabularies is None or value_type not in self.vocabularies:
+            return -1
+        else:
+            return len(self.vocabularies[value_type])
 
-    @property
-    def vocabulary(self):
-        return list(self.words.keys())
+    def vocabulary(self, value_type):
+        if self.vocabularies is None or value_type not in self.vocabularies:
+            return None
+        else:
+            return [word for word, _ in sorted(self.vocabularies[value_type].items(), key=(lambda kv: kv[1]))]
 
     def zero_batch(self, n, include_model=False, alternatives=False):
         batch = dict()
@@ -185,7 +179,7 @@ class Dataset(object):
                     batch[value_name] = [[] for _ in range(n)]
                 elif value_type == 'float':
                     batch[value_name] = [[] for _ in range(n)]
-                elif value_type == 'vector(int)' or value_type == 'text':
+                elif value_type == 'vector(int)' or value_type in self.vocabularies:
                     batch[value_name] = [[np.zeros(shape=self.vector_shape(value_name), dtype=np.int32)] for _ in range(n)]
                 elif value_type == 'vector(float)':
                     batch[value_name] = [[np.zeros(shape=self.vector_shape(value_name), dtype=np.float32)] for _ in range(n)]
@@ -196,7 +190,7 @@ class Dataset(object):
                     batch[value_name] = np.zeros(shape=(n,), dtype=np.int32)
                 elif value_type == 'float':
                     batch[value_name] = np.zeros(shape=(n,), dtype=np.float32)
-                elif value_type == 'vector(int)' or value_type == 'text':
+                elif value_type == 'vector(int)' or value_type in self.vocabularies:
                     batch[value_name] = np.zeros(shape=((n,) + self.vector_shape(value_name)), dtype=np.int32)
                 elif value_type == 'vector(float)':
                     batch[value_name] = np.zeros(shape=((n,) + self.vector_shape(value_name)), dtype=np.float32)
@@ -213,7 +207,7 @@ class Dataset(object):
         while True:
             yield self.generate(n=n, mode=mode, noise_range=noise_range, include_model=include_model, alternatives=alternatives)
 
-    def get_html(self, generated, id2word=None):
+    def get_html(self, generated):
         return None
 
     def serialize(self, path, generated, additional=None, filename=None, archive=None, concat_worlds=False, html=False):
@@ -221,16 +215,28 @@ class Dataset(object):
         if not os.path.isdir(os.path.dirname(path)):
             os.makedirs(os.path.dirname(path))
 
-        id2word = [word for word, _ in sorted(self.words.items(), key=(lambda kv: kv[1]))] if self.words else None
-
         with util.Archive(path=path, mode='w', archive=archive) as write_file:
             for value_name, value in generated.items():
-                Dataset.serialize_value(value=value, value_name=value_name, value_type=self.values[value_name], write_file=write_file, concat_worlds=concat_worlds, id2word=id2word)
+                Dataset.serialize_value(
+                    value=value,
+                    value_name=value_name,
+                    value_type=self.values[value_name],
+                    write_file=write_file,
+                    concat_worlds=concat_worlds,
+                    id2word=self.vocabulary(value_type=self.values[value_name])
+                )
             if additional:
                 for value_name, (value, value_type) in additional.items():
-                    Dataset.serialize_value(value=value, value_name=value_name, value_type=value_type, write_file=write_file, concat_worlds=concat_worlds, id2word=id2word)
+                    Dataset.serialize_value(
+                        value=value,
+                        value_name=value_name,
+                        value_type=value_type,
+                        write_file=write_file,
+                        concat_worlds=concat_worlds,
+                        id2word=self.vocabulary(value_type=self.values[value_name])
+                    )
             if html:
-                html = self.get_html(generated=generated, id2word=id2word)
+                html = self.get_html(generated=generated)
                 assert html is not None
                 write_file(filename='data.html', value=html)
 
@@ -255,13 +261,6 @@ class Dataset(object):
             else:
                 value = '\n'.join(','.join(str(x) for x in vector) for vector in value) + '\n'
             write_file(value_name + '.txt', value)
-        elif value_type == 'text':
-            assert id2word
-            if alts:
-                value = '\n\n'.join('\n'.join(' '.join(id2word[word_id] for word_id in text if word_id) for text in texts) for texts in value) + '\n\n'
-            else:
-                value = '\n'.join(' '.join(id2word[word_id] for word_id in text if word_id) for text in value) + '\n'
-            write_file(value_name + '.txt', value)
         elif value_type == 'world':
             if concat_worlds:
                 size = ceil(sqrt(len(value)))
@@ -285,8 +284,15 @@ class Dataset(object):
                     write_file('{}-{}.bmp'.format(value_name, n), image_bytes.getvalue(), binary=True)
                     image_bytes.close()
         elif value_type == 'model':
-            value = json.dumps(value)
+            value = json.dumps(obj=value, indent=2, sort_keys=True)
             write_file(value_name + '.json', value)
+        else:
+            assert id2word
+            if alts:
+                value = '\n\n'.join('\n'.join(' '.join(id2word[word_id] for word_id in words if word_id) for words in words_alts) for words_alts in value) + '\n\n'
+            else:
+                value = '\n'.join(' '.join(id2word[word_id] for word_id in words if word_id) for words in value) + '\n'
+            write_file(value_name + '.txt', value)
 
     @staticmethod
     def deserialize_value(value_name, value_type, read_file, num_concat_worlds=0, word2id=None):
@@ -319,14 +325,6 @@ class Dataset(object):
             else:
                 value = [[float(x) for x in vector.split(',')] for vector in value.split('\n')[:-1]]
             return value
-        elif value_type == 'text':
-            assert word2id
-            value = read_file(value_name + '.txt')
-            if alts:
-                value = [[[word2id[word] for word in text.split(' ')] for text in texts.split('\n')] for texts in value.split('\n\n')[:-1]]
-            else:
-                value = [[word2id[word] for word in text.split(' ')] for text in value.split('\n')[:-1]]
-            return value
         elif value_type == 'world':
             if num_concat_worlds:
                 size = ceil(sqrt(num_concat_worlds))
@@ -357,36 +355,41 @@ class Dataset(object):
             return value
         elif value_type == 'model':
             value = read_file(value_name + '.json')
-            value = json.loads(value)
+            value = json.loads(s=value)
+            return value
+        else:
+            assert word2id
+            value = read_file(value_name + '.txt')
+            if alts:
+                value = [[[word2id[word] for word in words.split(' ')] for words in words_alts.split('\n')] for words_alts in value.split('\n\n')[:-1]]
+            else:
+                value = [[word2id[word] for word in words.split(' ')] for words in value.split('\n')[:-1]]
             return value
 
 
 class LoadedDataset(Dataset):
 
-    dataset_name = 'loaded'
-    dataset_type = 'loaded'
-
     def __init__(self, specification):
-        super(LoadedDataset, self).__init__(world_size=specification.pop('world_size'), vectors=specification.pop('vectors', None), words=specification.pop('words', None), language=specification.pop('language', None))
-        # assert per_part or not part_once
         self._type = specification.pop('type')
         self._name = specification.pop('name')
         self._values = specification.pop('values')
         self.archive = specification.pop('archive', None)
         self.include_model = specification.pop('include_model', False)
         self.num_concat_worlds = specification.pop('num_concat_worlds', 0)
+        self.directory = specification.pop('directory')
         self._specification = specification
+
+        super(LoadedDataset, self).__init__(world_size=specification.pop('world_size'), vectors=specification.pop('vectors', None), vocabularies=specification.pop('vocabularies', None), language=specification.pop('language', None))
+
         self.per_part = True
         self.part_once = False
-
         self.parts = dict()
-        directory = specification['directory']
-        for root, dirs, files in os.walk(directory):
-            if root == directory:
+        for root, dirs, files in os.walk(self.directory):
+            if root == self.directory:
                 assert not files
                 assert len(dirs) <= 4 and 'train' in dirs and 'validation' in dirs and 'test' in dirs and (len(dirs) == 3 or 'tf-records' in dirs)
-            elif root[len(directory) + 1:] in ('train', 'validation', 'test', 'tf-records'):
-                mode = root[len(directory) + 1:]
+            elif root[len(self.directory) + 1:] in ('train', 'validation', 'test', 'tf-records'):
+                mode = root[len(self.directory) + 1:]
                 if dirs:
                     assert all(d[:4] == 'part' and d[4:].isdigit() for d in dirs)
                     assert not files
@@ -400,24 +403,30 @@ class LoadedDataset(Dataset):
         self.num_instances = 0
 
     @property
-    def type(self):
-        return self._type
-
-    @property
     def name(self):
         return self._name
+
+    @property
+    def type(self):
+        return self._type
 
     @property
     def values(self):
         return self._values
 
     def specification(self):
-        return self._specification
+        specification = super(LoadedDataset, self).specification()
+        specification.update(self._specification)
+        return specification
 
     def __getattr__(self, name):
-        if name in self._specification:
-            return self._specification[name]
-        raise AttributeError
+        try:
+            return super(LoadedDataset, self).__getattr__(name=name)
+        except AttributeError:
+            if name in self._specification:
+                return self._specification[name]
+            else:
+                raise
 
     def get_records_paths(self):
         assert 'tf-records' in self.parts
@@ -437,7 +446,13 @@ class LoadedDataset(Dataset):
             self.num_instances = 0
             with util.Archive(path=path, mode='r', archive=self.archive) as read_file:
                 for value_name, value in self.loaded.items():
-                    value.extend(Dataset.deserialize_value(value_name=value_name, value_type=self.values[value_name], read_file=read_file, num_concat_worlds=self.num_concat_worlds, word2id=self.words))
+                    value.extend(Dataset.deserialize_value(
+                        value_name=value_name,
+                        value_type=self.values[value_name],
+                        read_file=read_file,
+                        num_concat_worlds=self.num_concat_worlds,
+                        word2id=self.vocabularies.get(self.values[value_name])
+                    ))
                     if self.num_instances:
                         assert len(value) == self.num_instances
                     else:
@@ -451,7 +466,7 @@ class LoadedDataset(Dataset):
                 if value_type in ('model', 'alts(model)') and not self.include_model:
                     continue
                 value = self.loaded[value_name].pop(index)
-                if value_type == 'text':
+                if value_type in self.vocabularies:
                     batch[value_name][i][:len(value)] = value
                 elif value_type not in ('model', 'alts(model)') or include_model:
                     batch[value_name][i] = value
@@ -469,16 +484,13 @@ class LoadedDataset(Dataset):
                     np.clip(worlds, a_min=0.0, a_max=1.0, out=worlds)
         return batch
 
-    def get_html(self, generated, id2word=None):
+    def get_html(self, generated):
         module = import_module('shapeworld.datasets.{}.{}'.format(self.type, self.name))
         dclass = module.dataset
-        return dclass.get_html(self, generated=generated, id2word=id2word)
+        return dclass.get_html(self, generated=generated)
 
 
 class DatasetMixer(Dataset):
-
-    dataset_name = 'mixer'
-    dataset_type = 'mixer'
 
     # accepts Dataset, config, str
     def __init__(self, datasets, consistent_batches=False, distribution=None, train_distribution=None, validation_distribution=None, test_distribution=None):
@@ -491,16 +503,17 @@ class DatasetMixer(Dataset):
         assert all(dataset.values == datasets[0].values for dataset in datasets)
         assert all(dataset.world_size == datasets[0].world_size for dataset in datasets)
         assert all(sorted(dataset.vectors) == sorted(datasets[0].vectors) for dataset in datasets)
-        assert all((dataset.words is None) == (datasets[0].words is None) for dataset in datasets)
+        assert all(sorted(dataset.vocabularies) == sorted(datasets[0].vocabularies) for dataset in datasets)
         # combine vectors and words information
         vectors = {value_name: max(dataset.vectors[value_name] for dataset in datasets) for value_name in datasets[0].vectors}
-        words = sorted(set(word for dataset in datasets for word in dataset.words))
-        words = {words[n]: n for n in range(len(words))}
+        vocabularies = dict()
+        for name in datasets[0].vocabularies:
+            vocabularies[name] = sorted(set(word for dataset in datasets for word in dataset.vocabularies[name]))
         language = datasets[0].language
-        super(DatasetMixer, self).__init__(None, vectors=vectors, words=words, language=language)
+        super(DatasetMixer, self).__init__(None, vectors=vectors, vocabularies=vocabularies, language=language)
         for dataset in datasets:
             dataset.vectors = self.vectors
-            dataset.words = self.words
+            dataset.vocabularies = self.vocabularies
         self.datasets = datasets
         self.consistent_batches = consistent_batches
         assert not distribution or len(distribution) == len(datasets)
@@ -515,10 +528,6 @@ class DatasetMixer(Dataset):
     @property
     def type(self):
         return self.datasets[0].type
-
-    @property
-    def name(self):
-        return 'mixer'
 
     @property
     def values(self):
@@ -547,7 +556,7 @@ class DatasetMixer(Dataset):
                 generated = dataset.generate(n=1, mode=mode, noise_range=noise_range, include_model=include_model, alternatives=alternatives)
                 for value_name, value_type in self.values.items():
                     value = generated[value_name][0]
-                    if value_type == 'text':
+                    if value_type in self.vocabularies:
                         batch[value_name][i][:len(value)] = value
                     else:
                         batch[value_name][i] = value
@@ -556,9 +565,6 @@ class DatasetMixer(Dataset):
 
 class ClassificationDataset(Dataset):
 
-    dataset_type = 'classification'
-    dataset_values = {'world': 'world', 'world_model': 'model', 'classification': 'vector(float)'}
-
     def __init__(self, world_generator, num_classes, multi_class=False, class_count=False):
         super(ClassificationDataset, self).__init__(world_size=world_generator.world_size, vectors=dict(classification=num_classes))
         assert multi_class or not class_count
@@ -566,6 +572,14 @@ class ClassificationDataset(Dataset):
         self.num_classes = num_classes
         self.multi_class = multi_class
         self.class_count = class_count
+
+    @property
+    def type(self):
+        return 'classification'
+
+    @property
+    def values(self):
+        return dict(world='world', world_model='model', classification='vector(float)')
 
     def specification(self):
         specification = super(ClassificationDataset, self).specification()
@@ -580,7 +594,7 @@ class ClassificationDataset(Dataset):
     def generate(self, n, mode=None, noise_range=None, include_model=False, alternatives=False):
         batch = self.zero_batch(n, include_model=include_model, alternatives=alternatives)
         for i in range(n):
-            self.world_generator.sample_values(mode=mode)
+            self.world_generator.initialize(mode=mode)
 
             while True:
                 world = self.world_generator()
@@ -600,11 +614,11 @@ class ClassificationDataset(Dataset):
                 assert c is not None
         return batch
 
-    def get_html(self, generated, id2word=None):
+    def get_html(self, generated):
         classifications = generated['classification']
         data_html = list()
         for n, classification in enumerate(classifications):
-            data_html.append('<div class="instance"><div class="world"><img src="world-{world}.bmp" alt="world-{world}.bmp"></div><div class="classification"><p>'.format(world=n))
+            data_html.append('<div class="instance"><div class="world"><img src="world-{world}.bmp" alt="world-{world}.bmp"></div><div class="num"><p><b>({num})</b></p></div><div class="classification"><p>'.format(world=n, num=(n + 1)))
             comma = False
             for c, count in enumerate(classification):
                 if count == 0.0:
@@ -618,7 +632,7 @@ class ClassificationDataset(Dataset):
                 else:
                     data_html.append('class {c}'.format(c=c))
             data_html.append('</p></div></div>')
-        html = '<!DOCTYPE html><html><head><title>{dtype} {name}</title><style>.data{{width: 100%; height: 100%;}} .instance{{width: 100%; margin-top: 1px; margin-bottom: 1px; background-color: #CCCCCC;}} .world{{height: {world_height}px; display: inline-block; vertical-align: middle;}} .classification{{display: inline-block; vertical-align: middle; margin-left: 10px;}}</style></head><body><div class="data">{data}</div></body></html>'.format(
+        html = '<!DOCTYPE html><html><head><title>{dtype} {name}</title><style>.data{{width: 100%; height: 100%;}} .instance{{width: 100%; margin-top: 1px; margin-bottom: 1px; background-color: #CCCCCC;}} .world{{height: {world_height}px; display: inline-block; vertical-align: middle;}} .num{{display: inline-block; vertical-align: middle; margin-left: 10px;}} .classification{{display: inline-block; vertical-align: middle; margin-left: 10px;}}</style></head><body><div class="data">{data}</div></body></html>'.format(
             dtype=self.type,
             name=self.name,
             world_height=self.world_shape[0],
@@ -629,28 +643,48 @@ class ClassificationDataset(Dataset):
 
 class CaptionAgreementDataset(Dataset):
 
-    MAX_ATTEMPTS = 10
-    RESAMPLE_CAPTIONER = 10
-    dataset_type = 'agreement'
-    dataset_values = {'world': 'world', 'world_model': 'model', 'caption': 'text', 'caption_model': 'model', 'caption_length': 'int', 'agreement': 'float'}
+    INITIALIZE_CAPTIONER = 100
 
-    def __init__(self, world_generator, world_captioner, caption_size, words, correct_ratio=None, train_correct_ratio=None, validation_correct_ratio=None, test_correct_ratio=None, caption_realizer=None, language=None):
+    def __init__(self, world_generator, world_captioner, caption_size, vocabulary, correct_ratio=None, train_correct_ratio=None, validation_correct_ratio=None, test_correct_ratio=None, caption_realizer=None, language=None):
         assert isinstance(caption_size, int) and caption_size > 0
-        assert isinstance(words, list) and len(words) > 0
-        super(CaptionAgreementDataset, self).__init__(world_size=world_generator.world_size, vectors=dict(caption=caption_size), words=words, language=language)
+        vocabulary = list(vocabulary)
+        assert len(vocabulary) > 0 and vocabulary == sorted(vocabulary)
         self.world_generator = world_generator
         self.world_captioner = world_captioner
-        self.caption_size = caption_size
-        self.correct_ratio = util.value_or_default(correct_ratio, 0.5)
-        self.train_correct_ratio = util.value_or_default(train_correct_ratio, self.correct_ratio)
-        self.validation_correct_ratio = util.value_or_default(validation_correct_ratio, self.correct_ratio)
-        self.test_correct_ratio = util.value_or_default(test_correct_ratio, self.correct_ratio)
         if isinstance(caption_realizer, CaptionRealizer):
             self.caption_realizer = caption_realizer
         else:
             assert caption_realizer is None or isinstance(caption_realizer, str)
-            self.caption_realizer = CaptionRealizer.from_name(name=util.value_or_default(caption_realizer, 'dmrs'), language=util.value_or_default(language, 'english'))
+            self.caption_realizer = CaptionRealizer.from_name(
+                name=util.value_or_default(caption_realizer, 'dmrs'),
+                language=util.value_or_default(language, 'english')
+            )
         self.world_captioner.set_realizer(self.caption_realizer)
+        vocabularies = dict(
+            language=vocabulary,
+            rpn=sorted(self.world_captioner.rpn_symbols())
+        )
+        super(CaptionAgreementDataset, self).__init__(
+            world_size=world_generator.world_size,
+            vectors=dict(
+                caption=caption_size,
+                caption_rpn=self.world_captioner.rpn_length()
+            ),
+            vocabularies=vocabularies,
+            language=language
+        )
+        self.correct_ratio = util.value_or_default(correct_ratio, 0.5)
+        self.train_correct_ratio = util.value_or_default(train_correct_ratio, self.correct_ratio)
+        self.validation_correct_ratio = util.value_or_default(validation_correct_ratio, self.correct_ratio)
+        self.test_correct_ratio = util.value_or_default(test_correct_ratio, self.correct_ratio)
+
+    @property
+    def type(self):
+        return 'agreement'
+
+    @property
+    def values(self):
+        return dict(world='world', world_model='model', caption='language', caption_length='int', caption_rpn='rpn', caption_rpn_length='int', caption_model='model', agreement='float')
 
     def generate(self, n, mode=None, noise_range=None, include_model=False, alternatives=False):
         if mode == 'train':
@@ -662,18 +696,37 @@ class CaptionAgreementDataset(Dataset):
         else:
             correct_ratio = self.correct_ratio
 
+        captioners_proposed = list()
+        captioners_used = list()
+
+        rpn2id = self.vocabularies['rpn']
+        unknown = rpn2id['[UNKNOWN]']
+        rpn_size = self.vector_shape('caption_rpn')[0]
+
         batch = self.zero_batch(n, include_model=include_model, alternatives=alternatives)
         captions = [None] * n
         for i in range(n):
+            # print(i, end=', ', flush=True)
             correct = random() < correct_ratio
             resample = 0
-            while resample >= 0:
-                self.world_generator.sample_values(mode=mode)
-                if resample % self.__class__.RESAMPLE_CAPTIONER == 0:
-                    # if resample > 0:
-                    #     print(self.world_captioner.correct, self.world_captioner.model())
-                    #     exit(0)
-                    self.world_captioner.sample_values(mode=mode, correct=correct)
+            while True:
+                self.world_generator.initialize(mode=mode)
+                if resample % self.__class__.INITIALIZE_CAPTIONER == 0:
+                    if resample // self.__class__.INITIALIZE_CAPTIONER >= 1:
+                        # print('resample captioner')
+                        # print(self.world_captioner.correct, self.world_captioner.model())
+                        # exit(0)
+                        pass
+                    while not self.world_captioner.initialize(mode=mode, correct=correct):
+                        # print('initialize false')
+                        # assert False
+                        pass
+                    captioner_model = self.world_captioner.model()
+                    if captioner_model not in captioners_proposed:
+                        captioners_proposed.append(captioner_model)
+                    # print(json.dumps(obj=self.world_captioner.model(), indent=2, sort_keys=True))
+                    # print(self.world_captioner.captioner, self.world_captioner.correct)
+
                 resample += 1
 
                 while True:
@@ -681,44 +734,78 @@ class CaptionAgreementDataset(Dataset):
                     if world is not None:
                         break
 
-                for attempt in range(self.__class__.MAX_ATTEMPTS):
-                    caption = self.world_captioner(entities=world.entities)
-                    if caption is not None:
-                        # print('captioner successful:', resample, attempt, self.world_captioner.correct)
-                        resample = -1
-                        break
-                # else:
-                #     print('captioner failed')
+                caption = self.world_captioner(world=world)
+                if caption is not None:
+                    break
+                else:
+                    # print('captioner failed')
+                    pass
 
-            assert (caption.agreement(entities=world.entities) > 0.0 and correct) or (caption.agreement(entities=world.entities) < 0.0 and not correct)
-            batch['world'][i] = world.get_array(noise_range=noise_range)
+            if captioner_model not in captioners_used:
+                captioners_used.append(captioner_model)
+
             captions[i] = caption
+
+            batch['world'][i] = world.get_array(noise_range=noise_range)
             batch['agreement'][i] = float(correct)
+
+            rpn = caption.reverse_polish_notation()
+            assert len(rpn) <= rpn_size
+            for k, rpn_symbol in enumerate(rpn):
+                assert rpn_symbol in rpn2id
+                batch['caption_rpn'][i][k] = rpn2id.get(rpn_symbol, unknown)
+            batch['caption_rpn_length'][i] = len(rpn)
+
             if include_model:
                 batch['world_model'][i] = world.model()
                 batch['caption_model'][i] = caption.model()
 
-        captions = self.caption_realizer.realize(captions=captions)
-        unknown = self.words['[UNKNOWN]']
+        word2id = self.vocabularies['language']
+        unknown = word2id['[UNKNOWN]']
+        caption_size = self.vector_shape('caption')[0]
+
+        unused_words = set(word2id)  # for assert
+        unused_words.remove('')
+        unused_words.remove('[UNKNOWN]')
         missing_words = set()  # for assert
-        max_caption_size = self.caption_size  # for assert
+        max_caption_size = caption_size  # for assert
+
+        captions = self.caption_realizer.realize(captions=captions)
         for i, caption in enumerate(captions):
-            if len(caption) > self.caption_size:
+            if len(caption) > caption_size:
                 if len(caption) > max_caption_size:
                     max_caption_size = len(caption)
                 continue
-            for w, word in enumerate(caption):
-                if word not in self.words:
+            for k, word in enumerate(caption):
+                if word in word2id:
+                    unused_words.discard(word)
+                else:
                     missing_words.add(word)
                     continue
-                batch['caption'][i][w] = self.words.get(word, unknown)
+                batch['caption'][i][k] = word2id.get(word, unknown)
             batch['caption_length'][i] = len(caption)
-        assert not missing_words, 'Words missing in vocabulary: \'{}\''.format('\', \''.join(sorted(missing_words)))
-        assert max_caption_size <= self.caption_size, 'Caption size exceeds max size: {} > {}'.format(max_caption_size, self.caption_size)
+
+        if len(captioners_used) < len(captioners_proposed):
+            # print('More captioner models proposed than used: {} > {}'.format(len(captioners_proposed), len(captioners_used)))
+            # for captioner_model in captioners_proposed:
+            #     if captioner_model not in captioners_used:
+            #         print(json.dumps(obj=captioner_model, indent=2, sort_keys=True))
+            pass
+
+        # if len(unused_words) > 0:
+        #     print('Words unused in vocabulary: \'{}\''.format('\', \''.join(sorted(unused_words))))
+        # if max_caption_size < caption_size:
+        #     print('Caption size smaller than max size: {} < {}'.format(max_caption_size, caption_size))
+        if len(missing_words) > 0:
+            print('Words missing in vocabulary: \'{}\''.format('\', \''.join(sorted(missing_words))))
+        if max_caption_size > caption_size:
+            print('Caption size exceeds max size: {} > {}'.format(max_caption_size, caption_size))
+        assert not missing_words and max_caption_size <= caption_size
 
         return batch
 
-    def get_html(self, generated, id2word):
+    def get_html(self, generated):
+        id2word = self.vocabulary(value_type='language')
         captions = generated['caption']
         caption_lengths = generated['caption_length']
         agreements = generated['agreement']
@@ -730,12 +817,13 @@ class CaptionAgreementDataset(Dataset):
                 agreement = 'incorrect'
             else:
                 agreement = 'ambiguous'
-            data_html.append('<div class="{agreement}"><div class="world"><img src="world-{world}.bmp" alt="world-{world}.bmp"></div><div class="caption"><p>{caption}</p></div></div>'.format(
+            data_html.append('<div class="{agreement}"><div class="world"><img src="world-{world}.bmp" alt="world-{world}.bmp"></div><div class="num"><p><b>({num})</b></p></div><div class="caption"><p>{caption}</p></div></div>'.format(
                 agreement=agreement,
                 world=n,
+                num=(n + 1),
                 caption=util.tokens2string(id2word[word] for word in caption[:caption_length])
             ))
-        html = '<!DOCTYPE html><html><head><title>{dtype} {name}</title><style>.data{{width: 100%; height: 100%;}} .correct{{width: 100%; margin-top: 1px; margin-bottom: 1px; background-color: #BBFFBB;}} .incorrect{{width: 100%; margin-top: 1px; margin-bottom: 1px; background-color: #FFBBBB;}} .ambiguous{{width: 100%; margin-top: 1px; margin-bottom: 1px; background-color: #FFFFBB;}} .world{{height: {world_height}px; display: inline-block; vertical-align: middle;}} .caption{{display: inline-block; vertical-align: middle; margin-left: 10px;}}</style></head><body><div class="data">{data}</div></body></html>'.format(
+        html = '<!DOCTYPE html><html><head><title>{dtype} {name}</title><style>.data{{width: 100%; height: 100%;}} .correct{{width: 100%; margin-top: 1px; margin-bottom: 1px; background-color: #BBFFBB;}} .incorrect{{width: 100%; margin-top: 1px; margin-bottom: 1px; background-color: #FFBBBB;}} .ambiguous{{width: 100%; margin-top: 1px; margin-bottom: 1px; background-color: #FFFFBB;}} .world{{height: {world_height}px; display: inline-block; vertical-align: middle;}} .num{{display: inline-block; vertical-align: middle; margin-left: 10px;}} .caption{{display: inline-block; vertical-align: middle; margin-left: 10px;}}</style></head><body><div class="data">{data}</div></body></html>'.format(
             dtype=self.type,
             name=self.name,
             world_height=self.world_shape[0],

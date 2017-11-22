@@ -1,46 +1,60 @@
 from shapeworld.dataset import CaptionAgreementDataset
-from shapeworld.generators import GenericGenerator
-from shapeworld.captioners import CaptionerMixer, AttributesTypeCaptioner, AttributesRelationCaptioner, ExistentialCaptioner
+from shapeworld.generators import RandomAttributesGenerator
+from shapeworld.captioners import CaptionerMixer, RegularAttributeCaptioner, RegularTypeCaptioner, AttributeTypeRelationCaptioner, ExistentialCaptioner
 
 
-class OneshapeDataset(CaptionAgreementDataset):
+class Oneshape(CaptionAgreementDataset):
 
-    dataset_name = 'oneshape'
+    def __init__(
+        self,
+        validation_combinations=(('square', 'red', 'solid'), ('triangle', 'green', 'solid'), ('circle', 'blue', 'solid')),
+        test_combinations=(('rectangle', 'yellow', 'solid'), ('cross', 'magenta', 'solid'), ('ellipse', 'cyan', 'solid')),
+        caption_size=9,
+        vocabulary=('.', 'a', 'an', 'angular', 'asymmetric', 'blue', 'circle', 'cross', 'cyan', 'ellipse', 'gray', 'green', 'is', 'magenta', 'pentagon', 'rectangle', 'red', 'round', 'semicircle', 'shape', 'square', 'symmetric', 'there', 'triangle', 'yellow'),
+        language=None
+    ):
 
-    def __init__(self, validation_combinations, test_combinations, caption_size, words, language=None):
-        world_generator = GenericGenerator(
-            entity_counts=[1]
+        world_generator = RandomAttributesGenerator(
+            entity_counts=[1],
+            validation_combinations=validation_combinations,
+            test_combinations=test_combinations
         )
+
         world_captioner = CaptionerMixer(
             captioners=(
-                AttributesTypeCaptioner(
-                    existing_attribute_ratio=0.0
+                RegularTypeCaptioner(
+                    existing_attribute_rate=0.0
                 ),
                 ExistentialCaptioner(
-                    restrictor_captioner=AttributesTypeCaptioner(
-                        hypernym_ratio=1.0,
-                        existing_attribute_ratio=0.0
+                    restrictor_captioner=RegularTypeCaptioner(
+                        hypernym_rate=1.0,
+                        existing_attribute_rate=0.0,
+                        logical_tautology_rate=1.0
                     ),
-                    body_captioner=AttributesRelationCaptioner(
-                        existing_attribute_ratio=0.0
-                    )
+                    body_captioner=AttributeTypeRelationCaptioner(
+                        attribute_type_captioner=CaptionerMixer(
+                            captioners=(
+                                RegularAttributeCaptioner(
+                                    existing_attribute_rate=0.0
+                                ),
+                                RegularTypeCaptioner(
+                                    existing_attribute_rate=0.0
+                                )
+                            )
+                        )
+                    ),
+                    pragmatical_tautology_rate=1.0
                 )
-            ),
-            trivial_acceptance_rate=1.0
+            )
         )
-        super(OneshapeDataset, self).__init__(
+
+        super(Oneshape, self).__init__(
             world_generator=world_generator,
             world_captioner=world_captioner,
             caption_size=caption_size,
-            words=words,
+            vocabulary=vocabulary,
             language=language
         )
 
 
-dataset = OneshapeDataset
-OneshapeDataset.default_config = dict(
-    validation_combinations=[['square', 'red', 'solid'], ['triangle', 'green', 'solid'], ['circle', 'blue', 'solid']],
-    test_combinations=[['rectangle', 'yellow', 'solid'], ['cross', 'magenta', 'solid'], ['ellipse', 'cyan', 'solid']],
-    caption_size=8,
-    words=['.', 'a', 'an', 'black', 'blue', 'circle', 'cross', 'cyan', 'ellipse', 'green', 'is', 'magenta', 'pentagon', 'rectangle', 'red', 'semicircle', 'shape', 'square', 'there', 'triangle', 'white', 'yellow']
-)
+dataset = Oneshape

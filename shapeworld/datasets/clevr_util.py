@@ -1,6 +1,7 @@
 import json
 import os
 from PIL import Image
+from shapeworld import util
 from shapeworld.world import World
 
 
@@ -145,9 +146,10 @@ def questions_iter(directory, mode, parts=None):
             question = question_dict['question'].lower()
             if question[-1] != '?':
                 question += '?'
+            question = util.string2tokens(string=question)
             if mode == 'test':
                 question_model = dict()
-                answer = 'UNKNOWN'
+                answer = '[UNKNOWN]'
             else:
                 family = question_dict['question_family_index']
                 program = question_dict['program']
@@ -155,6 +157,7 @@ def questions_iter(directory, mode, parts=None):
                 answer = question_dict['answer'].lower()
             if answer in numbers:
                 answer = numbers[answer]
+            answer = util.string2tokens(string=answer)
             assert question_dict['question_index'] == n
             assert question_dict['split'] == split
             assert question_dict['image_filename'] == 'CLEVR_{}_{:0>6}.png'.format(split, image_index)

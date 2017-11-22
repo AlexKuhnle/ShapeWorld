@@ -1,13 +1,17 @@
+from shapeworld.captioners.logical_predication import LogicalPredication
+from shapeworld.captioners.pragmatical_predication import PragmaticalPredication
 from shapeworld.captioners.captioner import WorldCaptioner, CaptionerMixer
-from shapeworld.captioners.attributes_type import AttributesTypeCaptioner
-from shapeworld.captioners.attributes_relation import AttributesRelationCaptioner
-from shapeworld.captioners.spatial_relation import SpatialRelationCaptioner
-from shapeworld.captioners.comparison_relation import ComparisonRelationCaptioner
+from shapeworld.captioners.regular_attribute import RegularAttributeCaptioner
+from shapeworld.captioners.regular_type import RegularTypeCaptioner
+from shapeworld.captioners.attribute_type_relation import AttributeTypeRelationCaptioner
+from shapeworld.captioners.max_attribute import MaxAttributeCaptioner
+from shapeworld.captioners.relation import RelationCaptioner
 from shapeworld.captioners.existential import ExistentialCaptioner
-from shapeworld.captioners.absolute_quantifier import AbsoluteQuantifierCaptioner
-from shapeworld.captioners.relative_quantifier import RelativeQuantifierCaptioner
+from shapeworld.captioners.quantifier import QuantifierCaptioner
+from shapeworld.captioners.number_bound import NumberBoundCaptioner
+from shapeworld.captioners.comparative_quantifier import ComparativeQuantifierCaptioner
 from shapeworld.captioners.conjunction import ConjunctionCaptioner
 from shapeworld.captioners.disjunction import DisjunctionCaptioner
 
 
-__all__ = ['WorldCaptioner', 'CaptionerMixer', 'AttributesTypeCaptioner', 'AttributesRelationCaptioner', 'SpatialRelationCaptioner', 'ComparisonRelationCaptioner', 'ExistentialCaptioner', 'AbsoluteQuantifierCaptioner', 'RelativeQuantifierCaptioner', 'ConjunctionCaptioner', 'DisjunctionCaptioner']
+__all__ = ['LogicalPredication', 'PragmaticalPredication', 'WorldCaptioner', 'CaptionerMixer', 'RegularAttributeCaptioner', 'RegularTypeCaptioner', 'AttributeTypeRelationCaptioner', 'MaxAttributeCaptioner', 'RelationCaptioner', 'ExistentialCaptioner', 'QuantifierCaptioner', 'NumberBoundCaptioner', 'ComparativeQuantifierCaptioner', 'ConjunctionCaptioner', 'DisjunctionCaptioner']

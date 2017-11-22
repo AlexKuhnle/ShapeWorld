@@ -1,21 +1,21 @@
 from random import random
 from shapeworld import util
+from shapeworld.world import World
+from shapeworld.captioners import LogicalPredication, PragmaticalPredication
 
 
 class WorldCaptioner(object):
 
-    MAX_ATTEMPTS = 3
+    MAX_SAMPLE_ATTEMPTS = 10
+    MAX_ATTEMPTS = 4
 
-    def __init__(self, internal_captioners=None, trivial_acceptance_rate=None):
-        self.internal_captioners = list(util.value_or_default(internal_captioners, ()))
-        self.trivial_acceptance_rate = trivial_acceptance_rate
-        if trivial_acceptance_rate is not None:
-            captioners = list(self.internal_captioners)
-            while captioners:
-                captioner = captioners.pop()
-                if captioner.trivial_acceptance_rate is None:
-                    captioner.trivial_acceptance_rate = trivial_acceptance_rate
-                    captioners.extend(captioner.internal_captioners)
+    def __init__(self, internal_captioners, pragmatical_redundancy_rate=None, pragmatical_tautology_rate=None, logical_redundancy_rate=None, logical_tautology_rate=None, logical_contradiction_rate=None):
+        self.internal_captioners = list(internal_captioners)
+        self.pragmatical_redundancy_rate = util.value_or_default(pragmatical_redundancy_rate, 1.0)
+        self.pragmatical_tautology_rate = util.value_or_default(pragmatical_tautology_rate, 0.0)
+        self.logical_redundancy_rate = util.value_or_default(logical_redundancy_rate, 1.0)
+        self.logical_tautology_rate = util.value_or_default(logical_tautology_rate, 0.0)
+        self.logical_contradiction_rate = util.value_or_default(logical_contradiction_rate, 0.0)
         self.realizer = None
         self.correct = None
 
@@ -30,79 +30,138 @@ class WorldCaptioner(object):
             captioner.set_realizer(realizer)
         return True
 
-    def sample_values(self, mode, correct):
+    def rpn_length(self):
+        return max(captioner.rpn_length() for captioner in self.internal_captioners)
+
+    def rpn_symbols(self):
+        return set(rpn_symbol for captioner in self.internal_captioners for rpn_symbol in captioner.rpn_symbols())
+
+    def initialize(self, mode, correct):
+        return self.sample_values(mode=mode, correct=correct, predication=LogicalPredication())
+
+    def sample_values(self, mode, correct, predication):
         assert mode in (None, 'train', 'validation', 'test')
         assert isinstance(correct, bool)
+        assert isinstance(predication, LogicalPredication)
+
         self.mode = mode
         self.correct = correct
-        if self.trivial_acceptance_rate is None or self.trivial_acceptance_rate == 0.0:
-            self.trivial_accepted = False
-        elif self.trivial_acceptance_rate == 1.0:
-            self.trivial_accepted = True
+
+        if self.pragmatical_redundancy_rate == 0.0:
+            self.pragmatical_redundancy = False
+        elif self.pragmatical_redundancy_rate == 1.0:
+            self.pragmatical_redundancy = True
         else:
-            self.trivial_accepted = random() < self.trivial_acceptance_rate
+            self.pragmatical_redundancy = random() < self.pragmatical_redundancy_rate
+
+        if self.pragmatical_tautology_rate == 0.0:
+            self.pragmatical_tautology = False
+        elif self.pragmatical_tautology_rate == 1.0:
+            self.pragmatical_tautology = True
+        else:
+            self.pragmatical_tautology = random() < self.pragmatical_tautology_rate
+
+        if self.logical_redundancy_rate == 0.0:
+            self.logical_redundancy = False
+        elif self.logical_redundancy_rate == 1.0:
+            self.logical_redundancy = True
+        else:
+            self.logical_redundancy = random() < self.logical_redundancy_rate
+
+        if self.logical_tautology_rate == 0.0:
+            self.logical_tautology = False
+        elif self.logical_tautology_rate == 1.0:
+            self.logical_tautology = True
+        else:
+            self.logical_tautology = random() < self.logical_tautology_rate
+
+        if self.logical_contradiction_rate == 0.0:
+            self.logical_contradiction = False
+        elif self.logical_contradiction_rate == 1.0:
+            self.logical_contradiction = True
+        else:
+            self.logical_contradiction = random() < self.logical_contradiction_rate
+
+        return True
 
     def model(self):
-        return dict(name=str(self), mode=self.mode, correct=self.correct, trivial_accepted=self.trivial_accepted)
+        return dict(
+            name=str(self),
+            mode=self.mode,
+            correct=self.correct,
+            logical_tautology=self.logical_tautology,
+            logical_redundancy=self.logical_redundancy,
+            pragmatical_redundancy=self.pragmatical_redundancy
+        )
 
-    def __call__(self, entities, relevant_entities=None):
+    def __call__(self, world):
         assert self.realizer is not None
-        assert isinstance(entities, list)
-
-        if self.mode is None:
-            captioner = self.caption_world
-        elif self.mode == 'train':
-            captioner = self.caption_train_world
-        elif self.mode == 'validation':
-            captioner = self.caption_validation_world
-        elif self.mode == 'test':
-            captioner = self.caption_test_world
-
-        if relevant_entities is None:
-            relevant_entities = entities
+        assert isinstance(world, World)
 
         for _ in range(self.__class__.MAX_ATTEMPTS):
-            caption = captioner(entities=entities, relevant_entities=relevant_entities)
+            predication = PragmaticalPredication(agreeing=world.entities)
+
+            caption = self.caption(predication=predication, world=world)
             if caption is None:
                 continue
-            agreement = caption.agreement(entities=relevant_entities)
-            if agreement == 0.0:
-                continue
-            elif ((agreement == 2.0 and self.correct) or (agreement == -2.0 and not self.correct)) and not self.trivial_accepted:
-                continue
-            elif (agreement > 0.0 and self.correct) or (agreement < 0.0 and not self.correct):
-                return caption
-        return None
 
-    def caption_world(self, entities, relevant_entities):
+            agreement = caption.agreement(predication=predication, world=world)
+            if agreement > 0.0:
+                break
+
+        else:
+            return None
+
+        if not self.correct:
+            for _ in range(self.__class__.MAX_ATTEMPTS):
+                predication = PragmaticalPredication(agreeing=world.entities)
+
+                if not self.incorrect(caption=caption, predication=predication, world=world):
+                    continue
+
+                agreement = caption.agreement(predication=predication, world=world)
+                if agreement < 0.0:
+                    break
+
+            else:
+                return None
+
+        return caption
+
+    def caption(self, predication, world):
         raise NotImplementedError
 
-    def caption_train_world(self, entities, relevant_entities):
-        return self.caption_world(entities=entities, relevant_entities=relevant_entities)
+    def incorrect(self, caption, predication, world):
+        raise NotImplementedError
 
-    def caption_validation_world(self, entities, relevant_entities):
-        return self.caption_train_world(entities=entities, relevant_entities=relevant_entities)
-
-    def caption_test_world(self, entities, relevant_entities):
-        return self.caption_world(entities=entities, relevant_entities=relevant_entities)
+    def apply_caption_to_predication(self, caption, predication):
+        raise NotImplementedError
 
 
 class CaptionerMixer(WorldCaptioner):
 
-    def __init__(self, captioners, distribution=None, train_distribution=None, validation_distribution=None, test_distribution=None, trivial_acceptance_rate=None):
+    def __init__(self, captioners, distribution=None, train_distribution=None, validation_distribution=None, test_distribution=None, pragmatical_redundancy_rate=None, pragmatical_tautology_rate=None, logical_redundancy_rate=None, logical_tautology_rate=None, logical_contradiction_rate=None):
         assert len(captioners) >= 1
         assert not distribution or len(distribution) == len(captioners)
         assert bool(train_distribution) == bool(validation_distribution) == bool(test_distribution)
         assert not train_distribution or len(train_distribution) == len(validation_distribution) == len(test_distribution) == len(distribution)
-        super(CaptionerMixer, self).__init__(internal_captioners=captioners, trivial_acceptance_rate=trivial_acceptance_rate)
+        super(CaptionerMixer, self).__init__(
+            internal_captioners=captioners,
+            pragmatical_redundancy_rate=pragmatical_redundancy_rate,
+            pragmatical_tautology_rate=pragmatical_tautology_rate,
+            logical_redundancy_rate=logical_redundancy_rate,
+            logical_tautology_rate=logical_tautology_rate,
+            logical_contradiction_rate=logical_contradiction_rate
+        )
         distribution = util.value_or_default(distribution, [1] * len(captioners))
         self.distribution = util.cumulative_distribution(distribution)
         self.train_distribution = util.cumulative_distribution(util.value_or_default(train_distribution, distribution))
         self.validation_distribution = util.cumulative_distribution(util.value_or_default(validation_distribution, distribution))
         self.test_distribution = util.cumulative_distribution(util.value_or_default(test_distribution, distribution))
 
-    def sample_values(self, mode, correct):
-        super(CaptionerMixer, self).sample_values(mode=mode, correct=correct)
+    def sample_values(self, mode, correct, predication):
+        if not super(CaptionerMixer, self).sample_values(mode=mode, correct=correct, predication=predication):
+            return False
 
         if mode is None:
             self.captioner = util.sample(self.distribution, self.internal_captioners)
@@ -113,7 +172,7 @@ class CaptionerMixer(WorldCaptioner):
         elif mode == 'test':
             self.captioner = util.sample(self.test_distribution, self.internal_captioners)
 
-        self.captioner.sample_values(mode=mode, correct=correct)
+        return self.captioner.sample_values(mode=mode, correct=correct, predication=predication)
 
     def model(self):
         return util.merge_dicts(
@@ -121,14 +180,11 @@ class CaptionerMixer(WorldCaptioner):
             dict2=dict(captioner=self.captioner.model())
         )
 
-    def caption_world(self, entities, relevant_entities):
-        return self.captioner.caption_world(entities=entities, relevant_entities=relevant_entities)
+    def caption(self, predication, world):
+        return self.captioner.caption(predication=predication, world=world)
 
-    def caption_train_world(self, entities, relevant_entities):
-        return self.captioner.caption_train_world(entities=entities, relevant_entities=relevant_entities)
+    def incorrect(self, caption, predication, world):
+        return self.captioner.incorrect(caption=caption, predication=predication, world=world)
 
-    def caption_validation_world(self, entities, relevant_entities):
-        return self.captioner.caption_validation_world(entities=entities, relevant_entities=relevant_entities)
-
-    def caption_test_world(self, entities, relevant_entities):
-        return self.captioner.caption_test_world(entities=entities, relevant_entities=relevant_entities)
+    def apply_caption_to_predication(self, caption, predication):
+        return self.captioner.apply_caption_to_predication(caption=caption, predication=predication)

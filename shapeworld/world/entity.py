@@ -28,8 +28,12 @@ class Entity(object):
         self.set_center(center=center)
         self.collisions = dict()
 
+    def __hash__(self):
+        assert self.id is not None
+        return hash(self.id)
+
     def __eq__(self, other):
-        raise NotImplementedError
+        return isinstance(other, Entity) and self.id is not None and other.id is not None and self.id == other.id
 
     def model(self):
         return {'id': self.id, 'shape': self.shape.model(), 'color': self.color.model(), 'texture': self.texture.model(), 'center': self.center.model(), 'rotation': self.rotation}
@@ -107,6 +111,9 @@ class Entity(object):
                 if x == x1 or x == x2 or y == y1 or y == y2:
                     world_array[y, x] = color
 
+    def overall_collision(self):
+        return sum(self.collisions.values())
+
     def collides(self, other, ratio=False, symmetric=False, resolution=None):
         if other.id in self.collisions and self.id in other.collisions:
             if not ratio:
@@ -178,7 +185,7 @@ class Entity(object):
                 return 0.0
             else:
                 return (0.0, 0.0)
-        elif (bottomright1 - topleft1).length < (bottomright2 - topleft2).length:
+        elif bottomright1.distance(topleft1) < bottomright2.distance(topleft2):
             topleft, bottomright = topleft1, bottomright1
         else:
             topleft, bottomright = topleft2, bottomright2

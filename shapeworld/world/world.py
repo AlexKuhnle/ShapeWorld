@@ -1,13 +1,17 @@
+from __future__ import division
 from random import choice, random
 import numpy as np
 from PIL import Image
-from shapeworld.util import toposort, Point
+from shapeworld import util
+from shapeworld.util import Point
 from shapeworld.world import Entity, Color
 from shapeworld.world.shape import WorldShape
 from shapeworld.world.texture import SolidTexture
 
 
 class World(Entity):
+
+    COLLISION_MIN_DISTANCE = 0.75
 
     __slots__ = ('size', 'entities', 'shape', 'color', 'texture', 'center', 'rotation', 'rotation_sin', 'rotation_cos', 'relative_topleft', 'relative_bottomright', 'topleft', 'bottomright')
 
@@ -59,7 +63,7 @@ class World(Entity):
         if provoke_collision and self.entities:
             entity = choice(self.entities)
             angle = Point.from_angle(angle=random())
-            return entity.center + angle * entity.shape.size * (0.75 + random())
+            return entity.center + angle * entity.shape.size * (self.__class__.COLLISION_MIN_DISTANCE + random())
         else:
             return Point.random_instance(Point.zero, Point.one)
 
@@ -74,7 +78,10 @@ class World(Entity):
         if collision_tolerance > 0.0:
             for other in self.entities:
                 collision = entity.collides(other, ratio=True, symmetric=True, resolution=self.size)
-                if collision > collision_tolerance or (collision > 0.0 and entity.color.name == other.color.name):
+                if collision > collision_tolerance or (collision > 0.0 and entity.color == other.color):
+                    # can't distinguish shapes of same color
+                    return False
+                if entity.overall_collision() > collision_tolerance:
                     return False
         else:
             if any(entity.collides(other, resolution=self.size) for other in self.entities):
@@ -93,7 +100,7 @@ class World(Entity):
                     contained[n].add(k)
                 elif c1 > c2 or c1 != 0.0:
                     contained[k].add(n)
-        sort_indices = toposort(partial_order=contained)
+        sort_indices = util.toposort(partial_order=contained)
         self.entities = [self.entities[n] for n in sort_indices]
         for n, entity in enumerate(self.entities):
             entity.id = n

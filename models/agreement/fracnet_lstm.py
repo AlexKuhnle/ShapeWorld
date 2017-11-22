@@ -1,26 +1,41 @@
 from models.TFMacros.tf_macros import *
 
 
-def model(model, inputs, **parameters):
+def model(model, inputs, world_shape, fracnet_size, fracnet_depth, world_reduction, caption_shape, vocabulary_size, embedding_size, caption_reduction, multimodal_reduction, mlp_size, mlp_depth, soft):
+
+    fracnet_sizes = [fracnet_size * 2**n for n in range(fracnet_depth)]
+    if caption_reduction == 'state':
+        assert fracnet_sizes[-1] % 2 == 0
+        lstm_size = fracnet_sizes[-1] // 2
+    else:
+        lstm_size = fracnet_sizes[-1]
+    mlp_sizes = [mlp_size for _ in range(mlp_depth)]
+
     world = (
-        Input(name='world', shape=parameters['world_shape'], tensor=inputs.get('world')) >>
-        FractalNet(sizes=(16, 32, 64)) >>
-        Reduction(reduction=parameters.get('world_reduction', 'mean'), axis=(1, 2))
+        Input(name='world', shape=world_shape, tensor=inputs.get('world')) >>
+        FractalNet(sizes=fracnet_sizes) >>
+        Reduction(reduction=world_reduction, axis=(1, 2))
     )
+
     caption = (
         (
-            Input(name='caption', shape=parameters['caption_shape'], dtype='int', tensor=inputs.get('caption')) >>
-            Embedding(indices=parameters['vocabulary_size'], size=32),
+            Input(name='caption', shape=caption_shape, dtype='int', tensor=inputs.get('caption')) >>
+            Embedding(indices=vocabulary_size, size=embedding_size),
             Input(name='caption_length', shape=(), dtype='int', tensor=inputs.get('caption_length'))
         ) >>
-        Rnn(size=64, unit=Lstm) >>
-        Select(index=0) >>
-        Reduction(reduction=parameters.get('caption_reduction', 'mean'), axis=1)
+        Rnn(size=lstm_size, unit=Lstm)
     )
+
+    if caption_reduction == 'state':
+        caption >>= Select(index=1) >> Reduction(reduction='concat')
+    else:
+        caption >>= Select(index=0) >> Reduction(reduction=caption_reduction, axis=1)
+
     agreement = (
         (world, caption) >>
-        Reduction(reduction=parameters.get('multimodal_reduction', 'prod')) >>
-        Dense(size=512) >>
-        Binary(name='agreement', soft=parameters.get('soft', 0.0), tensor=inputs.get('agreement'))
+        Reduction(reduction=multimodal_reduction) >>
+        Repeat(layer=Dense, sizes=mlp_sizes, dropout=True) >>
+        Binary(name='agreement', soft=soft, tensor=inputs.get('agreement'))
     )
+
     return agreement

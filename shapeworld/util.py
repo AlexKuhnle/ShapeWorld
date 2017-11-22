@@ -102,10 +102,47 @@ def powerset(values, min_num=None, max_num=None):
     return chain.from_iterable(combinations(values, num) for num in range(min_num, max_num + 1))
 
 
+def unique_list(values):
+    result = list()
+    for value in values:
+        if value not in result:
+            result.append(value)
+    return result
+
+
 def merge_dicts(dict1, dict2):
     merged = dict1.copy()
     merged.update(dict2)
     return merged
+
+
+def all_and_any(xs):
+    try:
+        if not next(xs):
+            return False
+    except StopIteration:
+        return False
+    return all(xs)
+
+
+def any_or_none(xs):
+    try:
+        if next(xs):
+            return True
+    except StopIteration:
+        return True
+    return any(xs)
+
+
+def any_not_all(xs):
+    try:
+        first = next(xs)
+    except StopIteration:
+        return False
+    if first:
+        return not all(xs)
+    else:
+        return any(xs)
 
 
 # partial_order is dict: x -> set({>x})
@@ -129,12 +166,11 @@ def cumulative_distribution(values):
         assert values > 0
         return [n / values for n in range(1, values + 1)]
     elif all(isinstance(x, float) or isinstance(x, int) for x in values):
-        assert all(x >= 0.0 for x in values)
         denominator = sum(values)
         prob = 0.0
         cdf = []
         for x in values:
-            prob += x
+            prob += max(x, 0.0)  # negative values are zero
             cdf.append(prob / denominator)
         return cdf
     else:
@@ -153,14 +189,30 @@ def sample(cumulative_distribution, items=None):
                 return index
 
 
-def choice(available, count_range):
-    available = list(available)
-    count = min(randint(*count_range), len(available))
-    chosen = list()
-    for _ in range(count):
-        pick = randrange(len(available))
-        chosen.append(available.pop(pick))
-    return chosen
+# def sample_softmax(logits, temperature=1.0):
+#     probabilities = [exp(logit / temperature) for logit in logits]
+#     probabilities /= sum(probabilities)
+#     return sample(cumulative_distribution=cumulative_distribution(values=probabilities))
+
+
+def choice(items, num_range, auxiliary=None):
+    items = list(items)
+    num_items = randint(*num_range)
+    if len(items) == num_items:
+        return items
+    elif len(items) < num_items:
+        chosen = items
+        auxiliary = list(auxiliary)
+        for _ in range(num_items - len(items)):
+            pick = randrange(len(auxiliary))
+            chosen.append(auxiliary.pop(pick))
+        return chosen
+    else:
+        chosen = list()
+        for _ in range(num_items):
+            pick = randrange(len(items))
+            chosen.append(items.pop(pick))
+        return chosen
 
 
 PointTuple = namedtuple('PointTuple', ('x', 'y'))
@@ -196,6 +248,11 @@ class Point(PointTuple):
     @property
     def length(self):
         return sqrt(self.x * self.x + self.y * self.y)
+
+    def distance(self, other):
+        x_diff = self.x - other.x
+        y_diff = self.y - other.y
+        return sqrt(x_diff * x_diff + y_diff * y_diff)
 
     def __eq__(self, other):
         assert isinstance(other, float) or isinstance(other, int) or isinstance(other, bool) or isinstance(other, Point)

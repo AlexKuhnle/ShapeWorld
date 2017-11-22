@@ -10,6 +10,9 @@ pip3 install -e ShapeWorld
 
 ### Recently added features
 
+- More complex quantification captions
+- Abstract caption model as sequence in reverse Polish notation
+- Improved sampling strategy for more balanced / less biased data
 - Generator option `-H` to create an HTML file displaying the generated data (e.g. see in (examples))
 - Various new and extended caption agreement datasets
 
@@ -46,16 +49,18 @@ Contact: aok25 (at) cam.ac.uk
 
 #### Caption agreement datasets
 
-- [Oneshape](https://cdn.rawgit.com/AlexKuhnle/ShapeWorld/2932f4dd/examples/agreement/oneshape/data.html)
 - [Oneshape (simple)](https://cdn.rawgit.com/AlexKuhnle/ShapeWorld/2932f4dd/examples/agreement/oneshape_simple/data.html)
-- [Multishape](https://cdn.rawgit.com/AlexKuhnle/ShapeWorld/2932f4dd/examples/agreement/multishape/data.html)
+- [Oneshape](https://cdn.rawgit.com/AlexKuhnle/ShapeWorld/2932f4dd/examples/agreement/oneshape/data.html)
 - [Multishape (simple)](https://cdn.rawgit.com/AlexKuhnle/ShapeWorld/2932f4dd/examples/agreement/multishape_simple/data.html)
-- [Spatial](https://cdn.rawgit.com/AlexKuhnle/ShapeWorld/2932f4dd/examples/agreement/spatial/data.html)
+- [Multishape](https://cdn.rawgit.com/AlexKuhnle/ShapeWorld/2932f4dd/examples/agreement/multishape/data.html)
 - [Spatial (simple)](https://cdn.rawgit.com/AlexKuhnle/ShapeWorld/2932f4dd/examples/agreement/spatial_simple/data.html)
+- [Spatial](https://cdn.rawgit.com/AlexKuhnle/ShapeWorld/2932f4dd/examples/agreement/spatial/data.html)
 - [Relational](https://cdn.rawgit.com/AlexKuhnle/ShapeWorld/2932f4dd/examples/agreement/relational/data.html)
-- [Counting](https://cdn.rawgit.com/AlexKuhnle/ShapeWorld/2932f4dd/examples/agreement/counting/data.html)
-- [Counting (simple)](https://cdn.rawgit.com/AlexKuhnle/ShapeWorld/2932f4dd/examples/agreement/counting_simple/data.html)
-- [Quantification](https://cdn.rawgit.com/AlexKuhnle/ShapeWorld/2932f4dd/examples/agreement/quantification/data.html)
+- [MaxAttributes](https://cdn.rawgit.com/AlexKuhnle/ShapeWorld/2932f4dd/examples/agreement/maxattr/data.html)
+- [Count Quantification (simple)](https://cdn.rawgit.com/AlexKuhnle/ShapeWorld/2932f4dd/examples/agreement/counting_simple/data.html)
+- [Count Quantification](https://cdn.rawgit.com/AlexKuhnle/ShapeWorld/2932f4dd/examples/agreement/counting/data.html)
+- [Ratio Quantification (simple)](https://cdn.rawgit.com/AlexKuhnle/ShapeWorld/2932f4dd/examples/agreement/quantification_simple/data.html)
+- [Ratio Quantification](https://cdn.rawgit.com/AlexKuhnle/ShapeWorld/2932f4dd/examples/agreement/quantification/data.html)
 - [Quantification (simple)](https://cdn.rawgit.com/AlexKuhnle/ShapeWorld/2932f4dd/examples/agreement/quantification_simple/data.html)
 - [Combination](https://cdn.rawgit.com/AlexKuhnle/ShapeWorld/2932f4dd/examples/agreement/combination/data.html)
 
@@ -69,13 +74,13 @@ Contact: aok25 (at) cam.ac.uk
 
 ## Integration into Python code
 
-The easiest way to use the ShapeWorld data in your Python project is to directly call it from the code. Whenever a batch of training/evaluation instances is required, `dataset.generate(...)` is called with the respective arguments. This means that generation happens simultaneously to training/testing. Below an example of how to generate a batch of 128 training instances. See also the example models below.
+The easiest way to use the ShapeWorld data in your Python project is to directly call it from the code. Whenever a batch of training/evaluation instances is required, `dataset.generate(...)` is called with the respective arguments. This means that generation happens simultaneously to training/testing. Below an example of how to generate a batch of 100 training instances. See also the example models below.
 
 ```python
 from shapeworld import dataset
 
 dataset = dataset(dtype='agreement', name='multishape')
-generated = dataset.generate(n=128, mode='train', noise_range=0.1, include_model=True)
+generated = dataset.generate(n=100, mode='train', noise_range=0.1, include_model=True)
 
 # given to the image caption agreement system
 batch = (generated['world'], generated['caption'], generated['agreement'])
@@ -101,7 +106,7 @@ The following command line arguments are available:
 * `--[d]irectory`:  Directory for generated data, with automatically created sub-directories unless `--unmanaged`, hence should be non-existing or empty since it will be overwritten (**required**)
 * `--[a]rchive`:  Store generated data in (compressed) archives, either `zip[:mode]` or `tar[:mode]` with one of `none`, `deflate` (only zip), `gzip` (only tar), `bzip2`, `lzma` (default: `none`)
 * `--[A]ppend`:  Append to existing data (when used without `--unmanaged`)
-* `--[U]nmanaged`:  Do not automatically create sub-directories (implied, if `--mode` not set and `--files` single number)
+* `--[U]nmanaged`:  Do not automatically create sub-directories (implied if --files not specified)
 
 * `--[t]ype`:  Dataset type (default: `agreement`)
 * `--[n]ame`:  Dataset name (**required**)
@@ -109,7 +114,7 @@ The following command line arguments are available:
 * `--[c]onfig`:  Dataset configuration file, otherwise use default configuration
 
 * `--[m]ode`:  Mode, one of `train`, `validation`, `test` or `tf-records`, requires `--files` to be a single number (default: `none`)
-* `--[f]iles`:  Number of files to split data into (instead of all in one file), either a number (requires `--mode`), or a tuple of 3 (or 4) numbers like `(100,10,10)` (without `--mode`), for (`tf-records`,) `train`, `validation` and `test` data respectively (default: `1`)
+* `--[f]iles`:  Number of files to split data into instead of all in one file (not specified implies --unmanaged), either a number (requires `--mode`), or a tuple of 3 (or 4) numbers like `(100,10,10)` (without `--mode`), for (`tf-records`,) `train`, `validation` and `test` data respectively (default: `1`)
 * `--[i]nstances`:  Number of instances per file (default: `100`)
 
 * `--[p]ixel-noise`: Pixel noise range (default: `0.0`)
@@ -120,13 +125,13 @@ The following command line arguments are available:
 When creating larger amounts of ShapeWorld data, it is advisable to store the data in a compressed archive (for example `-a tar:bz2`) and turn off the pixel noise (`-p`) for best compression results. For instance, the following command line generates one million *training* instances of the `multishape` configuration file included in this repository:
 
 ```bash
-python generate.py -D [DIRECTORY] -a tar:bzip2 -c configs/agreement/multishape.json -m train -f 100 -i 10k -M
+python generate.py -D [DIRECTORY] -a tar:bzip2 -t agreement -n multishape -m train -f 100 -i 10k -M
 ```
 
 For the purpose of this introduction, we generate a smaller amount of *all* training (TensorFlow records and raw), validation and test instances using the default configuration of the dataset:
 
 ```bash
-python generate.py -d examples/readme -a tar:bzip2 -t agreement -n multishape -f "(5,5,1,1)" -i 128 -M
+python generate.py -d examples/readme -a tar:bzip2 -t agreement -n multishape -f "(5,5,1,1)" -i 100 -M
 ```
 
 
@@ -139,7 +144,7 @@ Extracted data can be loaded and accessed with the same `Dataset` interface as b
 from shapeworld import dataset
 
 dataset = dataset(dtype='agreement', name='multishape', config='load(examples/readme)')
-generated = dataset.generate(n=128, mode='train', noise_range=0.1)
+generated = dataset.generate(n=100, mode='train', noise_range=0.1)
 ```
 
 Loading the data in Python and then feeding it to a model is relatively slow. By using TensorFlow (TF) records (see above for how to generate TF records) and consequently the ability to load data implicitly within TensorFlow, models can be trained significantly faster. ShapeWorld provides utilities to access TF records as generated/loaded data would be handled:
@@ -147,7 +152,7 @@ Loading the data in Python and then feeding it to a model is relatively slow. By
 ```python
 from shapeworld import tf_util
 
-generated = tf_util.batch_records(dataset=dataset, batch_size=128, noise_range=0.1)
+generated = tf_util.batch_records(dataset=dataset, batch_size=100, noise_range=0.1)
 ```
 
 If you need to manually (re-)infuse the pixel noise later (for instance, because you want to load the data from another programming language), a procedure equivalent to the one used in the ShapeWorld framework can be used, which in Python code looks the following:
@@ -158,7 +163,7 @@ from shapeworld import dataset
 
 dataset = dataset(dtype='agreement', name='multishape', config='load(examples/readme)')
 world_size = 64
-generated = dataset.generate(n=128, mode='train')
+generated = dataset.generate(n=100, mode='train')
 worlds = generated['world']
 noise_range = 0.1
 for world in worlds:
@@ -239,35 +244,31 @@ The dataset provides:
 
 ## Evaluation and example models
 
-The `models/` directory contains a few exemplary models based on [TFMacros](https://github.com/AlexKuhnle/TFMacros), my collection of TensorFlow macros. The script `evaluate.py` provides the following command line arguments to run these models:
+The `models/` directory contains a few exemplary models based on [TFMacros](https://github.com/AlexKuhnle/TFMacros), my collection of TensorFlow macros. The scripts `train.py` and `evaluate.py` provide the following command line arguments to train and evaluate these models:
 
 * `--[t]ype`:  Dataset type (**required**)
 * `--[n]ame`:  Dataset name (**required**)
-* `--[l]anguage`:  Dataset language, if available (default: `none`/`english`)
+* `--[l]anguage`:  Dataset language, if available (default: `none`, i.e. English)
 * `--[c]onfig`:  Dataset configuration file, otherwise use default configuration
 * `--[p]ixel-noise`:  Pixel noise range (default: `0.1`)
 
 * `--[m]odel`:  Model, one in `models/[TYPE]/` (**required**)
+* `--h[y]perparams-file`:  Model hyperparameters file (default: hyperparams directory)
 * `--learning-[r]ate`:  Learning rate (default: `0.0001`)
-* `--[w]eight-decay`:  Weight decay (default: `0.0`)
-* `--[d]ropout-rate`:  Dropout rate (default: `0.0`)
-* `--h[y]perparameters`:  Model hyperparameters, otherwise use default parameters
+* `--[R]estore`:  Restore system, requires `--model-file` (default: `false`)
 
 * `--[i]terations`:  Number of training iterations (default: `1000`)
-* `--[b]atch-size`:  Batch size (default: `128`)
-* `--[e]valuation-size`:  Evaluation size (default: `1024`)
+* `--[b]atch-size`:  Batch size (default: `100`)
+* `--[e]valuation-size`:  Evaluation size (default: `1000`)
 * `--evaluation-[f]requency`:  Evaluation frequency (default: `100`)
-* `--[R]estore`:  Restore system, requires `--model-file` (default: `false`)
-* `--[E]valuate`:  Evaluate system without training, requires `--model-file` (default: `false`)
-* `--[T]f-records`:  Use TensorFlow records (not compatible with `--evaluate`)
+* `--[q]uery`:  Additional values to query (separated by commas) (default: `none`)
+* `--[T]f-records`:  Use TensorFlow records
 
-* `--model-file`:  TensorFlow model file, storing the model computation graph and parameters
-* `--summary-file`:  TensorFlow summary file for TensorBoard
+* `--model-dir`:  TensorFlow model directory, storing the model computation graph and parameters
+* `--summary-dir`:  TensorFlow summary directory for TensorBoard
 * `--report-file`:  CSV file reporting the evaluation results throughout the learning process
 
 * `--[v]erbosity`:  Verbosity, one of `0` (no messages), `1` (default), `2` (plus TensorFlow messages)
-
-
 
 For instance, the following command line trains an image caption agreement system on the dataset specified by the `multishape` configuration file included in this repository:
 

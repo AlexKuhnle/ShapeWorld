@@ -2,6 +2,7 @@ import json
 import os
 import numpy as np
 from PIL import Image
+from shapeworld import util
 from shapeworld.world import World
 
 
@@ -51,6 +52,7 @@ def descriptions_iter(directory, mode):
             description = description_dict['sentence'].lower()
             if description[-1] != '.':
                 description += '.'
+            description = util.string2tokens(string=description)
             agreement = description_dict['label']
             assert agreement in ('true', 'false')
             agreement = (agreement == 'true')

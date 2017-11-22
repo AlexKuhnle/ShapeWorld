@@ -1,0 +1,12 @@
+{
+    "learning_rate": 2.5e-4,
+    "weight_decay": 1e-5,
+    "dropout_rate": 0.0,
+    "resnet_size": 64,
+    "resnet_depth": 3,
+    "resnet_block_depth": 1,
+    "world_reduction": "max",
+    "mlp_size": 512,
+    "mlp_depth": 2,
+    "soft": 0.0
+}

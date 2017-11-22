@@ -121,15 +121,19 @@ Entity types are a conjunctive combination of attributes. Their DMRS representat
 
 #### Relations
 
-Relation DMRS snippets are required to indicate the head relation node via `[rel]` and the head *'reference'* node with `[ref]`. An example from the specification for English is the relation *"to the left of something"*, which is defined as `[rel]:_to_p e? -2-> _left_n_of x[_s___] <-- _the_q; :_left_n_of <=1= _of_p e -2-> [ref]:node <-- _a_q`. There are again two special relation entries for turning an attribute or type into a relation. For English, they are defined as `[rel]:_be_v_id e? -2-> [ref]:_shape_n_sw x? <-- default_q` and `[rel]:_be_v_id e? -2-> [ref]:node <-- default_q`, respectively, both defining an *"is a"* pattern.
+Relation DMRS snippets are required to indicate the head relation node via `[rel]` and the head *'reference'* node with `[ref]`. An example from the specification for English is the relation *"to the left of something"*, which is defined as `[rel]:_to_p e? -2-> _left_n_of x[num=s] <-- _the_q; :_left_n_of <=1= _of_p e -2-> [ref]:node <-- _a_q`. There are again two special relation entries for turning an attribute or type into a relation. For English, they are defined as `[rel]:_be_v_id e? -2-> [ref]:_shape_n_sw x? <-- default_q` and `[rel]:_be_v_id e? -2-> [ref]:node <-- default_q`, respectively, both defining an *"is a"* pattern.
 
 #### Existential
 
-The *existential* DMRS snippet is given as a special quantifier entry (see below).
+The special *existential* entry combines the restrictor type and the body relation, and just expresses that *"there is such an entity"*, in English defined as `_a_q --> [rstr]:pred x?[num=s] <-1- [body]:node`.
 
 #### Quantifiers
 
-The special *'existential'* entry combines the restrictor type and the body relation and just expresses that *"there is such an entity"*, in English defined as `_a_q --> [rstr]:pred x? <-1- [body]:node`.
+...
+
+#### Comparative quantifiers
+
+...
 
 #### Propositions
 

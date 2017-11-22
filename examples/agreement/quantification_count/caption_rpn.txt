@@ -1,0 +1,100 @@
+0 EntityType Attribute-shape-rectangle 1 EntityType Relation-size-rel-1 Quantifier-count-neq-5 NumberBound-4
+Attribute-shape-square 1 EntityType Attribute-shape-square 1 EntityType Attribute-color-cyan 1 EntityType Relation-proximity-rel--1 Quantifier-count-geq--2
+Attribute-shape-pentagon 1 EntityType Attribute-shape-triangle 1 EntityType Relation-size-rel--1 Quantifier-count-neq-2 NumberBound-3
+Attribute-color-cyan 1 EntityType Attribute-color-magenta 1 EntityType Attribute-shape-cross 1 EntityType Relation-size-rel--1 ComparativeQuantifier-count-eq-4
+Attribute-color-cyan 1 EntityType Attribute-color-cyan Attribute-shape-semicircle 2 EntityType Relation-type Quantifier-count-gt-3
+Attribute-color-gray 1 EntityType Attribute-color-gray Attribute-shape-semicircle 2 EntityType Relation-y-rel-1 Quantifier-count-neq-5
+0 EntityType Attribute-color-gray Relation-attribute Quantifier-count-neq--2
+Attribute-shape-pentagon 1 EntityType Attribute-color-blue Attribute-shape-pentagon 2 EntityType Relation-type Quantifier-count-leq-5
+Attribute-color-magenta 1 EntityType Attribute-color-gray Attribute-shape-rectangle 2 EntityType Relation-x-rel--1 Quantifier-count-lt-4 NumberBound-3
+Attribute-shape-cross 1 EntityType Attribute-shape-square 1 EntityType Attribute-color-yellow Attribute-shape-pentagon 2 EntityType Attribute-color-blue Attribute-shape-circle 2 EntityType Relation-proximity-rel--1 ComparativeQuantifier-ratio-eq-2.0
+Attribute-shape-semicircle 1 EntityType Attribute-color-blue 1 EntityType Relation-type Quantifier-count-leq-4
+Attribute-shape-semicircle 1 EntityType Attribute-shape-square 1 EntityType Attribute-shape-pentagon 1 EntityType Relation-x-rel--1 ComparativeQuantifier-count-eq--3
+0 EntityType Attribute-color-gray 1 EntityType Relation-type Quantifier-count-neq-3
+Attribute-color-gray 1 EntityType Attribute-color-magenta 1 EntityType Attribute-shape-ellipse 1 EntityType Relation-type ComparativeQuantifier-count-eq-2
+0 EntityType Attribute-color-red Attribute-shape-rectangle 2 EntityType Relation-x-rel-1 Quantifier-count-leq-4
+Attribute-shape-square 1 EntityType Attribute-shape-pentagon 1 EntityType Relation-x-rel--1 Quantifier-count-eq-5
+Attribute-color-blue 1 EntityType Attribute-shape-circle Relation-attribute Quantifier-count-lt-2
+Attribute-color-magenta 1 EntityType Attribute-shape-pentagon Relation-attribute Quantifier-count-eq--2 NumberBound-2
+Attribute-color-green 1 EntityType Attribute-shape-pentagon Relation-attribute Quantifier-count-leq-1
+Attribute-color-magenta 1 EntityType Attribute-color-red 1 EntityType Attribute-shape-rectangle Relation-attribute ComparativeQuantifier-count-eq-3
+Attribute-shape-rectangle 1 EntityType Attribute-shape-ellipse 1 EntityType Attribute-color-green Attribute-shape-square 2 EntityType Relation-x-rel-1 ComparativeQuantifier-ratio-eq-2.0
+Attribute-shape-rectangle 1 EntityType Attribute-color-green Attribute-shape-rectangle 2 EntityType Relation-z-rel-1 Quantifier-count-gt-4
+0 EntityType Attribute-color-blue 1 EntityType Relation-size-rel-1 Quantifier-count-gt-0
+Attribute-color-yellow 1 EntityType Attribute-color-red 1 EntityType Attribute-shape-rectangle 1 EntityType Relation-type ComparativeQuantifier-count-eq-5
+0 EntityType Attribute-shape-square 1 EntityType Attribute-color-yellow Attribute-shape-ellipse 2 EntityType Relation-proximity-rel--1 Quantifier-count-lt-1
+Attribute-color-magenta 1 EntityType Attribute-color-magenta Attribute-shape-cross 2 EntityType Relation-x-rel-1 Quantifier-count-lt-5
+Attribute-color-gray 1 EntityType Attribute-color-blue Attribute-shape-circle 2 EntityType Relation-size-rel--1 Quantifier-count-eq-3 NumberBound-3
+0 EntityType Attribute-color-green Attribute-shape-rectangle 2 EntityType Relation-type Quantifier-count-eq-5
+Attribute-shape-semicircle 1 EntityType Attribute-shape-square 1 EntityType Relation-shade-rel-1 Quantifier-count-lt-4
+Attribute-shape-semicircle 1 EntityType Attribute-color-green 1 EntityType Attribute-color-blue Attribute-shape-circle 2 EntityType Relation-x-rel-1 ComparativeQuantifier-ratio-eq-1.0
+Attribute-color-gray 1 EntityType Attribute-color-gray 1 EntityType Relation-shade-rel--1 Quantifier-count-gt-4
+0 EntityType Attribute-color-yellow Attribute-shape-semicircle 2 EntityType Relation-size-rel--1 Quantifier-count-gt-3 NumberBound-4
+0 EntityType Attribute-shape-cross 1 EntityType Relation-z-rel-1 Quantifier-count-leq-0
+0 EntityType Attribute-color-gray 1 EntityType Relation-type Quantifier-count-eq-5
+Attribute-color-cyan 1 EntityType Attribute-color-red Attribute-shape-square 2 EntityType Relation-z-rel-1 Quantifier-count-geq--2
+Attribute-shape-rectangle 1 EntityType Attribute-shape-circle 1 EntityType Attribute-color-cyan 1 EntityType Attribute-color-cyan Attribute-shape-rectangle 2 EntityType Relation-proximity-rel-1 ComparativeQuantifier-count-eq-3
+Attribute-color-blue 1 EntityType Attribute-color-blue 1 EntityType Relation-y-rel-1 Quantifier-count-lt-4 NumberBound-4
+Attribute-shape-triangle 1 EntityType Attribute-shape-triangle 1 EntityType Relation-z-rel-1 Quantifier-count-leq-3 NumberBound-6
+Attribute-color-blue 1 EntityType Attribute-color-red 1 EntityType Attribute-shape-square Relation-attribute ComparativeQuantifier-count-eq--3
+Attribute-shape-rectangle 1 EntityType Attribute-color-yellow 1 EntityType Relation-type Quantifier-count-geq-1 NumberBound-5
+Attribute-color-yellow 1 EntityType Attribute-color-yellow Attribute-shape-ellipse 2 EntityType Relation-type Quantifier-count-lt-5 NumberBound-4
+Attribute-shape-rectangle 1 EntityType Attribute-shape-cross 1 EntityType Attribute-color-blue Attribute-shape-semicircle 2 EntityType Relation-proximity-rel-1 Quantifier-count-leq--2
+Attribute-shape-triangle 1 EntityType Attribute-color-green 1 EntityType Attribute-color-blue Attribute-shape-square 2 EntityType Relation-size-rel-1 ComparativeQuantifier-count-eq-4
+Attribute-shape-triangle 1 EntityType Attribute-shape-pentagon 1 EntityType Attribute-color-cyan Attribute-shape-pentagon 2 EntityType Relation-proximity-rel-1 Quantifier-count-lt--2 NumberBound-3
+0 EntityType Attribute-color-yellow 1 EntityType Relation-type Quantifier-count-geq-2 NumberBound-8
+Attribute-shape-square 1 EntityType Attribute-color-red 1 EntityType Relation-type Quantifier-count-geq-1 NumberBound-3
+Attribute-color-cyan 1 EntityType Attribute-color-red 1 EntityType Attribute-color-cyan 1 EntityType Attribute-color-red Attribute-shape-cross 2 EntityType Relation-proximity-rel-1 ComparativeQuantifier-count-eq--2
+Attribute-shape-triangle 1 EntityType Attribute-color-red Attribute-shape-triangle 2 EntityType Relation-x-rel--1 Quantifier-count-leq--2 NumberBound-7
+0 EntityType Attribute-color-green Attribute-shape-circle 2 EntityType Relation-z-rel-1 Quantifier-count-lt-2
+Attribute-color-green 1 EntityType Attribute-color-magenta 1 EntityType Attribute-color-magenta 1 EntityType Relation-x-rel--1 ComparativeQuantifier-ratio-eq-2.0
+Attribute-color-green 1 EntityType Attribute-shape-circle 1 EntityType Attribute-shape-semicircle 1 EntityType Relation-z-rel--1 ComparativeQuantifier-ratio-eq-2.0
+Attribute-shape-semicircle 1 EntityType Attribute-color-yellow 1 EntityType Attribute-color-green Attribute-shape-circle 2 EntityType Relation-x-rel-1 ComparativeQuantifier-count-eq--2
+Attribute-shape-circle 1 EntityType Attribute-color-cyan 1 EntityType Relation-z-rel--1 Quantifier-count-neq-0
+Attribute-shape-circle 1 EntityType Attribute-color-green Attribute-shape-circle 2 EntityType Relation-type Quantifier-count-lt-3 NumberBound-8
+Attribute-color-cyan 1 EntityType Attribute-shape-cross 1 EntityType Attribute-shape-cross 1 EntityType Relation-z-rel--1 ComparativeQuantifier-count-eq--4
+Attribute-color-blue 1 EntityType Attribute-shape-ellipse Relation-attribute Quantifier-count-eq-2
+Attribute-color-gray 1 EntityType Attribute-color-gray Attribute-shape-pentagon 2 EntityType Relation-y-rel-1 Quantifier-count-gt--2
+Attribute-color-green 1 EntityType Attribute-shape-circle 1 EntityType Relation-type Quantifier-count-eq-0
+0 EntityType Attribute-color-cyan 1 EntityType Attribute-shape-cross 1 EntityType Relation-proximity-rel--1 Quantifier-count-neq-2 NumberBound-8
+Attribute-color-red 1 EntityType Attribute-color-red 1 EntityType Relation-z-rel-1 Quantifier-count-eq-0
+Attribute-color-blue 1 EntityType Attribute-shape-circle Relation-attribute Quantifier-count-leq-1 NumberBound-5
+Attribute-shape-pentagon 1 EntityType Attribute-shape-rectangle 1 EntityType Attribute-color-yellow 1 EntityType Relation-proximity-rel-1 Quantifier-count-leq--2
+Attribute-color-green 1 EntityType Attribute-color-red 1 EntityType Relation-y-rel-1 Quantifier-count-eq-3 NumberBound-2
+0 EntityType Attribute-shape-ellipse 1 EntityType Relation-type Quantifier-count-gt-2 NumberBound-5
+Attribute-shape-square 1 EntityType Attribute-shape-circle 1 EntityType Attribute-color-magenta Attribute-shape-square 2 EntityType Relation-z-rel--1 ComparativeQuantifier-ratio-eq-2.0
+Attribute-shape-square 1 EntityType Attribute-color-yellow Attribute-shape-ellipse 2 EntityType Relation-size-rel-1 Quantifier-count-geq-1 NumberBound-8
+0 EntityType Attribute-shape-cross 1 EntityType Relation-size-rel--1 Quantifier-count-lt-3 NumberBound-5
+Attribute-color-magenta 1 EntityType Attribute-color-red 1 EntityType Attribute-color-yellow Attribute-shape-pentagon 2 EntityType Relation-proximity-rel--1 Quantifier-count-eq--2
+Attribute-color-gray 1 EntityType Attribute-color-gray Attribute-shape-circle 2 EntityType Attribute-color-red Attribute-shape-rectangle 2 EntityType Relation-proximity-rel-1 Quantifier-count-neq-5
+Attribute-color-magenta 1 EntityType Attribute-color-magenta 1 EntityType Relation-y-rel-1 Quantifier-count-gt-5
+Attribute-shape-cross 1 EntityType Attribute-shape-pentagon 1 EntityType Relation-x-rel-1 Quantifier-count-gt-3 NumberBound-2
+Attribute-color-red 1 EntityType Attribute-shape-semicircle 1 EntityType Attribute-shape-semicircle 1 EntityType Attribute-color-blue Attribute-shape-cross 2 EntityType Relation-proximity-rel-1 ComparativeQuantifier-count-eq--5
+Attribute-color-yellow 1 EntityType Attribute-color-yellow Attribute-shape-pentagon 2 EntityType Relation-type Quantifier-count-eq-5 NumberBound-6
+0 EntityType Attribute-color-cyan Attribute-shape-semicircle 2 EntityType Relation-size-rel-1 Quantifier-count-leq-1
+0 EntityType Attribute-color-yellow Relation-attribute Quantifier-count-gt-3
+Attribute-shape-ellipse 1 EntityType Attribute-color-green 1 EntityType Attribute-color-blue 1 EntityType Relation-size-rel--1 ComparativeQuantifier-ratio-eq-2.0
+Attribute-shape-rectangle 1 EntityType Attribute-shape-rectangle 1 EntityType Relation-shade-rel-1 Quantifier-count-gt-4 NumberBound-7
+0 EntityType Attribute-color-blue 1 EntityType Attribute-color-red 1 EntityType Relation-proximity-rel--1 Quantifier-count-lt--2 NumberBound-5
+Attribute-color-green 1 EntityType Attribute-color-magenta 1 EntityType Relation-x-rel--1 Quantifier-count-gt-1
+Attribute-color-cyan 1 EntityType Attribute-shape-triangle 1 EntityType Attribute-shape-pentagon 1 EntityType Relation-proximity-rel--1 Quantifier-count-geq-2 NumberBound-3
+Attribute-shape-rectangle 1 EntityType Attribute-shape-ellipse 1 EntityType Attribute-color-red 1 EntityType Relation-type ComparativeQuantifier-count-eq-2
+0 EntityType Attribute-color-red Attribute-shape-cross 2 EntityType Relation-shade-rel-1 Quantifier-count-gt-0 NumberBound-8
+Attribute-color-blue 1 EntityType Attribute-shape-pentagon 1 EntityType Relation-z-rel-1 Quantifier-count-gt-3
+Attribute-color-red 1 EntityType Attribute-color-cyan Attribute-shape-ellipse 2 EntityType Relation-size-rel-1 Quantifier-count-neq-2 NumberBound-6
+Attribute-color-blue 1 EntityType Attribute-shape-semicircle 1 EntityType Relation-type Quantifier-count-neq-5 NumberBound-5
+Attribute-color-red 1 EntityType Attribute-color-gray 1 EntityType Attribute-shape-triangle 1 EntityType Relation-x-rel--1 ComparativeQuantifier-count-eq--5
+0 EntityType Attribute-color-green Relation-attribute Quantifier-count-leq-1 NumberBound-7
+Attribute-color-blue 1 EntityType Attribute-color-blue Attribute-shape-rectangle 2 EntityType Attribute-shape-rectangle 1 EntityType Relation-proximity-rel--1 Quantifier-count-neq-4
+0 EntityType Attribute-color-green Attribute-shape-rectangle 2 EntityType Relation-shade-rel-1 Quantifier-count-leq-0 NumberBound-6
+Attribute-color-gray 1 EntityType Attribute-color-magenta Attribute-shape-semicircle 2 EntityType Relation-y-rel--1 Quantifier-count-neq-3 NumberBound-4
+Attribute-shape-square 1 EntityType Attribute-color-red 1 EntityType Attribute-color-blue Attribute-shape-circle 2 EntityType Relation-y-rel--1 ComparativeQuantifier-count-eq--3
+Attribute-shape-pentagon 1 EntityType Attribute-color-red Attribute-shape-pentagon 2 EntityType Relation-x-rel-1 Quantifier-count-lt--2
+Attribute-shape-pentagon 1 EntityType Attribute-color-yellow Attribute-shape-ellipse 2 EntityType Attribute-shape-semicircle 1 EntityType Relation-proximity-rel--1 Quantifier-count-leq-4 NumberBound-5
+Attribute-color-red 1 EntityType Attribute-color-cyan Attribute-shape-triangle 2 EntityType Relation-y-rel--1 Quantifier-count-geq-2
+Attribute-color-cyan 1 EntityType Attribute-color-green Attribute-shape-rectangle 2 EntityType Relation-size-rel-1 Quantifier-count-gt-2 NumberBound-2
+Attribute-shape-pentagon 1 EntityType Attribute-color-gray Attribute-shape-pentagon 2 EntityType Relation-type Quantifier-count-geq-1 NumberBound-2
+Attribute-color-red 1 EntityType Attribute-color-magenta Attribute-shape-cross 2 EntityType Relation-x-rel-1 Quantifier-count-eq-3
+Attribute-color-red 1 EntityType Attribute-shape-cross 1 EntityType Relation-size-rel-1 Quantifier-count-eq--2 NumberBound-2
+0 EntityType Attribute-color-cyan Attribute-shape-semicircle 2 EntityType Relation-type Quantifier-count-leq-1
+0 EntityType Attribute-shape-ellipse 1 EntityType Relation-type Quantifier-count-lt-1

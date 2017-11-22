@@ -1,0 +1,11 @@
+{
+    "learning_rate": 2.5e-4,
+    "weight_decay": 1e-5,
+    "dropout_rate": 0.0,
+    "fracnet_size": 64,
+    "fracnet_depth": 3,
+    "world_reduction": "max",
+    "mlp_size": 512,
+    "mlp_depth": 2,
+    "soft": 0.0
+}

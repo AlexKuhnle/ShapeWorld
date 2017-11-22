@@ -1,43 +1,46 @@
 from shapeworld.dataset import CaptionAgreementDataset
-from shapeworld.generators import GenericGenerator
-from shapeworld.captioners import AttributesTypeCaptioner, SpatialRelationCaptioner, ExistentialCaptioner
+from shapeworld.generators import RandomAttributesGenerator
+from shapeworld.captioners import RegularTypeCaptioner, RelationCaptioner, ExistentialCaptioner
 
 
-class SpatialSimpleDataset(CaptionAgreementDataset):
+class SpatialSimple(CaptionAgreementDataset):
 
-    dataset_name = 'spatial_simple'
+    def __init__(
+        self,
+        validation_combinations=(('square', 'red', 'solid'), ('triangle', 'green', 'solid'), ('circle', 'blue', 'solid')),
+        test_combinations=(('rectangle', 'yellow', 'solid'), ('cross', 'magenta', 'solid'), ('ellipse', 'cyan', 'solid')),
+        caption_size=12,
+        vocabulary=('.', 'a', 'above', 'an', 'below', 'blue', 'circle', 'cross', 'cyan', 'ellipse', 'gray', 'green', 'is', 'left', 'magenta', 'of', 'pentagon', 'rectangle', 'red', 'right', 'semicircle', 'shape', 'square', 'the', 'to', 'triangle', 'yellow'),
+        language=None
+    ):
 
-    def __init__(self, validation_combinations, test_combinations, caption_size, words, language=None):
-        world_generator = GenericGenerator(
+        world_generator = RandomAttributesGenerator(
             entity_counts=[2],
-            collision_tolerance=0.0,
-            boundary_tolerance=0.0,
             validation_combinations=validation_combinations,
             test_combinations=test_combinations,
-            max_provoke_collision_rate=0.0
+            max_provoke_collision_rate=0.0,
+            collision_tolerance=0.0,
+            boundary_tolerance=0.0
         )
+
         world_captioner = ExistentialCaptioner(
-            restrictor_captioner=AttributesTypeCaptioner(
-                trivial_acceptance_rate=1.0
+            restrictor_captioner=RegularTypeCaptioner(
             ),
-            body_captioner=SpatialRelationCaptioner(
-                reference_captioner=AttributesTypeCaptioner(),
+            body_captioner=RelationCaptioner(
+                reference_captioner=RegularTypeCaptioner(),
+                comparison_captioner=RegularTypeCaptioner(),
                 relations=('x-rel', 'y-rel')
-            )
+            ),
+            pragmatical_tautology_rate=1.0
         )
-        super(SpatialSimpleDataset, self).__init__(
+
+        super(SpatialSimple, self).__init__(
             world_generator=world_generator,
             world_captioner=world_captioner,
             caption_size=caption_size,
-            words=words,
+            vocabulary=vocabulary,
             language=language
         )
 
 
-dataset = SpatialSimpleDataset
-SpatialSimpleDataset.default_config = dict(
-    validation_combinations=[['square', 'red', 'solid'], ['triangle', 'green', 'solid'], ['circle', 'blue', 'solid']],
-    test_combinations=[['rectangle', 'yellow', 'solid'], ['cross', 'magenta', 'solid'], ['ellipse', 'cyan', 'solid']],
-    caption_size=12,
-    words=['.', 'a', 'above', 'an', 'below', 'black', 'blue', 'circle', 'cross', 'cyan', 'ellipse', 'green', 'is', 'left', 'magenta', 'of', 'pentagon', 'rectangle', 'red', 'right', 'semicircle', 'shape', 'square', 'the', 'to', 'triangle', 'white', 'yellow']
-)
+dataset = SpatialSimple

@@ -1,12 +1,18 @@
 from models.TFMacros.tf_macros import *
 
 
-def model(model, inputs, **parameters):
+def model(model, inputs, world_shape, cnn_size, cnn_depth, cnn_block_depth, world_reduction, caption_shape, vocabulary_size, mlp_size, mlp_depth, soft):
+
+    cnn_sizes = [cnn_size * 2**n for n in range(cnn_depth)]
+    cnn_depths = [cnn_block_depth for _ in range(cnn_depth)]
+    mlp_sizes = [mlp_size for _ in range(mlp_depth)]
+
     agreement = (
-        Input(name='world', shape=parameters['world_shape'], tensor=inputs.get('world')) >>
-        ConvolutionalNet(sizes=(16, 32, 64), depths=(3, 3, 3)) >>
-        Reduction(reduction=parameters.get('world_reduction', 'mean'), axis=(1, 2)) >>
-        Dense(size=512) >>
-        Binary(name='agreement', soft=parameters.get('soft', 0.0), tensor=inputs.get('agreement'))
+        Input(name='world', shape=world_shape, tensor=inputs.get('world')) >>
+        ConvolutionalNet(sizes=cnn_sizes, depths=cnn_depths) >>
+        Reduction(reduction=world_reduction, axis=(1, 2)) >>
+        Repeat(layer=Dense, sizes=mlp_sizes, dropout=True) >>
+        Binary(name='agreement', soft=soft, tensor=inputs.get('agreement'))
     )
+
     return agreement

@@ -1,14 +1,24 @@
 from shapeworld.dataset import CaptionAgreementDataset
-from shapeworld.generators import GenericGenerator
-from shapeworld.captioners import CaptionerMixer, AttributesTypeCaptioner, AttributesRelationCaptioner, ExistentialCaptioner
+from shapeworld.generators import RandomAttributesGenerator
+from shapeworld.captioners import CaptionerMixer, RegularAttributeCaptioner, RegularTypeCaptioner, AttributeTypeRelationCaptioner, ExistentialCaptioner
 
 
-class MultishapeDataset(CaptionAgreementDataset):
+class Multishape(CaptionAgreementDataset):
 
-    dataset_name = 'multishape'
+    def __init__(
+        self,
+        entity_counts=(2, 3, 4, 5, 6, 7, 8),
+        train_entity_counts=(2, 3, 4, 5, 7),
+        validation_entity_counts=(6,),
+        test_entity_counts=(8,),
+        validation_combinations=(('square', 'red', 'solid'), ('triangle', 'green', 'solid'), ('circle', 'blue', 'solid')),
+        test_combinations=(('rectangle', 'yellow', 'solid'), ('cross', 'magenta', 'solid'), ('ellipse', 'cyan', 'solid')),
+        caption_size=8,
+        vocabulary=('.', 'a', 'an', 'blue', 'circle', 'cross', 'cyan', 'ellipse', 'gray', 'green', 'is', 'magenta', 'pentagon', 'rectangle', 'red', 'semicircle', 'shape', 'square', 'there', 'triangle', 'yellow'),
+        language=None
+    ):
 
-    def __init__(self, entity_counts, train_entity_counts, validation_entity_counts, test_entity_counts, validation_combinations, test_combinations, caption_size, words, language=None):
-        world_generator = GenericGenerator(
+        world_generator = RandomAttributesGenerator(
             entity_counts=entity_counts,
             train_entity_counts=train_entity_counts,
             validation_entity_counts=validation_entity_counts,
@@ -16,34 +26,34 @@ class MultishapeDataset(CaptionAgreementDataset):
             validation_combinations=validation_combinations,
             test_combinations=test_combinations
         )
+
         world_captioner = CaptionerMixer(
             captioners=(
-                AttributesTypeCaptioner(),
+                RegularTypeCaptioner(),
                 ExistentialCaptioner(
-                    restrictor_captioner=AttributesTypeCaptioner(
-                        hypernym_ratio=1.0
+                    restrictor_captioner=RegularTypeCaptioner(
+                        hypernym_rate=1.0,
+                        logical_tautology_rate=1.0
                     ),
-                    body_captioner=AttributesRelationCaptioner()
+                    body_captioner=AttributeTypeRelationCaptioner(
+                        attribute_type_captioner=CaptionerMixer(
+                            captioners=(
+                                RegularAttributeCaptioner(),
+                                RegularTypeCaptioner()
+                            )
+                        )
+                    )
                 )
             )
         )
-        super(MultishapeDataset, self).__init__(
+
+        super(Multishape, self).__init__(
             world_generator=world_generator,
             world_captioner=world_captioner,
             caption_size=caption_size,
-            words=words,
+            vocabulary=vocabulary,
             language=language
         )
 
 
-dataset = MultishapeDataset
-MultishapeDataset.default_config = dict(
-    entity_counts=[2, 3, 4, 5, 6, 7, 8],
-    train_entity_counts=[2, 3, 4, 5, 7],
-    validation_entity_counts=[6],
-    test_entity_counts=[8],
-    validation_combinations=[['square', 'red', 'solid'], ['triangle', 'green', 'solid'], ['circle', 'blue', 'solid']],
-    test_combinations=[['rectangle', 'yellow', 'solid'], ['cross', 'magenta', 'solid'], ['ellipse', 'cyan', 'solid']],
-    caption_size=8,
-    words=['.', 'a', 'an', 'black', 'blue', 'circle', 'cross', 'cyan', 'ellipse', 'green', 'is', 'magenta', 'pentagon', 'rectangle', 'red', 'semicircle', 'shape', 'square', 'there', 'triangle', 'white', 'yellow']
-)
+dataset = Multishape

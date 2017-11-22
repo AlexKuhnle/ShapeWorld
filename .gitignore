@@ -1,2 +1,4 @@
 __pycache__
-ShapeWorld.egg-info
+*.egg-info
+*.pyc
+

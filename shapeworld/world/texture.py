@@ -6,7 +6,7 @@ class Texture(object):
     __slots__ = ()
 
     def __eq__(self, other):
-        raise NotImplementedError
+        return isinstance(other, Texture) and self.name == other.name
 
     @property
     def name(self):

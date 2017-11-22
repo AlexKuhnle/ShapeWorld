@@ -1,0 +1,3625 @@
+[
+  {
+    "bound": 8,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "comparison": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "shape": {
+              "component": "Attribute",
+              "predtype": "shape",
+              "value": "semicircle"
+            }
+          }
+        },
+        "component": "Relation",
+        "predtype": "proximity-rel",
+        "reference": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "color": {
+              "component": "Attribute",
+              "predtype": "color",
+              "value": "cyan"
+            }
+          }
+        },
+        "value": 1
+      },
+      "component": "Quantifier",
+      "qrange": "gt",
+      "qtype": "ratio",
+      "quantity": 0.5,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {}
+      }
+    }
+  },
+  {
+    "body": {
+      "component": "Relation",
+      "predtype": "size-rel",
+      "reference": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "green"
+          },
+          "shape": {
+            "component": "Attribute",
+            "predtype": "shape",
+            "value": "cross"
+          }
+        }
+      },
+      "value": -1
+    },
+    "component": "Quantifier",
+    "qrange": "eq",
+    "qtype": "ratio",
+    "quantity": 1.0,
+    "restrictor": {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": {
+        "shape": {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        }
+      }
+    }
+  },
+  {
+    "bound": 8,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "shade-rel",
+        "reference": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "shape": {
+              "component": "Attribute",
+              "predtype": "shape",
+              "value": "pentagon"
+            }
+          }
+        },
+        "value": 1
+      },
+      "component": "Quantifier",
+      "qrange": "eq",
+      "qtype": "ratio",
+      "quantity": 0.5,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "gray"
+          }
+        }
+      }
+    }
+  },
+  {
+    "body": {
+      "component": "Relation",
+      "predtype": "y-rel",
+      "reference": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "yellow"
+          },
+          "shape": {
+            "component": "Attribute",
+            "predtype": "shape",
+            "value": "triangle"
+          }
+        }
+      },
+      "value": 1
+    },
+    "component": "Quantifier",
+    "qrange": "eq",
+    "qtype": "ratio",
+    "quantity": 1.0,
+    "restrictor": {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": {
+        "color": {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        }
+      }
+    }
+  },
+  {
+    "bound": 5,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "attribute",
+        "value": {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        }
+      },
+      "component": "Quantifier",
+      "qrange": "lt",
+      "qtype": "ratio",
+      "quantity": 0.5,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "gray"
+          }
+        }
+      }
+    }
+  },
+  {
+    "bound": 3,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "x-rel",
+        "reference": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "color": {
+              "component": "Attribute",
+              "predtype": "color",
+              "value": "cyan"
+            },
+            "shape": {
+              "component": "Attribute",
+              "predtype": "shape",
+              "value": "square"
+            }
+          }
+        },
+        "value": -1
+      },
+      "component": "Quantifier",
+      "qrange": "eq",
+      "qtype": "ratio",
+      "quantity": 0.33,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "shape": {
+            "component": "Attribute",
+            "predtype": "shape",
+            "value": "triangle"
+          }
+        }
+      }
+    }
+  },
+  {
+    "bound": 4,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "y-rel",
+        "reference": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "shape": {
+              "component": "Attribute",
+              "predtype": "shape",
+              "value": "cross"
+            }
+          }
+        },
+        "value": 1
+      },
+      "component": "Quantifier",
+      "qrange": "eq",
+      "qtype": "ratio",
+      "quantity": 0.0,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "shape": {
+            "component": "Attribute",
+            "predtype": "shape",
+            "value": "square"
+          }
+        }
+      }
+    }
+  },
+  {
+    "bound": 2,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "z-rel",
+        "reference": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "shape": {
+              "component": "Attribute",
+              "predtype": "shape",
+              "value": "square"
+            }
+          }
+        },
+        "value": 1
+      },
+      "component": "Quantifier",
+      "qrange": "eq",
+      "qtype": "ratio",
+      "quantity": 1.0,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "yellow"
+          }
+        }
+      }
+    }
+  },
+  {
+    "bound": 5,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "y-rel",
+        "reference": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "shape": {
+              "component": "Attribute",
+              "predtype": "shape",
+              "value": "pentagon"
+            }
+          }
+        },
+        "value": -1
+      },
+      "component": "Quantifier",
+      "qrange": "eq",
+      "qtype": "ratio",
+      "quantity": 0.0,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {}
+      }
+    }
+  },
+  {
+    "body": {
+      "component": "Relation",
+      "predtype": "x-rel",
+      "reference": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "shape": {
+            "component": "Attribute",
+            "predtype": "shape",
+            "value": "circle"
+          }
+        }
+      },
+      "value": 1
+    },
+    "component": "Quantifier",
+    "qrange": "gt",
+    "qtype": "ratio",
+    "quantity": 0.5,
+    "restrictor": {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": {
+        "color": {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        }
+      }
+    }
+  },
+  {
+    "bound": 5,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "type",
+        "value": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "color": {
+              "component": "Attribute",
+              "predtype": "color",
+              "value": "magenta"
+            },
+            "shape": {
+              "component": "Attribute",
+              "predtype": "shape",
+              "value": "triangle"
+            }
+          }
+        }
+      },
+      "component": "Quantifier",
+      "qrange": "gt",
+      "qtype": "ratio",
+      "quantity": 0.5,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {}
+      }
+    }
+  },
+  {
+    "bound": 4,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "y-rel",
+        "reference": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "shape": {
+              "component": "Attribute",
+              "predtype": "shape",
+              "value": "square"
+            }
+          }
+        },
+        "value": 1
+      },
+      "component": "Quantifier",
+      "qrange": "lt",
+      "qtype": "ratio",
+      "quantity": 0.5,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "shape": {
+            "component": "Attribute",
+            "predtype": "shape",
+            "value": "circle"
+          }
+        }
+      }
+    }
+  },
+  {
+    "bound": 6,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "attribute",
+        "value": {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        }
+      },
+      "component": "Quantifier",
+      "qrange": "eq",
+      "qtype": "ratio",
+      "quantity": 0.75,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {}
+      }
+    }
+  },
+  {
+    "bound": 5,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "shade-rel",
+        "reference": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "shape": {
+              "component": "Attribute",
+              "predtype": "shape",
+              "value": "cross"
+            }
+          }
+        },
+        "value": 1
+      },
+      "component": "Quantifier",
+      "qrange": "gt",
+      "qtype": "ratio",
+      "quantity": 0.5,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {}
+      }
+    }
+  },
+  {
+    "body": {
+      "component": "Relation",
+      "predtype": "size-rel",
+      "reference": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "magenta"
+          }
+        }
+      },
+      "value": 1
+    },
+    "component": "Quantifier",
+    "qrange": "eq",
+    "qtype": "ratio",
+    "quantity": 0.66,
+    "restrictor": {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": {}
+    }
+  },
+  {
+    "bound": 3,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "z-rel",
+        "reference": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "color": {
+              "component": "Attribute",
+              "predtype": "color",
+              "value": "blue"
+            },
+            "shape": {
+              "component": "Attribute",
+              "predtype": "shape",
+              "value": "semicircle"
+            }
+          }
+        },
+        "value": -1
+      },
+      "component": "Quantifier",
+      "qrange": "eq",
+      "qtype": "ratio",
+      "quantity": 0.0,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "gray"
+          }
+        }
+      }
+    }
+  },
+  {
+    "bound": 5,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "attribute",
+        "value": {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        }
+      },
+      "component": "Quantifier",
+      "qrange": "eq",
+      "qtype": "ratio",
+      "quantity": 0.0,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "shape": {
+            "component": "Attribute",
+            "predtype": "shape",
+            "value": "pentagon"
+          }
+        }
+      }
+    }
+  },
+  {
+    "bound": 4,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "attribute",
+        "value": {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        }
+      },
+      "component": "Quantifier",
+      "qrange": "eq",
+      "qtype": "ratio",
+      "quantity": 0.5,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "shape": {
+            "component": "Attribute",
+            "predtype": "shape",
+            "value": "circle"
+          }
+        }
+      }
+    }
+  },
+  {
+    "bound": 4,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "attribute",
+        "value": {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        }
+      },
+      "component": "Quantifier",
+      "qrange": "eq",
+      "qtype": "ratio",
+      "quantity": 0.25,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "yellow"
+          }
+        }
+      }
+    }
+  },
+  {
+    "bound": 4,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "attribute",
+        "value": {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        }
+      },
+      "component": "Quantifier",
+      "qrange": "eq",
+      "qtype": "ratio",
+      "quantity": 0.0,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "shape": {
+            "component": "Attribute",
+            "predtype": "shape",
+            "value": "pentagon"
+          }
+        }
+      }
+    }
+  },
+  {
+    "bound": 3,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "comparison": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "color": {
+              "component": "Attribute",
+              "predtype": "color",
+              "value": "magenta"
+            },
+            "shape": {
+              "component": "Attribute",
+              "predtype": "shape",
+              "value": "ellipse"
+            }
+          }
+        },
+        "component": "Relation",
+        "predtype": "proximity-rel",
+        "reference": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "shape": {
+              "component": "Attribute",
+              "predtype": "shape",
+              "value": "square"
+            }
+          }
+        },
+        "value": 1
+      },
+      "component": "Quantifier",
+      "qrange": "eq",
+      "qtype": "ratio",
+      "quantity": 0.66,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "shape": {
+            "component": "Attribute",
+            "predtype": "shape",
+            "value": "ellipse"
+          }
+        }
+      }
+    }
+  },
+  {
+    "bound": 3,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "comparison": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "color": {
+              "component": "Attribute",
+              "predtype": "color",
+              "value": "yellow"
+            },
+            "shape": {
+              "component": "Attribute",
+              "predtype": "shape",
+              "value": "semicircle"
+            }
+          }
+        },
+        "component": "Relation",
+        "predtype": "proximity-rel",
+        "reference": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "color": {
+              "component": "Attribute",
+              "predtype": "color",
+              "value": "gray"
+            },
+            "shape": {
+              "component": "Attribute",
+              "predtype": "shape",
+              "value": "semicircle"
+            }
+          }
+        },
+        "value": 1
+      },
+      "component": "Quantifier",
+      "qrange": "gt",
+      "qtype": "ratio",
+      "quantity": 0.5,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {}
+      }
+    }
+  },
+  {
+    "bound": 3,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "type",
+        "value": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "shape": {
+              "component": "Attribute",
+              "predtype": "shape",
+              "value": "semicircle"
+            }
+          }
+        }
+      },
+      "component": "Quantifier",
+      "qrange": "lt",
+      "qtype": "ratio",
+      "quantity": 0.5,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "blue"
+          }
+        }
+      }
+    }
+  },
+  {
+    "bound": 3,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "size-rel",
+        "reference": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "color": {
+              "component": "Attribute",
+              "predtype": "color",
+              "value": "yellow"
+            }
+          }
+        },
+        "value": 1
+      },
+      "component": "Quantifier",
+      "qrange": "eq",
+      "qtype": "ratio",
+      "quantity": 1.0,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "shape": {
+            "component": "Attribute",
+            "predtype": "shape",
+            "value": "circle"
+          }
+        }
+      }
+    }
+  },
+  {
+    "body": {
+      "component": "Relation",
+      "predtype": "type",
+      "value": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "gray"
+          },
+          "shape": {
+            "component": "Attribute",
+            "predtype": "shape",
+            "value": "triangle"
+          }
+        }
+      }
+    },
+    "component": "Quantifier",
+    "qrange": "eq",
+    "qtype": "ratio",
+    "quantity": 0.33,
+    "restrictor": {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": {
+        "color": {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        }
+      }
+    }
+  },
+  {
+    "bound": 8,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "attribute",
+        "value": {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        }
+      },
+      "component": "Quantifier",
+      "qrange": "eq",
+      "qtype": "ratio",
+      "quantity": 1.0,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {}
+      }
+    }
+  },
+  {
+    "bound": 6,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "type",
+        "value": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "color": {
+              "component": "Attribute",
+              "predtype": "color",
+              "value": "gray"
+            },
+            "shape": {
+              "component": "Attribute",
+              "predtype": "shape",
+              "value": "semicircle"
+            }
+          }
+        }
+      },
+      "component": "Quantifier",
+      "qrange": "eq",
+      "qtype": "ratio",
+      "quantity": 0.5,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "shape": {
+            "component": "Attribute",
+            "predtype": "shape",
+            "value": "semicircle"
+          }
+        }
+      }
+    }
+  },
+  {
+    "bound": 7,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "x-rel",
+        "reference": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "shape": {
+              "component": "Attribute",
+              "predtype": "shape",
+              "value": "square"
+            }
+          }
+        },
+        "value": -1
+      },
+      "component": "Quantifier",
+      "qrange": "lt",
+      "qtype": "ratio",
+      "quantity": 0.5,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {}
+      }
+    }
+  },
+  {
+    "body": {
+      "comparison": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "shape": {
+            "component": "Attribute",
+            "predtype": "shape",
+            "value": "rectangle"
+          }
+        }
+      },
+      "component": "Relation",
+      "predtype": "proximity-rel",
+      "reference": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "shape": {
+            "component": "Attribute",
+            "predtype": "shape",
+            "value": "ellipse"
+          }
+        }
+      },
+      "value": 1
+    },
+    "component": "Quantifier",
+    "qrange": "eq",
+    "qtype": "ratio",
+    "quantity": 0.0,
+    "restrictor": {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": {
+        "color": {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        }
+      }
+    }
+  },
+  {
+    "body": {
+      "component": "Relation",
+      "predtype": "size-rel",
+      "reference": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "blue"
+          }
+        }
+      },
+      "value": 1
+    },
+    "component": "Quantifier",
+    "qrange": "eq",
+    "qtype": "ratio",
+    "quantity": 1.0,
+    "restrictor": {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": {
+        "shape": {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        }
+      }
+    }
+  },
+  {
+    "bound": 7,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "z-rel",
+        "reference": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "shape": {
+              "component": "Attribute",
+              "predtype": "shape",
+              "value": "semicircle"
+            }
+          }
+        },
+        "value": 1
+      },
+      "component": "Quantifier",
+      "qrange": "eq",
+      "qtype": "ratio",
+      "quantity": 0.33,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "green"
+          }
+        }
+      }
+    }
+  },
+  {
+    "bound": 4,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "x-rel",
+        "reference": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "shape": {
+              "component": "Attribute",
+              "predtype": "shape",
+              "value": "rectangle"
+            }
+          }
+        },
+        "value": -1
+      },
+      "component": "Quantifier",
+      "qrange": "eq",
+      "qtype": "ratio",
+      "quantity": 1.0,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "blue"
+          }
+        }
+      }
+    }
+  },
+  {
+    "body": {
+      "component": "Relation",
+      "predtype": "attribute",
+      "value": {
+        "component": "Attribute",
+        "predtype": "shape",
+        "value": "square"
+      }
+    },
+    "component": "Quantifier",
+    "qrange": "eq",
+    "qtype": "ratio",
+    "quantity": 0.0,
+    "restrictor": {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": {
+        "color": {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        }
+      }
+    }
+  },
+  {
+    "body": {
+      "component": "Relation",
+      "predtype": "y-rel",
+      "reference": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "gray"
+          },
+          "shape": {
+            "component": "Attribute",
+            "predtype": "shape",
+            "value": "square"
+          }
+        }
+      },
+      "value": -1
+    },
+    "component": "Quantifier",
+    "qrange": "gt",
+    "qtype": "ratio",
+    "quantity": 0.5,
+    "restrictor": {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": {
+        "color": {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        }
+      }
+    }
+  },
+  {
+    "bound": 6,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "comparison": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "shape": {
+              "component": "Attribute",
+              "predtype": "shape",
+              "value": "ellipse"
+            }
+          }
+        },
+        "component": "Relation",
+        "predtype": "proximity-rel",
+        "reference": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "shape": {
+              "component": "Attribute",
+              "predtype": "shape",
+              "value": "circle"
+            }
+          }
+        },
+        "value": 1
+      },
+      "component": "Quantifier",
+      "qrange": "eq",
+      "qtype": "ratio",
+      "quantity": 0.5,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "shape": {
+            "component": "Attribute",
+            "predtype": "shape",
+            "value": "ellipse"
+          }
+        }
+      }
+    }
+  },
+  {
+    "body": {
+      "comparison": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "red"
+          },
+          "shape": {
+            "component": "Attribute",
+            "predtype": "shape",
+            "value": "cross"
+          }
+        }
+      },
+      "component": "Relation",
+      "predtype": "proximity-rel",
+      "reference": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "shape": {
+            "component": "Attribute",
+            "predtype": "shape",
+            "value": "triangle"
+          }
+        }
+      },
+      "value": 1
+    },
+    "component": "Quantifier",
+    "qrange": "lt",
+    "qtype": "ratio",
+    "quantity": 0.5,
+    "restrictor": {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": {
+        "color": {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        }
+      }
+    }
+  },
+  {
+    "body": {
+      "component": "Relation",
+      "predtype": "y-rel",
+      "reference": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "gray"
+          }
+        }
+      },
+      "value": -1
+    },
+    "component": "Quantifier",
+    "qrange": "eq",
+    "qtype": "ratio",
+    "quantity": 1.0,
+    "restrictor": {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": {
+        "shape": {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "triangle"
+        }
+      }
+    }
+  },
+  {
+    "bound": 5,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "type",
+        "value": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "shape": {
+              "component": "Attribute",
+              "predtype": "shape",
+              "value": "rectangle"
+            }
+          }
+        }
+      },
+      "component": "Quantifier",
+      "qrange": "eq",
+      "qtype": "ratio",
+      "quantity": 0.0,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {}
+      }
+    }
+  },
+  {
+    "bound": 4,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "attribute",
+        "value": {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "ellipse"
+        }
+      },
+      "component": "Quantifier",
+      "qrange": "eq",
+      "qtype": "ratio",
+      "quantity": 0.25,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "yellow"
+          }
+        }
+      }
+    }
+  },
+  {
+    "bound": 8,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "type",
+        "value": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "color": {
+              "component": "Attribute",
+              "predtype": "color",
+              "value": "magenta"
+            },
+            "shape": {
+              "component": "Attribute",
+              "predtype": "shape",
+              "value": "pentagon"
+            }
+          }
+        }
+      },
+      "component": "Quantifier",
+      "qrange": "eq",
+      "qtype": "ratio",
+      "quantity": 0.25,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {}
+      }
+    }
+  },
+  {
+    "bound": 2,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "y-rel",
+        "reference": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "color": {
+              "component": "Attribute",
+              "predtype": "color",
+              "value": "gray"
+            }
+          }
+        },
+        "value": 1
+      },
+      "component": "Quantifier",
+      "qrange": "eq",
+      "qtype": "ratio",
+      "quantity": 0.5,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "magenta"
+          }
+        }
+      }
+    }
+  },
+  {
+    "bound": 5,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "type",
+        "value": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "color": {
+              "component": "Attribute",
+              "predtype": "color",
+              "value": "red"
+            },
+            "shape": {
+              "component": "Attribute",
+              "predtype": "shape",
+              "value": "pentagon"
+            }
+          }
+        }
+      },
+      "component": "Quantifier",
+      "qrange": "eq",
+      "qtype": "ratio",
+      "quantity": 0.5,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {}
+      }
+    }
+  },
+  {
+    "body": {
+      "component": "Relation",
+      "predtype": "size-rel",
+      "reference": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "cyan"
+          },
+          "shape": {
+            "component": "Attribute",
+            "predtype": "shape",
+            "value": "circle"
+          }
+        }
+      },
+      "value": 1
+    },
+    "component": "Quantifier",
+    "qrange": "gt",
+    "qtype": "ratio",
+    "quantity": 0.5,
+    "restrictor": {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": {
+        "shape": {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      }
+    }
+  },
+  {
+    "body": {
+      "component": "Relation",
+      "predtype": "type",
+      "value": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "red"
+          }
+        }
+      }
+    },
+    "component": "Quantifier",
+    "qrange": "gt",
+    "qtype": "ratio",
+    "quantity": 0.5,
+    "restrictor": {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": {
+        "shape": {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      }
+    }
+  },
+  {
+    "bound": 7,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "size-rel",
+        "reference": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "shape": {
+              "component": "Attribute",
+              "predtype": "shape",
+              "value": "square"
+            }
+          }
+        },
+        "value": 1
+      },
+      "component": "Quantifier",
+      "qrange": "lt",
+      "qtype": "ratio",
+      "quantity": 0.5,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {}
+      }
+    }
+  },
+  {
+    "body": {
+      "comparison": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "yellow"
+          },
+          "shape": {
+            "component": "Attribute",
+            "predtype": "shape",
+            "value": "pentagon"
+          }
+        }
+      },
+      "component": "Relation",
+      "predtype": "proximity-rel",
+      "reference": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "green"
+          }
+        }
+      },
+      "value": 1
+    },
+    "component": "Quantifier",
+    "qrange": "eq",
+    "qtype": "ratio",
+    "quantity": 0.75,
+    "restrictor": {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": {
+        "color": {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        }
+      }
+    }
+  },
+  {
+    "bound": 8,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "attribute",
+        "value": {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        }
+      },
+      "component": "Quantifier",
+      "qrange": "eq",
+      "qtype": "ratio",
+      "quantity": 0.0,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {}
+      }
+    }
+  },
+  {
+    "body": {
+      "component": "Relation",
+      "predtype": "attribute",
+      "value": {
+        "component": "Attribute",
+        "predtype": "color",
+        "value": "magenta"
+      }
+    },
+    "component": "Quantifier",
+    "qrange": "eq",
+    "qtype": "ratio",
+    "quantity": 0.5,
+    "restrictor": {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": {}
+    }
+  },
+  {
+    "bound": 8,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "z-rel",
+        "reference": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "color": {
+              "component": "Attribute",
+              "predtype": "color",
+              "value": "gray"
+            },
+            "shape": {
+              "component": "Attribute",
+              "predtype": "shape",
+              "value": "semicircle"
+            }
+          }
+        },
+        "value": -1
+      },
+      "component": "Quantifier",
+      "qrange": "eq",
+      "qtype": "ratio",
+      "quantity": 0.0,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {}
+      }
+    }
+  },
+  {
+    "body": {
+      "component": "Relation",
+      "predtype": "x-rel",
+      "reference": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "blue"
+          },
+          "shape": {
+            "component": "Attribute",
+            "predtype": "shape",
+            "value": "circle"
+          }
+        }
+      },
+      "value": 1
+    },
+    "component": "Quantifier",
+    "qrange": "eq",
+    "qtype": "ratio",
+    "quantity": 1.0,
+    "restrictor": {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": {
+        "color": {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        }
+      }
+    }
+  },
+  {
+    "body": {
+      "component": "Relation",
+      "predtype": "x-rel",
+      "reference": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "shape": {
+            "component": "Attribute",
+            "predtype": "shape",
+            "value": "pentagon"
+          }
+        }
+      },
+      "value": -1
+    },
+    "component": "Quantifier",
+    "qrange": "lt",
+    "qtype": "ratio",
+    "quantity": 0.5,
+    "restrictor": {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": {
+        "color": {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        }
+      }
+    }
+  },
+  {
+    "body": {
+      "component": "Relation",
+      "predtype": "y-rel",
+      "reference": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "yellow"
+          },
+          "shape": {
+            "component": "Attribute",
+            "predtype": "shape",
+            "value": "ellipse"
+          }
+        }
+      },
+      "value": 1
+    },
+    "component": "Quantifier",
+    "qrange": "lt",
+    "qtype": "ratio",
+    "quantity": 0.5,
+    "restrictor": {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": {
+        "shape": {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "ellipse"
+        }
+      }
+    }
+  },
+  {
+    "bound": 5,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "attribute",
+        "value": {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        }
+      },
+      "component": "Quantifier",
+      "qrange": "eq",
+      "qtype": "ratio",
+      "quantity": 0.0,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {}
+      }
+    }
+  },
+  {
+    "body": {
+      "component": "Relation",
+      "predtype": "y-rel",
+      "reference": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "magenta"
+          }
+        }
+      },
+      "value": -1
+    },
+    "component": "Quantifier",
+    "qrange": "eq",
+    "qtype": "ratio",
+    "quantity": 0.25,
+    "restrictor": {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": {
+        "color": {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        }
+      }
+    }
+  },
+  {
+    "bound": 5,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "size-rel",
+        "reference": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "color": {
+              "component": "Attribute",
+              "predtype": "color",
+              "value": "red"
+            },
+            "shape": {
+              "component": "Attribute",
+              "predtype": "shape",
+              "value": "semicircle"
+            }
+          }
+        },
+        "value": -1
+      },
+      "component": "Quantifier",
+      "qrange": "lt",
+      "qtype": "ratio",
+      "quantity": 0.5,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "shape": {
+            "component": "Attribute",
+            "predtype": "shape",
+            "value": "semicircle"
+          }
+        }
+      }
+    }
+  },
+  {
+    "body": {
+      "component": "Relation",
+      "predtype": "type",
+      "value": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "shape": {
+            "component": "Attribute",
+            "predtype": "shape",
+            "value": "rectangle"
+          }
+        }
+      }
+    },
+    "component": "Quantifier",
+    "qrange": "eq",
+    "qtype": "ratio",
+    "quantity": 0.33,
+    "restrictor": {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": {
+        "color": {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        }
+      }
+    }
+  },
+  {
+    "body": {
+      "component": "Relation",
+      "predtype": "x-rel",
+      "reference": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "yellow"
+          }
+        }
+      },
+      "value": -1
+    },
+    "component": "Quantifier",
+    "qrange": "eq",
+    "qtype": "ratio",
+    "quantity": 0.0,
+    "restrictor": {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": {
+        "color": {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        }
+      }
+    }
+  },
+  {
+    "bound": 4,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "attribute",
+        "value": {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        }
+      },
+      "component": "Quantifier",
+      "qrange": "eq",
+      "qtype": "ratio",
+      "quantity": 0.75,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "shape": {
+            "component": "Attribute",
+            "predtype": "shape",
+            "value": "rectangle"
+          }
+        }
+      }
+    }
+  },
+  {
+    "bound": 4,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "z-rel",
+        "reference": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "color": {
+              "component": "Attribute",
+              "predtype": "color",
+              "value": "yellow"
+            },
+            "shape": {
+              "component": "Attribute",
+              "predtype": "shape",
+              "value": "ellipse"
+            }
+          }
+        },
+        "value": 1
+      },
+      "component": "Quantifier",
+      "qrange": "eq",
+      "qtype": "ratio",
+      "quantity": 0.0,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "gray"
+          }
+        }
+      }
+    }
+  },
+  {
+    "body": {
+      "component": "Relation",
+      "predtype": "z-rel",
+      "reference": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "green"
+          },
+          "shape": {
+            "component": "Attribute",
+            "predtype": "shape",
+            "value": "triangle"
+          }
+        }
+      },
+      "value": 1
+    },
+    "component": "Quantifier",
+    "qrange": "eq",
+    "qtype": "ratio",
+    "quantity": 0.5,
+    "restrictor": {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": {
+        "shape": {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "triangle"
+        }
+      }
+    }
+  },
+  {
+    "body": {
+      "component": "Relation",
+      "predtype": "shade-rel",
+      "reference": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "blue"
+          }
+        }
+      },
+      "value": 1
+    },
+    "component": "Quantifier",
+    "qrange": "gt",
+    "qtype": "ratio",
+    "quantity": 0.5,
+    "restrictor": {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": {
+        "shape": {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        }
+      }
+    }
+  },
+  {
+    "body": {
+      "comparison": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "shape": {
+            "component": "Attribute",
+            "predtype": "shape",
+            "value": "triangle"
+          }
+        }
+      },
+      "component": "Relation",
+      "predtype": "proximity-rel",
+      "reference": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "cyan"
+          },
+          "shape": {
+            "component": "Attribute",
+            "predtype": "shape",
+            "value": "triangle"
+          }
+        }
+      },
+      "value": -1
+    },
+    "component": "Quantifier",
+    "qrange": "lt",
+    "qtype": "ratio",
+    "quantity": 0.5,
+    "restrictor": {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": {
+        "color": {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        }
+      }
+    }
+  },
+  {
+    "bound": 3,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "type",
+        "value": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "color": {
+              "component": "Attribute",
+              "predtype": "color",
+              "value": "blue"
+            }
+          }
+        }
+      },
+      "component": "Quantifier",
+      "qrange": "eq",
+      "qtype": "ratio",
+      "quantity": 0.33,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "shape": {
+            "component": "Attribute",
+            "predtype": "shape",
+            "value": "cross"
+          }
+        }
+      }
+    }
+  },
+  {
+    "bound": 2,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "y-rel",
+        "reference": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "color": {
+              "component": "Attribute",
+              "predtype": "color",
+              "value": "cyan"
+            }
+          }
+        },
+        "value": 1
+      },
+      "component": "Quantifier",
+      "qrange": "eq",
+      "qtype": "ratio",
+      "quantity": 0.33,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "gray"
+          }
+        }
+      }
+    }
+  },
+  {
+    "bound": 7,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "type",
+        "value": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "color": {
+              "component": "Attribute",
+              "predtype": "color",
+              "value": "yellow"
+            },
+            "shape": {
+              "component": "Attribute",
+              "predtype": "shape",
+              "value": "cross"
+            }
+          }
+        }
+      },
+      "component": "Quantifier",
+      "qrange": "eq",
+      "qtype": "ratio",
+      "quantity": 0.33,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "shape": {
+            "component": "Attribute",
+            "predtype": "shape",
+            "value": "cross"
+          }
+        }
+      }
+    }
+  },
+  {
+    "bound": 8,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "attribute",
+        "value": {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        }
+      },
+      "component": "Quantifier",
+      "qrange": "eq",
+      "qtype": "ratio",
+      "quantity": 0.25,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {}
+      }
+    }
+  },
+  {
+    "body": {
+      "comparison": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "shape": {
+            "component": "Attribute",
+            "predtype": "shape",
+            "value": "triangle"
+          }
+        }
+      },
+      "component": "Relation",
+      "predtype": "proximity-rel",
+      "reference": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "yellow"
+          }
+        }
+      },
+      "value": -1
+    },
+    "component": "Quantifier",
+    "qrange": "eq",
+    "qtype": "ratio",
+    "quantity": 0.75,
+    "restrictor": {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": {
+        "shape": {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "triangle"
+        }
+      }
+    }
+  },
+  {
+    "body": {
+      "component": "Relation",
+      "predtype": "size-rel",
+      "reference": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "cyan"
+          },
+          "shape": {
+            "component": "Attribute",
+            "predtype": "shape",
+            "value": "ellipse"
+          }
+        }
+      },
+      "value": -1
+    },
+    "component": "Quantifier",
+    "qrange": "lt",
+    "qtype": "ratio",
+    "quantity": 0.5,
+    "restrictor": {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": {
+        "color": {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        }
+      }
+    }
+  },
+  {
+    "body": {
+      "component": "Relation",
+      "predtype": "z-rel",
+      "reference": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "shape": {
+            "component": "Attribute",
+            "predtype": "shape",
+            "value": "semicircle"
+          }
+        }
+      },
+      "value": -1
+    },
+    "component": "Quantifier",
+    "qrange": "lt",
+    "qtype": "ratio",
+    "quantity": 0.5,
+    "restrictor": {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": {
+        "shape": {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      }
+    }
+  },
+  {
+    "body": {
+      "component": "Relation",
+      "predtype": "type",
+      "value": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "gray"
+          },
+          "shape": {
+            "component": "Attribute",
+            "predtype": "shape",
+            "value": "triangle"
+          }
+        }
+      }
+    },
+    "component": "Quantifier",
+    "qrange": "eq",
+    "qtype": "ratio",
+    "quantity": 0.0,
+    "restrictor": {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": {}
+    }
+  },
+  {
+    "bound": 3,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "z-rel",
+        "reference": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "color": {
+              "component": "Attribute",
+              "predtype": "color",
+              "value": "blue"
+            },
+            "shape": {
+              "component": "Attribute",
+              "predtype": "shape",
+              "value": "square"
+            }
+          }
+        },
+        "value": 1
+      },
+      "component": "Quantifier",
+      "qrange": "gt",
+      "qtype": "ratio",
+      "quantity": 0.5,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "magenta"
+          }
+        }
+      }
+    }
+  },
+  {
+    "body": {
+      "component": "Relation",
+      "predtype": "shade-rel",
+      "reference": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "cyan"
+          }
+        }
+      },
+      "value": 1
+    },
+    "component": "Quantifier",
+    "qrange": "eq",
+    "qtype": "ratio",
+    "quantity": 1.0,
+    "restrictor": {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": {
+        "shape": {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "ellipse"
+        }
+      }
+    }
+  },
+  {
+    "bound": 5,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "type",
+        "value": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "shape": {
+              "component": "Attribute",
+              "predtype": "shape",
+              "value": "ellipse"
+            }
+          }
+        }
+      },
+      "component": "Quantifier",
+      "qrange": "gt",
+      "qtype": "ratio",
+      "quantity": 0.5,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "red"
+          }
+        }
+      }
+    }
+  },
+  {
+    "bound": 6,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "type",
+        "value": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "shape": {
+              "component": "Attribute",
+              "predtype": "shape",
+              "value": "circle"
+            }
+          }
+        }
+      },
+      "component": "Quantifier",
+      "qrange": "eq",
+      "qtype": "ratio",
+      "quantity": 0.0,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {}
+      }
+    }
+  },
+  {
+    "body": {
+      "component": "Relation",
+      "predtype": "shade-rel",
+      "reference": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "shape": {
+            "component": "Attribute",
+            "predtype": "shape",
+            "value": "triangle"
+          }
+        }
+      },
+      "value": 1
+    },
+    "component": "Quantifier",
+    "qrange": "eq",
+    "qtype": "ratio",
+    "quantity": 0.0,
+    "restrictor": {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": {
+        "shape": {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        }
+      }
+    }
+  },
+  {
+    "body": {
+      "component": "Relation",
+      "predtype": "x-rel",
+      "reference": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "shape": {
+            "component": "Attribute",
+            "predtype": "shape",
+            "value": "rectangle"
+          }
+        }
+      },
+      "value": -1
+    },
+    "component": "Quantifier",
+    "qrange": "eq",
+    "qtype": "ratio",
+    "quantity": 0.5,
+    "restrictor": {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": {
+        "color": {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        }
+      }
+    }
+  },
+  {
+    "body": {
+      "component": "Relation",
+      "predtype": "y-rel",
+      "reference": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "yellow"
+          }
+        }
+      },
+      "value": 1
+    },
+    "component": "Quantifier",
+    "qrange": "eq",
+    "qtype": "ratio",
+    "quantity": 1.0,
+    "restrictor": {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": {
+        "color": {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        }
+      }
+    }
+  },
+  {
+    "body": {
+      "component": "Relation",
+      "predtype": "x-rel",
+      "reference": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "red"
+          },
+          "shape": {
+            "component": "Attribute",
+            "predtype": "shape",
+            "value": "cross"
+          }
+        }
+      },
+      "value": -1
+    },
+    "component": "Quantifier",
+    "qrange": "eq",
+    "qtype": "ratio",
+    "quantity": 0.0,
+    "restrictor": {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": {
+        "color": {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        }
+      }
+    }
+  },
+  {
+    "bound": 5,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "size-rel",
+        "reference": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "shape": {
+              "component": "Attribute",
+              "predtype": "shape",
+              "value": "rectangle"
+            }
+          }
+        },
+        "value": -1
+      },
+      "component": "Quantifier",
+      "qrange": "eq",
+      "qtype": "ratio",
+      "quantity": 1.0,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "cyan"
+          }
+        }
+      }
+    }
+  },
+  {
+    "body": {
+      "component": "Relation",
+      "predtype": "x-rel",
+      "reference": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "shape": {
+            "component": "Attribute",
+            "predtype": "shape",
+            "value": "pentagon"
+          }
+        }
+      },
+      "value": 1
+    },
+    "component": "Quantifier",
+    "qrange": "gt",
+    "qtype": "ratio",
+    "quantity": 0.5,
+    "restrictor": {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": {
+        "color": {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        }
+      }
+    }
+  },
+  {
+    "bound": 3,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "attribute",
+        "value": {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        }
+      },
+      "component": "Quantifier",
+      "qrange": "eq",
+      "qtype": "ratio",
+      "quantity": 0.5,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "shape": {
+            "component": "Attribute",
+            "predtype": "shape",
+            "value": "cross"
+          }
+        }
+      }
+    }
+  },
+  {
+    "bound": 4,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "x-rel",
+        "reference": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "shape": {
+              "component": "Attribute",
+              "predtype": "shape",
+              "value": "ellipse"
+            }
+          }
+        },
+        "value": 1
+      },
+      "component": "Quantifier",
+      "qrange": "eq",
+      "qtype": "ratio",
+      "quantity": 0.0,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "yellow"
+          }
+        }
+      }
+    }
+  },
+  {
+    "bound": 2,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "y-rel",
+        "reference": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "shape": {
+              "component": "Attribute",
+              "predtype": "shape",
+              "value": "square"
+            }
+          }
+        },
+        "value": -1
+      },
+      "component": "Quantifier",
+      "qrange": "eq",
+      "qtype": "ratio",
+      "quantity": 0.5,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "shape": {
+            "component": "Attribute",
+            "predtype": "shape",
+            "value": "pentagon"
+          }
+        }
+      }
+    }
+  },
+  {
+    "bound": 5,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "y-rel",
+        "reference": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "color": {
+              "component": "Attribute",
+              "predtype": "color",
+              "value": "gray"
+            },
+            "shape": {
+              "component": "Attribute",
+              "predtype": "shape",
+              "value": "semicircle"
+            }
+          }
+        },
+        "value": -1
+      },
+      "component": "Quantifier",
+      "qrange": "eq",
+      "qtype": "ratio",
+      "quantity": 0.0,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "shape": {
+            "component": "Attribute",
+            "predtype": "shape",
+            "value": "rectangle"
+          }
+        }
+      }
+    }
+  },
+  {
+    "bound": 5,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "y-rel",
+        "reference": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "color": {
+              "component": "Attribute",
+              "predtype": "color",
+              "value": "blue"
+            },
+            "shape": {
+              "component": "Attribute",
+              "predtype": "shape",
+              "value": "square"
+            }
+          }
+        },
+        "value": 1
+      },
+      "component": "Quantifier",
+      "qrange": "eq",
+      "qtype": "ratio",
+      "quantity": 0.25,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "magenta"
+          }
+        }
+      }
+    }
+  },
+  {
+    "bound": 6,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "type",
+        "value": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "shape": {
+              "component": "Attribute",
+              "predtype": "shape",
+              "value": "triangle"
+            }
+          }
+        }
+      },
+      "component": "Quantifier",
+      "qrange": "eq",
+      "qtype": "ratio",
+      "quantity": 0.66,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "gray"
+          }
+        }
+      }
+    }
+  },
+  {
+    "body": {
+      "comparison": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "red"
+          },
+          "shape": {
+            "component": "Attribute",
+            "predtype": "shape",
+            "value": "rectangle"
+          }
+        }
+      },
+      "component": "Relation",
+      "predtype": "proximity-rel",
+      "reference": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "blue"
+          },
+          "shape": {
+            "component": "Attribute",
+            "predtype": "shape",
+            "value": "square"
+          }
+        }
+      },
+      "value": 1
+    },
+    "component": "Quantifier",
+    "qrange": "eq",
+    "qtype": "ratio",
+    "quantity": 0.5,
+    "restrictor": {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": {}
+    }
+  },
+  {
+    "bound": 8,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "x-rel",
+        "reference": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "shape": {
+              "component": "Attribute",
+              "predtype": "shape",
+              "value": "ellipse"
+            }
+          }
+        },
+        "value": 1
+      },
+      "component": "Quantifier",
+      "qrange": "lt",
+      "qtype": "ratio",
+      "quantity": 0.5,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {}
+      }
+    }
+  },
+  {
+    "body": {
+      "component": "Relation",
+      "predtype": "x-rel",
+      "reference": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "gray"
+          }
+        }
+      },
+      "value": -1
+    },
+    "component": "Quantifier",
+    "qrange": "eq",
+    "qtype": "ratio",
+    "quantity": 0.5,
+    "restrictor": {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": {
+        "color": {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        }
+      }
+    }
+  },
+  {
+    "bound": 3,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "size-rel",
+        "reference": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "color": {
+              "component": "Attribute",
+              "predtype": "color",
+              "value": "red"
+            },
+            "shape": {
+              "component": "Attribute",
+              "predtype": "shape",
+              "value": "circle"
+            }
+          }
+        },
+        "value": -1
+      },
+      "component": "Quantifier",
+      "qrange": "eq",
+      "qtype": "ratio",
+      "quantity": 0.66,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "red"
+          }
+        }
+      }
+    }
+  },
+  {
+    "bound": 4,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "comparison": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "shape": {
+              "component": "Attribute",
+              "predtype": "shape",
+              "value": "pentagon"
+            }
+          }
+        },
+        "component": "Relation",
+        "predtype": "proximity-rel",
+        "reference": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "color": {
+              "component": "Attribute",
+              "predtype": "color",
+              "value": "magenta"
+            },
+            "shape": {
+              "component": "Attribute",
+              "predtype": "shape",
+              "value": "pentagon"
+            }
+          }
+        },
+        "value": 1
+      },
+      "component": "Quantifier",
+      "qrange": "eq",
+      "qtype": "ratio",
+      "quantity": 0.75,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "green"
+          }
+        }
+      }
+    }
+  },
+  {
+    "bound": 4,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "size-rel",
+        "reference": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "color": {
+              "component": "Attribute",
+              "predtype": "color",
+              "value": "blue"
+            },
+            "shape": {
+              "component": "Attribute",
+              "predtype": "shape",
+              "value": "cross"
+            }
+          }
+        },
+        "value": -1
+      },
+      "component": "Quantifier",
+      "qrange": "lt",
+      "qtype": "ratio",
+      "quantity": 0.5,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "shape": {
+            "component": "Attribute",
+            "predtype": "shape",
+            "value": "cross"
+          }
+        }
+      }
+    }
+  },
+  {
+    "bound": 2,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "shade-rel",
+        "reference": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "color": {
+              "component": "Attribute",
+              "predtype": "color",
+              "value": "red"
+            },
+            "shape": {
+              "component": "Attribute",
+              "predtype": "shape",
+              "value": "square"
+            }
+          }
+        },
+        "value": -1
+      },
+      "component": "Quantifier",
+      "qrange": "eq",
+      "qtype": "ratio",
+      "quantity": 0.33,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "red"
+          }
+        }
+      }
+    }
+  },
+  {
+    "body": {
+      "component": "Relation",
+      "predtype": "y-rel",
+      "reference": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "green"
+          },
+          "shape": {
+            "component": "Attribute",
+            "predtype": "shape",
+            "value": "circle"
+          }
+        }
+      },
+      "value": -1
+    },
+    "component": "Quantifier",
+    "qrange": "eq",
+    "qtype": "ratio",
+    "quantity": 0.0,
+    "restrictor": {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": {
+        "shape": {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "ellipse"
+        }
+      }
+    }
+  },
+  {
+    "bound": 5,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "z-rel",
+        "reference": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "color": {
+              "component": "Attribute",
+              "predtype": "color",
+              "value": "magenta"
+            },
+            "shape": {
+              "component": "Attribute",
+              "predtype": "shape",
+              "value": "triangle"
+            }
+          }
+        },
+        "value": 1
+      },
+      "component": "Quantifier",
+      "qrange": "eq",
+      "qtype": "ratio",
+      "quantity": 0.0,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {}
+      }
+    }
+  },
+  {
+    "bound": 4,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "x-rel",
+        "reference": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "shape": {
+              "component": "Attribute",
+              "predtype": "shape",
+              "value": "triangle"
+            }
+          }
+        },
+        "value": 1
+      },
+      "component": "Quantifier",
+      "qrange": "lt",
+      "qtype": "ratio",
+      "quantity": 0.5,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "magenta"
+          }
+        }
+      }
+    }
+  },
+  {
+    "bound": 3,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "comparison": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "color": {
+              "component": "Attribute",
+              "predtype": "color",
+              "value": "blue"
+            }
+          }
+        },
+        "component": "Relation",
+        "predtype": "proximity-rel",
+        "reference": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "color": {
+              "component": "Attribute",
+              "predtype": "color",
+              "value": "yellow"
+            },
+            "shape": {
+              "component": "Attribute",
+              "predtype": "shape",
+              "value": "rectangle"
+            }
+          }
+        },
+        "value": -1
+      },
+      "component": "Quantifier",
+      "qrange": "eq",
+      "qtype": "ratio",
+      "quantity": 0.0,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "shape": {
+            "component": "Attribute",
+            "predtype": "shape",
+            "value": "rectangle"
+          }
+        }
+      }
+    }
+  },
+  {
+    "body": {
+      "component": "Relation",
+      "predtype": "size-rel",
+      "reference": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "green"
+          },
+          "shape": {
+            "component": "Attribute",
+            "predtype": "shape",
+            "value": "rectangle"
+          }
+        }
+      },
+      "value": -1
+    },
+    "component": "Quantifier",
+    "qrange": "eq",
+    "qtype": "ratio",
+    "quantity": 0.0,
+    "restrictor": {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": {
+        "color": {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        }
+      }
+    }
+  },
+  {
+    "bound": 8,
+    "component": "NumberBound",
+    "quantifier": {
+      "body": {
+        "component": "Relation",
+        "predtype": "y-rel",
+        "reference": {
+          "component": "EntityType",
+          "predtype": "type",
+          "value": {
+            "color": {
+              "component": "Attribute",
+              "predtype": "color",
+              "value": "green"
+            },
+            "shape": {
+              "component": "Attribute",
+              "predtype": "shape",
+              "value": "square"
+            }
+          }
+        },
+        "value": 1
+      },
+      "component": "Quantifier",
+      "qrange": "lt",
+      "qtype": "ratio",
+      "quantity": 0.5,
+      "restrictor": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "shape": {
+            "component": "Attribute",
+            "predtype": "shape",
+            "value": "triangle"
+          }
+        }
+      }
+    }
+  },
+  {
+    "body": {
+      "component": "Relation",
+      "predtype": "x-rel",
+      "reference": {
+        "component": "EntityType",
+        "predtype": "type",
+        "value": {
+          "color": {
+            "component": "Attribute",
+            "predtype": "color",
+            "value": "yellow"
+          }
+        }
+      },
+      "value": -1
+    },
+    "component": "Quantifier",
+    "qrange": "eq",
+    "qtype": "ratio",
+    "quantity": 0.25,
+    "restrictor": {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": {
+        "shape": {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      }
+    }
+  }
+]

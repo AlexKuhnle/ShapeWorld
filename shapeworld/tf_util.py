@@ -20,7 +20,7 @@ def read_record(dataset, serialized_record):
                 feature_lists[value_name] = tf.FixedLenSequenceFeature(shape=(), dtype=tf.float32)
             else:
                 features[value_name] = tf.FixedLenFeature(shape=(), dtype=tf.float32)
-        elif value_type == 'vector(int)' or value_type == 'text':
+        elif value_type == 'vector(int)' or dataset.vocabulary(value_type=value_type) is not None:
             if alts:
                 feature_lists[value_name] = tf.FixedLenSequenceFeature(shape=dataset.vector_shape(value_name=value_name), dtype=tf.int64)
             else:
@@ -93,7 +93,7 @@ def write_record(dataset, record):
                 feature_lists[value_name] = tf.train.FeatureList(feature=[tf.train.Feature(float_list=tf.train.FloatList(value=(value,))) for value in record[value_name]])
             else:
                 features[value_name] = tf.train.Feature(float_list=tf.train.FloatList(value=(record[value_name],)))
-        elif value_type == 'vector(int)' or value_type == 'text':
+        elif value_type == 'vector(int)' or dataset.vocabulary(value_type=value_type) is not None:
             if alts:
                 feature_lists[value_name] = tf.train.FeatureList(feature=[tf.train.Feature(int64_list=tf.train.Int64List(value=value)) for value in record[value_name]])
             else:

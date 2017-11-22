@@ -13,7 +13,7 @@ if __name__ == '__main__':
     parser.add_argument('-d', '--directory', help='Directory for generated data (with automatically created sub-directories, unless --unmanaged)')
     parser.add_argument('-a', '--archive', default=None, choices=('zip', 'zip:none', 'zip:deflate', 'zip:bzip2', 'zip:lzma', 'tar', 'tar:none', 'tar:gzip', 'tar:bzip2', 'tar:lzma'), help='Store generated data in (compressed) archives')
     parser.add_argument('-A', '--append', action='store_true', help='Append to existing data')
-    parser.add_argument('-U', '--unmanaged', action='store_true', help='Do not automatically create sub-directories')
+    parser.add_argument('-U', '--unmanaged', action='store_true', help='Do not automatically create sub-directories (implied if --files not specified)')
 
     parser.add_argument('-t', '--type', default='agreement', help='Dataset type')
     parser.add_argument('-n', '--name', help='Dataset name')
@@ -21,7 +21,7 @@ if __name__ == '__main__':
     parser.add_argument('-c', '--config', type=util.parse_config, default=None, help='Dataset configuration file')
 
     parser.add_argument('-m', '--mode', default=None, choices=('train', 'validation', 'test', 'tf-records'), help='Mode')
-    parser.add_argument('-f', '--files', type=util.parse_tuple, default=(1,), help='Number of files to split data into')
+    parser.add_argument('-f', '--files', type=util.parse_tuple, default=None, help='Number of files to split data into (not specified implies --unmanaged)')
     parser.add_argument('-i', '--instances', type=util.parse_int_with_factor, default=100, help='Number of instances per file')
 
     parser.add_argument('-p', '--pixel-noise', type=float, default=0.0, help='Pixel noise range')
@@ -37,9 +37,9 @@ if __name__ == '__main__':
     sys.stdout.flush()
 
     if args.instances * util.product(dataset.world_shape) > 5e8:  # > 500MB
-        sys.stdout.write('{time} Warning: part size is {size}MB\n'.format(time=datetime.now().strftime('%H:%M:%S'), size=int(args.instances * util.product(dataset.world_shape) / 1e6)))
+        sys.stdout.write('{time} warning: part size is {size}MB '.format(time=datetime.now().strftime('%H:%M:%S'), size=int(args.instances * util.product(dataset.world_shape) / 1e6)))
         sys.stdout.flush()
-        if sys.stdin.readline()[:-1].lower() in ('n', 'no', 'c', 'cancel', 'abort'):
+        if sys.stdin.readline()[:-1].lower() in ('n', 'no', 'c', 'cancel', 'a', 'abort'):
             exit(0)
 
     specification = dataset.specification()
@@ -50,25 +50,15 @@ if __name__ == '__main__':
     if args.concatenate_images:
         specification['num_concat_worlds'] = args.instances
 
-    parts = args.files
-    args.unmanaged = args.unmanaged or (args.mode is None and len(parts) == 1)
+    args.unmanaged = args.unmanaged or (args.files is None)
     if args.unmanaged:
-        assert len(parts) == 1
         directory = args.directory
-        modes = (args.mode,)
         directories = (args.directory,)
-        parts = args.files or (1,)
-    else:
-        assert len(parts) in (1, 3, 4)
-        assert (args.mode is not None) == (len(parts) == 1)
-        if dataset.language is None:
-            directory = os.path.join(args.directory, dataset.type, dataset.name)
-            specification_path = os.path.join(args.directory, '{}-{}.json'.format(dataset.type, dataset.name))
+        if args.files is None:
+            parts = (1,)
         else:
-            directory = os.path.join(args.directory, '{}-{}'.format(dataset.type, dataset.language), dataset.name)
-            specification_path = os.path.join(args.directory, '{}-{}-{}.json'.format(dataset.type, dataset.language, dataset.name))
-
-    if len(parts) == 1:
+            assert len(args.files) == 1
+            parts = args.files
         if args.mode == 'tf-records':
             from shapeworld import tf_util
             modes = ('train',)
@@ -76,21 +66,38 @@ if __name__ == '__main__':
         else:
             modes = (args.mode,)
             tf_records_flags = (False,)
-        if args.unmanaged:
-            directories = (directory,)
-        else:
-            directories = (os.path.join(directory, args.mode),)
-    elif len(parts) == 3:
-        assert args.mode is None
-        modes = ('train', 'validation', 'test')
-        directories = tuple(os.path.join(directory, mode) for mode in modes)
-        tf_records_flags = (False, False, False)
+
     else:
-        assert args.mode is None
-        from shapeworld import tf_util
-        modes = ('train', 'train', 'validation', 'test')
-        directories = tuple(os.path.join(directory, mode) for mode in ('tf-records', 'train', 'validation', 'test'))
-        tf_records_flags = (True, False, False, False)
+        assert len(args.files) in (1, 3, 4)
+        assert (args.mode is not None) == (len(args.files) == 1)
+        if dataset.language is None:
+            directory = os.path.join(args.directory, dataset.type, dataset.name)
+            specification_path = os.path.join(args.directory, '{}-{}.json'.format(dataset.type, dataset.name))
+        else:
+            directory = os.path.join(args.directory, '{}-{}'.format(dataset.type, dataset.language), dataset.name)
+            specification_path = os.path.join(args.directory, '{}-{}-{}.json'.format(dataset.type, dataset.language, dataset.name))
+
+        parts = args.files
+        if len(parts) == 1:
+            if args.mode == 'tf-records':
+                from shapeworld import tf_util
+                modes = ('train',)
+                tf_records_flags = (True,)
+            else:
+                modes = (args.mode,)
+                tf_records_flags = (False,)
+            directories = (os.path.join(directory, args.mode),)
+        elif len(parts) == 3:
+            assert args.mode is None
+            modes = ('train', 'validation', 'test')
+            directories = tuple(os.path.join(directory, mode) for mode in modes)
+            tf_records_flags = (False, False, False)
+        else:
+            assert args.mode is None
+            from shapeworld import tf_util
+            modes = ('train', 'train', 'validation', 'test')
+            directories = tuple(os.path.join(directory, mode) for mode in ('tf-records', 'train', 'validation', 'test'))
+            tf_records_flags = (True, False, False, False)
 
     if args.append:
         start_part = ()
@@ -107,7 +114,7 @@ if __name__ == '__main__':
                         start_part += (0,)
         if not args.unmanaged:
             with open(specification_path, 'r') as filehandle:
-                assert json.load(filehandle) == specification
+                assert json.load(filehandle) == specification, str(specification)
     else:
         start_part = (0,) * len(directories)
         if not args.unmanaged and os.path.isdir(directory):
@@ -124,7 +131,7 @@ if __name__ == '__main__':
 
     for mode, directory, num_parts, start, tf_records_flag in zip(modes, directories, parts, start_part, tf_records_flags):
         sys.stdout.write('{time} generate {dtype} {name}{mode} data...\n'.format(time=datetime.now().strftime('%H:%M:%S'), dtype=dataset.type, name=dataset.name, mode=(' ' + mode if mode else '')))
-        sys.stdout.write('         0%  0/{parts}  (time per part: n/a)'.format(parts=num_parts))
+        sys.stdout.write('         0%  0/{files}  (time per part: n/a)'.format(files=num_parts))
         sys.stdout.flush()
         for part in range(1, num_parts + 1):
             before = datetime.now()
@@ -139,26 +146,10 @@ if __name__ == '__main__':
                 tf_util.write_records(dataset=dataset, records=generated, path=path)
             else:
                 dataset.serialize(path=path, generated=generated, archive=args.archive, concat_worlds=args.concatenate_images, html=args.html)
-            # if args.html and dataset.type == 'agreement':
-            #     captions = generated['caption']
-            #     agreements = generated['agreement']
-            #     html_content = list()
-            #     for n, (caption, agreement) in enumerate(zip(captions, agreements)):
-            #         html_content.append('<div class="{agreement}"><div class="world"><img src="{world}.bmp" alt="{world}.bmp"></div><div class="caption">{caption}</div></div>'.format(
-            #             agreement=('correct' if agreement == 1.0 else 'incorrect'),
-            #             world=('world-' + str(n)),
-            #             caption=' '.join(str(c) for c in caption)
-            #         ))
-            #     with open(os.path.join(path, 'data.html'), 'w') as filehandle:
-            #         filehandle.write('<!DOCTYPE html><html><head><style>.data{{width: 100%; height: 100%;}} .correct{{width: 100%; height: 64px; margin-top: 1px; margin-bottom: 1px; background-color: #77FF77;}} .incorrect{{width: 100%; height: 64px; margin-top: 1px; margin-bottom: 1px; background-color: #FF7777;}} .world{{display: inline-block; vertical-align: middle;}} .caption{{display: inline-block; vertical-align: middle; margin-left: 10px;}}</style><title>{dtype} {name}</title></head><body><div class="data">{data}</div></body></html>'.format(
-            #             dtype=dataset.type,
-            #             name=dataset.name,
-            #             data=''.join(html_content)
-            #         ))
             after = datetime.now()
             sys.stdout.write('\r         {completed:.0f}%  {part}/{parts}  (time per part: {duration})'.format(completed=((part) * 100 / num_parts), part=part, parts=num_parts, duration=str(after - before).split('.')[0]))
             sys.stdout.flush()
         sys.stdout.write('\n')
         sys.stdout.flush()
-    sys.stdout.write('{time} data generation completed!\n'.format(time=datetime.now().strftime('%H:%M:%S')))
+    sys.stdout.write('{time} data generation completed\n'.format(time=datetime.now().strftime('%H:%M:%S')))
     sys.stdout.flush()

@@ -96,7 +96,7 @@ class Dmrs(ListDmrs):
             self.anchors = {anchor: self[node2.nodeid] for anchor, node2 in other.anchors.items()}
 
     def apply_paraphrases(self, paraphrases):
-        paraphrase(dmrs=self, paraphrases=paraphrases)
+        return paraphrase(dmrs=self, paraphrases=paraphrases)
 
     def remove_underspecifications(self):
         for node in list(self.iter_nodes()):
@@ -110,51 +110,48 @@ class Dmrs(ListDmrs):
             if node.carg == '?':
                 node.carg = None
 
-# [ _exactly_x_deg<0:7> LBL: h4 ARG0: e5 [ e ] ARG1: e6 [ e ] ]  
-# [ _exactly_x_deg_rel<0:0> LBL: h1 ARG0: e9 [ e ] ARG1: e8 ]  
-
-# [ udef_q<8:11> LBL: h7 ARG0: x3 [ x PERS: 3 NUM: sg ] RSTR: h8 BODY: h9 ]  
-# [ udef_q_rel<0:0> LBL: h1 ARG0: x7 RSTR: h12 ]  
-
-# [ card<8:11> LBL: h4 CARG: "1" ARG0: e6 ARG1: x3 ]  
-# [ card_rel<0:0> LBL: h2 CARG: "1" ARG0: e8 [ e ] ARG1: x7 ] 
-
-# [ _cyan_a_sw<12:16> LBL: h4 ARG0: e11 [ e ] ARG1: x3 ]  
-# [ _cyan_a_sw_rel<0:0> LBL: h2 ARG0: e10 [ e ] ARG1: x7 ]  
-
-# [ _rectangle_n_sw<17:26> LBL: h4 ARG0: x3 ]  
-# [ _rectangle_n_sw_rel<0:0> LBL: h2 ARG0: x7 [ x PERS: 3 NUM: sg ] ]  
-
-# [ _cyan_a_sw<30:35> LBL: h1 ARG0: e2 ARG1: x3 ] 
-# [ _cyan_a_sw_rel<0:0> LBL: h6 ARG0: e11 [ e SF: prop TENSE: pres MOOD: indicative PERF: - PROG: - ] ARG1: x7 ] 
-
     def get_mrs(self):
         # labels = dict(zip(self, range(1, len(self) + 1)))
         # redirected = []
         quantifiers = dict()
-        labels = dict(zip(self, self))
+        # labels = dict(zip(self, self))
+        labels = {nodeid: [nodeid] for nodeid in self}
         for link in self.iter_links():
             assert isinstance(link.start, int) and isinstance(link.end, int)
             assert link.rargname is not None or link.post == 'EQ'  # ('ARG1', 'ARG2', 'ARG3', 'ARG4', 'ARG', 'RSTR', 'BODY', 'L-INDEX', 'R-INDEX', 'L-HNDL', 'R-HNDL')
             assert link.post in ('NEQ', 'EQ', 'H', 'HEQ')
             if link.post == 'EQ':
-                upper, lower = (link.start, link.end) if link.start > link.end else (link.end, link.start)
-                labels[upper] = lower
-                # labels[upper] = labels[lower]
-                # redirected.append(upper)
+                # upper, lower = (link.start, link.end) if link.start > link.end else (link.end, link.start)
+                # labels[upper] = lower
+                labels[link.start].append(link.end)
+                labels[link.end].append(link.start)
             elif link.rargname == 'RSTR' and link.post == 'H':
                 quantifiers[link.start] = link.end
-        for upper, lower in labels.items():
-            lower_lower = labels[lower]
-            while lower_lower != lower:
-                lower = lower_lower
-                lower_lower = labels[lower]
-            labels[upper] = lower
-        lowest = sorted(labels.values())
-        labels = {nodeid: lowest.index(label) + 1 for nodeid, label in labels.items()}
-                # while lower in redirected:
-                #     print('>', lower, labels[lower])
-                #     lower = labels[lower]
+
+        # for upper, lower in labels.items():
+        #     lower_lower = labels[lower]
+        #     while lower_lower != lower:
+        #         lower = lower_lower
+        #         lower_lower = labels[lower]
+        #     labels[upper] = lower
+        for nodeid, eqs in labels.items():
+            if isinstance(eqs, int):
+                continue
+            lowest = nodeid
+            n = 0
+            while n < len(eqs):
+                lbl = eqs[n]
+                if lbl < lowest:
+                    lowest = lbl
+                for nodeid in labels[lbl]:
+                    if nodeid not in eqs:
+                        eqs.append(nodeid)
+                n += 1
+            for lbl in eqs:
+                labels[lbl] = lowest
+
+        ordered = sorted(labels.values())
+        labels = {nodeid: ordered.index(label) + 1 for nodeid, label in labels.items()}
 
         predicates = dict()
         cargs = dict()

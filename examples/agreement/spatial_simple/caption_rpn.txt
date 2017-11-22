@@ -1,0 +1,100 @@
+Attribute-color-magenta 1 EntityType Attribute-color-green Attribute-shape-ellipse 2 EntityType Relation-x-rel--1 Existential
+Attribute-color-blue Attribute-shape-circle 2 EntityType Attribute-shape-ellipse 1 EntityType Relation-x-rel--1 Existential
+Attribute-color-yellow Attribute-shape-ellipse 2 EntityType Attribute-shape-rectangle 1 EntityType Relation-x-rel--1 Existential
+Attribute-shape-rectangle 1 EntityType Attribute-shape-ellipse 1 EntityType Relation-x-rel--1 Existential
+Attribute-color-yellow Attribute-shape-cross 2 EntityType Attribute-color-yellow Attribute-shape-rectangle 2 EntityType Relation-y-rel-1 Existential
+Attribute-shape-ellipse 1 EntityType Attribute-color-yellow Attribute-shape-semicircle 2 EntityType Relation-y-rel-1 Existential
+Attribute-color-red 1 EntityType Attribute-shape-square 1 EntityType Relation-x-rel--1 Existential
+Attribute-color-magenta Attribute-shape-semicircle 2 EntityType Attribute-color-gray Attribute-shape-rectangle 2 EntityType Relation-x-rel-1 Existential
+Attribute-shape-semicircle 1 EntityType Attribute-color-cyan Attribute-shape-ellipse 2 EntityType Relation-y-rel--1 Existential
+Attribute-color-green Attribute-shape-semicircle 2 EntityType Attribute-color-green Attribute-shape-cross 2 EntityType Relation-y-rel--1 Existential
+Attribute-color-gray Attribute-shape-semicircle 2 EntityType Attribute-shape-cross 1 EntityType Relation-x-rel-1 Existential
+Attribute-color-green Attribute-shape-cross 2 EntityType Attribute-color-red 1 EntityType Relation-y-rel--1 Existential
+Attribute-color-blue 1 EntityType Attribute-color-red Attribute-shape-circle 2 EntityType Relation-y-rel--1 Existential
+Attribute-shape-cross 1 EntityType Attribute-color-cyan 1 EntityType Relation-x-rel-1 Existential
+Attribute-color-yellow Attribute-shape-square 2 EntityType Attribute-color-cyan Attribute-shape-ellipse 2 EntityType Relation-x-rel-1 Existential
+Attribute-shape-rectangle 1 EntityType Attribute-color-magenta Attribute-shape-cross 2 EntityType Relation-y-rel-1 Existential
+Attribute-color-magenta Attribute-shape-semicircle 2 EntityType Attribute-color-magenta Attribute-shape-cross 2 EntityType Relation-y-rel-1 Existential
+Attribute-color-gray Attribute-shape-pentagon 2 EntityType Attribute-color-red 1 EntityType Relation-y-rel-1 Existential
+Attribute-color-cyan 1 EntityType Attribute-shape-circle 1 EntityType Relation-x-rel-1 Existential
+Attribute-shape-ellipse 1 EntityType Attribute-shape-cross 1 EntityType Relation-x-rel-1 Existential
+Attribute-shape-ellipse 1 EntityType Attribute-shape-square 1 EntityType Relation-x-rel-1 Existential
+Attribute-shape-pentagon 1 EntityType Attribute-color-gray 1 EntityType Relation-x-rel-1 Existential
+Attribute-color-gray Attribute-shape-semicircle 2 EntityType Attribute-shape-circle 1 EntityType Relation-x-rel--1 Existential
+Attribute-color-gray Attribute-shape-triangle 2 EntityType Attribute-color-cyan Attribute-shape-rectangle 2 EntityType Relation-y-rel-1 Existential
+Attribute-color-green Attribute-shape-rectangle 2 EntityType Attribute-shape-ellipse 1 EntityType Relation-x-rel-1 Existential
+Attribute-shape-pentagon 1 EntityType Attribute-color-red Attribute-shape-circle 2 EntityType Relation-x-rel-1 Existential
+Attribute-color-magenta 1 EntityType Attribute-shape-triangle 1 EntityType Relation-x-rel--1 Existential
+Attribute-color-cyan Attribute-shape-rectangle 2 EntityType Attribute-shape-rectangle 1 EntityType Relation-x-rel-1 Existential
+Attribute-color-cyan Attribute-shape-triangle 2 EntityType Attribute-shape-pentagon 1 EntityType Relation-y-rel--1 Existential
+Attribute-color-cyan 1 EntityType Attribute-color-yellow 1 EntityType Relation-x-rel--1 Existential
+Attribute-shape-cross 1 EntityType Attribute-shape-rectangle 1 EntityType Relation-x-rel--1 Existential
+Attribute-color-yellow Attribute-shape-circle 2 EntityType Attribute-color-gray Attribute-shape-circle 2 EntityType Relation-x-rel-1 Existential
+Attribute-color-gray 1 EntityType Attribute-shape-triangle 1 EntityType Relation-x-rel-1 Existential
+Attribute-shape-square 1 EntityType Attribute-color-red Attribute-shape-pentagon 2 EntityType Relation-x-rel-1 Existential
+Attribute-color-magenta Attribute-shape-pentagon 2 EntityType Attribute-color-red 1 EntityType Relation-x-rel-1 Existential
+Attribute-color-gray Attribute-shape-cross 2 EntityType Attribute-color-cyan 1 EntityType Relation-x-rel-1 Existential
+Attribute-color-cyan 1 EntityType Attribute-color-cyan 1 EntityType Relation-y-rel--1 Existential
+Attribute-shape-square 1 EntityType Attribute-color-blue Attribute-shape-pentagon 2 EntityType Relation-y-rel--1 Existential
+Attribute-color-yellow Attribute-shape-cross 2 EntityType Attribute-color-green Attribute-shape-square 2 EntityType Relation-y-rel-1 Existential
+Attribute-shape-cross 1 EntityType Attribute-color-yellow Attribute-shape-cross 2 EntityType Relation-y-rel--1 Existential
+Attribute-shape-rectangle 1 EntityType Attribute-color-gray Attribute-shape-square 2 EntityType Relation-y-rel-1 Existential
+Attribute-color-green Attribute-shape-semicircle 2 EntityType Attribute-color-yellow Attribute-shape-ellipse 2 EntityType Relation-y-rel--1 Existential
+Attribute-shape-circle 1 EntityType Attribute-color-red Attribute-shape-semicircle 2 EntityType Relation-y-rel--1 Existential
+Attribute-color-blue 1 EntityType Attribute-color-cyan 1 EntityType Relation-x-rel-1 Existential
+Attribute-color-green 1 EntityType Attribute-color-gray Attribute-shape-ellipse 2 EntityType Relation-y-rel-1 Existential
+Attribute-shape-ellipse 1 EntityType Attribute-color-cyan Attribute-shape-ellipse 2 EntityType Relation-y-rel-1 Existential
+Attribute-shape-ellipse 1 EntityType Attribute-color-red 1 EntityType Relation-y-rel--1 Existential
+Attribute-shape-rectangle 1 EntityType Attribute-color-yellow Attribute-shape-ellipse 2 EntityType Relation-x-rel-1 Existential
+Attribute-color-blue 1 EntityType Attribute-color-magenta 1 EntityType Relation-x-rel--1 Existential
+Attribute-color-magenta 1 EntityType Attribute-color-blue 1 EntityType Relation-y-rel-1 Existential
+Attribute-shape-circle 1 EntityType Attribute-color-cyan Attribute-shape-square 2 EntityType Relation-x-rel-1 Existential
+Attribute-color-green Attribute-shape-square 2 EntityType Attribute-color-green Attribute-shape-semicircle 2 EntityType Relation-x-rel-1 Existential
+Attribute-color-blue 1 EntityType Attribute-color-red 1 EntityType Relation-y-rel--1 Existential
+Attribute-color-green Attribute-shape-semicircle 2 EntityType Attribute-color-red Attribute-shape-circle 2 EntityType Relation-x-rel--1 Existential
+Attribute-shape-ellipse 1 EntityType Attribute-shape-cross 1 EntityType Relation-y-rel--1 Existential
+Attribute-color-yellow Attribute-shape-ellipse 2 EntityType Attribute-color-yellow Attribute-shape-triangle 2 EntityType Relation-y-rel-1 Existential
+Attribute-color-magenta Attribute-shape-square 2 EntityType Attribute-color-blue Attribute-shape-triangle 2 EntityType Relation-y-rel--1 Existential
+Attribute-color-gray Attribute-shape-circle 2 EntityType Attribute-color-red Attribute-shape-semicircle 2 EntityType Relation-y-rel--1 Existential
+Attribute-shape-semicircle 1 EntityType Attribute-color-red 1 EntityType Relation-x-rel-1 Existential
+Attribute-color-green Attribute-shape-ellipse 2 EntityType Attribute-color-blue 1 EntityType Relation-x-rel-1 Existential
+Attribute-shape-ellipse 1 EntityType Attribute-color-cyan 1 EntityType Relation-y-rel--1 Existential
+Attribute-color-yellow Attribute-shape-square 2 EntityType Attribute-color-red Attribute-shape-rectangle 2 EntityType Relation-x-rel-1 Existential
+Attribute-color-cyan Attribute-shape-square 2 EntityType Attribute-color-gray Attribute-shape-semicircle 2 EntityType Relation-y-rel--1 Existential
+Attribute-color-red 1 EntityType Attribute-shape-square 1 EntityType Relation-y-rel--1 Existential
+Attribute-color-gray 1 EntityType Attribute-shape-triangle 1 EntityType Relation-y-rel-1 Existential
+Attribute-color-red 1 EntityType Attribute-color-cyan Attribute-shape-circle 2 EntityType Relation-y-rel--1 Existential
+Attribute-color-magenta 1 EntityType Attribute-color-gray Attribute-shape-cross 2 EntityType Relation-x-rel-1 Existential
+Attribute-color-gray Attribute-shape-cross 2 EntityType Attribute-shape-ellipse 1 EntityType Relation-y-rel--1 Existential
+Attribute-color-magenta Attribute-shape-ellipse 2 EntityType Attribute-color-cyan Attribute-shape-ellipse 2 EntityType Relation-y-rel--1 Existential
+Attribute-color-blue 1 EntityType Attribute-color-blue Attribute-shape-rectangle 2 EntityType Relation-x-rel--1 Existential
+Attribute-color-yellow Attribute-shape-square 2 EntityType Attribute-shape-ellipse 1 EntityType Relation-x-rel--1 Existential
+Attribute-shape-triangle 1 EntityType Attribute-color-green Attribute-shape-cross 2 EntityType Relation-y-rel-1 Existential
+Attribute-shape-circle 1 EntityType Attribute-color-red Attribute-shape-rectangle 2 EntityType Relation-y-rel--1 Existential
+Attribute-color-magenta Attribute-shape-circle 2 EntityType Attribute-shape-triangle 1 EntityType Relation-y-rel--1 Existential
+Attribute-color-gray Attribute-shape-ellipse 2 EntityType Attribute-color-gray Attribute-shape-rectangle 2 EntityType Relation-y-rel-1 Existential
+Attribute-color-yellow 1 EntityType Attribute-color-green Attribute-shape-ellipse 2 EntityType Relation-y-rel-1 Existential
+Attribute-color-gray Attribute-shape-cross 2 EntityType Attribute-color-cyan 1 EntityType Relation-x-rel--1 Existential
+Attribute-color-magenta Attribute-shape-circle 2 EntityType Attribute-shape-cross 1 EntityType Relation-x-rel--1 Existential
+Attribute-color-cyan 1 EntityType Attribute-shape-rectangle 1 EntityType Relation-y-rel--1 Existential
+Attribute-color-red Attribute-shape-ellipse 2 EntityType Attribute-color-gray Attribute-shape-semicircle 2 EntityType Relation-y-rel--1 Existential
+Attribute-color-cyan Attribute-shape-circle 2 EntityType Attribute-color-red 1 EntityType Relation-y-rel-1 Existential
+Attribute-color-cyan Attribute-shape-pentagon 2 EntityType Attribute-color-green Attribute-shape-rectangle 2 EntityType Relation-y-rel--1 Existential
+Attribute-color-yellow 1 EntityType Attribute-color-green Attribute-shape-rectangle 2 EntityType Relation-x-rel--1 Existential
+Attribute-color-blue Attribute-shape-rectangle 2 EntityType Attribute-shape-square 1 EntityType Relation-y-rel-1 Existential
+Attribute-color-gray Attribute-shape-circle 2 EntityType Attribute-shape-semicircle 1 EntityType Relation-x-rel-1 Existential
+Attribute-color-magenta Attribute-shape-pentagon 2 EntityType Attribute-color-red 1 EntityType Relation-x-rel-1 Existential
+Attribute-shape-cross 1 EntityType Attribute-shape-pentagon 1 EntityType Relation-x-rel--1 Existential
+Attribute-color-green Attribute-shape-semicircle 2 EntityType Attribute-color-gray Attribute-shape-cross 2 EntityType Relation-x-rel--1 Existential
+Attribute-color-green 1 EntityType Attribute-color-yellow Attribute-shape-circle 2 EntityType Relation-x-rel--1 Existential
+Attribute-color-gray Attribute-shape-semicircle 2 EntityType Attribute-shape-circle 1 EntityType Relation-y-rel-1 Existential
+Attribute-shape-square 1 EntityType Attribute-color-blue 1 EntityType Relation-x-rel--1 Existential
+Attribute-color-green Attribute-shape-cross 2 EntityType Attribute-color-blue Attribute-shape-cross 2 EntityType Relation-x-rel-1 Existential
+Attribute-color-red Attribute-shape-pentagon 2 EntityType Attribute-color-blue Attribute-shape-semicircle 2 EntityType Relation-x-rel--1 Existential
+Attribute-color-blue 1 EntityType Attribute-color-gray Attribute-shape-pentagon 2 EntityType Relation-y-rel-1 Existential
+Attribute-color-cyan Attribute-shape-cross 2 EntityType Attribute-shape-semicircle 1 EntityType Relation-x-rel--1 Existential
+Attribute-color-blue Attribute-shape-semicircle 2 EntityType Attribute-color-green 1 EntityType Relation-x-rel-1 Existential
+Attribute-shape-cross 1 EntityType Attribute-color-cyan Attribute-shape-cross 2 EntityType Relation-x-rel--1 Existential
+Attribute-color-magenta Attribute-shape-square 2 EntityType Attribute-shape-triangle 1 EntityType Relation-x-rel--1 Existential
+Attribute-color-cyan Attribute-shape-semicircle 2 EntityType Attribute-color-blue Attribute-shape-semicircle 2 EntityType Relation-x-rel--1 Existential
+Attribute-color-gray Attribute-shape-pentagon 2 EntityType Attribute-color-gray Attribute-shape-triangle 2 EntityType Relation-x-rel--1 Existential

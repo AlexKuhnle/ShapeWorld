@@ -15,16 +15,16 @@ class WorldGenerator(object):
         if self.world_color in self.colors:
             self.colors.remove(self.world_color)
         self.rotation = util.value_or_default(rotation, True)
-        self.size_range = util.value_or_default(size_range, (0.1, 0.2))
+        self.size_range = util.value_or_default(size_range, (0.1, 0.25))
         self.distortion_range = util.value_or_default(distortion_range, (2.0, 3.0))  # greater than 1.0
-        self.shade_range = util.value_or_default(shade_range, 0.33)
+        self.shade_range = util.value_or_default(shade_range, 0.4)
         self.collision_tolerance = util.value_or_default(collision_tolerance, 0.25)
         self.boundary_tolerance = util.value_or_default(boundary_tolerance, 0.25)
 
     def __str__(self):
         return self.__class__.__name__
 
-    def sample_values(self, mode):
+    def initialize(self, mode):
         assert mode in (None, 'train', 'validation', 'test')
         self.mode = mode
 
@@ -54,7 +54,7 @@ class WorldGenerator(object):
         return self.generate_world()
 
 
-class GeneratorMixer(object):
+class GeneratorMixer(WorldGenerator):
 
     def __init__(self, generators, distribution=None, train_distribution=None, validation_distribution=None, test_distribution=None):
         assert len(generators) >= 1
@@ -64,14 +64,14 @@ class GeneratorMixer(object):
         assert not train_distribution or len(train_distribution) == len(validation_distribution) == len(test_distribution) == len(distribution)
         super(GeneratorMixer, self).__init__(world_size=generators[0].world_size, world_color=generators[0].world_color, shapes=generators[0].shapes, colors=generators[0].colors, textures=generators[0].textures, rotation=generators[0].rotation, size_range=generators[0].size_range, distortion_range=generators[0].distortion_range, shade_range=generators[0].shade_range, collision_tolerance=generators[0].collision_tolerance, boundary_tolerance=generators[0].boundary_tolerance)
         self.generators = generators
-        util.value_or_default(distribution, [1] * len(generators))
+        distribution = util.value_or_default(distribution, [1] * len(generators))
         self.distribution = util.cumulative_distribution(distribution)
         self.train_distribution = util.cumulative_distribution(util.value_or_default(train_distribution, distribution))
         self.validation_distribution = util.cumulative_distribution(util.value_or_default(validation_distribution, distribution))
         self.test_distribution = util.cumulative_distribution(util.value_or_default(test_distribution, distribution))
 
-    def sample_values(self, mode):
-        super(GeneratorMixer, self).sample_values(mode=mode)
+    def initialize(self, mode):
+        super(GeneratorMixer, self).initialize(mode=mode)
 
         if mode is None:
             self.generator = util.sample(self.distribution, self.generators)
@@ -82,7 +82,7 @@ class GeneratorMixer(object):
         elif mode == 'test':
             self.generator = util.sample(self.test_distribution, self.generators)
 
-        self.generator.sample_values(mode=mode)
+        self.generator.initialize(mode=mode)
 
     def generate_world(self):
         return self.generator.generate_world()

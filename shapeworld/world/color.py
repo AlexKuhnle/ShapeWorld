@@ -24,7 +24,7 @@ class Color(object):
         self.shaded_rgb = np.array(object=shaded_rgb, dtype=np.float32)
 
     def __eq__(self, other):
-        raise NotImplementedError
+        return isinstance(other, Color) and self.name == other.name
 
     def model(self):
         return {'name': str(self), 'rgb': list(self.rgb), 'shade': self.shade}
@@ -59,5 +59,5 @@ Color.colors = {
     'yellow': (1.0, 1.0, 0.0),
     'magenta': (1.0, 0.0, 1.0),
     'cyan': (0.0, 1.0, 1.0),
-    'white': (1.0, 1.0, 1.0)
+    'gray': (0.5, 0.5, 0.5)
 }

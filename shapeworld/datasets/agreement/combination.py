@@ -1,87 +1,108 @@
 from shapeworld.dataset import CaptionAgreementDataset
-from shapeworld.generators import GenericGenerator
-from shapeworld.captioners import CaptionerMixer, AttributesTypeCaptioner, AttributesRelationCaptioner, SpatialRelationCaptioner, ComparisonRelationCaptioner, ExistentialCaptioner, AbsoluteQuantifierCaptioner, RelativeQuantifierCaptioner, ConjunctionCaptioner, DisjunctionCaptioner
+from shapeworld.generators import GeneratorMixer, RandomAttributesGenerator, ReinforcedAttributesGenerator
+from shapeworld.captioners import CaptionerMixer, RegularAttributeCaptioner, RegularTypeCaptioner, AttributeTypeRelationCaptioner, RelationCaptioner, ExistentialCaptioner, QuantifierCaptioner, NumberBoundCaptioner, ComparativeQuantifierCaptioner, ConjunctionCaptioner, DisjunctionCaptioner
 
 
-class CombinationDataset(CaptionAgreementDataset):
+class Combination(CaptionAgreementDataset):
 
-    dataset_name = 'combination'
+    def __init__(
+        self,
+        entity_counts=(5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15),
+        train_entity_counts=(5, 6, 7, 8, 9, 10, 11, 12, 14),
+        validation_entity_counts=(13,),
+        test_entity_counts=(15,),
+        validation_combinations=(('square', 'red', 'solid'), ('triangle', 'green', 'solid'), ('circle', 'blue', 'solid')),
+        test_combinations=(('rectangle', 'yellow', 'solid'), ('cross', 'magenta', 'solid'), ('ellipse', 'cyan', 'solid')),
+        caption_size=28,
+        vocabulary=('.', 'a', 'above', 'all', 'an', 'and', 'are', 'at', 'behind', 'below', 'bigger', 'biggest', 'black', 'blue', 'both', 'circle', 'circles', 'closer', 'closest', 'cross', 'crosses', 'cyan', 'darker', 'darkest', 'eight', 'either', 'ellipse', 'ellipses', 'every', 'exactly', 'farther', 'farthest', 'few', 'five', 'four', 'from', 'front', 'gray', 'green', 'half', 'in', 'is', 'least', 'left', 'leftmost', 'less', 'lighter', 'lightest', 'lowermost', 'magenta', 'more', 'most', 'no', 'not', 'of', 'one', 'or', 'pentagon', 'pentagons', 'quarter', 'quarters', 'rectangle', 'rectangles', 'red', 'right', 'rightmost', 'semicircle', 'semicircles', 'seven', 'shape', 'shapes', 'six', 'smaller', 'smallest', 'some', 'square', 'squares', 'than', 'the', 'there', 'third', 'three', 'to', 'topmost', 'triangle', 'triangles', 'two', 'yellow', 'zero'),
+        language=None
+    ):
 
-    def __init__(self, entity_counts, train_entity_counts, validation_entity_counts, test_entity_counts, validation_combinations, test_combinations, shapes_range, colors_range, textures_range, caption_size, words, language=None):
-        world_generator = GenericGenerator(
+        random_generator = RandomAttributesGenerator(
             entity_counts=entity_counts,
             train_entity_counts=train_entity_counts,
             validation_entity_counts=validation_entity_counts,
             test_entity_counts=test_entity_counts,
             validation_combinations=validation_combinations,
-            test_combinations=test_combinations,
-            shapes_range=shapes_range,
-            colors_range=colors_range,
-            textures_range=textures_range
+            test_combinations=test_combinations
         )
-        oneshape = CaptionerMixer(
+        reinforced_attributes_generator = ReinforcedAttributesGenerator(
+            reinforcement_range=(1, 3),
+            entity_counts=entity_counts,
+            train_entity_counts=train_entity_counts,
+            validation_entity_counts=validation_entity_counts,
+            test_entity_counts=test_entity_counts,
+            validation_combinations=validation_combinations,
+            test_combinations=test_combinations
+        )
+        world_generator = GeneratorMixer(
+            generators=(random_generator, reinforced_attributes_generator)
+        )
+
+        body_captioner = AttributeTypeRelationCaptioner(
+            attribute_type_captioner=CaptionerMixer(
+                captioners=(
+                    RegularAttributeCaptioner(),
+                    RegularTypeCaptioner()
+                )
+            )
+        )
+        multishape_captioner = CaptionerMixer(
             captioners=(
-                AttributesTypeCaptioner(),
+                RegularTypeCaptioner(),
                 ExistentialCaptioner(
-                    restrictor_captioner=AttributesTypeCaptioner(
-                        hypernym_ratio=1.0
+                    restrictor_captioner=RegularTypeCaptioner(
+                        hypernym_rate=1.0,
+                        logical_tautology_rate=1.0
                     ),
-                    body_captioner=AttributesRelationCaptioner()
+                    body_captioner=body_captioner
                 )
             )
         )
-        relational = CaptionerMixer(
-            captioners=(
-                SpatialRelationCaptioner(),
-                ComparisonRelationCaptioner()
+        relational_captioner = ExistentialCaptioner(
+            restrictor_captioner=RegularTypeCaptioner(),
+            body_captioner=RelationCaptioner(
+                reference_captioner=RegularTypeCaptioner(),
+                comparison_captioner=RegularTypeCaptioner()
             )
         )
-        counting = AbsoluteQuantifierCaptioner(
-            restrictor_captioner=AttributesTypeCaptioner(),
-            body_captioner=CaptionerMixer(
-                captioners=(
-                    AttributesRelationCaptioner(),
-                    SpatialRelationCaptioner(),
-                    ComparisonRelationCaptioner()
-                )
-            )
+        quantifier_captioner = QuantifierCaptioner(
+            restrictor_captioner=RegularTypeCaptioner(
+                hypernym_rate=1.0,
+                logical_tautology_rate=1.0
+            ),
+            body_captioner=body_captioner
         )
-        quantification = RelativeQuantifierCaptioner(
-            restrictor_captioner=AttributesTypeCaptioner(),
-            body_captioner=CaptionerMixer(
-                captioners=(
-                    AttributesRelationCaptioner(),
-                    SpatialRelationCaptioner(),
-                    ComparisonRelationCaptioner()
-                )
-            )
+        number_bound_captioner = NumberBoundCaptioner(
+            quantifier_captioner=quantifier_captioner
+        )
+        comparative_quantifier_captioner = ComparativeQuantifierCaptioner(
+            restrictor_captioner=RegularTypeCaptioner(
+                hypernym_rate=1.0
+            ),
+            comparison_captioner=RegularTypeCaptioner(
+                hypernym_rate=1.0
+            ),
+            body_captioner=body_captioner
+        )
+        quantification_captioner = CaptionerMixer(
+            captioners=(quantifier_captioner, number_bound_captioner, comparative_quantifier_captioner),
+            distribution=[2, 2, 1]
         )
         world_captioner = CaptionerMixer(
             captioners=(
-                ConjunctionCaptioner(captioners=(oneshape, relational, counting, quantification)),
-                DisjunctionCaptioner(captioners=(oneshape, relational, counting, quantification))
+                ConjunctionCaptioner(captioners=(multishape_captioner, relational_captioner, quantification_captioner)),
+                DisjunctionCaptioner(captioners=(multishape_captioner, relational_captioner, quantification_captioner))
             )
         )
-        super(CombinationDataset, self).__init__(
+
+        super(Combination, self).__init__(
             world_generator=world_generator,
             world_captioner=world_captioner,
             caption_size=caption_size,
-            words=words,
+            vocabulary=vocabulary,
             language=language
         )
 
 
-dataset = CombinationDataset
-CombinationDataset.default_config = dict(
-    entity_counts=[5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
-    train_entity_counts=[5, 6, 7, 8, 9, 10, 11, 12, 14],
-    validation_entity_counts=[13],
-    test_entity_counts=[15],
-    validation_combinations=[['square', 'red', 'solid'], ['triangle', 'green', 'solid'], ['circle', 'blue', 'solid']],
-    test_combinations=[['rectangle', 'yellow', 'solid'], ['cross', 'magenta', 'solid'], ['ellipse', 'cyan', 'solid']],
-    shapes_range=[2, 3],
-    colors_range=[2, 3],
-    textures_range=[1, 1],
-    caption_size=28,
-    words=['.', 'a', 'above', 'all', 'an', 'and', 'are', 'behind', 'below', 'bigger', 'black', 'blue', 'both', 'circle', 'circles', 'closer', 'closest', 'cross', 'crosses', 'cyan', 'darker', 'either', 'ellipse', 'ellipses', 'every', 'exactly', 'farther', 'farthest', 'five', 'four', 'from', 'front', 'green', 'half', 'in', 'is', 'left', 'lighter', 'magenta', 'most', 'no', 'of', 'one', 'or', 'pentagon', 'pentagons', 'rectangle', 'rectangles', 'red', 'right', 'semicircle', 'semicircles', 'shape', 'shapes', 'smaller', 'some', 'square', 'squares', 'than', 'the', 'there', 'three', 'to', 'triangle', 'triangles', 'two', 'white', 'yellow']
-)
+dataset = Combination

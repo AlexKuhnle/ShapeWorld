@@ -1,0 +1,100 @@
+a lowermost gray shape is a cross .
+a biggest semicircle is gray .
+a rightmost yellow shape is a pentagon .
+a lightest cross is gray .
+a topmost shape is an ellipse .
+a most leftmost shape is blue .
+a biggest semicircle is a magenta rectangle .
+a topmost gray shape is a circle .
+a lightest semicircle is red .
+a lightest cross is a red cross .
+a rightmost shape is a triangle .
+a darkest shape is yellow .
+a smallest shape is a square .
+a lightest shape is a magenta pentagon .
+a lightest circle is gray .
+a lowermost pentagon is yellow .
+a biggest pentagon is green .
+a most leftmost cyan shape is a semicircle .
+a lightest shape is a triangle .
+a topmost rectangle is magenta .
+a darkest ellipse is blue .
+a rightmost triangle is green .
+a darkest shape is yellow .
+a biggest magenta shape is a red square .
+a rightmost shape is a triangle .
+a darkest cross is yellow .
+a topmost shape is gray .
+a most leftmost shape is yellow .
+a biggest semicircle is magenta .
+a topmost pentagon is blue .
+a rightmost shape is green .
+a most leftmost square is magenta .
+a lowermost square is magenta .
+a topmost yellow shape is a yellow semicircle .
+a rightmost cyan shape is a cyan rectangle .
+a smallest shape is green .
+a most leftmost pentagon is red .
+a darkest shape is a red semicircle .
+a darkest green shape is a green rectangle .
+a smallest shape is a blue circle .
+a lightest triangle is a red triangle .
+a biggest cross is a red circle .
+a rightmost square is red .
+a biggest gray shape is a triangle .
+a rightmost blue shape is a gray circle .
+a smallest shape is green .
+a lightest shape is a rectangle .
+a smallest shape is cyan .
+a rightmost semicircle is red .
+a biggest shape is a red square .
+a rightmost rectangle is a blue rectangle .
+a lightest shape is red .
+a topmost gray shape is a triangle .
+a lowermost rectangle is yellow .
+a topmost magenta shape is a triangle .
+a darkest magenta shape is a semicircle .
+a biggest shape is green .
+a lowermost shape is a cyan ellipse .
+a biggest cross is blue .
+a smallest cross is a cyan cross .
+a smallest shape is a triangle .
+a biggest square is magenta .
+a smallest shape is a rectangle .
+a biggest pentagon is yellow .
+a lightest cross is red .
+a darkest yellow shape is a semicircle .
+a lightest pentagon is green .
+a darkest magenta shape is a magenta rectangle .
+a topmost gray shape is a semicircle .
+a topmost yellow shape is a rectangle .
+a smallest blue shape is a pentagon .
+a topmost shape is a cross .
+a rightmost shape is a pentagon .
+a rightmost magenta shape is an ellipse .
+a topmost cyan shape is an ellipse .
+a lowermost magenta shape is a triangle .
+a lightest blue shape is a square .
+a rightmost shape is a rectangle .
+a darkest green shape is an ellipse .
+a darkest yellow shape is a circle .
+a darkest shape is blue .
+a topmost shape is a red cross .
+a most leftmost rectangle is red .
+a biggest shape is yellow .
+a darkest red shape is a red pentagon .
+a smallest cyan shape is a triangle .
+a smallest shape is a cross .
+a rightmost semicircle is cyan .
+a topmost red shape is a red pentagon .
+a most leftmost magenta shape is a circle .
+a smallest magenta shape is an ellipse .
+a lowermost square is red .
+a most leftmost shape is a green pentagon .
+a biggest shape is green .
+a topmost square is a magenta square .
+a biggest cross is a blue cross .
+a biggest shape is blue .
+a smallest gray shape is a gray square .
+a biggest circle is green .
+a topmost cyan shape is a square .

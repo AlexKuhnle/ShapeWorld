@@ -19,7 +19,7 @@ class Shape(object):
         self.size = size / 2.0
 
     def __eq__(self, other):
-        raise NotImplementedError
+        return isinstance(other, Shape) and self.name == other.name
 
     @property
     def name(self):
@@ -144,8 +144,10 @@ class RectangleShape(Shape):
 
     @staticmethod
     def random_instance(size_range, distortion_range):
-        size = uniform(*size_range)
         distortion = uniform(*distortion_range)
+        distortion_ratio = (distortion - distortion_range[0]) / (distortion_range[1] - distortion_range[0])
+        min_size = size_range[0] + (size_range[1] - size_range[0]) * distortion_ratio * 0.5
+        size = uniform(min_size, size_range[1])
         return RectangleShape(Point(size, size / distortion))
 
 
@@ -415,8 +417,10 @@ class EllipseShape(Shape):
 
     @staticmethod
     def random_instance(size_range, distortion_range):
-        size = uniform(*size_range)
         distortion = uniform(*distortion_range)
+        distortion_ratio = (distortion - distortion_range[0]) / (distortion_range[1] - distortion_range[0])
+        min_size = size_range[0] + (size_range[1] - size_range[0]) * distortion_ratio * 0.5
+        size = uniform(min_size, size_range[1])
         return EllipseShape(Point(size, size / distortion))
 
 
