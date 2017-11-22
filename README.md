@@ -49,8 +49,6 @@ Contact: aok25 (at) cam.ac.uk
 
 #### Caption agreement datasets
 
-https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/oneshape_simple/data.html
-
 - [Oneshape (simple)](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/oneshape_simple/data.html)
 - [Oneshape](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/oneshape/data.html)
 - [Multishape (simple)](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/multishape_simple/data.html)
@@ -59,10 +57,10 @@ https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/oneshape_simp
 - [Spatial](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/spatial/data.html)
 - [Relational](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/relational/data.html)
 - [MaxAttributes](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/maxattr/data.html)
-- [Count Quantification (simple)](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/counting_simple/data.html)
-- [Count Quantification](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/counting/data.html)
-- [Ratio Quantification (simple)](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/quantification_simple/data.html)
-- [Ratio Quantification](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/quantification/data.html)
+- [Count Quantification (simple)](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/quantification_count_simple/data.html)
+- [Count Quantification](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/quantification_count/data.html)
+- [Ratio Quantification (simple)](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/quantification_ratio_simple/data.html)
+- [Ratio Quantification](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/quantification_ratio/data.html)
 - [Quantification (simple)](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/quantification_simple/data.html)
 - [Combination](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/combination/data.html)
 
