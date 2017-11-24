@@ -13,7 +13,7 @@ class Texture(object):
         raise NotImplementedError
 
     def model(self):
-        return {'name': str(self)}
+        return {'name': str(self.name)}
 
     @staticmethod
     def from_model(model):
