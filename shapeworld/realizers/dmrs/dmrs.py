@@ -134,7 +134,8 @@ class Dmrs(ListDmrs):
         #         lower = lower_lower
         #         lower_lower = labels[lower]
         #     labels[upper] = lower
-        for nodeid, eqs in labels.items():
+        for nodeid in labels:
+            eqs = labels[nodeid]
             if isinstance(eqs, int):
                 continue
             lowest = nodeid
