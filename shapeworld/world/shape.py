@@ -26,7 +26,7 @@ class Shape(object):
         raise NotImplementedError
 
     def model(self):
-        return {'name': str(self), 'size': self.size.model()}
+        return {'name': str(self.name), 'size': self.size.model()}
 
     @staticmethod
     def from_model(model):

@@ -27,7 +27,7 @@ class Color(object):
         return isinstance(other, Color) and self.name == other.name
 
     def model(self):
-        return {'name': str(self), 'rgb': list(self.rgb), 'shade': self.shade}
+        return {'name': str(self.name), 'rgb': list(self.rgb), 'shade': self.shade}
 
     @staticmethod
     def from_model(model):
