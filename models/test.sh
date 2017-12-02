@@ -1,5 +1,8 @@
 echo "agreement:"
 
+echo "  custom"
+python train.py -t agreement -n oneshape_simple -m custom --model-dir models/test/ -b 1 -e 2 -i 1 -v 0
+python evaluate.py -t agreement -n oneshape_simple -m custom --model-dir models/test/ -b 1 -i 1 -v 0
 echo "  cnn_only"
 python train.py -t agreement -n oneshape_simple -m cnn_only --model-dir models/test/ -b 1 -e 2 -i 1 -v 0
 python evaluate.py -t agreement -n oneshape_simple -m cnn_only --model-dir models/test/ -b 1 -i 1 -v 0

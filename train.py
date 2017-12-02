@@ -148,8 +148,8 @@ if __name__ == '__main__':
                 filehandle.write('\n')
     iteration_end = iteration_start + args.iterations - 1
 
-    with Model(name=args.model, learning_rate=parameters.pop('learning_rate'), weight_decay=parameters.pop('weight_decay'), model_directory=args.model_dir, summary_directory=args.summary_dir) as model:
-        dropout = parameters.pop('dropout_rate')
+    with Model(name=args.model, learning_rate=parameters.pop('learning_rate'), weight_decay=parameters.pop('weight_decay', 0.0), model_directory=args.model_dir, summary_directory=args.summary_dir) as model:
+        dropout = parameters.pop('dropout_rate', 0.0)
 
         module = import_module('models.{}.{}'.format(args.type, args.model))
         if args.tf_records:

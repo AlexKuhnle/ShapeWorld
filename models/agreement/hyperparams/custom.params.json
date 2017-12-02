@@ -1,0 +1,9 @@
+{
+    "learning_rate": 2.5e-4,
+    "cnn_size": 64,
+    "cnn_depth": 3,
+    "cnn_block_depth": 1,
+    "embedding_size": 64,
+    "mlp_size": 512,
+    "mlp_depth": 2
+}

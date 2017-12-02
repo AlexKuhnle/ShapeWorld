@@ -106,8 +106,8 @@ if __name__ == '__main__':
         if value != 'iteration':
             iteration_start = int(value) + 1
 
-    with Model(name=args.model, learning_rate=parameters.pop('learning_rate'), weight_decay=parameters.pop('weight_decay'), model_directory=args.model_dir) as model:
-        parameters.pop('dropout_rate')
+    with Model(name=args.model, learning_rate=parameters.pop('learning_rate'), weight_decay=parameters.pop('weight_decay', 0.0), model_directory=args.model_dir) as model:
+        parameters.pop('dropout_rate', 0.0)
 
         module = import_module('models.{}.{}'.format(args.type, args.model))
         module.model(model=model, inputs=dict(), **parameters)  # no input tensors, hence None for placeholder creation
