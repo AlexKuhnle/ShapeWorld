@@ -112,7 +112,7 @@ class RelationCaptioner(WorldCaptioner):
 
     def incorrect(self, caption, predication, world):
         if self.incorrect_mode == 0:  # 0: correct
-            ref_predication, comp_predication = self.apply_caption_to_predication(caption=caption, predication=predication)
+            ref_predication, comp_predication = caption.apply_to_predication(predication=predication)
 
         elif self.incorrect_mode == 1:  # 1: incorrect reference
             ref_predication = predication.sub_predication(reset=True)
@@ -120,13 +120,13 @@ class RelationCaptioner(WorldCaptioner):
                 return False
             if self.predtype in Relation.ternary_relations:
                 comp_predication = predication.sub_predication(reset=True)
-                self.comparison_captioner.apply_caption_to_predication(caption=caption.comparison, predication=comp_predication)
+                caption.comparison.apply_to_predication(predication=comp_predication)
             predication_copy = predication.copy(reset=True)
             predication.apply(predicate=caption, predication=predication_copy)
 
         elif self.incorrect_mode == 2:  # 2: incorrect comparison
             ref_predication = predication.sub_predication(reset=True)
-            self.reference_captioner.apply_caption_to_predication(caption=caption.reference, predication=ref_predication)
+            caption.reference.apply_to_predication(predication=ref_predication)
             comp_predication = predication.sub_predication(reset=True)
             if not self.comparison_captioner.incorrect(caption=caption.comparison, predication=comp_predication, world=world):
                 return False
@@ -135,13 +135,13 @@ class RelationCaptioner(WorldCaptioner):
 
         if self.incorrect_mode == 3:  # 3: incorrect relation
             caption.predtype, caption.value = choice(self.incorrect_relations)
-            ref_predication, comp_predication = self.apply_caption_to_predication(caption=caption, predication=predication)
+            ref_predication, comp_predication = caption.apply_to_predication(predication=predication)
 
         elif self.incorrect_mode == 4:  # 4: inverse relation
             caption.value = -caption.value
             if (caption.predtype, caption.value) not in self.relations:
                 return False
-            ref_predication, comp_predication = self.apply_caption_to_predication(caption=caption, predication=predication)
+            ref_predication, comp_predication = caption.apply_to_predication(predication=predication)
 
         if self.predtype in Relation.ternary_relations or self.incorrect_mode == 3:
             if ref_predication.equals(other=comp_predication):
@@ -149,15 +149,3 @@ class RelationCaptioner(WorldCaptioner):
                 return False
 
         return True
-
-    def apply_caption_to_predication(self, caption, predication):
-        ref_predication = predication.sub_predication(reset=True)
-        self.reference_captioner.apply_caption_to_predication(caption=caption.reference, predication=ref_predication)
-        if caption.comparison is None:
-            comp_predication = None
-        else:
-            comp_predication = predication.sub_predication(reset=True)
-            self.comparison_captioner.apply_caption_to_predication(caption=caption.comparison, predication=comp_predication)
-        predication_copy = predication.copy(reset=True)
-        predication.apply(predicate=caption, predication=predication_copy)
-        return ref_predication, comp_predication

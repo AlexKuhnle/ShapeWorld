@@ -1,32 +1,36 @@
-from shapeworld.captions import Predicate
+from shapeworld.captions import Predicate, Attribute
 
 
 class EntityType(Predicate):
 
     predtypes = {'type'}
 
-    def __init__(self, predicates=None):
-        if predicates is None:
-            predicates = dict()
-        elif isinstance(predicates, Predicate):
-            predicates = {predicates.predtype: predicates}
-        assert isinstance(predicates, dict)
-        assert all(isinstance(predicate, Predicate) and not isinstance(predicate, EntityType) for predicate in predicates.values())
-        super(EntityType, self).__init__(predtype='type', value=predicates)
+    def __init__(self, attributes=None):
+        if attributes is None:
+            attributes = list()
+        elif isinstance(attributes, Attribute):
+            attributes = [attributes]
+        assert isinstance(attributes, list)
+        assert all(isinstance(attribute, Attribute) for attribute in attributes)
+        super(EntityType, self).__init__(predtype='type', value=attributes)
 
     def model(self):
         return dict(
             component=str(self),
             predtype=self.predtype,
-            value={predtype: predicate.model() for predtype, predicate in self.value.items()}
+            value=[attribute.model() for attribute in self.value]
         )
 
     def reverse_polish_notation(self):
-        return [rpn_symbol for predtype in sorted(self.value) for rpn_symbol in self.value[predtype].reverse_polish_notation()] + \
+        return [rpn_symbol for attribute in self.value for rpn_symbol in attribute.reverse_polish_notation()] + \
             [str(len(self.value)), str(self)]  # two separate arguments, no tuple?
 
+    def apply_to_predication(self, predication):
+        for attribute in self.value:
+            predication.apply(predicate=attribute)
+
     def pred_agreement(self, entity, predication):
-        return all(predicate.pred_agreement(entity=entity, predication=predication) for predicate in self.value.values())
+        return all(attribute.pred_agreement(entity=entity, predication=predication) for attribute in self.value)
 
     def pred_disagreement(self, entity, predication):
-        return any(predicate.pred_disagreement(entity=entity, predication=predication) for predicate in self.value.values())
+        return any(attribute.pred_disagreement(entity=entity, predication=predication) for attribute in self.value)

@@ -36,7 +36,7 @@ class Entity(object):
         return isinstance(other, Entity) and self.id is not None and other.id is not None and self.id == other.id
 
     def model(self):
-        return {'id': self.id, 'shape': self.shape.model(), 'color': self.color.model(), 'texture': self.texture.model(), 'center': self.center.model(), 'rotation': self.rotation}
+        return dict(id=self.id, shape=self.shape.model(), color=self.color.model(), texture=self.texture.model(), center=self.center.model(), rotation=self.rotation, bounding_box=dict(topleft=self.topleft.model(), bottomright=self.bottomright.model()))
 
     @staticmethod
     def from_model(model):
@@ -64,7 +64,7 @@ class Entity(object):
         inv_rot_sin = sin(self.rotation * 2.0 * pi)
         inv_rot_cos = cos(self.rotation * 2.0 * pi)
         topleft = Point.one
-        bottomright = Point.zero
+        bottomright = Point.neg_one
         for point in self.shape.polygon():
             point = point.rotate(inv_rot_sin, inv_rot_cos)
             topleft = topleft.min(point)
@@ -77,9 +77,10 @@ class Entity(object):
     def draw(self, world_array, world_size, bounding_box=False):
         shift = Point(2.0 / world_size.x, 2.0 / world_size.y)
         scale = 1.0 + 2.0 * shift
-        topleft = (((self.topleft + 0.5 * shift) / scale) * world_size).max(Point.izero)
-        bottomright = (((self.bottomright + 1.5 * shift) / scale) * world_size).min(world_size)
+        topleft = (((self.topleft) / scale) * world_size).max(Point.izero)  # + 0.5 * shift
+        bottomright = (((self.bottomright + 2.0 * shift) / scale) * world_size).min(world_size)
         color = self.color.get_color()
+        world_length = min(*world_size)
 
         for (x, y), point in Point.range(topleft, bottomright, world_size):
             point = point * scale - shift
@@ -90,7 +91,7 @@ class Entity(object):
                 world_array[y, x] = self.texture.get_color(color, offset)
             else:
                 # assert offset not in self
-                distance = max(1.0 - distance * min(*world_size), 0.0)
+                distance = max(1.0 - distance * world_length, 0.0)
                 world_array[y, x] = distance * self.texture.get_color(color, offset) + (1.0 - distance) * world_array[y, x]
 
         if bounding_box:  # draw bounding box

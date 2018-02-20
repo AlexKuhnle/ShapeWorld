@@ -23,6 +23,13 @@ class NumberBound(Caption):
     def reverse_polish_notation(self):
         return self.quantifier.reverse_polish_notation() + ['{}-{}'.format(self, self.bound)]
 
+    def apply_to_predication(self, predication):
+        quant_predication = predication.sub_predication()
+        self.quantifier.apply_to_predication(predication=quant_predication)
+        num_predication = predication.sub_predication()
+        self.quantifier.restrictor.apply_to_predication(predication=num_predication)
+        return num_predication
+
     def agreement(self, predication, world):
         quant_predication = predication.get_sub_predication()
         quant_agreement = self.quantifier.agreement(predication=quant_predication, world=world)

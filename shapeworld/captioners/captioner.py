@@ -134,9 +134,6 @@ class WorldCaptioner(object):
     def incorrect(self, caption, predication, world):
         raise NotImplementedError
 
-    def apply_caption_to_predication(self, caption, predication):
-        raise NotImplementedError
-
 
 class CaptionerMixer(WorldCaptioner):
 
@@ -185,6 +182,3 @@ class CaptionerMixer(WorldCaptioner):
 
     def incorrect(self, caption, predication, world):
         return self.captioner.incorrect(caption=caption, predication=predication, world=world)
-
-    def apply_caption_to_predication(self, caption, predication):
-        return self.captioner.apply_caption_to_predication(caption=caption, predication=predication)

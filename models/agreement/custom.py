@@ -2,7 +2,7 @@ from math import sqrt
 import tensorflow as tf
 
 
-def model(model, inputs, world_shape, cnn_size, cnn_depth, cnn_block_depth, caption_shape, vocabulary_size, embedding_size, mlp_size, mlp_depth):
+def model(model, inputs, dataset_parameters, cnn_size, cnn_depth, cnn_block_depth, embedding_size, mlp_size, mlp_depth):
 
     cnn_sizes = [cnn_size * 2**n for n in range(cnn_depth)]
     cnn_depths = [cnn_block_depth for _ in range(cnn_depth)]
@@ -13,7 +13,7 @@ def model(model, inputs, world_shape, cnn_size, cnn_depth, cnn_block_depth, capt
     with tf.name_scope(name='cnn'):
         world = inputs.get('world')
         if world is None:
-            world = tf.placeholder(dtype=tf.float32, shape=((None,) + world_shape), name='world')
+            world = tf.placeholder(dtype=tf.float32, shape=((None,) + dataset_parameters['world_shape']), name='world')
             model.register_placeholder(key='world', placeholder=world)
         for size, depth in zip(cnn_sizes, cnn_depths):
             for _ in range(depth):
@@ -27,10 +27,10 @@ def model(model, inputs, world_shape, cnn_size, cnn_depth, cnn_block_depth, capt
             world = tf.reduce_max(input_tensor=world, axis=1)
 
     with tf.name_scope(name='lstm'):
-        embeddings = tf.Variable(initial_value=tf.random_normal(shape=(vocabulary_size, embedding_size), stddev=sqrt(2.0 / embedding_size)))
+        embeddings = tf.Variable(initial_value=tf.random_normal(shape=(dataset_parameters['vocabulary_size'], embedding_size), stddev=sqrt(2.0 / embedding_size)))
         caption = inputs.get('caption')
         if caption is None:
-            caption = tf.placeholder(dtype=tf.int32, shape=((None,) + caption_shape), name='caption')
+            caption = tf.placeholder(dtype=tf.int32, shape=((None,) + dataset_parameters['caption_shape']), name='caption')
             model.register_placeholder(key='caption', placeholder=caption)
         embeddings = tf.nn.embedding_lookup(params=embeddings, ids=caption)
         lstm = tf.contrib.rnn.LSTMCell(num_units=lstm_size)

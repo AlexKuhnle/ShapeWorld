@@ -1,25 +1,40 @@
 from shapeworld import util
-from shapeworld.world import all_shapes, all_colors, all_textures
+from shapeworld.world import Shape, Color, Texture
 
 
 class WorldGenerator(object):
 
     MAX_ATTEMPTS = 3
 
-    def __init__(self, world_size=None, world_color=None, shapes=None, colors=None, textures=None, rotation=None, size_range=None, distortion_range=None, shade_range=None, collision_tolerance=None, boundary_tolerance=None):
-        self.world_size = util.value_or_default(world_size, 64)
-        self.shapes = list(util.value_or_default(shapes, all_shapes.keys()))
-        self.colors = list(util.value_or_default(colors, all_colors.keys()))
-        self.textures = list(util.value_or_default(textures, all_textures.keys()))
-        self.world_color = util.value_or_default(world_color, 'black')
+    def __init__(
+        self,
+        world_size=64,
+        world_color='black',
+        shapes=None,
+        colors=None,
+        textures=None,
+        rotation=True,
+        size_range=(0.1, 0.25),
+        distortion_range=(2.0, 3.0),
+        shade_range=0.4,
+        collision_tolerance=0.25,
+        collision_shade_difference=0.5,
+        boundary_tolerance=0.25
+    ):
+        self.world_size = world_size
+        self.world_color = world_color
+        self.shapes = list(util.value_or_default(shapes, Shape.get_shapes()))
+        self.colors = list(util.value_or_default(colors, Color.get_colors()))
+        self.textures = list(util.value_or_default(textures, Texture.get_textures()))
         if self.world_color in self.colors:
             self.colors.remove(self.world_color)
-        self.rotation = util.value_or_default(rotation, True)
-        self.size_range = util.value_or_default(size_range, (0.1, 0.25))
-        self.distortion_range = util.value_or_default(distortion_range, (2.0, 3.0))  # greater than 1.0
-        self.shade_range = util.value_or_default(shade_range, 0.4)
-        self.collision_tolerance = util.value_or_default(collision_tolerance, 0.25)
-        self.boundary_tolerance = util.value_or_default(boundary_tolerance, 0.25)
+        self.rotation = rotation
+        self.size_range = size_range
+        self.distortion_range = distortion_range
+        self.shade_range = shade_range
+        self.collision_tolerance = collision_tolerance
+        self.collision_shade_difference = collision_shade_difference
+        self.boundary_tolerance = boundary_tolerance
 
     def __str__(self):
         return self.__class__.__name__

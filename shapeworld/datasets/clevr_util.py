@@ -6,6 +6,8 @@ from shapeworld.world import World
 
 
 def clevr(directory, mode, parts=None):
+    assert len(parts) == 3
+    parts = dict(train=parts[0], validation=parts[1], test=parts[2])
     worlds = images_iter(directory=directory, mode=mode, parts=parts)
     world_models = scenes_iter(directory=directory, mode=mode, parts=parts)
     questions_answers = questions_iter(directory=directory, mode=mode, parts=parts)

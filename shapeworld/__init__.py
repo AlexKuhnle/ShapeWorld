@@ -1,4 +1,4 @@
-from shapeworld.dataset import Dataset, dataset
+from shapeworld.dataset import Dataset
 
 
-__all__ = ['Dataset', 'dataset']
+__all__ = ['Dataset']

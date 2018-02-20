@@ -6,17 +6,25 @@ class Multishape(ClassificationDataset):
 
     def __init__(
         self,
+        world_size=64,
         entity_counts=(5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15),
         train_entity_counts=(5, 6, 7, 8, 9, 10, 11, 12, 14),
         validation_entity_counts=(13,),
-        test_entity_counts=(15,)
+        test_entity_counts=(15,),
+        max_provoke_collision_rate=0.33,
+        collision_tolerance=0.2,
+        boundary_tolerance=0.2
     ):
 
         world_generator = RandomAttributesGenerator(
             entity_counts=entity_counts,
+            world_size=world_size,
             train_entity_counts=train_entity_counts,
             validation_entity_counts=validation_entity_counts,
-            test_entity_counts=test_entity_counts
+            test_entity_counts=test_entity_counts,
+            max_provoke_collision_rate=max_provoke_collision_rate,
+            collision_tolerance=collision_tolerance,
+            boundary_tolerance=boundary_tolerance
         )
 
         num_classes = len(world_generator.shapes) * len(world_generator.colors) * len(world_generator.textures)

@@ -3,7 +3,6 @@ import json
 import os
 import re
 import subprocess
-from shapeworld import util
 from shapeworld.captions import Attribute, Relation, EntityType, Existential, Quantifier, NumberBound, ComparativeQuantifier, Proposition
 from shapeworld.realizers import CaptionRealizer
 from shapeworld.realizers.dmrs.dmrs import Dmrs, create_sortinfo
@@ -49,7 +48,6 @@ class DmrsRealizer(CaptionRealizer):
         self.ace_path = os.path.join(directory, 'resources', 'ace')
         self.erg_path = os.path.join(directory, 'languages', language + '.dat')
 
-        # self.regex = re.compile(pattern=r'^(NOTE: [0-9]+ passive, [0-9]+ active edges in final generation chart; built [0-9]+ passives total. \[1 results\])|(NOTE: generated [0-9]+ / [0-9]+ sentences, avg [0-9]+k, time [0-9]+.[0-9]+s)|(NOTE: transfer did [0-9]+ successful unifies and [0-9]+ failed ones)|(WARNING: unknown lexeme \'be_inv_am\'!)|(ERROR: trigger rules call for non-existant lexeme `be_inv_am\')$')
         self.successful_regex = re.compile(pattern=r'^NOTE: [0-9]+ passive, [0-9]+ active edges in final generation chart; built [0-9]+ passives total. \[1 results\]$')
         self.unsuccessful_regex = re.compile(pattern=r'^NOTE: [0-9]+ passive, [0-9]+ active edges in final generation chart; built [0-9]+ passives total. \[0 results\]$')
         self.final_regex = re.compile(pattern=r'^(NOTE: generated [0-9]+ / [0-9]+ sentences, avg [0-9]+k, time [0-9]+.[0-9]+s)|(NOTE: transfer did [0-9]+ successful unifies and [0-9]+ failed ones)$')
@@ -91,8 +89,8 @@ class DmrsRealizer(CaptionRealizer):
                 for value, attribute in values.items():
                     value = parse_string(value)
                     self.attributes[predtype][value] = Dmrs.parse(attribute['dmrs'])
-                    assert str(attribute['key']) not in self.attribute_by_key
-                    self.attribute_by_key[str(attribute['key'])] = (predtype, value)
+                    assert attribute['key'] not in self.attribute_by_key
+                    self.attribute_by_key[attribute['key']] = (predtype, value)
 
         self.relations = dict()
         self.relation_by_key = dict()
@@ -112,8 +110,8 @@ class DmrsRealizer(CaptionRealizer):
                 for value, relation in values.items():
                     value = parse_string(value)
                     self.relations[predtype][value] = Dmrs.parse(relation['dmrs'])
-                    assert str(relation['key']) not in self.relation_by_key
-                    self.relation_by_key[str(relation['key'])] = (predtype, value)
+                    assert relation['key'] not in self.relation_by_key
+                    self.relation_by_key[relation['key']] = (predtype, value)
 
         self.existential = None
         if 'existential' in language:
@@ -141,8 +139,8 @@ class DmrsRealizer(CaptionRealizer):
                     for quantity, quantifier in quantities.items():
                         quantity = parse_string(quantity)
                         self.quantifiers[qtype][qrange][quantity] = Dmrs.parse(quantifier['dmrs'])
-                        assert str(quantifier['key']) not in self.quantifier_by_key
-                        self.quantifier_by_key[str(quantifier['key'])] = (qtype, qrange, quantity)
+                        assert quantifier['key'] not in self.quantifier_by_key
+                        self.quantifier_by_key[quantifier['key']] = (qtype, qrange, quantity)
 
         self.number_bounds = dict()
         self.number_bound_by_key = dict()
@@ -150,8 +148,8 @@ class DmrsRealizer(CaptionRealizer):
             for bound, number_bound in language['number-bounds'].items():
                 bound = parse_string(bound)
                 self.number_bounds[bound] = Dmrs.parse(number_bound['dmrs'])
-                assert str(number_bound['key']) not in self.number_bound_by_key
-                self.number_bound_by_key[str(number_bound['key'])] = (bound,)
+                assert number_bound['key'] not in self.number_bound_by_key
+                self.number_bound_by_key[number_bound['key']] = (bound,)
 
         self.comparative_quantifiers = dict()
         self.comparative_quantifier_by_key = dict()
@@ -175,8 +173,8 @@ class DmrsRealizer(CaptionRealizer):
                     for quantity, quantifier in quantities.items():
                         quantity = parse_string(quantity)
                         self.comparative_quantifiers[qtype][qrange][quantity] = Dmrs.parse(quantifier['dmrs'])
-                        assert str(quantifier['key']) not in self.comparative_quantifier_by_key
-                        self.comparative_quantifier_by_key[str(quantifier['key'])] = (qtype, qrange, quantity)
+                        assert quantifier['key'] not in self.comparative_quantifier_by_key
+                        self.comparative_quantifier_by_key[quantifier['key']] = (qtype, qrange, quantity)
 
         self.propositions = dict()
         self.proposition_by_key = dict()
@@ -186,16 +184,20 @@ class DmrsRealizer(CaptionRealizer):
                 self.propositions[connective] = tuple(Dmrs.parse(dmrs) for dmrs in proposition['dmrs'])
             else:
                 self.propositions[connective] = Dmrs.parse(proposition['dmrs'])
-            assert str(proposition['key']) not in self.proposition_by_key
-            self.proposition_by_key[str(proposition['key'])] = connective
+            assert proposition['key'] not in self.proposition_by_key
+            self.proposition_by_key[proposition['key']] = connective
 
         self.hierarchy = language['hierarchy']
 
-        self.post_processing = dict()
-        for key, paraphrase in language['post-processing'].items():
+        self.post_processing = list()
+        self.post_processing_by_key = dict()
+        for n, paraphrase in enumerate(language['post-processing']):
             search = Dmrs.parse(paraphrase['search'])
             replace = Dmrs.parse(paraphrase['replace'])
-            self.post_processing[str(key)] = (search, replace)
+            disable_hierarchy = paraphrase.get('disable_hierarchy', False)
+            self.post_processing.append((search, replace, disable_hierarchy))
+            assert paraphrase['key'] not in self.post_processing_by_key
+            self.post_processing_by_key[paraphrase['key']] = n
 
     def realize(self, captions):
         try:
@@ -209,12 +211,18 @@ class DmrsRealizer(CaptionRealizer):
             raise
         dmrs_list = list()
         mrs_list = list()
-        for caption in captions:
+        none_indices = list()
+        for n, caption in enumerate(captions):
+            if caption is None:
+                none_indices.append(n)
+                continue
             dmrs = self.caption_dmrs(caption=caption)
-            dmrs = dmrs.apply_paraphrases(self.post_processing.values())
+            for (search, replace, disable_hierarchy) in self.post_processing:
+                dmrs = dmrs.apply_paraphrases(paraphrases=[(search, replace)], hierarchy=(None if disable_hierarchy else self.hierarchy))
             dmrs.remove_underspecifications()
             dmrs_list.append(dmrs)
             mrs_list.append(dmrs.get_mrs() + '\n')
+            # print(n, dmrs.get_mrs())
         stdout_data, stderr_data = ace.communicate(input=''.join(mrs_list).encode())
         stderr_data = stderr_data.decode('utf-8').splitlines()
         stdout_data = stdout_data.decode('utf-8').splitlines()
@@ -223,7 +231,7 @@ class DmrsRealizer(CaptionRealizer):
         n = 0
         unexpected = False
         for line in stderr_data:
-            if n == len(captions):
+            if n == len(captions) - len(none_indices):
                 assert self.final_regex.match(line), line
                 continue
             if self.successful_regex.match(line):
@@ -244,11 +252,11 @@ class DmrsRealizer(CaptionRealizer):
             print('Failures: {}'.format(failures))
             exit(0)
 
-        caption_strings = [line for line in stdout_data if line]
+        caption_strings = [line for line in stdout_data if line != '']
+        for n in none_indices:
+            caption_strings.insert(n, '')
         assert len(caption_strings) == len(captions), stdout_data + '\n' + stderr_data
-        for n, caption in enumerate(caption_strings):
-            captions[n] = util.string2tokens(string=caption)
-        return captions
+        return caption_strings
 
     def attribute_dmrs(self, attribute):
         if attribute.predtype == 'relation':
@@ -260,10 +268,10 @@ class DmrsRealizer(CaptionRealizer):
             dmrs = copy.deepcopy(self.attributes[attribute.predtype][attribute.value])
         return dmrs
 
-    def type_dmrs(self, etype):
+    def type_dmrs(self, entity_type):
         assert self.empty_type is not None
         dmrs = copy.deepcopy(self.empty_type)
-        for attribute in etype.value.values():
+        for attribute in entity_type.value:
             dmrs.compose(self.attribute_dmrs(attribute), fusion={'type': 'type'}, hierarchy=self.hierarchy)
         return dmrs
 
@@ -271,11 +279,11 @@ class DmrsRealizer(CaptionRealizer):
         if relation.predtype == 'attribute':
             assert self.attribute_relation is not None
             dmrs = copy.deepcopy(self.attribute_relation)
-            dmrs.compose(self.attribute_dmrs(relation.value), fusion={'ref': 'type'}, hierarchy=self.hierarchy)
+            dmrs.compose(self.attribute_dmrs(relation.value), fusion={'type': 'type'}, hierarchy=self.hierarchy)
         elif relation.predtype == 'type':
             assert self.type_relation is not None
             dmrs = copy.deepcopy(self.type_relation)
-            dmrs.compose(self.type_dmrs(relation.value), fusion={'ref': 'type'}, hierarchy=self.hierarchy)
+            dmrs.compose(self.type_dmrs(relation.value), fusion={'type': 'type'}, hierarchy=self.hierarchy)
         else:
             assert relation.predtype in self.relations and relation.value in self.relations[relation.predtype], (relation.predtype, relation.value)
             dmrs = copy.deepcopy(self.relations[relation.predtype][relation.value])
@@ -308,7 +316,7 @@ class DmrsRealizer(CaptionRealizer):
         quantifier = number_bound.quantifier
         assert quantifier.qtype in self.quantifiers and quantifier.qrange in self.quantifiers[quantifier.qtype] and quantifier.quantity in self.quantifiers[quantifier.qtype][quantifier.qrange]
         rstr_dmrs = copy.deepcopy(self.number_bounds[number_bound.bound])
-        rstr_dmrs.compose(self.type_dmrs(quantifier.restrictor), fusion={'rstr': 'type'}, hierarchy=self.hierarchy)
+        rstr_dmrs.compose(self.type_dmrs(quantifier.restrictor), fusion={'scope': 'type'}, hierarchy=self.hierarchy)
         dmrs = copy.deepcopy(self.quantifiers[quantifier.qtype][quantifier.qrange][quantifier.quantity])
         dmrs.compose(rstr_dmrs, fusion={'rstr': 'type'}, hierarchy=self.hierarchy)
         dmrs.compose(self.relation_dmrs(quantifier.body), fusion={'body': 'rel'}, hierarchy=self.hierarchy)

@@ -45,6 +45,7 @@ class RegularAttributeCaptioner(WorldCaptioner):
             return False
 
         attributes = list()
+        # if wrong, should be logical_contradiction
         if len(self.shapes) > 1 and (self.logical_tautology or not predication.redundant(predicate='shape')):
             attributes.append('shape')
         if len(self.colors) > 1 and (self.logical_tautology or not predication.redundant(predicate='color')):
@@ -92,7 +93,7 @@ class RegularAttributeCaptioner(WorldCaptioner):
         elif not self.pragmatical_redundancy and predication.redundant(predicate=attribute):
             return None
 
-        self.apply_caption_to_predication(caption=attribute, predication=predication)
+        attribute.apply_to_predication(predication=predication)
 
         return attribute
 
@@ -119,9 +120,6 @@ class RegularAttributeCaptioner(WorldCaptioner):
 
             caption.value = choice(values)
 
-        self.apply_caption_to_predication(caption=caption, predication=predication)
+        caption.apply_to_predication(predication=predication)
 
         return True
-
-    def apply_caption_to_predication(self, caption, predication):
-        predication.apply(predicate=caption)

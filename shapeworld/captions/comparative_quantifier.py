@@ -47,6 +47,22 @@ class ComparativeQuantifier(Caption):
             self.body.reverse_polish_notation() + \
             ['{}-{}-{}-{}'.format(self, self.qtype, self.qrange, self.quantity)]
 
+    def apply_to_predication(self, predication):
+        rstr_predication = predication.sub_predication()
+        self.restrictor.apply_to_predication(predication=rstr_predication)
+        rstr_body_predication = predication.sub_predication(predication=rstr_predication.copy())
+        self.body.apply_to_predication(predication=rstr_body_predication)
+
+        comp_predication = predication.sub_predication()
+        self.comparison.apply_to_predication(predication=comp_predication)
+        comp_body_predication = predication.sub_predication(predication=comp_predication.copy())
+        self.body.apply_to_predication(predication=comp_body_predication)
+
+        body_predication = predication.sub_predication()
+        self.body.apply_to_predication(predication=body_predication)
+
+        return rstr_predication, comp_predication, body_predication
+
     def agreement(self, predication, world):
         if self.qtype == 'composed':
             quantifiers = [Quantifier(qtype=quantifier[0], qrange=quantifier[1], quantity=quantifier[2], restrictor=self.restrictor, comparison=self.comparison, body=self.body) for quantifier in self.quantity]

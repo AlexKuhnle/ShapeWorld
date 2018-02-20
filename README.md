@@ -45,8 +45,7 @@ Contact: aok25 (at) cam.ac.uk
 
 If you use ShapeWorld in your work, please cite:
 
-> **ShapeWorld: A new test methodology for multimodal language understanding** ([arXiv](https://arxiv.org/abs/1704.04517))
-> *Alexander Kuhnle and Ann Copestake* (April 2017)
+> **ShapeWorld: A new test methodology for multimodal language understanding** ([arXiv](https://arxiv.org/abs/1704.04517)). *Alexander Kuhnle and Ann Copestake* (April 2017).
 
 
 
@@ -54,19 +53,13 @@ If you use ShapeWorld in your work, please cite:
 
 #### Caption agreement datasets
 
-- [Oneshape (simple)](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/oneshape_simple/data.html)
 - [Oneshape](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/oneshape/data.html)
-- [Multishape (simple)](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/multishape_simple/data.html)
 - [Multishape](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/multishape/data.html)
-- [Spatial (simple)](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/spatial_simple/data.html)
 - [Spatial](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/spatial/data.html)
 - [Relational](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/relational/data.html)
-- [MaxAttributes](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/maxattr/data.html)
-- [Count Quantification (simple)](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/quantification_count_simple/data.html)
-- [Count Quantification](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/quantification_count/data.html)
-- [Ratio Quantification (simple)](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/quantification_ratio_simple/data.html)
-- [Ratio Quantification](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/quantification_ratio/data.html)
 - [Quantification (simple)](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/quantification_simple/data.html)
+- [Quantification](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/quantification/data.html)
+- [Quantification (complex)](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/quantification_complex/data.html)
 - [Combination](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/combination/data.html)
 
 #### Classification datasets
@@ -79,13 +72,13 @@ If you use ShapeWorld in your work, please cite:
 
 ## Integration into Python code
 
-The easiest way to use the ShapeWorld data in your Python project is to directly call it from the code. Whenever a batch of training/evaluation instances is required, `dataset.generate(...)` is called with the respective arguments. This means that generation happens simultaneously to training/testing. Below an example of how to generate a batch of 100 training instances. See also the example models below.
+The easiest way to use the ShapeWorld data in your Python project is to directly call it from the code. Whenever a batch of training/evaluation instances is required, `dataset.generate(...)` is called with the respective arguments. This means that generation happens simultaneously to training/testing. Below an example of how to generate a batch of 128 training instances. See also the example models below.
 
 ```python
-from shapeworld import dataset
+from shapeworld import Dataset
 
-dataset = dataset(dtype='agreement', name='multishape')
-generated = dataset.generate(n=100, mode='train', noise_range=0.1, include_model=True)
+dataset = Dataset.create(dtype='agreement', name='multishape')
+generated = dataset.generate(n=128, mode='train', noise_range=0.1, include_model=True)
 
 # given to the image caption agreement system
 batch = (generated['world'], generated['caption'], generated['agreement'])
@@ -108,48 +101,54 @@ The `shapeworld/generate.py` module provides options to generate ShapeWorld data
 
 The following command line arguments are available:
 
-* `--[d]irectory`:  Directory for generated data, with automatically created sub-directories unless `--unmanaged`, hence should be non-existing or empty since it will be overwritten (**required**)
-* `--[a]rchive`:  Store generated data in (compressed) archives, either `zip[:mode]` or `tar[:mode]` with one of `none`, `deflate` (only zip), `gzip` (only tar), `bzip2`, `lzma` (default: `none`)
-* `--[A]ppend`:  Append to existing data (when used without `--unmanaged`)
-* `--[U]nmanaged`:  Do not automatically create sub-directories (implied if --files not specified)
+* `-d`, `--directory`:  Directory for generated data, with automatically created sub-directories unless `--unmanaged`, hence should be non-existing or empty since it will be overwritten (**required**)
+* `-a`, `--archive`:  Store generated data in (compressed) archives, either `zip[:mode]` or `tar[:mode]` with one of `none`, `deflate` (only zip), `gzip` (only tar), `bzip2`, `lzma` (default: `none`)
+* `-A`, `--append`:  Append to existing data (when used without `--unmanaged`)
+* `-U`, `--unmanaged`:  Do not automatically create sub-directories (implied if --files not specified)
 
-* `--[t]ype`:  Dataset type (default: `agreement`)
-* `--[n]ame`:  Dataset name (**required**)
-* `--[l]anguage`:  Dataset language, if available (default: `none`, i.e. English)
-* `--[c]onfig`:  Dataset configuration file, otherwise use default configuration
+* `-t`, `--type`:  Dataset type (**required**)
+* `-n`, `--name`:  Dataset name (**required**)
+* `-l`, `--language`:  Dataset language, if available (default: `none`, i.e. English)
+* `-c`, `--config`:  Dataset configuration file, otherwise use default configuration
 
-* `--[m]ode`:  Mode, one of `train`, `validation`, `test` or `tf-records`, requires `--files` to be a single number (default: `none`)
-* `--[f]iles`:  Number of files to split data into instead of all in one file (not specified implies --unmanaged), either a number (requires `--mode`), or a tuple of 3 (or 4) numbers like `(100,10,10)` (without `--mode`), for (`tf-records`,) `train`, `validation` and `test` data respectively (default: `1`)
-* `--[i]nstances`:  Number of instances per file (default: `100`)
+* `-f`, `--files`:  Number of files to split data into instead of all in one file (not specified implies --unmanaged), either a number (with `--mode`) or a tuple of 3 comma-separated numbers (without `--mode`), for `train`, `validation` and `test` data respectively
+* `-m`, `--mode`:  Mode, one of `train`, `validation` or `test`, requires `--files` to be a single number (default: `none`)
+* `-i`, `--instances`:  Number of instances per file (default: `128`)
 
-* `--[p]ixel-noise`: Pixel noise range (default: `0.0`)
-* `--include-[M]odel`:  Include world/caption model (as json file)
-* `--[C]oncatenate-images`:  Concatenate images per part into one image file
-* `--[H]tml`:  Create HTML file (`data.html`) displaying the generated data
+* `-p`, `--pixel-noise`: Pixel noise range (default: `0.0`)
+* `-M`, `--include-model`:  Include world/caption model (as json file)
+* `-H`, `--html`:  Create HTML file (`data.html`) visualizing the generated data
+* `-T`, `--tf-records`:  Additionally store data as TensorFlow records
+* `-F`, `--features`:  Additionally extract image features (`conv4` of `resnet_v2_101`)
+* `-C`, `--clevr-format`:  Output in CLEVR format
+* `-O`, `--concatenate-images`:  Concatenate images per part into one image file
+
+* `-Y`, `--yes`:  Confirm all questions with yes
+* `--config-values`:  Additional dataset configuration values passed as command line arguments
 
 When creating larger amounts of ShapeWorld data, it is advisable to store the data in a compressed archive (for example `-a tar:bz2`) and turn off the pixel noise (`-p`) for best compression results. For instance, the following command line generates one million *training* instances of the `multishape` configuration file included in this repository:
 
 ```bash
-python generate.py -D [DIRECTORY] -a tar:bzip2 -t agreement -n multishape -m train -f 100 -i 10k -M
+python generate.py -d [DIRECTORY] -a tar:bzip2 -t agreement -n multishape -m train -f 100 -i 10k -M
 ```
 
 For the purpose of this introduction, we generate a smaller amount of *all* training (TensorFlow records and raw), validation and test instances using the default configuration of the dataset:
 
 ```bash
-python generate.py -d examples/readme -a tar:bzip2 -t agreement -n multishape -f "(5,5,1,1)" -i 100 -M
+python generate.py -d examples/readme -a tar:bzip2 -t agreement -n multishape -f 3,2,1 -i 128 -M -T
 ```
 
 
 
 ## Loading extracted data
 
-Extracted data can be loaded and accessed with the same `Dataset` interface as before, just define the `config` argument as `'load([DIRECTORY])'`. However, to be able to do this, we need to extract all of training, validation and test data, as is done in the last command line. Note that we extracted pixel-noise-free instances - the noise will automatically be (re-)infused accordingly.
+Extracted data can be loaded and accessed with the same `Dataset` interface as before, just define the `config` argument as `[DIRECTORY]`. However, to be able to do this, we need to extract all of training, validation and test data, as is done in the last command line. Note that we extracted pixel-noise-free instances - the noise will automatically be (re-)infused accordingly.
 
 ```python
-from shapeworld import dataset
+from shapeworld import Dataset
 
-dataset = dataset(dtype='agreement', name='multishape', config='load(examples/readme)')
-generated = dataset.generate(n=100, mode='train', noise_range=0.1)
+dataset = Dataset.create(dtype='agreement', name='multishape', config='examples/readme')
+generated = dataset.generate(n=128, mode='train', noise_range=0.1)
 ```
 
 Loading the data in Python and then feeding it to a model is relatively slow. By using TensorFlow (TF) records (see above for how to generate TF records) and consequently the ability to load data implicitly within TensorFlow, models can be trained significantly faster. ShapeWorld provides utilities to access TF records as generated/loaded data would be handled:
@@ -157,18 +156,18 @@ Loading the data in Python and then feeding it to a model is relatively slow. By
 ```python
 from shapeworld import tf_util
 
-generated = tf_util.batch_records(dataset=dataset, batch_size=100, noise_range=0.1)
+generated = tf_util.batch_records(dataset=dataset, mode='train', batch_size=128, noise_range=0.1)
 ```
 
 If you need to manually (re-)infuse the pixel noise later (for instance, because you want to load the data from another programming language), a procedure equivalent to the one used in the ShapeWorld framework can be used, which in Python code looks the following:
 
 ```python
 import numpy as np
-from shapeworld import dataset
+from shapeworld import Dataset
 
-dataset = dataset(dtype='agreement', name='multishape', config='load(examples/readme)')
+dataset = Dataset.create(dtype='agreement', name='multishape', config='examples/readme')
 world_size = 64
-generated = dataset.generate(n=100, mode='train')
+generated = dataset.generate(n=128, mode='train')
 worlds = generated['world']
 noise_range = 0.1
 for world in worlds:
@@ -203,17 +202,15 @@ rm CLEVR_v1.0.zip
 ShapeWorld then provides a basic interface to load the CLEVR instances **in order of their appearance** in the dataset. It is hence recommended to *'pre-generate'* the entire dataset (70k training, 15k validation and 15k test instances) once through the ShapeWorld interface, either as `clevr_classification` or `clevr_answering` dataset type, and subsequently access it as you would load other pre-generated ShapeWorld datasets:
 
 ```bash
-python generate.py -d [SHAPEWORLD_DIRECTORY] -a tar:bzip2 -t clevr_classification -n clevr -c "{directory=CLEVR_v1.0}" -f "(140,0,30,30)" -i 500 -M
-python generate.py -d [SHAPEWORLD_DIRECTORY] -a tar:bzip2 -t clevr_classification -n clevr -c "{directory=CLEVR_v1.0}" -m train -f 140 -i 500 -M -A
+python generate.py -d [SHAPEWORLD_DIRECTORY] -a tar:bzip2 -t clevr_classification -n clevr -f 140,30,30 -i 500 -M -T --config-values --directory CLEVR_v1.0
 rm -r CLEVR_v1.0
 ```
 
 Accordingly, in the case of CLEVR CoGenT:
 
 ```bash
-python generate.py -d [SHAPEWORLD_DIRECTORY] -a tar:bzip2 -t clevr_classification -n clevr -c "{directory=CLEVR_CoGenT_v1.0,parts={train=A,validation=A,test=A}}" -f "(140,0,30,30)" -i 500 -M
-python generate.py -d [SHAPEWORLD_DIRECTORY] -a tar:bzip2 -t clevr_classification -n clevr -c "{directory=CLEVR_CoGenT_v1.0,parts={train=A,validation=A,test=A}}" -m train -f 140 -i 500 -M -A
-python generate.py -d [SHAPEWORLD_DIRECTORY] -a tar:bzip2 -t clevr_classification -n clevr -c "{directory=CLEVR_CoGenT_v1.0,parts={train=A,validation=B,test=B}}" -f "(0,30,30)" -i 500 -M
+python generate.py -d [SHAPEWORLD_DIRECTORY] -a tar:bzip2 -t clevr_classification -n clevr -f 140,30,30 -i 500 -M -T --config-values --directory CLEVR_CoGenT_v1.0 --parts A,A,A
+python generate.py -d [SHAPEWORLD_DIRECTORY] -a tar:bzip2 -t clevr_classification -n clevr -f 0,30,30 -i 500 -M -T --config-values --directory CLEVR_CoGenT_v1.0 --parts A,B,B
 rm -r CLEVR_CoGenT_v1.0
 ```
 
@@ -235,8 +232,7 @@ git clone https://github.com/cornell-lic/nlvr.git
 Again, one should *'pre-generate'* the entire dataset (75k training, 6k validation and 6k test instances) as `nlvr_agreement` dataset type, and subsequently access it via the ShapeWorld load interface:
 
 ```bash
-python generate.py -d [SHAPEWORLD_DIRECTORY] -a tar:bzip2 -t nlvr_agreement -n nlvr -c "{directory=nlvr}" -f "(25,0,2,2)" -i 3k -M
-python generate.py -d [SHAPEWORLD_DIRECTORY] -a tar:bzip2 -t nlvr_agreement -n nlvr -c "{directory=nlvr}" -m train -f 25 -i 3k -M -A
+python generate.py -d [SHAPEWORLD_DIRECTORY] -a tar:bzip2 -t nlvr_agreement -n nlvr -f 25,2,2 -i 3k -M -T --config-values --directory nlvr
 rm -r nlvr
 ```
 
@@ -251,38 +247,70 @@ The dataset provides:
 
 The `models/` directory contains a few exemplary models based on [TFMacros](https://github.com/AlexKuhnle/TFMacros), my collection of TensorFlow macros. The scripts `train.py` and `evaluate.py` provide the following command line arguments to train and evaluate these models:
 
-* `--[t]ype`:  Dataset type (**required**)
-* `--[n]ame`:  Dataset name (**required**)
-* `--[l]anguage`:  Dataset language, if available (default: `none`, i.e. English)
-* `--[c]onfig`:  Dataset configuration file, otherwise use default configuration
-* `--[p]ixel-noise`:  Pixel noise range (default: `0.1`)
+* `-t`, `--type`:  Dataset type (**required**)
+* `-n`, `--name`:  Dataset name (**required**)
+* `-l`, `--language`:  Dataset language, if available (default: `none`, i.e. English)
+* `-c`, `--config`:  Dataset configuration file, otherwise use default configuration
+* `-p`, `--pixel-noise`:  Pixel noise range (default: `0.0`)
 
-* `--[m]odel`:  Model, one in `models/[TYPE]/` (**required**)
-* `--h[y]perparams-file`:  Model hyperparameters file (default: hyperparams directory)
-* `--learning-[r]ate`:  Learning rate (default: `0.0001`)
-* `--[R]estore`:  Restore system, requires `--model-file` (default: `false`)
+* `-m`, `--model`:  Model, one in `models/[TYPE]/` (**required**)
+* `-y`, `--hyperparams-file`:  Model hyperparameters file (default: hyperparams directory)
+* `-R`, `--restore`:  Restore model, requires `--model-file`
 
-* `--[i]terations`:  Number of training iterations (default: `1000`)
-* `--[b]atch-size`:  Batch size (default: `100`)
-* `--[e]valuation-size`:  Evaluation size (default: `1000`)
-* `--evaluation-[f]requency`:  Evaluation frequency (default: `100`)
-* `--[q]uery`:  Additional values to query (separated by commas) (default: `none`)
-* `--[T]f-records`:  Use TensorFlow records
+* `-b`, `--batch-size`:  Batch size (default: `64`)
+* `-i`, `--iterations`:  Number of iterations (default: `1000`)
+* `-e`, `--evaluation-iterations`:  Evaluation iterations (default: `10`)
+* `-f`, `--evaluation-frequency`:  Evaluation frequency (default: `100`)
+* `-q`, `--query`:  Additional values to query, separated by commas (default: `none`)
+* `-T`, `--tf-records`:  Use TensorFlow records
 
-* `--model-dir`:  TensorFlow model directory, storing the model computation graph and parameters
-* `--summary-dir`:  TensorFlow summary directory for TensorBoard
-* `--report-file`:  CSV file reporting the evaluation results throughout the learning process
+* `--model-dir`:  TensorFlow model directory, storing the model computation graph and parameters (default: `none`)
+* `--summary-dir`:  TensorFlow summary directory for TensorBoard (default: `none`)
+* `--report-file`:  CSV file reporting the training results throughout the learning process (default: `none`)
 
-* `--[v]erbosity`:  Verbosity, one of `0` (no messages), `1` (default), `2` (plus TensorFlow messages)
+* `-v`, `--verbosity'`:  Verbosity, one of `0` (no messages), `1` (default), `2` (plus TensorFlow messages) (default: `1`)
+* `-Y`, `--yes`:  Confirm all questions with yes
+
+* `--config-values`:  Additional dataset configuration values passed as command line arguments
 
 For instance, the following command line trains an image caption agreement system on the dataset specified by the `multishape` configuration file included in this repository:
 
 ```bash
-python evaluate.py -t agreement -n multishape -m cnn_bow_mult -i 5k
+python train.py -t agreement -n multishape -m cnn_bow -i 5k
 ```
 
 The previously generated data (here: TF records) can be loaded in the same way as was explained for loading the data in Python code:
 
 ```bash
-python evaluate.py -t agreement -n multishape -c "load(examples/readme)" -m cnn_bow -i 10 -T
+python train.py -t agreement -n multishape -c examples/readme -m cnn_bow -i 10 -T
+```
+
+
+
+
+
+* `-t`, `--type`:  Dataset type (**required**)
+* `-n`, `--name`:  Dataset name (**required**)
+* `-l`, `--language`:  Dataset language, if available (default: `none`, i.e. English)
+* `-c`, `--config`:  Dataset configuration file, otherwise use default configuration
+* `-p`, `--pixel-noise`:  Pixel noise range (default: `0.0`)
+
+* `-m`, `--model`:  Model, one in `models/[TYPE]/` (**required**)
+* `-y`, `--hyperparams-file`:  Model hyperparameters file (default: hyperparams directory)
+
+* `-b`, `--batch-size`:  Batch size (default: `64`)
+* `-i`, `--iterations`:  Number of iterations (default: `100`)
+* `-q`, `--query`:  Additional values to query, separated by commas (default: `none`)
+* `-s`, `--serialize`:  Values to serialize, separated by commas (default: `none`)
+
+* `--model-dir`:  TensorFlow model directory, storing the model computation graph and parameters (**required**)
+* `--report-file`:  CSV file reporting the evaluation results (default: `none`)
+
+* `-v`, `--verbosity'`:  Verbosity, one of `0` (no messages), `1` (default), `2` (plus TensorFlow messages) (default: `1`)
+
+* `--config-values`:  Additional dataset configuration values passed as command line arguments
+
+
+```bash
+python evaluate.py -t agreement -n multishape -c examples/readme -m cnn_bow -i 10
 ```

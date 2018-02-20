@@ -4,9 +4,8 @@ import numpy as np
 from PIL import Image
 from shapeworld import util
 from shapeworld.util import Point
-from shapeworld.world import Entity, Color
+from shapeworld.world import Entity, Color, Texture
 from shapeworld.world.shape import WorldShape
-from shapeworld.world.texture import SolidTexture
 
 
 class World(Entity):
@@ -18,7 +17,7 @@ class World(Entity):
     def __init__(self, size, color):
         assert isinstance(size, int) and size > 0
         assert isinstance(color, str) and color in Color.colors
-        super(World, self).__init__(WorldShape(), Color(color, Color.colors[color], 0.0), SolidTexture(), Point.half, 0.0)
+        super(World, self).__init__(WorldShape(), Color(color, Color.get_rgb(color), 0.0), Texture.get_texture('solid')(), Point.half, 0.0)
         self.relative_topleft = -Point.half
         self.relative_bottomright = Point.half
         self.topleft = Point.zero
@@ -67,7 +66,7 @@ class World(Entity):
         else:
             return Point.random_instance(Point.zero, Point.one)
 
-    def add_entity(self, entity, boundary_tolerance=0.0, collision_tolerance=0.0):
+    def add_entity(self, entity, collision_tolerance=0.0, collision_shade_difference=0.5, boundary_tolerance=0.0):
         entity.id = len(self.entities)
         if boundary_tolerance > 0.0:
             if self.not_collides(entity, ratio=True, resolution=self.size)[1] > boundary_tolerance:
@@ -78,7 +77,7 @@ class World(Entity):
         if collision_tolerance > 0.0:
             for other in self.entities:
                 collision = entity.collides(other, ratio=True, symmetric=True, resolution=self.size)
-                if collision > collision_tolerance or (collision > 0.0 and entity.color == other.color):
+                if collision > collision_tolerance or (collision > 0.0 and entity.color == other.color and abs(entity.color.shade - other.color.shade) < collision_shade_difference):
                     # can't distinguish shapes of same color
                     return False
                 if entity.overall_collision() > collision_tolerance:

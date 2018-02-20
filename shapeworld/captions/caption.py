@@ -12,6 +12,9 @@ class Caption(object):
     def reverse_polish_notation(self):
         raise NotImplementedError
 
-    def agreement(self, entities, world_entities=None):
+    def apply_to_predication(self, predication):
+        raise NotImplementedError
+
+    def agreement(self, predication, world):
         # returns -1.0, 0.0, 1.0
         raise NotImplementedError

@@ -117,30 +117,27 @@ class DisjunctionCaptioner(WorldCaptioner):
             if not self.captioner1.incorrect(caption=caption.clauses[0], predication=predication1, world=world):
                 return False
             predication2 = predication.sub_predication()
-            if self.captioner2.incorrect(caption=caption.clauses[1], predication=predication2, world=world):
+            if not self.captioner2.incorrect(caption=caption.clauses[1], predication=predication2, world=world):
                 return False
 
-        elif self.correct_mode == 1:  # 1: first correct
-            predication1 = predication.sub_predication()
-            self.captioner1.apply_caption_to_predication(caption=caption.clauses[0], predication=predication1)
-            predication2 = predication.sub_predication()
-            if self.captioner2.incorrect(caption=caption.clauses[1], predication=predication2, world=world):
-                return False
+        else:
+            caption.apply_to_predication(predication=predication)
 
-        elif self.correct_mode == 2:  # 2: second correct
-            predication1 = predication.sub_predication()
-            if not self.captioner1.incorrect(caption=caption.clauses[0], predication=predication1, world=world):
-                return False
-            predication2 = predication.sub_predication()
-            self.captioner2.apply_caption_to_predication(caption=caption.clauses[1], predication=predication2)
+        # elif self.correct_mode == 1:  # 1: first correct
+        #     predication1 = predication.sub_predication()
+        #     caption.clauses[0].apply_to_predication(predication=predication1)
+        #     predication2 = predication.sub_predication()
+        #     if self.captioner2.incorrect(caption=caption.clauses[1], predication=predication2, world=world):
+        #         return False
 
-        elif self.correct_mode == 3:  # 3: both correct
-            self.apply_caption_to_predication(caption=caption, predication=predication)
+        # elif self.correct_mode == 2:  # 2: second correct
+        #     predication1 = predication.sub_predication()
+        #     if not self.captioner1.incorrect(caption=caption.clauses[0], predication=predication1, world=world):
+        #         return False
+        #     predication2 = predication.sub_predication()
+        #     caption.clauses[1].apply_to_predication(predication=predication2)
+
+        # elif self.correct_mode == 3:  # 3: both correct
+        #     caption.apply_to_predication(predication=predication)
 
         return True
-
-    def apply_caption_to_predication(self, caption, predication):
-        predication1 = predication.sub_predication()
-        self.captioner1.apply_caption_to_predication(caption=caption.clauses[0], predication=predication1)
-        predication2 = predication.sub_predication()
-        self.captioner2.apply_caption_to_predication(caption=caption.clauses[1], predication=predication2)

@@ -7,32 +7,53 @@ class Spatial(CaptionAgreementDataset):
 
     def __init__(
         self,
-        entity_counts=(5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15),
-        train_entity_counts=(5, 6, 7, 8, 9, 10, 11, 12, 14),
-        validation_entity_counts=(13,),
-        test_entity_counts=(15,),
+        world_size=64,
+        world_color='black',
+        shapes=None,
+        colors=None,
+        textures=None,
+        rotation=True,
+        size_range=(0.1, 0.25),
+        distortion_range=(2.0, 3.0),
+        shade_range=0.4,
+        boundary_tolerance=0.25,
         validation_combinations=(('square', 'red', 'solid'), ('triangle', 'green', 'solid'), ('circle', 'blue', 'solid')),
         test_combinations=(('rectangle', 'yellow', 'solid'), ('cross', 'magenta', 'solid'), ('ellipse', 'cyan', 'solid')),
         caption_size=14,
-        vocabulary=('.', 'a', 'above', 'an', 'behind', 'below', 'blue', 'circle', 'closer', 'closest', 'cross', 'cyan', 'ellipse', 'farther', 'farthest', 'from', 'front', 'gray', 'green', 'in', 'is', 'left', 'magenta', 'of', 'pentagon', 'rectangle', 'red', 'right', 'semicircle', 'shape', 'square', 'than', 'the', 'to', 'triangle', 'yellow'),
+        vocabulary=('.', 'a', 'above', 'an', 'below', 'blue', 'circle', 'cross', 'cyan', 'ellipse', 'gray', 'green', 'is', 'left', 'magenta', 'of', 'pentagon', 'rectangle', 'red', 'right', 'semicircle', 'shape', 'square', 'the', 'to', 'triangle', 'yellow'),
+        correct_ratio=0.5,
+        train_correct_ratio=0.5,
+        validation_correct_ratio=0.5,
+        test_correct_ratio=0.5,
+        worlds_per_instance=1,
+        captions_per_instance=1,
+        caption_realizer=None,
         language=None
     ):
 
         world_generator = RandomAttributesGenerator(
-            entity_counts=entity_counts,
-            train_entity_counts=train_entity_counts,
-            validation_entity_counts=validation_entity_counts,
-            test_entity_counts=test_entity_counts,
+            world_size=world_size,
+            world_color=world_color,
+            shapes=shapes,
+            colors=colors,
+            textures=textures,
+            rotation=rotation,
+            size_range=size_range,
+            distortion_range=distortion_range,
+            shade_range=shade_range,
+            collision_tolerance=0.0,
+            boundary_tolerance=boundary_tolerance,
+            entity_counts=(2,),
             validation_combinations=validation_combinations,
             test_combinations=test_combinations
         )
 
         world_captioner = ExistentialCaptioner(
-            restrictor_captioner=RegularTypeCaptioner(),
+            restrictor_captioner=RegularTypeCaptioner(existing_attribute_rate=0.0),
             body_captioner=RelationCaptioner(
-                reference_captioner=RegularTypeCaptioner(),
-                comparison_captioner=RegularTypeCaptioner(),
-                relations=('x-rel', 'y-rel', 'z-rel', 'proximity-rel')
+                reference_captioner=RegularTypeCaptioner(existing_attribute_rate=0.0),
+                comparison_captioner=RegularTypeCaptioner(existing_attribute_rate=0.0),
+                relations=('x-rel', 'y-rel')  # , 'z-rel', 'proximity-rel'
             )
         )
 
@@ -41,6 +62,13 @@ class Spatial(CaptionAgreementDataset):
             world_captioner=world_captioner,
             caption_size=caption_size,
             vocabulary=vocabulary,
+            correct_ratio=correct_ratio,
+            train_correct_ratio=train_correct_ratio,
+            validation_correct_ratio=validation_correct_ratio,
+            test_correct_ratio=test_correct_ratio,
+            worlds_per_instance=worlds_per_instance,
+            captions_per_instance=captions_per_instance,
+            caption_realizer=caption_realizer,
             language=language
         )
 

@@ -1,27 +1,59 @@
 from random import randint, random
-from shapeworld import util
 from shapeworld.world import Entity
 from shapeworld.generators import GenericGenerator
 
 
 class ReinforcedAttributesGenerator(GenericGenerator):
 
-    def __init__(self, reinforcement_range, entity_counts, train_entity_counts=None, validation_entity_counts=None, test_entity_counts=None, validation_combinations=None, test_combinations=None, max_provoke_collision_rate=None, **kwargs):
+    def __init__(
+        self,
+        world_size=64,
+        world_color='black',
+        shapes=None,
+        colors=None,
+        textures=None,
+        rotation=True,
+        size_range=(0.1, 0.25),
+        distortion_range=(2.0, 3.0),
+        shade_range=0.4,
+        collision_tolerance=0.25,
+        collision_shade_difference=0.5,
+        boundary_tolerance=0.25,
+        entity_counts=(1,),
+        train_entity_counts=None,
+        validation_entity_counts=None,
+        test_entity_counts=None,
+        validation_combinations=None,
+        test_combinations=None,
+        max_provoke_collision_rate=0.33,
+        reinforcement_range=(1, 3)
+    ):
         super(ReinforcedAttributesGenerator, self).__init__(
+            world_size=world_size,
+            world_color=world_color,
+            shapes=shapes,
+            colors=colors,
+            textures=textures,
+            rotation=rotation,
+            size_range=size_range,
+            distortion_range=distortion_range,
+            shade_range=shade_range,
+            collision_tolerance=collision_tolerance,
+            collision_shade_difference=collision_shade_difference,
+            boundary_tolerance=boundary_tolerance,
             entity_counts=entity_counts,
             train_entity_counts=train_entity_counts,
             validation_entity_counts=validation_entity_counts,
             test_entity_counts=test_entity_counts,
             validation_combinations=validation_combinations,
-            test_combinations=test_combinations,
-            **kwargs
+            test_combinations=test_combinations
         )
+
+        assert isinstance(max_provoke_collision_rate, float) and 0.0 <= max_provoke_collision_rate <= 1.0
+        self.max_provoke_collision_rate = max_provoke_collision_rate
 
         assert 0 <= reinforcement_range[0] <= reinforcement_range[1]
         self.reinforcement_range = reinforcement_range
-
-        assert max_provoke_collision_rate is None or isinstance(max_provoke_collision_rate, float) and 0.0 <= max_provoke_collision_rate <= 1.0
-        self.max_provoke_collision_rate = util.value_or_default(max_provoke_collision_rate, 0.5)
 
     def initialize(self, mode):
         super(ReinforcedAttributesGenerator, self).initialize(mode=mode)

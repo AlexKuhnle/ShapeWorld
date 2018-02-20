@@ -64,6 +64,23 @@ class Relation(Predicate):
         else:
             assert False
 
+    def apply_to_predication(self, predication):
+        if self.predtype in ('attribute', 'type'):
+            self.value.apply_to_predication(predication=predication)
+            return
+        if self.reference is None:
+            ref_predication = None
+        else:
+            ref_predication = predication.sub_predication(reset=True)
+            self.reference.apply_to_predication(predication=ref_predication)
+        if self.comparison is None:
+            comp_predication = None
+        else:
+            comp_predication = predication.sub_predication(reset=True)
+            self.comparison.apply_to_predication(predication=comp_predication)
+        predication.apply(predicate=self, predication=predication.copy(reset=True))
+        return ref_predication, comp_predication
+
     def pred_agreement(self, entity, predication):
         if self.predtype in ('attribute', 'type'):
             return self.value.pred_agreement(entity=entity, predication=predication)
@@ -85,7 +102,7 @@ class Relation(Predicate):
             return any((entity.shape.area - reference.shape.area) * self.value > Settings.min_area for reference in ref_entities if reference != entity)
 
         elif self.predtype == 'shade-rel':
-            return any((entity.color.shade - reference.color.shade) * self.value > Settings.min_shade for reference in ref_entities if reference != entity and reference.color == entity.color)
+            return any((entity.color.shade - reference.color.shade) * self.value > Settings.min_shade for reference in ref_entities if reference != entity)  # and reference.color == entity.color)
 
         comp_entities = self.comparison.filter_agreement(entities=predication.agreeing, predication=predication)
 
@@ -123,7 +140,7 @@ class Relation(Predicate):
             return util.all_and_any((reference.shape.area - entity.shape.area) * self.value > Settings.min_area for reference in ref_entities if reference != entity)
 
         elif self.predtype == 'shade-rel':
-            return util.all_and_any((reference.color.shade - entity.color.shade) * self.value > Settings.min_shade for reference in ref_entities if reference != entity and reference.color == entity.color)
+            return util.all_and_any((reference.color.shade - entity.color.shade) * self.value > Settings.min_shade for reference in ref_entities if reference != entity)  # and reference.color == entity.color)
 
         comp_entities = self.comparison.filter_agreement(entities=predication.not_disagreeing, predication=predication)
 

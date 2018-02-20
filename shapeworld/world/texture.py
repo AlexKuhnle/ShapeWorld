@@ -10,10 +10,10 @@ class Texture(object):
 
     @property
     def name(self):
-        raise NotImplementedError
+        return self.__class__.__name__.lower()
 
     def model(self):
-        return {'name': str(self.name)}
+        return dict(name=self.name)
 
     @staticmethod
     def from_model(model):
@@ -26,31 +26,35 @@ class Texture(object):
         raise NotImplementedError
 
     @staticmethod
+    def get_textures():
+        return sorted(Texture.textures.keys())
+
+    @staticmethod
+    def get_texture(name):
+        return Texture.textures[name]
+
+    @staticmethod
     def random_instance(textures, colors, shade_range):
-        return choice([Texture.textures[texture] for texture in textures]).random_instance(colors, shade_range)
+        return choice([Texture.get_texture(texture) for texture in textures]).random_instance(colors, shade_range)
 
 
-class SolidTexture(Texture):
+class Solid(Texture):
     __slots__ = ()
 
     def __init__(self):
-        return super(SolidTexture, self).__init__()
-
-    @property
-    def name(self):
-        return 'solid'
+        return super(Solid, self).__init__()
 
     def copy(self):
-        return SolidTexture()
+        return Solid()
 
     def get_color(self, color, offset):
         return color
 
     @staticmethod
     def random_instance(colors, shade_range):
-        return SolidTexture()
+        return Solid()
 
 
-Texture.textures = {
-    'solid': SolidTexture
-}
+Texture.textures = dict(
+    solid=Solid
+)

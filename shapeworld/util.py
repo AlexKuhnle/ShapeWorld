@@ -18,6 +18,10 @@ def value_or_default(value, default):
         return value
 
 
+def negative_response(response):
+    return response.lower() in ('n', 'no', 'c', 'cancel', 'a', 'abort')
+
+
 def parse_int_with_factor(string):
     assert string
     if len(string) < 2:
@@ -34,58 +38,98 @@ def parse_int_with_factor(string):
         return int(string)
 
 
-def parse_tuple(string):
-    if ',' in string:
-        assert len(string) > 2 and string[0] == '(' and string[-1] == ')'
-        return tuple(parse_int_with_factor(x) for x in string[1:-1].split(','))
+def parse_tuple(parse_item, unary_tuple=True, valid_sizes=None):
+    def parse(string):
+        if ',' in string:
+            if string[0] == '(' and string[-1] == ')':
+                assert len(string) > 2
+                xs = string[1:-1].split(',')
+                assert valid_sizes is None or len(xs) in valid_sizes
+                return tuple(parse_item(x) for x in xs)
+            else:
+                xs = string.split(',')
+                assert valid_sizes is None or len(xs) in valid_sizes
+                return tuple(parse_item(x) for x in xs)
+        elif unary_tuple:
+            return (parse_item(string),)
+        else:
+            return parse_item(string)
+    return parse
+
+
+def parse_config(values):
+    assert len(values) % 2 == 0
+    config = dict()
+    for key, value in zip(values[::2], values[1::2]):
+        if key[0:2] == '--':
+            key = key[2:].replace('-', '_')
+        else:
+            key = key.replace('-', '_')
+        if value == 'true' or value == 'True':
+            value = True
+        elif value == 'false' or value == 'False':
+            value = False
+        try:
+            value = int(value)
+        except ValueError:
+            try:
+                value = float(value)
+            except ValueError:
+                pass
+        config[key] = value
+    return config
+    # assert string
+    # if string.lower() in ('none', 'null'):
+    #     return None
+    # if string[0] == '{' and string[-1] == '}':
+    #     if '=' in string and ':' not in string:
+    #         values = list()
+    #         index = last_index = 1
+    #         depth = 0
+    #         while True:
+    #             comma = string.find(',', index, -1)
+    #             o = string.find('{', index, -1)
+    #             if depth > 0:
+    #                 c = string.find('}', index, -1)
+    #                 if 0 < o < c:
+    #                     index = o + 1
+    #                     depth += 1
+    #                 else:
+    #                     index = c + 1
+    #                     depth -= 1
+    #             elif 0 < o < comma:
+    #                 index = o + 1
+    #                 depth += 1
+    #             elif 0 < comma:
+    #                 index = comma
+    #                 values.append(tuple(string[last_index:index].split('=', 1)))
+    #                 index = last_index = comma + 1
+    #             else:
+    #                 values.append(tuple(string[last_index:-1].split('=', 1)))
+    #                 break
+    #         assert all(len(value) == 2 for value in values)
+    #         return {key: (parse_config(value) if value[0] == '{' else value) for key, value in values}
+    #     elif ':' in string:
+    #         return json.loads(string)
+    # else:
+    #     return string
+
+
+def sentence2tokens(sentence):
+    sentence = sentence[0].lower() + sentence[1:]
+    return sentence.replace(', ', ' , ').replace('; ', ' ; ').replace('.', ' .').replace('?', ' ?').split()
+
+
+def tokens2sentence(tokens):
+    sentence = ' '.join(tokens).replace(' , ', ', ').replace(' ; ', '; ').replace(' .', '.').replace(' ?', '?')
+    return sentence[0].upper() + sentence[1:]
+
+
+def alternatives_type(value_type):
+    if len(value_type) > 5 and value_type[:13] == 'alternatives(' and value_type[-1] == ')':
+        return value_type[13:-1], True
     else:
-        return (int(string),)
-
-
-def parse_config(string):
-    assert string
-    if string.lower() in ('none', 'null'):
-        return None
-    if string[0] == '{' and string[-1] == '}':
-        if '=' in string and ':' not in string:
-            values = list()
-            index = last_index = 1
-            depth = 0
-            while True:
-                comma = string.find(',', index, -1)
-                o = string.find('{', index, -1)
-                if depth > 0:
-                    c = string.find('}', index, -1)
-                    if 0 < o < c:
-                        index = o + 1
-                        depth += 1
-                    else:
-                        index = c + 1
-                        depth -= 1
-                elif 0 < o < comma:
-                    index = o + 1
-                    depth += 1
-                elif 0 < comma:
-                    index = comma
-                    values.append(tuple(string[last_index:index].split('=', 1)))
-                    index = last_index = comma + 1
-                else:
-                    values.append(tuple(string[last_index:-1].split('=', 1)))
-                    break
-            assert all(len(value) == 2 for value in values)
-            return {key: (parse_config(value) if value[0] == '{' else value) for key, value in values}
-        elif ':' in string:
-            return json.loads(string)
-    else:
-        return string
-
-
-def string2tokens(string):
-    return string.lower().replace(', ', ' , ').replace('; ', ' ; ').replace('.', ' .').replace('?', ' ?').split()
-
-
-def tokens2string(tokens):
-    return ' '.join(tokens).replace(' , ', ', ').replace(' ; ', '; ').replace(' .', '.').replace(' ?', '?')
+        return value_type, False
 
 
 def product(xs):
@@ -478,6 +522,7 @@ class Point(PointTuple):
 
 Point.zero = Point(0.0, 0.0)
 Point.one = Point(1.0, 1.0)
+Point.neg_one = Point(-1.0, -1.0)
 Point.half = Point(0.5, 0.5)
 
 Point.izero = Point(0, 0)

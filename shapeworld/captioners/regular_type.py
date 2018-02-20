@@ -144,26 +144,25 @@ class RegularTypeCaptioner(WorldCaptioner):
             return None
 
         entity = predication.random_agreeing_entity()
-        attributes = dict()
+        attributes = list()
 
-        if 'shape' in self.attributes:
-            attributes['shape'] = Attribute(predtype='shape', value=entity.shape.name)
+        for predtype in self.attributes:
+            if predtype == 'shape':
+                attributes.append(Attribute(predtype='shape', value=entity.shape.name))
+            elif predtype == 'color':
+                attributes.append(Attribute(predtype='color', value=entity.color.name))
+            elif predtype == 'texture':
+                attributes.append(Attribute(predtype='texture', value=entity.texture.name))
 
-        if 'color' in self.attributes:
-            attributes['color'] = Attribute(predtype='color', value=entity.color.name)
-
-        if 'texture' in self.attributes:
-            attributes['texture'] = Attribute(predtype='texture', value=entity.texture.name)
-
-        for predtype, attribute in list(attributes.items()):
-            if predication.contradictory(predicate=attribute):
+        for n in range(len(attributes) - 1, -1, -1):
+            if predication.contradictory(predicate=attributes[n]):
                 assert False
-            elif not self.pragmatical_redundancy and predication.redundant(predicate=attribute):
-                attributes.pop(predtype)
+            elif not self.pragmatical_redundancy and predication.redundant(predicate=attributes[n]):
+                attributes.pop(n)
 
-        entity_type = EntityType(predicates=attributes)
+        entity_type = EntityType(attributes=attributes)
 
-        self.apply_caption_to_predication(caption=entity_type, predication=predication)
+        entity_type.apply_to_predication(predication=predication)
 
         return entity_type
 
@@ -173,21 +172,27 @@ class RegularTypeCaptioner(WorldCaptioner):
                 shapes = util.unique_list(entity.shape.name for entity in world.entities if entity.shape.name in self.shapes)
             else:
                 shapes = self.shapes
-            caption.value['shape'] = Attribute(predtype='shape', value=choice(shapes))
+            for n, predicate in enumerate(caption.value):
+                if predicate.predtype == 'shape':
+                    caption.value[n] = Attribute(predtype='shape', value=choice(shapes))
 
         elif self.incorrect_mode == 2:  # random (existing) color
             if self.existing_attribute:
                 colors = util.unique_list(entity.color.name for entity in world.entities if entity.color.name in self.colors)
             else:
                 colors = self.colors
-            caption.value['color'] = Attribute(predtype='color', value=choice(colors))
+            for n, predicate in enumerate(caption.value):
+                if predicate.predtype == 'color':
+                    caption.value[n] = Attribute(predtype='color', value=choice(colors))
 
         elif self.incorrect_mode == 3:  # random (existing) texture
             if self.existing_attribute:
                 textures = util.unique_list(entity.texture.name for entity in world.entities if entity.texture.name in self.textures)
             else:
                 textures = self.textures
-            caption.value['texture'] = Attribute(predtype='texture', value=choice(textures))
+            for n, predicate in enumerate(caption.value):
+                if predicate.predtype == 'texture':
+                    caption.value[n] = Attribute(predtype='texture', value=choice(textures))
 
         elif self.incorrect_mode == 4:  # random (existing) attributes
             if self.existing_attribute:
@@ -198,17 +203,14 @@ class RegularTypeCaptioner(WorldCaptioner):
                 shapes = self.shapes
                 colors = self.colors
                 textures = self.textures
-            if 'shape' in self.attributes:
-                caption.value['shape'] = Attribute(predtype='shape', value=choice(shapes))
-            if 'color' in self.attributes:
-                caption.value['color'] = Attribute(predtype='color', value=choice(colors))
-            if 'texture' in self.attributes:
-                caption.value['texture'] = Attribute(predtype='texture', value=choice(textures))
+            for n, predicate in enumerate(caption.value):
+                if predicate.predtype == 'shape' in self.attributes:
+                    caption.value[n] = Attribute(predtype='shape', value=choice(shapes))
+                elif predicate.predtype == 'color' in self.attributes:
+                    caption.value[n] = Attribute(predtype='color', value=choice(colors))
+                elif predicate.predtype == 'texture' in self.attributes:
+                    caption.value[n] = Attribute(predtype='texture', value=choice(textures))
 
-        self.apply_caption_to_predication(caption=caption, predication=predication)
+        caption.apply_to_predication(predication=predication)
 
         return True
-
-    def apply_caption_to_predication(self, caption, predication):
-        for predtype in self.attributes:
-            predication.apply(predicate=caption.value[predtype])

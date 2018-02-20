@@ -1,6 +1,7 @@
 {
     "learning_rate": 2.5e-4,
     "weight_decay": 1e-5,
+    "clip_gradients": null,
     "dropout_rate": 0.0,
     "cnn_size": 64,
     "cnn_depth": 3,

@@ -1,0 +1,600 @@
+there is a gray shape and exactly all red shapes but one are a triangle .
+at most two of the four red shapes are a red ellipse or there is an ellipse .
+a triangle is a yellow shape or a circle is a green shape .
+at least one magenta shape is a circle and a shape is an ellipse .
+a green shape is a red circle or most shapes are a cyan semicircle .
+
+almost all the four gray shapes are crosses or there is a blue cross .
+exactly three of the three gray shapes are crosses or at least zero of the two yellow shapes are an ellipse .
+a magenta shape is closer to an ellipse than a yellow cross and a gray shape is closer to a rectangle than a magenta cross .
+not three yellow shapes are a yellow ellipse and a yellow ellipse is to the right of a magenta shape .
+a magenta shape is lighter than a yellow cross or at least four of the eight shapes are a cyan cross .
+
+a rectangle is bigger than a magenta rectangle or three more gray shapes than yellow shapes are a rectangle .
+a triangle is a magenta shape or a gray rectangle is smaller than a rectangle .
+a semicircle is a red shape or a rectangle is a yellow shape .
+a shape is a gray shape and a blue semicircle is smaller than a blue rectangle .
+a red shape is above a rectangle or almost all the seven rectangles are a magenta shape .
+
+a magenta shape is an ellipse and more than zero of the three gray shapes are a circle .
+a yellow circle is closer to a blue rectangle than a magenta ellipse or a red square is closer to a blue ellipse than a blue rectangle .
+a circle is bigger than a circle or exactly zero shapes are a yellow shape .
+a shape is a magenta shape and at most zero of the two squares are a magenta shape .
+a cross is below a square or at least four squares are a cyan shape .
+
+a magenta shape is smaller than a magenta semicircle and a cyan shape is smaller than a magenta cross .
+exactly zero of the two gray shapes are semicircles and a rectangle is farther from a semicircle than a gray semicircle .
+a semicircle is a magenta shape and a semicircle is a magenta shape .
+at least zero shapes are a magenta semicircle and there is a cyan semicircle .
+four less rectangles than semicircles are a magenta shape or there is a cross .
+
+at least four yellow shapes are a yellow pentagon or there is a gray ellipse .
+a blue shape is above a yellow shape or less than zero shapes are a magenta shape .
+a gray pentagon is farther from a green shape than a yellow shape and there is a pentagon .
+a yellow shape is bigger than a yellow pentagon or a shape is a pentagon .
+not one of the four ellipses is a green ellipse or there is a magenta shape .
+
+a circle is a cyan circle and half the six cyan shapes are a cyan circle .
+exactly two green shapes are a green ellipse and less than zero green shapes are a green ellipse .
+a cyan rectangle is behind a green circle or five more circles than rectangles are a yellow shape .
+a green rectangle is bigger than a green shape or none of the six green shapes is a rectangle .
+a cyan rectangle is above a cyan shape or there is a cyan circle .
+
+a magenta shape is lighter than a yellow semicircle or a red shape is lighter than a magenta rectangle .
+a semicircle is closer to a green semicircle than a magenta rectangle or less than three of the three yellow shapes are a semicircle .
+a magenta shape is a circle and a red semicircle is farther from a red square than a magenta shape .
+there is a semicircle or there is a semicircle .
+a red square is closer to a semicircle than a square and there is a circle .
+
+exactly two shapes are pentagons and exactly two shapes are a square .
+a shape is a yellow shape or a shape is a gray shape .
+a cyan shape is above a cross and more than four of the two cyan shapes are a circle .
+there is a cyan cross or a circle is below a blue shape .
+there is a green shape and a square is lighter than a cyan shape .
+
+a gray rectangle is below a yellow square and a green semicircle is below a gray ellipse .
+more than zero of the two yellow shapes are circles or a cyan ellipse is to the left of a cross .
+a blue semicircle is closer to a yellow circle than a magenta cross and a blue square is closer to a magenta circle than a yellow circle .
+there is a green circle and less than three circles are a yellow shape .
+two more magenta shapes than yellow shapes are circles or a cyan shape is a triangle .
+
+a gray cross is above a magenta circle or a green ellipse is above a magenta circle .
+there is a cyan rectangle or almost all ellipses are a blue shape .
+at least five circles are a blue shape or an ellipse is a cyan shape .
+a shape is a triangle or three less blue shapes than gray shapes are an ellipse .
+a triangle is lighter than a magenta cross or more than zero triangles are a gray triangle .
+
+a pentagon is behind a red triangle and a pentagon is in front of a cyan ellipse .
+a red pentagon is bigger than a red pentagon or two more cyan shapes than red shapes are a pentagon .
+there is a red ellipse and there is a red pentagon .
+there is a semicircle or there is a rectangle .
+there is a triangle and there is an ellipse .
+
+a square is in front of a magenta shape or a pentagon is in front of a green shape .
+three quarters of the seven green shapes are a green ellipse or there is a pentagon .
+at most zero crosses are a red shape or a semicircle is to the left of a green ellipse .
+twice as many crosses as semicircles are a red shape and a triangle is farther from a red cross than a yellow shape .
+there is a magenta circle and there is a red cross .
+
+a blue shape is in front of an ellipse or a magenta shape is smaller than a rectangle .
+more than four squares are a blue shape or a square is a green shape .
+a magenta shape is a rectangle or a gray shape is a square .
+a magenta shape is a circle or a gray shape is bigger than a magenta shape .
+there is a blue circle or there is a magenta square .
+
+there is an ellipse or a magenta pentagon is lighter than a cyan shape .
+less than five of the four blue shapes are pentagons and a blue ellipse is below a gray ellipse .
+two thirds of the two triangles are a magenta triangle or two thirds of the five triangles are a magenta triangle .
+there is a blue cross and a square is to the left of a cyan circle .
+there is a blue pentagon and a gray ellipse is in front of a gray semicircle .
+
+a gray shape is an ellipse and a gray shape is an ellipse .
+a magenta shape is a magenta rectangle and a cyan shape is a cyan semicircle .
+a magenta rectangle is in front of a cyan shape and a gray shape is a rectangle .
+there is a cross or almost all the three magenta shapes are a magenta circle .
+a rectangle is farther from a magenta semicircle than a magenta shape or exactly three rectangles are a red rectangle .
+
+there is a green shape or at most four of the two green shapes are a square .
+a green square is smaller than a blue square and there is a green ellipse .
+there is a green square and less than one of the four shapes is a blue shape .
+a red ellipse is smaller than a green square and there is a green shape .
+a yellow square is closer to a square than a red square or a yellow square is closer to a square than a red triangle .
+
+a pentagon is farther from a gray shape than a pentagon and a pentagon is farther from a yellow shape than a triangle .
+there is a green semicircle or a cyan shape is lighter than a pentagon .
+there is a gray pentagon or half the two yellow shapes are a pentagon .
+at most four of the four pentagons are a red shape or at most four of the four pentagons are a red shape .
+there is a blue pentagon and there is a red pentagon .
+
+a pentagon is a blue shape or a pentagon is bigger than a blue pentagon .
+a yellow triangle is closer to a blue square than a blue triangle or a shape is a yellow pentagon .
+a cyan shape is behind a blue triangle or a gray shape is behind a blue triangle .
+a gray cross is lighter than a blue shape and a cyan shape is a pentagon .
+there is a magenta circle or a blue shape is closer to a magenta triangle than a gray pentagon .
+
+a green square is to the right of a magenta semicircle and not zero triangles are a cyan shape .
+a magenta square is lighter than a red square or a gray triangle is lighter than a cyan cross .
+an ellipse is darker than a cyan triangle or at least five of the two squares are a green shape .
+a gray triangle is closer to a green square than a magenta square or a shape is a blue shape .
+there is a square or a red shape is smaller than a blue shape .
+
+a green shape is closer to a red cross than a green shape or two thirds of the seven semicircles are a blue semicircle .
+there is a pentagon and a gray pentagon is farther from an ellipse than a semicircle .
+there is a cyan ellipse and exactly zero semicircles are a green shape .
+at least two of the eight shapes are rectangles and there is a blue semicircle .
+a shape is a yellow semicircle and not three ellipses are a cyan ellipse .
+
+there is a green shape or a blue circle is to the right of a magenta circle .
+a shape is a cross and exactly two shapes are a circle .
+a cross is to the left of a blue shape and a circle is to the left of a green shape .
+a cross is to the right of a magenta circle or a shape is a magenta circle .
+not three shapes are a cyan shape or not three shapes are a blue shape .
+
+there is a gray shape or at most one magenta shape is a square .
+exactly four shapes are semicircles or a shape is a pentagon .
+there is a magenta ellipse or there is a magenta square .
+there is a green square and half the semicircles are a gray semicircle .
+more than three gray shapes are rectangles or a pentagon is to the right of a semicircle .
+
+a gray cross is farther from a yellow triangle than a red shape or none of the five magenta shapes is a triangle .
+a gray shape is a triangle and a yellow shape is a triangle .
+exactly two of the three magenta shapes are triangles and a green ellipse is closer to a blue shape than a gray cross .
+a gray shape is smaller than a gray shape and a magenta shape is smaller than a magenta shape .
+a triangle is to the left of a magenta triangle or less than one shape is a blue square .
+
+a square is smaller than a semicircle and a circle is smaller than a cross .
+there is a triangle or there is an ellipse .
+a magenta shape is closer to a pentagon than a red semicircle and at most zero gray shapes are an ellipse .
+a cyan shape is above a yellow circle and there is a gray circle .
+a red shape is a square or a pentagon is farther from a red shape than a yellow circle .
+
+a red square is bigger than a red cross and there is a circle .
+a shape is a gray shape and a shape is a cyan shape .
+a gray rectangle is to the left of a rectangle and a green square is to the left of a square .
+there is a red pentagon and at least two squares are a red shape .
+there is an ellipse or at most four of the eight shapes are a square .
+
+a gray shape is a triangle or a cross is in front of a yellow circle .
+a circle is a blue shape and a square is to the left of a gray semicircle .
+there is a gray cross and a cyan circle is closer to a cyan square than a yellow triangle .
+at least all crosses but one are a red shape or a green cross is above a cyan square .
+a quarter of the six green shapes is a rectangle or a blue shape is bigger than a cyan triangle .
+
+a cyan shape is a rectangle and a yellow shape is a pentagon .
+a pentagon is smaller than a cyan pentagon and a rectangle is smaller than a cyan square .
+there is a pentagon and there is a cross .
+more than zero pentagons are a yellow shape and more than zero pentagons are a red shape .
+there is a magenta circle and a pentagon is smaller than a red pentagon .
+
+there is a square or a magenta ellipse is above a cyan triangle .
+a circle is a gray shape and a cyan rectangle is farther from an ellipse than a triangle .
+at most three shapes are a red shape or a cyan shape is below a gray triangle .
+there is a red pentagon and exactly two triangles are a cyan triangle .
+a cyan shape is bigger than a rectangle and a gray shape is bigger than a rectangle .
+
+a cyan shape is a cyan circle and less than one of the two gray shapes is a gray circle .
+at least two of the two squares are a gray shape or a green ellipse is below an ellipse .
+at most five of the two gray shapes are triangles and a green circle is above a green shape .
+a yellow semicircle is above an ellipse or at most one rectangle is a gray shape .
+almost all the three circles are a cyan shape or a pentagon is above a square .
+
+a shape is a pentagon or a shape is a semicircle .
+there is a yellow pentagon and more than one shape is a cyan pentagon .
+not four of the four shapes are a cyan shape or not four of the four shapes are a cyan shape .
+a blue rectangle is to the right of a cyan semicircle or a gray square is to the right of a cyan semicircle .
+there is a semicircle or there is a semicircle .
+
+exactly all magenta shapes but one are triangles or exactly one magenta shape is a triangle .
+there is a gray cross or there is a magenta semicircle .
+a blue triangle is darker than a magenta semicircle and a shape is a triangle .
+less than three of the seven triangles are a yellow shape and there is a gray square .
+a blue shape is a triangle and a magenta triangle is behind a cyan semicircle .
+
+at most four of the two ellipses are a gray shape and at most four of the two ellipses are a gray shape .
+there is a square or not two of the two shapes are an ellipse .
+less than two gray shapes are a gray circle and a shape is a cyan ellipse .
+at most two of the three shapes are a cyan ellipse and at most two of the three shapes are a magenta pentagon .
+more than one ellipse is a gray shape or exactly one circle is a gray shape .
+
+a blue shape is in front of a pentagon or a cross is a magenta shape .
+a circle is a magenta circle and not four magenta shapes are a magenta semicircle .
+a blue circle is smaller than a magenta circle or a blue circle is smaller than a magenta circle .
+almost all circles are a blue shape or a gray pentagon is bigger than a cyan shape .
+a green shape is to the right of a semicircle and there is a magenta pentagon .
+
+there is a gray shape and a square is to the left of a gray shape .
+a magenta pentagon is lighter than a magenta pentagon and a rectangle is a magenta shape .
+there is a blue circle or there is a green pentagon .
+more than four circles are a blue circle or a green semicircle is darker than a cyan semicircle .
+a pentagon is a green pentagon or at least four of the two semicircles are a gray semicircle .
+
+exactly five of the eight green shapes are rectangles or a cyan semicircle is in front of a rectangle .
+a square is smaller than a green semicircle or a cyan shape is a square .
+at least four of the eight green shapes are rectangles and a green rectangle is above a semicircle .
+there is a circle or there is a pentagon .
+there is a green triangle and a cyan semicircle is lighter than a green cross .
+
+two thirds of the three triangles are a blue shape and a circle is behind a blue shape .
+a circle is above a circle or a semicircle is above a circle .
+there is a semicircle and a cyan ellipse is above a gray shape .
+a triangle is a blue triangle or a green circle is to the left of a gray cross .
+a cyan triangle is smaller than a red shape and a green circle is smaller than a gray shape .
+
+a gray shape is above a blue shape or two more crosses than pentagons are a red shape .
+a gray ellipse is below a blue shape and a gray circle is below a red shape .
+a gray triangle is farther from a gray pentagon than a gray shape and a blue shape is a rectangle .
+at least one of the four gray shapes is an ellipse and a red cross is lighter than a red shape .
+more than four of the three ellipses are a gray ellipse or there is a green shape .
+
+at least three of the five magenta shapes are ellipses and a gray cross is to the right of a blue semicircle .
+a blue semicircle is behind a semicircle and a blue semicircle is smaller than a rectangle .
+there is a yellow ellipse and a semicircle is farther from a blue rectangle than a magenta semicircle .
+at least one of the six semicircles is a blue shape and at least one of the three ellipses is a magenta shape .
+a blue shape is a triangle and a blue shape is above a blue shape .
+
+there is a gray shape and more than three of the seven crosses are a gray shape .
+there is a gray cross or there is a green rectangle .
+a magenta shape is in front of a gray cross and less than three green shapes are a cross .
+a shape is a cross or a shape is a semicircle .
+a green square is to the right of a gray cross and more than zero shapes are a cross .
+
+exactly all blue shapes but one are semicircles or more than four green shapes are a semicircle .
+exactly one of the two semicircles is a blue shape or there is a green ellipse .
+a shape is an ellipse or at most zero gray shapes are a pentagon .
+there is a gray shape and there is a gray shape .
+less than two gray shapes are rectangles or a blue shape is a semicircle .
+
+a cross is to the left of a pentagon or a semicircle is to the left of a rectangle .
+a magenta pentagon is bigger than a magenta pentagon or there is a yellow pentagon .
+a magenta pentagon is to the left of a yellow pentagon and a yellow pentagon is behind a yellow square .
+there is a triangle or there is a semicircle .
+there is a magenta shape and there is a cyan shape .
+
+there is a rectangle and a circle is lighter than a blue cross .
+there is a gray shape and a red shape is darker than a red shape .
+there is a cyan shape and a red cross is to the left of a red cross .
+an ellipse is a gray ellipse and exactly all gray shapes but one are a gray ellipse .
+a gray shape is a gray ellipse and a gray circle is below a gray shape .
+
+not one pentagon is a gray shape or there is a yellow shape .
+there is a blue pentagon or there is a cyan pentagon .
+there is a gray pentagon and there is a cyan pentagon .
+a cyan pentagon is above a gray pentagon or a yellow shape is a pentagon .
+there is a gray pentagon or there is a green circle .
+
+there is a pentagon and there is a square .
+there is a yellow semicircle and exactly one of the two semicircles is a gray shape .
+a pentagon is farther from a blue square than a yellow ellipse or a circle is farther from a yellow ellipse than a cyan pentagon .
+a magenta shape is a rectangle or a cyan shape is an ellipse .
+there is a yellow circle or a gray shape is darker than a cyan pentagon .
+
+less than one pentagon is a yellow shape and a gray shape is darker than a yellow shape .
+a magenta shape is smaller than a yellow circle or a green shape is smaller than a yellow circle .
+less than four green shapes are pentagons and a shape is a rectangle .
+a shape is a circle or a red circle is to the right of a triangle .
+a circle is a cyan shape or a triangle is a green shape .
+
+more than three cyan shapes are a cyan cross or there is a gray shape .
+a rectangle is a yellow shape and a cross is to the right of a cyan shape .
+at least five shapes are a magenta shape or a pentagon is a yellow shape .
+at least three of the three cyan shapes are ellipses or a magenta pentagon is to the left of a yellow ellipse .
+a few of the four magenta shapes are crosses or a cyan shape is closer to a cyan semicircle than a cyan pentagon .
+
+a cross is lighter than a rectangle and almost all rectangles are a magenta rectangle .
+at most four of the four rectangles are a gray shape and a cross is to the left of a rectangle .
+there is a circle and a gray circle is to the left of a green shape .
+a magenta shape is behind a green cross and there is a yellow shape .
+at most four magenta shapes are pentagons and at most four green shapes are a rectangle .
+
+there is an ellipse and a gray cross is smaller than a gray shape .
+a green shape is an ellipse and a green ellipse is darker than a cyan shape .
+at most three of the two circles are a yellow shape and a green cross is to the right of a magenta cross .
+a cyan shape is below a circle and there is a red shape .
+a pentagon is farther from a green ellipse than a cyan shape or a circle is farther from a yellow ellipse than a gray shape .
+
+a cross is lighter than a cyan shape or a rectangle is lighter than a gray shape .
+a rectangle is a gray rectangle and a cyan square is farther from a cyan ellipse than a cross .
+an ellipse is lighter than a cross and not two of the four yellow shapes are a circle .
+exactly zero of the two rectangles are a red shape or a square is closer to a cyan ellipse than a cross .
+a blue shape is an ellipse or a red shape is an ellipse .
+
+a yellow rectangle is farther from a green rectangle than a yellow shape or a yellow circle is farther from a yellow rectangle than a yellow shape .
+a yellow rectangle is below a rectangle or exactly two of the seven yellow shapes are a circle .
+at least one of the seven yellow shapes is a pentagon or a yellow pentagon is bigger than a yellow circle .
+not two of the five rectangles are a yellow shape and a rectangle is in front of a red rectangle .
+a red shape is below a cyan shape or more than five rectangles are a green rectangle .
+
+not three ellipses are a magenta shape or there is a cyan pentagon .
+a magenta square is to the left of a cyan shape or a pentagon is a blue shape .
+there is a magenta shape or a semicircle is farther from a red cross than a pentagon .
+a blue pentagon is farther from a cyan ellipse than a semicircle and a magenta shape is a pentagon .
+four more cyan shapes than magenta shapes are ellipses or there is a red shape .
+
+a semicircle is lighter than a yellow shape and more than three of the eight shapes are a semicircle .
+a square is a yellow shape and a circle is a gray shape .
+a gray shape is a semicircle and a gray shape is a semicircle .
+a magenta shape is darker than a gray semicircle or a red shape is darker than a gray cross .
+a third of the five yellow shapes are semicircles or there is a yellow circle .
+
+a triangle is in front of a magenta shape or a triangle is lighter than a magenta shape .
+a magenta shape is in front of a red shape or a magenta shape is in front of a red shape .
+a cross is bigger than a red cross and there is a magenta ellipse .
+exactly three of the six crosses are a red shape or a magenta square is bigger than a cross .
+a shape is a red cross or a cross is lighter than a magenta square .
+
+at least two of the five rectangles are a gray shape and at least two of the five rectangles are a magenta shape .
+a magenta rectangle is bigger than a blue rectangle or a yellow circle is bigger than a yellow rectangle .
+a magenta rectangle is to the left of a blue semicircle or a magenta shape is a rectangle .
+a magenta shape is smaller than a rectangle and not four rectangles are a gray shape .
+at most five gray shapes are rectangles or at most five cyan shapes are a rectangle .
+
+a cross is to the left of a cross or at least all the two triangles but one are a green shape .
+exactly one of the seven green shapes is a circle and a green shape is a cross .
+a yellow rectangle is to the right of a cross and a green semicircle is to the right of an ellipse .
+a green triangle is smaller than a green shape and a green cross is smaller than a green shape .
+a shape is a green cross and a green shape is smaller than a yellow ellipse .
+
+there is a yellow pentagon or more than three shapes are a green ellipse .
+less than one rectangle is a cyan shape or exactly five triangles are a gray shape .
+a circle is to the left of a triangle or more than two of the three green shapes are a rectangle .
+there is a green rectangle and there is a green ellipse .
+a yellow shape is above a green rectangle and there is a green rectangle .
+
+there is a yellow cross or a cross is to the left of a yellow triangle .
+less than two of the three green shapes are pentagons and a green shape is farther from a green shape than a square .
+a triangle is to the left of an ellipse or there is a yellow rectangle .
+a yellow shape is in front of a cyan square or all of the four squares are a yellow shape .
+a shape is a green shape and a cross is behind a triangle .
+
+there is a semicircle or there is a rectangle .
+there is a cross and a gray circle is darker than a gray shape .
+less than one circle is a red shape or less than one circle is a yellow shape .
+a gray circle is lighter than a circle or there is a gray circle .
+there is a gray cross or there is a green circle .
+
+two less circles than crosses are a yellow shape and two more circles than ellipses are a yellow shape .
+less than one of the six shapes is a magenta shape or less than one of the two shapes is a magenta shape .
+there is a cyan circle or a green cross is to the left of a circle .
+a red shape is a circle or a green pentagon is above a triangle .
+at least zero of the three yellow shapes are circles and an ellipse is smaller than a pentagon .
+
+a blue cross is smaller than an ellipse or two more blue shapes than magenta shapes are a cross .
+a magenta triangle is darker than a cross and a cyan cross is darker than a square .
+there is a yellow shape and a green shape is smaller than a magenta shape .
+a magenta shape is a magenta triangle and a magenta rectangle is to the right of a magenta shape .
+a gray shape is bigger than a magenta rectangle and there is a blue shape .
+
+at most zero of the two green shapes are a green rectangle and a blue rectangle is in front of a square .
+a red shape is a circle or a blue shape is an ellipse .
+a green shape is above a cyan ellipse or almost none of the two triangles is a magenta triangle .
+a magenta cross is bigger than a red semicircle or a magenta cross is bigger than a blue rectangle .
+a cross is lighter than a cyan shape and there is a circle .
+
+a red shape is a pentagon or a gray ellipse is in front of a red pentagon .
+there is a magenta semicircle or there is a magenta ellipse .
+a magenta shape is to the right of an ellipse or five less pentagons than circles are a blue shape .
+a shape is a yellow semicircle and a yellow ellipse is darker than a gray ellipse .
+a gray semicircle is bigger than a semicircle and an ellipse is a green shape .
+
+at most five yellow shapes are a yellow semicircle and a shape is a green ellipse .
+a yellow semicircle is closer to an ellipse than a red triangle and a green ellipse is closer to a cross than a red triangle .
+a triangle is to the left of a green cross and more than one shape is a green shape .
+there is a pentagon or there is a pentagon .
+a red shape is to the left of a green ellipse or an ellipse is a green shape .
+
+there is a magenta cross and exactly four rectangles are a cyan shape .
+no shape is a circle or a rectangle is darker than a green shape .
+a green shape is a rectangle and not zero cyan shapes are a rectangle .
+a yellow rectangle is smaller than a rectangle or there is a blue shape .
+there is a green shape and a magenta ellipse is above a magenta shape .
+
+there is a blue square and a rectangle is behind a blue shape .
+a blue square is above a red shape or exactly three blue shapes are a blue ellipse .
+a shape is a blue shape and a shape is a blue shape .
+there is a gray rectangle and there is a gray rectangle .
+a square is below a blue ellipse or there is a red triangle .
+
+there is a blue square or a gray rectangle is bigger than a gray triangle .
+a circle is a gray shape or an ellipse is a green shape .
+there is a blue rectangle and there is a green pentagon .
+a shape is a square or less than all blue shapes but one are a circle .
+a blue circle is darker than a triangle and at most four red shapes are a cross .
+
+not all shapes but one are a blue shape or not all shapes but one are a cyan shape .
+there is a cyan semicircle or there is a gray circle .
+a blue triangle is smaller than a cyan semicircle or an ellipse is a blue shape .
+a magenta triangle is to the left of a cyan square or four more pentagons than triangles are a magenta shape .
+as many rectangles as semicircles are a blue shape and there is a cyan triangle .
+
+there is a triangle and a green circle is closer to a triangle than a blue shape .
+a cyan semicircle is to the right of a green circle and a yellow semicircle is to the right of a red triangle .
+a red circle is to the right of a blue shape or there is a magenta semicircle .
+a cross is a cyan triangle and less than five of the seven circles are a red circle .
+almost no shape is a pentagon or there is a rectangle .
+
+a rectangle is below a green square or there is a yellow rectangle .
+there is a gray rectangle or there is a blue rectangle .
+more than four shapes are triangles or a circle is to the left of a cyan shape .
+a shape is a triangle or a blue shape is closer to a green shape than a red circle .
+as many squares as ellipses are a green shape and as many circles as squares are a green shape .
+
+there is a blue ellipse or there is a blue ellipse .
+exactly one of the four shapes is a blue shape or there is a gray shape .
+exactly two shapes are a blue shape or there is a blue rectangle .
+exactly one of the two shapes is a rectangle and exactly one of the two shapes is a rectangle .
+there is an ellipse or there is an ellipse .
+
+a green rectangle is farther from a circle than a green shape or a triangle is a cyan shape .
+a circle is a green shape or a semicircle is a green shape .
+there is a cyan ellipse or a green square is above a green shape .
+less than three of the six shapes are a green shape or a rectangle is a cyan shape .
+a circle is a green shape or a blue circle is below a cyan square .
+
+at least zero shapes are a gray shape and a square is farther from a magenta shape than a red circle .
+a yellow triangle is above a square and a square is a cyan shape .
+a square is to the right of a red pentagon and there is a cyan square .
+at least one of the two pentagons is a red shape and at least one of the seven squares is a cyan shape .
+exactly all the three red shapes but one are squares or a magenta shape is a triangle .
+
+a magenta square is to the left of a yellow shape and a gray square is to the left of a green shape .
+a square is farther from a yellow ellipse than a square or a gray shape is a semicircle .
+a shape is a circle or no shape is a square .
+most of the eight shapes are triangles or a rectangle is to the right of a magenta shape .
+a magenta shape is farther from a green cross than a yellow ellipse or a magenta shape is in front of a green cross .
+
+there is a green shape and at least two of the three circles are a magenta shape .
+not two blue shapes are circles and not all blue shapes but one are a circle .
+a square is to the right of a green square and at most four squares are a magenta shape .
+a red shape is lighter than a magenta square and a gray shape is lighter than a red square .
+there is a magenta shape or there is a blue shape .
+
+a third of the pentagons is a cyan shape and a triangle is a yellow shape .
+a circle is a yellow circle and a gray rectangle is farther from a cross than a circle .
+two more crosses than rectangles are a red shape or there is a magenta shape .
+less than five of the eight shapes are a gray shape and a circle is a red shape .
+there is a magenta shape and less than four gray shapes are a triangle .
+
+there is a magenta square or there is a blue circle .
+a triangle is bigger than a gray rectangle and a rectangle is bigger than a gray triangle .
+a gray shape is to the right of a triangle and half the triangles are a blue triangle .
+a red shape is a triangle or a yellow circle is closer to a red triangle than a gray rectangle .
+a red triangle is smaller than a gray shape and a gray rectangle is smaller than a gray shape .
+
+a yellow cross is closer to a yellow shape than a yellow triangle and less than one gray shape is a gray rectangle .
+a gray shape is a triangle or a blue shape is to the left of a blue triangle .
+at least one of the six triangles is a cyan shape and a cyan triangle is above a yellow triangle .
+there is a semicircle or a red triangle is farther from a cyan triangle than a yellow triangle .
+a circle is above a gray pentagon or a triangle is above a yellow triangle .
+
+there is a square or exactly four cyan shapes are a pentagon .
+an ellipse is a green shape or a magenta rectangle is darker than an ellipse .
+at most two cyan shapes are crosses and at most two cyan shapes are an ellipse .
+there is a cross and less than four magenta shapes are a magenta pentagon .
+a cyan cross is to the left of a magenta pentagon and a green cross is to the left of a cyan ellipse .
+
+a cyan pentagon is behind a cyan pentagon and at most all shapes but one are a pentagon .
+there is a cyan pentagon and a red pentagon is lighter than a cyan pentagon .
+a pentagon is behind a cyan pentagon and a cyan shape is a pentagon .
+there is a triangle and a cyan pentagon is above a cyan pentagon .
+a shape is a cyan shape and a shape is a cyan shape .
+
+a pentagon is lighter than a magenta shape and not five shapes are a cyan triangle .
+a blue rectangle is to the right of a triangle or a blue cross is to the right of a triangle .
+a magenta shape is above a cyan semicircle or a yellow shape is above a yellow triangle .
+a green shape is smaller than a gray rectangle or there is a yellow pentagon .
+exactly zero blue shapes are ellipses and exactly zero yellow shapes are a pentagon .
+
+a triangle is in front of a cyan circle and a gray shape is a gray semicircle .
+there is a gray triangle or there is a yellow semicircle .
+a red triangle is below a circle or at most one of the seven shapes is a triangle .
+a triangle is a green shape and a green shape is in front of a green triangle .
+a green triangle is in front of a gray triangle and most triangles are a gray shape .
+
+at most zero rectangles are a gray rectangle and at most zero circles are a gray circle .
+at least one shape is a square or there is a magenta semicircle .
+a magenta shape is a semicircle and a magenta shape is a rectangle .
+there is a yellow semicircle and there is a magenta square .
+more than two magenta shapes are semicircles or a cyan shape is a semicircle .
+
+not all ellipses but one are a gray shape or not all ellipses but one are a cyan shape .
+a blue cross is farther from a triangle than a magenta shape or a cyan ellipse is farther from a semicircle than a gray shape .
+a gray shape is farther from a cross than a rectangle or less than one of the two magenta shapes is a cross .
+almost all the four magenta shapes are ellipses or there is a blue shape .
+not two of the three rectangles are a gray shape or not two of the five circles are a cyan shape .
+
+a cross is a gray shape or a pentagon is behind a cross .
+a magenta shape is a green triangle and less than four of the two magenta shapes are a magenta pentagon .
+more than all the two gray shapes but one are triangles or a circle is above a triangle .
+half the green shapes are circles or half the gray shapes are a triangle .
+a magenta shape is below a gray shape and there is a cyan cross .
+
+not all the four triangles but one are a blue shape or not all the four pentagons but one are a magenta shape .
+a cross is a gray shape and a blue triangle is below a magenta pentagon .
+a yellow shape is closer to a pentagon than a yellow cross and there is a blue cross .
+as many triangles as squares are a gray shape and there is a yellow shape .
+there is a magenta triangle and a triangle is smaller than a cyan shape .
+
+a magenta shape is below a magenta pentagon or a shape is a cyan pentagon .
+not four of the three cyan shapes are pentagons or not four of the six cyan shapes are a pentagon .
+there is a yellow ellipse or a blue triangle is in front of a magenta square .
+not all pentagons but one are a blue shape or there is a magenta shape .
+a cyan shape is to the right of a magenta shape and there is a magenta pentagon .
+
+there is a magenta triangle and twice as many pentagons as squares are a magenta shape .
+at most one of the seven triangles is a red triangle or there is a gray shape .
+a pentagon is to the right of a triangle and a shape is a magenta shape .
+a magenta triangle is smaller than a blue circle and all shapes are a circle .
+a red circle is farther from a circle than a blue shape and a magenta circle is farther from a triangle than a magenta shape .
+
+a shape is a red shape or a shape is a cyan shape .
+a cross is bigger than a rectangle and a shape is a red shape .
+more than two shapes are a green ellipse or a green triangle is closer to a green ellipse than a magenta shape .
+a blue cross is closer to a triangle than a magenta semicircle and a shape is a red semicircle .
+a green circle is lighter than a green triangle and there is an ellipse .
+
+a shape is a rectangle or a shape is a circle .
+almost no rectangle is a blue shape or a square is a red shape .
+a rectangle is a red shape and a rectangle is above a magenta square .
+at most zero blue shapes are squares and there is a blue square .
+a red rectangle is lighter than a blue cross or a magenta cross is lighter than a blue rectangle .
+
+a rectangle is to the right of a square or an ellipse is a blue shape .
+at most zero rectangles are a magenta shape or at most zero squares are a green shape .
+there is a blue rectangle and more than one of the seven blue shapes is a square .
+less than zero rectangles are a blue shape or at most two rectangles are a blue shape .
+a blue shape is to the right of a blue rectangle and a rectangle is a blue shape .
+
+a cyan shape is a triangle or a red shape is a circle .
+a square is behind a red triangle or more than four of the five red shapes are a rectangle .
+a triangle is a cyan shape and a red triangle is closer to a green shape than a red triangle .
+a green rectangle is lighter than a red triangle or a magenta rectangle is lighter than a magenta triangle .
+a shape is a square and a red triangle is farther from a red shape than a red rectangle .
+
+a shape is a pentagon and exactly five of the eight shapes are a pentagon .
+a shape is a cyan ellipse and a cross is smaller than a green shape .
+a cyan pentagon is above a cross and a red shape is a pentagon .
+there is a magenta cross and a cyan pentagon is darker than a magenta pentagon .
+there is a magenta triangle or at least three pentagons are a magenta pentagon .
+
+at most all shapes but one are circles and less than all shapes but one are a circle .
+there is a semicircle or there is a semicircle .
+there is a gray square and there is a gray square .
+there is a gray shape or there is a red shape .
+there is a gray rectangle and there is a gray circle .
+
+a cyan rectangle is to the right of a cyan triangle and half the red shapes are a red triangle .
+half the two rectangles are a red rectangle or there is a yellow shape .
+there is a green square and at most one of the five rectangles is a red shape .
+a magenta pentagon is lighter than a pentagon and a red rectangle is lighter than a rectangle .
+a triangle is above a cyan rectangle or a circle is above a cyan rectangle .
+
+a red shape is lighter than a green shape or at most zero of the two blue shapes are a pentagon .
+there is a green triangle and half the seven rectangles are a blue rectangle .
+as many rectangles as pentagons are a blue shape and as many rectangles as pentagons are a blue shape .
+there is a cross and there is a semicircle .
+an ellipse is in front of a red shape or a shape is a square .
+
+a blue shape is a cross or a blue shape is a cross .
+there is a blue semicircle or there is a green cross .
+less than three circles are a blue shape and a cyan shape is darker than a blue shape .
+none of the two ellipses is a yellow shape or there is a pentagon .
+there is a yellow ellipse and less than five shapes are a yellow shape .
+
+two thirds of the three shapes are a red triangle and a triangle is to the left of a red triangle .
+there is a triangle and there is a rectangle .
+a yellow shape is closer to a cyan shape than a red triangle and there is a gray shape .
+a shape is a cyan shape or a shape is a cyan shape .
+there is a red pentagon or a triangle is behind a triangle .
+
+at least five of the eight shapes are a yellow shape or there is a rectangle .
+at least three of the six shapes are a gray shape or an ellipse is lighter than a yellow ellipse .
+a blue shape is farther from a green circle than a magenta shape and there is a magenta shape .
+a circle is smaller than a cyan shape and less than three of the eight shapes are a cyan shape .
+a third of the green shapes are circles or there is a cyan square .
+
+a semicircle is below a red circle or a semicircle is above a cyan ellipse .
+a cyan shape is a cyan triangle and more than zero of the three squares are a cyan square .
+at most four of the three ellipses are a magenta shape or a cyan square is smaller than a yellow semicircle .
+a semicircle is a blue shape and a cyan semicircle is smaller than a blue semicircle .
+there is a cyan square and there is a yellow semicircle .
+

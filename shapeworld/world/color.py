@@ -1,4 +1,4 @@
-from random import choice, gauss
+from random import choice, uniform
 import numpy as np
 
 
@@ -27,7 +27,7 @@ class Color(object):
         return isinstance(other, Color) and self.name == other.name
 
     def model(self):
-        return {'name': str(self.name), 'rgb': list(self.rgb), 'shade': self.shade}
+        return dict(name=self.name, rgb=list(self.rgb), shade=self.shade)
 
     @staticmethod
     def from_model(model):
@@ -40,24 +40,30 @@ class Color(object):
         return self.shaded_rgb.copy()
 
     @staticmethod
+    def get_colors():
+        return sorted(Color.colors.keys())
+
+    @staticmethod
+    def get_rgb(name):
+        return Color.colors[name]
+
+    @staticmethod
     def random_instance(colors, shade_range):
-        name, rgb = choice([(color, Color.colors[color]) for color in colors])
+        name, rgb = choice([(color, Color.get_rgb(color)) for color in colors])
         if shade_range > 0.0:
-            shade = gauss(mu=0.0, sigma=shade_range)
-            while shade < -shade_range or shade > shade_range:
-                shade = gauss(mu=0.0, sigma=shade_range)
+            shade = uniform(a=-shade_range, b=shade_range)
         else:
             shade = 0.0
         return Color(name, rgb, shade)
 
 
-Color.colors = {
-    'black': (0.0, 0.0, 0.0),
-    'red': (1.0, 0.0, 0.0),
-    'green': (0.0, 1.0, 0.0),
-    'blue': (0.0, 0.0, 1.0),
-    'yellow': (1.0, 1.0, 0.0),
-    'magenta': (1.0, 0.0, 1.0),
-    'cyan': (0.0, 1.0, 1.0),
-    'gray': (0.5, 0.5, 0.5)
-}
+Color.colors = dict(
+    black=(0.0, 0.0, 0.0),
+    red=(1.0, 0.0, 0.0),
+    green=(0.0, 1.0, 0.0),
+    blue=(0.0, 0.0, 1.0),
+    yellow=(1.0, 1.0, 0.0),
+    magenta=(1.0, 0.0, 1.0),
+    cyan=(0.0, 1.0, 1.0),
+    gray=(0.5, 0.5, 0.5)
+)

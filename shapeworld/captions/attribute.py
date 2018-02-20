@@ -43,6 +43,9 @@ class Attribute(Predicate):
         else:
             return ['{}-{}-{}'.format(self, self.predtype, self.value)]
 
+    def apply_to_predication(self, predication):
+        predication.apply(predicate=self)
+
     def pred_agreement(self, entity, predication):
         if self.predtype == 'relation':
             return self.value.pred_agreement(entity=entity, predication=predication)

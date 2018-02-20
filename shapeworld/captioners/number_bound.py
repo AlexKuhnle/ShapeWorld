@@ -86,7 +86,7 @@ class NumberBoundCaptioner(WorldCaptioner):
             return None
 
         num_predication = predication.sub_predication()
-        self.quantifier_captioner.restrictor_captioner.apply_caption_to_predication(caption=quantifier.restrictor, predication=num_predication)
+        quantifier.restrictor.apply_to_predication(predication=num_predication)
 
         if num_predication.num_agreeing not in self.number_bounds and (self.incorrect_mode == 0 or self.incorrect_mode == 1):
             return None
@@ -99,17 +99,17 @@ class NumberBoundCaptioner(WorldCaptioner):
         assert predication.empty()
 
         if self.incorrect_mode == 0:  # 0: correct
-            self.apply_caption_to_predication(caption=caption, predication=predication)
+            caption.apply_to_predication(predication=predication)
 
         elif self.incorrect_mode == 1:  # 1: incorrect quantifier
             quant_predication = predication.sub_predication()
             if not self.quantifier_captioner.incorrect(caption=caption.quantifier, predication=quant_predication, world=world):
                 return False
             num_predication = predication.sub_predication()
-            self.quantifier_captioner.restrictor_captioner.apply_caption_to_predication(caption=caption.quantifier.restrictor, predication=num_predication)
+            caption.quantifier.restrictor.apply_to_predication(predication=num_predication)
 
         elif self.incorrect_mode == 2 or self.incorrect_mode == 3:  # 2/3: number off by one/two
-            num_predication = self.apply_caption_to_predication(caption=caption, predication=predication)
+            num_predication = caption.apply_to_predication(predication=predication)
 
             delta = self.incorrect_mode - 1
             if random() < 0.5:
@@ -124,14 +124,7 @@ class NumberBoundCaptioner(WorldCaptioner):
                 return False
 
         elif self.incorrect_mode == 4:  # 4: random incorrect number
-            self.apply_caption_to_predication(caption=caption, predication=predication)
+            caption.apply_to_predication(predication=predication)
             caption.bound = choice(self.number_bounds)
 
         return True
-
-    def apply_caption_to_predication(self, caption, predication):
-        quant_predication = predication.sub_predication()
-        self.quantifier_captioner.apply_caption_to_predication(caption=caption.quantifier, predication=quant_predication)
-        num_predication = predication.sub_predication()
-        self.quantifier_captioner.restrictor_captioner.apply_caption_to_predication(caption=caption.quantifier.restrictor, predication=num_predication)
-        return num_predication

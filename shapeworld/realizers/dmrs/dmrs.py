@@ -31,7 +31,7 @@ class Dmrs(ListDmrs):
 
     __slots__ = ('nodes', 'links', 'index', 'top', 'anchors')
 
-    def __init__(self, nodes=(), links=(), index=None, top=None):
+    def __init__(self, nodes=(), links=(), index=None, top=None, **kwargs):
         super(Dmrs, self).__init__(nodes=nodes, links=links, index=index, top=top)
         self.anchors = dict()
 
@@ -41,6 +41,29 @@ class Dmrs(ListDmrs):
         dmrs = parse_graphlang(string, cls=Dmrs, anchors=anchors, sortinfo_classes=sortinfo_classes, sortinfo_shortforms=sortinfo_shortforms)
         dmrs.anchors = anchors
         return dmrs
+
+    def subgraph(self, nodeid, exclude=()):
+        subgraph_nodeid = nodeid
+        subgraph = {subgraph_nodeid}
+        for link in self.get_links(nodeid=subgraph_nodeid):
+            stack = list()
+            stack.append(link.start)
+            stack.append(link.end)
+            visited = {subgraph_nodeid}
+            while stack:
+                nodeid = stack.pop()
+                # if self.index is not None and nodeid == self.index.nodeid:  # or top?
+                #     break
+                if nodeid in exclude and nodeid != subgraph_nodeid:
+                    break
+                if nodeid not in visited:
+                    visited.add(nodeid)
+                    for link in self.get_links(nodeid=nodeid):
+                        stack.append(link.start)
+                        stack.append(link.end)
+            else:
+                subgraph |= visited
+        return SubDmrs(dmrs=self, nodeids=subgraph)
 
     def compose(self, other, fusion=None, other_head=False, hierarchy=None):
         assert isinstance(other, Dmrs)
@@ -95,8 +118,8 @@ class Dmrs(ListDmrs):
         if other_head:
             self.anchors = {anchor: self[node2.nodeid] for anchor, node2 in other.anchors.items()}
 
-    def apply_paraphrases(self, paraphrases):
-        return paraphrase(dmrs=self, paraphrases=paraphrases)
+    def apply_paraphrases(self, paraphrases, hierarchy=None):
+        return paraphrase(dmrs=self, paraphrases=paraphrases, hierarchy=hierarchy)
 
     def remove_underspecifications(self):
         for node in list(self.iter_nodes()):
@@ -208,3 +231,66 @@ class Dmrs(ListDmrs):
         hcons_string = ' '.join('h{} qeq h{}'.format(*qeq) for qeq in hcons.items())
         mrs_string = '[ {}{}RELS: < {} > HCONS: < {} > ICONS: <  > ]'.format(top_string, index_string, eps_string, hcons_string)
         return mrs_string
+
+
+class SubDmrs(Dmrs):
+
+    def __init__(self, dmrs, nodeids=None):
+        self.dmrs = dmrs
+        self.nodeids = set(dmrs) if nodeids is None else set(nodeids)
+        if dmrs.index is not None and dmrs.index.nodeid in self.nodeids:
+            self.index = dmrs.index
+        else:
+            self.index = None
+        if dmrs.top is not None and dmrs.top.nodeid in self.nodeids:
+            self.top = dmrs.top
+        else:
+            self.top = None
+
+        self.cfrom = dmrs.cfrom
+        self.cto = dmrs.cto
+        self.surface = dmrs.surface
+        self.ident = dmrs.ident
+
+    def __iter__(self):
+        for nodeid in self.dmrs:
+            if nodeid in self.nodeids:
+                yield nodeid
+
+    def __len__(self):
+        return sum(1 for nodeid in self.dmrs if nodeid in self.nodeids)
+
+    def __getitem__(self, nodeid):
+        if nodeid in self.nodeids:
+            return self.dmrs[nodeid]
+        raise KeyError(nodeid)
+
+    def iter_nodes(self):
+        for node in self.dmrs.iter_nodes():
+            if node.nodeid in self.nodeids:
+                yield node
+
+    def iter_links(self):
+        for link in self.dmrs.iter_links():
+            if link.start in self.nodeids and link.end in self.nodeids:
+                yield link
+
+    def add_node(self, node):
+        raise NotImplementedError
+
+    def add_link(self, link):
+        raise NotImplementedError
+
+    def remove_node(self, nodeid):
+        if nodeid in self.nodeids:
+            self.nodeids.remove(nodeid)
+            if self.index is not None and self.index.nodeid == nodeid:
+                self.index = None
+            if self.top is not None and self.top.nodeid == nodeid:
+                self.top = None
+
+    def remove_link(self, link):
+        raise NotImplementedError
+
+    def renumber_node(self, old_id, new_id):
+        raise NotImplementedError

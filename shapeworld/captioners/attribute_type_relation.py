@@ -54,6 +54,3 @@ class AttributeTypeRelationCaptioner(WorldCaptioner):
 
     def incorrect(self, caption, predication, world):
         return self.captioner.incorrect(caption=caption.value, predication=predication, world=world)
-
-    def apply_caption_to_predication(self, caption, predication):
-        self.captioner.apply_caption_to_predication(caption=caption.value, predication=predication)

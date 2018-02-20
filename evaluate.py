@@ -4,7 +4,7 @@ from importlib import import_module
 import json
 import os
 import sys
-from shapeworld import dataset, util
+from shapeworld import Dataset, util
 from models.TFMacros.tf_macros import Model
 
 
@@ -12,25 +12,28 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Evaluate a model')
 
     parser.add_argument('-t', '--type', help='Dataset type')
-    parser.add_argument('-n', '--name', help='Dataset name')
+    parser.add_argument('-n', '--name', type=util.parse_tuple(parse_item=str, unary_tuple=False), default=None, help='Dataset name')
     parser.add_argument('-l', '--language', default=None, help='Dataset language')
-    parser.add_argument('-c', '--config', type=util.parse_config, default=None, help='Dataset configuration file')
-    parser.add_argument('-p', '--pixel-noise', type=float, default=0.1, help='Pixel noise range')
+    parser.add_argument('-c', '--config', type=util.parse_tuple(parse_item=str, unary_tuple=False), default=None, help='Dataset configuration file')
+    parser.add_argument('-p', '--pixel-noise', type=float, default=0.0, help='Pixel noise range')
 
     parser.add_argument('-m', '--model', help='Model')
     parser.add_argument('-y', '--hyperparams-file', default=None, help='Model hyperparameters file (default: hyperparams directory)')
 
-    parser.add_argument('-i', '--iterations', type=util.parse_int_with_factor, default=1, help='Iterations')
-    parser.add_argument('-b', '--batch-size', type=util.parse_int_with_factor, default=1000, help='Batch size')
+    parser.add_argument('-b', '--batch-size', type=util.parse_int_with_factor, default=64, help='Batch size')
+    parser.add_argument('-i', '--iterations', type=util.parse_int_with_factor, default=100, help='Number of iterations')
+    parser.add_argument('-q', '--query', default=None, help='Additional values to query (separated by commas)')
+    parser.add_argument('-s', '--serialize', default=None, help='Values to serialize (separated by commas)')
 
     parser.add_argument('--model-dir', help='TensorFlow model directory, storing the model computation graph and parameters')
     parser.add_argument('--report-file', default=None, help='CSV file reporting the evaluation results')
 
-    parser.add_argument('-v', '--verbosity', type=int, choices=(0, 1, 2), default=1, help='Verbosity (0: nothing, 1: default, 2: TensorFlow)')
+    parser.add_argument('-v', '--verbosity', type=int, choices=(0, 1, 2), default=1, help='Verbosity (0: no messages, 1: default, 2: plus TensorFlow messages)')
 
-    parser.add_argument('--query', default=None, help='Experimental: Values to query (separated by commas)')
-    parser.add_argument('--serialize', default=None, help='Experimental: Values to serialize (requires --evaluate) (separated by commas)')
+
+    parser.add_argument('--config-values', nargs=argparse.REMAINDER, default=(), help='Additional dataset configuration values passed as command line arguments')
     args = parser.parse_args()
+    args.config_values = util.parse_config(values=args.config_values)
 
     # import tensorflow
     if args.verbosity >= 2:
@@ -42,42 +45,52 @@ if __name__ == '__main__':
     assert args.model_dir is not None
 
     # dataset
-    dataset = dataset(dtype=args.type, name=args.name, language=args.language, config=args.config)
+    dataset = Dataset.create(dtype=args.type, name=args.name, language=args.language, config=args.config, **args.config_values)
 
     # information about dataset and model
     if args.verbosity >= 1:
         sys.stdout.write('{time} {dataset}\n'.format(time=datetime.now().strftime('%H:%M:%S'), dataset=dataset))
-        sys.stdout.write('         config: {}\n'.format(args.config))
+        if args.config is None:
+            if args.config_values:
+                sys.stdout.write('         config: {config}\n'.format(config=args.config_values))
+        else:
+            sys.stdout.write('         config: {config}\n'.format(config=args.config))
+            if args.config_values:
+                sys.stdout.write('                 {config}\n'.format(config=args.config_values))
         sys.stdout.write('         {} model: {}\n'.format(args.type, args.model))
         sys.stdout.write('         hyperparameters: {}\n'.format(args.hyperparameters))
         sys.stdout.flush()
 
     if args.type == 'agreement':
-        parameters = dict(
+        dataset_parameters = dict(
             world_shape=dataset.world_shape,
-            vocabulary_size=dataset.vocabulary_size(value_type='language'),
-            caption_shape=dataset.vector_shape(value_name='caption')
+            vocabulary_size=dataset.vocabulary_size(value_type='language')
         )
+        for value_name in dataset.vectors:
+            dataset_parameters[value_name + '_shape'] = dataset.vector_shape(value_name=value_name)
         query = ('agreement_accuracy',)
         serialize = ()
 
     elif args.type == 'classification':
-        parameters = dict(
+        dataset_parameters = dict(
             world_shape=dataset.world_shape,
             num_classes=dataset.num_classes,
             multi_class=dataset.multi_class,
             class_count=dataset.class_count
         )
+        for value_name in dataset.vectors:
+            dataset_parameters[value_name + '_shape'] = dataset.vector_shape(value_name=value_name)
         query = ('classification_fscore', 'classification_precision', 'classification_recall')
         serialize = ()
 
     elif args.type == 'clevr_classification':
-        parameters = dict(
+        dataset_parameters = dict(
             world_shape=dataset.world_shape,
             vocabulary_size=dataset.vocabulary_size,
-            question_shape=dataset.vector_shape('question'),
             num_answers=len(dataset.answers)
         )
+        for value_name in dataset.vectors:
+            dataset_parameters[value_name + '_shape'] = dataset.vector_shape(value_name=value_name)
         query = ('answer_fscore', 'answer_precision', 'answer_recall')
         serialize = ()
 
@@ -92,10 +105,10 @@ if __name__ == '__main__':
 
     if args.hyperparams_file is None:
         with open(os.path.join('models', dataset.type, 'hyperparams', args.model + '.params.json'), 'r') as filehandle:
-            parameters.update(json.load(fp=filehandle))
+            parameters = json.load(fp=filehandle)
     else:
         with open(args.hyperparams_file, 'r') as filehandle:
-            parameters.update(json.load(fp=filehandle))
+            parameters = json.load(fp=filehandle)
 
     # restore
     iteration_start = 1
@@ -106,11 +119,11 @@ if __name__ == '__main__':
         if value != 'iteration':
             iteration_start = int(value) + 1
 
-    with Model(name=args.model, learning_rate=parameters.pop('learning_rate'), weight_decay=parameters.pop('weight_decay', 0.0), model_directory=args.model_dir) as model:
-        parameters.pop('dropout_rate', 0.0)
+    with Model(name=args.model, learning_rate=parameters.pop('learning_rate'), weight_decay=parameters.pop('weight_decay', None), clip_gradients=parameters.pop('clip_gradients', None), model_directory=args.model_dir) as model:
+        parameters.pop('dropout_rate', None)
 
         module = import_module('models.{}.{}'.format(args.type, args.model))
-        module.model(model=model, inputs=dict(), **parameters)  # no input tensors, hence None for placeholder creation
+        module.model(model=model, inputs=dict(), dataset_parameters=dataset_parameters, **parameters)  # no input tensors, hence None for placeholder creation
         model.finalize(restore=True)
 
         if args.verbosity >= 1:
