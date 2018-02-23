@@ -1,7 +1,7 @@
 from models.TFMacros.tf_macros import *
 
 
-def model(model, inputs, dataset_parameters, cnn_size, cnn_depth, cnn_block_depth, embedding_size, caption_reduction, san_size, san_depth, mlp_size, mlp_depth, soft):
+def model(model, inputs, dataset_parameters, cnn_size, cnn_depth, cnn_block_depth, embedding_size, conv_size, caption_reduction, san_size, san_depth, mlp_size, mlp_depth, soft):
 
     cnn_sizes = [cnn_size * 2**n for n in range(cnn_depth)]
     cnn_depths = [cnn_block_depth for _ in range(cnn_depth)]
@@ -29,20 +29,25 @@ def model(model, inputs, dataset_parameters, cnn_size, cnn_depth, cnn_block_dept
         Repeat(layer=Dense, sizes=mlp_sizes, dropout=True) >>
         Binary(name='agreement', soft=soft, tensor=inputs.get('agreement'))
     )
+
     return agreement
 
 
 class StackedAttention(Layer):
 
-    def __init__(self, size, name=None):
-        self.x_linear = Linear(size=size, bias=False)
-        self.y_linear = Linear(size=size, bias=True)
+    num_in = 2
+    num_out = 2
+
+    def initialize(self, x, y):
+        super(StackedAttention, self).initialize(x)
+        self.x_linear = Linear(size=self.size, bias=False)
+        self.y_linear = Linear(size=self.size, bias=True)
         self.activation = Activation(activation='tanh')
         self.dense = Dense(size=0, bias=True, activation='softmax')
         self.reduction = Reduction(reduction='sum', axis=1)
-        super(StackedAttention, self).__init__(size=size, name=name)
 
     def forward(self, x, y):
+        super(StackedAttention, self).forward(x, y)
         attention = ((x >> self.x_linear) + tf.expand_dims(input=(y >> self.y_linear), axis=1)) >> self.activation >> self.dense
         attention = (x * tf.expand_dims(input=attention, axis=2)) >> self.reduction
         return x, y + attention

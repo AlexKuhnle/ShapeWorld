@@ -10,6 +10,8 @@ pip3 install -e ShapeWorld
 
 ### Recently added features
 
+- Generator option `-F` for extraction of image features (ResNet-101)
+- Generator option `-C` for alternative CLEVR output format
 - More complex quantification captions
 - Abstract caption model as sequence in reverse Polish notation
 - Improved sampling strategy for more balanced / less biased data
@@ -111,7 +113,8 @@ The following command line arguments are available:
 * `-l`, `--language`:  Dataset language, if available (default: `none`, i.e. English)
 * `-c`, `--config`:  Dataset configuration file, otherwise use default configuration
 
-* `-f`, `--files`:  Number of files to split data into instead of all in one file (not specified implies --unmanaged), either a number (with `--mode`) or a tuple of 3 comma-separated numbers (without `--mode`), for `train`, `validation` and `test` data respectively
+* `-f`, `--files`:  Optional number of files to split data into, instead of all in one file (not specified implies --unmanaged), either a number (with `--mode`) or a tuple of 3 comma-separated numbers (without `--mode`), for `train`, `validation` and `test` data respectively
+* `-s`, `--start`: Optional start file number (requires `--append`), same format as `--files`
 * `-m`, `--mode`:  Mode, one of `train`, `validation` or `test`, requires `--files` to be a single number (default: `none`)
 * `-i`, `--instances`:  Number of instances per file (default: `128`)
 

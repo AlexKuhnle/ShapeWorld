@@ -1,15 +1,10 @@
 from models.TFMacros.tf_macros import *
 
 
-def model(model, inputs, dataset_parameters, cnn_size, cnn_depth, cnn_block_depth, embedding_size, caption_reduction, relnet_size, relnet_depth, relnet_relreduce, relnet_reduce, mlp_size, mlp_depth, soft):
+def model(model, inputs, dataset_parameters, cnn_size, cnn_depth, cnn_block_depth, embedding_size, lstm_size, caption_reduction, relnet_size, relnet_depth, relnet_relreduce, relnet_reduce, mlp_size, mlp_depth, soft):
 
     cnn_sizes = [cnn_size * 2**n for n in range(cnn_depth)]
     cnn_depths = [cnn_block_depth for _ in range(cnn_depth)]
-    if caption_reduction == 'state':
-        assert cnn_sizes[-1] % 2 == 0
-        lstm_size = cnn_sizes[-1] // 2
-    else:
-        lstm_size = cnn_sizes[-1]
     relnet_sizes = [relnet_size for _ in range(relnet_depth)]
     mlp_sizes = [mlp_size for _ in range(mlp_depth)]
 

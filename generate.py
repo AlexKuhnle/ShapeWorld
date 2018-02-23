@@ -23,6 +23,7 @@ if __name__ == '__main__':
     parser.add_argument('-c', '--config', type=util.parse_tuple(parse_item=str, unary_tuple=False), default=None, help='Dataset configuration file')
 
     parser.add_argument('-f', '--files', type=util.parse_tuple(parse_item=util.parse_int_with_factor, unary_tuple=True, valid_sizes=(1, 3)), default=None, help='Number of files to split data into (not specified implies --unmanaged)')
+    parser.add_argument('-s', '--start', type=util.parse_tuple(parse_item=util.parse_int_with_factor, unary_tuple=True, valid_sizes=(1, 3)), default=None, help='Start file number (requires --append)')
     parser.add_argument('-m', '--mode', default=None, choices=('train', 'validation', 'test'), help='Mode')
     parser.add_argument('-i', '--instances', type=util.parse_int_with_factor, default=128, help='Number of instances per file')
 
@@ -110,12 +111,15 @@ if __name__ == '__main__':
         modes = ('train', 'validation', 'test')
         directories = tuple(os.path.join(directory, mode) for mode in modes)
 
+    assert args.start is None or args.append
+    assert args.start is None or len(args.start) == len(args.files)
     if args.append:
-        start_part = ()
-        if args.clevr_format:
-            for _ in directories:
-                start_part += (0,)
+        if args.start is not None:
+            start_part = args.start
+        elif args.clevr_format:
+            start_part = tuple(0 for _ in directories)
         else:
+            start_part = ()
             for subdir in directories:
                 for root, dirs, files in os.walk(subdir):
                     if root == subdir:
@@ -131,6 +135,7 @@ if __name__ == '__main__':
             with open(specification_path, 'r') as filehandle:
                 loaded_specification = json.load(filehandle)
                 assert loaded_specification == specification, str(loaded_specification) + '\n' + str(specification)
+
     else:
         start_part = (0,) * len(directories)
         if not args.unmanaged and os.path.isdir(directory):
@@ -193,7 +198,7 @@ if __name__ == '__main__':
                                 comparison = parse(model=model['comparison'], index=(index + len(reference)), inputs=list())
                                 return reference + comparison + [dict(inputs=[index + len(reference) - 1, index + len(reference) + len(comparison) - 1], function='relation', value_inputs=['{}({})'.format(model['predtype'], model['value'])])]
                             else:
-                                return reference + [dict(inputs=[index + len(reference) - 1], function='relation', value_inputs=['{}({})'.format(model['predtype'], model['value'])])]
+                                return reference + [dict(inputs=[index + len(reference) - 1], function='relation', value_inputs=['{}-{}'.format(model['predtype'], model['value'])])]
                     elif model['component'] == 'Existential':  # should connect relation???
                         restrictor = parse(model=model['restrictor'], index=index, inputs=list())
                         body = parse(model=model['body'], index=(index + len(restrictor)), inputs=[index + len(restrictor) - 1])

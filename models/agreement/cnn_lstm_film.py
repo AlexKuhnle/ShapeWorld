@@ -27,20 +27,22 @@ def model(model, inputs, dataset_parameters, cnn_size, cnn_depth, cnn_block_dept
     else:
         caption >>= Select(index=0) >> Reduction(reduction=caption_reduction, axis=1)
 
-    def film_layer(size):
-        return (
-            (Convolution(size=size, index=True, window=(1, 1), normalization=False), caption) >>
-            Convolution(size=size, normalization=(Linear, Linear)) >>
-            Select(index=0)
-        )
+    class CustomFilmLayer(Layer):
 
-    def res_film_layer(size):
-        return Residual(size=size, unit=film_layer, depth=1)
+        def initialize(self, x):
+            super(CustomFilmLayer, self).initialize(x)
+            self.conv = Convolution(size=self.size, index=True, window=(1, 1), normalization=False)
+            self.film = FiLM(layer=Convolution, size=self.size)
+
+        def forward(self, x):
+            super(CustomFilmLayer, self).forward(x)
+            x >>= self.conv
+            return (x, caption) >> self.film
 
     agreement = (
         world >>
         Convolution(size=film_sizes[0], index=True, window=(3, 3), normalization=False) >>
-        Repeat(layer=res_film_layer, sizes=film_sizes) >>
+        Repeat(layer=customize(unit_=Residual, unit=CustomFilmLayer, depth=1), sizes=film_sizes) >>
         Convolution(size=conv_size, window=(1, 1)) >>
         Reduction(reduction=world_reduction, axis=(1, 2)) >>
         Repeat(layer=Dense, sizes=mlp_sizes) >>
@@ -48,3 +50,5 @@ def model(model, inputs, dataset_parameters, cnn_size, cnn_depth, cnn_block_dept
     )
 
     return agreement
+
+

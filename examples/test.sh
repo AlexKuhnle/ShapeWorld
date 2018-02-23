@@ -1,6 +1,3 @@
-rm -r examples/test
-
-
 echo "agreement:"
 
 echo "  oneshape"

@@ -6,6 +6,7 @@
     "cnn_depth": 3,
     "cnn_block_depth": 1,
     "embedding_size": 64,
+    "conv_size": 128,
     "caption_reduction": "mean",
     "san_size": 256,
     "san_depth": 2,

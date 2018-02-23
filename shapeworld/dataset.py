@@ -299,7 +299,8 @@ class Dataset(object):
         value_type, alts = util.alternatives_type(value_type=value_type)
         if value_name == 'alternatives':
             assert value_type == 'int'
-            write_file('alternatives.txt', str(value) + '\n')
+            value = '\n'.join(str(int(x)) for x in value) + '\n'
+            write_file('alternatives.txt', value)
         elif value_type == 'int':
             if alts:
                 value = '\n'.join(';'.join(str(int(x)) for x in xs) for xs in value) + '\n'
@@ -366,7 +367,8 @@ class Dataset(object):
         value_type, alts = util.alternatives_type(value_type=value_type)
         if value_name == 'alternatives':
             assert value_type == 'int'
-            return int(read_file('alternatives.txt')[:-1])
+            value = read_file('alternatives.txt')
+            return [int(x) for x in value.split('\n')[:-1]]
         elif value_type == 'int':
             value = read_file(value_name + '.txt')
             if alts:
@@ -723,7 +725,7 @@ class CaptionAgreementDataset(Dataset):
 
     INITIALIZE_CAPTIONER = 100
 
-    def __init__(self, world_generator, world_captioner, caption_size, vocabulary, correct_ratio=None, train_correct_ratio=None, validation_correct_ratio=None, test_correct_ratio=None, worlds_per_instance=None, captions_per_instance=None, caption_realizer=None, language=None):
+    def __init__(self, world_generator, world_captioner, caption_size, vocabulary, correct_ratio=0.5, train_correct_ratio=None, validation_correct_ratio=None, test_correct_ratio=None, worlds_per_instance=None, captions_per_instance=None, caption_realizer=None, language=None):
         if worlds_per_instance > 1 or captions_per_instance > 1:
             values = dict(agreement='alternatives(float)')
         else:
@@ -767,7 +769,7 @@ class CaptionAgreementDataset(Dataset):
             vocabularies=vocabularies,
             language=language
         )
-        self.correct_ratio = util.value_or_default(correct_ratio, 0.5)
+        self.correct_ratio = correct_ratio
         self.train_correct_ratio = util.value_or_default(train_correct_ratio, self.correct_ratio)
         self.validation_correct_ratio = util.value_or_default(validation_correct_ratio, self.correct_ratio)
         self.test_correct_ratio = util.value_or_default(test_correct_ratio, self.correct_ratio)
@@ -848,7 +850,7 @@ class CaptionAgreementDataset(Dataset):
                 batch['agreement'][i] = float(correct)
 
             if alternatives and self.captions_per_instance > 1:
-                batch['alternatives'] = self.worlds_per_instance
+                batch['alternatives'][i] = self.captions_per_instance
                 batch['caption'][i].extend(batch['caption'][i][0].copy() for _ in range(self.captions_per_instance - 1))
                 batch['caption_rpn'][i].extend(batch['caption_rpn'][i][0].copy() for _ in range(self.captions_per_instance - 1))
                 caption_alternatives = [caption]
@@ -896,7 +898,7 @@ class CaptionAgreementDataset(Dataset):
                     batch['caption_model'][i] = caption.model()
 
             if alternatives and self.worlds_per_instance > 1:
-                batch['alternatives'] = self.worlds_per_instance
+                batch['alternatives'][i] = self.worlds_per_instance
                 batch['world'][i].extend(batch['world'][i][0].copy() for _ in range(self.worlds_per_instance - 1))
                 batch['world'][i][0] = world.get_array(noise_range=noise_range)
                 if include_model:

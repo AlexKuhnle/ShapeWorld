@@ -186,7 +186,7 @@
                 "0.5": {"key": "few", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= _a+few_a_1 e?; :rstr <-1- [body]:node"}
             },
             "eq": {
-                "0.0": {"key": "no", "dmrs": "_no_q --> [rstr]:pred x?[num=s] <-1- [body]:node"},
+                "0.0": {"key": "no", "dmrs": "_no_q --> [rstr]:pred x?[pers=3] <-1- [body]:node"},
                 "0.25": {"key": "a_quarter", "dmrs": "_the_q --> [rstr]:pred x?[num=p] <-1- _quarter_n_of x?[pers=3,num=s] <-1- [body]:node; _a_q --> :_quarter_n_of"},
                 "0.33": {"key": "a_third", "dmrs": "_the_q --> [rstr]:pred x?[num=p] <-1- _third_n_of x?[pers=3,num=s] <-1- [body]:node; _a_q --> :_third_n_of"},
                 "0.5": {"key": "half", "dmrs": "_half_q --> part_of x[3p___] -1-> [rstr]:pred x?[num=p] <-- _the_q; :part_of <-1- [body]:node"},
@@ -313,13 +313,18 @@
         },
         {
             "key": "remove-part-of1",
-            "search": "[part]:fraction_n x? -1-> part_of x[3p___] -1-> [type]:pred x?; :part_of <-- _the_q",
-            "replace": "[part]:fraction_n x? -1-> [type]:pred x?"
+            "search": "[part]:fraction_n x? -1-> part_of x[3p___] -1-> [type]:pred x? <=1= [num]:card(?) e?; :part_of <-- _the_q",
+            "replace": "[part]:fraction_n x? -1-> [type]:pred x? <=1= [num]:card(?) e?"
         },
         {
             "key": "remove-part-of2",
-            "search": "[quant]:_half_q --> [part]:part_of x? -1-> part_of x[3p___] -1-> [type]:pred x?; :part_of <-- _the_q",
-            "replace": "[quant]:_half_q --> [part]:part_of x? -1-> [type]:pred x?"
+            "search": "[quant]:_half_q --> [part]:part_of x? -1-> part_of x[3p___] -1-> [type]:pred x? <=1= [num]:card(?) e?; :part_of <-- _the_q",
+            "replace": "[quant]:_half_q --> [part]:part_of x? -1-> [type]:pred x? <=1= [num]:card(?) e?"
+        },
+        {
+            "key": "none-part-of",
+            "search": "[part]:part_of x[3s___]",
+            "replace": "[part]:part_of x"
         },
         {
             "key": "deg-part-erg-fix",
