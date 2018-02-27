@@ -6,7 +6,7 @@ from shapeworld.datasets import clevr_util
 
 class CLEVR(Dataset):
 
-    def __init__(self, directory, parts=None):
+    def __init__(self, directory, parts=None, pixel_noise_stddev=0.0):
         parts = parts.split(',')
         values = dict(world='world', world_model='model', question='alternatives(language)', question_length='alternatives(int)', question_model='alternatives(model)', answer='alternatives(int)', alternatives='int')
         world_size = tuple(next(clevr_util.images_iter(directory=directory, parts=parts, mode='train')).shape[:2])
@@ -22,7 +22,7 @@ class CLEVR(Dataset):
         self.answers = sorted(unique_answers)
         self.answers.append('[UNKNOWN]')
         self.num_answers = len(self.answers)
-        super(CLEVR, self).__init__(values=values, world_size=world_size, vectors=dict(question=self.question_size), vocabularies=vocabularies)
+        super(CLEVR, self).__init__(values=values, world_size=world_size, pixel_noise_stddev=pixel_noise_stddev, vectors=dict(question=self.question_size), vocabularies=vocabularies)
         self.clevr = {mode: clevr_util.clevr(directory=directory, parts=parts, mode=mode) for mode in ('train', 'validation', 'test')}
 
     @property
@@ -39,7 +39,6 @@ class CLEVR(Dataset):
         return specification
 
     def generate(self, n, mode=None, noise_range=None, include_model=False, alternatives=False):
-        assert noise_range is None or noise_range == 0.0
         batch = self.zero_batch(n, include_model=include_model, alternatives=alternatives)
         vocabulary = self.vocabularies['language']
         unknown = vocabulary['[UNKNOWN]']
@@ -51,7 +50,7 @@ class CLEVR(Dataset):
                     return {key: value[:i] for key, value in batch.items()}
                 else:
                     return None
-            batch['world'][i] = world
+            batch['world'][i] = self.apply_pixel_noise(world=world)
             if include_model:
                 batch['world_model'][i] = world_model
             if alternatives:

@@ -80,10 +80,19 @@ The easiest way to use the ShapeWorld data in your Python project is to directly
 from shapeworld import Dataset
 
 dataset = Dataset.create(dtype='agreement', name='multishape')
-generated = dataset.generate(n=128, mode='train', noise_range=0.1, include_model=True)
+generated = dataset.generate(n=128, mode='train', include_model=True)
 
-# given to the image caption agreement system
-batch = (generated['world'], generated['caption'], generated['agreement'])
+print('world shape:', dataset.world_shape())
+print('caption shape:', dataset.vector_shape(value_name='caption'))
+print('vocabulary size:', dataset.vocabulary_size(value_type='language'))
+print('vocabulary:', dataset.vocabulary)
+
+# caption surface forms
+print('captions:')
+print('\n'.join(dataset.to_surface(value_type='language', word_ids=generated['caption'])))
+
+# given to the image caption agreement model
+batch = (generated['world'], generated['caption'], generated['caption_length'], generated['agreement'])
 
 # can be used for more specific evaluation
 world_model = generated['world_model']
@@ -118,7 +127,6 @@ The following command line arguments are available:
 * `-m`, `--mode`:  Mode, one of `train`, `validation` or `test`, requires `--files` to be a single number (default: `none`)
 * `-i`, `--instances`:  Number of instances per file (default: `128`)
 
-* `-p`, `--pixel-noise`: Pixel noise range (default: `0.0`)
 * `-M`, `--include-model`:  Include world/caption model (as json file)
 * `-H`, `--html`:  Create HTML file (`data.html`) visualizing the generated data
 * `-T`, `--tf-records`:  Additionally store data as TensorFlow records
@@ -129,7 +137,7 @@ The following command line arguments are available:
 * `-Y`, `--yes`:  Confirm all questions with yes
 * `--config-values`:  Additional dataset configuration values passed as command line arguments
 
-When creating larger amounts of ShapeWorld data, it is advisable to store the data in a compressed archive (for example `-a tar:bz2`) and turn off the pixel noise (`-p`) for best compression results. For instance, the following command line generates one million *training* instances of the `multishape` configuration file included in this repository:
+When creating larger amounts of ShapeWorld data, it is advisable to store the data in a compressed archive (for example `-a tar:bz2`). For instance, the following command line generates one million *training* instances of the `multishape` configuration file included in this repository:
 
 ```bash
 python generate.py -d [DIRECTORY] -a tar:bzip2 -t agreement -n multishape -m train -f 100 -i 10k -M
@@ -145,49 +153,22 @@ python generate.py -d examples/readme -a tar:bzip2 -t agreement -n multishape -f
 
 ## Loading extracted data
 
-Extracted data can be loaded and accessed with the same `Dataset` interface as before, just define the `config` argument as `[DIRECTORY]`. However, to be able to do this, we need to extract all of training, validation and test data, as is done in the last command line. Note that we extracted pixel-noise-free instances - the noise will automatically be (re-)infused accordingly.
+Extracted data can be loaded and accessed with the same `Dataset` interface as before, just define the `config` argument as `[DIRECTORY]`. However, to be able to do this, we need to extract all of training, validation and test data, as is done in the last command line.
 
 ```python
 from shapeworld import Dataset
 
 dataset = Dataset.create(dtype='agreement', name='multishape', config='examples/readme')
-generated = dataset.generate(n=128, mode='train', noise_range=0.1)
+generated = dataset.generate(n=128, mode='train')
 ```
 
 Loading the data in Python and then feeding it to a model is relatively slow. By using TensorFlow (TF) records (see above for how to generate TF records) and consequently the ability to load data implicitly within TensorFlow, models can be trained significantly faster. ShapeWorld provides utilities to access TF records as generated/loaded data would be handled:
 
 ```python
-from shapeworld import tf_util
-
-generated = tf_util.batch_records(dataset=dataset, mode='train', batch_size=128, noise_range=0.1)
-```
-
-If you need to manually (re-)infuse the pixel noise later (for instance, because you want to load the data from another programming language), a procedure equivalent to the one used in the ShapeWorld framework can be used, which in Python code looks the following:
-
-```python
-import numpy as np
-from shapeworld import Dataset
+from shapeworld import Dataset, tf_util
 
 dataset = Dataset.create(dtype='agreement', name='multishape', config='examples/readme')
-world_size = 64
-generated = dataset.generate(n=128, mode='train')
-worlds = generated['world']
-noise_range = 0.1
-for world in worlds:
-    noise = np.random.normal(
-        loc=0.0,
-        scale=noise_range,
-        size=dataset.world_shape)
-    mask = (noise < -2.0 * noise_range) + (noise > 2.0 * noise_range)
-    while np.any(a=mask):
-        noise -= mask * noise
-        noise += mask * np.random.normal(
-            loc=0.0,
-            scale=noise_range,
-            size=dataset.world_shape)
-        mask = (noise < -2.0 * noise_range) + (noise > 2.0 * noise_range)
-    world += noise
-    np.clip(world, a_min=0.0, a_max=1.0, out=world)
+generated = tf_util.batch_records(dataset=dataset, mode='train', batch_size=128)
 ```
 
 
@@ -254,7 +235,6 @@ The `models/` directory contains a few exemplary models based on [TFMacros](http
 * `-n`, `--name`:  Dataset name (**required**)
 * `-l`, `--language`:  Dataset language, if available (default: `none`, i.e. English)
 * `-c`, `--config`:  Dataset configuration file, otherwise use default configuration
-* `-p`, `--pixel-noise`:  Pixel noise range (default: `0.0`)
 
 * `-m`, `--model`:  Model, one in `models/[TYPE]/` (**required**)
 * `-y`, `--hyperparams-file`:  Model hyperparameters file (default: hyperparams directory)
@@ -296,7 +276,6 @@ python train.py -t agreement -n multishape -c examples/readme -m cnn_bow -i 10 -
 * `-n`, `--name`:  Dataset name (**required**)
 * `-l`, `--language`:  Dataset language, if available (default: `none`, i.e. English)
 * `-c`, `--config`:  Dataset configuration file, otherwise use default configuration
-* `-p`, `--pixel-noise`:  Pixel noise range (default: `0.0`)
 
 * `-m`, `--model`:  Model, one in `models/[TYPE]/` (**required**)
 * `-y`, `--hyperparams-file`:  Model hyperparameters file (default: hyperparams directory)

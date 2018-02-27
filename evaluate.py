@@ -15,7 +15,6 @@ if __name__ == '__main__':
     parser.add_argument('-n', '--name', type=util.parse_tuple(parse_item=str, unary_tuple=False), default=None, help='Dataset name')
     parser.add_argument('-l', '--language', default=None, help='Dataset language')
     parser.add_argument('-c', '--config', type=util.parse_tuple(parse_item=str, unary_tuple=False), default=None, help='Dataset configuration file')
-    parser.add_argument('-p', '--pixel-noise', type=float, default=0.0, help='Pixel noise range')
 
     parser.add_argument('-m', '--model', help='Model')
     parser.add_argument('-y', '--hyperparams-file', default=None, help='Model hyperparameters file (default: hyperparams directory)')
@@ -63,7 +62,7 @@ if __name__ == '__main__':
 
     if args.type == 'agreement':
         dataset_parameters = dict(
-            world_shape=dataset.world_shape,
+            world_shape=dataset.world_shape(),
             vocabulary_size=dataset.vocabulary_size(value_type='language')
         )
         for value_name in dataset.vectors:
@@ -73,7 +72,7 @@ if __name__ == '__main__':
 
     elif args.type == 'classification':
         dataset_parameters = dict(
-            world_shape=dataset.world_shape,
+            world_shape=dataset.world_shape(),
             num_classes=dataset.num_classes,
             multi_class=dataset.multi_class,
             class_count=dataset.class_count
@@ -85,7 +84,7 @@ if __name__ == '__main__':
 
     elif args.type == 'clevr_classification':
         dataset_parameters = dict(
-            world_shape=dataset.world_shape,
+            world_shape=dataset.world_shape(),
             vocabulary_size=dataset.vocabulary_size,
             num_answers=len(dataset.answers)
         )
@@ -137,7 +136,7 @@ if __name__ == '__main__':
 
         train = {name: 0.0 for name in query}
         for _ in range(args.iterations):
-            generated = dataset.generate(n=args.batch_size, mode='train', noise_range=args.pixel_noise)
+            generated = dataset.generate(n=args.batch_size, mode='train')
             queried = model(query=query, data=generated)
             train = {name: value + queried[name] for name, value in train.items()}
         train = {name: value / args.iterations for name, value in train.items()}
@@ -151,7 +150,7 @@ if __name__ == '__main__':
 
         validation = {name: 0.0 for name in query}
         for _ in range(args.iterations):
-            generated = dataset.generate(n=args.batch_size, mode='validation', noise_range=args.pixel_noise)
+            generated = dataset.generate(n=args.batch_size, mode='validation')
             queried = model(query=query, data=generated)
             validation = {name: value + queried[name] for name, value in validation.items()}
         validation = {name: value / args.iterations for name, value in validation.items()}
@@ -165,7 +164,7 @@ if __name__ == '__main__':
 
         test = {name: 0.0 for name in query}
         for _ in range(args.iterations):
-            generated = dataset.generate(n=args.batch_size, mode='test', noise_range=args.pixel_noise)
+            generated = dataset.generate(n=args.batch_size, mode='test')
             queried = model(query=query, data=generated)
             test = {name: value + queried[name] for name, value in test.items()}
         test = {name: value / args.iterations for name, value in test.items()}
@@ -180,65 +179,3 @@ if __name__ == '__main__':
         if args.verbosity >= 1:
             sys.stdout.write('\n{} model evaluation finished\n'.format(datetime.now().strftime('%H:%M:%S')))
             sys.stdout.flush()
-
-        # else:  # training
-        #     if args.verbosity >= 1:
-        #         sys.stdout.write('{} train model...\n'.format(datetime.now().strftime('%H:%M:%S')))
-        #         sys.stdout.flush()
-        #     before = datetime.now()
-
-        #     if args.tf_records:
-        #         mean = {name: 0.0 for name in query}
-        #         n = 0
-        #         for iteration in range(iteration_start, iteration_end + 1):
-        #             train = model(query=query, optimize=True, dropout=args.dropout_rate)  # loss !!!???
-        #             mean = {name: value + train[name] for name, value in mean.items()}
-        #             n += 1
-        #             if iteration % args.evaluation_frequency == 0 or iteration == 1 or iteration == args.evaluation_frequency // 2 or iteration == iteration_end:
-        #                 mean = {name: value / n for name, value in mean.items()}
-        #                 after = datetime.now()
-        #                 if args.verbosity >= 1:
-        #                     sys.stdout.write('\r         {:.0f}%  {}/{}  '.format(iteration * 100 / iteration_end, iteration, iteration_end))
-        #                     for name in query:
-        #                         sys.stdout.write('{}={:.3f}  '.format(name, train[name]))
-        #                     sys.stdout.write('(time per evaluation iteration: {})'.format(str(after - before).split('.')[0]))
-        #                     sys.stdout.flush()
-        #                 before = datetime.now()
-        #                 if args.report_file:
-        #                     with open(args.report_file, 'a') as filehandle:
-        #                         filehandle.write(str(iteration))
-        #                         for name in query:
-        #                             filehandle.write(',' + str(train[name]))
-        #                         filehandle.write('\n')
-        #                 mean = {name: 0.0 for name in mean}
-        #                 n = 0
-
-        #     else:
-        #         for iteration in range(iteration_start, iteration_end + 1):
-        #             generated = dataset.generate(n=args.batch_size, mode='train', noise_range=args.pixel_noise)
-        #             model(data=generated, optimize=True, dropout=args.dropout_rate)
-        #             if iteration % args.evaluation_frequency == 0 or iteration == 1 or iteration == args.evaluation_frequency // 2 or iteration == iteration_end:
-        #                 generated = dataset.generate(n=args.evaluation_size, mode='train', noise_range=args.pixel_noise)
-        #                 train = model(query=query, data=generated)
-        #                 generated = dataset.generate(n=args.evaluation_size, mode='validation', noise_range=args.pixel_noise)
-        #                 validation = model(query=query, data=generated)
-        #                 after = datetime.now()
-        #                 if args.verbosity >= 1:
-        #                     sys.stdout.write('\r         {:.0f}%  {}/{}  '.format(iteration * 100 / iteration_end, iteration, iteration_end))
-        #                     sys.stdout.write('train: ')
-        #                     for name in query:
-        #                         sys.stdout.write('{}={:.3f} '.format(name, train[name]))
-        #                     sys.stdout.write(' validation: ')
-        #                     for name in query:
-        #                         sys.stdout.write('{}={:.3f} '.format(name, validation[name]))
-        #                     sys.stdout.write(' (time per evaluation iteration: {})'.format(str(after - before).split('.')[0]))
-        #                     sys.stdout.flush()
-        #                 before = datetime.now()
-        #                 if args.report_file:
-        #                     with open(args.report_file, 'a') as filehandle:
-        #                         filehandle.write(str(iteration))
-        #                         for name in query:
-        #                             filehandle.write(',' + str(train[name]))
-        #                         for name in query:
-        #                             filehandle.write(',' + str(validation[name]))
-        #                         filehandle.write('\n')

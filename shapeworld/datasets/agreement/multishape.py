@@ -34,7 +34,8 @@ class Multishape(CaptionAgreementDataset):
         test_correct_ratio=None,
         worlds_per_instance=1,
         captions_per_instance=1,
-        caption_realizer=None,
+        pixel_noise_stddev=0.0,
+        caption_realizer='dmrs',
         language=None
     ):
 
@@ -93,6 +94,7 @@ class Multishape(CaptionAgreementDataset):
             test_correct_ratio=test_correct_ratio,
             worlds_per_instance=worlds_per_instance,
             captions_per_instance=captions_per_instance,
+            pixel_noise_stddev=pixel_noise_stddev,
             caption_realizer=caption_realizer,
             language=language
         )

@@ -7,7 +7,8 @@ class Oneshape(ClassificationDataset):
     def __init__(
         self,
         world_size=64,
-        boundary_tolerance=0.2
+        boundary_tolerance=0.2,
+        pixel_noise_stddev=0.0
     ):
 
         world_generator = RandomAttributesGenerator(
@@ -20,7 +21,8 @@ class Oneshape(ClassificationDataset):
 
         super(Oneshape, self).__init__(
             world_generator=world_generator,
-            num_classes=num_classes
+            num_classes=num_classes,
+            pixel_noise_stddev=pixel_noise_stddev
         )
 
     def get_classes(self, world):

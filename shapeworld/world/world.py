@@ -105,22 +105,13 @@ class World(Entity):
             entity.id = n
             entity.collisions = {sort_indices.index(i): c for i, c in entity.collisions.items()}
 
-    def get_array(self, noise_range=None):
+    def get_array(self):
         color = self.color.get_color()
         if not color.any():
             world_array = np.zeros(shape=(self.size.y, self.size.x, 3), dtype=np.float32)
         else:
             world_array = np.tile(A=np.array(object=color, dtype=np.float32), reps=(self.size.x, self.size.y, 1))
         self.draw(world_array=world_array, world_size=self.size)
-        if noise_range is not None and noise_range > 0.0:
-            noise = np.random.normal(loc=0.0, scale=noise_range, size=(self.size.y, self.size.x, 3))
-            mask = (noise < -2.0 * noise_range) + (noise > 2.0 * noise_range)
-            while np.any(a=mask):
-                noise -= mask * noise
-                noise += mask * np.random.normal(loc=0.0, scale=noise_range, size=(self.size.y, self.size.x, 3))
-                mask = (noise < -2.0 * noise_range) + (noise > 2.0 * noise_range)
-            world_array += noise
-            np.clip(world_array, a_min=0.0, a_max=1.0, out=world_array)
         return world_array
 
     @staticmethod

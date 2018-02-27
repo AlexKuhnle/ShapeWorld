@@ -16,7 +16,6 @@ if __name__ == '__main__':
     parser.add_argument('-n', '--name', type=util.parse_tuple(parse_item=str, unary_tuple=False), help='Dataset name')
     parser.add_argument('-l', '--language', default=None, help='Dataset language')
     parser.add_argument('-c', '--config', type=util.parse_tuple(parse_item=str, unary_tuple=False), default=None, help='Dataset configuration file')
-    parser.add_argument('-p', '--pixel-noise', type=float, default=0.0, help='Pixel noise range')
 
     parser.add_argument('-m', '--model', help='Model')
     parser.add_argument('-y', '--hyperparams-file', default=None, help='Model hyperparameters file (default: hyperparams directory)')
@@ -73,7 +72,7 @@ if __name__ == '__main__':
 
     if args.type == 'agreement':
         dataset_parameters = dict(
-            world_shape=dataset.world_shape,
+            world_shape=dataset.world_shape(),
             vocabulary_size=dataset.vocabulary_size(value_type='language')
         )
         for value_name in dataset.vectors:
@@ -82,7 +81,7 @@ if __name__ == '__main__':
 
     elif args.type == 'classification':
         dataset_parameters = dict(
-            world_shape=dataset.world_shape,
+            world_shape=dataset.world_shape(),
             num_classes=dataset.num_classes,
             multi_class=dataset.multi_class,
             class_count=dataset.class_count
@@ -93,7 +92,7 @@ if __name__ == '__main__':
 
     elif args.type == 'clevr_classification':
         dataset_parameters = dict(
-            world_shape=dataset.world_shape,
+            world_shape=dataset.world_shape(),
             vocabulary_size=dataset.vocabulary_size(value_type='language'),
             num_answers=len(dataset.answers)
         )
@@ -183,7 +182,7 @@ if __name__ == '__main__':
 
         module = import_module('models.{}.{}'.format(args.type, args.model))
         if args.tf_records:
-            inputs = tf_util.batch_records(dataset=dataset, mode='train', batch_size=args.batch_size, noise_range=args.pixel_noise)
+            inputs = tf_util.batch_records(dataset=dataset, mode='train', batch_size=args.batch_size)
             module.model(model=model, inputs=inputs, dataset_parameters=dataset_parameters, **parameters)
         else:
             module.model(model=model, inputs=dict(), dataset_parameters=dataset_parameters, **parameters)  # no input tensors, hence None for placeholder creation
@@ -245,20 +244,20 @@ if __name__ == '__main__':
 
         else:
             for iteration in range(iteration_start, iteration_end + 1):
-                generated = dataset.generate(n=args.batch_size, mode='train', noise_range=args.pixel_noise)
+                generated = dataset.generate(n=args.batch_size, mode='train')
                 model(data=generated, optimize=True, dropout=dropout)
                 if iteration % args.evaluation_frequency == 0 or iteration == 1 or iteration == args.evaluation_frequency // 2 or iteration == iteration_end:
 
                     train = {name: 0.0 for name in query}
                     for _ in range(args.evaluation_iterations):
-                        generated = dataset.generate(n=args.batch_size, mode='train', noise_range=args.pixel_noise)
+                        generated = dataset.generate(n=args.batch_size, mode='train')
                         queried = model(query=query, data=generated)
                         train = {name: value + queried[name] for name, value in train.items()}
                     train = {name: value / args.evaluation_iterations for name, value in train.items()}
 
                     validation = {name: 0.0 for name in query}
                     for _ in range(args.evaluation_iterations):
-                        generated = dataset.generate(n=args.batch_size, mode='validation', noise_range=args.pixel_noise)
+                        generated = dataset.generate(n=args.batch_size, mode='validation')
                         queried = model(query=query, data=generated)
                         validation = {name: value + queried[name] for name, value in validation.items()}
                     validation = {name: value / args.evaluation_iterations for name, value in validation.items()}

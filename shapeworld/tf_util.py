@@ -32,9 +32,9 @@ def read_record(dataset, serialized_record):
                 features[value_name] = tf.FixedLenFeature(shape=dataset.vector_shape(value_name=value_name), dtype=tf.float32)
         elif value_type == 'world':
             if alts:
-                feature_lists[value_name] = tf.FixedLenSequenceFeature(shape=dataset.world_shape, dtype=tf.float32)
+                feature_lists[value_name] = tf.FixedLenSequenceFeature(shape=dataset.world_shape(), dtype=tf.float32)
             else:
-                features[value_name] = tf.FixedLenFeature(shape=dataset.world_shape, dtype=tf.float32)
+                features[value_name] = tf.FixedLenFeature(shape=dataset.world_shape(), dtype=tf.float32)
         else:
             pass
     record, sequence_record = tf.parse_single_sequence_example(serialized=serialized_record, context_features=features, sequence_features=feature_lists)
@@ -50,7 +50,7 @@ def read_records(dataset, mode):
     return records, sequence_records
 
 
-def batch_records(dataset, mode, batch_size, noise_range=None):
+def batch_records(dataset, mode, batch_size):
     with tf.variable_scope(name_or_scope='tf-records'):
         records, sequence_records = read_records(dataset=dataset, mode=mode)
         if 'alternatives' in records:
@@ -61,21 +61,22 @@ def batch_records(dataset, mode, batch_size, noise_range=None):
         batch = tf.train.shuffle_batch(tensors=records, batch_size=batch_size, capacity=(batch_size * 50), min_after_dequeue=(batch_size * 10), num_threads=1)
         # if alternatives and 'alternatives' in batch:
         #     sample = tf.floor(x=tf.multiply(x=batch['alternatives'], y=tf.random_uniform(shape=(batch_size,))))
-        for value_name, value_type in dataset.values.items():
-            # value_type, alts = util.alternatives_type(value_type=value_type)
-            # if not alternatives and alts:
-            #     indices = tf.stack(values=(tf.range(limit=batch[value_name].shape[1].value), sample), axis=1)
-            #     print(indices.get_shape().as_list())
-            #     exit(0)
-            #     batch[value_name] = tf.gather_nd(params=batch[value_name], indices=indices)
-            #     print(batch[value_name].get_shape().as_list())
-            #     exit(0)
-            value_type, _ = util.alternatives_type(value_type=value_type)
-            if noise_range is not None and noise_range > 0.0 and value_type == 'world':
-                world = batch[value_name]
-                noise = tf.truncated_normal(shape=((batch_size,) + dataset.world_shape), mean=0.0, stddev=noise_range)
-                world = tf.clip_by_value(t=(world + noise), clip_value_min=0.0, clip_value_max=1.0)
-                batch[value_name] = world
+        if dataset.pixel_noise_stddev > 0.0:
+            for value_name, value_type in dataset.values.items():
+                # value_type, alts = util.alternatives_type(value_type=value_type)
+                # if not alternatives and alts:
+                #     indices = tf.stack(values=(tf.range(limit=batch[value_name].shape[1].value), sample), axis=1)
+                #     print(indices.get_shape().as_list())
+                #     exit(0)
+                #     batch[value_name] = tf.gather_nd(params=batch[value_name], indices=indices)
+                #     print(batch[value_name].get_shape().as_list())
+                #     exit(0)
+                value_type, _ = util.alternatives_type(value_type=value_type)
+                if value_type == 'world':
+                    world = batch[value_name]
+                    noise = tf.truncated_normal(shape=((batch_size,) + dataset.world_shape()), mean=0.0, stddev=dataset.pixel_noise_stddev)
+                    world = tf.clip_by_value(t=(world + noise), clip_value_min=0.0, clip_value_max=1.0)
+                    batch[value_name] = world
         if 'alternatives' in batch:
             batch.pop('alternatives')
         return batch

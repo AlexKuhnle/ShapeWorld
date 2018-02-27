@@ -27,7 +27,7 @@ if __name__ == '__main__':
     parser.add_argument('-m', '--mode', default=None, choices=('train', 'validation', 'test'), help='Mode')
     parser.add_argument('-i', '--instances', type=util.parse_int_with_factor, default=128, help='Number of instances per file')
 
-    parser.add_argument('-p', '--pixel-noise', type=float, default=0.0, help='Pixel noise range')
+    parser.add_argument('-P', '--delay-pixel-noise', action='store_true', help='Do not infuse pixel noise now, but when dataset is loaded')
     parser.add_argument('-M', '--include-model', action='store_true', help='Include world/caption model (as json file)')
     parser.add_argument('-H', '--html', action='store_true', help='Create HTML file visualizing the generated data')
     parser.add_argument('-T', '--tf-records', action='store_true', help='Additionally store data as TensorFlow records')
@@ -56,8 +56,16 @@ if __name__ == '__main__':
             sys.stdout.write('                 {config}\n'.format(config=args.config_values))
     sys.stdout.flush()
 
-    if args.instances * util.product(dataset.world_shape) > 5e8:  # > 500MB
-        sys.stdout.write('{time} warning: part size is {size}MB '.format(time=datetime.now().strftime('%H:%M:%S'), size=int(args.instances * util.product(dataset.world_shape) / 1e6)))
+    if args.archive is not None and not args.delay_pixel_noise and dataset.pixel_noise_stddev > 0.0:
+        sys.stdout.write('Warning: best compression results without pixel noise, continue? ')
+        sys.stdout.flush()
+        if args.yes:
+            sys.stdout.write('y\n')
+        elif util.negative_response(sys.stdin.readline()[:-1]):
+            exit(0)
+
+    if args.instances * util.product(dataset.world_shape()) > 5e8:  # > 500MB
+        sys.stdout.write('{time} warning: part size is {size}MB '.format(time=datetime.now().strftime('%H:%M:%S'), size=int(args.instances * util.product(dataset.world_shape()) / 1e6)))
         sys.stdout.flush()
         if args.yes:
             sys.stdout.write('y\n')
@@ -67,7 +75,7 @@ if __name__ == '__main__':
     if args.features:
         assert args.tf_records
         from pretrained import PretrainedModel
-        pretrained_model = PretrainedModel(image_shape=dataset.world_shape)
+        pretrained_model = PretrainedModel(image_shape=dataset.world_shape())
         for value_name, value_type in list(dataset.values.items()):
             if value_type == 'world':
                 dataset.values[value_name + '_features'] = 'vector(float)'
@@ -76,6 +84,9 @@ if __name__ == '__main__':
     specification = dataset.specification()
     if args.archive:
         specification['archive'] = args.archive
+    if args.delay_pixel_noise and dataset.pixel_noise_stddev > 0.0:
+        specification['pixel_noise_stddev'] = dataset.pixel_noise_stddev
+        dataset.pixel_noise_stddev = 0.0
     if args.include_model:
         specification['include_model'] = args.include_model
     if args.concatenate_images:
@@ -173,7 +184,7 @@ if __name__ == '__main__':
             else:
                 path = os.path.join(directory, 'part{}'.format(start + part))
 
-            generated = dataset.generate(n=args.instances, mode=mode, noise_range=args.pixel_noise, include_model=args.include_model, alternatives=True)
+            generated = dataset.generate(n=args.instances, mode=mode, include_model=(args.include_model or args.clevr_format), alternatives=True)
 
             if generated is None:
                 assert False

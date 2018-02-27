@@ -13,7 +13,8 @@ class Countshape(ClassificationDataset):
         test_entity_counts=(15,),
         max_provoke_collision_rate=0.33,
         collision_tolerance=0.2,
-        boundary_tolerance=0.2
+        boundary_tolerance=0.2,
+        pixel_noise_stddev=0.0
     ):
 
         world_generator = ReinforcedAttributesGenerator(
@@ -34,7 +35,9 @@ class Countshape(ClassificationDataset):
             world_generator=world_generator,
             num_classes=num_classes,
             multi_class=True,
-            class_count=True)
+            class_count=True,
+            pixel_noise_stddev=pixel_noise_stddev
+        )
 
     def get_classes(self, world):
         return [self.world_generator.shapes.index(entity.shape.name) * len(self.world_generator.colors) * len(self.world_generator.textures) + self.world_generator.colors.index(entity.color.name) * len(self.world_generator.textures) + self.world_generator.textures.index(entity.texture.name) for entity in world.entities]

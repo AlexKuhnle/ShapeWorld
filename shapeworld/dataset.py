@@ -14,7 +14,7 @@ from shapeworld.realizers import CaptionRealizer
 
 class Dataset(object):
 
-    def __init__(self, values, world_size, vectors=None, vocabularies=None, language=None):
+    def __init__(self, values, world_size, pixel_noise_stddev=0.0, vectors=None, vocabularies=None, language=None):
         assert self.type and self.name
         assert all(value_name != 'alternatives' or value_type == 'int' for value_name, value_type in values.items())
         self.values = values
@@ -22,6 +22,7 @@ class Dataset(object):
             self.world_size = world_size
         else:
             self.world_size = tuple(world_size)
+        self.pixel_noise_stddev = pixel_noise_stddev
         self.vectors = vectors
         self.vocabularies = dict()
         if vocabularies is not None:
@@ -147,7 +148,7 @@ class Dataset(object):
             else:
                 assert 'name' not in config or config['name'] == name
             if language is None:
-                language = config.pop('language', None)
+                language = config.get('language')
             else:
                 assert 'language' not in config or config['language'] == language
 
@@ -198,7 +199,6 @@ class Dataset(object):
             specification['language'] = self.language
         return specification
 
-    @property
     def world_shape(self):
         if isinstance(self.world_size, int):
             return (self.world_size, self.world_size, 3)
@@ -224,6 +224,41 @@ class Dataset(object):
         else:
             return [word for word, _ in sorted(self.vocabularies[value_type].items(), key=(lambda kv: kv[1]))]
 
+    def to_surface(self, value_type, word_ids):
+        id2word = self.vocabulary(value_type)
+        assert id2word is not None
+        if word_ids.ndim == 1:
+            return ' '.join(id2word[word_id] for word_id in word_ids)
+        elif word_ids.ndim == 2:
+            return [self.to_surface(value_type, word_ids) for word_ids in word_ids]
+        else:
+            assert False
+
+    def from_surface(self, value_type, words):
+        word2id = self.vocabularies.get(value_type)
+        assert word2id is not None
+        if isinstance(words, str):
+            return np.asarray(word2id[word] for word in words.split(' '))
+        elif isinstance(words, list):
+            if len(words) > 0 and ' ' in words[0]:
+                return [self.from_surface(value_type, words) for words in words]
+            else:
+                return np.asarray(word2id[word] for word in words)
+        else:
+            assert False
+
+    def apply_pixel_noise(self, world):
+        if self.pixel_noise_stddev > 0.0:
+            noise = np.random.normal(loc=0.0, scale=self.pixel_noise_stddev, size=world.shape)
+            mask = (noise < -2.0 * self.pixel_noise_stddev) + (noise > 2.0 * self.pixel_noise_stddev)
+            while np.any(a=mask):
+                noise -= mask * noise
+                noise += mask * np.random.normal(loc=0.0, scale=self.pixel_noise_stddev, size=world.shape)
+                mask = (noise < -2.0 * self.pixel_noise_stddev) + (noise > 2.0 * self.pixel_noise_stddev)
+            world += noise
+            np.clip(world, a_min=0.0, a_max=1.0, out=world)
+        return world
+
     def zero_batch(self, n, include_model=False, alternatives=False):
         batch = dict()
         for value_name, value_type in self.values.items():
@@ -238,7 +273,7 @@ class Dataset(object):
                 elif value_type == 'vector(float)':
                     batch[value_name] = [[np.zeros(shape=self.vector_shape(value_name), dtype=np.float32)] for _ in range(n)]
                 elif value_type == 'world':
-                    batch[value_name] = [[np.zeros(shape=self.world_shape, dtype=np.float32)] for _ in range(n)]
+                    batch[value_name] = [[np.zeros(shape=self.world_shape(), dtype=np.float32)] for _ in range(n)]
                 elif value_type == 'model' and include_model:
                     batch[value_name] = [[] for _ in range(n)]
             else:
@@ -251,17 +286,17 @@ class Dataset(object):
                 elif value_type == 'vector(float)':
                     batch[value_name] = np.zeros(shape=((n,) + self.vector_shape(value_name)), dtype=np.float32)
                 elif value_type == 'world':
-                    batch[value_name] = np.zeros(shape=((n,) + self.world_shape), dtype=np.float32)
+                    batch[value_name] = np.zeros(shape=((n,) + self.world_shape()), dtype=np.float32)
                 elif value_type == 'model' and include_model:
                     batch[value_name] = [None] * n
         return batch
 
-    def generate(self, n, mode=None, noise_range=None, include_model=False, alternatives=False):  # mode: None, 'train', 'validation', 'test'
+    def generate(self, n, mode=None, include_model=False, alternatives=False):  # mode: None, 'train', 'validation', 'test'
         raise NotImplementedError
 
-    def iterate(self, n, mode=None, noise_range=None, include_model=False, alternatives=False):
+    def iterate(self, n, mode=None, include_model=False, alternatives=False):
         while True:
-            yield self.generate(n=n, mode=mode, noise_range=noise_range, include_model=include_model, alternatives=alternatives)
+            yield self.generate(n=n, mode=mode, include_model=include_model, alternatives=alternatives)
 
     def get_html(self, generated):
         return None
@@ -458,13 +493,13 @@ class LoadedDataset(Dataset):
     def __init__(self, specification):
         self._type = specification.pop('type')
         self._name = specification.pop('name')
+        self.directory = specification.pop('directory')
         self.archive = specification.pop('archive', None)
         self.include_model = specification.pop('include_model', False)
         self.num_concat_worlds = specification.pop('num_concat_worlds', 0)
-        self.directory = specification.pop('directory')
         self._specification = specification
 
-        super(LoadedDataset, self).__init__(values=specification.pop('values'), world_size=specification.pop('world_size'), vectors=specification.pop('vectors', None), vocabularies=specification.pop('vocabularies', None), language=specification.pop('language', None))
+        super(LoadedDataset, self).__init__(values=specification.pop('values'), world_size=specification.pop('world_size'), pixel_noise_stddev=specification.pop('pixel_noise_stddev', 0.0), vectors=specification.pop('vectors', None), vocabularies=specification.pop('vocabularies', None), language=specification.pop('language', None))
 
         self.per_part = True
         self.part_once = False
@@ -518,7 +553,7 @@ class LoadedDataset(Dataset):
         assert mode in self.records_parts
         return self.records_parts[mode]
 
-    def generate(self, n, mode=None, noise_range=None, include_model=False, alternatives=False):
+    def generate(self, n, mode=None, include_model=False, alternatives=False):
         assert not include_model or self.include_model
         if not self.per_part:
             self.mode = None if mode else 'train'
@@ -543,6 +578,7 @@ class LoadedDataset(Dataset):
                         self.num_instances = len(value)
 
         batch = self.zero_batch(n, include_model=include_model, alternatives=alternatives)
+
         for i in range(n):
             index = randrange(self.num_instances)
             self.num_instances -= 1
@@ -554,18 +590,11 @@ class LoadedDataset(Dataset):
                     batch[value_name][i][:len(value)] = value
                 elif value_type not in ('model', 'alternatives(model)') or include_model:
                     batch[value_name][i] = value
-        if noise_range is not None and noise_range > 0.0:
-            for value_name, value_type in self.values.items():
-                if value_type == 'world':
-                    noise = np.random.normal(loc=0.0, scale=noise_range, size=((n,) + self.world_shape))
-                    mask = (noise < -2.0 * noise_range) + (noise > 2.0 * noise_range)
-                    while np.any(a=mask):
-                        noise -= mask * noise
-                        noise += mask * np.random.normal(loc=0.0, scale=noise_range, size=((n,) + self.world_shape))
-                        mask = (noise < -2.0 * noise_range) + (noise > 2.0 * noise_range)
-                    worlds = batch[value_name]
-                    worlds += noise
-                    np.clip(worlds, a_min=0.0, a_max=1.0, out=worlds)
+
+        for value_name, value_type in self.values.items():
+            if value_type == 'world':
+                batch[value_name] = self.apply_pixel_noise(world=batch[value_name])
+
         return batch
 
     def get_html(self, generated):
@@ -620,7 +649,7 @@ class DatasetMixer(Dataset):
     def name(self):
         return '+'.join(dataset.name for dataset in self.datasets)
 
-    def generate(self, n, mode=None, noise_range=None, include_model=False, alternatives=False):
+    def generate(self, n, mode=None, include_model=False, alternatives=False):
         if mode is None:
             distribution = self.distribution
         if mode == 'train':
@@ -631,12 +660,12 @@ class DatasetMixer(Dataset):
             distribution = self.test_distribution
         if self.consistent_batches:
             dataset = util.sample(distribution, self.datasets)
-            return dataset.generate(n=n, mode=mode, noise_range=noise_range, include_model=include_model, alternatives=alternatives)
+            return dataset.generate(n=n, mode=mode, include_model=include_model, alternatives=alternatives)
         else:
             batch = self.zero_batch(n, include_model=include_model, alternatives=alternatives)
             for i in range(n):
                 dataset = util.sample(distribution, self.datasets)
-                generated = dataset.generate(n=1, mode=mode, noise_range=noise_range, include_model=include_model, alternatives=alternatives)
+                generated = dataset.generate(n=1, mode=mode, include_model=include_model, alternatives=alternatives)
                 for value_name, value_type in self.values.items():
                     value = generated[value_name][0]
                     if value_type in self.vocabularies:
@@ -648,9 +677,9 @@ class DatasetMixer(Dataset):
 
 class ClassificationDataset(Dataset):
 
-    def __init__(self, world_generator, num_classes, multi_class=False, class_count=False):
+    def __init__(self, world_generator, num_classes, multi_class=False, class_count=False, pixel_noise_stddev=0.0):
         values = dict(world='world', world_model='model', classification='vector(float)')
-        super(ClassificationDataset, self).__init__(values=values, world_size=world_generator.world_size, vectors=dict(classification=num_classes))
+        super(ClassificationDataset, self).__init__(values=values, world_size=world_generator.world_size, vectors=dict(classification=num_classes), pixel_noise_stddev=pixel_noise_stddev)
         assert multi_class or not class_count
         self.world_generator = world_generator
         self.num_classes = num_classes
@@ -671,7 +700,7 @@ class ClassificationDataset(Dataset):
     def get_classes(self, world):  # iterable of classes
         raise NotImplementedError
 
-    def generate(self, n, mode=None, noise_range=None, include_model=False, alternatives=False):
+    def generate(self, n, mode=None, include_model=False, alternatives=False):
         batch = self.zero_batch(n, include_model=include_model, alternatives=alternatives)
         for i in range(n):
             self.world_generator.initialize(mode=mode)
@@ -681,17 +710,21 @@ class ClassificationDataset(Dataset):
                 if world is not None:
                     break
 
-            batch['world'][i] = world.get_array(noise_range=noise_range)
+            batch['world'][i] = self.apply_pixel_noise(world=world.get_array())
+
             if include_model:
                 batch['world_model'][i] = world.model()
+
             c = None
             for c in self.get_classes(world):
                 if self.class_count:
                     batch['classification'][i][c] += 1.0
                 else:
                     batch['classification'][i][c] = 1.0
+
             if not self.multi_class:
                 assert c is not None
+
         return batch
 
     def get_html(self, generated):
@@ -715,7 +748,7 @@ class ClassificationDataset(Dataset):
         html = '<!DOCTYPE html><html><head><title>{dtype} {name}</title><style>.data{{width: 100%; height: 100%;}} .instance{{width: 100%; display: flex; margin-top: 1px; margin-bottom: 1px; background-color: #DDEEFF; vertical-align: middle; align-items: center;}} .world{{height: {world_height}px; display: inline-block; flex-grow: 0; vertical-align: middle;}} .num{{width: 50px; display: inline-block; flex-grow: 0; text-align: center; vertical-align: middle; margin-left: 10px;}} .classification{{display: inline-block; flex-grow: 1; vertical-align: middle; margin-left: 10px;}}</style></head><body><div class="data">{data}</div></body></html>'.format(
             dtype=self.type,
             name=self.name,
-            world_height=self.world_shape[0],
+            world_height=self.world_shape()[0],
             data=''.join(data_html)
         )
         return html
@@ -725,7 +758,7 @@ class CaptionAgreementDataset(Dataset):
 
     INITIALIZE_CAPTIONER = 100
 
-    def __init__(self, world_generator, world_captioner, caption_size, vocabulary, correct_ratio=0.5, train_correct_ratio=None, validation_correct_ratio=None, test_correct_ratio=None, worlds_per_instance=None, captions_per_instance=None, caption_realizer=None, language=None):
+    def __init__(self, world_generator, world_captioner, caption_size, vocabulary, pixel_noise_stddev=0.0, caption_realizer='dmrs', language=None, worlds_per_instance=1, captions_per_instance=1, correct_ratio=0.5, train_correct_ratio=None, validation_correct_ratio=None, test_correct_ratio=None):
         if worlds_per_instance > 1 or captions_per_instance > 1:
             values = dict(agreement='alternatives(float)')
         else:
@@ -748,7 +781,7 @@ class CaptionAgreementDataset(Dataset):
         else:
             assert caption_realizer is None or isinstance(caption_realizer, str)
             self.caption_realizer = CaptionRealizer.from_name(
-                name=util.value_or_default(caption_realizer, 'dmrs'),
+                name=caption_realizer,
                 language=util.value_or_default(language, 'english')
             )
         self.world_captioner.set_realizer(self.caption_realizer)
@@ -756,12 +789,10 @@ class CaptionAgreementDataset(Dataset):
             language=vocabulary,
             rpn=sorted(self.world_captioner.rpn_symbols())
         )
-        self.worlds_per_instance = util.value_or_default(worlds_per_instance, 1)
-        self.captions_per_instance = util.value_or_default(captions_per_instance, 1)
-        assert self.worlds_per_instance == 1 or self.captions_per_instance == 1
         super(CaptionAgreementDataset, self).__init__(
             values=values,
             world_size=world_generator.world_size,
+            pixel_noise_stddev=pixel_noise_stddev,
             vectors=dict(
                 caption=caption_size,
                 caption_rpn=self.world_captioner.rpn_length()
@@ -769,6 +800,9 @@ class CaptionAgreementDataset(Dataset):
             vocabularies=vocabularies,
             language=language
         )
+        assert worlds_per_instance == 1 or captions_per_instance == 1
+        self.worlds_per_instance = worlds_per_instance
+        self.captions_per_instance = captions_per_instance
         self.correct_ratio = correct_ratio
         self.train_correct_ratio = util.value_or_default(train_correct_ratio, self.correct_ratio)
         self.validation_correct_ratio = util.value_or_default(validation_correct_ratio, self.correct_ratio)
@@ -778,13 +812,13 @@ class CaptionAgreementDataset(Dataset):
     def type(self):
         return 'agreement'
 
-    # def specification(self):
-    #     specification = super(ClassificationDataset, self).specification()
-    #     specification['worlds_per_instance'] = self.worlds_per_instance
-    #     specification['captions_per_instance'] = self.captions_per_instance
-    #     return specification
+    def specification(self):
+        specification = super(CaptionAgreementDataset, self).specification()
+        specification['worlds_per_instance'] = self.worlds_per_instance
+        specification['captions_per_instance'] = self.captions_per_instance
+        return specification
 
-    def generate(self, n, mode=None, noise_range=None, include_model=False, alternatives=False):
+    def generate(self, n, mode=None, include_model=False, alternatives=False):
         if mode == 'train':
             correct_ratio = self.train_correct_ratio
         elif mode == 'validation':
@@ -900,7 +934,7 @@ class CaptionAgreementDataset(Dataset):
             if alternatives and self.worlds_per_instance > 1:
                 batch['alternatives'][i] = self.worlds_per_instance
                 batch['world'][i].extend(batch['world'][i][0].copy() for _ in range(self.worlds_per_instance - 1))
-                batch['world'][i][0] = world.get_array(noise_range=noise_range)
+                batch['world'][i][0] = self.apply_pixel_noise(world=world.get_array())
                 if include_model:
                     batch['world_model'][i].append(world.model())
                 for j in range(1, self.worlds_per_instance):
@@ -918,19 +952,19 @@ class CaptionAgreementDataset(Dataset):
                                 break
                         else:
                             break
-                    batch['world'][i][j] = world.get_array(noise_range=noise_range)
+                    batch['world'][i][j] = self.apply_pixel_noise(world=world.get_array())
                     if include_model:
                         batch['world_model'][i].append(world.model())
                     batch['agreement'][i].append(float(correct))
 
             else:
-                batch['world'][i] = world.get_array(noise_range=noise_range)
+                batch['world'][i] = self.apply_pixel_noise(world=world.get_array())
                 if include_model:
                     batch['world_model'][i] = world.model()
 
             # captions[i] = caption
 
-            # batch['world'][i] = world.get_array(noise_range=noise_range)
+            # batch['world'][i] = self.apply_pixel_noise(world=world.get_array())
             # batch['agreement'][i] = float(correct)
 
             # rpn = caption.reverse_polish_notation()
@@ -1071,7 +1105,7 @@ class CaptionAgreementDataset(Dataset):
         html = '<!DOCTYPE html><html><head><title>{dtype} {name}</title><style>.data{{width: 100%; height: 100%;}} .instance{{width: 100%; display: flex; margin-top: 1px; margin-bottom: 1px; background-color: #DDEEFF; vertical-align: middle; align-items: center;}} .world{{height: {world_height}px; display: inline-block; flex-grow: 0; vertical-align: middle;}} .vertical{{width: 2px; height: {world_height}px; display: inline-block; flex-grow: 0; background-color: #777777; vertical-align: middle;}} .num{{width: 50px; display: inline-block; flex-grow: 0; text-align: center; vertical-align: middle; margin-left: 10px;}} .caption{{display: inline-block; flex-grow: 1; vertical-align: middle; margin-left: 10px;}} .correct{{margin-top: 1px; margin-bottom: 1px; background-color: #BBFFBB;}} .incorrect{{margin-top: 1px; margin-bottom: 1px; background-color: #FFBBBB;}} .ambiguous{{margin-top: 1px; margin-bottom: 1px; background-color: #FFFFBB;}}</style></head><body><div class="data">{data}</div></body></html>'.format(
             dtype=self.type,
             name=self.name,
-            world_height=self.world_shape[0],
+            world_height=self.world_shape()[0],
             data=''.join(data_html)
         )
         return html
