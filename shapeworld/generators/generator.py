@@ -1,5 +1,4 @@
 from shapeworld import util
-from shapeworld.world import Shape, Color, Texture
 
 
 class WorldGenerator(object):
@@ -10,9 +9,9 @@ class WorldGenerator(object):
         self,
         world_size=64,
         world_color='black',
-        shapes=None,
-        colors=None,
-        textures=None,
+        shapes=('square', 'rectangle', 'triangle', 'pentagon', 'cross', 'circle', 'semicircle', 'ellipse'),
+        colors=('red', 'green', 'blue', 'yellow', 'magenta', 'cyan', 'gray'),
+        textures=('solid',),
         rotation=True,
         size_range=(0.1, 0.25),
         distortion_range=(2.0, 3.0),
@@ -21,13 +20,12 @@ class WorldGenerator(object):
         collision_shade_difference=0.5,
         boundary_tolerance=0.25
     ):
+        assert world_color not in colors
         self.world_size = world_size
         self.world_color = world_color
-        self.shapes = list(util.value_or_default(shapes, Shape.get_shapes()))
-        self.colors = list(util.value_or_default(colors, Color.get_colors()))
-        self.textures = list(util.value_or_default(textures, Texture.get_textures()))
-        if self.world_color in self.colors:
-            self.colors.remove(self.world_color)
+        self.shapes = list(shapes)
+        self.colors = list(colors)
+        self.textures = list(textures)
         self.rotation = rotation
         self.size_range = size_range
         self.distortion_range = distortion_range
