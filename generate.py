@@ -14,18 +14,18 @@ if __name__ == '__main__':
 
     parser.add_argument('-d', '--directory', help='Directory for generated data (with automatically created sub-directories, unless --unmanaged)')
     parser.add_argument('-a', '--archive', default=None, choices=('zip', 'zip:none', 'zip:deflate', 'zip:bzip2', 'zip:lzma', 'tar', 'tar:none', 'tar:gzip', 'tar:bzip2', 'tar:lzma'), help='Store generated data in (compressed) archives')
-    parser.add_argument('-A', '--append', action='store_true', help='Append to existing data (when used without --unmanaged)')
-    parser.add_argument('-U', '--unmanaged', action='store_true', help='Do not automatically create sub-directories (implied if --files not specified)')
+    parser.add_argument('-U', '--unmanaged', action='store_true', help='Do not automatically create sub-directories (implied if --shards not specified)')
 
     parser.add_argument('-t', '--type', default=None, help='Dataset type')
     parser.add_argument('-n', '--name', type=util.parse_tuple(parse_item=str, unary_tuple=False), default=None, help='Dataset name')
     parser.add_argument('-l', '--language', default=None, help='Dataset language')
     parser.add_argument('-c', '--config', type=util.parse_tuple(parse_item=str, unary_tuple=False), default=None, help='Dataset configuration file')
 
-    parser.add_argument('-f', '--files', type=util.parse_tuple(parse_item=util.parse_int_with_factor, unary_tuple=True, valid_sizes=(1, 3)), default=None, help='Number of files to split data into (not specified implies --unmanaged)')
-    parser.add_argument('-s', '--start', type=util.parse_tuple(parse_item=util.parse_int_with_factor, unary_tuple=True, valid_sizes=(1, 3)), default=None, help='Start file number (requires --append)')
+    parser.add_argument('-s', '--shards', type=util.parse_tuple(parse_item=util.parse_int_with_factor, unary_tuple=True, valid_sizes=(1, 3)), default=None, help='Number of shards to split data into (not specified implies --unmanaged)')
+    parser.add_argument('-i', '--instances', type=util.parse_int_with_factor, default=128, help='Number of instances per shard')
     parser.add_argument('-m', '--mode', default=None, choices=('train', 'validation', 'test'), help='Mode')
-    parser.add_argument('-i', '--instances', type=util.parse_int_with_factor, default=128, help='Number of instances per file')
+    parser.add_argument('-A', '--append', action='store_true', help='Append to existing data (when used without --unmanaged)')
+    parser.add_argument('-b', '--begin', type=util.parse_tuple(parse_item=util.parse_int_with_factor, unary_tuple=True, valid_sizes=(1, 3)), default=None, help='Begin from shard number (requires --append)')
 
     parser.add_argument('-P', '--delay-pixel-noise', action='store_true', help='Do not infuse pixel noise now, but when dataset is loaded')
     parser.add_argument('-M', '--include-model', action='store_true', help='Include world/caption model (as json file)')
@@ -65,7 +65,7 @@ if __name__ == '__main__':
             exit(0)
 
     if args.instances * util.product(dataset.world_shape()) > 5e8:  # > 500MB
-        sys.stdout.write('{time} warning: part size is {size}MB '.format(time=datetime.now().strftime('%H:%M:%S'), size=int(args.instances * util.product(dataset.world_shape()) / 1e6)))
+        sys.stdout.write('{time} warning: shard size is {size}MB '.format(time=datetime.now().strftime('%H:%M:%S'), size=int(args.instances * util.product(dataset.world_shape()) / 1e6)))
         sys.stdout.flush()
         if args.yes:
             sys.stdout.write('y\n')
@@ -92,13 +92,13 @@ if __name__ == '__main__':
     if args.concatenate_images:
         specification['num_concat_worlds'] = args.instances
 
-    args.unmanaged = args.unmanaged or (args.files is None)
+    args.unmanaged = args.unmanaged or (args.shards is None)
     if args.unmanaged:
         directory = args.directory
-        if args.files is None:
-            parts = (0,)
+        if args.shards is None:
+            shards = (0,)
         else:
-            parts = args.files
+            shards = args.shards
 
     else:
         if dataset.language is None:
@@ -107,48 +107,48 @@ if __name__ == '__main__':
         else:
             directory = os.path.join(args.directory, '{}-{}'.format(dataset.type, dataset.language), dataset.name)
             specification_path = os.path.join(args.directory, '{}-{}-{}.json'.format(dataset.type, dataset.language, dataset.name))
-        parts = args.files
+        shards = args.shards
 
-    assert all(part >= 0 for part in parts)
-    assert args.files is None or (args.mode is not None) == (len(parts) == 1)
-    if len(parts) == 1:
+    assert all(shard >= 0 for shard in shards)
+    assert args.shards is None or (args.mode is not None) == (len(shards) == 1)
+    if len(shards) == 1:
         modes = (args.mode,)
         if args.unmanaged:
             directories = (directory,)
         else:
             directories = (os.path.join(directory, args.mode),)
-    elif len(parts) == 3:
+    elif len(shards) == 3:
         assert args.mode is None
         modes = ('train', 'validation', 'test')
         directories = tuple(os.path.join(directory, mode) for mode in modes)
 
-    assert args.start is None or args.append
-    assert args.start is None or len(args.start) == len(args.files)
+    assert args.begin is None or args.append
+    assert args.begin is None or len(args.begin) == len(args.shards)
     if args.append:
-        if args.start is not None:
-            start_part = args.start
+        if args.begin is not None:
+            shards_begin = args.begin
         elif args.clevr_format:
-            start_part = tuple(0 for _ in directories)
+            shards_begin = tuple(0 for _ in directories)
         else:
-            start_part = ()
+            shards_begin = ()
             for subdir in directories:
                 for root, dirs, files in os.walk(subdir):
                     if root == subdir:
                         if dirs:
-                            assert all(d[:4] == 'part' for d in dirs)
-                            start_part += (max(int(d[4:]) for d in dirs),)
+                            assert all(d[:5] == 'shard' for d in dirs)
+                            shards_begin += (max(int(d[4:]) for d in dirs),)
                         elif files:
-                            assert all(f[:4] == 'part' for f in files)
-                            start_part += (max(int(f[4:f.index('.')]) for f in files),)
+                            assert all(f[:5] == 'shard' for f in files)
+                            shards_begin += (max(int(f[4:f.index('.')]) for f in files),)
                         else:
-                            start_part += (0,)
+                            shards_begin += (0,)
         if not args.unmanaged:
             with open(specification_path, 'r') as filehandle:
                 loaded_specification = json.load(filehandle)
                 assert loaded_specification == specification, str(loaded_specification) + '\n' + str(specification)
 
     else:
-        start_part = (0,) * len(directories)
+        shards_begin = (0,) * len(directories)
         if not args.unmanaged and os.path.isdir(directory):
             sys.stdout.write('Delete content of directory {directory}? '.format(directory=directory))
             sys.stdout.flush()
@@ -168,21 +168,21 @@ if __name__ == '__main__':
                 if not os.path.isdir(subdir):
                     os.makedirs(subdir)
 
-    for mode, directory, num_parts, start in zip(modes, directories, parts, start_part):
+    for mode, directory, num_shards, shard_begin in zip(modes, directories, shards, shards_begin):
         sys.stdout.write('{time} generate {dtype} {name}{mode} data...\n'.format(time=datetime.now().strftime('%H:%M:%S'), dtype=dataset.type, name=dataset.name, mode=(' ' + mode if mode else '')))
-        sys.stdout.write('         0%  0/{files}  (time per part: n/a)'.format(files=num_parts))
+        sys.stdout.write('         0%  0/{shards}  (time per shard: n/a)'.format(shards=num_shards))
         sys.stdout.flush()
 
         if args.clevr_format:  # validation --> val
             questions = list()
 
-        for part in range(1, num_parts + (num_parts == 0) + 1):
+        for shard in range(1, num_shards + (num_shards == 0) + 1):
             before = datetime.now()
-            if num_parts == 0:
+            if num_shards == 0:
                 path = directory
-                num_parts = 1
+                num_shards = 1
             else:
-                path = os.path.join(directory, 'part{}'.format(start + part))
+                path = os.path.join(directory, 'shard{}'.format(shard_begin + shard))
 
             generated = dataset.generate(n=args.instances, mode=mode, include_model=(args.include_model or args.clevr_format), alternatives=True)
 
@@ -239,7 +239,7 @@ if __name__ == '__main__':
                 captions_model = generated.get('caption_model')
                 agreements = generated['agreement']
                 for n in range(len(worlds)):
-                    index = (part - 1) * args.instances + n
+                    index = (shard - 1) * args.instances + n
                     filename = 'world_{}.png'.format(index)
                     image_bytes = BytesIO()
                     World.get_image(world_array=worlds[n]).save(image_bytes, format='png')
@@ -281,7 +281,7 @@ if __name__ == '__main__':
                     tf_util.write_records(dataset=dataset, records=generated, path=path)
 
             after = datetime.now()
-            sys.stdout.write('\r         {completed:.0f}%  {part}/{parts}  (time per part: {duration})'.format(completed=((part) * 100 / num_parts), part=part, parts=num_parts, duration=str(after - before).split('.')[0]))
+            sys.stdout.write('\r         {completed:.0f}%  {shard}/{shards}  (time per shard: {duration})'.format(completed=(shard * 100 / num_shards), shard=shard, shards=num_shards, duration=str(after - before).split('.')[0]))
             sys.stdout.flush()
 
         if args.clevr_format:

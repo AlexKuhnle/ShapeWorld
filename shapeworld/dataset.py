@@ -512,13 +512,13 @@ class LoadedDataset(Dataset):
             elif root[len(self.directory) + 1:] in ('train', 'validation', 'test'):
                 mode = root[len(self.directory) + 1:]
                 if dirs:
-                    assert all(d[:4] == 'part' and d[4:].isdigit() for d in dirs)
+                    assert all(d[:5] == 'shard' or d[:4] == 'part' for d in dirs)
                     self.parts[mode] = [os.path.join(root, d) for d in dirs]
                     if files:
-                        assert all(f[:4] == 'part' and f[-13:] == '.tfrecords.gz' for f in files)
+                        assert all((f[:5] == 'shard' or f[:4] == 'part') and f[-13:] == '.tfrecords.gz' for f in files)
                         self.records_parts[mode] = [os.path.join(root, f) for f in files]
                 else:
-                    assert all(f[:4] == 'part' for f in files)
+                    assert all(f[:5] == 'shard' or f[:4] == 'part' for f in files)
                     self.parts[mode] = [os.path.join(root, f) for f in files if f[-13:] != '.tfrecords.gz']
                     if any(f[-13:] == '.tfrecords.gz' for f in files):
                         self.records_parts[mode] = [os.path.join(root, f) for f in files if f[-13:] == '.tfrecords.gz']

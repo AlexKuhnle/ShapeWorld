@@ -114,26 +114,22 @@ The following command line arguments are available:
 
 * `-d`, `--directory`:  Directory for generated data, with automatically created sub-directories unless `--unmanaged`, hence should be non-existing or empty since it will be overwritten (**required**)
 * `-a`, `--archive`:  Store generated data in (compressed) archives, either `zip[:mode]` or `tar[:mode]` with one of `none`, `deflate` (only zip), `gzip` (only tar), `bzip2`, `lzma` (default: `none`)
-* `-A`, `--append`:  Append to existing data (when used without `--unmanaged`)
-* `-U`, `--unmanaged`:  Do not automatically create sub-directories (implied if --files not specified)
-
+* `-U`, `--unmanaged`:  Do not automatically create sub-directories (implied if --shards not specified)
 * `-t`, `--type`:  Dataset type (**required**)
 * `-n`, `--name`:  Dataset name (**required**)
 * `-l`, `--language`:  Dataset language, if available (default: `none`, i.e. English)
 * `-c`, `--config`:  Dataset configuration file, otherwise use default configuration
-
-* `-f`, `--files`:  Optional number of files to split data into, instead of all in one file (not specified implies --unmanaged), either a number (with `--mode`) or a tuple of 3 comma-separated numbers (without `--mode`), for `train`, `validation` and `test` data respectively
-* `-s`, `--start`: Optional start file number (requires `--append`), same format as `--files`
-* `-m`, `--mode`:  Mode, one of `train`, `validation` or `test`, requires `--files` to be a single number (default: `none`)
-* `-i`, `--instances`:  Number of instances per file (default: `128`)
-
+* `-s`, `--shards`:  Optional number of shards to split data into (not specified implies --unmanaged), either a number (with `--mode`) or a tuple of 3 comma-separated numbers (without `--mode`), for `train`, `validation` and `test` data respectively
+* `-i`, `--instances`:  Number of instances per shard (default: `128`)
+* `-m`, `--mode`:  Mode, one of `train`, `validation` or `test`, requires `--shards` to be a single number (default: `none`)
+* `-A`, `--append`:  Append to existing data (when used without `--unmanaged`)
+* `-b`, `--begin`: Optional begin from shard number (requires `--append`), same format as `--shards`
 * `-M`, `--include-model`:  Include world/caption model (as json file)
 * `-H`, `--html`:  Create HTML file (`data.html`) visualizing the generated data
 * `-T`, `--tf-records`:  Additionally store data as TensorFlow records
 * `-F`, `--features`:  Additionally extract image features (`conv4` of `resnet_v2_101`)
 * `-C`, `--clevr-format`:  Output in CLEVR format
 * `-O`, `--concatenate-images`:  Concatenate images per part into one image file
-
 * `-Y`, `--yes`:  Confirm all questions with yes
 * `--config-values`:  Additional dataset configuration values passed as command line arguments
 
@@ -229,31 +225,27 @@ The dataset provides:
 
 ## Evaluation and example models
 
-The `models/` directory contains a few exemplary models based on [TFMacros](https://github.com/AlexKuhnle/TFMacros), my collection of TensorFlow macros. The scripts `train.py` and `evaluate.py` provide the following command line arguments to train and evaluate these models:
+The `models/` directory contains a few exemplary models based on [TFMacros](https://github.com/AlexKuhnle/TFMacros), my collection of TensorFlow macros. The scripts `train.py` and `evaluate.py` provide the following command line arguments to train and evaluate these models ((t) train-only, (e) evaluate-only):
 
 * `-t`, `--type`:  Dataset type (**required**)
 * `-n`, `--name`:  Dataset name (**required**)
 * `-l`, `--language`:  Dataset language, if available (default: `none`, i.e. English)
 * `-c`, `--config`:  Dataset configuration file, otherwise use default configuration
-
 * `-m`, `--model`:  Model, one in `models/[TYPE]/` (**required**)
 * `-y`, `--hyperparams-file`:  Model hyperparameters file (default: hyperparams directory)
-* `-R`, `--restore`:  Restore model, requires `--model-file`
-
+* `-R`, `--restore` (t):  Restore model, requires `--model-file`
 * `-b`, `--batch-size`:  Batch size (default: `64`)
 * `-i`, `--iterations`:  Number of iterations (default: `1000`)
-* `-e`, `--evaluation-iterations`:  Evaluation iterations (default: `10`)
-* `-f`, `--evaluation-frequency`:  Evaluation frequency (default: `100`)
+* `-e`, `--evaluation-iterations` (t):  Evaluation iterations (default: `10`) (*)
+* `-f`, `--evaluation-frequency` (t):  Evaluation frequency (default: `100`) (*)
 * `-q`, `--query`:  Additional values to query, separated by commas (default: `none`)
-* `-T`, `--tf-records`:  Use TensorFlow records
-
+* `-s`, `--serialize` (e):  Values to serialize, separated by commas (default: `none`) (**)
+* `-T`, `--tf-records` (t):  Use TensorFlow records (*)
 * `--model-dir`:  TensorFlow model directory, storing the model computation graph and parameters (default: `none`)
-* `--summary-dir`:  TensorFlow summary directory for TensorBoard (default: `none`)
+* `--summary-dir` (t):  TensorFlow summary directory for TensorBoard (default: `none`)
 * `--report-file`:  CSV file reporting the training results throughout the learning process (default: `none`)
-
 * `-v`, `--verbosity'`:  Verbosity, one of `0` (no messages), `1` (default), `2` (plus TensorFlow messages) (default: `1`)
-* `-Y`, `--yes`:  Confirm all questions with yes
-
+* `-Y`, `--yes` (t):  Confirm all questions with yes
 * `--config-values`:  Additional dataset configuration values passed as command line arguments
 
 For instance, the following command line trains an image caption agreement system on the dataset specified by the `multishape` configuration file included in this repository:
@@ -269,28 +261,6 @@ python train.py -t agreement -n multishape -c examples/readme -m cnn_bow -i 10 -
 ```
 
 
-
-
-
-* `-t`, `--type`:  Dataset type (**required**)
-* `-n`, `--name`:  Dataset name (**required**)
-* `-l`, `--language`:  Dataset language, if available (default: `none`, i.e. English)
-* `-c`, `--config`:  Dataset configuration file, otherwise use default configuration
-
-* `-m`, `--model`:  Model, one in `models/[TYPE]/` (**required**)
-* `-y`, `--hyperparams-file`:  Model hyperparameters file (default: hyperparams directory)
-
-* `-b`, `--batch-size`:  Batch size (default: `64`)
-* `-i`, `--iterations`:  Number of iterations (default: `100`)
-* `-q`, `--query`:  Additional values to query, separated by commas (default: `none`)
-* `-s`, `--serialize`:  Values to serialize, separated by commas (default: `none`)
-
-* `--model-dir`:  TensorFlow model directory, storing the model computation graph and parameters (**required**)
-* `--report-file`:  CSV file reporting the evaluation results (default: `none`)
-
-* `-v`, `--verbosity'`:  Verbosity, one of `0` (no messages), `1` (default), `2` (plus TensorFlow messages) (default: `1`)
-
-* `--config-values`:  Additional dataset configuration values passed as command line arguments
 
 
 ```bash
