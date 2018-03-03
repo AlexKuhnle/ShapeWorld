@@ -3,7 +3,7 @@ from io import BytesIO
 import json
 from math import ceil, sqrt
 import os
-from random import random, randrange
+from random import choice, random, randrange
 import numpy as np
 from PIL import Image
 from shapeworld import util
@@ -524,7 +524,11 @@ class LoadedDataset(Dataset):
                         self.records_parts[mode] = [os.path.join(root, f) for f in files if f[-13:] == '.tfrecords.gz']
         assert self.parts
         self.mode = None
-        self.loaded = {value_name: [] for value_name, value_type in self.values.items() if value_type != 'model' or self.include_model}
+        self.loaded = dict()
+        for value_name, value_type in self.values.items():
+            value_type, alts = util.alternatives_type(value_type=value_type)
+            if value_type != 'model' or self.include_model:
+                self.loaded[value_name] = list()
         self.num_instances = 0
 
     @property
@@ -560,7 +564,11 @@ class LoadedDataset(Dataset):
         while self.mode != mode or self.num_instances < n:
             if self.mode != mode:
                 self.mode = mode
-                self.loaded = {value_name: [] for value_name, value_type in self.values.items() if value_type not in ('model', 'alternatives(model)') or self.include_model}
+                self.loaded = dict()
+                for value_name, value_type in self.values.items():
+                    value_type, alts = util.alternatives_type(value_type=value_type)
+                    if value_type != 'model' or self.include_model:
+                        self.loaded[value_name] = list()
             parts = self.parts[mode]
             part = randrange(len(parts))
             path = parts.pop(part) if self.part_once else parts[part]
@@ -583,15 +591,21 @@ class LoadedDataset(Dataset):
             index = randrange(self.num_instances)
             self.num_instances -= 1
             for value_name, value_type in self.values.items():
-                if value_type in ('model', 'alternatives(model)') and not self.include_model:
+                if value_name == 'alternatives' and not alternatives:
+                    continue
+                value_type, alts = util.alternatives_type(value_type=value_type)
+                if value_type == 'model' and not include_model:
                     continue
                 value = self.loaded[value_name].pop(index)
+                if alts and not alternatives:
+                    value = choice(value)
                 if value_type in self.vocabularies:
                     batch[value_name][i][:len(value)] = value
-                elif value_type not in ('model', 'alternatives(model)') or include_model:
+                else:
                     batch[value_name][i] = value
 
         for value_name, value_type in self.values.items():
+            value_type, _ = util.alternatives_type(value_type=value_type)
             if value_type == 'world':
                 batch[value_name] = self.apply_pixel_noise(world=batch[value_name])
 
@@ -667,6 +681,7 @@ class DatasetMixer(Dataset):
                 dataset = util.sample(distribution, self.datasets)
                 generated = dataset.generate(n=1, mode=mode, include_model=include_model, alternatives=alternatives)
                 for value_name, value_type in self.values.items():
+                    value_type, alts = util.alternatives_type(value_type=value_type)
                     value = generated[value_name][0]
                     if value_type in self.vocabularies:
                         batch[value_name][i][:len(value)] = value
