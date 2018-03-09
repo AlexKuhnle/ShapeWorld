@@ -35,7 +35,7 @@ class QuantificationComplex(CaptionAgreementDataset):
         reinforcement_range=(1, 3),
         quantifier_types=None,
         caption_size=20,
-        vocabulary=('.', 'a', 'above', 'all', 'almost', 'an', 'are', 'as', 'at', 'behind', 'below', 'bigger', 'blue', 'but', 'circle', 'circles', 'closer', 'cross', 'crosses', 'cyan', 'darker', 'eight', 'ellipse', 'ellipses', 'exactly', 'farther', 'few', 'five', 'four', 'from', 'front', 'gray', 'green', 'half', 'in', 'is', 'least', 'left', 'less', 'lighter', 'magenta', 'many', 'more', 'most', 'no', 'none', 'not', 'of', 'one', 'pentagon', 'pentagons', 'quarter', 'quarters', 'rectangle', 'rectangles', 'red', 'right', 'semicircle', 'semicircles', 'seven', 'shape', 'shapes', 'six', 'smaller', 'square', 'squares', 'than', 'the', 'third', 'thirds', 'three', 'to', 'triangle', 'triangles', 'twice', 'two', 'yellow', 'zero'),
+        vocabulary=('.', 'a', 'above', 'all', 'an', 'are', 'as', 'at', 'behind', 'below', 'bigger', 'blue', 'but', 'circle', 'circles', 'closer', 'cross', 'crosses', 'cyan', 'darker', 'eight', 'ellipse', 'ellipses', 'exactly', 'farther', 'few', 'five', 'four', 'from', 'front', 'gray', 'green', 'half', 'in', 'is', 'least', 'left', 'less', 'lighter', 'magenta', 'many', 'more', 'most', 'no', 'none', 'not', 'of', 'one', 'pentagon', 'pentagons', 'quarter', 'quarters', 'rectangle', 'rectangles', 'red', 'right', 'semicircle', 'semicircles', 'seven', 'shape', 'shapes', 'six', 'smaller', 'square', 'squares', 'than', 'the', 'third', 'thirds', 'three', 'to', 'triangle', 'triangles', 'twice', 'two', 'yellow', 'zero'),
         correct_ratio=0.5,
         train_correct_ratio=None,
         validation_correct_ratio=None,

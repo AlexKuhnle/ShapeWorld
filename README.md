@@ -4,12 +4,14 @@
 
 ```bash
 git clone --recursive https://github.com/AlexKuhnle/ShapeWorld.git
-pip3 install -e ShapeWorld
+pip3 install -e ShapeWorld  # optional: ShapeWorld[full] or ShapeWorld[full-gpu]
 ```
 
 
 ### Recently added features
 
+- Support for Mac OS X (ACE, grammar)
+- New agreement baseline models
 - Generator option `-F` for extraction of image features (ResNet-101)
 - Generator option `-C` for alternative CLEVR output format
 - More complex quantification captions
@@ -47,7 +49,8 @@ Contact: aok25 (at) cam.ac.uk
 
 If you use ShapeWorld in your work, please cite:
 
-> **ShapeWorld: A new test methodology for multimodal language understanding** ([arXiv](https://arxiv.org/abs/1704.04517)). *Alexander Kuhnle and Ann Copestake* (April 2017).
+> **ShapeWorld: A new test methodology for multimodal language understanding** ([arXiv](https://arxiv.org/abs/1704.04517)).
+> *Alexander Kuhnle and Ann Copestake* (April 2017).
 
 
 
@@ -242,6 +245,7 @@ The `models/` directory contains a few exemplary models based on [TFMacros](http
 * `-s`, `--serialize` (e):  Values to serialize, separated by commas (default: `none`) (**)
 * `-T`, `--tf-records` (t):  Use TensorFlow records (*)
 * `--model-dir`:  TensorFlow model directory, storing the model computation graph and parameters (default: `none`)
+* `--save-frequency` (t):  Save frequency, in hours (default: `3`)
 * `--summary-dir` (t):  TensorFlow summary directory for TensorBoard (default: `none`)
 * `--report-file`:  CSV file reporting the training results throughout the learning process (default: `none`)
 * `-v`, `--verbosity'`:  Verbosity, one of `0` (no messages), `1` (default), `2` (plus TensorFlow messages) (default: `1`)

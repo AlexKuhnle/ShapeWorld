@@ -42,10 +42,16 @@ class ComparativeQuantifier(Caption):
         )
 
     def reverse_polish_notation(self):
-        return self.restrictor.reverse_polish_notation() + \
-            self.comparison.reverse_polish_notation() + \
-            self.body.reverse_polish_notation() + \
-            ['{}-{}-{}-{}'.format(self, self.qtype, self.qrange, self.quantity)]
+        if self.qtype == 'composed':
+            return self.restrictor.reverse_polish_notation() + \
+                self.comparison.reverse_polish_notation() + \
+                self.body.reverse_polish_notation() + \
+                ['{}-{}-{}'.format(self, self.qtype, self.qrange)]
+        else:
+            return self.restrictor.reverse_polish_notation() + \
+                self.comparison.reverse_polish_notation() + \
+                self.body.reverse_polish_notation() + \
+                ['{}-{}-{}-{}'.format(self, self.qtype, self.qrange, self.quantity)]
 
     def apply_to_predication(self, predication):
         rstr_predication = predication.sub_predication()

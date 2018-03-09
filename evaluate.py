@@ -29,7 +29,6 @@ if __name__ == '__main__':
 
     parser.add_argument('-v', '--verbosity', type=int, choices=(0, 1, 2), default=1, help='Verbosity (0: no messages, 1: default, 2: plus TensorFlow messages)')
 
-
     parser.add_argument('--config-values', nargs=argparse.REMAINDER, default=(), help='Additional dataset configuration values passed as command line arguments')
     args = parser.parse_args()
     args.config_values = util.parse_config(values=args.config_values)
@@ -40,8 +39,6 @@ if __name__ == '__main__':
     else:
         os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
     import tensorflow as tf
-
-    assert args.model_dir is not None
 
     # dataset
     dataset = Dataset.create(dtype=args.type, name=args.name, language=args.language, config=args.config, **args.config_values)
@@ -57,13 +54,14 @@ if __name__ == '__main__':
             if args.config_values:
                 sys.stdout.write('                 {config}\n'.format(config=args.config_values))
         sys.stdout.write('         {} model: {}\n'.format(args.type, args.model))
-        sys.stdout.write('         hyperparameters: {}\n'.format(args.hyperparameters))
+        sys.stdout.write('         hyperparameters: {}\n'.format(args.hyperparams_file))
         sys.stdout.flush()
 
     if args.type == 'agreement':
         dataset_parameters = dict(
             world_shape=dataset.world_shape(),
-            vocabulary_size=dataset.vocabulary_size(value_type='language')
+            vocabulary_size=dataset.vocabulary_size(value_type='language'),
+            rpn_vocabulary_size=dataset.vocabulary_size(value_type='rpn')
         )
         for value_name in dataset.vectors:
             dataset_parameters[value_name + '_shape'] = dataset.vector_shape(value_name=value_name)
@@ -103,8 +101,12 @@ if __name__ == '__main__':
         query += serialize
 
     if args.hyperparams_file is None:
-        with open(os.path.join('models', dataset.type, 'hyperparams', args.model + '.params.json'), 'r') as filehandle:
-            parameters = json.load(fp=filehandle)
+        hyperparams_file = os.path.join('models', dataset.type, 'hyperparams', args.model + '.params.json')
+        if os.path.isfile(hyperparams_file):
+            with open(hyperparams_file, 'r') as filehandle:
+                parameters = json.load(fp=filehandle)
+        else:
+            parameters = dict()
     else:
         with open(args.hyperparams_file, 'r') as filehandle:
             parameters = json.load(fp=filehandle)
@@ -118,12 +120,12 @@ if __name__ == '__main__':
         if value != 'iteration':
             iteration_start = int(value) + 1
 
-    with Model(name=args.model, learning_rate=parameters.pop('learning_rate'), weight_decay=parameters.pop('weight_decay', None), clip_gradients=parameters.pop('clip_gradients', None), model_directory=args.model_dir) as model:
+    with Model(name=args.model, learning_rate=parameters.pop('learning_rate', 1e-3), weight_decay=parameters.pop('weight_decay', None), clip_gradients=parameters.pop('clip_gradients', None), model_directory=args.model_dir) as model:
         parameters.pop('dropout_rate', None)
 
         module = import_module('models.{}.{}'.format(args.type, args.model))
         module.model(model=model, inputs=dict(), dataset_parameters=dataset_parameters, **parameters)  # no input tensors, hence None for placeholder creation
-        model.finalize(restore=True)
+        model.finalize(restore=(args.model_dir is not None))
 
         if args.verbosity >= 1:
             sys.stdout.write('         parameters: {:,}\n'.format(model.num_parameters))

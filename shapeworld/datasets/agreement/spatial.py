@@ -54,12 +54,13 @@ class Spatial(CaptionAgreementDataset):
         )
 
         world_captioner = ExistentialCaptioner(
-            restrictor_captioner=RegularTypeCaptioner(existing_attribute_rate=0.0),
+            restrictor_captioner=RegularTypeCaptioner(),
             body_captioner=RelationCaptioner(
-                reference_captioner=RegularTypeCaptioner(existing_attribute_rate=0.0),
-                comparison_captioner=RegularTypeCaptioner(existing_attribute_rate=0.0),
+                reference_captioner=RegularTypeCaptioner(),
+                comparison_captioner=RegularTypeCaptioner(),
                 relations=('x-rel', 'y-rel')  # , 'z-rel', 'proximity-rel'
-            )
+            ),
+            pragmatical_tautology_rate=1.0
         )
 
         super(Spatial, self).__init__(

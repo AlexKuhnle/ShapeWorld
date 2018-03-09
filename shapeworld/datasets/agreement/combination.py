@@ -34,7 +34,7 @@ class Combination(CaptionAgreementDataset):
         max_provoke_collision_rate=0.33,
         reinforcement_range=(1, 3),
         caption_size=28,
-        vocabulary=('.', 'a', 'above', 'all', 'almost', 'an', 'and', 'are', 'as', 'at', 'behind', 'below', 'bigger', 'blue', 'but', 'circle', 'circles', 'closer', 'cross', 'crosses', 'cyan', 'darker', 'eight', 'either', 'ellipse', 'ellipses', 'exactly', 'farther', 'few', 'five', 'four', 'from', 'front', 'gray', 'green', 'half', 'in', 'is', 'least', 'left', 'less', 'lighter', 'magenta', 'many', 'more', 'most', 'no', 'none', 'not', 'of', 'one', 'or', 'pentagon', 'pentagons', 'quarter', 'quarters', 'rectangle', 'rectangles', 'red', 'right', 'semicircle', 'semicircles', 'seven', 'shape', 'shapes', 'six', 'smaller', 'square', 'squares', 'than', 'the', 'there', 'third', 'thirds', 'three', 'to', 'triangle', 'triangles', 'twice', 'two', 'yellow', 'zero'),
+        vocabulary=('.', 'a', 'above', 'all', 'an', 'and', 'are', 'as', 'at', 'behind', 'below', 'bigger', 'blue', 'but', 'circle', 'circles', 'closer', 'cross', 'crosses', 'cyan', 'darker', 'eight', 'either', 'ellipse', 'ellipses', 'exactly', 'farther', 'few', 'five', 'four', 'from', 'front', 'gray', 'green', 'half', 'in', 'is', 'least', 'left', 'less', 'lighter', 'magenta', 'many', 'more', 'most', 'no', 'none', 'not', 'of', 'one', 'or', 'pentagon', 'pentagons', 'quarter', 'quarters', 'rectangle', 'rectangles', 'red', 'right', 'semicircle', 'semicircles', 'seven', 'shape', 'shapes', 'six', 'smaller', 'square', 'squares', 'than', 'the', 'there', 'third', 'thirds', 'three', 'to', 'triangle', 'triangles', 'twice', 'two', 'yellow', 'zero'),
         correct_ratio=0.5,
         train_correct_ratio=None,
         validation_correct_ratio=None,

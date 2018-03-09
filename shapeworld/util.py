@@ -1,7 +1,6 @@
 from __future__ import division
 from collections import Counter, namedtuple
 from itertools import chain, combinations
-import json
 from math import ceil, cos, floor, pi, sin, sqrt, trunc
 from operator import __truediv__
 import os
@@ -78,41 +77,6 @@ def parse_config(values):
                 pass
         config[key] = value
     return config
-    # assert string
-    # if string.lower() in ('none', 'null'):
-    #     return None
-    # if string[0] == '{' and string[-1] == '}':
-    #     if '=' in string and ':' not in string:
-    #         values = list()
-    #         index = last_index = 1
-    #         depth = 0
-    #         while True:
-    #             comma = string.find(',', index, -1)
-    #             o = string.find('{', index, -1)
-    #             if depth > 0:
-    #                 c = string.find('}', index, -1)
-    #                 if 0 < o < c:
-    #                     index = o + 1
-    #                     depth += 1
-    #                 else:
-    #                     index = c + 1
-    #                     depth -= 1
-    #             elif 0 < o < comma:
-    #                 index = o + 1
-    #                 depth += 1
-    #             elif 0 < comma:
-    #                 index = comma
-    #                 values.append(tuple(string[last_index:index].split('=', 1)))
-    #                 index = last_index = comma + 1
-    #             else:
-    #                 values.append(tuple(string[last_index:-1].split('=', 1)))
-    #                 break
-    #         assert all(len(value) == 2 for value in values)
-    #         return {key: (parse_config(value) if value[0] == '{' else value) for key, value in values}
-    #     elif ':' in string:
-    #         return json.loads(string)
-    # else:
-    #     return string
 
 
 def sentence2tokens(sentence):

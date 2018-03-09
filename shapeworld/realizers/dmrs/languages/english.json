@@ -44,34 +44,6 @@
             "magenta": {"key": "magenta", "dmrs": "[attr]:_magenta_a_sw e? =1=> [type]:node"},
             "cyan": {"key": "cyan", "dmrs": "[attr]:_cyan_a_sw e? =1=> [type]:node"},
             "gray": {"key": "gray", "dmrs": "[attr]:_gray_a_sw e? =1=> [type]:node"}
-        },
-
-        "shapes": {
-            "square,rectangle,triangle,pentagon,cross,semicircle": {"key": "angular", "dmrs": "[attr]:_angular_a_1 e? =1=> [type]:node"},
-            "circle,semicircle,ellipse": {"key": "round", "dmrs": "[attr]:_round_a_1 e? =1=> [type]:node"},
-
-            "square,triangle,pentagon,cross,circle": {"key": "symmetric", "dmrs": "[attr]:_symmetric_a_1 e? =1=> [type]:node"},
-            "rectangle,semicircle,ellipse": {"key": "asymmetric", "dmrs": "[attr]:_asymmetric_a_1 e? =1=> [type]:node"}
-        },
-
-        "x-max": {
-            "-1": {"key": "leftmost", "dmrs": "superl e? =1=> [attr]:_leftmost_a_1 e? =1=> [type]:node"},
-            "1": {"key": "rightmost", "dmrs": "superl e? =1=> [attr]:_rightmost_a_1 e? =1=> [type]:node"}
-        },
-
-        "y-max": {
-            "-1": {"key": "topmost", "dmrs": "superl e? =1=> [attr]:_topmost_a_1 e? =1=> [type]:node"},
-            "1": {"key": "lowermost", "dmrs": "superl e? =1=> [attr]:_lower_a_1 e? =1=> [type]:node"}
-        },
-
-        "size-max": {
-            "-1": {"key": "smallest", "dmrs": "superl e? =1=> [attr]:_small_a_1 e? =1=> [type]:node"},
-            "1": {"key": "biggest", "dmrs": "superl e? =1=> [attr]:_big_a_1 e? =1=> [type]:node"}
-        },
-
-        "shade-max": {
-            "-1": {"key": "darkest", "dmrs": "superl e? =1=> [attr]:_dark_a_1 e? =1=> [type]:node"},
-            "1": {"key": "lightest", "dmrs": "superl e? =1=> [attr]:_light_a_1 e? =1=> [type]:node"}
         }
     },
 
@@ -108,14 +80,6 @@
         "shade-rel": {
             "-1": {"key": "darker", "dmrs": "[rel]:_dark_a_1 e? <=1= more_comp e? -2-> [ref]:node <-- _a_q"},
             "1": {"key": "lighter", "dmrs": "[rel]:_light_a_1 e? <=1= more_comp e? -2-> [ref]:node <-- _a_q"}
-        }
-    },
-
-
-    "max-relations": {
-        "proximity-max": {
-            "-1": {"key": "closest", "dmrs": "[rel]:_close_a_to e? <=1= _to_p e? -2-> [ref]:node <-- _a_q; superl e? =1=> :rel"},
-            "1": {"key": "farthest", "dmrs": "[rel]:_far_a_from e? <=1= _from_p e? -2-> [ref]:node <-- _a_q; superl e? =1=> :rel"}
         }
     },
 
@@ -186,7 +150,7 @@
                 "0.5": {"key": "few", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= _a+few_a_1 e?; :rstr <-1- [body]:node"}
             },
             "eq": {
-                "0.0": {"key": "no", "dmrs": "_no_q --> [rstr]:pred x?[pers=3] <-1- [body]:node"},
+                "0.0": {"key": "no", "dmrs": "_no_q --> [rstr]:pred x?[num=s] <-1- [body]:node"},
                 "0.25": {"key": "a_quarter", "dmrs": "_the_q --> [rstr]:pred x?[num=p] <-1- _quarter_n_of x?[pers=3,num=s] <-1- [body]:node; _a_q --> :_quarter_n_of"},
                 "0.33": {"key": "a_third", "dmrs": "_the_q --> [rstr]:pred x?[num=p] <-1- _third_n_of x?[pers=3,num=s] <-1- [body]:node; _a_q --> :_third_n_of"},
                 "0.5": {"key": "half", "dmrs": "_half_q --> part_of x[3p___] -1-> [rstr]:pred x?[num=p] <-- _the_q; :part_of <-1- [body]:node"},
@@ -196,17 +160,6 @@
             },
             "gt": {
                 "0.5": {"key": "most", "dmrs": "_most_q --> [rstr]:pred x?[num=p] <-1- [body]:node"}
-            }
-        },
-
-        "composed": {
-            "almost_no": {
-                "definition": [["ratio", "neq", 0.0], ["ratio", "leq", 0.2]],
-                "dmrs": "_almost_x_deg e? ==> _no_q --> [rstr]:pred x?[num=s] <-1- [body]:node"
-            },
-            "almost_all": {
-                "definition": [["ratio", "neq", 1.0], ["ratio", "geq", 0.8]],
-                "dmrs": "_almost_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <-1- [body]:node"
             }
         }
     },
@@ -243,9 +196,6 @@
                 "1.0": {"key": "as_many", "dmrs": "comp_equal e? =1=> much-many_a e? =1=> [rstr]:pred x?[num=p] <-- udef_q; :comp_equal -2-> [comp]:pred x?[num=p] <-- udef_q; :rstr <-1- [body]:node"},
                 "2.0": {"key": "twice_as_many", "dmrs": "_twice_x_deg e? =1=> comp_equal e? =1=> much-many_a e? =1=> [rstr]:pred x?[num=p] <-- udef_q; :comp_equal -2-> [comp]:pred x?[num=p] <-- udef_q; :rstr <-1- [body]:node"}
             }
-        },
-
-        "composed": {
         }
     },
 
@@ -260,14 +210,12 @@
         "comparative_quantifier": {"key": "comparative-quantifier-proposition", "dmrs": "***[head,body]:pred e[ppi--]"},
 
         "conjunction": {"key": "and", "dmrs": "[arg1]:node <-1h- ***[head]:_and_c e[ppi--] -2h-> [arg2]:node"},
-        "disjunction": {"key": "or", "dmrs": "[arg1]:node <-1h- ***[head]:_or_c e[ppi--] -2h-> [arg2]:node"},
-        "exclusive-disjunction": {"key": "either_or", "dmrs": ["[arg1]:node <-1h- ***[head]:_or_c e[ppi--] -2h-> [arg2]:node", "[arg1]:node <-1h- ***[head]:_or_c e[ppi--] -2h-> [arg2]:node", "_either_a_also i =1=> [arg]:node"]}
+        "disjunction": {"key": "or", "dmrs": "[arg1]:node <-1h- ***[head]:_or_c e[ppi--] -2h-> [arg2]:node"}
     },
 
 
     "hierarchy": {
         "shape_n": ["_square_n_sw", "_rectangle_n_sw", "_triangle_n_sw", "_pentagon_n_sw", "_cross_n_sw", "_circle_n_sw", "_semicircle_n_sw", "_ellipse_n_sw"],
-        "shape_a": ["_angular_a_1", "_round_a_1", "_symmetric_a_1", "_asymmetric_a_1"],
         "color_a": ["_red_a_sw", "_green_a_sw", "_blue_a_sw", "_yellow_a_sw", "_magenta_a_sw", "_cyan_a_sw", "_white_a_sw"],
         "default_q": ["_a_q", "udef_q"],
         "fraction_n": ["_quarter_n_of", "_third_n_of"]
@@ -293,33 +241,33 @@
         },
         {
             "key": "default-q-singular1",
-            "search": "[subj]:pred x?[num=s] <-1- [cop]:_be_v_id e? -2-> [obj]:pred x?[num=s] <-- default_q",
+            "search": "[subj]:pred x?[num=s] <-1- [cop]:_be_v_id e? -2-> [obj]:pred x? <-- default_q",
             "replace": "[subj]:pred x?[num=s] <-1- [cop]:_be_v_id e? -2-> [obj]:pred x?[num=s] <-- _a_q"
         },
         {
             "key": "default-q-singular2",
-            "search": "[subj]:pred x?[num=s] <-1- ***[cop]:_be_v_id e? -2-> [obj]:pred x?[num=s] <-- default_q",
+            "search": "[subj]:pred x?[num=s] <-1- ***[cop]:_be_v_id e? -2-> [obj]:pred x? <-- default_q",
             "replace": "[subj]:pred x?[num=s] <-1- ***[cop]:_be_v_id e? -2-> [obj]:pred x?[num=s] <-- _a_q"
         },
         {
             "key": "default-q-plural1",
-            "search": "[subj]:pred x?[num=p] <-1- [cop]:_be_v_id e? -2-> [obj]:pred x?[num=p] <-- default_q",
+            "search": "[subj]:pred x?[num=p] <-1- [cop]:_be_v_id e? -2-> [obj]:pred x? <-- default_q",
             "replace": "[subj]:pred x?[num=p] <-1- [cop]:_be_v_id e? -2-> [obj]:pred x?[num=p] <-- udef_q"
         },
         {
             "key": "default-q-plural2",
-            "search": "[subj]:pred x?[num=p] <-1- ***[cop]:_be_v_id e? -2-> [obj]:pred x?[num=p] <-- default_q",
+            "search": "[subj]:pred x?[num=p] <-1- ***[cop]:_be_v_id e? -2-> [obj]:pred x? <-- default_q",
             "replace": "[subj]:pred x?[num=p] <-1- ***[cop]:_be_v_id e? -2-> [obj]:pred x?[num=p] <-- udef_q"
         },
         {
             "key": "remove-part-of1",
-            "search": "[part]:fraction_n x? -1-> part_of x[3p___] -1-> [type]:pred x? <=1= [num]:card(?) e?; :part_of <-- _the_q",
+            "search": "[part]:fraction_n x? -1-> part_of x?[pers=3,num=p] -1-> [type]:pred x? <=1= [num]:card(?) e?; :part_of <-- _the_q",
             "replace": "[part]:fraction_n x? -1-> [type]:pred x? <=1= [num]:card(?) e?"
         },
         {
             "key": "remove-part-of2",
-            "search": "[quant]:_half_q --> [part]:part_of x? -1-> part_of x[3p___] -1-> [type]:pred x? <=1= [num]:card(?) e?; :part_of <-- _the_q",
-            "replace": "[quant]:_half_q --> [part]:part_of x? -1-> [type]:pred x? <=1= [num]:card(?) e?"
+            "search": "[quant]:_half_q --> [part]:part_of x[3p___] -1-> part_of x?[pers=3,num=p] -1-> [type]:pred x? <=1= [num]:card(?) e?; :part_of <-- _the_q",
+            "replace": "[quant]:_half_q --> [part]:part_of x[3p___] -1-> [type]:pred x? <=1= [num]:card(?) e?"
         },
         {
             "key": "none-part-of",

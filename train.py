@@ -29,6 +29,7 @@ if __name__ == '__main__':
     parser.add_argument('-T', '--tf-records', action='store_true', help='Use TensorFlow records')
 
     parser.add_argument('--model-dir', default=None, help='TensorFlow model directory, storing the model computation graph and parameters')
+    parser.add_argument('--save-frequency', type=int, default=3, help='Save frequency (in hours)')
     parser.add_argument('--summary-dir', default=None, help='TensorFlow summary directory for TensorBoard')
     parser.add_argument('--report-file', default=None, help='CSV file reporting the training results throughout the learning process')
 
@@ -73,7 +74,8 @@ if __name__ == '__main__':
     if args.type == 'agreement':
         dataset_parameters = dict(
             world_shape=dataset.world_shape(),
-            vocabulary_size=dataset.vocabulary_size(value_type='language')
+            vocabulary_size=dataset.vocabulary_size(value_type='language'),
+            rpn_vocabulary_size=dataset.vocabulary_size(value_type='rpn')
         )
         for value_name in dataset.vectors:
             dataset_parameters[value_name + '_shape'] = dataset.vector_shape(value_name=value_name)
@@ -108,8 +110,12 @@ if __name__ == '__main__':
         query += tuple(args.query.split(','))
 
     if args.hyperparams_file is None:
-        with open(os.path.join('models', dataset.type, 'hyperparams', args.model + '.params.json'), 'r') as filehandle:
-            parameters = json.load(fp=filehandle)
+        hyperparams_file = os.path.join('models', dataset.type, 'hyperparams', args.model + '.params.json')
+        if os.path.isfile(hyperparams_file):
+            with open(hyperparams_file, 'r') as filehandle:
+                parameters = json.load(fp=filehandle)
+        else:
+            parameters = dict()
     else:
         with open(args.hyperparams_file, 'r') as filehandle:
             parameters = json.load(fp=filehandle)
@@ -136,7 +142,7 @@ if __name__ == '__main__':
                 filehandle.write(''.join(lines))
 
     else:
-        if args.model_dir:
+        if args.model_dir is not None:
             if os.path.isdir(args.model_dir):
                 sys.stdout.write('Delete path {path}? '.format(path=args.model_dir))
                 sys.stdout.flush()
@@ -146,7 +152,7 @@ if __name__ == '__main__':
                     exit(0)
                 shutil.rmtree(args.model_dir)
             os.makedirs(args.model_dir)
-        if args.summary_dir:
+        if args.summary_dir is not None:
             if os.path.isdir(args.summary_dir):
                 sys.stdout.write('Delete path {path}? '.format(path=args.summary_dir))
                 sys.stdout.flush()
@@ -156,7 +162,7 @@ if __name__ == '__main__':
                     exit(0)
                 shutil.rmtree(args.summary_dir)
             os.makedirs(args.summary_dir)
-        if args.report_file:
+        if args.report_file is not None:
             if os.path.isfile(args.report_file):
                 sys.stdout.write('Delete file {file}? '.format(file=args.report_file))
                 sys.stdout.flush()
@@ -177,7 +183,7 @@ if __name__ == '__main__':
                 filehandle.write('\n')
     iteration_end = iteration_start + args.iterations - 1
 
-    with Model(name=args.model, learning_rate=parameters.pop('learning_rate'), weight_decay=parameters.pop('weight_decay', None), clip_gradients=parameters.pop('clip_gradients', None), model_directory=args.model_dir, summary_directory=args.summary_dir) as model:
+    with Model(name=args.model, learning_rate=parameters.pop('learning_rate', 1e-3), weight_decay=parameters.pop('weight_decay', None), clip_gradients=parameters.pop('clip_gradients', None), model_directory=args.model_dir, summary_directory=args.summary_dir) as model:
         dropout = parameters.pop('dropout_rate', None)
 
         module = import_module('models.{}.{}'.format(args.type, args.model))
@@ -196,14 +202,13 @@ if __name__ == '__main__':
             sys.stdout.flush()
         before = datetime.now()
         time_since_save = timedelta()
-        save_frequency = 60 * 60 * 3  # 3 hours
 
         if args.tf_records:
             train = {name: 0.0 for name in query}
             n = 0
 
             for iteration in range(iteration_start, iteration_end + 1):
-                queried = model(query=query, optimize=True, dropout=dropout)  # loss !!!???
+                queried = model(query=query, optimize=True, summarize=True, dropout=dropout)
                 train = {name: value + queried[name] for name, value in train.items()}
                 n += 1
 
@@ -215,7 +220,7 @@ if __name__ == '__main__':
                     if args.report_file:
                         with open(args.report_file, 'a') as filehandle:
                             filehandle.write(str(iteration))
-                            if time_since_save.seconds > save_frequency or iteration == iteration_end:
+                            if args.model_dir is not None and (time_since_save.seconds > args.save_frequency * 60 * 60 or iteration == iteration_end):
                                 filehandle.write(',yes')
                             else:
                                 filehandle.write(',no')
@@ -229,7 +234,7 @@ if __name__ == '__main__':
                             sys.stdout.write('{}={:.3f}  '.format(name, train[name]))
                         sys.stdout.write('(time per evaluation iteration: {})'.format(str(after - before).split('.')[0]))
 
-                    if time_since_save.seconds > save_frequency or iteration == iteration_end:
+                    if args.model_dir is not None and (time_since_save.seconds > args.save_frequency * 60 * 60 or iteration == iteration_end):
                         model.save()
                         if args.verbosity >= 1:
                             sys.stdout.write(' (model saved)')
@@ -245,28 +250,30 @@ if __name__ == '__main__':
         else:
             for iteration in range(iteration_start, iteration_end + 1):
                 generated = dataset.generate(n=args.batch_size, mode='train')
-                model(data=generated, optimize=True, dropout=dropout)
+                model(data=generated, optimize=True, summarize=True, dropout=dropout)
+
                 if iteration % args.evaluation_frequency == 0 or iteration == 1 or iteration == args.evaluation_frequency // 2 or iteration == iteration_end:
-
                     train = {name: 0.0 for name in query}
-                    for _ in range(args.evaluation_iterations):
-                        generated = dataset.generate(n=args.batch_size, mode='train')
-                        queried = model(query=query, data=generated)
-                        train = {name: value + queried[name] for name, value in train.items()}
-                    train = {name: value / args.evaluation_iterations for name, value in train.items()}
-
                     validation = {name: 0.0 for name in query}
-                    for _ in range(args.evaluation_iterations):
-                        generated = dataset.generate(n=args.batch_size, mode='validation')
-                        queried = model(query=query, data=generated)
-                        validation = {name: value + queried[name] for name, value in validation.items()}
-                    validation = {name: value / args.evaluation_iterations for name, value in validation.items()}
+
+                    if args.evaluation_iterations > 0:
+                        for _ in range(args.evaluation_iterations):
+                            generated = dataset.generate(n=args.batch_size, mode='train')
+                            queried = model(query=query, data=generated)
+                            train = {name: value + queried[name] for name, value in train.items()}
+                        train = {name: value / args.evaluation_iterations for name, value in train.items()}
+
+                        for _ in range(args.evaluation_iterations):
+                            generated = dataset.generate(n=args.batch_size, mode='validation')
+                            queried = model(query=query, data=generated)
+                            validation = {name: value + queried[name] for name, value in validation.items()}
+                        validation = {name: value / args.evaluation_iterations for name, value in validation.items()}
 
                     after = datetime.now()
                     if args.report_file:
                         with open(args.report_file, 'a') as filehandle:
                             filehandle.write(str(iteration))
-                            if time_since_save.seconds > save_frequency or iteration == iteration_end:
+                            if args.model_dir is not None and (time_since_save.seconds > args.save_frequency * 60 * 60 or iteration == iteration_end):
                                 filehandle.write(',yes')
                             else:
                                 filehandle.write(',no')
@@ -287,7 +294,7 @@ if __name__ == '__main__':
                         sys.stdout.write(' (time per evaluation iteration: {})'.format(str(after - before).split('.')[0]))
 
                     time_since_save += (after - before)
-                    if time_since_save.seconds > save_frequency or iteration == iteration_end:
+                    if args.model_dir is not None and (time_since_save.seconds > args.save_frequency * 60 * 60 or iteration == iteration_end):
                         model.save()
                         if args.verbosity >= 1:
                             sys.stdout.write(' (model saved)')

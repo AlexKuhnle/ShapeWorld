@@ -44,7 +44,7 @@ class ComparativeQuantifierCaptioner(WorldCaptioner):
         return self.restrictor_captioner.rpn_length() + self.comparison_captioner.rpn_length() + self.body_captioner.rpn_length() + 1
 
     def rpn_symbols(self):
-        return super(ComparativeQuantifierCaptioner, self).rpn_symbols() | {'{}-{}-{}-{}'.format(ComparativeQuantifier.__name__, *quantifier) for quantifier in self.quantifiers}
+        return super(ComparativeQuantifierCaptioner, self).rpn_symbols() | {'{}-{}-{}-{}'.format(ComparativeQuantifier.__name__, *quantifier[:3 - int(quantifier[0] == 'composed')]) for quantifier in self.quantifiers}
 
     def sample_values(self, mode, correct, predication):
         assert predication.empty()

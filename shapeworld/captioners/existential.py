@@ -75,8 +75,8 @@ class ExistentialCaptioner(WorldCaptioner):
         assert predication.empty()
 
         rstr_predication = predication.sub_predication()
-        rstr_body_predication = predication.sub_predication()
         body_predication = predication.sub_predication()
+        rstr_body_predication = predication.sub_predication()
 
         body = self.body_captioner.caption(predication=rstr_body_predication, world=world)
         if body is None:
@@ -103,18 +103,18 @@ class ExistentialCaptioner(WorldCaptioner):
             rstr_predication = predication.sub_predication()
             if not self.restrictor_captioner.incorrect(caption=caption.restrictor, predication=rstr_predication, world=world):
                 return False
-            rstr_body_predication = predication.sub_predication(predication=rstr_predication.copy())
-            caption.body.apply_to_predication(predication=rstr_body_predication)
             body_predication = predication.sub_predication()
             caption.body.apply_to_predication(predication=body_predication)
+            rstr_body_predication = predication.sub_predication(predication=rstr_predication.copy())
+            caption.body.apply_to_predication(predication=rstr_body_predication)
 
         elif self.incorrect_mode == 2:  # 2: incorrect body
             rstr_predication = predication.sub_predication()
             caption.restrictor.apply_to_predication(predication=rstr_predication)
+            body_predication = predication.sub_predication()
             rstr_body_predication = predication.sub_predication(predication=rstr_predication.copy())
             if not self.body_captioner.incorrect(caption=caption.body, predication=rstr_body_predication, world=world):
                 return False
-            body_predication = predication.sub_predication()
             caption.body.apply_to_predication(predication=body_predication)
 
         if not self.pragmatical_tautology and rstr_predication.equals(other=body_predication):

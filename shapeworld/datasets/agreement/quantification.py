@@ -35,7 +35,7 @@ class Quantification(CaptionAgreementDataset):
         reinforcement_range=(1, 3),
         quantifier_types=None,
         caption_size=15,
-        vocabulary=('.', 'a', 'all', 'almost', 'an', 'are', 'as', 'at', 'blue', 'but', 'circle', 'circles', 'cross', 'crosses', 'cyan', 'eight', 'ellipse', 'ellipses', 'exactly', 'few', 'five', 'four', 'gray', 'green', 'half', 'is', 'least', 'less', 'magenta', 'many', 'more', 'most', 'no', 'none', 'not', 'of', 'one', 'pentagon', 'pentagons', 'quarter', 'quarters', 'rectangle', 'rectangles', 'red', 'semicircle', 'semicircles', 'seven', 'shape', 'shapes', 'six', 'square', 'squares', 'than', 'the', 'third', 'thirds', 'three', 'triangle', 'triangles', 'twice', 'two', 'yellow', 'zero'),
+        vocabulary=('.', 'a', 'all', 'an', 'are', 'as', 'at', 'blue', 'but', 'circle', 'circles', 'cross', 'crosses', 'cyan', 'eight', 'ellipse', 'ellipses', 'exactly', 'few', 'five', 'four', 'gray', 'green', 'half', 'is', 'least', 'less', 'magenta', 'many', 'more', 'most', 'no', 'none', 'not', 'of', 'one', 'pentagon', 'pentagons', 'quarter', 'quarters', 'rectangle', 'rectangles', 'red', 'semicircle', 'semicircles', 'seven', 'shape', 'shapes', 'six', 'square', 'squares', 'than', 'the', 'third', 'thirds', 'three', 'triangle', 'triangles', 'twice', 'two', 'yellow', 'zero'),
         correct_ratio=0.5,
         train_correct_ratio=None,
         validation_correct_ratio=None,

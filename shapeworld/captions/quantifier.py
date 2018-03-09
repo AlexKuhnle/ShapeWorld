@@ -1,5 +1,4 @@
 from __future__ import division
-from shapeworld import util
 from shapeworld.captions import Caption, EntityType, Relation, Settings
 
 
@@ -39,17 +38,22 @@ class Quantifier(Caption):
         )
 
     def reverse_polish_notation(self):
-        return self.restrictor.reverse_polish_notation() + \
-            self.body.reverse_polish_notation() + \
-            ['{}-{}-{}-{}'.format(self, self.qtype, self.qrange, self.quantity)]
+        if self.qtype == 'composed':
+            return self.restrictor.reverse_polish_notation() + \
+                self.body.reverse_polish_notation() + \
+                ['{}-{}-{}'.format(self, self.qtype, self.qrange)]
+        else:
+            return self.restrictor.reverse_polish_notation() + \
+                self.body.reverse_polish_notation() + \
+                ['{}-{}-{}-{}'.format(self, self.qtype, self.qrange, self.quantity)]
 
     def apply_to_predication(self, predication):
         rstr_predication = predication.sub_predication()
         self.restrictor.apply_to_predication(predication=rstr_predication)
-        rstr_body_predication = predication.sub_predication(predication=rstr_predication.copy())
-        self.body.apply_to_predication(predication=rstr_body_predication)
         body_predication = predication.sub_predication()
         self.body.apply_to_predication(predication=body_predication)
+        rstr_body_predication = predication.sub_predication(predication=rstr_predication.copy())
+        self.body.apply_to_predication(predication=rstr_body_predication)
         return rstr_predication, body_predication
 
     def agreement(self, predication, world):
@@ -58,6 +62,7 @@ class Quantifier(Caption):
             return min(quantifier.agreement(predication=predication.copy(include_sub_predications=True), world=world) for quantifier in quantifiers)
 
         rstr_predication = predication.get_sub_predication()
+        body_predication = predication.get_sub_predication()
         rstr_body_predication = predication.get_sub_predication()
         assert rstr_body_predication <= rstr_predication
 

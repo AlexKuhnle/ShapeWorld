@@ -1,5 +1,6 @@
 import tensorflow as tf
 from shapeworld import util
+from shapeworld.dataset import LoadedDataset
 
 
 options = tf.python_io.TFRecordOptions(compression_type=tf.python_io.TFRecordCompressionType.GZIP)
@@ -20,7 +21,7 @@ def read_record(dataset, serialized_record):
                 feature_lists[value_name] = tf.FixedLenSequenceFeature(shape=(), dtype=tf.float32)
             else:
                 features[value_name] = tf.FixedLenFeature(shape=(), dtype=tf.float32)
-        elif value_type == 'vector(int)' or dataset.vocabulary(value_type=value_type) is not None:
+        elif value_type == 'vector(int)' or value_type in dataset.vocabularies:
             if alts:
                 feature_lists[value_name] = tf.FixedLenSequenceFeature(shape=dataset.vector_shape(value_name=value_name), dtype=tf.int64)
             else:
@@ -43,7 +44,8 @@ def read_record(dataset, serialized_record):
 
 def read_records(dataset, mode):
     paths = tuple(dataset.get_records_paths(mode=mode))
-    path_queue = tf.train.string_input_producer(string_tensor=paths, shuffle=True, capacity=len(paths))
+    shuffle = not isinstance(dataset, LoadedDataset) or dataset.random_sampling
+    path_queue = tf.train.string_input_producer(string_tensor=paths, shuffle=shuffle, capacity=len(paths))
     reader = tf.TFRecordReader(options=options)
     _, serialized_records = reader.read(queue=path_queue)
     records, sequence_records = read_record(dataset=dataset, serialized_record=serialized_records)
@@ -55,18 +57,26 @@ def batch_records(dataset, mode, batch_size):
     # implicit alternatives=False
     with tf.variable_scope(name_or_scope='tf-records'):
         records, sequence_records = read_records(dataset=dataset, mode=mode)
-        if 'alternatives' in records:
-            sample = tf.cast(x=tf.floor(x=tf.multiply(x=tf.cast(x=records['alternatives'], dtype=tf.float32), y=tf.random_uniform(shape=()))), dtype=tf.int32)
-            for value_name, sequence_record in sequence_records.items():
-                records[value_name] = sequence_record[sample]
-        batch = tf.train.shuffle_batch(tensors=records, batch_size=batch_size, capacity=(batch_size * 50), min_after_dequeue=(batch_size * 10), num_threads=1)
-        batch.pop('alternatives')
-        if dataset.pixel_noise_stddev > 0.0:
-            for value_name, value_type in dataset.values.items():
-                value_type, _ = util.alternatives_type(value_type=value_type)
-                if value_type == 'world':
-                    noise = tf.truncated_normal(shape=((batch_size,) + dataset.world_shape()), mean=0.0, stddev=dataset.pixel_noise_stddev)
-                    batch[value_name] = tf.clip_by_value(t=(batch[value_name] + noise), clip_value_min=0.0, clip_value_max=1.0)
+        if not isinstance(dataset, LoadedDataset) or dataset.random_sampling:
+            if 'alternatives' in records:
+                sample = tf.cast(x=tf.floor(x=tf.multiply(x=tf.cast(x=records['alternatives'], dtype=tf.float32), y=tf.random_uniform(shape=()))), dtype=tf.int32)
+                for value_name, sequence_record in sequence_records.items():
+                    records[value_name] = sequence_record[sample]
+                records.pop('alternatives')
+            batch = tf.train.shuffle_batch(tensors=records, batch_size=batch_size, capacity=(batch_size * 50), min_after_dequeue=(batch_size * 10), num_threads=1)
+        else:
+            if 'alternatives' in records:
+                for value_name, sequence_record in sequence_records.items():
+                    records[value_name] = sequence_record[0]
+                records.pop('alternatives')
+            batch = tf.train.batch(tensors=records, batch_size=batch_size, num_threads=1, capacity=(batch_size * 50))
+        for value_name, value_type in dataset.values.items():
+            value_type, _ = util.alternatives_type(value_type=value_type)
+            if dataset.pixel_noise_stddev > 0.0 and value_type == 'world':
+                noise = tf.truncated_normal(shape=((batch_size,) + dataset.world_shape()), mean=0.0, stddev=dataset.pixel_noise_stddev)
+                batch[value_name] = tf.clip_by_value(t=(batch[value_name] + noise), clip_value_min=0.0, clip_value_max=1.0)
+            elif value_type == 'int' or value_type == 'vector(int)' or value_type in dataset.vocabularies:
+                batch[value_name] = tf.cast(x=batch[value_name], dtype=tf.int32)
         return batch
 
 
@@ -87,7 +97,7 @@ def write_record(dataset, record):
                 feature_lists[value_name] = tf.train.FeatureList(feature=[tf.train.Feature(float_list=tf.train.FloatList(value=(value,))) for value in record[value_name]])
             else:
                 features[value_name] = tf.train.Feature(float_list=tf.train.FloatList(value=(record[value_name],)))
-        elif value_type == 'vector(int)' or dataset.vocabulary(value_type=value_type) is not None:
+        elif value_type == 'vector(int)' or value_type in dataset.vocabularies:
             if alts:
                 feature_lists[value_name] = tf.train.FeatureList(feature=[tf.train.Feature(int64_list=tf.train.Int64List(value=value)) for value in record[value_name]])
             else:

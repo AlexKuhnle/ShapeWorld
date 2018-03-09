@@ -12,6 +12,9 @@ from shapeworld.captioners import PragmaticalPredication
 from shapeworld.realizers import CaptionRealizer
 
 
+DEBUG = False
+
+
 class Dataset(object):
 
     def __init__(self, values, world_size, pixel_noise_stddev=0.0, vectors=None, vocabularies=None, language=None):
@@ -43,7 +46,7 @@ class Dataset(object):
                 datasets = list()
                 for n in name:
                     datasets.append(Dataset.create(dtype=dtype, name=n, language=language, config=config))
-                dataset = DatasetMixer(datasets=datasets)
+                dataset = DatasetMixer(datasets=datasets, **kwargs)
                 assert dtype == dataset.type
                 assert language is None or language == dataset.language
                 return dataset
@@ -58,7 +61,7 @@ class Dataset(object):
                     if isinstance(c, dict):
                         c = dict(c)
                     datasets.append(c)
-                dataset = DatasetMixer(datasets=datasets)
+                dataset = DatasetMixer(datasets=datasets, **kwargs)
                 assert dtype is None or dtype == dataset.type
                 assert language is None or language == dataset.language
                 return dataset
@@ -83,7 +86,7 @@ class Dataset(object):
                 config = json.load(fp=filehandle)
             if 'directory' not in config:
                 config['directory'] = directory
-            return Dataset.create(dtype=dtype, name=config.get('name', name), language=language, config=config)
+            return Dataset.create(dtype=dtype, name=config.get('name', name), language=language, config=config, **kwargs)
 
         elif os.path.isfile(config):
             directory = os.path.dirname(config)
@@ -99,14 +102,10 @@ class Dataset(object):
                 config['directory'] = os.path.join(directory, dtype, name)
             else:
                 config['directory'] = os.path.join(directory, '{}-{}'.format(dtype, language), name)
-            return Dataset.create(dtype=dtype, name=name, language=language, config=config)
+            return Dataset.create(dtype=dtype, name=name, language=language, config=config, **kwargs)
 
         else:
             assert False
-
-        for key, value in kwargs.items():
-            assert key not in config
-            config[key] = value
 
         # if not isinstance(name, str):
         #     try:
@@ -125,20 +124,24 @@ class Dataset(object):
         #     except TypeError:
         #         assert False
 
-        if 'type' in config and 'name' in config:
+        if 'type' in config and 'name' in config and 'directory' in config:
             assert dtype is None or config['type'] == dtype
             assert name is None or config['name'] == name
             assert language is None or config['language'] == language
             dtype = config['type']
             name = config['name']
             language = config.get('language')
-            dataset = LoadedDataset(specification=config)
+            dataset = LoadedDataset(specification=config, **kwargs)
             assert dtype == dataset.type
             assert name == dataset.name
             assert language is None or language == dataset.language
             return dataset
 
         else:
+            for key, value in kwargs.items():
+                assert key not in config
+                config[key] = value
+
             if dtype is None:
                 dtype = config.pop('type')
             else:
@@ -490,7 +493,7 @@ class Dataset(object):
 
 class LoadedDataset(Dataset):
 
-    def __init__(self, specification):
+    def __init__(self, specification, random_sampling=True):
         self._type = specification.pop('type')
         self._name = specification.pop('name')
         self.directory = specification.pop('directory')
@@ -498,14 +501,15 @@ class LoadedDataset(Dataset):
         self.include_model = specification.pop('include_model', False)
         self.num_concat_worlds = specification.pop('num_concat_worlds', 0)
         self._specification = specification
+        self.random_sampling = random_sampling
 
         super(LoadedDataset, self).__init__(values=specification.pop('values'), world_size=specification.pop('world_size'), pixel_noise_stddev=specification.pop('pixel_noise_stddev', 0.0), vectors=specification.pop('vectors', None), vocabularies=specification.pop('vocabularies', None), language=specification.pop('language', None))
 
-        self.per_part = True
-        self.part_once = False
         self.parts = dict()
         self.records_parts = dict()
         for root, dirs, files in os.walk(self.directory):
+            dirs = [d for d in dirs if d[0] != '.']
+            files = [f for f in files if f[0] != '.']
             if root == self.directory:
                 assert not files
                 assert len(dirs) <= 4 and 'train' in dirs and 'validation' in dirs and 'test' in dirs and len(dirs) == 3
@@ -513,23 +517,24 @@ class LoadedDataset(Dataset):
                 mode = root[len(self.directory) + 1:]
                 if dirs:
                     assert all(d[:5] == 'shard' or d[:4] == 'part' for d in dirs)
-                    self.parts[mode] = [os.path.join(root, d) for d in dirs]
+                    self.parts[mode] = [os.path.join(root, d) for d in sorted(dirs)]
                     if files:
                         assert all((f[:5] == 'shard' or f[:4] == 'part') and f[-13:] == '.tfrecords.gz' for f in files)
-                        self.records_parts[mode] = [os.path.join(root, f) for f in files]
+                        self.records_parts[mode] = [os.path.join(root, f) for f in sorted(files)]
                 else:
                     assert all(f[:5] == 'shard' or f[:4] == 'part' for f in files)
-                    self.parts[mode] = [os.path.join(root, f) for f in files if f[-13:] != '.tfrecords.gz']
+                    self.parts[mode] = [os.path.join(root, f) for f in sorted(files) if f[-13:] != '.tfrecords.gz']
                     if any(f[-13:] == '.tfrecords.gz' for f in files):
-                        self.records_parts[mode] = [os.path.join(root, f) for f in files if f[-13:] == '.tfrecords.gz']
+                        self.records_parts[mode] = [os.path.join(root, f) for f in sorted(files) if f[-13:] == '.tfrecords.gz']
         assert self.parts
         self.mode = None
-        self.loaded = dict()
-        for value_name, value_type in self.values.items():
-            value_type, alts = util.alternatives_type(value_type=value_type)
-            if value_type != 'model' or self.include_model:
-                self.loaded[value_name] = list()
+        self.part = -1
         self.num_instances = 0
+        # self.loaded = dict()
+        # for value_name, value_type in self.values.items():
+        #     value_type, alts = util.alternatives_type(value_type=value_type)
+        #     if value_type != 'model' or self.include_model:
+        #         self.loaded[value_name] = list()
 
     @property
     def name(self):
@@ -558,9 +563,9 @@ class LoadedDataset(Dataset):
         return self.records_parts[mode]
 
     def generate(self, n, mode=None, include_model=False, alternatives=False):
+        assert mode is not None
         assert not include_model or self.include_model
-        if not self.per_part:
-            self.mode = None if mode else 'train'
+        assert self.random_sampling or self.mode is None or self.mode == mode or self.part == len(self.parts[self.mode]) - 1  # random sampling or no intermediate mode switch possible
         while self.mode != mode or self.num_instances < n:
             if self.mode != mode:
                 self.mode = mode
@@ -569,11 +574,12 @@ class LoadedDataset(Dataset):
                     value_type, alts = util.alternatives_type(value_type=value_type)
                     if value_type != 'model' or self.include_model:
                         self.loaded[value_name] = list()
-            parts = self.parts[mode]
-            part = randrange(len(parts))
-            path = parts.pop(part) if self.part_once else parts[part]
+            if self.random_sampling:
+                self.part = randrange(len(self.parts[mode]))
+            else:
+                self.part = (self.part + 1) % len(self.parts[mode])
             self.num_instances = 0
-            with util.Archive(path=path, mode='r', archive=self.archive) as read_file:
+            with util.Archive(path=self.parts[mode][self.part], mode='r', archive=self.archive) as read_file:
                 for value_name, value in self.loaded.items():
                     value.extend(self.deserialize_value(
                         value_name=value_name,
@@ -588,7 +594,10 @@ class LoadedDataset(Dataset):
         batch = self.zero_batch(n, include_model=include_model, alternatives=alternatives)
 
         for i in range(n):
-            index = randrange(self.num_instances)
+            if self.random_sampling:
+                index = randrange(self.num_instances)
+            else:
+                index = -1
             self.num_instances -= 1
             for value_name, value_type in self.values.items():
                 if value_name == 'alternatives' and not alternatives:
@@ -863,18 +872,13 @@ class CaptionAgreementDataset(Dataset):
                 if resample % self.__class__.INITIALIZE_CAPTIONER == 0:
                     if resample // self.__class__.INITIALIZE_CAPTIONER >= 1:
                         # print('resample captioner')
-                        # print(self.world_captioner.correct, self.world_captioner.model())
-                        # exit(0)
                         pass
                     while not self.world_captioner.initialize(mode=mode, correct=correct):
                         # print('initialize false')
-                        # assert False
                         pass
                     captioner_model = self.world_captioner.model()
                     if captioner_model not in captioners_proposed:
                         captioners_proposed.append(captioner_model)
-                    # print(json.dumps(obj=self.world_captioner.model(), indent=2, sort_keys=True))
-                    # print(self.world_captioner.captioner, self.world_captioner.correct)
 
                 resample += 1
 
@@ -977,22 +981,6 @@ class CaptionAgreementDataset(Dataset):
                 if include_model:
                     batch['world_model'][i] = world.model()
 
-            # captions[i] = caption
-
-            # batch['world'][i] = self.apply_pixel_noise(world=world.get_array())
-            # batch['agreement'][i] = float(correct)
-
-            # rpn = caption.reverse_polish_notation()
-            # assert len(rpn) <= rpn_size
-            # for k, rpn_symbol in enumerate(rpn):
-            #     assert rpn_symbol in rpn2id
-            #     batch['caption_rpn'][i][k] = rpn2id.get(rpn_symbol, unknown)
-            # batch['caption_rpn_length'][i] = len(rpn)
-
-            # if include_model:
-            #     batch['world_model'][i] = world.model()
-            #     batch['caption_model'][i] = caption.model()
-
         word2id = self.vocabularies['language']
         unknown = word2id['[UNKNOWN]']
         caption_size = self.vector_shape('caption')[0]
@@ -1007,6 +995,7 @@ class CaptionAgreementDataset(Dataset):
         captions = self.caption_realizer.realize(captions=captions)
 
         for i, caption in enumerate(captions):
+            assert caption[-1] == '.'
             caption = util.sentence2tokens(sentence=caption)
 
             if len(caption) > caption_size:
@@ -1028,8 +1017,6 @@ class CaptionAgreementDataset(Dataset):
                     unused_words.discard(word)
                 else:
                     missing_words.add(word)
-                    continue
-                    i
                 caption_array[k] = word2id.get(word, unknown)
 
         if len(captioners_used) < len(captioners_proposed):
@@ -1039,10 +1026,10 @@ class CaptionAgreementDataset(Dataset):
             #         print(json.dumps(obj=captioner_model, indent=2, sort_keys=True))
             pass
 
-        # if len(unused_words) > 0:
-        #     print('Words unused in vocabulary: \'{}\''.format('\', \''.join(sorted(unused_words))))
-        # if max_caption_size < caption_size:
-        #     print('Caption size smaller than max size: {} < {}'.format(max_caption_size, caption_size))
+        if DEBUG and len(unused_words) > 0:
+            print('Words unused in vocabulary: \'{}\''.format('\', \''.join(sorted(unused_words))))
+        if DEBUG and max_caption_size < caption_size:
+            print('Caption size smaller than max size: {} < {}'.format(max_caption_size, caption_size))
         if len(missing_words) > 0:
             print('Words missing in vocabulary: \'{}\''.format('\', \''.join(sorted(missing_words))))
         if max_caption_size > caption_size:
@@ -1106,9 +1093,6 @@ class CaptionAgreementDataset(Dataset):
                         agreement=agreement,
                         caption=util.tokens2sentence(id2word[word] for word in caption[:caption_length])
                     ))
-                    # data_html.append('<p>{caption}</p>'.format(
-                    #     caption=util.tokens2sentence(id2word[word] for word in caption[:caption_length])
-                    # ))
                 data_html.append('</div>')
             else:
                 data_html.append('<div class="caption">{caption}</div>'.format(

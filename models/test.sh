@@ -3,6 +3,21 @@ echo "agreement:"
 echo "  custom"
 python train.py -t agreement -n oneshape -m custom -b 1 -i 2 -e 2 -f 2 --model-dir models/test/ --summary-dir models/summary/ --report-file models/test.csv -v 0
 python evaluate.py -t agreement -n oneshape -m custom -b 2 -i 1 --model-dir models/test/ --report-file models/test.csv -v 0
+echo "  always_true"
+python train.py -t agreement -n oneshape -m always_true -b 1 -i 2 -e 2 -f 2 --summary-dir models/summary/ --report-file models/test.csv -v 0 -Y
+python evaluate.py -t agreement -n oneshape -m always_true -b 2 -i 1 --report-file models/test.csv -v 0
+echo "  always_false"
+python train.py -t agreement -n oneshape -m always_false -b 1 -i 2 -e 2 -f 2 --summary-dir models/summary/ --report-file models/test.csv -v 0 -Y
+python evaluate.py -t agreement -n oneshape -m always_false -b 2 -i 1 --report-file models/test.csv -v 0
+echo "  prefix_prior"
+python train.py -t agreement -n oneshape -m prefix_prior -b 1 -i 2 -e 2 -f 2 --model-dir models/test/ --summary-dir models/summary/ --report-file models/test.csv -v 0 -Y
+python evaluate.py -t agreement -n oneshape -m prefix_prior -b 2 -i 1 --model-dir models/test/ --report-file models/test.csv -v 0
+echo "  suffix_prior"
+python train.py -t agreement -n oneshape -m suffix_prior -b 1 -i 2 -e 2 -f 2 --model-dir models/test/ --summary-dir models/summary/ --report-file models/test.csv -v 0 -Y
+python evaluate.py -t agreement -n oneshape -m suffix_prior -b 2 -i 1 --model-dir models/test/ --report-file models/test.csv -v 0
+echo "  type_prior"
+python train.py -t agreement -n oneshape -m type_prior -b 1 -i 2 -e 2 -f 2 --model-dir models/test/ --summary-dir models/summary/ --report-file models/test.csv -v 0 -Y
+python evaluate.py -t agreement -n oneshape -m type_prior -b 2 -i 1 --model-dir models/test/ --report-file models/test.csv -v 0
 echo "  cnn_only"
 python train.py -t agreement -n oneshape -m cnn_only -b 1 -i 2 -e 2 -f 2 --model-dir models/test/ --summary-dir models/summary/ --report-file models/test.csv -v 0 -Y
 python evaluate.py -t agreement -n oneshape -m cnn_only -b 2 -i 1 --model-dir models/test/ --report-file models/test.csv -v 0

@@ -44,7 +44,7 @@ class QuantifierCaptioner(WorldCaptioner):
         return self.restrictor_captioner.rpn_length() + self.body_captioner.rpn_length() + 1
 
     def rpn_symbols(self):
-        return super(QuantifierCaptioner, self).rpn_symbols() | {'{}-{}-{}-{}'.format(Quantifier.__name__, *quantifier) for quantifier in self.quantifiers}
+        return super(QuantifierCaptioner, self).rpn_symbols() | {'{}-{}-{}-{}'.format(Quantifier.__name__, *quantifier[:3 - int(quantifier[0] == 'composed')]) for quantifier in self.quantifiers}
 
     def sample_values(self, mode, correct, predication):
         assert predication.empty()
@@ -102,8 +102,8 @@ class QuantifierCaptioner(WorldCaptioner):
         assert predication.empty()
 
         rstr_predication = predication.sub_predication()
-        rstr_body_predication = predication.sub_predication()
         body_predication = predication.sub_predication()
+        rstr_body_predication = predication.sub_predication()
 
         if (self.qtype, self.qrange, self.quantity) in QuantifierCaptioner.zero_quantifiers:
             # special case: zero quantifier, hence incorrect body
@@ -146,14 +146,15 @@ class QuantifierCaptioner(WorldCaptioner):
             rstr_predication = predication.sub_predication()
             if not self.restrictor_captioner.incorrect(caption=caption.restrictor, predication=rstr_predication, world=world):
                 return False
-            rstr_body_predication = predication.sub_predication(predication=rstr_predication.copy())
-            caption.body.apply_to_predication(predication=rstr_body_predication)
             body_predication = predication.sub_predication()
             caption.body.apply_to_predication(predication=body_predication)
+            rstr_body_predication = predication.sub_predication(predication=rstr_predication.copy())
+            caption.body.apply_to_predication(predication=rstr_body_predication)
 
         elif self.incorrect_mode == 2:  # 2: incorrect body
             rstr_predication = predication.sub_predication()
             caption.restrictor.apply_to_predication(predication=rstr_predication)
+            body_predication = predication.sub_predication()
             rstr_body_predication = predication.sub_predication(predication=rstr_predication.copy())
             if (self.qtype, self.qrange, self.quantity) in QuantifierCaptioner.zero_quantifiers:
                 # special case: zero quantifier, hence correct body
@@ -163,7 +164,6 @@ class QuantifierCaptioner(WorldCaptioner):
             else:
                 if not self.body_captioner.incorrect(caption=caption.body, predication=rstr_body_predication, world=world):
                     return False
-            body_predication = predication.sub_predication()
             caption.body.apply_to_predication(predication=body_predication)
 
         elif self.incorrect_mode == 3:  # 3: incorrect quantifier

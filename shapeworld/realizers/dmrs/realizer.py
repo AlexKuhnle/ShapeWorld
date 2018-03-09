@@ -1,6 +1,7 @@
 import copy
 import json
 import os
+import platform
 import re
 import subprocess
 from shapeworld.captions import Attribute, Relation, EntityType, Existential, Quantifier, NumberBound, ComparativeQuantifier, Proposition
@@ -8,14 +9,38 @@ from shapeworld.realizers import CaptionRealizer
 from shapeworld.realizers.dmrs.dmrs import Dmrs, create_sortinfo
 
 
+def prepare_ace():
+    # dmrs sub-directory
+    directory = os.path.dirname(os.path.realpath(__file__))
+    # unpack grammar if used for the first time
+    if not os.path.isfile(os.path.join(directory, 'resources', 'ace')):
+        if platform.system() == 'Linux':
+            system = 'linux'
+        elif platform.system() == 'Darwin':
+            system = 'mac'
+        else:
+            assert False
+        assert os.path.isfile(os.path.join(directory, 'resources', 'ace_{}.gz'.format(system)))
+        import gzip
+        with gzip.open(os.path.join(directory, 'resources', 'ace_{}.gz'.format(system)), 'rb') as gzip_filehandle:
+            with open(os.path.join(directory, 'resources', 'ace'), 'wb') as filehandle:
+                filehandle.write(gzip_filehandle.read())
+
+
 def prepare_grammar(language):
     # dmrs sub-directory
     directory = os.path.dirname(os.path.realpath(__file__))
     # unpack grammar if used for the first time
     if not os.path.isfile(os.path.join(directory, 'languages', language + '.dat')):
-        assert os.path.isfile(os.path.join(directory, 'languages', language + '.dat.gz'))
+        if platform.system() == 'Linux':
+            system = 'linux'
+        elif platform.system() == 'Darwin':
+            system = 'mac'
+        else:
+            assert False
+        assert os.path.isfile(os.path.join(directory, 'languages', language + '_{}.dat.gz'.format(system)))
         import gzip
-        with gzip.open(os.path.join(directory, 'languages', language + '.dat.gz'), 'rb') as gzip_filehandle:
+        with gzip.open(os.path.join(directory, 'languages', language + '_{}.dat.gz'.format(system)), 'rb') as gzip_filehandle:
             with open(os.path.join(directory, 'languages', language + '.dat'), 'wb') as filehandle:
                 filehandle.write(gzip_filehandle.read())
 
@@ -43,6 +68,7 @@ class DmrsRealizer(CaptionRealizer):
 
     def __init__(self, language):
         super(DmrsRealizer, self).__init__(language)
+        prepare_ace()
         prepare_grammar(language=language)
         directory = os.path.join(os.path.dirname(os.path.realpath(__file__)))
         self.ace_path = os.path.join(directory, 'resources', 'ace')
@@ -217,8 +243,10 @@ class DmrsRealizer(CaptionRealizer):
                 none_indices.append(n)
                 continue
             dmrs = self.caption_dmrs(caption=caption)
+            # print(dmrs.dumps_xml())
             for (search, replace, disable_hierarchy) in self.post_processing:
                 dmrs = dmrs.apply_paraphrases(paraphrases=[(search, replace)], hierarchy=(None if disable_hierarchy else self.hierarchy))
+            # print(dmrs.dumps_xml())
             dmrs.remove_underspecifications()
             dmrs_list.append(dmrs)
             mrs_list.append(dmrs.get_mrs() + '\n')

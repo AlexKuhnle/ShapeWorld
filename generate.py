@@ -136,10 +136,10 @@ if __name__ == '__main__':
                     if root == subdir:
                         if dirs:
                             assert all(d[:5] == 'shard' for d in dirs)
-                            shards_begin += (max(int(d[4:]) for d in dirs),)
+                            shards_begin += (max(int(d[5:]) for d in dirs),)
                         elif files:
                             assert all(f[:5] == 'shard' for f in files)
-                            shards_begin += (max(int(f[4:f.index('.')]) for f in files),)
+                            shards_begin += (max(int(f[5:f.index('.')]) for f in files),)
                         else:
                             shards_begin += (0,)
         if not args.unmanaged:

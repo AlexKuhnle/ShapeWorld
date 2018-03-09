@@ -18,7 +18,7 @@ def model(model, inputs, dataset_parameters, cnn_size, cnn_depth, cnn_block_dept
         Input(name='caption', shape=dataset_parameters['caption_shape'], dtype='int', tensor=inputs.get('caption')) >>
         Embedding(indices=dataset_parameters['vocabulary_size'], size=embedding_size) >>
         NgramConvolution(size=conv_size) >>
-        Reduction(reduction=caption_reduction, axis=1)  # not quite!
+        Reduction(reduction=caption_reduction, axis=1)  # not quite! what about sequence length?
     )
 
     agreement = (

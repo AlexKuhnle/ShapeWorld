@@ -35,7 +35,7 @@ class QuantificationSimple(CaptionAgreementDataset):
         reinforcement_range=(1, 3),
         quantifier_types=None,
         caption_size=15,
-        vocabulary=('.', 'a', 'all', 'almost', 'an', 'are', 'at', 'blue', 'but', 'circle', 'circles', 'cross', 'crosses', 'cyan', 'ellipse', 'ellipses', 'exactly', 'few', 'five', 'four', 'gray', 'green', 'half', 'is', 'least', 'less', 'magenta', 'more', 'most', 'no', 'not', 'of', 'one', 'pentagon', 'pentagons', 'quarter', 'quarters', 'rectangle', 'rectangles', 'red', 'semicircle', 'semicircles', 'shape', 'shapes', 'square', 'squares', 'than', 'the', 'third', 'thirds', 'three', 'triangle', 'triangles', 'two', 'yellow', 'zero'),
+        vocabulary=('.', 'a', 'all', 'an', 'are', 'at', 'blue', 'but', 'circle', 'circles', 'cross', 'crosses', 'cyan', 'ellipse', 'ellipses', 'exactly', 'few', 'five', 'four', 'gray', 'green', 'half', 'is', 'least', 'less', 'magenta', 'more', 'most', 'no', 'not', 'of', 'one', 'pentagon', 'pentagons', 'quarter', 'quarters', 'rectangle', 'rectangles', 'red', 'semicircle', 'semicircles', 'shape', 'shapes', 'square', 'squares', 'than', 'the', 'third', 'thirds', 'three', 'triangle', 'triangles', 'two', 'yellow', 'zero'),
         correct_ratio=0.5,
         train_correct_ratio=None,
         validation_correct_ratio=None,
