@@ -283,7 +283,8 @@ class DmrsRealizer(CaptionRealizer):
         caption_strings = [line for line in stdout_data if line != '']
         for n in none_indices:
             caption_strings.insert(n, '')
-        assert len(caption_strings) == len(captions), stdout_data + '\n' + stderr_data
+        assert len(caption_strings) == len(captions), \
+                '\n'.join(stdout_data) + '\n' + '\n'.join(stderr_data)
         return caption_strings
 
     def attribute_dmrs(self, attribute):
