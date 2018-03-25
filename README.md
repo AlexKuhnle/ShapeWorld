@@ -170,7 +170,16 @@ dataset = Dataset.create(dtype='agreement', name='multishape', config='examples/
 generated = tf_util.batch_records(dataset=dataset, mode='train', batch_size=128)
 ```
 
+The `generated` Tensor cannot be immediately evaluated as it requires the Tensorflow graph to start shard reading queues. Basic data reading can be performed as:
 
+```python
+with tf.Session() as session:
+	coordinator = tf.train.Coordinator()
+	queue_threads = tf.train.start_queue_runners(sess=session, coord=coordinator)
+	batch = session.run(generated)
+	coordinator.request_stop()
+	coordinator.join(threads=queue_threads)
+```
 
 ## CLEVR and NLVR interface
 

@@ -2,7 +2,6 @@ import tensorflow as tf
 from shapeworld import util
 from shapeworld.dataset import LoadedDataset
 
-
 options = tf.python_io.TFRecordOptions(compression_type=tf.python_io.TFRecordCompressionType.GZIP)
 
 
@@ -70,8 +69,8 @@ def batch_records(dataset, mode, batch_size):
                     records[value_name] = sequence_record[0]
                 records.pop('alternatives')
             batch = tf.train.batch(tensors=records, batch_size=batch_size, num_threads=1, capacity=(batch_size * 50))
-        for value_name, value_type in dataset.values.items():
-            value_type, _ = util.alternatives_type(value_type=value_type)
+        for value_name, value_type in batch.items():
+            value_type, _ = util.alternatives_type(value_type=dataset.values[value_name])
             if dataset.pixel_noise_stddev > 0.0 and value_type == 'world':
                 noise = tf.truncated_normal(shape=((batch_size,) + dataset.world_shape()), mean=0.0, stddev=dataset.pixel_noise_stddev)
                 batch[value_name] = tf.clip_by_value(t=(batch[value_name] + noise), clip_value_min=0.0, clip_value_max=1.0)
