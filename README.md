@@ -10,8 +10,10 @@ pip3 install -e ShapeWorld  # optional: ShapeWorld[full] or ShapeWorld[full-gpu]
 
 ### Recently added features
 
+- Batch generator for datasets and epoch batch generator for loaded datasets
 - Support for Mac OS X (ACE, grammar)
 - New agreement baseline models
+- New agreement dataset parameters `worlds_per_instance` and `captions_per_instance`
 - Generator option `-F` for extraction of image features (ResNet-101)
 - Generator option `-C` for alternative CLEVR output format
 - More complex quantification captions
@@ -91,8 +93,8 @@ print('vocabulary size:', dataset.vocabulary_size(value_type='language'))
 print('vocabulary:', dataset.vocabulary)
 
 # caption surface forms
-print('captions:')
-print('\n'.join(dataset.to_surface(value_type='language', word_ids=generated['caption'])))
+print('first few captions:')
+print('\n'.join(dataset.to_surface(value_type='language', word_ids=generated['caption'][:5])))
 
 # given to the image caption agreement model
 batch = (generated['world'], generated['caption'], generated['caption_length'], generated['agreement'])
@@ -100,6 +102,33 @@ batch = (generated['world'], generated['caption'], generated['caption_length'], 
 # can be used for more specific evaluation
 world_model = generated['world_model']
 caption_model = generated['caption_model']
+```
+
+Alternatively, `dataset.iterate(...)` returns a batch generator, with the optional argument `iterations` specifying a fixed number of iterations:
+
+```python
+from shapeworld import Dataset
+
+dataset = Dataset.create(dtype='agreement', name='multishape')
+for batch in dataset.iterate(n=64, mode='train', include_model=True, iterations=5):
+    # iterations argument optional
+    print(len(batch['world']))
+```
+
+The agreement datasets offer a parameter `worlds_per_instance` or `captions_per_instance` (exclusive) to generate multiple worlds/captions per instance. To actually retrieve these alternatives, the `alternatives` flag has to be set:
+
+```python
+from shapeworld import Dataset
+
+dataset = Dataset.create(dtype='agreement', name='multishape', captions_per_instance=3)
+
+generated = dataset.generate(n=1)
+print('caption:', generated['caption'][0])  # one caption
+
+generated = dataset.generate(n=1, alternatives=True)
+print('world:', type(generated['world'][0]))  # one world
+print('captions:', ', '.join(str(caption) for caption in generated['caption'][0]))  # three captions
+print('agreements:', ', '.join(str(agreement) for agreement in generated['agreement'][0]))  # three agreement values
 ```
 
 
@@ -132,6 +161,7 @@ The following command line arguments are available:
 * `-T`, `--tf-records`:  Additionally store data as TensorFlow records
 * `-F`, `--features`:  Additionally extract image features (`conv4` of `resnet_v2_101`)
 * `-C`, `--clevr-format`:  Output in CLEVR format
+* `-N`, `--png-format`:  Store images in PNG as opposed to bitmat format
 * `-O`, `--concatenate-images`:  Concatenate images per part into one image file
 * `-Y`, `--yes`:  Confirm all questions with yes
 * `--config-values`:  Additional dataset configuration values passed as command line arguments
@@ -139,26 +169,36 @@ The following command line arguments are available:
 When creating larger amounts of ShapeWorld data, it is advisable to store the data in a compressed archive (for example `-a tar:bz2`). For instance, the following command line generates one million *training* instances of the `multishape` configuration file included in this repository:
 
 ```bash
-python generate.py -d [DIRECTORY] -a tar:bzip2 -t agreement -n multishape -m train -f 100 -i 10k -M
+python generate.py -d [DIRECTORY] -a tar:bzip2 -t agreement -n multishape -m train -s 100 -i 10k -M
 ```
 
 For the purpose of this introduction, we generate a smaller amount of *all* training (TensorFlow records and raw), validation and test instances using the default configuration of the dataset:
 
 ```bash
-python generate.py -d examples/readme -a tar:bzip2 -t agreement -n multishape -f 3,2,1 -i 128 -M -T
+python generate.py -d examples/readme -a tar:bzip2 -t agreement -n multishape -s 3,2,1 -i 100 -M -T
 ```
 
 
 
 ## Loading extracted data
 
-Extracted data can be loaded and accessed with the same `Dataset` interface as before, just define the `config` argument as `[DIRECTORY]`. However, to be able to do this, we need to extract all of training, validation and test data, as is done in the last command line.
+Extracted data can be loaded and accessed with the same `Dataset` interface as before, just define the `config` argument as `[DIRECTORY]`:
 
 ```python
 from shapeworld import Dataset
 
 dataset = Dataset.create(dtype='agreement', name='multishape', config='examples/readme')
 generated = dataset.generate(n=128, mode='train')
+```
+
+Besides the batch generator functionality `dataset.iterate(...)`, loaded datasets offer an epoch batch generator via `dataset.epoch(...)` which terminates after one iteration over the entire dataset (with the last batch potentially being smaller than the specified `n`):
+
+```python
+from shapeworld import Dataset
+
+dataset = Dataset.create(dtype='agreement', name='multishape', config='examples/readme')
+for batch in dataset.epoch(n=64, mode='train', include_model=True):
+    print(len(batch['world']))  # 64, 64, 64, 64, 44 (300 overall)
 ```
 
 Loading the data in Python and then feeding it to a model is relatively slow. By using TensorFlow (TF) records (see above for how to generate TF records) and consequently the ability to load data implicitly within TensorFlow, models can be trained significantly faster. ShapeWorld provides utilities to access TF records as generated/loaded data would be handled:
@@ -168,6 +208,22 @@ from shapeworld import Dataset, tf_util
 
 dataset = Dataset.create(dtype='agreement', name='multishape', config='examples/readme')
 generated = tf_util.batch_records(dataset=dataset, mode='train', batch_size=128)
+```
+
+The `generated` Tensor cannot immediately be evaluated as it requires the TF queue runners to be initialized:
+
+```python
+import tensorflow as tf
+
+with tf.Session() as session:
+    coordinator = tf.train.Coordinator()
+    queue_threads = tf.train.start_queue_runners(sess=session, coord=coordinator)
+
+    # session calls, for instance:
+    batch = session.run(fetches=generated)
+
+    coordinator.request_stop()
+    coordinator.join(threads=queue_threads)
 ```
 
 
@@ -185,15 +241,15 @@ rm CLEVR_v1.0.zip
 ShapeWorld then provides a basic interface to load the CLEVR instances **in order of their appearance** in the dataset. It is hence recommended to *'pre-generate'* the entire dataset (70k training, 15k validation and 15k test instances) once through the ShapeWorld interface, either as `clevr_classification` or `clevr_answering` dataset type, and subsequently access it as you would load other pre-generated ShapeWorld datasets:
 
 ```bash
-python generate.py -d [SHAPEWORLD_DIRECTORY] -a tar:bzip2 -t clevr_classification -n clevr -f 140,30,30 -i 500 -M -T --config-values --directory CLEVR_v1.0
+python generate.py -d [SHAPEWORLD_DIRECTORY] -a tar:bzip2 -t clevr_classification -n clevr -s 140,30,30 -i 500 -M -T --config-values --directory CLEVR_v1.0
 rm -r CLEVR_v1.0
 ```
 
 Accordingly, in the case of CLEVR CoGenT:
 
 ```bash
-python generate.py -d [SHAPEWORLD_DIRECTORY] -a tar:bzip2 -t clevr_classification -n clevr -f 140,30,30 -i 500 -M -T --config-values --directory CLEVR_CoGenT_v1.0 --parts A,A,A
-python generate.py -d [SHAPEWORLD_DIRECTORY] -a tar:bzip2 -t clevr_classification -n clevr -f 0,30,30 -i 500 -M -T --config-values --directory CLEVR_CoGenT_v1.0 --parts A,B,B
+python generate.py -d [SHAPEWORLD_DIRECTORY] -a tar:bzip2 -t clevr_classification -n clevr -s 140,30,30 -i 500 -M -T --config-values --directory CLEVR_CoGenT_v1.0 --parts A,A,A
+python generate.py -d [SHAPEWORLD_DIRECTORY] -a tar:bzip2 -t clevr_classification -n clevr -s 0,30,30 -i 500 -M -T --config-values --directory CLEVR_CoGenT_v1.0 --parts A,B,B
 rm -r CLEVR_CoGenT_v1.0
 ```
 
@@ -215,7 +271,7 @@ git clone https://github.com/cornell-lic/nlvr.git
 Again, one should *'pre-generate'* the entire dataset (75k training, 6k validation and 6k test instances) as `nlvr_agreement` dataset type, and subsequently access it via the ShapeWorld load interface:
 
 ```bash
-python generate.py -d [SHAPEWORLD_DIRECTORY] -a tar:bzip2 -t nlvr_agreement -n nlvr -f 25,2,2 -i 3k -M -T --config-values --directory nlvr
+python generate.py -d [SHAPEWORLD_DIRECTORY] -a tar:bzip2 -t nlvr_agreement -n nlvr -s 25,2,2 -i 3k -M -T --config-values --directory nlvr
 rm -r nlvr
 ```
 

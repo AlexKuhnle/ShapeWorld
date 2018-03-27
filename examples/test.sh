@@ -14,6 +14,8 @@ echo "  quantification"
 python generate.py -d examples/test1 -U -t agreement -n quantification -i 1 -M -H
 echo "  quantification_complex"
 python generate.py -d examples/test1 -U -t agreement -n quantification_complex -i 1 -M -H
+echo "  combination_simple"
+python generate.py -d examples/test1 -U -t agreement -n combination_simple -i 1 -M -H
 echo "  combination"
 python generate.py -d examples/test1 -U -t agreement -n combination -i 1 -M -H
 

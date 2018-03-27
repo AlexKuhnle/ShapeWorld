@@ -54,9 +54,9 @@ class World(Entity):
     def distance(self, offset):
         return self.shape.distance(offset)
 
-    def draw(self, world_array, world_size):
+    def draw(self, world_array, world_size, draw_fn=None):
         for entity in self.entities:
-            entity.draw(world_array=world_array, world_size=world_size)
+            entity.draw(world_array=world_array, world_size=world_size, draw_fn=draw_fn)
 
     def random_location(self, provoke_collision=False):
         if provoke_collision and self.entities:
@@ -105,13 +105,16 @@ class World(Entity):
             entity.id = n
             entity.collisions = {sort_indices.index(i): c for i, c in entity.collisions.items()}
 
-    def get_array(self):
-        color = self.color.get_color()
-        if not color.any():
-            world_array = np.zeros(shape=(self.size.y, self.size.x, 3), dtype=np.float32)
+    def get_array(self, world_array=None, draw_fn=None):
+        if draw_fn is None:
+            color = self.color.get_color()
+            if color.any():
+                world_array = np.tile(A=np.array(object=color, dtype=np.float32), reps=(self.size.x, self.size.y, 1))
+            elif world_array is None:
+                world_array = np.zeros(shape=(self.size.y, self.size.x, 3), dtype=np.float32)
         else:
-            world_array = np.tile(A=np.array(object=color, dtype=np.float32), reps=(self.size.x, self.size.y, 1))
-        self.draw(world_array=world_array, world_size=self.size)
+            world_array = draw_fn(value=world_array)
+        self.draw(world_array=world_array, world_size=self.size, draw_fn=draw_fn)
         return world_array
 
     @staticmethod
@@ -121,7 +124,7 @@ class World(Entity):
 
     @staticmethod
     def from_image(image):
-        world_array = (np.array(object=image, dtype=np.float32) / 255.0)
+        world_array = np.array(object=image, dtype=np.float32) / 255.0
         if world_array.shape[2] == 4:
             world_array = world_array[:, :, :3]
         assert world_array.shape[2] == 3

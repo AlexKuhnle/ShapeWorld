@@ -49,7 +49,7 @@ class NLVR(Dataset):
             batch['agreement'][i] = agreement
         return batch
 
-    def get_html(self, generated):
+    def get_html(self, generated, image_format='bmp'):
         id2word = self.vocabulary(value_type='language')
         descriptions = generated['description']
         description_lengths = generated['description_length']
@@ -62,9 +62,10 @@ class NLVR(Dataset):
                 agreement = 'incorrect'
             else:
                 assert False
-            data_html.append('<div class="{agreement}"><div class="world"><img src="world1-{world}.bmp" alt="world1-{world}.bmp"></div><div class="vertical"></div><div class="world"><img src="world2-{world}.bmp" alt="world2-{world}.bmp"></div><div class="vertical"></div><div class="world"><img src="world3-{world}.bmp" alt="world3-{world}.bmp"></div><div class="num"><p><b>({num})</b></p></div><div class="description"><p>{description}</p></div></div>'.format(
+            data_html.append('<div class="{agreement}"><div class="world"><img src="world1-{world}.{format}" alt="world1-{world}.{format}"></div><div class="vertical"></div><div class="world"><img src="world2-{world}.{format}" alt="world2-{world}.{format}"></div><div class="vertical"></div><div class="world"><img src="world3-{world}.{format}" alt="world3-{world}.{format}"></div><div class="num"><p><b>({num})</b></p></div><div class="description"><p>{description}</p></div></div>'.format(
                 agreement=agreement,
                 world=n,
+                format=image_format,
                 num=(n + 1),
                 description=util.tokens2string(id2word[word] for word in description[:description_length])
             ))

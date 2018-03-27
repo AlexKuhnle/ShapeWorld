@@ -33,6 +33,7 @@ if __name__ == '__main__':
     parser.add_argument('-T', '--tf-records', action='store_true', help='Additionally store data as TensorFlow records')
     parser.add_argument('-F', '--features', action='store_true', help='Additionally extract image features (conv4 of resnet_v2_101)')
     parser.add_argument('-C', '--clevr-format', action='store_true', help='Output in CLEVR format')
+    parser.add_argument('-N', '--png-format', action='store_true', help='Store images in PNG as opposed to bitmat format')
     parser.add_argument('-O', '--concatenate-images', action='store_true', help='Concatenate images per part into one image file')
 
     parser.add_argument('-Y', '--yes', action='store_true', help='Confirm all questions with yes')
@@ -73,12 +74,15 @@ if __name__ == '__main__':
             exit(0)
 
     if args.features:
-        assert args.tf_records
         from pretrained import PretrainedModel
         pretrained_model = PretrainedModel(image_shape=dataset.world_shape())
         for value_name, value_type in list(dataset.values.items()):
+            value_type, alts = util.alternatives_type(value_type=value_type)
             if value_type == 'world':
-                dataset.values[value_name + '_features'] = 'vector(float)'
+                if alts:
+                    dataset.values[value_name + '_features'] = 'alternatives(vector(float))'
+                else:
+                    dataset.values[value_name + '_features'] = 'vector(float)'
                 dataset.vectors[value_name + '_features'] = pretrained_model.features_shape
 
     specification = dataset.specification()
@@ -89,6 +93,8 @@ if __name__ == '__main__':
         dataset.pixel_noise_stddev = 0.0
     if args.include_model:
         specification['include_model'] = args.include_model
+    if args.png_format:
+        specification['image_format'] = 'png'
     if args.concatenate_images:
         specification['num_concat_worlds'] = args.instances
 
@@ -271,13 +277,14 @@ if __name__ == '__main__':
                         ))
 
             else:
-                dataset.serialize(path=path, generated=generated, archive=args.archive, concat_worlds=args.concatenate_images, html=args.html)
+                if args.features:
+                    for value_name, value_type in dataset.values.items():
+                        if value_type == 'world':
+                            features = pretrained_model.features(images=generated[value_name])
+                            generated[value_name + '_features'] = features
+
+                dataset.serialize(path=path, generated=generated, archive=args.archive, html=args.html, image_format=('png' if args.png_format else 'bmp'), concat_worlds=args.concatenate_images)
                 if args.tf_records:
-                    if args.features:
-                        for value_name, value_type in dataset.values.items():
-                            if value_type == 'world':
-                                features = pretrained_model.features(images=generated[value_name])
-                                generated[value_name + '_features'] = features
                     tf_util.write_records(dataset=dataset, records=generated, path=path)
 
             after = datetime.now()

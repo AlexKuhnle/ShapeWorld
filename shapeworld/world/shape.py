@@ -41,6 +41,9 @@ class Shape(object):
     def distance(self, offset):
         raise NotImplementedError
 
+    def centrality(self, offset):
+        raise NotImplementedError
+
     @property
     def area(self):
         raise NotImplementedError
@@ -78,7 +81,7 @@ class WorldShape(Shape):
         return abs(offset) < 0.5
 
     def distance(self, offset):
-        return (abs(offset) - 0.5).positive().length
+        return (abs(offset) - 0.5).positive().length()
 
     @property
     def area(self):
@@ -100,7 +103,10 @@ class Square(Shape):
         return abs(offset) <= self.size
 
     def distance(self, offset):
-        return (abs(offset) - self.size).positive().length
+        return (abs(offset) - self.size).positive().length()
+
+    def centrality(self, offset):
+        return max(((self.size - abs(offset)) / self.size).lower(), 0.0)
 
     @property
     def area(self):
@@ -130,7 +136,10 @@ class Rectangle(Shape):
         return abs(offset) <= self.size
 
     def distance(self, offset):
-        return (abs(offset) - self.size).positive().length
+        return (abs(offset) - self.size).positive().length()
+
+    def centrality(self, offset):
+        return max(((self.size - abs(offset)) / self.size).lower(), 0.0)
 
     @property
     def area(self):
@@ -167,11 +176,40 @@ class Triangle(Shape):
 
     def distance(self, offset):
         if offset.y < -self.size.y:
-            return (abs(offset) - self.size).positive().length
+            return (abs(offset) - self.size).positive().length()
         else:
             offset = Point(abs(offset.x), offset.y + self.size.y)
             linear = min(max(offset.y - offset.x + self.size.x, 0.0) / (self.size.x + 2.0 * self.size.y), 1.0)
-            return Point(offset.x - (1.0 - linear) * self.size.x, offset.y - linear * 2.0 * self.size.y).positive().length
+            size = Point((1.0 - linear) * self.size.x, linear * 2.0 * self.size.y)
+            return (offset - size).positive().length()
+
+    def centrality(self, offset):
+        if offset.y < -self.size.y:
+            return 0.0
+        else:
+            x = abs(offset.x) / ((1.0 - (offset.y + self.size.y) / (2.0 * self.size.y)) * self.size.x)
+            if offset.y < -self.size.y / 3.0:
+                offset = Point(abs(offset.x), -offset.y - self.size.y / 3.0)
+                frac_x = max(offset.x / self.size.x, 2.0 / 3.0)
+                # x = abs(offset.x) / ((1.0 - (offset.y + self.size.y) / (2.0 * self.size.y)) * self.size.x)
+                y = min(offset.y / (frac_x * 2.0 * self.size.y / 3.0), 1.0)
+                linear = offset.y / (self.size.y * 2.0 / 3.0)
+                linear **= 2
+                # linear = 1.0 - (1.0 - linear) ** 2
+                # linear = 1.0
+            else:
+                offset = Point(abs(offset.x), offset.y + self.size.y / 3.0)
+                frac_x = (offset.x / self.size.x) * 3.0 / 2.0
+                assert 1.0 - frac_x >= offset.y / (4.0 * self.size.y / 3.0)
+                y = offset.y / ((1.0 - frac_x) * 4.0 * self.size.y / 3.0)
+                linear = offset.y / (self.size.y * 4.0 / 3.0)
+                linear = 1.0 - (1.0 - linear) ** 2
+            linear = 1.0 - (1.0 - linear) ** 2
+            assert 0.0 <= x <= 1.0, x
+            assert 0.0 <= y <= 1.0, y
+            assert 0.0 <= linear <= 1.0, linear
+            # return ((1.0 - y) + (1.0 - x)) / 2.0
+            return linear * (1.0 - y) + (1.0 - linear) * (1.0 - x)
 
     @property
     def area(self):
@@ -213,11 +251,39 @@ class Pentagon(Shape):
                 offset = Point(offset.x - golden_ratio * self.size.x, -offset.y)
                 x_length = (1.0 - golden_ratio) * self.size.x
                 linear = min(max(offset.y - offset.x + x_length, 0.0) / (x_length + y_length), 1.0)
-                return Point(offset.x - (1.0 - linear) * x_length, offset.y - linear * y_length).positive().length
+                size = Point((1.0 - linear) * x_length, linear * y_length)
+                return (offset - size).positive().length()
         else:
             y_length = (1.0 - golden_ratio) * 2.0 * self.size.y
             linear = min(max(offset.y - offset.x + self.size.x, 0.0) / (self.size.x + y_length), 1.0)
-            return Point(offset.x - (1.0 - linear) * self.size.x, offset.y - linear * y_length).positive().length
+            size = Point((1.0 - linear) * self.size.x, linear * y_length)
+            return (offset - size).positive().length()
+
+    def centrality(self, offset):
+        # return 0.0
+        offset = Point(abs(offset.x), offset.y + self.size.y - golden_ratio * 2.0 * self.size.y)
+        if offset.y < 0.0:
+            y_length = golden_ratio * 2.0 * self.size.y
+            if offset.x < golden_ratio * self.size.x:
+                return max(((self.size - abs(offset)) / self.size).lower(), 0.0)
+                return max((y_length + offset.y) / y_length, 0.0)
+            else:
+                offset = Point(offset.x - golden_ratio * self.size.x, -offset.y)
+                x_length = (1.0 - golden_ratio) * self.size.x
+                linear = min(max(offset.y - offset.x + x_length, 0.0) / (x_length + y_length), 1.0)
+                size = Point((1.0 - linear) * x_length, linear * y_length)
+                return max(((size - offset) / size).lower(), 0.0)
+        else:
+            y_length = (1.0 - golden_ratio) * 2.0 * self.size.y
+            linear = min(max(offset.y - offset.x + self.size.x, 0.0) / (self.size.x + y_length), 1.0)
+            size = Point((1.0 - linear) * self.size.x, linear * y_length)
+            return max(((size - offset) / size).lower(), 0.0)
+
+        # return (abs(offset) - self.size).positive().length()
+        # return max(((self.size - abs(offset)) / self.size).lower(), 0.0)
+
+        # return max(offset.length() - self.size.x, 0.0)
+        # return max((self.size.x - offset.length()) / self.size.x, 0.0)
 
     @property
     def area(self):
@@ -257,9 +323,22 @@ class Cross(Shape):
     def distance(self, offset):
         offset = abs(offset)
         if offset.x > offset.y:
-            return (offset - Point(self.size.x, self.size.y / 3.0)).positive().length
+            size = Point(self.size.x, self.size.y / 3.0)
         else:
-            return (offset - Point(self.size.x / 3.0, self.size.y)).positive().length
+            size = Point(self.size.x / 3.0, self.size.y)
+        return (offset - size).positive().length()
+
+    def centrality(self, offset):
+        offset = abs(offset)
+        if offset.x > self.size.x / 3.0:
+            size = Point(self.size.x, self.size.y / 3.0)
+        elif offset.y > self.size.y / 3.0:
+            size = Point(self.size.x / 3.0, self.size.y)
+        elif offset.x > offset.y:
+            size = Point(self.size.x / 3.0 * 4.0, self.size.y / 3.0)
+        else:
+            size = Point(self.size.x / 3.0, self.size.y / 3.0 * 4.0)
+        return max(((size - offset) / size).lower(), 0.0)
 
     @property
     def area(self):
@@ -292,10 +371,13 @@ class Circle(Shape):
         return Circle(size=(self.size.x * 2.0))
 
     def __contains__(self, offset):
-        return offset.length <= self.size.x
+        return offset.length() <= self.size.x
 
     def distance(self, offset):
-        return max(offset.length - self.size.x, 0.0)
+        return max(offset.length() - self.size.x, 0.0)
+
+    def centrality(self, offset):
+        return max((self.size.x - offset.length()) / self.size.x, 0.0)
 
     @property
     def area(self):
@@ -330,14 +412,21 @@ class Semicircle(Shape):
 
     def __contains__(self, offset):
         offset += Point(0.0, self.size.y)
-        return offset.length <= self.size.x and offset.y >= 0.0
+        return offset.length() <= self.size.x and offset.y >= 0.0
 
     def distance(self, offset):
         offset += Point(0.0, self.size.y)
         if offset.y < 0.0:
-            return (abs(offset) - Point(self.size.x, 0.0)).positive().length
+            return (abs(offset) - Point(self.size.x, 0.0)).positive().length()
         else:
-            return max(offset.length - self.size.x, 0.0)
+            return max(offset.length() - self.size.x, 0.0)
+
+    def centrality(self, offset):
+        offset += Point(0.0, self.size.y)
+        if offset.y < 0.0:
+            return 0.0
+        else:
+            return max((self.size.x - offset.length()) / self.size.x, 0.0)
 
     @property
     def area(self):
@@ -367,14 +456,17 @@ class Ellipse(Shape):
         return Ellipse(size=(self.size * 2.0))
 
     def __contains__(self, offset):
-        return (offset / self.size).length <= 1.0
+        return (offset / self.size).length() <= 1.0
 
     def distance(self, offset):
-        direction = offset / self.size
-        direction_length = direction.length
-        if direction_length <= 1.0:
-            return 0.0
-        return ((direction - direction / direction_length) * self.size).length
+        offset = abs(offset) / self.size
+        offset -= offset / offset.length()
+        return (offset * self.size).positive().length()
+
+    def centrality(self, offset):
+        offset = abs(offset) / self.size
+        offset = offset / offset.length() - offset
+        return max(offset.length(), 0.0)
 
     @property
     def area(self):

@@ -253,7 +253,12 @@ class Point(PointTuple):
     def from_model(model):
         return Point(x=model['x'], y=model['y'])
 
-    @property
+    def lower(self):
+        return min(self.x, self.y)
+
+    def upper(self):
+        return max(self.x, self.y)
+
     def length(self):
         return sqrt(self.x * self.x + self.y * self.y)
 

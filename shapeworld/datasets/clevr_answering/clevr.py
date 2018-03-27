@@ -75,7 +75,7 @@ class CLEVR(Dataset):
                 batch['answer_length'][i] = len(answers[sample])
         return batch
 
-    def get_html(self, generated):
+    def get_html(self, generated, image_format='bmp'):
         id2word = self.vocabulary(value_type='language')
         questions = generated['question']
         question_lengths = generated['question_length']
@@ -83,7 +83,7 @@ class CLEVR(Dataset):
         answer_lengths = generated['answer_length']
         data_html = list()
         for n, (question, question_length, answer, answer_length) in enumerate(zip(questions, question_lengths, answers, answer_lengths)):
-            data_html.append('<div class="instance"><div class="world"><img src="world-{world}.bmp" alt="world-{world}.bmp"></div><div class="num"><p><b>({num})</b></p></div><div class="questions">'.format(world=n, num=(n + 1)))
+            data_html.append('<div class="instance"><div class="world"><img src="world-{world}.{format}" alt="world-{world}.{format}"></div><div class="num"><p><b>({num})</b></p></div><div class="questions">'.format(world=n, format=image_format, num=(n + 1)))
             for question, question_length, answer, answer_length in zip(question, question_length, answer, answer_length):
                 data_html.append('<p>{question}&ensp;&ndash;&ensp;{answer}</p>'.format(
                     question=util.tokens2string(id2word[word] for word in question[:question_length]),

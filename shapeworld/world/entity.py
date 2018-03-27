@@ -59,6 +59,9 @@ class Entity(object):
     def distance(self, offset):
         return self.shape.distance(self.rotate(offset))
 
+    def centrality(self, offset):
+        return self.shape.centrality(self.rotate(offset))
+
     def set_center(self, center):
         self.center = center
         inv_rot_sin = sin(self.rotation * 2.0 * pi)
@@ -74,27 +77,41 @@ class Entity(object):
         self.topleft = topleft + center
         self.bottomright = bottomright + center
 
-    def draw(self, world_array, world_size, bounding_box=False):
+    def draw(self, world_array, world_size, draw_fn=None):
         shift = Point(2.0 / world_size.x, 2.0 / world_size.y)
         scale = 1.0 + 2.0 * shift
         topleft = (((self.topleft) / scale) * world_size).max(Point.izero)  # + 0.5 * shift
         bottomright = (((self.bottomright + 2.0 * shift) / scale) * world_size).min(world_size)
-        color = self.color.get_color()
-        world_length = min(*world_size)
 
-        for (x, y), point in Point.range(topleft, bottomright, world_size):
-            point = point * scale - shift
-            offset = point - self.center
-            distance = self.distance(offset)
-            if distance == 0.0:
-                # assert offset in self
-                world_array[y, x] = self.texture.get_color(color, offset)
-            else:
-                # assert offset not in self
-                distance = max(1.0 - distance * world_length, 0.0)
-                world_array[y, x] = distance * self.texture.get_color(color, offset) + (1.0 - distance) * world_array[y, x]
+        if draw_fn is None:
+            color = self.color.get_color()
+            world_length = min(*world_size)
+            for (x, y), point in Point.range(topleft, bottomright, world_size):
+                point = point * scale - shift
+                offset = point - self.center
+                distance = self.distance(offset)
+                if distance == 0.0:
+                    # assert offset in self
+                    world_array[y, x] = self.texture.get_color(color, offset)
+                else:
+                    # assert offset not in self
+                    distance = max(1.0 - distance * world_length, 0.0)
+                    world_array[y, x] = distance * self.texture.get_color(color, offset) + (1.0 - distance) * world_array[y, x]
+                # if distance == 0.0:
+                #     centrality = self.centrality(offset)
+                #     world_array[y, x] = (centrality, centrality, centrality) + (1.0 - centrality) * self.texture.get_color(color, offset)
+                # else:
+                #     assert self.centrality(offset) == 0.0
 
+        else:
+            for (x, y), point in Point.range(topleft, bottomright, world_size):
+                point = point * scale - shift
+                offset = point - self.center
+                world_array[y, x] = draw_fn(value=world_array[y, x], entity=self, offset=offset)
+
+        bounding_box = False
         if bounding_box:  # draw bounding box
+            assert draw_fn is None
             x1 = world_size + 1
             x2 = -1
             y1 = world_size + 1

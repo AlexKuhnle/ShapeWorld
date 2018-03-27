@@ -3,6 +3,7 @@ import json
 import os
 import platform
 import re
+import stat
 import subprocess
 from shapeworld.captions import Attribute, Relation, EntityType, Existential, Quantifier, NumberBound, ComparativeQuantifier, Proposition
 from shapeworld.realizers import CaptionRealizer
@@ -21,10 +22,13 @@ def prepare_ace():
         else:
             assert False
         assert os.path.isfile(os.path.join(directory, 'resources', 'ace_{}.gz'.format(system)))
+        ace_path = os.path.join(directory, 'resources', 'ace')
         import gzip
         with gzip.open(os.path.join(directory, 'resources', 'ace_{}.gz'.format(system)), 'rb') as gzip_filehandle:
-            with open(os.path.join(directory, 'resources', 'ace'), 'wb') as filehandle:
+            with open(ace_path, 'wb') as filehandle:
                 filehandle.write(gzip_filehandle.read())
+        # Make executable
+        os.chmod(ace_path, os.stat(ace_path).st_mode | stat.S_IEXEC)
 
 
 def prepare_grammar(language):
@@ -283,7 +287,7 @@ class DmrsRealizer(CaptionRealizer):
         caption_strings = [line for line in stdout_data if line != '']
         for n in none_indices:
             caption_strings.insert(n, '')
-        assert len(caption_strings) == len(captions), stdout_data + '\n' + stderr_data
+        assert len(caption_strings) == len(captions), '\n'.join(stdout_data) + '\n' + '\n'.join(stderr_data)
         return caption_strings
 
     def attribute_dmrs(self, attribute):

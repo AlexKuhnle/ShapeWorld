@@ -26,14 +26,19 @@ class Dataset(object):
         else:
             self.world_size = tuple(world_size)
         self.pixel_noise_stddev = pixel_noise_stddev
-        self.vectors = vectors
+        self.vectors = {value_name: shape if isinstance(shape, int) else tuple(shape) for value_name, shape in vectors.items()}
         self.vocabularies = dict()
         if vocabularies is not None:
             for name, vocabulary in vocabularies.items():
-                vocabulary = {word: index for index, word in enumerate((word for word in vocabulary if word != '' and word != '[UNKNOWN]'), 1)}
-                vocabulary[''] = 0
-                vocabulary['[UNKNOWN]'] = len(vocabulary)
-                self.vocabularies[name] = vocabulary
+                if isinstance(vocabulary, dict):
+                    assert all(isinstance(word, str) and isinstance(index, int) for word, index in vocabulary.items())
+                    assert sorted(vocabulary.values()) == list(range(len(vocabulary)))
+                    self.vocabularies[name] = vocabulary
+                else:
+                    vocabulary = {word: index for index, word in enumerate((word for word in vocabulary if word != '' and word != '[UNKNOWN]'), 1)}
+                    vocabulary[''] = 0
+                    vocabulary['[UNKNOWN]'] = len(vocabulary)
+                    self.vocabularies[name] = vocabulary
         self.language = language
 
     @staticmethod
@@ -297,14 +302,18 @@ class Dataset(object):
     def generate(self, n, mode=None, include_model=False, alternatives=False):  # mode: None, 'train', 'validation', 'test'
         raise NotImplementedError
 
-    def iterate(self, n, mode=None, include_model=False, alternatives=False):
-        while True:
+    def iterate(self, n, mode=None, include_model=False, alternatives=False, iterations=None):
+        if iterations is None:
+            iterations = -1
+        i = 0
+        while i < iterations:
             yield self.generate(n=n, mode=mode, include_model=include_model, alternatives=alternatives)
+            i += 1
 
-    def get_html(self, generated):
+    def get_html(self, generated, image_format='bmp'):
         return None
 
-    def serialize(self, path, generated, additional=None, filename=None, archive=None, concat_worlds=False, html=False):
+    def serialize(self, path, generated, additional=None, filename=None, archive=None, html=False, image_format='bmp', concat_worlds=False):
         assert not additional or all(value_name not in self.values for value_name in additional)
         if not os.path.isdir(os.path.dirname(path)):
             os.makedirs(os.path.dirname(path))
@@ -315,6 +324,7 @@ class Dataset(object):
                     value=value,
                     value_name=value_name,
                     write_file=write_file,
+                    image_format=image_format,
                     concat_worlds=concat_worlds
                 )
             if additional:
@@ -324,14 +334,15 @@ class Dataset(object):
                         value_name=value_name,
                         write_file=write_file,
                         value_type=value_type,
+                        image_format=image_format,
                         concat_worlds=concat_worlds
                     )
             if html:
-                html = self.get_html(generated=generated)
+                html = self.get_html(generated=generated, image_format=image_format)
                 assert html is not None
                 write_file(filename='data.html', value=html)
 
-    def serialize_value(self, value, value_name, write_file, value_type=None, concat_worlds=False):
+    def serialize_value(self, value, value_name, write_file, value_type=None, image_format='bmp', concat_worlds=False):
         if value_type is None:
             value_type = self.values[value_name]
         value_type, alts = util.alternatives_type(value_type=value_type)
@@ -353,9 +364,9 @@ class Dataset(object):
             write_file(value_name + '.txt', value)
         elif value_type == 'vector(int)' or value_type == 'vector(float)':
             if alts:
-                value = '\n'.join(';'.join(','.join(str(x) for x in vector) for vector in vectors) for vectors in value) + '\n'
+                value = '\n'.join(';'.join(','.join(str(x) for x in vector.flatten()) for vector in vectors) for vectors in value) + '\n'
             else:
-                value = '\n'.join(','.join(str(x) for x in vector) for vector in value) + '\n'
+                value = '\n'.join(','.join(str(x) for x in vector.flatten()) for vector in value) + '\n'
             write_file(value_name + '.txt', value)
         elif value_type == 'world':
             if concat_worlds:
@@ -370,8 +381,8 @@ class Dataset(object):
                 worlds = np.concatenate(worlds, axis=0)
                 image = World.get_image(world_array=worlds)
                 image_bytes = BytesIO()
-                image.save(image_bytes, format='bmp')
-                write_file(value_name + '.bmp', image_bytes.getvalue(), binary=True)
+                image.save(image_bytes, format=image_format)
+                write_file('{}.{}'.format(value_name, image_format), image_bytes.getvalue(), binary=True)
                 image_bytes.close()
             else:
                 for n in range(len(value)):
@@ -379,14 +390,14 @@ class Dataset(object):
                         for i, v in enumerate(value[n]):
                             image = World.get_image(world_array=v)
                             image_bytes = BytesIO()
-                            image.save(image_bytes, format='bmp')
-                            write_file('{}-{}-{}.bmp'.format(value_name, n, i), image_bytes.getvalue(), binary=True)
+                            image.save(image_bytes, format=image_format)
+                            write_file('{}-{}-{}.{}'.format(value_name, n, i, image_format), image_bytes.getvalue(), binary=True)
                             image_bytes.close()
                     else:
                         image = World.get_image(world_array=value[n])
                         image_bytes = BytesIO()
-                        image.save(image_bytes, format='bmp')
-                        write_file('{}-{}.bmp'.format(value_name, n), image_bytes.getvalue(), binary=True)
+                        image.save(image_bytes, format=image_format)
+                        write_file('{}-{}.{}'.format(value_name, n, image_format), image_bytes.getvalue(), binary=True)
                         image_bytes.close()
         elif value_type == 'model':
             value = json.dumps(obj=value, indent=2, sort_keys=True)
@@ -399,7 +410,7 @@ class Dataset(object):
                 value = '\n'.join(' '.join(id2word[word_id] for word_id in words if word_id) for words in value) + '\n'
             write_file(value_name + '.txt', value)
 
-    def deserialize_value(self, value_name, read_file, value_type=None, num_concat_worlds=0):
+    def deserialize_value(self, value_name, read_file, value_type=None, image_format='bmp', num_concat_worlds=0):
         if value_type is None:
             value_type = self.values[value_name]
         value_type, alts = util.alternatives_type(value_type=value_type)
@@ -423,23 +434,25 @@ class Dataset(object):
             return value
         elif value_type == 'vector(int)':
             value = read_file(value_name + '.txt')
+            shape = self.vector_shape(value_name=value_name)
             if alts:
-                value = [[[int(x) for x in vector.split(',')] for vector in vectors.split(';')] for vectors in value.split('\n')[:-1]]
+                value = [[np.array(object=[int(x) for x in vector.split(',')], dtype=np.int32).reshape(shape) for vector in vectors.split(';')] for vectors in value.split('\n')[:-1]]
             else:
-                value = [[int(x) for x in vector.split(',')] for vector in value.split('\n')[:-1]]
+                value = [np.array(object=[int(x) for x in vector.split(',')], dtype=np.int32).reshape(shape) for vector in value.split('\n')[:-1]]
             return value
         elif value_type == 'vector(float)':
             value = read_file(value_name + '.txt')
+            shape = self.vector_shape(value_name=value_name)
             if alts:
-                value = [[[float(x) for x in vector.split(',')] for vector in vectors.split(';')] for vectors in value.split('\n')[:-1]]
+                value = [[np.array(object=[float(x) for x in vector.split(',')], dtype=np.float32).reshape(shape) for vector in vectors.split(';')] for vectors in value.split('\n')[:-1]]
             else:
-                value = [[float(x) for x in vector.split(',')] for vector in value.split('\n')[:-1]]
+                value = [np.array(object=[float(x) for x in vector.split(',')], dtype=np.float32).reshape(shape) for vector in value.split('\n')[:-1]]
             return value
         elif value_type == 'world':
             if num_concat_worlds:
                 assert not alts
                 size = ceil(sqrt(num_concat_worlds))
-                image_bytes = read_file(value_name + '.bmp', binary=True)
+                image_bytes = read_file('{}.{}'.format(value_name, image_format), binary=True)
                 assert image_bytes is not None
                 image_bytes = BytesIO(image_bytes)
                 image = Image.open(image_bytes)
@@ -460,7 +473,7 @@ class Dataset(object):
                         i = 0
                         v = list()
                         while True:
-                            image_bytes = read_file('{}-{}-{}.bmp'.format(value_name, n, i), binary=True)
+                            image_bytes = read_file('{}-{}-{}.{}'.format(value_name, n, i, image_format), binary=True)
                             if image_bytes is None:
                                 break
                             image_bytes = BytesIO(image_bytes)
@@ -469,7 +482,7 @@ class Dataset(object):
                             i += 1
                         value.append(v)
                     else:
-                        image_bytes = read_file('{}-{}.bmp'.format(value_name, n), binary=True)
+                        image_bytes = read_file('{}-{}.{}'.format(value_name, n, image_format), binary=True)
                         if image_bytes is None:
                             break
                         image_bytes = BytesIO(image_bytes)
@@ -499,6 +512,7 @@ class LoadedDataset(Dataset):
         self.directory = specification.pop('directory')
         self.archive = specification.pop('archive', None)
         self.include_model = specification.pop('include_model', False)
+        self.image_format = specification.pop('image_format', 'bmp')
         self.num_concat_worlds = specification.pop('num_concat_worlds', 0)
         self._specification = specification
         self.random_sampling = random_sampling
@@ -528,13 +542,6 @@ class LoadedDataset(Dataset):
                         self.records_parts[mode] = [os.path.join(root, f) for f in sorted(files) if f[-13:] == '.tfrecords.gz']
         assert self.parts
         self.mode = None
-        self.part = -1
-        self.num_instances = 0
-        # self.loaded = dict()
-        # for value_name, value_type in self.values.items():
-        #     value_type, alts = util.alternatives_type(value_type=value_type)
-        #     if value_type != 'model' or self.include_model:
-        #         self.loaded[value_name] = list()
 
     @property
     def name(self):
@@ -562,18 +569,22 @@ class LoadedDataset(Dataset):
         assert mode in self.records_parts
         return self.records_parts[mode]
 
-    def generate(self, n, mode=None, include_model=False, alternatives=False):
+    def generate(self, n, mode, include_model=False, alternatives=False):
         assert mode is not None
         assert not include_model or self.include_model
-        assert self.random_sampling or self.mode is None or self.mode == mode or self.part == len(self.parts[self.mode]) - 1  # random sampling or no intermediate mode switch possible
-        while self.mode != mode or self.num_instances < n:
-            if self.mode != mode:
-                self.mode = mode
-                self.loaded = dict()
-                for value_name, value_type in self.values.items():
-                    value_type, alts = util.alternatives_type(value_type=value_type)
-                    if value_type != 'model' or self.include_model:
-                        self.loaded[value_name] = list()
+
+        if self.mode != mode:
+            self.mode = mode
+            self.part = -1
+            self.loaded = dict()
+            for value_name, value_type in self.values.items():
+                value_type, alts = util.alternatives_type(value_type=value_type)
+                if value_type != 'model' or self.include_model:
+                    self.loaded[value_name] = list()
+            self.num_instances = 0
+            self.num_alternatives = 0
+
+        while (self.num_instances < n) if (self.random_sampling or alternatives) else (self.num_alternatives < n):
             if self.random_sampling:
                 self.part = randrange(len(self.parts[mode]))
             else:
@@ -584,12 +595,15 @@ class LoadedDataset(Dataset):
                     value.extend(self.deserialize_value(
                         value_name=value_name,
                         read_file=read_file,
+                        image_format=self.image_format,
                         num_concat_worlds=self.num_concat_worlds
                     ))
-                    if self.num_instances:
-                        assert len(value) == self.num_instances
+                    if self.num_instances == 0:
+                        self.num_instances = self.num_alternatives = len(value)
                     else:
-                        self.num_instances = len(value)
+                        assert len(value) == self.num_instances
+                    if value_name == 'alternatives':
+                        self.num_alternatives = sum(value)
 
         batch = self.zero_batch(n, include_model=include_model, alternatives=alternatives)
 
@@ -597,17 +611,36 @@ class LoadedDataset(Dataset):
             if self.random_sampling:
                 index = randrange(self.num_instances)
             else:
-                index = -1
-            self.num_instances -= 1
+                index = 0
+            if 'alternatives' not in self.values:
+                alt_index = -1
+                self.num_instances -= 1
+                self.num_alternatives -= 1
+            elif alternatives or self.loaded['alternatives'][index] == 1:
+                alt_index = -1
+                self.num_instances -= 1
+                self.num_alternatives -= self.loaded['alternatives'][index]
+            elif self.random_sampling:
+                alt_index = randrange(self.loaded['alternatives'][index])
+                self.num_instances -= 1
+                self.num_alternatives -= self.loaded['alternatives'][index]
+            else:
+                alt_index = 0
+                self.loaded['alternatives'][index] -= 1
+                self.num_alternatives -= 1
+
             for value_name, value_type in self.values.items():
-                if value_name == 'alternatives' and not alternatives:
-                    continue
                 value_type, alts = util.alternatives_type(value_type=value_type)
                 if value_type == 'model' and not include_model:
                     continue
-                value = self.loaded[value_name].pop(index)
-                if alts and not alternatives:
-                    value = choice(value)
+                if self.random_sampling or alt_index == -1:
+                    value = self.loaded[value_name].pop(index)
+                else:
+                    value = self.loaded[value_name][index]
+                if not alternatives and alts:
+                    value = value.pop(alt_index)
+                if not alternatives and value_name == 'alternatives':
+                    continue
                 if value_type in self.vocabularies:
                     batch[value_name][i][:len(value)] = value
                 else:
@@ -620,10 +653,104 @@ class LoadedDataset(Dataset):
 
         return batch
 
-    def get_html(self, generated):
+    def epoch(self, n, mode, include_model=False, alternatives=False):
+        assert mode is not None
+        assert not include_model or self.include_model
+
+        available_parts = list(range(len(self.parts[mode])))
+        loaded = dict()
+        for value_name, value_type in self.values.items():
+            value_type, alts = util.alternatives_type(value_type=value_type)
+            if value_type != 'model' or self.include_model:
+                loaded[value_name] = list()
+        num_instances = 0
+
+        while available_parts:
+            if self.random_sampling:
+                part = available_parts.pop(randrange(len(available_parts)))
+            else:
+                part = available_parts.pop(0)
+            num_instances = 0
+            with util.Archive(path=self.parts[mode][part], mode='r', archive=self.archive) as read_file:
+                for value_name, value in loaded.items():
+                    value.extend(self.deserialize_value(
+                        value_name=value_name,
+                        read_file=read_file,
+                        image_format=self.image_format,
+                        num_concat_worlds=self.num_concat_worlds
+                    ))
+                    if num_instances == 0:
+                        num_instances = num_alternatives = len(value)
+                    else:
+                        assert len(value) == num_instances
+                    if value_name == 'alternatives':
+                        num_alternatives = sum(value)
+
+            while (num_instances >= n) if alternatives else (num_alternatives >= n):
+                batch = self.zero_batch(n, include_model=include_model, alternatives=alternatives)
+
+                for i in range(n):
+                    if self.random_sampling:
+                        index = randrange(num_instances)
+                    else:
+                        index = 0
+                    if 'alternatives' not in self.values:
+                        alt_index = -1
+                        num_instances -= 1
+                        num_alternatives -= 1
+                    elif alternatives or loaded['alternatives'][index] == 1:
+                        alt_index = -1
+                        num_instances -= 1
+                        num_alternatives -= loaded['alternatives'][index]
+                    else:
+                        if self.random_sampling:
+                            alt_index = randrange(loaded['alternatives'][index])
+                        else:
+                            alt_index = 0
+                        loaded['alternatives'][index] -= 1
+                        num_alternatives -= 1
+
+                    for value_name, value_type in self.values.items():
+                        value_type, alts = util.alternatives_type(value_type=value_type)
+                        if value_type == 'model' and not include_model:
+                            continue
+                        if alt_index == -1:
+                            value = loaded[value_name].pop(index)
+                            if not alternatives and alts:
+                                value = value.pop(0)
+                        elif alts:
+                            value = loaded[value_name][index].pop(alt_index)
+                        else:
+                            value = loaded[value_name][index]
+                        if not alternatives and value_name == 'alternatives':
+                            continue
+                        if value_type in self.vocabularies:
+                            batch[value_name][i][:len(value)] = value
+                        else:
+                            batch[value_name][i] = value
+
+                for value_name, value_type in self.values.items():
+                    value_type, _ = util.alternatives_type(value_type=value_type)
+                    if value_type == 'world':
+                        batch[value_name] = self.apply_pixel_noise(world=batch[value_name])
+
+                yield batch
+
+                if not available_parts:
+                    if alternatives:
+                        if 0 < num_instances < n:
+                            n = num_instances
+
+                    else:
+                        if 0 < num_alternatives < n:
+                            n = num_alternatives
+
+        assert num_instances == 0 and num_alternatives == 0
+
+    def get_html(self, generated, image_format='bmp'):
         module = import_module('shapeworld.datasets.{}.{}'.format(self.type, self.name))
         dclass = module.dataset
-        return dclass.get_html(self, generated=generated)
+        return dclass.get_html(self, generated=generated, image_format=image_format)
 
 
 class DatasetMixer(Dataset):
@@ -703,7 +830,8 @@ class ClassificationDataset(Dataset):
 
     def __init__(self, world_generator, num_classes, multi_class=False, class_count=False, pixel_noise_stddev=0.0):
         values = dict(world='world', world_model='model', classification='vector(float)')
-        super(ClassificationDataset, self).__init__(values=values, world_size=world_generator.world_size, vectors=dict(classification=num_classes), pixel_noise_stddev=pixel_noise_stddev)
+        vectors = dict(classification=num_classes)
+        super(ClassificationDataset, self).__init__(values=values, world_size=world_generator.world_size, vectors=vectors, pixel_noise_stddev=pixel_noise_stddev)
         assert multi_class or not class_count
         self.world_generator = world_generator
         self.num_classes = num_classes
@@ -734,7 +862,7 @@ class ClassificationDataset(Dataset):
                 if world is not None:
                     break
 
-            batch['world'][i] = self.apply_pixel_noise(world=world.get_array())
+            batch['world'][i] = self.apply_pixel_noise(world=world.get_array(world_array=batch['world'][i]))
 
             if include_model:
                 batch['world_model'][i] = world.model()
@@ -751,11 +879,11 @@ class ClassificationDataset(Dataset):
 
         return batch
 
-    def get_html(self, generated):
+    def get_html(self, generated, image_format='bmp'):
         classifications = generated['classification']
         data_html = list()
         for n, classification in enumerate(classifications):
-            data_html.append('<div class="instance"><div class="world"><img src="world-{world}.bmp" alt="world-{world}.bmp"></div><div class="num"><p><b>({num})</b></p></div><div class="classification"><p>'.format(world=n, num=(n + 1)))
+            data_html.append('<div class="instance"><div class="world"><img src="world-{world}.{format}" alt="world-{world}.{format}"></div><div class="num"><p><b>({num})</b></p></div><div class="classification"><p>'.format(world=n, format=image_format, num=(n + 1)))
             comma = False
             for c, count in enumerate(classification):
                 if count == 0.0:
@@ -809,6 +937,10 @@ class CaptionAgreementDataset(Dataset):
                 language=util.value_or_default(language, 'english')
             )
         self.world_captioner.set_realizer(self.caption_realizer)
+        vectors = dict(
+            caption=caption_size,
+            caption_rpn=self.world_captioner.rpn_length()
+        )
         vocabularies = dict(
             language=vocabulary,
             rpn=sorted(self.world_captioner.rpn_symbols())
@@ -817,10 +949,7 @@ class CaptionAgreementDataset(Dataset):
             values=values,
             world_size=world_generator.world_size,
             pixel_noise_stddev=pixel_noise_stddev,
-            vectors=dict(
-                caption=caption_size,
-                caption_rpn=self.world_captioner.rpn_length()
-            ),
+            vectors=vectors,
             vocabularies=vocabularies,
             language=language
         )
@@ -897,7 +1026,7 @@ class CaptionAgreementDataset(Dataset):
             if captioner_model not in captioners_used:
                 captioners_used.append(captioner_model)
 
-            if self.worlds_per_instance > 1 or self.captions_per_instance > 1:
+            if alternatives and (self.worlds_per_instance > 1 or self.captions_per_instance > 1):
                 batch['agreement'][i].append(float(correct))
             else:
                 batch['agreement'][i] = float(correct)
@@ -953,7 +1082,7 @@ class CaptionAgreementDataset(Dataset):
             if alternatives and self.worlds_per_instance > 1:
                 batch['alternatives'][i] = self.worlds_per_instance
                 batch['world'][i].extend(batch['world'][i][0].copy() for _ in range(self.worlds_per_instance - 1))
-                batch['world'][i][0] = self.apply_pixel_noise(world=world.get_array())
+                batch['world'][i][0] = self.apply_pixel_noise(world=world.get_array(world_array=batch['world'][i][0]))
                 if include_model:
                     batch['world_model'][i].append(world.model())
                 for j in range(1, self.worlds_per_instance):
@@ -971,13 +1100,13 @@ class CaptionAgreementDataset(Dataset):
                                 break
                         else:
                             break
-                    batch['world'][i][j] = self.apply_pixel_noise(world=world.get_array())
+                    batch['world'][i][j] = self.apply_pixel_noise(world=world.get_array(world_array=batch['world'][i][j]))
                     if include_model:
                         batch['world_model'][i].append(world.model())
                     batch['agreement'][i].append(float(correct))
 
             else:
-                batch['world'][i] = self.apply_pixel_noise(world=world.get_array())
+                batch['world'][i] = self.apply_pixel_noise(world=world.get_array(world_array=batch['world'][i]))
                 if include_model:
                     batch['world_model'][i] = world.model()
 
@@ -991,7 +1120,7 @@ class CaptionAgreementDataset(Dataset):
         missing_words = set()  # for assert
         max_caption_size = caption_size  # for assert
 
-        assert len(captions) == n * self.captions_per_instance
+        assert len(captions) == n * self.captions_per_instance if alternatives else len(captions) == n
         captions = self.caption_realizer.realize(captions=captions)
 
         for i, caption in enumerate(captions):
@@ -1003,7 +1132,7 @@ class CaptionAgreementDataset(Dataset):
                     max_caption_size = len(caption)
                 continue
 
-            if self.captions_per_instance > 1:
+            if alternatives and self.captions_per_instance > 1:
                 j = i % self.captions_per_instance
                 i = i // self.captions_per_instance
                 batch['caption_length'][i].append(len(caption))
@@ -1039,7 +1168,7 @@ class CaptionAgreementDataset(Dataset):
 
         return batch
 
-    def get_html(self, generated):
+    def get_html(self, generated, image_format='bmp'):
         id2word = self.vocabulary(value_type='language')
         worlds = generated['world']
         captions = generated['caption']
@@ -1070,13 +1199,14 @@ class CaptionAgreementDataset(Dataset):
                         agreement = 'incorrect'
                     else:
                         agreement = 'ambiguous'
-                    data_html.append('<div class="{agreement}"><div class="world"><img src="world-{world}-{alt}.bmp" alt="world-{world}-{alt}.bmp"></div></div>'.format(
+                    data_html.append('<div class="{agreement}"><div class="world"><img src="world-{world}-{alt}.{format}" alt="world-{world}-{alt}.{format}"></div></div>'.format(
                         agreement=agreement,
                         world=n,
+                        format=image_format,
                         alt=i
                     ))
             else:
-                data_html.append('<div class="world"><img src="world-{world}.bmp" alt="world-{world}.bmp"></div>'.format(world=n))
+                data_html.append('<div class="world"><img src="world-{world}.{format}" alt="world-{world}.{format}"></div>'.format(world=n, format=image_format))
 
             data_html.append('<div class="num"><b>({num})</b></div>'.format(num=(n + 1)))
 
