@@ -1,6 +1,7 @@
 import copy
 import json
 import os
+import stat
 import platform
 import re
 import stat
