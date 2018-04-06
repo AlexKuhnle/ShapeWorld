@@ -4,21 +4,29 @@ from shapeworld.captions import Caption, EntityType, Relation, Settings
 
 class Quantifier(Caption):
 
+    zero_quantifiers = {
+        ('count', 'lt', 0), ('count', 'leq', 0), ('count', 'eq', 0), ('count', 'lt', 1),
+        ('ratio', 'lt', 0.0), ('ratio', 'leq', 0.0), ('ratio', 'eq', 0.0)
+    }
+    all_quantifiers = {
+        ('count', 'gt', -1), ('count', 'geq', -1), ('count', 'eq', -1), ('count', 'gt', -2),
+        ('ratio', 'gt', 1.0), ('ratio', 'geq', 1.0), ('ratio', 'eq', 1.0)
+    }
+    tautological_quantifiers = {
+        ('count', 'geq', 0), ('count', 'leq', -1),
+        ('ratio', 'geq', 0.0), ('ratio', 'leq', 1.0)
+    }
+
     __slots__ = ('qtype', 'qrange', 'quantity', 'restrictor', 'body')
 
     def __init__(self, qtype, qrange, quantity, restrictor, body):
-        # if qtype == 'composed': qrange is identifier, quantity is list of quantifiers
-        assert qtype in ('count', 'ratio', 'composed')
+        assert qtype in ('count', 'ratio')
         if qtype == 'count':
             assert qrange in ('lt', 'leq', 'eq', 'neq', 'geq', 'gt')
             assert isinstance(quantity, int)
         elif qtype == 'ratio':
             assert qrange in ('lt', 'leq', 'eq', 'neq', 'geq', 'gt')
             assert isinstance(quantity, float) and 0.0 <= quantity <= 1.0
-        elif qtype == 'composed':
-            assert isinstance(qrange, str)
-            assert all(len(quantifier) == 3 and quantifier[0] in ('count', 'ratio') for quantifier in quantity)
-            quantity = tuple(tuple(quantifier) for quantifier in quantity)
         assert isinstance(restrictor, EntityType)
         assert isinstance(body, Relation)
         self.qtype = qtype
@@ -32,20 +40,15 @@ class Quantifier(Caption):
             component=str(self),
             qtype=self.qtype,
             qrange=self.qrange,
-            quantity=(list(self.quantity) if self.qtype == 'composed' else self.quantity),
+            quantity=self.quantity,
             restrictor=self.restrictor.model(),
             body=self.body.model()
         )
 
     def reverse_polish_notation(self):
-        if self.qtype == 'composed':
-            return self.restrictor.reverse_polish_notation() + \
-                self.body.reverse_polish_notation() + \
-                ['{}-{}-{}'.format(self, self.qtype, self.qrange)]
-        else:
-            return self.restrictor.reverse_polish_notation() + \
-                self.body.reverse_polish_notation() + \
-                ['{}-{}-{}-{}'.format(self, self.qtype, self.qrange, self.quantity)]
+        return self.restrictor.reverse_polish_notation() + \
+            self.body.reverse_polish_notation() + \
+            ['{}-{}-{}-{}'.format(self, self.qtype, self.qrange, self.quantity)]
 
     def apply_to_predication(self, predication):
         rstr_predication = predication.sub_predication()
@@ -54,16 +57,12 @@ class Quantifier(Caption):
         self.body.apply_to_predication(predication=body_predication)
         rstr_body_predication = predication.sub_predication(predication=rstr_predication.copy())
         self.body.apply_to_predication(predication=rstr_body_predication)
-        return rstr_predication, body_predication
+        return rstr_predication, body_predication, rstr_body_predication
 
     def agreement(self, predication, world):
-        if self.qtype == 'composed':
-            quantifiers = [Quantifier(qtype=quantifier[0], qrange=quantifier[1], quantity=quantifier[2], restrictor=self.restrictor, body=self.body) for quantifier in self.quantity]
-            return min(quantifier.agreement(predication=predication.copy(include_sub_predications=True), world=world) for quantifier in quantifiers)
-
-        rstr_predication = predication.get_sub_predication()
-        body_predication = predication.get_sub_predication()
-        rstr_body_predication = predication.get_sub_predication()
+        rstr_predication = predication.get_sub_predication(0)
+        body_predication = predication.get_sub_predication(1)
+        rstr_body_predication = predication.get_sub_predication(2)
         assert rstr_body_predication <= rstr_predication
 
         if self.qtype == 'count':
@@ -91,6 +90,8 @@ class Quantifier(Caption):
             else:
                 upper = rstr_body_predication.num_not_disagreeing / rstr_predication.num_agreeing
 
+        assert lower >= 0.0 and lower_target >= 0.0
+
         return Quantifier.get_agreement(qrange=self.qrange, lower=lower, upper=upper, target=lower_target, upper_target=upper_target)
 
     @staticmethod
@@ -98,8 +99,8 @@ class Quantifier(Caption):
         lower_target = target
         if upper_target is None:
             upper_target = target
-        assert lower <= upper
-        assert lower_target <= upper_target
+        assert lower <= upper, (lower, upper)
+        assert lower_target <= upper_target, (lower_target, upper_target)
 
         if qrange == 'lt':
             if upper < upper_target:
@@ -128,7 +129,7 @@ class Quantifier(Caption):
                     return 0.0
             elif max(upper - upper_target, lower_target - lower) < Settings.min_quantifier:
                 return 1.0
-            elif min(lower - lower_target, upper_target - upper) >= Settings.min_quantifier:
+            elif max(lower_target - upper, lower - upper_target) >= Settings.min_quantifier:
                 return -1.0
             else:
                 return 0.0
@@ -142,7 +143,7 @@ class Quantifier(Caption):
                     return -1.0
                 else:
                     return 0.0
-            elif min(lower - lower_target, upper_target - upper) >= Settings.min_quantifier:
+            elif max(lower_target - upper, lower - upper_target) >= Settings.min_quantifier:
                 return 1.0
             elif max(upper - upper_target, lower_target - lower) < Settings.min_quantifier:
                 return -1.0

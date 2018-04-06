@@ -22,7 +22,6 @@
 
 
     "attributes": {
-        "empty": {"key": "shape", "dmrs": "[attr,type]:shape_n x?[pers=3]"},
         "relation": {"key": "relation-attribute", "dmrs": "[attr]:pred e[ppi--] =1=> [type]:node"},
 
         "shape": {
@@ -48,6 +47,9 @@
     },
 
 
+    "type": {"key": "shape", "dmrs": "[attr,type]:shape_n x?[pers=3]"},
+
+
     "relations": {
         "attribute": {"key": "attribute-relation", "dmrs": "[rel]:_be_v_id e? -2-> [type]:shape_n x?[pers=3] <-- default_q"},
         "type": {"key": "type-relation", "dmrs": "[rel]:_be_v_id e? -2-> [type]:node <-- default_q"},
@@ -67,11 +69,6 @@
             "1": {"key": "front", "dmrs": "[rel]:_in+front+of_p e? -2-> [ref]:node <-- _a_q"}
         },
 
-        "proximity-rel": {
-            "-1": {"key": "closer", "dmrs": "[rel]:_close_a_to e? -2-> [ref]:node <-- _a_q; :rel <=1= more_comp e? -2-> [comp]:node <-- _a_q"},
-            "1": {"key": "farther", "dmrs": "[rel]:_far_a_from e? -2-> [ref]:node <-- _a_q; :rel <=1= more_comp e? -2-> [comp]:node <-- _a_q"}
-        },
-
         "size-rel": {
             "-1": {"key": "smaller", "dmrs": "[rel]:_small_a_1 e? <=1= more_comp e? -2-> [ref]:node <-- _a_q"},
             "1": {"key": "bigger", "dmrs": "[rel]:_big_a_1 e? <=1= more_comp e? -2-> [ref]:node <-- _a_q"}
@@ -80,6 +77,11 @@
         "shade-rel": {
             "-1": {"key": "darker", "dmrs": "[rel]:_dark_a_1 e? <=1= more_comp e? -2-> [ref]:node <-- _a_q"},
             "1": {"key": "lighter", "dmrs": "[rel]:_light_a_1 e? <=1= more_comp e? -2-> [ref]:node <-- _a_q"}
+        },
+
+        "proximity-rel": {
+            "-1": {"key": "closer", "dmrs": "[rel]:_close_a_to e? -2-> [ref]:node <-- _a_q; :rel <=1= more_comp e? -2-> [comp]:node <-- _a_q"},
+            "1": {"key": "farther", "dmrs": "[rel]:_far_a_from e? -2-> [ref]:node <-- _a_q; :rel <=1= more_comp e? -2-> [comp]:node <-- _a_q"}
         }
     },
 
@@ -90,13 +92,15 @@
     "quantifiers": {
         "count": {
             "lt": {
-                "0": {"key": "less_than_zero", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(0) e? <=1= _less+than_x_deg e?; :rstr <-1- [body]:node"},
                 "1": {"key": "less_than_one", "dmrs": "udef_q --> [rstr]:pred x?[num=s] <=1= card(1) e? <=1= _less+than_x_deg e?; :rstr <-1- [body]:node"},
                 "2": {"key": "less_than_two", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(2) e? <=1= _less+than_x_deg e?; :rstr <-1- [body]:node"},
                 "3": {"key": "less_than_three", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(3) e? <=1= _less+than_x_deg e?; :rstr <-1- [body]:node"},
                 "4": {"key": "less_than_four", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(4) e? <=1= _less+than_x_deg e?; :rstr <-1- [body]:node"},
                 "5": {"key": "less_than_five", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(5) e? <=1= _less+than_x_deg e?; :rstr <-1- [body]:node"},
-                "-2": {"key": "less_than_all_but_one", "dmrs": "_less+than_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <=1= _but_p_except e? -2-> generic_entity x?[num=s] <=1= card(1) e?; :rstr <-1- [body]:node; :generic_entity <-- udef_q"}
+                "-4": {"key": "less_than_all_but_three", "dmrs": "_less+than_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <=1= _but_p_except e? -2-> generic_entity x?[num=p] <=1= card(3) e?; :rstr <-1- [body]:node; :generic_entity <-- udef_q"},
+                "-3": {"key": "less_than_all_but_two", "dmrs": "_less+than_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <=1= _but_p_except e? -2-> generic_entity x?[num=p] <=1= card(2) e?; :rstr <-1- [body]:node; :generic_entity <-- udef_q"},
+                "-2": {"key": "less_than_all_but_one", "dmrs": "_less+than_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <=1= _but_p_except e? -2-> generic_entity x?[num=s] <=1= card(1) e?; :rstr <-1- [body]:node; :generic_entity <-- udef_q"},
+                "-1": {"key": "less_than_all_but_zero", "dmrs": "_less+than_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <=1= _but_p_except e? -2-> generic_entity x?[num=p] <=1= card(0) e?; :rstr <-1- [body]:node; :generic_entity <-- udef_q"}
             },
             "leq": {
                 "0": {"key": "at_most_zero", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(0) e? <=1= _at+most_x_deg e?; :rstr <-1- [body]:node"},
@@ -105,7 +109,10 @@
                 "3": {"key": "at_most_three", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(3) e? <=1= _at+most_x_deg e?; :rstr <-1- [body]:node"},
                 "4": {"key": "at_most_four", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(4) e? <=1= _at+most_x_deg e?; :rstr <-1- [body]:node"},
                 "5": {"key": "at_most_five", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(5) e? <=1= _at+most_x_deg e?; :rstr <-1- [body]:node"},
-                "-2": {"key": "at_most_all_but_one", "dmrs": "_at+most_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <=1= _but_p_except e? -2-> generic_entity x?[num=s] <=1= card(1) e?; :rstr <-1- [body]:node; :generic_entity <-- udef_q"}
+                "-4": {"key": "at_most_all_but_three", "dmrs": "_at+most_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <=1= _but_p_except e? -2-> generic_entity x?[num=p] <=1= card(3) e?; :rstr <-1- [body]:node; :generic_entity <-- udef_q"},
+                "-3": {"key": "at_most_all_but_two", "dmrs": "_at+most_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <=1= _but_p_except e? -2-> generic_entity x?[num=p] <=1= card(2) e?; :rstr <-1- [body]:node; :generic_entity <-- udef_q"},
+                "-2": {"key": "at_most_all_but_one", "dmrs": "_at+most_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <=1= _but_p_except e? -2-> generic_entity x?[num=s] <=1= card(1) e?; :rstr <-1- [body]:node; :generic_entity <-- udef_q"},
+                "-1": {"key": "at_most_all_but_zero", "dmrs": "_at+most_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <=1= _but_p_except e? -2-> generic_entity x?[num=p] <=1= card(0) e?; :rstr <-1- [body]:node; :generic_entity <-- udef_q"}
             },
             "eq": {
                 "0": {"key": "exactly_zero", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(0) e? <=1= _exactly_x_deg e?; :rstr <-1- [body]:node"},
@@ -114,7 +121,10 @@
                 "3": {"key": "exactly_three", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(3) e? <=1= _exactly_x_deg e?; :rstr <-1- [body]:node"},
                 "4": {"key": "exactly_four", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(4) e? <=1= _exactly_x_deg e?; :rstr <-1- [body]:node"},
                 "5": {"key": "exactly_five", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(5) e? <=1= _exactly_x_deg e?; :rstr <-1- [body]:node"},
-                "-2": {"key": "exactly_all_but_one", "dmrs": "_exactly_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <=1= _but_p_except e? -2-> generic_entity x?[num=s] <=1= card(1) e?; :rstr <-1- [body]:node; :generic_entity <-- udef_q"}
+                "-4": {"key": "exactly_all_but_three", "dmrs": "_exactly_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <=1= _but_p_except e? -2-> generic_entity x?[num=p] <=1= card(3) e?; :rstr <-1- [body]:node; :generic_entity <-- udef_q"},
+                "-3": {"key": "exactly_all_but_two", "dmrs": "_exactly_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <=1= _but_p_except e? -2-> generic_entity x?[num=p] <=1= card(2) e?; :rstr <-1- [body]:node; :generic_entity <-- udef_q"},
+                "-2": {"key": "exactly_all_but_one", "dmrs": "_exactly_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <=1= _but_p_except e? -2-> generic_entity x?[num=s] <=1= card(1) e?; :rstr <-1- [body]:node; :generic_entity <-- udef_q"},
+                "-1": {"key": "exactly_all_but_zero", "dmrs": "_exactly_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <=1= _but_p_except e? -2-> generic_entity x?[num=p] <=1= card(0) e?; :rstr <-1- [body]:node; :generic_entity <-- udef_q"}
             },
             "neq": {
                 "0": {"key": "not_zero", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(0) e? <=1= _not_x_deg e?; :rstr <-1- [body]:node"},
@@ -123,7 +133,10 @@
                 "3": {"key": "not_three", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(3) e? <=1= _not_x_deg e?; :rstr <-1- [body]:node"},
                 "4": {"key": "not_four", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(4) e? <=1= _not_x_deg e?; :rstr <-1- [body]:node"},
                 "5": {"key": "not_five", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(5) e? <=1= _not_x_deg e?; :rstr <-1- [body]:node"},
-                "-2": {"key": "not_all_but_one", "dmrs": "_not_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <=1= _but_p_except e? -2-> generic_entity x?[num=s] <=1= card(1) e?; :rstr <-1- [body]:node; :generic_entity <-- udef_q"}
+                "-4": {"key": "not_all_but_three", "dmrs": "_not_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <=1= _but_p_except e? -2-> generic_entity x?[num=p] <=1= card(3) e?; :rstr <-1- [body]:node; :generic_entity <-- udef_q"},
+                "-3": {"key": "not_all_but_two", "dmrs": "_not_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <=1= _but_p_except e? -2-> generic_entity x?[num=p] <=1= card(2) e?; :rstr <-1- [body]:node; :generic_entity <-- udef_q"},
+                "-2": {"key": "not_all_but_one", "dmrs": "_not_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <=1= _but_p_except e? -2-> generic_entity x?[num=s] <=1= card(1) e?; :rstr <-1- [body]:node; :generic_entity <-- udef_q"},
+                "-1": {"key": "not_all_but_zero", "dmrs": "_not_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <=1= _but_p_except e? -2-> generic_entity x?[num=p] <=1= card(0) e?; :rstr <-1- [body]:node; :generic_entity <-- udef_q"}
             },
             "geq": {
                 "0": {"key": "at_least_zero", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(0) e? <=1= _at+least_x_deg e?; :rstr <-1- [body]:node"},
@@ -132,7 +145,10 @@
                 "3": {"key": "at_least_three", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(3) e? <=1= _at+least_x_deg e?; :rstr <-1- [body]:node"},
                 "4": {"key": "at_least_four", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(4) e? <=1= _at+least_x_deg e?; :rstr <-1- [body]:node"},
                 "5": {"key": "at_least_five", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(5) e? <=1= _at+least_x_deg e?; :rstr <-1- [body]:node"},
-                "-2": {"key": "at_least_all_but_one", "dmrs": "_at+least_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <=1= _but_p_except e? -2-> generic_entity x?[num=s] <=1= card(1) e?; :rstr <-1- [body]:node; :generic_entity <-- udef_q"}
+                "-4": {"key": "at_least_all_but_three", "dmrs": "_at+least_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <=1= _but_p_except e? -2-> generic_entity x?[num=p] <=1= card(3) e?; :rstr <-1- [body]:node; :generic_entity <-- udef_q"},
+                "-3": {"key": "at_least_all_but_two", "dmrs": "_at+least_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <=1= _but_p_except e? -2-> generic_entity x?[num=p] <=1= card(2) e?; :rstr <-1- [body]:node; :generic_entity <-- udef_q"},
+                "-2": {"key": "at_least_all_but_one", "dmrs": "_at+least_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <=1= _but_p_except e? -2-> generic_entity x?[num=s] <=1= card(1) e?; :rstr <-1- [body]:node; :generic_entity <-- udef_q"},
+                "-1": {"key": "at_least_all_but_zero", "dmrs": "_at+least_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <=1= _but_p_except e? -2-> generic_entity x?[num=p] <=1= card(0) e?; :rstr <-1- [body]:node; :generic_entity <-- udef_q"}
             },
             "gt": {
                 "0": {"key": "more_than_zero", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(0) e? <=1= _more+than_x_deg e?; :rstr <-1- [body]:node"},
@@ -141,25 +157,64 @@
                 "3": {"key": "more_than_three", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(3) e? <=1= _more+than_x_deg e?; :rstr <-1- [body]:node"},
                 "4": {"key": "more_than_four", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(4) e? <=1= _more+than_x_deg e?; :rstr <-1- [body]:node"},
                 "5": {"key": "more_than_five", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(5) e? <=1= _more+than_x_deg e?; :rstr <-1- [body]:node"},
+                "-4": {"key": "more_than_all_but_three", "dmrs": "_more+than_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <=1= _but_p_except e? -2-> generic_entity x?[num=p] <=1= card(3) e?; :rstr <-1- [body]:node; :generic_entity <-- udef_q"},
+                "-3": {"key": "more_than_all_but_two", "dmrs": "_more+than_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <=1= _but_p_except e? -2-> generic_entity x?[num=p] <=1= card(2) e?; :rstr <-1- [body]:node; :generic_entity <-- udef_q"},
                 "-2": {"key": "more_than_all_but_one", "dmrs": "_more+than_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <=1= _but_p_except e? -2-> generic_entity x?[num=s] <=1= card(1) e?; :rstr <-1- [body]:node; :generic_entity <-- udef_q"}
             }
         },
 
         "ratio": {
             "lt": {
-                "0.5": {"key": "few", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= _a+few_a_1 e?; :rstr <-1- [body]:node"}
+                "0.25": {"key": "less_than_a_quarter", "dmrs": "_the_q --> [rstr]:pred x?[num=p] <-1- _quarter_n_of x?[pers=3,num=s] <-1- [body]:node; _less+than_x_deg e? ==> _a_q --> :_quarter_n_of"},
+                "0.33": {"key": "less_than_a_third", "dmrs": "_the_q --> [rstr]:pred x?[num=p] <-1- _third_n_of x?[pers=3,num=s] <-1- [body]:node; _less+than_x_deg e? ==> _a_q --> :_third_n_of"},
+                "0.5": {"key": "less_than_half", "dmrs": "_less+than_x_deg e? ==> _half_q --> part_of x[3p___] -1-> [rstr]:pred x?[num=p] <-- _the_q; :part_of <-1- [body]:node"},
+                "0.67": {"key": "less_than_two_thirds", "dmrs": "_the_q --> [rstr]:pred x?[num=p] <-1- _third_n_of x?[pers=3,num=p] <-1- [body]:node; udef_q --> :_third_n_of <=1= card(2) e? <=1= _less+than_x_deg e?"},
+                "0.75": {"key": "less_than_three_quarters", "dmrs": "_the_q --> [rstr]:pred x?[num=p] <-1- _quarter_n_of x?[pers=3,num=p] <-1- [body]:node; udef_q --> :_quarter_n_of <=1= card(3) e? <=1= _less+than_x_deg e?"},
+                "1.0": {"key": "less_than_all", "dmrs": "_less+than_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <-1- [body]:node"}
+            },
+            "leq": {
+                "0.0": {"key": "at_most_no", "dmrs": "_at+most_x_deg e? ==> _no_q --> [rstr]:pred x?[num=s] <-1- [body]:node"},
+                "0.25": {"key": "at_most_a_quarter", "dmrs": "_the_q --> [rstr]:pred x?[num=p] <-1- _quarter_n_of x?[pers=3,num=s] <-1- [body]:node; _at+most_x_deg e? ==> _a_q --> :_quarter_n_of"},
+                "0.33": {"key": "at_most_a_third", "dmrs": "_the_q --> [rstr]:pred x?[num=p] <-1- _third_n_of x?[pers=3,num=s] <-1- [body]:node; _at+most_x_deg e? ==> _a_q --> :_third_n_of"},
+                "0.5": {"key": "at_most_half", "dmrs": "_at+most_x_deg e? ==> _half_q --> part_of x[3p___] -1-> [rstr]:pred x?[num=p] <-- _the_q; :part_of <-1- [body]:node"},
+                "0.67": {"key": "at_most_two_thirds", "dmrs": "_the_q --> [rstr]:pred x?[num=p] <-1- _third_n_of x?[pers=3,num=p] <-1- [body]:node; udef_q --> :_third_n_of <=1= card(2) e? <=1= _at+most_x_deg e?"},
+                "0.75": {"key": "at_most_three_quarters", "dmrs": "_the_q --> [rstr]:pred x?[num=p] <-1- _quarter_n_of x?[pers=3,num=p] <-1- [body]:node; udef_q --> :_quarter_n_of <=1= card(3) e? <=1= _at+most_x_deg e?"},
+                "1.0": {"key": "at_most_all", "dmrs": "_at+most_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <-1- [body]:node"}
             },
             "eq": {
-                "0.0": {"key": "no", "dmrs": "_no_q --> [rstr]:pred x?[num=s] <-1- [body]:node"},
-                "0.25": {"key": "a_quarter", "dmrs": "_the_q --> [rstr]:pred x?[num=p] <-1- _quarter_n_of x?[pers=3,num=s] <-1- [body]:node; _a_q --> :_quarter_n_of"},
-                "0.33": {"key": "a_third", "dmrs": "_the_q --> [rstr]:pred x?[num=p] <-1- _third_n_of x?[pers=3,num=s] <-1- [body]:node; _a_q --> :_third_n_of"},
-                "0.5": {"key": "half", "dmrs": "_half_q --> part_of x[3p___] -1-> [rstr]:pred x?[num=p] <-- _the_q; :part_of <-1- [body]:node"},
-                "0.66": {"key": "two_thirds", "dmrs": "_the_q --> [rstr]:pred x?[num=p] <-1- _third_n_of x?[pers=3,num=p] <-1- [body]:node; udef_q --> :_third_n_of <=1= card(2) e?"},
-                "0.75": {"key": "three_quarters", "dmrs": "_the_q --> [rstr]:pred x?[num=p] <-1- _quarter_n_of x?[pers=3,num=p] <-1- [body]:node; udef_q --> :_quarter_n_of <=1= card(3) e?"},
-                "1.0": {"key": "all", "dmrs": "_all_q --> [rstr]:pred x?[num=p] <-1- [body]:node"}
+                "0.0": {"key": "exactly_no", "dmrs": "_exactly_x_deg e? ==> _no_q --> [rstr]:pred x?[num=s] <-1- [body]:node"},
+                "0.25": {"key": "exactly_a_quarter", "dmrs": "_the_q --> [rstr]:pred x?[num=p] <-1- _quarter_n_of x?[pers=3,num=s] <-1- [body]:node; _exactly_x_deg e? ==> _a_q --> :_quarter_n_of"},
+                "0.33": {"key": "exactly_a_third", "dmrs": "_the_q --> [rstr]:pred x?[num=p] <-1- _third_n_of x?[pers=3,num=s] <-1- [body]:node; _exactly_x_deg e? ==> _a_q --> :_third_n_of"},
+                "0.5": {"key": "exactly_half", "dmrs": "_exactly_x_deg e? ==> _half_q --> part_of x[3p___] -1-> [rstr]:pred x?[num=p] <-- _the_q; :part_of <-1- [body]:node"},
+                "0.67": {"key": "exactly_two_thirds", "dmrs": "_the_q --> [rstr]:pred x?[num=p] <-1- _third_n_of x?[pers=3,num=p] <-1- [body]:node; udef_q --> :_third_n_of <=1= card(2) e? <=1= _exactly_x_deg e?"},
+                "0.75": {"key": "exactly_three_quarters", "dmrs": "_the_q --> [rstr]:pred x?[num=p] <-1- _quarter_n_of x?[pers=3,num=p] <-1- [body]:node; udef_q --> :_quarter_n_of <=1= card(3) e? <=1= _exactly_x_deg e?"},
+                "1.0": {"key": "exactly_all", "dmrs": "_exactly_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <-1- [body]:node"}
+            },
+            "neq": {
+                "0.0": {"key": "not_no", "dmrs": "_not_x_deg e? ==> _no_q --> [rstr]:pred x?[num=s] <-1- [body]:node"},
+                "0.25": {"key": "not_a_quarter", "dmrs": "_the_q --> [rstr]:pred x?[num=p] <-1- _quarter_n_of x?[pers=3,num=s] <-1- [body]:node; _not_x_deg e? ==> _a_q --> :_quarter_n_of"},
+                "0.33": {"key": "not_a_third", "dmrs": "_the_q --> [rstr]:pred x?[num=p] <-1- _third_n_of x?[pers=3,num=s] <-1- [body]:node; _not_x_deg e? ==> _a_q --> :_third_n_of"},
+                "0.5": {"key": "not_half", "dmrs": "_not_x_deg e? ==> _half_q --> part_of x[3p___] -1-> [rstr]:pred x?[num=p] <-- _the_q; :part_of <-1- [body]:node"},
+                "0.67": {"key": "not_two_thirds", "dmrs": "_the_q --> [rstr]:pred x?[num=p] <-1- _third_n_of x?[pers=3,num=p] <-1- [body]:node; udef_q --> :_third_n_of <=1= card(2) e? <=1= _not_x_deg e?"},
+                "0.75": {"key": "not_three_quarters", "dmrs": "_the_q --> [rstr]:pred x?[num=p] <-1- _quarter_n_of x?[pers=3,num=p] <-1- [body]:node; udef_q --> :_quarter_n_of <=1= card(3) e? <=1= _not_x_deg e?"},
+                "1.0": {"key": "not_all", "dmrs": "_not_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <-1- [body]:node"}
+            },
+            "geq": {
+                "0.0": {"key": "at_least_no", "dmrs": "_at+least_x_deg e? ==> _no_q --> [rstr]:pred x?[num=s] <-1- [body]:node"},
+                "0.25": {"key": "at_least_a_quarter", "dmrs": "_the_q --> [rstr]:pred x?[num=p] <-1- _quarter_n_of x?[pers=3,num=s] <-1- [body]:node; _at+least_x_deg e? ==> _a_q --> :_quarter_n_of"},
+                "0.33": {"key": "at_least_a_third", "dmrs": "_the_q --> [rstr]:pred x?[num=p] <-1- _third_n_of x?[pers=3,num=s] <-1- [body]:node; _at+least_x_deg e? ==> _a_q --> :_third_n_of"},
+                "0.5": {"key": "at_least_half", "dmrs": "_at+least_x_deg e? ==> _half_q --> part_of x[3p___] -1-> [rstr]:pred x?[num=p] <-- _the_q; :part_of <-1- [body]:node"},
+                "0.67": {"key": "at_least_two_thirds", "dmrs": "_the_q --> [rstr]:pred x?[num=p] <-1- _third_n_of x?[pers=3,num=p] <-1- [body]:node; udef_q --> :_third_n_of <=1= card(2) e? <=1= _at+least_x_deg e?"},
+                "0.75": {"key": "at_least_three_quarters", "dmrs": "_the_q --> [rstr]:pred x?[num=p] <-1- _quarter_n_of x?[pers=3,num=p] <-1- [body]:node; udef_q --> :_quarter_n_of <=1= card(3) e? <=1= _at+least_x_deg e?"},
+                "1.0": {"key": "at_least_all", "dmrs": "_at+least_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <-1- [body]:node"}
             },
             "gt": {
-                "0.5": {"key": "most", "dmrs": "_most_q --> [rstr]:pred x?[num=p] <-1- [body]:node"}
+                "0.0": {"key": "more_than_no", "dmrs": "_more+than_x_deg e? ==> _no_q --> [rstr]:pred x?[num=s] <-1- [body]:node"},
+                "0.25": {"key": "more_than_a_quarter", "dmrs": "_the_q --> [rstr]:pred x?[num=p] <-1- _quarter_n_of x?[pers=3,num=s] <-1- [body]:node; _more+than_x_deg e? ==> _a_q --> :_quarter_n_of"},
+                "0.33": {"key": "more_than_a_third", "dmrs": "_the_q --> [rstr]:pred x?[num=p] <-1- _third_n_of x?[pers=3,num=s] <-1- [body]:node; _more+than_x_deg e? ==> _a_q --> :_third_n_of"},
+                "0.5": {"key": "more_than_half", "dmrs": "_more+than_x_deg e? ==> _half_q --> part_of x[3p___] -1-> [rstr]:pred x?[num=p] <-- _the_q; :part_of <-1- [body]:node"},
+                "0.67": {"key": "more_than_two_thirds", "dmrs": "_the_q --> [rstr]:pred x?[num=p] <-1- _third_n_of x?[pers=3,num=p] <-1- [body]:node; udef_q --> :_third_n_of <=1= card(2) e? <=1= _more+than_x_deg e?"},
+                "0.75": {"key": "more_than_three_quarters", "dmrs": "_the_q --> [rstr]:pred x?[num=p] <-1- _quarter_n_of x?[pers=3,num=p] <-1- [body]:node; udef_q --> :_quarter_n_of <=1= card(3) e? <=1= _more+than_x_deg e?"}
             }
         }
     },
@@ -201,16 +256,16 @@
 
 
     "propositions": {
-        "attribute": {"key": "attribute-proposition", "dmrs": "***[head]:_be_v_there e[ppi--] -1-> [type]:shape_n x?[pers=3] <-- _a_q"},
-        "type": {"key": "type-proposition", "dmrs": "***[head]:_be_v_there e[ppi--] -1-> [type]:pred x? <-- _a_q"},
-        "relation": {"key": "relation-proposition", "dmrs": "***[head,rel]:pred e[ppi--] -1-> shape_n x?[pers=3] <-- _a_q"},
-        "existential": {"key": "existential-proposition", "dmrs": "***[head,body]:pred e[ppi--]"},
-        "quantifier": {"key": "quantifier-proposition", "dmrs": "***[head,body]:pred e[ppi--]"},
-        "number_bound": {"key": "number-bound-proposition", "dmrs": "***[head,body]:pred e[ppi--]"},
-        "comparative_quantifier": {"key": "comparative-quantifier-proposition", "dmrs": "***[head,body]:pred e[ppi--]"},
+        "attribute": {"key": "attribute-proposition", "dmrs": "**[head]:_be_v_there e[ppi--] -1-> [type]:shape_n x?[pers=3] <-- _a_q"},
+        "type": {"key": "type-proposition", "dmrs": "**[head]:_be_v_there e[ppi--] -1-> [type]:pred x? <-- _a_q"},
+        "relation": {"key": "relation-proposition", "dmrs": "**[head,rel]:pred e[ppi--] -1-> shape_n x?[pers=3] <-- _a_q"},
+        "existential": {"key": "existential-proposition", "dmrs": "**[head,body]:pred e[ppi--]"},
+        "quantifier": {"key": "quantifier-proposition", "dmrs": "**[head,body]:pred e[ppi--]"},
+        "number-bound": {"key": "number-bound-proposition", "dmrs": "**[head,body]:pred e[ppi--]"},
+        "comparative-quantifier": {"key": "comparative-quantifier-proposition", "dmrs": "**[head,body]:pred e[ppi--]"},
 
-        "conjunction": {"key": "and", "dmrs": "[arg1]:node <-1h- ***[head]:_and_c e[ppi--] -2h-> [arg2]:node"},
-        "disjunction": {"key": "or", "dmrs": "[arg1]:node <-1h- ***[head]:_or_c e[ppi--] -2h-> [arg2]:node"}
+        "conjunction": {"key": "and", "dmrs": "[arg1]:node <-1h- **[head]:_and_c e[ppi--] -2h-> [arg2]:node"},
+        "disjunction": {"key": "or", "dmrs": "[arg1]:node <-1h- **[head]:_or_c e[ppi--] -2h-> [arg2]:node"}
     },
 
 
@@ -230,34 +285,24 @@
             "disable_hierarchy": true
         },
         {
-            "key": "adjective-to-verb1",
+            "key": "shift-top-index",
+            "search": "***[cop]:_be_v_id e[ppi--] -2-> [obj]:_shape_n_sw x?[pers=3] <=1= [attr]:_?_a_? e?",
+            "replace": "[cop]:_be_v_id e[ppi--] -2-> [obj]:_shape_n_sw x?[pers=3] <=1= ***[attr]:_?_a_? e?"
+        },
+        {
+            "key": "adjective-to-verb",
             "search": "[subj]:node <-1- _be_v_id e[ppi--] -2-> _shape_n_sw x?[pers=3] <=1= [attr]:_?_a_? e?; :_shape_n_sw <-- default_q",
             "replace": "[subj]:node <-1- [attr]:_?_a_? e[ppi--]"
         },
         {
-            "key": "adjective-to-verb2",
-            "search": "[subj]:node <-1- ***_be_v_id e[ppi--] -2-> _shape_n_sw x?[pers=3] <=1= [attr]:_?_a_? e?; :_shape_n_sw <-- default_q",
-            "replace": "[subj]:node <-1- ***[attr]:_?_a_? e[ppi--]"
-        },
-        {
-            "key": "default-q-singular1",
+            "key": "default-q-singular",
             "search": "[subj]:pred x?[num=s] <-1- [cop]:_be_v_id e? -2-> [obj]:pred x? <-- default_q",
             "replace": "[subj]:pred x?[num=s] <-1- [cop]:_be_v_id e? -2-> [obj]:pred x?[num=s] <-- _a_q"
         },
         {
-            "key": "default-q-singular2",
-            "search": "[subj]:pred x?[num=s] <-1- ***[cop]:_be_v_id e? -2-> [obj]:pred x? <-- default_q",
-            "replace": "[subj]:pred x?[num=s] <-1- ***[cop]:_be_v_id e? -2-> [obj]:pred x?[num=s] <-- _a_q"
-        },
-        {
-            "key": "default-q-plural1",
+            "key": "default-q-plural",
             "search": "[subj]:pred x?[num=p] <-1- [cop]:_be_v_id e? -2-> [obj]:pred x? <-- default_q",
             "replace": "[subj]:pred x?[num=p] <-1- [cop]:_be_v_id e? -2-> [obj]:pred x?[num=p] <-- udef_q"
-        },
-        {
-            "key": "default-q-plural2",
-            "search": "[subj]:pred x?[num=p] <-1- ***[cop]:_be_v_id e? -2-> [obj]:pred x? <-- default_q",
-            "replace": "[subj]:pred x?[num=p] <-1- ***[cop]:_be_v_id e? -2-> [obj]:pred x?[num=p] <-- udef_q"
         },
         {
             "key": "remove-part-of1",

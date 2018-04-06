@@ -23,14 +23,14 @@ class EntityType(Predicate):
 
     def reverse_polish_notation(self):
         return [rpn_symbol for attribute in self.value for rpn_symbol in attribute.reverse_polish_notation()] + \
-            [str(len(self.value)), str(self)]  # two separate arguments, no tuple?
+            [str(len(self.value)), str(self)]
 
     def apply_to_predication(self, predication):
         for attribute in self.value:
-            predication.apply(predicate=attribute)
+            attribute.apply_to_predication(predication=predication)
 
-    def pred_agreement(self, entity, predication):
-        return all(attribute.pred_agreement(entity=entity, predication=predication) for attribute in self.value)
+    def pred_agreement(self, entity):
+        return all(attribute.pred_agreement(entity=entity) for attribute in self.value)
 
-    def pred_disagreement(self, entity, predication):
-        return any(attribute.pred_disagreement(entity=entity, predication=predication) for attribute in self.value)
+    def pred_disagreement(self, entity):
+        return any(attribute.pred_disagreement(entity=entity) for attribute in self.value)

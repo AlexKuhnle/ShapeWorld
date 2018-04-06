@@ -1,28 +1,31 @@
-from shapeworld import util
 from shapeworld.captions import Predicate, EntityType, Settings
 
 
 class Relation(Predicate):
 
     predtypes = {'attribute', 'type', 'x-rel', 'y-rel', 'z-rel', 'size-rel', 'shade-rel', 'proximity-rel'}
+    meta_relations = set()
     ternary_relations = {'proximity-rel'}
 
     __slots__ = ('predtype', 'value', 'reference', 'comparison')
 
     def __init__(self, predtype, value, reference=None, comparison=None):
         assert predtype in Relation.predtypes
-        assert (reference is None) == (predtype in ('attribute', 'type'))
-        assert (reference is not None) == isinstance(reference, EntityType)
-        assert comparison is None or isinstance(comparison, EntityType)
         if predtype == 'attribute':
             from shapeworld.captions import Attribute
             assert isinstance(value, Attribute)
+            assert reference is None and comparison is None
         elif predtype == 'type':
             assert isinstance(value, EntityType)
-        elif predtype in ('x-rel', 'y-rel', 'z-rel', 'proximity-rel', 'size-rel', 'shade-rel'):
+            assert reference is None and comparison is None
+        elif predtype in Relation.ternary_relations:
             assert value == -1 or value == 1
+            assert isinstance(reference, EntityType)
+            assert isinstance(comparison, EntityType)
         else:
-            assert False
+            assert value == -1 or value == 1
+            assert isinstance(reference, EntityType)
+            assert comparison is None or isinstance(comparison, EntityType)
         super(Relation, self).__init__(predtype=predtype, value=value)
         self.reference = reference
         self.comparison = comparison
@@ -34,14 +37,7 @@ class Relation(Predicate):
                 predtype=self.predtype,
                 value=self.value.model()
             )
-        elif self.predtype in ('x-rel', 'y-rel', 'z-rel', 'size-rel', 'shade-rel'):
-            return dict(
-                component=str(self),
-                predtype=self.predtype,
-                value=self.value,
-                reference=self.reference.model()
-            )
-        elif self.predtype == 'proximity-rel':
+        elif self.predtype in Relation.ternary_relations:
             return dict(
                 component=str(self),
                 predtype=self.predtype,
@@ -50,61 +46,62 @@ class Relation(Predicate):
                 comparison=self.comparison.model()
             )
         else:
-            assert False
+            return dict(
+                component=str(self),
+                predtype=self.predtype,
+                value=self.value,
+                reference=self.reference.model()
+            )
 
     def reverse_polish_notation(self):
         if self.predtype in ('attribute', 'type'):
             return self.value.reverse_polish_notation() + ['{}-{}'.format(self, self.predtype)]
-        elif self.predtype in ('x-rel', 'y-rel', 'z-rel', 'size-rel', 'shade-rel'):
-            return self.reference.reverse_polish_notation() + ['{}-{}-{}'.format(self, self.predtype, self.value)]
-        elif self.predtype == 'proximity-rel':
+        elif self.predtype in Relation.ternary_relations:
             return self.reference.reverse_polish_notation() + \
                 self.comparison.reverse_polish_notation() + \
                 ['{}-{}-{}'.format(self, self.predtype, self.value)]
         else:
-            assert False
+            return self.reference.reverse_polish_notation() + ['{}-{}-{}'.format(self, self.predtype, self.value)]
 
     def apply_to_predication(self, predication):
         if self.predtype in ('attribute', 'type'):
             self.value.apply_to_predication(predication=predication)
             return
-        if self.reference is None:
-            ref_predication = None
+        elif self.predtype in Relation.ternary_relations:
+            ref_predication = predication.sub_predication(reset=True)
+            self.reference.apply_to_predication(predication=ref_predication)
+            comp_predication = predication.sub_predication(reset=True)
+            self.comparison.apply_to_predication(predication=comp_predication)
         else:
             ref_predication = predication.sub_predication(reset=True)
             self.reference.apply_to_predication(predication=ref_predication)
-        if self.comparison is None:
             comp_predication = None
-        else:
-            comp_predication = predication.sub_predication(reset=True)
-            self.comparison.apply_to_predication(predication=comp_predication)
-        predication.apply(predicate=self, predication=predication.copy(reset=True))
+        predication.apply(predicate=self, ref_predication=ref_predication, comp_predication=comp_predication)
         return ref_predication, comp_predication
 
-    def pred_agreement(self, entity, predication):
+    def pred_agreement(self, entity, ref_predication=None, comp_predication=None):
         if self.predtype in ('attribute', 'type'):
-            return self.value.pred_agreement(entity=entity, predication=predication)
+            return self.value.pred_agreement(entity=entity)
 
-        # sub-optimal to do this for every entity again... batched pred_agreement?
-        ref_entities = self.reference.filter_agreement(entities=predication.agreeing, predication=predication)
+        ref_entities = ref_predication.agreeing
 
         if self.predtype == 'x-rel':
             # min distance in case of overlap
-            return any((entity.center.x - reference.center.x) * self.value > max(Settings.min_distance, abs(entity.center.y - reference.center.y)) for reference in ref_entities if reference != entity)
+            return any((entity.center.x - reference.center.x) * self.value > max(Settings.min_axis_distance, abs(entity.center.y - reference.center.y)) for reference in ref_entities if reference != entity)
 
         elif self.predtype == 'y-rel':
-            return any((entity.center.y - reference.center.y) * self.value > max(Settings.min_distance, abs(entity.center.x - reference.center.x)) for reference in ref_entities if reference != entity)
+            return any((entity.center.y - reference.center.y) * self.value > max(Settings.min_axis_distance, abs(entity.center.x - reference.center.x)) for reference in ref_entities if reference != entity)
 
         elif self.predtype == 'z-rel':
             return any(entity.collides(reference, ratio=True, symmetric=True) > Settings.min_overlap and (entity.id - reference.id) * self.value > 0 for reference in ref_entities if reference != entity)
 
         elif self.predtype == 'size-rel':
-            return any((entity.shape.area - reference.shape.area) * self.value > Settings.min_area for reference in ref_entities if reference != entity)
+            return any((entity.shape.area - reference.shape.area) * self.value > Settings.min_area for reference in ref_entities if reference.shape == entity.shape)
 
         elif self.predtype == 'shade-rel':
-            return any((entity.color.shade - reference.color.shade) * self.value > Settings.min_shade for reference in ref_entities if reference != entity)  # and reference.color == entity.color)
+            return any((entity.color.shade - reference.color.shade) * self.value > Settings.min_shade for reference in ref_entities if reference.color == entity.color)
 
-        comp_entities = self.comparison.filter_agreement(entities=predication.agreeing, predication=predication)
+        comp_entities = comp_predication.agreeing
 
         if self.predtype == 'proximity-rel':
             for reference in ref_entities:
@@ -115,19 +112,19 @@ class Relation(Predicate):
                         return True
             return False
 
-    def pred_disagreement(self, entity, predication):
+    def pred_disagreement(self, entity, ref_predication=None, comp_predication=None):
         if self.predtype in ('attribute', 'type'):
-            return self.value.pred_disagreement(entity=entity, predication=predication)
+            return self.value.pred_disagreement(entity=entity)
 
-        ref_entities = self.reference.filter_agreement(entities=predication.not_disagreeing, predication=predication)
-        if len(ref_entities) == 0:
+        ref_entities = ref_predication.not_disagreeing
+        if len(ref_entities) == 1 and ref_entities[0] == entity:
             return True
 
         if self.predtype == 'x-rel':
-            return util.all_and_any((entity.center.x - reference.center.x) * self.value < 0.0 for reference in ref_entities if reference != entity)
+            return all((reference.center.x - entity.center.x) * self.value > Settings.min_axis_distance for reference in ref_entities)
 
         elif self.predtype == 'y-rel':
-            return util.all_and_any((entity.center.y - reference.center.y) * self.value < 0.0 for reference in ref_entities if reference != entity)
+            return all((reference.center.y - entity.center.y) * self.value > Settings.min_axis_distance for reference in ref_entities)
 
         elif self.predtype == 'z-rel':
             for reference in ref_entities:
@@ -137,17 +134,19 @@ class Relation(Predicate):
             return True
 
         elif self.predtype == 'size-rel':
-            return util.all_and_any((reference.shape.area - entity.shape.area) * self.value > Settings.min_area for reference in ref_entities if reference != entity)
+            return all((reference.shape.area - entity.shape.area) * self.value > Settings.min_area for reference in ref_entities)  # and reference.shape == entity.shape)
 
         elif self.predtype == 'shade-rel':
-            return util.all_and_any((reference.color.shade - entity.color.shade) * self.value > Settings.min_shade for reference in ref_entities if reference != entity)  # and reference.color == entity.color)
+            return all((reference.color.shade - entity.color.shade) * self.value > Settings.min_shade for reference in ref_entities)  # and reference.color == entity.color)
 
-        comp_entities = self.comparison.filter_agreement(entities=predication.not_disagreeing, predication=predication)
+        comp_entities = comp_predication.not_disagreeing
+        if len(comp_entities) == 1 and comp_entities[0] == entity:
+            return True
 
         if self.predtype == 'proximity-rel':
             for reference in ref_entities:
                 for comparison in comp_entities:
-                    if reference.id == comparison.id or entity.id == reference.id or entity.id == comparison.id:
+                    if comparison == reference:
                         continue
                     if ((comparison.center - reference.center).length() - (entity.center - reference.center).length()) * self.value < Settings.min_distance:
                         return False

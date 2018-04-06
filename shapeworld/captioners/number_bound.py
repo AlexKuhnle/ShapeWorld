@@ -7,13 +7,22 @@ from shapeworld.captioners import WorldCaptioner
 class NumberBoundCaptioner(WorldCaptioner):
 
     # incorrect modes
-    # 0: correct
-    # 1: incorrect quantifier
-    # 2: number off by one
-    # 3: number off by two
-    # 4: random incorrect number
+    # 0: incorrect quantifier
+    # 1: number off by one
+    # 2: number off by two
+    # 3: random incorrect number
 
-    def __init__(self, quantifier_captioner, number_bounds=None, incorrect_distribution=None, pragmatical_redundancy_rate=None, pragmatical_tautology_rate=None, logical_redundancy_rate=None, logical_tautology_rate=None, logical_contradiction_rate=None):
+    def __init__(
+        self,
+        quantifier_captioner,
+        pragmatical_redundancy_rate=1.0,
+        pragmatical_tautology_rate=0.0,
+        logical_redundancy_rate=1.0,
+        logical_tautology_rate=0.0,
+        logical_contradiction_rate=0.0,
+        number_bounds=None,
+        incorrect_distribution=(3, 1, 1, 1)
+    ):
         super(NumberBoundCaptioner, self).__init__(
             internal_captioners=(quantifier_captioner,),
             pragmatical_redundancy_rate=pragmatical_redundancy_rate,
@@ -25,7 +34,7 @@ class NumberBoundCaptioner(WorldCaptioner):
 
         self.quantifier_captioner = quantifier_captioner
         self.number_bounds = number_bounds
-        self.incorrect_distribution = util.cumulative_distribution(util.value_or_default(incorrect_distribution, [3, 1, 1, 1]))
+        self.incorrect_distribution = util.cumulative_distribution(incorrect_distribution)
 
     def set_realizer(self, realizer):
         if not super(NumberBoundCaptioner, self).set_realizer(realizer):
@@ -44,27 +53,19 @@ class NumberBoundCaptioner(WorldCaptioner):
     def rpn_symbols(self):
         return super(NumberBoundCaptioner, self).rpn_symbols() | {'{}-{}'.format(NumberBound.__name__, bound) for bound in self.number_bounds}
 
-    def sample_values(self, mode, correct, predication):
+    def sample_values(self, mode, predication):
         assert predication.empty()
 
-        if not super(NumberBoundCaptioner, self).sample_values(mode=mode, correct=correct, predication=predication):
+        if not super(NumberBoundCaptioner, self).sample_values(mode=mode, predication=predication):
             return False
 
-        self.incorrect_mode = 0 if correct else 1 + util.sample(self.incorrect_distribution)
+        self.incorrect_mode = util.sample(self.incorrect_distribution)
 
-        if not self.quantifier_captioner.sample_values(mode=mode, correct=(self.incorrect_mode != 1), predication=predication):  # 1: incorrect quantifier
+        if not self.quantifier_captioner.sample_values(mode=mode, predication=predication):
             return False
 
         # potentially option to choose fixed number bound?
-        # ----->
-        # qtype = self.quantifier_captioner.qtype
-        # quantity = self.quantifier_captioner.quantity
-        # for _ in range(self.__class__.MAX_SAMPLE_ATTEMPTS):
-        #     self.bound = choice(self.number_bounds)
-        #     if not correct or ((qtype != 'count' or self.bound >= quantity) and (qtype != 'ratio' or quantity == 0.0 or self.bound >= 1.0 // quantity)):
-        #         break
-        # else:
-        #     return False
+        # self.bound = choice(self.number_bounds)
 
         return True
 
@@ -88,7 +89,7 @@ class NumberBoundCaptioner(WorldCaptioner):
         num_predication = predication.sub_predication()
         quantifier.restrictor.apply_to_predication(predication=num_predication)
 
-        if num_predication.num_agreeing not in self.number_bounds and (self.incorrect_mode == 0 or self.incorrect_mode == 1):
+        if num_predication.num_agreeing not in self.number_bounds:
             return None
 
         else:
@@ -98,17 +99,14 @@ class NumberBoundCaptioner(WorldCaptioner):
     def incorrect(self, caption, predication, world):
         assert predication.empty()
 
-        if self.incorrect_mode == 0:  # 0: correct
-            caption.apply_to_predication(predication=predication)
-
-        elif self.incorrect_mode == 1:  # 1: incorrect quantifier
+        if self.incorrect_mode == 0:  # 0: incorrect quantifier
             quant_predication = predication.sub_predication()
             if not self.quantifier_captioner.incorrect(caption=caption.quantifier, predication=quant_predication, world=world):
                 return False
             num_predication = predication.sub_predication()
             caption.quantifier.restrictor.apply_to_predication(predication=num_predication)
 
-        elif self.incorrect_mode == 2 or self.incorrect_mode == 3:  # 2/3: number off by one/two
+        elif self.incorrect_mode == 1 or self.incorrect_mode == 2:  # 1/2: number off by one/two
             num_predication = caption.apply_to_predication(predication=predication)
 
             delta = self.incorrect_mode - 1
@@ -123,8 +121,8 @@ class NumberBoundCaptioner(WorldCaptioner):
             if caption.bound not in self.number_bounds:
                 return False
 
-        elif self.incorrect_mode == 4:  # 4: random incorrect number
-            caption.apply_to_predication(predication=predication)
+        elif self.incorrect_mode == 3:  # 3: random incorrect number
             caption.bound = choice(self.number_bounds)
+            caption.apply_to_predication(predication=predication)
 
         return True

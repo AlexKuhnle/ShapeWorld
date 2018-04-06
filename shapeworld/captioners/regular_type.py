@@ -8,14 +8,22 @@ from shapeworld.captioners import WorldCaptioner
 class RegularTypeCaptioner(WorldCaptioner):
 
     # incorrect modes
-    # 0: correct
-    # 1: incorrect shape
-    # 2: incorrect color
-    # 3: incorrect texture
-    # 4: incorrect attributes
+    # 0: incorrect shape
+    # 1: incorrect color
+    # 2: incorrect texture
+    # 3: incorrect attributes
 
-    def __init__(self, hypernym_rate=None, existing_attribute_rate=None, incorrect_distribution=None, pragmatical_redundancy_rate=None, pragmatical_tautology_rate=None, logical_redundancy_rate=None, logical_tautology_rate=None, logical_contradiction_rate=None):
-
+    def __init__(
+        self,
+        pragmatical_redundancy_rate=1.0,
+        pragmatical_tautology_rate=0.0,
+        logical_redundancy_rate=1.0,
+        logical_tautology_rate=0.0,
+        logical_contradiction_rate=0.0,
+        hypernym_rate=0.5,
+        existing_attribute_rate=0.5,
+        incorrect_distribution=(1, 1, 1, 1)
+    ):
         super(RegularTypeCaptioner, self).__init__(
             internal_captioners=(),
             pragmatical_redundancy_rate=pragmatical_redundancy_rate,
@@ -25,9 +33,9 @@ class RegularTypeCaptioner(WorldCaptioner):
             logical_contradiction_rate=logical_contradiction_rate
         )
 
-        self.hypernym_rate = util.value_or_default(hypernym_rate, 0.5)
-        self.existing_attribute_rate = util.value_or_default(existing_attribute_rate, 0.5)
-        self.incorrect_distribution = incorrect_distribution
+        self.hypernym_rate = hypernym_rate
+        self.existing_attribute_rate = existing_attribute_rate
+        self.incorrect_distribution = util.cumulative_distribution(incorrect_distribution)
 
     def set_realizer(self, realizer):
         if not super(RegularTypeCaptioner, self).set_realizer(realizer):
@@ -37,13 +45,6 @@ class RegularTypeCaptioner(WorldCaptioner):
         self.colors = list(realizer.attributes.get('color', ()))
         self.textures = list(realizer.attributes.get('texture', ()))
         assert self.shapes or self.colors or self.textures
-
-        if self.incorrect_distribution is None:
-            # incorrect mode distribution uniform across attributes
-            max_length = max(len(self.shapes), len(self.colors), len(self.textures)) - 1
-            self.incorrect_distribution = util.cumulative_distribution([len(self.shapes) - 1, len(self.colors) - 1, len(self.textures) - 1, max_length])
-        else:
-            self.incorrect_distribution = util.cumulative_distribution(self.incorrect_distribution)
 
         return True
 
@@ -58,70 +59,88 @@ class RegularTypeCaptioner(WorldCaptioner):
             {'{}-{}-{}'.format(Attribute.__name__, 'color', value) for value in self.colors} | \
             {'{}-{}-{}'.format(Attribute.__name__, 'texture', value) for value in self.textures}
 
-    def sample_values(self, mode, correct, predication):
-        if not super(RegularTypeCaptioner, self).sample_values(mode=mode, correct=correct, predication=predication):
+    def sample_values(self, mode, predication):
+        if not super(RegularTypeCaptioner, self).sample_values(mode=mode, predication=predication):
             return False
 
-        attributes = list()
+        self.valid_attributes = list()
         if len(self.shapes) > 1 and (self.logical_redundancy or not predication.redundant(predicate='shape')):
-            attributes.append('shape')
+            self.valid_attributes.append('shape')
         if len(self.colors) > 1 and (self.logical_redundancy or not predication.redundant(predicate='color')):
-            attributes.append('color')
+            self.valid_attributes.append('color')
         if len(self.textures) > 1 and (self.logical_redundancy or not predication.redundant(predicate='texture')):
-            attributes.append('texture')
+            self.valid_attributes.append('texture')
 
-        if not self.logical_tautology and predication.tautological(predicates=attributes):
+        if not self.logical_tautology and predication.tautological(predicates=self.valid_attributes):
             return False
 
         for _ in range(self.__class__.MAX_SAMPLE_ATTEMPTS):
-            self.incorrect_mode = 0 if correct else 1 + util.sample(self.incorrect_distribution)
-            if (self.incorrect_mode != 1 or ('shape' in attributes and not predication.redundant(predicate='shape'))) and \
-                    (self.incorrect_mode != 2 or ('color' in attributes and not predication.redundant(predicate='color'))) and \
-                    (self.incorrect_mode != 3 or ('texture' in attributes and not predication.redundant(predicate='texture'))):
-                break
+            self.incorrect_mode = util.sample(self.incorrect_distribution)
+            if self.incorrect_mode == 0 and ('shape' not in self.valid_attributes or (not self.logical_contradiction and predication.redundant(predicate='shape'))):
+                continue
+            elif self.incorrect_mode == 1 and ('color' not in self.valid_attributes or (not self.logical_contradiction and predication.redundant(predicate='color'))):
+                continue
+            elif self.incorrect_mode == 2 and ('texture' not in self.valid_attributes or (not self.logical_contradiction and predication.redundant(predicate='texture'))):
+                continue
+            elif self.incorrect_mode == 3 and not self.logical_contradiction and all(predication.redundant(predicate=attribute) for attribute in self.valid_attributes):
+                continue
+            break
         else:
             return False
 
         is_hypernym = 0
-        if not self.logical_contradiction and self.incorrect_mode == 4:
+        if not self.logical_contradiction and self.incorrect_mode == 3:
             # since otherwise an incorrect predicate might contradict parts of the predication
-            for attribute in list(attributes):
+            for attribute in list(self.valid_attributes):
                 if predication.redundant(predicate=attribute):
-                    attributes.remove(attribute)
+                    self.valid_attributes.remove(attribute)
                     is_hypernym = 1  # attribute set is already smaller
 
-        if len(attributes) == 0 and (not self.logical_tautology or not correct):
-            return False
+        assert len(self.valid_attributes) != 0
+        # if not self.logical_tautology and len(self.valid_attributes) != 0: return False
 
         self.hypernym = random() < self.hypernym_rate
 
-        shuffle(attributes)
+        shuffle(self.valid_attributes)
 
         if self.hypernym:
             for _ in range(self.__class__.MAX_SAMPLE_ATTEMPTS):
-                self.attributes = choice([list(comb) for n in range(len(attributes) + is_hypernym) for comb in combinations(attributes, n)])
-                if (not predication.tautological(predicates=self.attributes) or (self.logical_tautology and correct)) and \
-                        (self.incorrect_mode != 1 or 'shape' in self.attributes) and \
-                        (self.incorrect_mode != 2 or 'color' in self.attributes) and \
-                        (self.incorrect_mode != 3 or 'texture' in self.attributes):
-                    break
+                self.attributes = choice([list(comb) for n in range(len(self.valid_attributes) + is_hypernym) for comb in combinations(self.valid_attributes, n)])
+                if not self.logical_tautology and predication.tautological(predicates=self.attributes):
+                    continue
+                # elif len(self.attributes) == 0:
+                #     break
+                elif self.incorrect_mode == 0 and 'shape' not in self.attributes:
+                    continue
+                elif self.incorrect_mode == 1 and 'color' not in self.attributes:
+                    continue
+                elif self.incorrect_mode == 2 and 'texture' not in self.attributes:
+                    continue
+                break
             else:
                 return False
 
         else:
-            self.attributes = attributes
+            self.attributes = list(self.valid_attributes)
 
-        if self.incorrect_mode == 1:
+        if len(self.attributes) == 0:
+            pass
+        elif self.incorrect_mode == 0:
             self.attributes.remove('shape')
             self.attributes.insert(0, 'shape')
-        elif self.incorrect_mode == 2:
+        elif self.incorrect_mode == 1:
             self.attributes.remove('color')
             self.attributes.insert(0, 'color')
-        elif self.incorrect_mode == 3:
+        elif self.incorrect_mode == 2:
             self.attributes.remove('texture')
             self.attributes.insert(0, 'texture')
 
-        self.existing_attribute = (correct or (random() < self.existing_attribute_rate and (len(self.attributes) > 1 or not predication.empty())))
+        if self.existing_attribute_rate == 0.0 or (len(self.attributes) <= 1 and predication.empty()):
+            self.existing_attribute = False
+        elif self.existing_attribute_rate == 1.0:
+            self.existing_attribute = True
+        else:
+            self.existing_attribute = random() < self.existing_attribute_rate
 
         for predtype in self.attributes:
             predication.apply(predicate=predtype)
@@ -157,7 +176,7 @@ class RegularTypeCaptioner(WorldCaptioner):
         for n in range(len(attributes) - 1, -1, -1):
             if predication.contradictory(predicate=attributes[n]):
                 assert False
-            elif not self.pragmatical_redundancy and predication.redundant(predicate=attributes[n]):
+            elif not self.pragmatical_redundancy and predication.num_entities > 1 and predication.redundant(predicate=attributes[n]):
                 attributes.pop(n)
 
         entity_type = EntityType(attributes=attributes)
@@ -167,49 +186,89 @@ class RegularTypeCaptioner(WorldCaptioner):
         return entity_type
 
     def incorrect(self, caption, predication, world):
-        if self.incorrect_mode == 1:  # random (existing) shape
+        if self.incorrect_mode == 0:  # random (existing) shape
             if self.existing_attribute:
-                shapes = util.unique_list(entity.shape.name for entity in world.entities if entity.shape.name in self.shapes)
-            else:
+                caption_shape = None
+                for predicate in caption.value:
+                    if predicate.predtype == 'shape':
+                        caption_shape = predicate.value
+                shapes = util.unique_list(entity.shape.name for entity in world.entities if entity.shape.name in self.shapes and entity.shape.name != caption_shape)
+            if not self.existing_attribute or len(shapes) == 0:
                 shapes = self.shapes
-            for n, predicate in enumerate(caption.value):
-                if predicate.predtype == 'shape':
-                    caption.value[n] = Attribute(predtype='shape', value=choice(shapes))
-
-        elif self.incorrect_mode == 2:  # random (existing) color
-            if self.existing_attribute:
-                colors = util.unique_list(entity.color.name for entity in world.entities if entity.color.name in self.colors)
+            if len(caption.value) == 0:
+                caption.value.append(Attribute(predtype='shape', value=choice(shapes)))
             else:
+                for n, predicate in enumerate(caption.value):
+                    if predicate.predtype == 'shape':
+                        caption.value[n] = Attribute(predtype='shape', value=choice(shapes))
+
+        elif self.incorrect_mode == 1:  # random (existing) color
+            if self.existing_attribute:
+                caption_color = None
+                for predicate in caption.value:
+                    if predicate.predtype == 'color':
+                        caption_color = predicate.value
+                colors = util.unique_list(entity.color.name for entity in world.entities if entity.color.name in self.colors and entity.color.name != caption_color)
+            if not self.existing_attribute or len(colors) == 0:
                 colors = self.colors
-            for n, predicate in enumerate(caption.value):
-                if predicate.predtype == 'color':
-                    caption.value[n] = Attribute(predtype='color', value=choice(colors))
-
-        elif self.incorrect_mode == 3:  # random (existing) texture
-            if self.existing_attribute:
-                textures = util.unique_list(entity.texture.name for entity in world.entities if entity.texture.name in self.textures)
+            if len(caption.value) == 0:
+                caption.value.append(Attribute(predtype='color', value=choice(colors)))
             else:
+                for n, predicate in enumerate(caption.value):
+                    if predicate.predtype == 'color':
+                        caption.value[n] = Attribute(predtype='color', value=choice(colors))
+
+        elif self.incorrect_mode == 2:  # random (existing) texture
+            if self.existing_attribute:
+                caption_texture = None
+                for predicate in caption.value:
+                    if predicate.predtype == 'texture':
+                        caption_texture = predicate.value
+                textures = util.unique_list(entity.texture.name for entity in world.entities if entity.texture.name in self.textures and entity.texture.name != caption_texture)
+            if not self.existing_attribute or len(textures) == 0:
                 textures = self.textures
-            for n, predicate in enumerate(caption.value):
-                if predicate.predtype == 'texture':
-                    caption.value[n] = Attribute(predtype='texture', value=choice(textures))
-
-        elif self.incorrect_mode == 4:  # random (existing) attributes
-            if self.existing_attribute:
-                shapes = util.unique_list(entity.shape.name for entity in world.entities if entity.shape.name in self.shapes)
-                colors = util.unique_list(entity.color.name for entity in world.entities if entity.color.name in self.colors)
-                textures = util.unique_list(entity.texture.name for entity in world.entities if entity.texture.name in self.textures)
+            if len(caption.value) == 0:
+                caption.value.append(Attribute(predtype='texture', value=choice(textures)))
             else:
+                for n, predicate in enumerate(caption.value):
+                    if predicate.predtype == 'texture':
+                        caption.value[n] = Attribute(predtype='texture', value=choice(textures))
+
+        elif self.incorrect_mode == 3:  # random (existing) attributes
+            if self.existing_attribute:
+                caption_shape = caption_color = caption_texture = None
+                for predicate in caption.value:
+                    if predicate.predtype == 'shape':
+                        caption_shape = predicate.value
+                    elif predicate.predtype == 'color':
+                        caption_color = predicate.value
+                    elif predicate.predtype == 'texture':
+                        caption_texture = predicate.value
+                shapes = util.unique_list(entity.shape.name for entity in world.entities if entity.shape.name in self.shapes and entity.shape.name != caption_shape)
+                colors = util.unique_list(entity.color.name for entity in world.entities if entity.color.name in self.colors and entity.color.name != caption_color)
+                textures = util.unique_list(entity.texture.name for entity in world.entities if entity.texture.name in self.textures and entity.texture.name != caption_texture)
+            if not self.existing_attribute or len(shapes) == 0:
                 shapes = self.shapes
+            if not self.existing_attribute or len(colors) == 0:
                 colors = self.colors
+            if not self.existing_attribute or len(textures) == 0:
                 textures = self.textures
-            for n, predicate in enumerate(caption.value):
-                if predicate.predtype == 'shape' in self.attributes:
-                    caption.value[n] = Attribute(predtype='shape', value=choice(shapes))
-                elif predicate.predtype == 'color' in self.attributes:
-                    caption.value[n] = Attribute(predtype='color', value=choice(colors))
-                elif predicate.predtype == 'texture' in self.attributes:
-                    caption.value[n] = Attribute(predtype='texture', value=choice(textures))
+            if len(caption.value) == 0:
+                attribute = choice(self.valid_attributes)
+                if attribute == 'shape':
+                    caption.value.append(Attribute(predtype='shape', value=choice(shapes)))
+                elif attribute == 'color':
+                    caption.value.append(Attribute(predtype='color', value=choice(colors)))
+                elif attribute == 'texture':
+                    caption.value.append(Attribute(predtype='texture', value=choice(textures)))
+            else:
+                for n, predicate in enumerate(caption.value):
+                    if predicate.predtype == 'shape':
+                        caption.value[n] = Attribute(predtype='shape', value=choice(shapes))
+                    elif predicate.predtype == 'color':
+                        caption.value[n] = Attribute(predtype='color', value=choice(colors))
+                    elif predicate.predtype == 'texture':
+                        caption.value[n] = Attribute(predtype='texture', value=choice(textures))
 
         caption.apply_to_predication(predication=predication)
 

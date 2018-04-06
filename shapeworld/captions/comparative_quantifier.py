@@ -1,5 +1,4 @@
 from __future__ import division
-from shapeworld import util
 from shapeworld.captions import Caption, EntityType, Relation, Quantifier
 
 
@@ -8,18 +7,13 @@ class ComparativeQuantifier(Caption):
     __slots__ = ('qtype', 'qrange', 'quantity', 'restrictor', 'comparison', 'body')
 
     def __init__(self, qtype, qrange, quantity, restrictor, comparison, body):
-        # if qtype == 'composed': qrange is identifier, quantity is list of quantifiers
-        assert qtype in ('count', 'ratio', 'composed')
+        assert qtype in ('count', 'ratio')
         if qtype == 'count':
             assert qrange in ('lt', 'leq', 'eq', 'neq', 'geq', 'gt')
             assert isinstance(quantity, int)
         elif qtype == 'ratio':
             assert qrange in ('lt', 'leq', 'eq', 'neq', 'geq', 'gt')
-            assert isinstance(quantity, float) and quantity >= 0.0
-        elif qtype == 'composed':
-            assert isinstance(qrange, str)
-            assert all(len(quantifier) == 3 and quantifier[0] in ('count', 'ratio') for quantifier in quantity)
-            quantity = tuple(tuple(quantifier) for quantifier in quantity)
+            assert isinstance(quantity, float) and quantity > 0.0
         assert isinstance(restrictor, EntityType)
         assert isinstance(comparison, EntityType)
         assert isinstance(body, Relation)
@@ -35,23 +29,17 @@ class ComparativeQuantifier(Caption):
             component=str(self),
             qtype=self.qtype,
             qrange=self.qrange,
-            quantity=(list(self.quantity) if self.qtype == 'composed' else self.quantity),
+            quantity=self.quantity,
             restrictor=self.restrictor.model(),
             comparison=self.comparison.model(),
             body=self.body.model()
         )
 
     def reverse_polish_notation(self):
-        if self.qtype == 'composed':
-            return self.restrictor.reverse_polish_notation() + \
-                self.comparison.reverse_polish_notation() + \
-                self.body.reverse_polish_notation() + \
-                ['{}-{}-{}'.format(self, self.qtype, self.qrange)]
-        else:
-            return self.restrictor.reverse_polish_notation() + \
-                self.comparison.reverse_polish_notation() + \
-                self.body.reverse_polish_notation() + \
-                ['{}-{}-{}-{}'.format(self, self.qtype, self.qrange, self.quantity)]
+        return self.restrictor.reverse_polish_notation() + \
+            self.comparison.reverse_polish_notation() + \
+            self.body.reverse_polish_notation() + \
+            ['{}-{}-{}-{}'.format(self, self.qtype, self.qrange, self.quantity)]
 
     def apply_to_predication(self, predication):
         rstr_predication = predication.sub_predication()
@@ -67,19 +55,15 @@ class ComparativeQuantifier(Caption):
         body_predication = predication.sub_predication()
         self.body.apply_to_predication(predication=body_predication)
 
-        return rstr_predication, comp_predication, body_predication
+        return rstr_predication, rstr_body_predication, comp_predication, comp_body_predication, body_predication
 
     def agreement(self, predication, world):
-        if self.qtype == 'composed':
-            quantifiers = [Quantifier(qtype=quantifier[0], qrange=quantifier[1], quantity=quantifier[2], restrictor=self.restrictor, comparison=self.comparison, body=self.body) for quantifier in self.quantity]
-            return min(quantifier.agreement(predication=predication.copy(include_sub_predications=True), world=world) for quantifier in quantifiers)
-
-        rstr_predication = predication.get_sub_predication()
-        rstr_body_predication = predication.get_sub_predication()
+        rstr_predication = predication.get_sub_predication(0)
+        rstr_body_predication = predication.get_sub_predication(1)
         assert rstr_body_predication <= rstr_predication
 
-        comp_predication = predication.get_sub_predication()
-        comp_body_predication = predication.get_sub_predication()
+        comp_predication = predication.get_sub_predication(2)
+        comp_body_predication = predication.get_sub_predication(3)
         assert comp_body_predication <= comp_predication
 
         if self.qtype == 'count':

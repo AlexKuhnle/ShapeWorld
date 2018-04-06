@@ -3,16 +3,10 @@ from io import BytesIO
 import json
 from math import ceil, sqrt
 import os
-from random import choice, random, randrange
+from random import random, randrange
 import numpy as np
 from PIL import Image
 from shapeworld import util
-from shapeworld.world import World
-from shapeworld.captioners import PragmaticalPredication
-from shapeworld.realizers import CaptionRealizer
-
-
-DEBUG = False
 
 
 class Dataset(object):
@@ -42,17 +36,36 @@ class Dataset(object):
         self.language = language
 
     @staticmethod
-    def create(dtype=None, name=None, language=None, config=None, **kwargs):
+    def create(dtype=None, name=None, variant=None, language=None, config=None, **kwargs):
         assert (dtype is None) is (name is None)
+        assert variant is None or name is not None
         assert language is None or name is not None
 
         if name is not None and not isinstance(name, str):
             try:
                 datasets = list()
-                for n in name:
-                    datasets.append(Dataset.create(dtype=dtype, name=n, language=language, config=config))
+                if variant is not None and not isinstance(variant, str):
+                    for n, vs in zip(name, variant):
+                        for v in vs:
+                            datasets.append(Dataset.create(dtype=dtype, name=n, variant=v, language=language, config=config))
+                else:
+                    for n in name:
+                        datasets.append(Dataset.create(dtype=dtype, name=n, variant=variant, language=language, config=config))
                 dataset = DatasetMixer(datasets=datasets, **kwargs)
                 assert dtype == dataset.type
+                assert language is None or language == dataset.language
+                return dataset
+            except TypeError:
+                assert False
+
+        if variant is not None and not isinstance(variant, str):
+            try:
+                datasets = list()
+                for v in variant:
+                    datasets.append(Dataset.create(dtype=dtype, name=name, variant=v, language=language, config=config))
+                dataset = DatasetMixer(datasets=datasets, **kwargs)
+                assert dtype == dataset.type
+                assert name == dataset.name
                 assert language is None or language == dataset.language
                 return dataset
             except TypeError:
@@ -81,17 +94,19 @@ class Dataset(object):
 
         elif os.path.isdir(config):
             assert dtype is not None and name is not None
-            if language is None:
-                directory = os.path.join(config, dtype, name)
-                config = os.path.join(config, '{}-{}.json'.format(dtype, name))
-            else:
-                directory = os.path.join(config, '{}-{}'.format(dtype, language), name)
-                config = os.path.join(config, '{}-{}-{}.json'.format(dtype, language, name))
+            full_name = name
+            if variant is not None:
+                full_name = '{}-{}'.format(full_name, variant)
+            if language is not None:
+                full_name = '{}-{}'.format(full_name, language)
+            directory = os.path.join(config, dtype, full_name)
+            config = os.path.join(config, '{}-{}.json'.format(dtype, full_name))
             with open(config, 'r') as filehandle:
                 config = json.load(fp=filehandle)
             if 'directory' not in config:
                 config['directory'] = directory
-            return Dataset.create(dtype=dtype, name=config.get('name', name), language=language, config=config, **kwargs)
+            assert config.get('name', name) == name
+            return Dataset.create(dtype=dtype, name=name, language=language, config=config, **kwargs)
 
         elif os.path.isfile(config):
             directory = os.path.dirname(config)
@@ -103,31 +118,18 @@ class Dataset(object):
                 name = config['name']
             if language is None:
                 language = config.get('language')
-            if language is None:
-                config['directory'] = os.path.join(directory, dtype, name)
-            else:
-                config['directory'] = os.path.join(directory, '{}-{}'.format(dtype, language), name)
+            full_name = name
+            if variant is not None:
+                full_name = '{}-{}'.format(full_name, variant)
+            if language is not None:
+                full_name = '{}-{}'.format(full_name, language)
+            config['directory'] = os.path.join(directory, dtype, full_name)
             return Dataset.create(dtype=dtype, name=name, language=language, config=config, **kwargs)
 
         else:
             assert False
 
-        # if not isinstance(name, str):
-        #     try:
-        #         datasets = list()
-        #         for n in name:
-        #             dataset_config = dict(config)
-        #             dataset_config['type'] = dtype
-        #             dataset_config['name'] = n
-        #             if language is not None:
-        #                 dataset_config['language'] = language
-        #             datasets.append(dataset_config)
-        #         dataset = DatasetMixer(datasets=datasets)
-        #         assert dtype == dataset.type
-        #         assert language is None or language == dataset.language
-        #         return dataset
-        #     except TypeError:
-        #         assert False
+        assert variant is None
 
         if 'type' in config and 'name' in config and 'directory' in config:
             assert dtype is None or config['type'] == dtype
@@ -135,7 +137,6 @@ class Dataset(object):
             assert language is None or config['language'] == language
             dtype = config['type']
             name = config['name']
-            language = config.get('language')
             dataset = LoadedDataset(specification=config, **kwargs)
             assert dtype == dataset.type
             assert name == dataset.name
@@ -155,19 +156,19 @@ class Dataset(object):
                 name = config.pop('name')
             else:
                 assert 'name' not in config or config['name'] == name
-            if language is None:
-                language = config.get('language')
-            else:
-                assert 'language' not in config or config['language'] == language
+            if 'language' in config:
+                assert language is None or config['language'] == language
+            elif language is not None:
+                config['language'] = language
 
             module = import_module('shapeworld.datasets.{}.{}'.format(dtype, name))
-            if language is None:
-                dataset = module.dataset(**config)
-            else:
-                dataset = module.dataset(language=language, **config)
+            class_name = util.class_name(name) + 'Dataset'
+            for key, module in module.__dict__.items():
+                if key == class_name:
+                    break
+            dataset = module(**config)
             assert dtype == dataset.type
             assert name == dataset.name
-            assert language is None or language == dataset.language
             return dataset
 
     def __str__(self):
@@ -183,15 +184,8 @@ class Dataset(object):
     @property
     def name(self):
         name = self.__class__.__name__
-        lowercase_name = list()
-        for n, char in enumerate(name):
-            if char.isupper():
-                if n > 0:
-                    lowercase_name.append('_')
-                lowercase_name.append(char.lower())
-            else:
-                lowercase_name.append(char)
-        return ''.join(lowercase_name)
+        assert name[-7:] == 'Dataset'
+        return util.real_name(name[:-7])
 
     def specification(self):
         specification = dict(type=self.type, name=self.name, values=self.values)
@@ -350,25 +344,26 @@ class Dataset(object):
             assert value_type == 'int'
             value = '\n'.join(str(int(x)) for x in value) + '\n'
             write_file('alternatives.txt', value)
-        elif value_type == 'int':
+        elif value_type == 'int' or value_type == 'float':
             if alts:
-                value = '\n'.join(';'.join(str(int(x)) for x in xs) for xs in value) + '\n'
+                value = '\n'.join(';'.join(str(x)for x in xs) for xs in value) + '\n'
             else:
-                value = '\n'.join(str(int(x)) for x in value) + '\n'
+                value = '\n'.join(str(x) for x in value) + '\n'
             write_file(value_name + '.txt', value)
-        elif value_type == 'float':
-            if alts:
-                value = '\n'.join(';'.join(str(float(x)) for x in xs) for xs in value) + '\n'
-            else:
-                value = '\n'.join(str(float(x)) for x in value) + '\n'
-            write_file(value_name + '.txt', value)
-        elif value_type == 'vector(int)' or value_type == 'vector(float)':
+        elif value_type == 'vector(int)':
             if alts:
                 value = '\n'.join(';'.join(','.join(str(x) for x in vector.flatten()) for vector in vectors) for vectors in value) + '\n'
             else:
                 value = '\n'.join(','.join(str(x) for x in vector.flatten()) for vector in value) + '\n'
             write_file(value_name + '.txt', value)
+        elif value_type == 'vector(float)':
+            if alts:
+                value = '\n'.join(';'.join(','.join(str(x)[:6] if x < 0 else str(x)[:5] for x in vector.flatten()) for vector in vectors) for vectors in value) + '\n'
+            else:
+                value = '\n'.join(','.join(str(x)[:6] if x < 0 else str(x)[:5] for x in vector.flatten()) for vector in value) + '\n'
+            write_file(value_name + '.txt', value)
         elif value_type == 'world':
+            from shapeworld.world import World
             if concat_worlds:
                 assert not alts
                 size = ceil(sqrt(len(value)))
@@ -449,6 +444,7 @@ class Dataset(object):
                 value = [np.array(object=[float(x) for x in vector.split(',')], dtype=np.float32).reshape(shape) for vector in value.split('\n')[:-1]]
             return value
         elif value_type == 'world':
+            from shapeworld.world import World
             if num_concat_worlds:
                 assert not alts
                 size = ceil(sqrt(num_concat_worlds))
@@ -828,15 +824,15 @@ class DatasetMixer(Dataset):
 
 class ClassificationDataset(Dataset):
 
-    def __init__(self, world_generator, num_classes, multi_class=False, class_count=False, pixel_noise_stddev=0.0):
+    def __init__(self, world_generator, num_classes, multi_class=False, count_class=False, pixel_noise_stddev=0.0):
         values = dict(world='world', world_model='model', classification='vector(float)')
         vectors = dict(classification=num_classes)
         super(ClassificationDataset, self).__init__(values=values, world_size=world_generator.world_size, vectors=vectors, pixel_noise_stddev=pixel_noise_stddev)
-        assert multi_class or not class_count
+        assert multi_class or not count_class
         self.world_generator = world_generator
         self.num_classes = num_classes
         self.multi_class = multi_class
-        self.class_count = class_count
+        self.count_class = count_class
 
     @property
     def type(self):
@@ -846,7 +842,7 @@ class ClassificationDataset(Dataset):
         specification = super(ClassificationDataset, self).specification()
         specification['num_classes'] = self.num_classes
         specification['multi_class'] = self.multi_class
-        specification['class_count'] = self.class_count
+        specification['count_class'] = self.count_class
         return specification
 
     def get_classes(self, world):  # iterable of classes
@@ -869,7 +865,7 @@ class ClassificationDataset(Dataset):
 
             c = None
             for c in self.get_classes(world):
-                if self.class_count:
+                if self.count_class:
                     batch['classification'][i][c] += 1.0
                 else:
                     batch['classification'][i][c] = 1.0
@@ -892,7 +888,7 @@ class ClassificationDataset(Dataset):
                     data_html.append(',&ensp;')
                 else:
                     comma = True
-                if self.class_count:
+                if self.count_class:
                     data_html.append('{count:.0f} &times; class {c}'.format(c=c, count=count))
                 else:
                     data_html.append('class {c}'.format(c=c))
@@ -928,6 +924,7 @@ class CaptionAgreementDataset(Dataset):
         assert len(vocabulary) > 0 and vocabulary == sorted(vocabulary)
         self.world_generator = world_generator
         self.world_captioner = world_captioner
+        from shapeworld.realizers import CaptionRealizer
         if isinstance(caption_realizer, CaptionRealizer):
             self.caption_realizer = caption_realizer
         else:
@@ -981,9 +978,6 @@ class CaptionAgreementDataset(Dataset):
         else:
             correct_ratio = self.correct_ratio
 
-        captioners_proposed = list()
-        captioners_used = list()
-
         rpn2id = self.vocabularies['rpn']
         unknown = rpn2id['[UNKNOWN]']
         rpn_size = self.vector_shape('caption_rpn')[0]
@@ -1000,14 +994,10 @@ class CaptionAgreementDataset(Dataset):
 
                 if resample % self.__class__.INITIALIZE_CAPTIONER == 0:
                     if resample // self.__class__.INITIALIZE_CAPTIONER >= 1:
-                        # print('resample captioner')
+                        # print(i, resample, correct, self.world_captioner.model())
                         pass
                     while not self.world_captioner.initialize(mode=mode, correct=correct):
-                        # print('initialize false')
                         pass
-                    captioner_model = self.world_captioner.model()
-                    if captioner_model not in captioners_proposed:
-                        captioners_proposed.append(captioner_model)
 
                 resample += 1
 
@@ -1019,12 +1009,6 @@ class CaptionAgreementDataset(Dataset):
 
                 if caption is not None:
                     break
-                else:
-                    # print('captioner failed')
-                    pass
-
-            if captioner_model not in captioners_used:
-                captioners_used.append(captioner_model)
 
             if alternatives and (self.worlds_per_instance > 1 or self.captions_per_instance > 1):
                 batch['agreement'][i].append(float(correct))
@@ -1080,6 +1064,7 @@ class CaptionAgreementDataset(Dataset):
                     batch['caption_model'][i] = caption.model()
 
             if alternatives and self.worlds_per_instance > 1:
+                from shapeworld.captioners import PragmaticalPredication
                 batch['alternatives'][i] = self.worlds_per_instance
                 batch['world'][i].extend(batch['world'][i][0].copy() for _ in range(self.worlds_per_instance - 1))
                 batch['world'][i][0] = self.apply_pixel_noise(world=world.get_array(world_array=batch['world'][i][0]))
@@ -1148,16 +1133,9 @@ class CaptionAgreementDataset(Dataset):
                     missing_words.add(word)
                 caption_array[k] = word2id.get(word, unknown)
 
-        if len(captioners_used) < len(captioners_proposed):
-            # print('More captioner models proposed than used: {} > {}'.format(len(captioners_proposed), len(captioners_used)))
-            # for captioner_model in captioners_proposed:
-            #     if captioner_model not in captioners_used:
-            #         print(json.dumps(obj=captioner_model, indent=2, sort_keys=True))
-            pass
-
-        if DEBUG and len(unused_words) > 0:
+        if util.debug() and len(unused_words) > 0:
             print('Words unused in vocabulary: \'{}\''.format('\', \''.join(sorted(unused_words))))
-        if DEBUG and max_caption_size < caption_size:
+        if util.debug() and max_caption_size < caption_size:
             print('Caption size smaller than max size: {} < {}'.format(max_caption_size, caption_size))
         if len(missing_words) > 0:
             print('Words missing in vocabulary: \'{}\''.format('\', \''.join(sorted(missing_words))))

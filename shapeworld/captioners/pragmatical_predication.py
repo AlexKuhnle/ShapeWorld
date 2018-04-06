@@ -32,7 +32,7 @@ class PragmaticalPredication(object):
         if reset:
             return PragmaticalPredication(agreeing=self.entities)
         elif include_sub_predications:
-            return PragmaticalPredication(agreeing=self.agreeing, ambiguous=self.ambiguous, disagreeing=self.disagreeing, sub_predications=self.sub_predications)
+            return PragmaticalPredication(agreeing=self.agreeing, ambiguous=self.ambiguous, disagreeing=self.disagreeing, sub_predications=[predication.copy(include_sub_predications=True) for predication in self.sub_predications])
         else:
             return PragmaticalPredication(agreeing=self.agreeing, ambiguous=self.ambiguous, disagreeing=self.disagreeing)
 
@@ -42,18 +42,18 @@ class PragmaticalPredication(object):
     def random_agreeing_entity(self):
         return choice(list(self.agreeing))
 
-    def redundant(self, predicate, predication=None):
+    def redundant(self, predicate, **kwargs):
         assert isinstance(predicate, Predicate)
-        return util.all_and_any(predicate.pred_agreement(entity=entity, predication=predication) for entity in self.agreeing)
+        return util.all_and_any(predicate.pred_agreement(entity=entity, **kwargs) for entity in self.agreeing)
 
-    def tautological(self, predicate, predication=None):
+    def tautological(self, predicate, **kwargs):
         assert isinstance(predicate, Predicate)
-        return util.all_and_any(predicate.pred_agreement(entity=entity, predication=predication) for entity in self.agreeing) and \
-            all(predicate.pred_disagreement(entity=entity, predication=self) for entity in self.disagreeing)
+        return util.all_and_any(predicate.pred_agreement(entity=entity, **kwargs) for entity in self.agreeing) and \
+            all(predicate.pred_disagreement(entity=entity, predication=self, **kwargs) for entity in self.disagreeing)
 
-    def contradictory(self, predicate, predication=None):
+    def contradictory(self, predicate, **kwargs):
         assert isinstance(predicate, Predicate)
-        return util.all_and_any(predicate.pred_disagreement(entity=entity, predication=predication) for entity in self.agreeing)
+        return util.all_and_any(predicate.pred_disagreement(entity=entity, **kwargs) for entity in self.agreeing)
 
     # def redundant_sub_predications(self):
     #     for m in range(len(self.sub_predications)):
@@ -67,21 +67,21 @@ class PragmaticalPredication(object):
     #                 return True
     #     return False
 
-    def apply(self, predicate, predication=None):
+    def apply(self, predicate, **kwargs):
         assert isinstance(predicate, Predicate)
         assert not isinstance(predicate, EntityType)  # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
         # Insert in sorted order ideally !!!
         for n in reversed(range(len(self.agreeing))):
-            if predicate.pred_disagreement(entity=self.agreeing[n], predication=predication):
+            if predicate.pred_disagreement(entity=self.agreeing[n], **kwargs):
                 entity = self.agreeing.pop(n)
                 self.not_disagreeing.remove(entity)
                 self.disagreeing.append(entity)
-            elif not predicate.pred_agreement(entity=self.agreeing[n], predication=predication):
+            elif not predicate.pred_agreement(entity=self.agreeing[n], **kwargs):
                 entity = self.agreeing.pop(n)
                 self.ambiguous.append(entity)
         for n in reversed(range(len(self.ambiguous))):
-            if predicate.pred_disagreement(entity=self.ambiguous[n], predication=predication):
+            if predicate.pred_disagreement(entity=self.ambiguous[n], **kwargs):
                 entity = self.ambiguous.pop(n)
                 self.not_disagreeing.remove(entity)
                 self.disagreeing.append(entity)
@@ -96,8 +96,11 @@ class PragmaticalPredication(object):
         self.sub_predications.append(predication)
         return predication
 
-    def get_sub_predication(self):
-        return self.sub_predications.pop(0)
+    def get_sub_predication(self, index):
+        if index < len(self.sub_predications):
+            return self.sub_predications[index]
+        else:
+            return None
 
     def __eq__(self, other):
         assert all(entity1 == entity2 for entity1, entity2 in zip(self.entities, other.entities))

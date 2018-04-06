@@ -21,7 +21,7 @@ class GenericGenerator(WorldGenerator):
         shade_range=0.4,
         collision_tolerance=0.25,
         collision_shade_difference=0.5,
-        boundary_tolerance=0.25,
+        boundary_tolerance=None,
         entity_counts=(1,),
         train_entity_counts=None,
         validation_entity_counts=None,
@@ -51,9 +51,9 @@ class GenericGenerator(WorldGenerator):
         )
 
         assert util.all_and_any(isinstance(n, int) and n >= 0 for n in entity_counts)
-        assert train_entity_counts is None or util.all_and_any(isinstance(n, int) and n >= 0 for n in train_entity_counts)
-        assert validation_entity_counts is None or util.all_and_any(isinstance(n, int) and n >= 0 for n in validation_entity_counts)
-        assert test_entity_counts is None or util.all_and_any(isinstance(n, int) and n >= 0 for n in test_entity_counts)
+        assert train_entity_counts is None or util.all_and_any(n in entity_counts for n in train_entity_counts)
+        assert validation_entity_counts is None or util.all_and_any(n in entity_counts for n in validation_entity_counts)
+        assert test_entity_counts is None or util.all_and_any(n in entity_counts for n in test_entity_counts)
         self.entity_counts = entity_counts
         self.train_entity_counts = util.value_or_default(train_entity_counts, entity_counts)
         self.validation_entity_counts = util.value_or_default(validation_entity_counts, entity_counts)

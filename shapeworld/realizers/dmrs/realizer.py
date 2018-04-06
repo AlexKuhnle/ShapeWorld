@@ -1,11 +1,11 @@
 import copy
 import json
 import os
-import stat
 import platform
 import re
 import stat
 import subprocess
+from shapeworld import util
 from shapeworld.captions import Attribute, Relation, EntityType, Existential, Quantifier, NumberBound, ComparativeQuantifier, Proposition
 from shapeworld.realizers import CaptionRealizer
 from shapeworld.realizers.dmrs.dmrs import Dmrs, create_sortinfo
@@ -83,8 +83,12 @@ class DmrsRealizer(CaptionRealizer):
         self.unsuccessful_regex = re.compile(pattern=r'^NOTE: [0-9]+ passive, [0-9]+ active edges in final generation chart; built [0-9]+ passives total. \[0 results\]$')
         self.final_regex = re.compile(pattern=r'^(NOTE: generated [0-9]+ / [0-9]+ sentences, avg [0-9]+k, time [0-9]+.[0-9]+s)|(NOTE: transfer did [0-9]+ successful unifies and [0-9]+ failed ones)$')
 
-        with open(os.path.join(directory, 'languages', language + '.json'), 'r') as filehandle:
-            language = json.load(fp=filehandle)
+        if util.v2() and os.path.isfile(os.path.join(directory, 'languages', language + '_v2.json')):
+            with open(os.path.join(directory, 'languages', language + '_v2.json'), 'r') as filehandle:
+                language = json.load(fp=filehandle)
+        else:
+            with open(os.path.join(directory, 'languages', language + '.json'), 'r') as filehandle:
+                language = json.load(fp=filehandle)
 
         if 'sortinfos' in language:
             sortinfo_classes = dict()
@@ -104,15 +108,11 @@ class DmrsRealizer(CaptionRealizer):
 
         self.attributes = dict()
         self.attribute_by_key = dict()
-        self.empty_type = None
         self.relation_attribute = None
         if 'attributes' in language:
             for predtype, values in language['attributes'].items():
                 predtype = parse_string(predtype)
-                if predtype == 'empty':
-                    self.empty_type = Dmrs.parse(values['dmrs'])
-                    continue
-                elif predtype == 'relation':
+                if predtype == 'relation':
                     self.relation_attribute = Dmrs.parse(values['dmrs'])
                     continue
                 elif predtype not in self.attributes:
@@ -122,6 +122,10 @@ class DmrsRealizer(CaptionRealizer):
                     self.attributes[predtype][value] = Dmrs.parse(attribute['dmrs'])
                     assert attribute['key'] not in self.attribute_by_key
                     self.attribute_by_key[attribute['key']] = (predtype, value)
+
+        self.entity_type = None
+        if 'type' in language:
+            self.entity_type = Dmrs.parse(language['type']['dmrs'])
 
         self.relations = dict()
         self.relation_by_key = dict()
@@ -302,8 +306,8 @@ class DmrsRealizer(CaptionRealizer):
         return dmrs
 
     def type_dmrs(self, entity_type):
-        assert self.empty_type is not None
-        dmrs = copy.deepcopy(self.empty_type)
+        assert self.entity_type is not None
+        dmrs = copy.deepcopy(self.entity_type)
         for attribute in entity_type.value:
             dmrs.compose(self.attribute_dmrs(attribute), fusion={'type': 'type'}, hierarchy=self.hierarchy)
         return dmrs
@@ -401,24 +405,13 @@ class DmrsRealizer(CaptionRealizer):
             dmrs = copy.deepcopy(self.propositions['quantifier'])
             dmrs.compose(self.quantifier_dmrs(caption), hierarchy=self.hierarchy)
         elif isinstance(caption, NumberBound):
-            dmrs = copy.deepcopy(self.propositions['number_bound'])
+            dmrs = copy.deepcopy(self.propositions['number-bound'])
             dmrs.compose(self.number_bound_dmrs(caption), hierarchy=self.hierarchy)
         elif isinstance(caption, ComparativeQuantifier):
-            dmrs = copy.deepcopy(self.propositions['comparative_quantifier'])
+            dmrs = copy.deepcopy(self.propositions['comparative-quantifier'])
             dmrs.compose(self.comparative_quantifier_dmrs(caption), hierarchy=self.hierarchy)
         elif isinstance(caption, Proposition):
             dmrs = self.proposition_dmrs(caption)
         else:
             assert False
         return dmrs
-
-
-realizer = DmrsRealizer
-
-
-"""
-        "proximity-rel": {
-            "-1": {"key": "closer", "dmrs": "[rel]:_close_a_to e? <=1= _to_p e -2-> [ref]:node <-- _a_q; :rel <=1= comp e -2-> [comp]:node <-- _a_q"},
-            "1": {"key": "farther", "dmrs": "[rel]:_far_a_from e? <=1= _from_p e -2-> [ref]:node <-- _a_q; :rel <=1= comp e -2-> [comp]:node <-- _a_q"}
-        },
-"""

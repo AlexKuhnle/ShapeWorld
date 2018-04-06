@@ -220,3 +220,47 @@ def json_list_generator(fp):
                 except Exception:
                     print('Could not read JSON.')
                     print('|', json_str, '|')
+
+
+def parse_program(model, index=0, inputs=None):
+    if inputs is None:
+        inputs = list()
+    if model['component'] == 'Attribute':
+        return [dict(inputs=inputs, function='attribute', value_inputs=['{}-{}'.format(model['predtype'], model['value'])])]
+    elif model['component'] == 'EntityType':
+        outputs = [dict(inputs=list(), function='scene', value_inputs=list())]
+        for model in model['value']:
+            outputs += parse_program(model=model, index=(index + len(outputs)), inputs=[index + len(outputs) - 1])
+        return outputs
+    elif model['component'] == 'Relation':  # should connect relation???
+        if model['predtype'] in ('attribute', 'type'):
+            value = parse_program(model=model['value'], index=index, inputs=list())
+            return value + [dict(inputs=[index + len(value) - 1], function='relation', value_inputs=[model['predtype']])]
+        else:
+            reference = parse_program(model=model['reference'], index=index, inputs=list())
+            if 'comparison' in model:
+                comparison = parse_program(model=model['comparison'], index=(index + len(reference)), inputs=list())
+                return reference + comparison + [dict(inputs=[index + len(reference) - 1, index + len(reference) + len(comparison) - 1], function='relation', value_inputs=['{}({})'.format(model['predtype'], model['value'])])]
+            else:
+                return reference + [dict(inputs=[index + len(reference) - 1], function='relation', value_inputs=['{}-{}'.format(model['predtype'], model['value'])])]
+    elif model['component'] == 'Existential':  # should connect relation???
+        restrictor = parse_program(model=model['restrictor'], index=index, inputs=list())
+        body = parse_program(model=model['body'], index=(index + len(restrictor)), inputs=[index + len(restrictor) - 1])
+        return restrictor + body + [dict(inputs=[index + len(restrictor) - 1, index + len(restrictor) + len(body) - 1], function='quantifier', value_inputs=['existential'])]
+    elif model['component'] == 'Quantifier':
+        restrictor = parse_program(model=model['restrictor'], index=index, inputs=list())
+        body = parse_program(model=model['body'], index=(index + len(restrictor)), inputs=[index + len(restrictor) - 1])
+        return restrictor + body + [dict(inputs=[index + len(restrictor) - 1, index + len(restrictor) + len(body) - 1], function='quantifier', value_inputs=['{}-{}-{}'.format(model['qtype'], model['qrange'], model['quantity'])])]
+    elif model['component'] == 'NumberBound':
+        quantifier = parse_program(model=model['quantifier'], index=index, inputs=list())
+        return quantifier + [dict(inputs=[index + len(quantifier) - 1], function='number-bound', value_inputs=[str(model['bound'])])]
+    elif model['component'] == 'ComparativeQuantifier':
+        restrictor = parse_program(model=model['restrictor'], index=index, inputs=list())
+        comparison = parse_program(model=model['comparison'], index=(index + len(restrictor)), inputs=list())
+        restrictor_body = parse_program(model=model['body'], index=(index + len(restrictor) + len(comparison)), inputs=[index + len(restrictor) - 1])
+        comparison_body = parse_program(model=model['body'], index=(index + len(restrictor) + len(comparison)), inputs=[index + len(restrictor) + len(comparison) - 1])
+        return restrictor + comparison + restrictor_body + comparison_body + [dict(inputs=[index + len(restrictor) - 1, index + len(restrictor) + len(comparison) - 1, index + len(restrictor) + len(comparison) + len(restrictor_body) - 1, index + len(restrictor) + len(comparison) + len(restrictor_body) + len(comparison_body) - 1], function='comparative-quantifier', value_inputs=['{}-{}-{}'.format(model['qtype'], model['qrange'], model['quantity'])])]
+    elif model['component'] == 'Proposition':
+        assert False, model
+    else:
+        assert False, model

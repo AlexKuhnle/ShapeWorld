@@ -133,6 +133,14 @@ class Entity(object):
         return sum(self.collisions.values())
 
     def collides(self, other, ratio=False, symmetric=False, resolution=None):
+        if other.id == self.id:
+            if not ratio:
+                return True
+            elif symmetric:
+                return 1.0
+            else:
+                return (1.0, 1.0)
+
         if other.id in self.collisions and self.id in other.collisions:
             if not ratio:
                 return min(self.collisions[other.id], other.collisions[self.id]) > 0.0

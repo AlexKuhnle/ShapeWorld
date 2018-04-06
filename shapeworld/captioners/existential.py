@@ -6,11 +6,20 @@ from shapeworld.captioners import WorldCaptioner
 class ExistentialCaptioner(WorldCaptioner):
 
     # incorrect modes
-    # 0: correct
-    # 1: incorrect restrictor
-    # 2: incorrect body
+    # 0: incorrect restrictor
+    # 1: incorrect body
 
-    def __init__(self, restrictor_captioner, body_captioner, incorrect_distribution=None, pragmatical_redundancy_rate=None, pragmatical_tautology_rate=None, logical_redundancy_rate=None, logical_tautology_rate=None, logical_contradiction_rate=None):
+    def __init__(
+        self,
+        restrictor_captioner,
+        body_captioner,
+        pragmatical_redundancy_rate=1.0,
+        pragmatical_tautology_rate=0.0,
+        logical_redundancy_rate=1.0,
+        logical_tautology_rate=0.0,
+        logical_contradiction_rate=0.0,
+        incorrect_distribution=(1, 1)
+    ):
         super(ExistentialCaptioner, self).__init__(
             internal_captioners=(restrictor_captioner, body_captioner),
             pragmatical_redundancy_rate=pragmatical_redundancy_rate,
@@ -22,7 +31,7 @@ class ExistentialCaptioner(WorldCaptioner):
 
         self.restrictor_captioner = restrictor_captioner
         self.body_captioner = body_captioner
-        self.incorrect_distribution = util.cumulative_distribution(util.value_or_default(incorrect_distribution, [1, 1]))
+        self.incorrect_distribution = util.cumulative_distribution(incorrect_distribution)
 
     def set_realizer(self, realizer):
         if not super(ExistentialCaptioner, self).set_realizer(realizer=realizer):
@@ -37,26 +46,27 @@ class ExistentialCaptioner(WorldCaptioner):
     def rpn_symbols(self):
         return super(ExistentialCaptioner, self).rpn_symbols() | {Existential.__name__}
 
-    def sample_values(self, mode, correct, predication):
+    def sample_values(self, mode, predication):
         assert predication.empty()
 
-        if not super(ExistentialCaptioner, self).sample_values(mode=mode, correct=correct, predication=predication):
+        if not super(ExistentialCaptioner, self).sample_values(mode=mode, predication=predication):
             return False
 
-        self.incorrect_mode = 0 if correct else 1 + util.sample(self.incorrect_distribution)
+        self.incorrect_mode = util.sample(self.incorrect_distribution)
 
         predication = predication.copy()
 
-        if self.incorrect_mode == 1:  # incorrect after correct
-            if not self.body_captioner.sample_values(mode=mode, correct=True, predication=predication):  # 2: incorrect body
+        if self.incorrect_mode == 0:  # 0: incorrect restrictor
+            # incorrect after correct
+            if not self.body_captioner.sample_values(mode=mode, predication=predication):
                 return False
-            if not self.restrictor_captioner.sample_values(mode=mode, correct=False, predication=predication):  # 1: incorrect restrictor
+            if not self.restrictor_captioner.sample_values(mode=mode, predication=predication):
                 return False
 
         else:
-            if not self.restrictor_captioner.sample_values(mode=mode, correct=True, predication=predication):  # 1: incorrect restrictor
+            if not self.restrictor_captioner.sample_values(mode=mode, predication=predication):
                 return False
-            if not self.body_captioner.sample_values(mode=mode, correct=(self.incorrect_mode != 2), predication=predication):  # 2: incorrect body
+            if not self.body_captioner.sample_values(mode=mode, predication=predication):
                 return False
 
         return True
@@ -88,7 +98,7 @@ class ExistentialCaptioner(WorldCaptioner):
             return None
         restrictor.apply_to_predication(predication=rstr_predication)
 
-        if not self.pragmatical_tautology and rstr_predication.equals(other=body_predication):
+        if not self.pragmatical_tautology and predication.num_entities > 1 and predication.equals(other=body_predication):
             return None
 
         return Existential(restrictor=restrictor, body=body)
@@ -96,10 +106,7 @@ class ExistentialCaptioner(WorldCaptioner):
     def incorrect(self, caption, predication, world):
         assert predication.empty()
 
-        if self.incorrect_mode == 0:  # 0: correct
-            rstr_predication, body_predication = caption.apply_to_predication(predication=predication)
-
-        elif self.incorrect_mode == 1:  # 1: incorrect restrictor
+        if self.incorrect_mode == 0:  # 0: incorrect restrictor
             rstr_predication = predication.sub_predication()
             if not self.restrictor_captioner.incorrect(caption=caption.restrictor, predication=rstr_predication, world=world):
                 return False
@@ -108,14 +115,14 @@ class ExistentialCaptioner(WorldCaptioner):
             rstr_body_predication = predication.sub_predication(predication=rstr_predication.copy())
             caption.body.apply_to_predication(predication=rstr_body_predication)
 
-        elif self.incorrect_mode == 2:  # 2: incorrect body
+        elif self.incorrect_mode == 1:  # 1: incorrect body
             rstr_predication = predication.sub_predication()
             caption.restrictor.apply_to_predication(predication=rstr_predication)
             body_predication = predication.sub_predication()
-            rstr_body_predication = predication.sub_predication(predication=rstr_predication.copy())
-            if not self.body_captioner.incorrect(caption=caption.body, predication=rstr_body_predication, world=world):
+            if not self.body_captioner.incorrect(caption=caption.body, predication=body_predication, world=world):
                 return False
-            caption.body.apply_to_predication(predication=body_predication)
+            rstr_body_predication = predication.sub_predication(predication=rstr_predication.copy())
+            caption.body.apply_to_predication(predication=rstr_body_predication)
 
         if not self.pragmatical_tautology and rstr_predication.equals(other=body_predication):
             return False

@@ -3,7 +3,7 @@ from shapeworld.generators import ReinforcedAttributesGenerator
 from shapeworld.captioners import RegularTypeCaptioner, RelationCaptioner, ExistentialCaptioner
 
 
-class Relational(CaptionAgreementDataset):
+class RelationalDataset(CaptionAgreementDataset):
 
     def __init__(
         self,
@@ -18,13 +18,13 @@ class Relational(CaptionAgreementDataset):
         shade_range=0.4,
         collision_tolerance=0.25,
         collision_shade_difference=0.5,
-        boundary_tolerance=0.25,
-        entity_counts=(2, 3, 4, 5, 6, 7, 8),
-        train_entity_counts=(2, 3, 4, 5, 7),
-        validation_entity_counts=(6,),
-        validation_count_rate=1.0,
-        test_entity_counts=(8,),
-        test_count_rate=1.0,
+        boundary_tolerance=None,
+        entity_counts=(4, 5, 6, 7, 8, 9, 10),
+        train_entity_counts=(4, 5, 6, 7, 9),
+        validation_entity_counts=(8,),
+        validation_count_rate=0.5,
+        test_entity_counts=(10,),
+        test_count_rate=0.5,
         validation_combinations=(('square', 'red', 'solid'), ('triangle', 'green', 'solid'), ('circle', 'blue', 'solid')),
         validation_space_rate_range=(0.0, 1.0),
         validation_combination_rate=0.5,
@@ -32,8 +32,7 @@ class Relational(CaptionAgreementDataset):
         test_space_rate_range=(0.0, 1.0),
         test_combination_rate=0.5,
         max_provoke_collision_rate=0.33,
-        # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        reinforcement_range=(1, 1),
+        relations=None,
         caption_size=14,
         vocabulary=('.', 'a', 'above', 'an', 'behind', 'below', 'bigger', 'blue', 'circle', 'closer', 'cross', 'cyan', 'darker', 'ellipse', 'farther', 'from', 'front', 'gray', 'green', 'in', 'is', 'left', 'lighter', 'magenta', 'of', 'pentagon', 'rectangle', 'red', 'right', 'semicircle', 'shape', 'smaller', 'square', 'than', 'the', 'to', 'triangle', 'yellow'),
         correct_ratio=0.5,
@@ -63,22 +62,29 @@ class Relational(CaptionAgreementDataset):
             entity_counts=entity_counts,
             train_entity_counts=train_entity_counts,
             validation_entity_counts=validation_entity_counts,
+            validation_count_rate=validation_count_rate,
             test_entity_counts=test_entity_counts,
+            test_count_rate=test_count_rate,
             validation_combinations=validation_combinations,
+            validation_space_rate_range=validation_space_rate_range,
+            validation_combination_rate=validation_combination_rate,
             test_combinations=test_combinations,
+            test_space_rate_range=test_space_rate_range,
+            test_combination_rate=test_combination_rate,
             max_provoke_collision_rate=max_provoke_collision_rate,
-            reinforcement_range=reinforcement_range
+            reinforcement_range=(1, 1)
         )
 
         world_captioner = ExistentialCaptioner(
             restrictor_captioner=RegularTypeCaptioner(),
             body_captioner=RelationCaptioner(
                 reference_captioner=RegularTypeCaptioner(),
-                comparison_captioner=RegularTypeCaptioner()
+                comparison_captioner=RegularTypeCaptioner(),
+                relations=relations
             )
         )
 
-        super(Relational, self).__init__(
+        super(RelationalDataset, self).__init__(
             world_generator=world_generator,
             world_captioner=world_captioner,
             caption_size=caption_size,
@@ -93,6 +99,3 @@ class Relational(CaptionAgreementDataset):
             caption_realizer=caption_realizer,
             language=language
         )
-
-
-dataset = Relational

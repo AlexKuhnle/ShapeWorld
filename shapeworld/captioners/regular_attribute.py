@@ -1,14 +1,20 @@
-from itertools import combinations
-from random import choice, random, shuffle
+from random import choice, random
 from shapeworld import util
-from shapeworld.captions import Attribute, EntityType, Relation
+from shapeworld.captions import Attribute
 from shapeworld.captioners import WorldCaptioner
 
 
 class RegularAttributeCaptioner(WorldCaptioner):
 
-    def __init__(self, existing_attribute_rate=None, pragmatical_redundancy_rate=None, pragmatical_tautology_rate=None, logical_redundancy_rate=None, logical_tautology_rate=None, logical_contradiction_rate=None):
-
+    def __init__(
+        self,
+        pragmatical_redundancy_rate=1.0,
+        pragmatical_tautology_rate=0.0,
+        logical_redundancy_rate=1.0,
+        logical_tautology_rate=0.0,
+        logical_contradiction_rate=0.0,
+        existing_attribute_rate=0.5
+    ):
         super(RegularAttributeCaptioner, self).__init__(
             internal_captioners=(),
             pragmatical_redundancy_rate=pragmatical_redundancy_rate,
@@ -18,7 +24,7 @@ class RegularAttributeCaptioner(WorldCaptioner):
             logical_contradiction_rate=logical_contradiction_rate
         )
 
-        self.existing_attribute_rate = util.value_or_default(existing_attribute_rate, 0.5)
+        self.existing_attribute_rate = existing_attribute_rate
 
     def set_realizer(self, realizer):
         if not super(RegularAttributeCaptioner, self).set_realizer(realizer):
@@ -40,17 +46,17 @@ class RegularAttributeCaptioner(WorldCaptioner):
             {'{}-{}-{}'.format(Attribute.__name__, 'color', value) for value in self.colors} | \
             {'{}-{}-{}'.format(Attribute.__name__, 'texture', value) for value in self.textures}
 
-    def sample_values(self, mode, correct, predication):
-        if not super(RegularAttributeCaptioner, self).sample_values(mode=mode, correct=correct, predication=predication):
+    def sample_values(self, mode, predication):
+        if not super(RegularAttributeCaptioner, self).sample_values(mode=mode, predication=predication):
             return False
 
         attributes = list()
-        # if wrong, should be logical_contradiction
-        if len(self.shapes) > 1 and (self.logical_tautology or not predication.redundant(predicate='shape')):
+        redundant_valid = self.logical_tautology and self.logical_contradition
+        if len(self.shapes) > 1 and (redundant_valid or not predication.redundant(predicate='shape')):
             attributes.append('shape')
-        if len(self.colors) > 1 and (self.logical_tautology or not predication.redundant(predicate='color')):
+        if len(self.colors) > 1 and (redundant_valid or not predication.redundant(predicate='color')):
             attributes.append('color')
-        if len(self.textures) > 1 and (self.logical_tautology or not predication.redundant(predicate='texture')):
+        if len(self.textures) > 1 and (redundant_valid or not predication.redundant(predicate='texture')):
             attributes.append('texture')
 
         if len(attributes) == 0:
@@ -58,7 +64,12 @@ class RegularAttributeCaptioner(WorldCaptioner):
 
         self.attribute = choice(attributes)
 
-        self.existing_attribute = (correct or (random() < self.existing_attribute_rate and not predication.empty()))
+        if self.existing_attribute_rate == 0.0 or predication.empty():
+            self.existing_attribute = False
+        elif self.existing_attribute_rate == 1.0:
+            self.existing_attribute = True
+        else:
+            self.existing_attribute = random() < self.existing_attribute_rate
 
         predication.apply(predicate=self.attribute)
 
@@ -90,7 +101,7 @@ class RegularAttributeCaptioner(WorldCaptioner):
 
         if predication.contradictory(predicate=attribute):
             assert False
-        elif not self.pragmatical_redundancy and predication.redundant(predicate=attribute):
+        elif not self.pragmatical_redundancy and predication.num_entities > 1 and predication.redundant(predicate=attribute):
             return None
 
         attribute.apply_to_predication(predication=predication)
@@ -98,27 +109,25 @@ class RegularAttributeCaptioner(WorldCaptioner):
         return attribute
 
     def incorrect(self, caption, predication, world):
-        if not self.correct:
+        if self.attribute == 'shape':  # random (existing) shape
+            if self.existing_attribute:
+                values = util.unique_list(entity.shape.name for entity in world.entities if entity.shape.name in self.shapes and entity.shape.name != caption.value)
+            if not self.existing_attribute or len(values) == 0:
+                values = self.shapes
 
-            if self.attribute == 'shape':  # random (existing) shape
-                if self.existing_attribute:
-                    values = util.unique_list(entity.shape.name for entity in world.entities if entity.shape.name in self.shapes)
-                else:
-                    values = self.shapes
+        elif self.attribute == 'color':  # random (existing) color
+            if self.existing_attribute:
+                values = util.unique_list(entity.color.name for entity in world.entities if entity.color.name in self.colors and entity.color.name != caption.value)
+            if not self.existing_attribute or len(values) == 0:
+                values = self.colors
 
-            elif self.attribute == 'color':  # random (existing) color
-                if self.existing_attribute:
-                    values = util.unique_list(entity.color.name for entity in world.entities if entity.color.name in self.colors)
-                else:
-                    values = self.colors
+        elif self.attribute == 'texture':  # random (existing) texture
+            if self.existing_attribute:
+                values = util.unique_list(entity.texture.name for entity in world.entities if entity.texture.name in self.textures and entity.texture.name != caption.value)
+            if not self.existing_attribute or len(values) == 0:
+                values = self.textures
 
-            elif self.attribute == 'texture':  # random (existing) texture
-                if self.existing_attribute:
-                    values = util.unique_list(entity.texture.name for entity in world.entities if entity.texture.name in self.textures)
-                else:
-                    values = self.textures
-
-            caption.value = choice(values)
+        caption.value = choice(values)
 
         caption.apply_to_predication(predication=predication)
 

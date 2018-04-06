@@ -1,5 +1,4 @@
 from __future__ import division
-from shapeworld import util
 from shapeworld.captions import Caption, Quantifier
 
 
@@ -31,9 +30,9 @@ class NumberBound(Caption):
         return num_predication
 
     def agreement(self, predication, world):
-        quant_predication = predication.get_sub_predication()
+        quant_predication = predication.get_sub_predication(0)
         quant_agreement = self.quantifier.agreement(predication=quant_predication, world=world)
-        num_predication = predication.get_sub_predication()
+        num_predication = predication.get_sub_predication(1)
 
         if num_predication.num_agreeing == self.bound:
             return quant_agreement

@@ -1,0 +1,600 @@
+exactly five yellow shapes are semicircles .
+exactly one blue shape is a blue semicircle .
+exactly one cyan shape is an ellipse .
+exactly five semicircles are yellow semicircles .
+exactly one cross is cyan .
+
+exactly one red shape is a cross .
+exactly two shapes are crosses .
+exactly five magenta shapes are ellipses .
+exactly one red shape is a cross .
+exactly three magenta shapes are ellipses .
+
+exactly zero semicircles are cyan .
+exactly one pentagon is blue .
+exactly three semicircles are red .
+exactly two shapes are pentagons .
+exactly zero cyan shapes are cyan pentagons .
+
+exactly one cyan shape is a cyan cross .
+exactly zero green shapes are semicircles .
+exactly three crosses are cyan crosses .
+exactly two semicircles are green semicircles .
+exactly two shapes are blue semicircles .
+
+exactly one semicircle is a cyan semicircle .
+exactly four shapes are gray pentagons .
+exactly two crosses are gray .
+exactly one circle is gray .
+exactly two gray shapes are semicircles .
+
+exactly four yellow shapes are yellow rectangles .
+exactly one yellow shape is a yellow semicircle .
+exactly one semicircle is yellow .
+exactly four rectangles are red rectangles .
+exactly one cross is yellow .
+
+exactly three red shapes are red triangles .
+exactly two squares are blue squares .
+exactly two red shapes are squares .
+exactly five blue shapes are squares .
+exactly one square is green .
+
+exactly five semicircles are green .
+exactly two green shapes are pentagons .
+exactly one green shape is a pentagon .
+exactly four green shapes are green semicircles .
+exactly four blue shapes are semicircles .
+
+exactly five shapes are green rectangles .
+exactly three rectangles are gray .
+exactly three gray shapes are gray crosses .
+exactly zero gray shapes are gray crosses .
+exactly three shapes are green rectangles .
+
+exactly one blue shape is an ellipse .
+exactly one gray shape is a rectangle .
+exactly three ellipses are magenta .
+exactly zero crosses are cyan crosses .
+exactly three blue shapes are ellipses .
+
+exactly one shape is a square .
+exactly one circle is magenta .
+exactly zero gray shapes are circles .
+exactly zero squares are red .
+exactly zero squares are yellow .
+
+exactly four shapes are cyan .
+exactly zero cyan shapes are cyan circles .
+exactly four cyan shapes are crosses .
+exactly four cyan shapes are ellipses .
+exactly one cyan shape is an ellipse .
+
+exactly two yellow shapes are semicircles .
+exactly four yellow shapes are rectangles .
+exactly five yellow shapes are yellow triangles .
+exactly four yellow shapes are semicircles .
+exactly four semicircles are yellow .
+
+exactly four cyan shapes are semicircles .
+exactly one ellipse is cyan .
+exactly zero cyan shapes are cyan semicircles .
+exactly one shape is cyan .
+exactly one circle is cyan .
+
+exactly zero circles are magenta .
+exactly three green shapes are circles .
+exactly zero circles are red .
+exactly five magenta shapes are circles .
+exactly three circles are red circles .
+
+exactly five crosses are blue .
+exactly two shapes are semicircles .
+exactly zero shapes are blue squares .
+exactly one green shape is a cross .
+exactly one square is red .
+
+exactly one blue shape is a triangle .
+exactly four shapes are cyan .
+exactly four blue shapes are triangles .
+exactly four blue shapes are rectangles .
+exactly three blue shapes are blue rectangles .
+
+exactly two semicircles are green semicircles .
+exactly zero green shapes are pentagons .
+exactly four green shapes are semicircles .
+exactly one ellipse is a yellow ellipse .
+exactly four semicircles are green .
+
+exactly zero rectangles are blue .
+exactly four green shapes are green triangles .
+exactly zero triangles are red .
+exactly zero red shapes are semicircles .
+exactly one green shape is a triangle .
+
+exactly two magenta shapes are magenta ellipses .
+exactly one circle is green .
+exactly two ellipses are yellow .
+exactly three circles are magenta .
+exactly three ellipses are yellow .
+
+exactly one magenta shape is a triangle .
+exactly zero triangles are cyan .
+exactly zero shapes are yellow squares .
+exactly four cyan shapes are squares .
+exactly five magenta shapes are triangles .
+
+exactly two rectangles are gray .
+exactly one magenta shape is a pentagon .
+exactly one magenta shape is a magenta rectangle .
+exactly three shapes are semicircles .
+exactly two gray shapes are ellipses .
+
+exactly five semicircles are cyan .
+exactly five cyan shapes are semicircles .
+exactly zero crosses are green crosses .
+exactly two semicircles are green .
+exactly five cyan shapes are triangles .
+
+exactly three semicircles are cyan .
+exactly five semicircles are cyan .
+exactly three ellipses are cyan .
+exactly four squares are yellow squares .
+exactly one cyan shape is a square .
+
+exactly five crosses are yellow .
+exactly two crosses are yellow .
+exactly one blue shape is a rectangle .
+exactly two crosses are yellow crosses .
+exactly two crosses are yellow .
+
+exactly zero gray shapes are triangles .
+exactly five semicircles are green .
+exactly zero semicircles are gray .
+exactly two semicircles are gray .
+exactly zero blue shapes are rectangles .
+
+exactly two triangles are magenta .
+exactly zero red shapes are crosses .
+exactly four magenta shapes are semicircles .
+exactly three gray shapes are triangles .
+exactly one cyan shape is a cross .
+
+exactly five green shapes are pentagons .
+exactly one red shape is a semicircle .
+exactly three shapes are blue .
+exactly two blue shapes are ellipses .
+exactly five ellipses are cyan .
+
+exactly one cross is cyan .
+exactly zero green shapes are semicircles .
+exactly zero red shapes are ellipses .
+exactly three ellipses are green .
+exactly five gray shapes are ellipses .
+
+exactly three blue shapes are ellipses .
+exactly one cross is blue .
+exactly two blue shapes are circles .
+exactly zero ellipses are blue .
+exactly zero crosses are red crosses .
+
+exactly zero gray shapes are crosses .
+exactly two gray shapes are pentagons .
+exactly one yellow shape is a circle .
+exactly three gray shapes are pentagons .
+exactly one blue shape is a circle .
+
+exactly three gray shapes are semicircles .
+exactly zero semicircles are gray .
+exactly one shape is a gray circle .
+exactly five red shapes are rectangles .
+exactly zero red shapes are pentagons .
+
+exactly three semicircles are green semicircles .
+exactly three semicircles are blue semicircles .
+exactly three semicircles are blue .
+exactly one green shape is a pentagon .
+exactly one pentagon is green .
+
+exactly five red shapes are red ellipses .
+exactly one rectangle is gray .
+exactly four red shapes are triangles .
+exactly five rectangles are cyan .
+exactly zero ellipses are blue ellipses .
+
+exactly five rectangles are green .
+exactly two gray shapes are rectangles .
+exactly one rectangle is green .
+exactly one rectangle is green .
+exactly zero green shapes are squares .
+
+exactly three rectangles are magenta .
+exactly zero blue shapes are circles .
+exactly four blue shapes are blue circles .
+exactly zero blue shapes are ellipses .
+exactly one rectangle is magenta .
+
+exactly zero magenta shapes are rectangles .
+exactly five ellipses are gray .
+exactly four rectangles are gray rectangles .
+exactly three shapes are semicircles .
+exactly four ellipses are magenta .
+
+exactly four ellipses are yellow .
+exactly zero yellow shapes are yellow rectangles .
+exactly two ellipses are magenta .
+exactly five magenta shapes are circles .
+exactly zero ellipses are blue ellipses .
+
+exactly zero squares are yellow .
+exactly one magenta shape is a square .
+exactly one square is magenta .
+exactly one magenta shape is a triangle .
+exactly three squares are magenta .
+
+exactly one shape is magenta .
+exactly one shape is a gray triangle .
+exactly three yellow shapes are circles .
+exactly two circles are yellow .
+exactly two yellow shapes are yellow circles .
+
+exactly five ellipses are green ellipses .
+exactly one green shape is a rectangle .
+exactly one red shape is a rectangle .
+exactly zero red shapes are red rectangles .
+exactly two ellipses are red .
+
+exactly five triangles are yellow .
+exactly two triangles are gray triangles .
+exactly two triangles are green .
+exactly four triangles are yellow .
+exactly two yellow shapes are triangles .
+
+exactly three shapes are magenta .
+exactly one cyan shape is a triangle .
+exactly two triangles are blue .
+exactly one magenta shape is a semicircle .
+exactly five triangles are blue triangles .
+
+exactly two pentagons are cyan .
+exactly one green shape is an ellipse .
+exactly four shapes are gray semicircles .
+exactly zero green shapes are semicircles .
+exactly three green shapes are semicircles .
+
+exactly three yellow shapes are yellow ellipses .
+exactly two crosses are gray .
+exactly zero yellow shapes are yellow squares .
+exactly four triangles are red .
+exactly three triangles are yellow .
+
+exactly four semicircles are red .
+exactly one square is a magenta square .
+exactly zero cyan shapes are crosses .
+exactly five semicircles are red .
+exactly zero red shapes are rectangles .
+
+exactly one magenta shape is a circle .
+exactly zero gray shapes are squares .
+exactly zero semicircles are cyan .
+exactly one gray shape is a semicircle .
+exactly one semicircle is yellow .
+
+exactly three blue shapes are semicircles .
+exactly zero shapes are blue semicircles .
+exactly one square is blue .
+exactly three semicircles are blue .
+exactly one green shape is a square .
+
+exactly four rectangles are yellow .
+exactly five rectangles are red .
+exactly five shapes are magenta .
+exactly one pentagon is green .
+exactly one pentagon is green .
+
+exactly five triangles are blue .
+exactly two triangles are red .
+exactly five triangles are blue .
+exactly one pentagon is blue .
+exactly zero triangles are green triangles .
+
+exactly zero squares are gray squares .
+exactly zero rectangles are cyan .
+exactly zero squares are blue squares .
+exactly one shape is a gray rectangle .
+exactly zero green shapes are squares .
+
+exactly one triangle is a red triangle .
+exactly one red shape is a cross .
+exactly zero red shapes are triangles .
+exactly five red shapes are semicircles .
+exactly zero shapes are blue rectangles .
+
+exactly four yellow shapes are yellow pentagons .
+exactly two ellipses are gray ellipses .
+exactly four yellow shapes are pentagons .
+exactly five magenta shapes are rectangles .
+exactly five magenta shapes are magenta circles .
+
+exactly five yellow shapes are yellow rectangles .
+exactly one green shape is a pentagon .
+exactly five rectangles are green .
+exactly one square is red .
+exactly zero green shapes are squares .
+
+exactly two blue shapes are semicircles .
+exactly one shape is gray .
+exactly one semicircle is blue .
+exactly zero shapes are gray semicircles .
+exactly zero gray shapes are crosses .
+
+exactly five semicircles are magenta .
+exactly one red shape is a rectangle .
+exactly five semicircles are magenta .
+exactly zero gray shapes are ellipses .
+exactly four squares are red .
+
+exactly two magenta shapes are semicircles .
+exactly five blue shapes are ellipses .
+exactly one shape is a rectangle .
+exactly zero ellipses are cyan .
+exactly five shapes are blue semicircles .
+
+exactly two red shapes are red rectangles .
+exactly three crosses are red .
+exactly one cross is cyan .
+exactly one cross is cyan .
+exactly zero shapes are red pentagons .
+
+exactly five ellipses are yellow .
+exactly zero yellow shapes are yellow triangles .
+exactly two gray shapes are circles .
+exactly one ellipse is red .
+exactly two gray shapes are pentagons .
+
+exactly two pentagons are blue .
+exactly three pentagons are blue .
+exactly five pentagons are blue .
+exactly two squares are blue .
+exactly two pentagons are blue .
+
+exactly three green shapes are pentagons .
+exactly two magenta shapes are pentagons .
+exactly one pentagon is green .
+exactly five green shapes are green pentagons .
+exactly one green shape is a triangle .
+
+exactly zero cyan shapes are cyan squares .
+exactly four triangles are cyan .
+exactly two shapes are magenta crosses .
+exactly zero cyan shapes are cyan rectangles .
+exactly two triangles are blue .
+
+exactly one circle is cyan .
+exactly zero yellow shapes are triangles .
+exactly five yellow shapes are ellipses .
+exactly four crosses are magenta crosses .
+exactly three yellow shapes are crosses .
+
+exactly zero triangles are blue .
+exactly three magenta shapes are triangles .
+exactly four triangles are blue .
+exactly four triangles are blue .
+exactly two shapes are gray .
+
+exactly five yellow shapes are semicircles .
+exactly five blue shapes are blue semicircles .
+exactly one blue shape is a semicircle .
+exactly four shapes are red semicircles .
+exactly four red shapes are semicircles .
+
+exactly five yellow shapes are triangles .
+exactly one shape is a cyan circle .
+exactly zero crosses are red crosses .
+exactly one rectangle is gray .
+exactly one cross is yellow .
+
+exactly zero magenta shapes are circles .
+exactly one rectangle is red .
+exactly two red shapes are pentagons .
+exactly one red shape is a circle .
+exactly zero shapes are red crosses .
+
+exactly four yellow shapes are triangles .
+exactly five ellipses are yellow .
+exactly four triangles are yellow triangles .
+exactly one ellipse is gray .
+exactly four triangles are green triangles .
+
+exactly two semicircles are cyan .
+exactly two shapes are gray pentagons .
+exactly two cyan shapes are pentagons .
+exactly three magenta shapes are semicircles .
+exactly two cyan shapes are cyan semicircles .
+
+exactly zero rectangles are cyan .
+exactly zero cyan shapes are ellipses .
+exactly zero green shapes are rectangles .
+exactly three green shapes are ellipses .
+exactly zero semicircles are green semicircles .
+
+exactly four triangles are green .
+exactly one ellipse is green .
+exactly zero yellow shapes are yellow crosses .
+exactly zero pentagons are yellow pentagons .
+exactly zero triangles are cyan .
+
+exactly four green shapes are circles .
+exactly one green shape is a semicircle .
+exactly four green shapes are squares .
+exactly zero gray shapes are squares .
+exactly one semicircle is green .
+
+exactly two circles are cyan circles .
+exactly four gray shapes are pentagons .
+exactly two circles are cyan circles .
+exactly three circles are gray .
+exactly three circles are magenta .
+
+exactly zero blue shapes are squares .
+exactly three triangles are gray .
+exactly five shapes are circles .
+exactly three blue shapes are rectangles .
+exactly two gray shapes are triangles .
+
+exactly one blue shape is a blue pentagon .
+exactly five blue shapes are blue ellipses .
+exactly zero rectangles are red .
+exactly one triangle is red .
+exactly two red shapes are rectangles .
+
+exactly two semicircles are green .
+exactly four red shapes are semicircles .
+exactly one red shape is a semicircle .
+exactly two semicircles are red semicircles .
+exactly two semicircles are green .
+
+exactly two shapes are yellow triangles .
+exactly one blue shape is a semicircle .
+exactly one semicircle is blue .
+exactly one blue shape is a semicircle .
+exactly one square is yellow .
+
+exactly zero rectangles are magenta rectangles .
+exactly one yellow shape is an ellipse .
+exactly two ellipses are yellow .
+exactly zero rectangles are blue .
+exactly five shapes are squares .
+
+exactly five magenta shapes are squares .
+exactly four red shapes are red squares .
+exactly one semicircle is yellow .
+exactly four red shapes are squares .
+exactly four red shapes are squares .
+
+exactly three shapes are gray squares .
+exactly three yellow shapes are triangles .
+exactly two shapes are gray triangles .
+exactly five squares are gray .
+exactly three squares are yellow .
+
+exactly two magenta shapes are ellipses .
+exactly five semicircles are green .
+exactly four semicircles are green .
+exactly zero ellipses are green .
+exactly two pentagons are red .
+
+exactly two yellow shapes are ellipses .
+exactly two shapes are yellow ellipses .
+exactly one green shape is a circle .
+exactly one blue shape is a circle .
+exactly one yellow shape is a circle .
+
+exactly zero shapes are magenta circles .
+exactly zero magenta shapes are pentagons .
+exactly five circles are blue .
+exactly three magenta shapes are circles .
+exactly one magenta shape is a magenta rectangle .
+
+exactly one shape is yellow .
+exactly three semicircles are yellow .
+exactly three cyan shapes are triangles .
+exactly two cyan shapes are squares .
+exactly zero squares are blue .
+
+exactly five green shapes are green semicircles .
+exactly zero green shapes are circles .
+exactly one cyan shape is a circle .
+exactly four gray shapes are circles .
+exactly five green shapes are circles .
+
+exactly three magenta shapes are crosses .
+exactly five ellipses are cyan .
+exactly three blue shapes are circles .
+exactly zero crosses are blue .
+exactly three crosses are blue .
+
+exactly three shapes are circles .
+exactly one square is gray .
+exactly one gray shape is a gray square .
+exactly one gray shape is a gray circle .
+exactly two squares are gray .
+
+exactly four blue shapes are triangles .
+exactly two semicircles are blue .
+exactly one green shape is a square .
+exactly two semicircles are blue .
+exactly four triangles are red triangles .
+
+exactly one cyan shape is a rectangle .
+exactly four ellipses are cyan .
+exactly two ellipses are yellow .
+exactly two green shapes are green ellipses .
+exactly zero ellipses are yellow ellipses .
+
+exactly five pentagons are cyan .
+exactly zero magenta shapes are pentagons .
+exactly four shapes are green pentagons .
+exactly four gray shapes are gray pentagons .
+exactly one shape is a red pentagon .
+
+exactly four green shapes are pentagons .
+exactly one triangle is a blue triangle .
+exactly one magenta shape is a triangle .
+exactly four cyan shapes are pentagons .
+exactly zero cyan shapes are circles .
+
+exactly five ellipses are green .
+exactly five crosses are gray .
+exactly two gray shapes are ellipses .
+exactly two ellipses are green .
+exactly five gray shapes are ellipses .
+
+exactly three ellipses are blue .
+exactly zero ellipses are red ellipses .
+exactly one cyan shape is a rectangle .
+exactly one rectangle is green .
+exactly three ellipses are cyan .
+
+exactly two cyan shapes are triangles .
+exactly one cyan shape is a cyan ellipse .
+exactly zero green shapes are triangles .
+exactly one ellipse is cyan .
+exactly one cyan shape is a triangle .
+
+exactly one triangle is gray .
+exactly two semicircles are yellow .
+exactly two yellow shapes are triangles .
+exactly zero ellipses are yellow .
+exactly one yellow shape is a semicircle .
+
+exactly five shapes are gray semicircles .
+exactly two ellipses are red .
+exactly two ellipses are yellow ellipses .
+exactly zero ellipses are magenta ellipses .
+exactly five semicircles are yellow semicircles .
+
+exactly one shape is a cross .
+exactly zero blue shapes are circles .
+exactly zero green shapes are green pentagons .
+exactly two red shapes are triangles .
+exactly two rectangles are green .
+
+exactly zero ellipses are yellow .
+exactly three ellipses are yellow .
+exactly two ellipses are magenta .
+exactly zero semicircles are gray .
+exactly zero green shapes are ellipses .
+
+exactly three circles are blue circles .
+exactly one yellow shape is a pentagon .
+exactly one circle is magenta .
+exactly two shapes are cyan .
+exactly zero blue shapes are pentagons .
+
+exactly zero magenta shapes are semicircles .
+exactly one shape is gray .
+exactly two semicircles are magenta .
+exactly four crosses are magenta .
+exactly one magenta shape is a pentagon .
+

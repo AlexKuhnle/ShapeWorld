@@ -1,0 +1,600 @@
+exactly a quarter of the blue shapes is an ellipse .
+exactly two thirds of the red shapes are ellipses .
+exactly no cyan shape is an ellipse .
+exactly half the ellipses are cyan .
+exactly a third of the blue shapes is an ellipse .
+
+exactly two thirds of the shapes are cyan rectangles .
+exactly two thirds of the yellow shapes are yellow ellipses .
+exactly two thirds of the yellow shapes are ellipses .
+exactly a quarter of the yellow shapes is an ellipse .
+exactly no shape is a yellow square .
+
+exactly half the triangles are cyan .
+exactly half the semicircles are gray .
+exactly a quarter of the semicircles is cyan .
+exactly three quarters of the cyan shapes are triangles .
+exactly no semicircle is gray .
+
+exactly a third of the green shapes is a rectangle .
+exactly all circles are magenta .
+exactly two thirds of the pentagons are green .
+exactly no yellow shape is a triangle .
+exactly no triangle is yellow .
+
+exactly three quarters of the green shapes are pentagons .
+exactly two thirds of the crosses are green .
+exactly all magenta shapes are magenta semicircles .
+exactly no magenta shape is a semicircle .
+exactly half the magenta shapes are semicircles .
+
+exactly a quarter of the pentagons is yellow .
+exactly all red shapes are circles .
+exactly a quarter of the pentagons is magenta .
+exactly a quarter of the rectangles is yellow .
+exactly half the yellow shapes are triangles .
+
+exactly no ellipse is a gray ellipse .
+exactly half the cyan shapes are cyan semicircles .
+exactly half the cyan shapes are semicircles .
+exactly half the semicircles are cyan .
+exactly a third of the gray shapes is a cross .
+
+exactly a third of the shapes is an ellipse .
+exactly no ellipse is blue .
+exactly no cyan shape is an ellipse .
+exactly two thirds of the ellipses are cyan .
+exactly two thirds of the ellipses are gray .
+
+exactly a quarter of the crosses is red .
+exactly half the green shapes are pentagons .
+exactly no cyan shape is an ellipse .
+exactly three quarters of the pentagons are cyan .
+exactly a quarter of the green shapes is a rectangle .
+
+exactly a third of the gray shapes is a square .
+exactly all cyan shapes are semicircles .
+exactly a quarter of the squares is cyan .
+exactly half the semicircles are gray .
+exactly a third of the rectangles is red .
+
+exactly no magenta shape is a pentagon .
+exactly all ellipses are red .
+exactly all ellipses are yellow .
+exactly no semicircle is a blue semicircle .
+exactly no shape is a yellow pentagon .
+
+exactly two thirds of the ellipses are green .
+exactly no ellipse is cyan .
+exactly a third of the yellow shapes is an ellipse .
+exactly no green shape is a green pentagon .
+exactly two thirds of the rectangles are yellow rectangles .
+
+exactly half the shapes are blue triangles .
+exactly no triangle is cyan .
+exactly no semicircle is yellow .
+exactly two thirds of the yellow shapes are triangles .
+exactly no blue shape is a triangle .
+
+exactly all rectangles are red .
+exactly a third of the cyan shapes is a semicircle .
+exactly half the cyan shapes are semicircles .
+exactly half the ellipses are cyan ellipses .
+exactly all cyan shapes are cyan rectangles .
+
+exactly half the semicircles are blue .
+exactly all circles are magenta .
+exactly two thirds of the cyan shapes are rectangles .
+exactly half the circles are blue .
+exactly two thirds of the cyan shapes are ellipses .
+
+exactly no gray shape is a rectangle .
+exactly all triangles are gray triangles .
+exactly no triangle is red .
+exactly two thirds of the gray shapes are pentagons .
+exactly all triangles are gray .
+
+exactly a quarter of the shapes is a red square .
+exactly no ellipse is a red ellipse .
+exactly no ellipse is green .
+exactly half the ellipses are green .
+exactly a third of the shapes is a yellow ellipse .
+
+exactly all cyan shapes are circles .
+exactly half the blue shapes are rectangles .
+exactly a third of the semicircles is a green semicircle .
+exactly no red shape is a semicircle .
+exactly half the cyan shapes are ellipses .
+
+exactly all pentagons are yellow .
+exactly a third of the circles is magenta .
+exactly all pentagons are blue .
+exactly no green shape is a green square .
+exactly no cyan shape is a cyan cross .
+
+exactly no magenta shape is a circle .
+exactly a quarter of the red shapes is a triangle .
+exactly all crosses are magenta .
+exactly a quarter of the red shapes is a red triangle .
+exactly no red shape is an ellipse .
+
+exactly a third of the green shapes is a square .
+exactly a third of the green shapes is a triangle .
+exactly half the green shapes are ellipses .
+exactly a quarter of the shapes is a cyan circle .
+exactly all gray shapes are triangles .
+
+exactly all gray shapes are squares .
+exactly all yellow shapes are yellow pentagons .
+exactly a third of the shapes is a red pentagon .
+exactly three quarters of the yellow shapes are rectangles .
+exactly all red shapes are semicircles .
+
+exactly a quarter of the rectangles is cyan .
+exactly all triangles are yellow .
+exactly no triangle is magenta .
+exactly half the rectangles are yellow .
+exactly half the rectangles are cyan rectangles .
+
+exactly three quarters of the shapes are semicircles .
+exactly no yellow shape is a circle .
+exactly half the semicircles are yellow .
+exactly half the squares are red .
+exactly all triangles are cyan .
+
+exactly all rectangles are yellow rectangles .
+exactly no yellow shape is a rectangle .
+exactly a third of the gray shapes is a triangle .
+exactly three quarters of the semicircles are gray .
+exactly no triangle is magenta .
+
+exactly no triangle is cyan .
+exactly two thirds of the cyan shapes are triangles .
+exactly no triangle is yellow .
+exactly all cyan shapes are cyan triangles .
+exactly all rectangles are green rectangles .
+
+exactly three quarters of the yellow shapes are pentagons .
+exactly no cyan shape is a cross .
+exactly three quarters of the yellow shapes are yellow pentagons .
+exactly three quarters of the yellow shapes are rectangles .
+exactly three quarters of the pentagons are yellow .
+
+exactly a third of the shapes is a magenta rectangle .
+exactly half the green shapes are green ellipses .
+exactly all triangles are green .
+exactly three quarters of the squares are magenta .
+exactly a third of the magenta shapes is a triangle .
+
+exactly no ellipse is a gray ellipse .
+exactly a quarter of the rectangles is gray .
+exactly no gray shape is a gray semicircle .
+exactly all squares are gray .
+exactly two thirds of the squares are red .
+
+exactly three quarters of the rectangles are blue rectangles .
+exactly all squares are cyan .
+exactly a third of the yellow shapes is a pentagon .
+exactly a quarter of the yellow shapes is a rectangle .
+exactly a third of the semicircles is gray .
+
+exactly three quarters of the ellipses are magenta .
+exactly two thirds of the gray shapes are ellipses .
+exactly no semicircle is a red semicircle .
+exactly no triangle is magenta .
+exactly a third of the gray shapes is a cross .
+
+exactly no blue shape is a square .
+exactly three quarters of the blue shapes are blue crosses .
+exactly no triangle is a green triangle .
+exactly three quarters of the blue shapes are crosses .
+exactly three quarters of the squares are blue .
+
+exactly a third of the shapes is a blue ellipse .
+exactly no shape is yellow .
+exactly no cyan shape is a rectangle .
+exactly a third of the triangles is a green triangle .
+exactly a quarter of the gray shapes is a gray cross .
+
+exactly no shape is a yellow cross .
+exactly a third of the crosses is cyan .
+exactly no cyan shape is a square .
+exactly all magenta shapes are rectangles .
+exactly no ellipse is magenta .
+
+exactly all magenta shapes are semicircles .
+exactly all gray shapes are gray triangles .
+exactly half the magenta shapes are semicircles .
+exactly no gray shape is a cross .
+exactly a third of the circles is gray .
+
+exactly a quarter of the cyan shapes is a triangle .
+exactly no circle is gray .
+exactly no shape is a square .
+exactly all triangles are magenta .
+exactly a quarter of the semicircles is green .
+
+exactly all pentagons are cyan .
+exactly two thirds of the cyan shapes are rectangles .
+exactly no cyan shape is a circle .
+exactly two thirds of the cyan shapes are triangles .
+exactly no semicircle is cyan .
+
+exactly a quarter of the ellipses is green .
+exactly half the gray shapes are pentagons .
+exactly three quarters of the ellipses are green .
+exactly all green shapes are ellipses .
+exactly all green shapes are ellipses .
+
+exactly a third of the shapes is a semicircle .
+exactly no shape is gray .
+exactly a third of the triangles is red .
+exactly no ellipse is a yellow ellipse .
+exactly a quarter of the triangles is a gray triangle .
+
+exactly three quarters of the semicircles are yellow .
+exactly a quarter of the green shapes is a green semicircle .
+exactly all yellow shapes are yellow semicircles .
+exactly all green shapes are ellipses .
+exactly no yellow shape is an ellipse .
+
+exactly half the rectangles are gray rectangles .
+exactly all blue shapes are semicircles .
+exactly half the rectangles are gray rectangles .
+exactly two thirds of the semicircles are green .
+exactly all yellow shapes are yellow semicircles .
+
+exactly half the green shapes are squares .
+exactly half the yellow shapes are ellipses .
+exactly a third of the blue shapes is a pentagon .
+exactly a quarter of the magenta shapes is an ellipse .
+exactly no square is gray .
+
+exactly no cross is red .
+exactly half the circles are yellow .
+exactly three quarters of the cyan shapes are crosses .
+exactly no shape is a pentagon .
+exactly two thirds of the cyan shapes are semicircles .
+
+exactly three quarters of the shapes are red circles .
+exactly two thirds of the circles are red .
+exactly two thirds of the circles are red .
+exactly all squares are red .
+exactly a quarter of the shapes is green .
+
+exactly half the rectangles are magenta .
+exactly three quarters of the semicircles are yellow .
+exactly a third of the yellow shapes is a rectangle .
+exactly half the rectangles are red .
+exactly no pentagon is yellow .
+
+exactly a quarter of the shapes is a yellow semicircle .
+exactly no cyan shape is a triangle .
+exactly three quarters of the semicircles are red .
+exactly all cyan shapes are semicircles .
+exactly half the pentagons are cyan .
+
+exactly no cyan shape is a pentagon .
+exactly no shape is a cyan square .
+exactly all gray shapes are pentagons .
+exactly no red shape is a circle .
+exactly no pentagon is cyan .
+
+exactly half the blue shapes are squares .
+exactly half the cyan shapes are squares .
+exactly no shape is a blue rectangle .
+exactly all blue shapes are ellipses .
+exactly no ellipse is green .
+
+exactly a third of the shapes is a green ellipse .
+exactly half the semicircles are red .
+exactly a quarter of the red shapes is a semicircle .
+exactly half the semicircles are green .
+exactly half the red shapes are ellipses .
+
+exactly two thirds of the green shapes are semicircles .
+exactly no triangle is cyan .
+exactly all magenta shapes are pentagons .
+exactly two thirds of the green shapes are green semicircles .
+exactly no green shape is a semicircle .
+
+exactly two thirds of the rectangles are cyan .
+exactly half the squares are blue .
+exactly no gray shape is a semicircle .
+exactly two thirds of the ellipses are gray ellipses .
+exactly a third of the ellipses is green .
+
+exactly a third of the crosses is magenta .
+exactly all triangles are magenta .
+exactly a third of the gray shapes is a semicircle .
+exactly two thirds of the circles are magenta circles .
+exactly no gray shape is a cross .
+
+exactly a quarter of the magenta shapes is a magenta cross .
+exactly three quarters of the circles are green circles .
+exactly all triangles are magenta .
+exactly a quarter of the circles is gray .
+exactly no gray shape is a gray square .
+
+exactly a quarter of the rectangles is red .
+exactly two thirds of the crosses are gray crosses .
+exactly half the red shapes are triangles .
+exactly half the crosses are cyan .
+exactly no gray shape is a gray pentagon .
+
+exactly all blue shapes are circles .
+exactly half the circles are cyan .
+exactly no magenta shape is a circle .
+exactly half the squares are green .
+exactly all squares are yellow .
+
+exactly no square is cyan .
+exactly three quarters of the semicircles are yellow .
+exactly a quarter of the circles is red .
+exactly all magenta shapes are circles .
+exactly all circles are red .
+
+exactly three quarters of the circles are red .
+exactly no cross is a cyan cross .
+exactly three quarters of the circles are red .
+exactly all pentagons are gray pentagons .
+exactly a quarter of the shapes is a red circle .
+
+exactly a third of the ellipses is a yellow ellipse .
+exactly half the cyan shapes are rectangles .
+exactly no cyan shape is a cyan triangle .
+exactly three quarters of the cyan shapes are rectangles .
+exactly half the red shapes are red triangles .
+
+exactly all circles are blue .
+exactly all squares are cyan .
+exactly no yellow shape is a semicircle .
+exactly all squares are yellow .
+exactly two thirds of the circles are blue .
+
+exactly two thirds of the blue shapes are triangles .
+exactly a quarter of the magenta shapes is a square .
+exactly no blue shape is a triangle .
+exactly no rectangle is yellow .
+exactly all yellow shapes are squares .
+
+exactly three quarters of the green shapes are circles .
+exactly all magenta shapes are pentagons .
+exactly a quarter of the circles is cyan .
+exactly no cyan shape is an ellipse .
+exactly all magenta shapes are magenta pentagons .
+
+exactly no semicircle is red .
+exactly half the crosses are blue .
+exactly all circles are magenta .
+exactly no red shape is a pentagon .
+exactly half the crosses are green .
+
+exactly three quarters of the shapes are magenta .
+exactly half the rectangles are green .
+exactly no triangle is magenta .
+exactly half the green shapes are pentagons .
+exactly half the green shapes are green pentagons .
+
+exactly all magenta shapes are ellipses .
+exactly half the magenta shapes are semicircles .
+exactly no triangle is green .
+exactly half the yellow shapes are yellow rectangles .
+exactly a third of the yellow shapes is a semicircle .
+
+exactly a quarter of the pentagons is cyan .
+exactly all magenta shapes are rectangles .
+exactly three quarters of the squares are blue .
+exactly no cyan shape is a triangle .
+exactly no blue shape is a square .
+
+exactly no pentagon is magenta .
+exactly no circle is a yellow circle .
+exactly half the magenta shapes are circles .
+exactly no rectangle is blue .
+exactly half the magenta shapes are pentagons .
+
+exactly a third of the yellow shapes is a triangle .
+exactly no yellow shape is a cross .
+exactly all blue shapes are rectangles .
+exactly three quarters of the triangles are gray .
+exactly all blue shapes are blue rectangles .
+
+exactly all magenta shapes are triangles .
+exactly no shape is a magenta triangle .
+exactly three quarters of the circles are magenta .
+exactly no semicircle is magenta .
+exactly all magenta shapes are triangles .
+
+exactly two thirds of the circles are yellow .
+exactly all ellipses are blue .
+exactly no circle is yellow .
+exactly no circle is a cyan circle .
+exactly half the crosses are cyan .
+
+exactly no blue shape is a pentagon .
+exactly a third of the magenta shapes is a cross .
+exactly half the triangles are magenta triangles .
+exactly a third of the blue shapes is a square .
+exactly no shape is a gray triangle .
+
+exactly a third of the cyan shapes is a circle .
+exactly two thirds of the cyan shapes are triangles .
+exactly half the triangles are green .
+exactly no circle is green .
+exactly no green shape is a triangle .
+
+exactly a third of the crosses is blue .
+exactly no green shape is an ellipse .
+exactly half the yellow shapes are semicircles .
+exactly half the cyan shapes are squares .
+exactly no ellipse is green .
+
+exactly all magenta shapes are triangles .
+exactly a quarter of the red shapes is a circle .
+exactly no circle is gray .
+exactly a third of the circles is magenta .
+exactly a quarter of the red shapes is a circle .
+
+exactly a third of the shapes is a semicircle .
+exactly no gray shape is a cross .
+exactly no semicircle is red .
+exactly no gray shape is a circle .
+exactly all red shapes are red circles .
+
+exactly three quarters of the rectangles are magenta .
+exactly three quarters of the magenta shapes are rectangles .
+exactly half the rectangles are cyan rectangles .
+exactly no rectangle is a blue rectangle .
+exactly a quarter of the rectangles is cyan .
+
+exactly two thirds of the ellipses are green .
+exactly two thirds of the gray shapes are triangles .
+exactly two thirds of the ellipses are green .
+exactly half the green shapes are ellipses .
+exactly no triangle is green .
+
+exactly a third of the green shapes is a green rectangle .
+exactly a quarter of the blue shapes is an ellipse .
+exactly a quarter of the gray shapes is an ellipse .
+exactly no rectangle is green .
+exactly all magenta shapes are ellipses .
+
+exactly no green shape is a green semicircle .
+exactly no semicircle is blue .
+exactly all blue shapes are blue triangles .
+exactly all blue shapes are triangles .
+exactly no red shape is a semicircle .
+
+exactly two thirds of the cyan shapes are triangles .
+exactly half the cyan shapes are cyan ellipses .
+exactly a third of the cyan shapes is a cross .
+exactly no shape is a semicircle .
+exactly a quarter of the cyan shapes is a cross .
+
+exactly three quarters of the ellipses are gray .
+exactly no yellow shape is a semicircle .
+exactly no shape is blue .
+exactly half the ellipses are green .
+exactly a third of the shapes is a pentagon .
+
+exactly half the ellipses are green .
+exactly half the yellow shapes are pentagons .
+exactly half the ellipses are yellow .
+exactly no yellow shape is a yellow ellipse .
+exactly all squares are magenta .
+
+exactly two thirds of the triangles are cyan .
+exactly no pentagon is cyan .
+exactly half the circles are gray circles .
+exactly all squares are cyan .
+exactly a third of the triangles is gray .
+
+exactly half the green shapes are circles .
+exactly half the circles are gray circles .
+exactly two thirds of the green shapes are pentagons .
+exactly a third of the gray shapes is a semicircle .
+exactly no green shape is a semicircle .
+
+exactly two thirds of the semicircles are cyan .
+exactly all rectangles are magenta .
+exactly no yellow shape is a yellow cross .
+exactly half the cyan shapes are crosses .
+exactly no semicircle is green .
+
+exactly two thirds of the magenta shapes are magenta ellipses .
+exactly a quarter of the magenta shapes is an ellipse .
+exactly all ellipses are magenta .
+exactly a third of the shapes is a pentagon .
+exactly a third of the semicircles is magenta .
+
+exactly three quarters of the shapes are green .
+exactly all green shapes are green ellipses .
+exactly no green shape is a green square .
+exactly half the green shapes are semicircles .
+exactly all ellipses are green .
+
+exactly three quarters of the magenta shapes are crosses .
+exactly a third of the green shapes is a cross .
+exactly all gray shapes are gray semicircles .
+exactly all squares are green .
+exactly half the pentagons are red .
+
+exactly three quarters of the rectangles are cyan .
+exactly no rectangle is red .
+exactly three quarters of the rectangles are cyan .
+exactly half the triangles are cyan .
+exactly no shape is a semicircle .
+
+exactly three quarters of the ellipses are magenta .
+exactly half the magenta shapes are ellipses .
+exactly a third of the red shapes is a triangle .
+exactly three quarters of the red shapes are triangles .
+exactly no gray shape is a square .
+
+exactly all magenta shapes are ellipses .
+exactly half the cyan shapes are crosses .
+exactly no magenta shape is a magenta triangle .
+exactly no cyan shape is an ellipse .
+exactly all gray shapes are ellipses .
+
+exactly two thirds of the pentagons are magenta .
+exactly a third of the red shapes is a triangle .
+exactly half the semicircles are red .
+exactly a third of the pentagons is red .
+exactly a third of the rectangles is green .
+
+exactly a quarter of the semicircles is a blue semicircle .
+exactly half the cyan shapes are cyan circles .
+exactly two thirds of the cyan shapes are semicircles .
+exactly three quarters of the semicircles are red .
+exactly a quarter of the semicircles is a magenta semicircle .
+
+exactly three quarters of the yellow shapes are circles .
+exactly all red shapes are squares .
+exactly all semicircles are magenta .
+exactly two thirds of the blue shapes are pentagons .
+exactly no yellow shape is a yellow triangle .
+
+exactly a third of the gray shapes is a gray ellipse .
+exactly all yellow shapes are pentagons .
+exactly a quarter of the magenta shapes is an ellipse .
+exactly no red shape is a square .
+exactly no yellow shape is a rectangle .
+
+exactly no cyan shape is a cyan semicircle .
+exactly half the yellow shapes are ellipses .
+exactly no shape is red .
+exactly all pentagons are gray .
+exactly all rectangles are yellow .
+
+exactly half the cyan shapes are pentagons .
+exactly a quarter of the pentagons is a red pentagon .
+exactly a third of the rectangles is red .
+exactly no pentagon is red .
+exactly a third of the gray shapes is a rectangle .
+
+exactly all squares are gray .
+exactly a third of the squares is a gray square .
+exactly three quarters of the green shapes are ellipses .
+exactly all cyan shapes are cyan ellipses .
+exactly no ellipse is blue .
+
+exactly three quarters of the shapes are magenta .
+exactly a quarter of the triangles is a yellow triangle .
+exactly all yellow shapes are ellipses .
+exactly a quarter of the ellipses is green .
+exactly a third of the yellow shapes is a yellow ellipse .
+
+exactly all ellipses are blue .
+exactly all yellow shapes are triangles .
+exactly no magenta shape is a semicircle .
+exactly all semicircles are blue .
+exactly all ellipses are blue .
+
+exactly a quarter of the cyan shapes is a semicircle .
+exactly a third of the cyan shapes is a cross .
+exactly all semicircles are magenta .
+exactly no cyan shape is a square .
+exactly half the crosses are magenta .
+

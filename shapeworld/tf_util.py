@@ -2,6 +2,7 @@ import tensorflow as tf
 from shapeworld import util
 from shapeworld.dataset import LoadedDataset
 
+
 options = tf.python_io.TFRecordOptions(compression_type=tf.python_io.TFRecordCompressionType.GZIP)
 
 

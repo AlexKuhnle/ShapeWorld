@@ -7,13 +7,24 @@ from shapeworld.captioners import WorldCaptioner
 class ComparativeQuantifierCaptioner(WorldCaptioner):
 
     # incorrect modes
-    # 0: correct
-    # 1: incorrect restrictor
-    # 2: incorrect comparison
-    # 3: incorrect body
-    # 4: incorrect quantifier
+    # 0: incorrect restrictor
+    # 1: incorrect comparison
+    # 2: incorrect body
+    # 3: incorrect quantifier
 
-    def __init__(self, restrictor_captioner, comparison_captioner, body_captioner, quantifier_types=None, incorrect_distribution=None, pragmatical_redundancy_rate=None, pragmatical_tautology_rate=None, logical_redundancy_rate=None, logical_tautology_rate=None, logical_contradiction_rate=None):
+    def __init__(
+        self,
+        restrictor_captioner,
+        comparison_captioner,
+        body_captioner,
+        pragmatical_redundancy_rate=1.0,
+        pragmatical_tautology_rate=0.0,
+        logical_redundancy_rate=1.0,
+        logical_tautology_rate=0.0,
+        logical_contradiction_rate=0.0,
+        comparative_quantifiers=None,
+        incorrect_distribution=(1, 1, 1, 3)
+    ):
         super(ComparativeQuantifierCaptioner, self).__init__(
             internal_captioners=(restrictor_captioner, comparison_captioner, body_captioner),
             pragmatical_redundancy_rate=pragmatical_redundancy_rate,
@@ -26,17 +37,23 @@ class ComparativeQuantifierCaptioner(WorldCaptioner):
         self.restrictor_captioner = restrictor_captioner
         self.comparison_captioner = comparison_captioner
         self.body_captioner = body_captioner
-        self.quantifier_types = quantifier_types
-        self.incorrect_distribution = util.cumulative_distribution(util.value_or_default(incorrect_distribution, [1, 1, 1, 3]))
+        self.comparative_quantifiers = comparative_quantifiers
+        self.incorrect_distribution = util.cumulative_distribution(incorrect_distribution)
 
     def set_realizer(self, realizer):
         if not super(ComparativeQuantifierCaptioner, self).set_realizer(realizer):
             return False
 
-        if self.quantifier_types is None:
-            self.quantifiers = [(qtype, qrange, quantity) for qtype, qranges in realizer.comparative_quantifiers.items() for qrange, quantities in qranges.items() for quantity in quantities]
+        if self.comparative_quantifiers is None:
+            self.comparative_quantifiers = [(qtype, qrange, quantity) for qtype, qranges in realizer.comparative_quantifiers.items() for qrange, quantities in qranges.items() for quantity in quantities]
         else:
-            self.quantifiers = [(qtype, qrange, quantity) for qtype, qranges in realizer.comparative_quantifiers.items() if qtype in self.quantifier_types for qrange, quantities in qranges.items() for quantity in quantities]
+            assert len(self.comparative_quantifiers) == 3
+            self.comparative_quantifiers = [
+                (qtype, qrange, quantity)
+                for qtype, qranges in realizer.comparative_quantifiers.items() if self.comparative_quantifiers[0] is None or qtype in self.comparative_quantifiers[0]
+                for qrange, quantities in qranges.items() if self.comparative_quantifiers[1] is None or qrange in self.comparative_quantifiers[1]
+                for quantity in quantities if self.comparative_quantifiers[2] is None or quantity in self.comparative_quantifiers[2]
+            ]
 
         return True
 
@@ -44,37 +61,37 @@ class ComparativeQuantifierCaptioner(WorldCaptioner):
         return self.restrictor_captioner.rpn_length() + self.comparison_captioner.rpn_length() + self.body_captioner.rpn_length() + 1
 
     def rpn_symbols(self):
-        return super(ComparativeQuantifierCaptioner, self).rpn_symbols() | {'{}-{}-{}-{}'.format(ComparativeQuantifier.__name__, *quantifier[:3 - int(quantifier[0] == 'composed')]) for quantifier in self.quantifiers}
+        return super(ComparativeQuantifierCaptioner, self).rpn_symbols() | {'{}-{}-{}-{}'.format(ComparativeQuantifier.__name__, *quantifier[:3 - int(quantifier[0] == 'composed')]) for quantifier in self.comparative_quantifiers}
 
-    def sample_values(self, mode, correct, predication):
+    def sample_values(self, mode, predication):
         assert predication.empty()
 
-        if not super(ComparativeQuantifierCaptioner, self).sample_values(mode=mode, correct=correct, predication=predication):
+        if not super(ComparativeQuantifierCaptioner, self).sample_values(mode=mode, predication=predication):
             return False
 
-        self.incorrect_mode = 0 if correct else 1 + util.sample(self.incorrect_distribution)
+        self.incorrect_mode = util.sample(self.incorrect_distribution)
 
-        self.qtype, self.qrange, self.quantity = choice(self.quantifiers)
+        self.qtype, self.qrange, self.quantity = choice(self.comparative_quantifiers)
 
         for _ in range(self.__class__.MAX_SAMPLE_ATTEMPTS):
             rstr_predication = predication.copy()
             comp_predication = predication.copy()
 
-            if not self.restrictor_captioner.sample_values(mode=mode, correct=(self.incorrect_mode != 1), predication=rstr_predication):  # 1: incorrect restrictor
+            if not self.restrictor_captioner.sample_values(mode=mode, predication=rstr_predication):
                 return False
 
-            if not self.comparison_captioner.sample_values(mode=mode, correct=(self.incorrect_mode != 2), predication=comp_predication):  # 2: incorrect comparison
+            if not self.comparison_captioner.sample_values(mode=mode, predication=comp_predication):
                 return False
 
             union_predication = rstr_predication.union(other=comp_predication)
 
-            if self.body_captioner.sample_values(mode=mode, correct=(self.incorrect_mode != 3), predication=union_predication):  # 3: incorrect body
+            if self.body_captioner.sample_values(mode=mode, predication=union_predication):
                 break
         else:
             return False
 
-        if self.incorrect_mode == 4:  # 4: incorrect quantifier
-            self.incorrect_quantifiers = [(qtype, qrange, quantity) for qtype, qrange, quantity in self.quantifiers if qtype != self.qtype or qrange != self.qrange or quantity != self.quantity]
+        if self.incorrect_mode == 3:  # 3: incorrect quantifier
+            self.incorrect_quantifiers = [(qtype, qrange, quantity) for qtype, qrange, quantity in self.comparative_quantifiers if qtype != self.qtype or qrange != self.qrange or quantity != self.quantity]
 
         return True
 
@@ -119,6 +136,9 @@ class ComparativeQuantifierCaptioner(WorldCaptioner):
             return None
         comparison.apply_to_predication(predication=comp_predication)
 
+        if self.quantity < 0 and -self.quantity > rstr_body_predication.num_agreeing:
+            return None
+
         if rstr_predication.equals(other=comp_predication):
             # restrictor and comparison should not be equal
             return None
@@ -131,10 +151,7 @@ class ComparativeQuantifierCaptioner(WorldCaptioner):
     def incorrect(self, caption, predication, world):
         assert predication.empty()
 
-        if self.incorrect_mode == 0:  # 0: correct
-            rstr_predication, comp_predication, body_predication = caption.apply_to_predication(predication=predication)
-
-        elif self.incorrect_mode == 1:  # 1: incorrect restrictor
+        if self.incorrect_mode == 0:  # 0: incorrect restrictor
             rstr_predication = predication.sub_predication()
             if not self.restrictor_captioner.incorrect(caption=caption.restrictor, predication=rstr_predication, world=world):
                 return False
@@ -149,7 +166,7 @@ class ComparativeQuantifierCaptioner(WorldCaptioner):
             body_predication = predication.sub_predication()
             caption.body.apply_to_predication(predication=body_predication)
 
-        elif self.incorrect_mode == 2:  # 2: incorrect comparison
+        elif self.incorrect_mode == 1:  # 1: incorrect comparison
             rstr_predication = predication.sub_predication()
             caption.restrictor.apply_to_predication(predication=rstr_predication)
             rstr_body_predication = predication.sub_predication(predication=rstr_predication.copy())
@@ -164,7 +181,7 @@ class ComparativeQuantifierCaptioner(WorldCaptioner):
             body_predication = predication.sub_predication()
             caption.body.apply_to_predication(predication=body_predication)
 
-        elif self.incorrect_mode == 3:  # 3: incorrect body
+        elif self.incorrect_mode == 2:  # 2: incorrect body
             rstr_predication = predication.sub_predication()
             caption.restrictor.apply_to_predication(predication=rstr_predication)
             rstr_body_predication = predication.sub_predication(predication=rstr_predication.copy())
@@ -182,15 +199,18 @@ class ComparativeQuantifierCaptioner(WorldCaptioner):
             body_predication = predication.sub_predication()
             caption.body.apply_to_predication(predication=body_predication)
 
-        elif self.incorrect_mode == 4:  # 4: incorrect quantifier
-            rstr_predication, comp_predication, body_predication = caption.apply_to_predication(predication=predication)
-            caption.qtype, caption.qrange, caption.quantity = choice(self.quantifiers)
+        elif self.incorrect_mode == 3:  # 3: incorrect quantifier
+            caption.qtype, caption.qrange, caption.quantity = choice(self.comparative_quantifiers)
+            rstr_predication, rstr_body_predication, comp_predication, _, body_predication = caption.apply_to_predication(predication=predication)
+
+        if caption.quantity < 0 and -caption.quantity > rstr_body_predication.num_agreeing:
+            return False
 
         if rstr_predication.equals(other=comp_predication):
             # restrictor and comparison should not be equal
-            return None
+            return False
 
         if not self.pragmatical_tautology and (rstr_predication.equals(other=body_predication) or comp_predication.equals(other=body_predication)):
-            return None
+            return False
 
         return True

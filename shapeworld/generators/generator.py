@@ -18,7 +18,7 @@ class WorldGenerator(object):
         shade_range=0.4,
         collision_tolerance=0.25,
         collision_shade_difference=0.5,
-        boundary_tolerance=0.25
+        boundary_tolerance=None
     ):
         assert world_color not in colors
         self.world_size = world_size
@@ -32,7 +32,7 @@ class WorldGenerator(object):
         self.shade_range = shade_range
         self.collision_tolerance = collision_tolerance
         self.collision_shade_difference = collision_shade_difference
-        self.boundary_tolerance = boundary_tolerance
+        self.boundary_tolerance = util.value_or_default(boundary_tolerance, self.collision_tolerance)
 
     def __str__(self):
         return self.__class__.__name__
@@ -69,7 +69,14 @@ class WorldGenerator(object):
 
 class GeneratorMixer(WorldGenerator):
 
-    def __init__(self, generators, distribution=None, train_distribution=None, validation_distribution=None, test_distribution=None):
+    def __init__(
+        self,
+        generators,
+        distribution=None,
+        train_distribution=None,
+        validation_distribution=None,
+        test_distribution=None
+    ):
         assert len(generators) >= 1
         assert all(generator.world_size == generators[0].world_size for generator in generators)
         assert not distribution or len(distribution) == len(generators)

@@ -193,7 +193,9 @@ class Dmrs(ListDmrs):
                 variables[node.nodeid] = (node.sortinfo.cvarsort + str(index), node.sortinfo)
 
         args = dict()
-        hcons = {0: labels[self.top.nodeid]}
+        hcons = dict()
+        if self.top is not None:
+            hcons[0] = labels[self.top.nodeid]
         for link in self.iter_links():
             if link.start not in args and link.rargname is not None:
                 args[link.start] = dict()

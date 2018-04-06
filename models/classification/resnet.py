@@ -3,7 +3,7 @@ from models.TFMacros.tf_macros import *
 
 def model(model, inputs, dataset_parameters, resnet_size, resnet_depth, resnet_block_depth, world_reduction, mlp_size, mlp_depth, soft):
 
-    assert not dataset_parameters['class_count']
+    assert not dataset_parameters['count_class']
     resnet_sizes = [resnet_size * 2**n for n in range(resnet_depth)]
     resnet_depths = [resnet_block_depth for _ in range(resnet_depth)]
     mlp_sizes = [mlp_size for _ in range(mlp_depth)]

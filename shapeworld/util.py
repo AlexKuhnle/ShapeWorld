@@ -1,6 +1,7 @@
 from __future__ import division
 from collections import Counter, namedtuple
 from itertools import chain, combinations
+import json
 from math import ceil, cos, floor, pi, sin, sqrt, trunc
 from operator import __truediv__
 import os
@@ -10,11 +11,43 @@ import time
 import zipfile
 
 
+_version = 2
+_debug = False
+
+
+def v1():
+    global _version
+    return _version == 1
+
+
+def v2():
+    global _version
+    return _version == 2
+
+
+def set_version(v):
+    global _version
+    _version = v
+
+
+def debug():
+    global _debug
+    return _debug
+
+
 def value_or_default(value, default):
     if value is None:
         return default
     else:
         return value
+
+
+def class_name(string):
+    return ''.join(part[0].upper() + part[1:] for part in string.split('_'))
+
+
+def real_name(string):
+    return string[0].lower() + ''.join('_' + char.lower() if char.isupper() else char for char in string[1:])
 
 
 def negative_response(response):
@@ -64,18 +97,10 @@ def parse_config(values):
             key = key[2:].replace('-', '_')
         else:
             key = key.replace('-', '_')
-        if value == 'true' or value == 'True':
-            value = True
-        elif value == 'false' or value == 'False':
-            value = False
         try:
-            value = int(value)
-        except ValueError:
-            try:
-                value = float(value)
-            except ValueError:
-                pass
-        config[key] = value
+            config[key] = json.loads(value)
+        except json.decoder.JSONDecodeError:
+            config[key] = value
     return config
 
 

@@ -3,7 +3,7 @@ from shapeworld.dataset import Dataset
 from shapeworld.datasets import nlvr_util
 
 
-class NLVR(Dataset):
+class NlvrDataset(Dataset):
 
     def __init__(self, directory, pixel_noise_stddev=0.0):
         values = dict(world1='world', world2='world', world3='world', world_model1='model', world_model2='model', world_model3='model', description='language', description_length='int', description_model='model', agreement='float')
@@ -14,7 +14,7 @@ class NLVR(Dataset):
             self.description_size = max(self.description_size, len(description))
             vocabulary.update(description)
         vocabularies = dict(language=sorted(vocabulary))
-        super(NLVR, self).__init__(values=values, world_size=world_size, pixel_noise_stddev=pixel_noise_stddev, vectors=dict(description=self.description_size), vocabularies=vocabularies)
+        super(NlvrDataset, self).__init__(values=values, world_size=world_size, pixel_noise_stddev=pixel_noise_stddev, vectors=dict(description=self.description_size), vocabularies=vocabularies)
         self.nlvr = {mode: nlvr_util.nlvr(directory=directory, mode=mode) for mode in ('train', 'validation', 'test')}
 
     @property
@@ -76,6 +76,3 @@ class NLVR(Dataset):
             data=''.join(data_html)
         )
         return html
-
-
-dataset = NLVR

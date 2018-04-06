@@ -4,7 +4,7 @@ from shapeworld.dataset import Dataset
 from shapeworld.datasets import clevr_util
 
 
-class CLEVR(Dataset):
+class ClevrDataset(Dataset):
 
     def __init__(self, directory, parts=None, pixel_noise_stddev=0.0):
         parts = parts.split(',')
@@ -22,7 +22,7 @@ class CLEVR(Dataset):
         self.answers = sorted(unique_answers)
         self.answers.append('[UNKNOWN]')
         self.num_answers = len(self.answers)
-        super(CLEVR, self).__init__(values=values, world_size=world_size, pixel_noise_stddev=pixel_noise_stddev, vectors=dict(question=self.question_size), vocabularies=vocabularies)
+        super(ClevrDataset, self).__init__(values=values, world_size=world_size, pixel_noise_stddev=pixel_noise_stddev, vectors=dict(question=self.question_size), vocabularies=vocabularies)
         self.clevr = {mode: clevr_util.clevr(directory=directory, parts=parts, mode=mode) for mode in ('train', 'validation', 'test')}
 
     @property
@@ -34,7 +34,7 @@ class CLEVR(Dataset):
         return 'clevr_classification'
 
     def specification(self):
-        specification = super(CLEVR, self).specification()
+        specification = super(ClevrDataset, self).specification()
         specification['answers'] = self.answers
         return specification
 
@@ -106,6 +106,3 @@ class CLEVR(Dataset):
             data=''.join(data_html)
         )
         return html
-
-
-dataset = CLEVR

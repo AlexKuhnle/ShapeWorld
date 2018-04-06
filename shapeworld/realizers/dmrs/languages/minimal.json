@@ -56,30 +56,32 @@
     },
 
 
-    "post-processing": {
-        "adjective-to-verb1": {
-            "search": "[subj]:node <-1- _be_v_id e[ppi--] -2-> _shape_n_sw x? <=1= [attr]:pred e?; :_shape_n_sw <-- default_q",
-            "replace": "[subj]:node <-1- [attr]:pred e[ppi--]"
+    "post-processing": [
+        {
+            "key": "unspecified-shape",
+            "search": "[type]:shape_n x?",
+            "replace": "[type]:_shape_n_sw x?",
+            "disable_hierarchy": true
         },
-        "adjective-to-verb2": {
-            "search": "[subj]:node <-1- ***_be_v_id e[ppi--] -2-> _shape_n_sw x? <=1= [attr]:pred e?; :_shape_n_sw <-- default_q",
-            "replace": "[subj]:node <-1- ***[attr]:pred e[ppi--]"
+        {
+            "key": "shift-top-index",
+            "search": "***[cop]:_be_v_id e[ppi--] -2-> [obj]:_shape_n_sw x?[pers=3] <=1= [attr]:_?_a_? e?",
+            "replace": "[cop]:_be_v_id e[ppi--] -2-> [obj]:_shape_n_sw x?[pers=3] <=1= ***[attr]:_?_a_? e?"
         },
-        "default-q-singular1": {
-            "search": "[subj]:pred x?[num=s] <-1- [cop]:_be_v_id e? -2-> [obj]:node <-- default_q",
-            "replace": "[subj]:pred x? <-1- [cop]:_be_v_id e? -2-> [obj]:node <-- _a_q"
+        {
+            "key": "adjective-to-verb",
+            "search": "[subj]:node <-1- _be_v_id e[ppi--] -2-> _shape_n_sw x?[pers=3] <=1= [attr]:_?_a_? e?; :_shape_n_sw <-- default_q",
+            "replace": "[subj]:node <-1- [attr]:_?_a_? e[ppi--]"
         },
-        "default-q-singular2": {
-            "search": "[subj]:pred x?[num=s] <-1- ***[cop]:_be_v_id e? -2-> [obj]:node <-- default_q",
-            "replace": "[subj]:pred x? <-1- ***[cop]:_be_v_id e? -2-> [obj]:node <-- _a_q"
+        {
+            "key": "default-q-singular",
+            "search": "[subj]:pred x?[num=s] <-1- [cop]:_be_v_id e? -2-> [obj]:pred x? <-- default_q",
+            "replace": "[subj]:pred x?[num=s] <-1- [cop]:_be_v_id e? -2-> [obj]:pred x?[num=s] <-- _a_q"
         },
-        "default-q-plural1": {
-            "search": "[subj]:pred x?[num=p] <-1- [cop]:_be_v_id e? -2-> [obj]:node <-- default_q",
-            "replace": "[subj]:pred x? <-1- [cop]:_be_v_id e? -2-> [obj]:node <-- udef_q"
-        },
-        "default-q-plural2": {
-            "search": "[subj]:pred x?[num=p] <-1- ***[cop]:_be_v_id e? -2-> [obj]:node <-- default_q",
-            "replace": "[subj]:pred x? <-1- ***[cop]:_be_v_id e? -2-> [obj]:node <-- udef_q"
+        {
+            "key": "default-q-plural",
+            "search": "[subj]:pred x?[num=p] <-1- [cop]:_be_v_id e? -2-> [obj]:pred x? <-- default_q",
+            "replace": "[subj]:pred x?[num=p] <-1- [cop]:_be_v_id e? -2-> [obj]:pred x?[num=p] <-- udef_q"
         }
-    }
+    ]
 }

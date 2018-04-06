@@ -1,600 +1,600 @@
-exactly one red shape is a triangle .
-not five shapes are semicircles .
-less than one of the two red shapes is a triangle .
-more than three magenta shapes are triangles .
-less than four of the three triangles are yellow .
+less than three quarters of the yellow shapes are squares .
+less than one ellipse is cyan .
+not no pentagon is yellow .
+not all rectangles are yellow .
+not a quarter of the green shapes is a green ellipse .
 
-three less triangles than squares are blue .
-three less triangles than squares are cyan .
-exactly four circles are cyan .
-at most one square is a magenta square .
-at most two squares are blue squares .
+at least all ellipses but one are gray .
+more than a third of the squares is green .
+exactly one red shape is a circle .
+more than no shape is a square .
+exactly two ellipses are red .
 
-three less pentagons than squares are magenta .
-exactly four of the eight squares are gray .
-a quarter of the pentagons is a blue pentagon .
-half the squares are gray .
-at least four of the eight squares are magenta .
+at least no gray shape is an ellipse .
+less than all gray shapes but two are circles .
+more than two thirds of the gray shapes are circles .
+not two thirds of the circles are yellow .
+at least half the triangles are yellow triangles .
 
-at most five of the seven shapes are blue .
-not zero gray shapes are squares .
-exactly all shapes but one are blue ellipses .
-at most one of the two ellipses is green .
-not zero blue shapes are blue ellipses .
+at most three ellipses are cyan .
+at least all shapes but three are cyan .
+more than three quarters of the ellipses are magenta .
+not one cyan shape is an ellipse .
+exactly four ellipses are magenta .
 
-at least all magenta shapes but one are circles .
-less than four shapes are semicircles .
-more than one shape is an ellipse .
-not three of the two semicircles are blue .
-at least two blue shapes are pentagons .
+not three red shapes are rectangles .
+more than no green shape is a square .
+less than all pentagons but two are green .
+at least all pentagons are green .
+less than one red shape is a square .
 
-two more semicircles than rectangles are gray .
-at least two semicircles are gray .
-more than four shapes are yellow triangles .
-not two of the five gray shapes are gray semicircles .
-less than zero of the four semicircles are magenta semicircles .
+more than one triangle is yellow .
+more than all green shapes but one are green rectangles .
+more than three quarters of the magenta shapes are rectangles .
+more than two thirds of the green shapes are squares .
+less than four squares are magenta .
 
-most shapes are blue .
-a few red shapes are circles .
-exactly three crosses are red .
-more than all yellow shapes but one are yellow circles .
-at most two of the two gray shapes are triangles .
+exactly three quarters of the cyan shapes are cyan circles .
+more than two thirds of the circles are magenta .
+more than four semicircles are magenta .
+more than no cyan shape is a circle .
+more than four cyan shapes are cyan semicircles .
 
-two less pentagons than crosses are gray .
-at least zero shapes are gray .
-three more triangles than crosses are gray .
-less than two blue shapes are blue squares .
-all triangles are gray .
+at most all ellipses but three are cyan .
+at most two ellipses are cyan .
+at least one ellipse is cyan .
+more than a quarter of the ellipses is cyan .
+exactly three ellipses are gray .
 
-two less rectangles than circles are gray .
-at least two rectangles are gray .
-at least two shapes are rectangles .
-more than all yellow shapes but one are ellipses .
-less than one magenta shape is a semicircle .
+more than all blue shapes but three are blue pentagons .
+at most four pentagons are blue .
+at most all magenta shapes but one are magenta pentagons .
+not four magenta shapes are pentagons .
+more than five blue shapes are rectangles .
 
-exactly three red shapes are red ellipses .
-exactly zero of the eight red shapes are circles .
-exactly five of the seven ellipses are cyan ellipses .
-not one red shape is a rectangle .
-exactly one of the three red shapes is a red rectangle .
+exactly no circle is red .
+at least five blue shapes are circles .
+at most four gray shapes are squares .
+at least all gray shapes but two are circles .
+exactly four circles are gray .
 
-not zero of the four yellow shapes are semicircles .
-not three of the five green shapes are triangles .
-less than three of the seven triangles are green triangles .
-more than one of the five green shapes is a green triangle .
-less than all the four yellow shapes but one are triangles .
+exactly three yellow shapes are pentagons .
+at least four magenta shapes are pentagons .
+at least three triangles are red .
+exactly all cyan shapes but zero are crosses .
+at most one pentagon is red .
 
-at least all the five squares but one are magenta .
-four more green shapes than gray shapes are rectangles .
-exactly one green shape is a green rectangle .
-more than four green shapes are green rectangles .
-at least two of the seven rectangles are green .
+exactly all pentagons but one are green .
+at least all magenta shapes but two are triangles .
+at most all green shapes but two are pentagons .
+at least one magenta shape is a rectangle .
+not all green shapes but one are circles .
 
-not four blue shapes are ellipses .
-a quarter of the blue shapes is a rectangle .
-exactly two pentagons are green .
-less than all the five red shapes but one are ellipses .
-at least two of the seven green shapes are ellipses .
+less than all shapes but one are blue .
+more than zero green shapes are rectangles .
+at least three quarters of the triangles are green triangles .
+at least a quarter of the triangles is yellow .
+not all green shapes but one are triangles .
 
-most shapes are semicircles .
-at least four of the six shapes are red semicircles .
-exactly one semicircle is red .
-more than five gray shapes are ellipses .
-more than one of the three gray shapes is a gray semicircle .
+exactly three triangles are magenta .
+at least a quarter of the semicircles is yellow .
+at least all magenta shapes but two are triangles .
+not all triangles but three are cyan .
+not four triangles are magenta .
 
-exactly zero of the three green shapes are green rectangles .
-at most two of the six shapes are yellow .
-more than one shape is a blue circle .
-not five of the seven shapes are cyan ellipses .
-not four of the four ellipses are cyan .
+not all yellow shapes but three are rectangles .
+less than four yellow shapes are rectangles .
+at least a quarter of the rectangles is a gray rectangle .
+at least all shapes but two are gray rectangles .
+less than five rectangles are yellow rectangles .
 
-exactly one of the two gray shapes is a gray semicircle .
-at most all semicircles but one are red semicircles .
-no square is a red square .
-more than five of the four semicircles are gray semicircles .
-less than five of the three shapes are yellow semicircles .
+less than half the circles are blue circles .
+not two pentagons are blue .
+exactly all blue shapes but one are pentagons .
+more than five circles are blue .
+more than all circles but two are magenta circles .
 
-more than three of the seven shapes are cyan semicircles .
-less than one shape is a cyan square .
-most shapes are cyan .
-at least two shapes are yellow semicircles .
-at least three shapes are cyan rectangles .
+exactly all shapes but zero are yellow .
+exactly three yellow shapes are yellow pentagons .
+exactly two thirds of the yellow shapes are triangles .
+exactly half the yellow shapes are triangles .
+exactly two yellow shapes are pentagons .
 
-not zero of the four yellow shapes are ellipses .
-exactly two shapes are cyan ellipses .
-more than three cyan shapes are ellipses .
-not five of the three crosses are red .
-not zero of the four yellow shapes are triangles .
+less than a quarter of the circles is magenta .
+exactly four circles are magenta .
+at least half the shapes are cyan circles .
+less than two ellipses are cyan .
+more than two thirds of the shapes are magenta circles .
 
-more than two yellow shapes are yellow squares .
-less than five of the seven yellow shapes are yellow pentagons .
-at least three shapes are yellow .
-most squares are yellow .
-at most zero crosses are gray crosses .
+more than a quarter of the blue shapes is an ellipse .
+more than four magenta shapes are pentagons .
+more than four red shapes are red crosses .
+at least all squares but two are magenta squares .
+less than a quarter of the shapes is a triangle .
 
-none of the seven shapes is a magenta square .
-less than three shapes are cyan triangles .
-at least five shapes are triangles .
-at least four of the five cyan shapes are triangles .
-less than all the three cyan shapes but one are circles .
+not three quarters of the magenta shapes are pentagons .
+less than two shapes are pentagons .
+not zero pentagons are magenta .
+more than all magenta shapes but two are magenta triangles .
+not three shapes are squares .
 
-at least three gray shapes are gray squares .
-less than five of the six squares are gray .
-at least two of the five gray shapes are squares .
-exactly zero of the three blue shapes are ellipses .
-exactly two of the eight shapes are blue squares .
+not zero triangles are yellow .
+at least five shapes are yellow .
+exactly no blue shape is a triangle .
+less than a third of the blue shapes is a triangle .
+exactly all green shapes but zero are squares .
 
-at most one triangle is a yellow triangle .
-at least zero of the seven cyan shapes are cyan triangles .
-more than zero cyan shapes are rectangles .
-at most one of the four yellow shapes is a square .
-more than zero of the three magenta shapes are rectangles .
+less than three green shapes are triangles .
+at most one green shape is a triangle .
+less than two thirds of the ellipses are red ellipses .
+not all triangles but two are red .
+exactly zero ellipses are red .
 
-more than four shapes are yellow ellipses .
-exactly four pentagons are yellow pentagons .
-at least two of the two yellow shapes are semicircles .
-less than all the four ellipses but one are cyan .
-most of the four semicircles are cyan .
-
-not all gray shapes but one are gray rectangles .
-a quarter of the five rectangles is a gray rectangle .
-five less green shapes than yellow shapes are pentagons .
-at most one of the six gray shapes is a pentagon .
-exactly zero of the four pentagons are blue .
-
-none of the eight shapes is a gray triangle .
-less than one of the two triangles is cyan .
-at most two of the three triangles are green triangles .
-a few of the eight shapes are green rectangles .
-three less triangles than rectangles are green .
-
-less than three of the two gray shapes are rectangles .
-at most all the six rectangles but one are magenta rectangles .
-not two gray shapes are squares .
-more than two of the six rectangles are red rectangles .
-exactly four ellipses are gray ellipses .
-
+at least a third of the crosses is magenta .
+less than all crosses are magenta .
+more than zero cyan shapes are crosses .
+at least one cyan shape is a cyan cross .
 less than five semicircles are cyan .
-at most three of the seven cyan shapes are squares .
-more than four cyan shapes are crosses .
-exactly all cyan shapes but one are cyan squares .
-at most all the seven cyan shapes but one are cyan squares .
+
+at most two shapes are cyan .
+at least a third of the ellipses is cyan .
+more than zero ellipses are green ellipses .
+at least five yellow shapes are ellipses .
+at most no ellipse is a magenta ellipse .
+
+more than zero pentagons are gray .
+less than all gray shapes but two are pentagons .
+at most five gray shapes are circles .
+more than all rectangles but one are gray .
+at least one rectangle is green .
+
+more than five circles are green circles .
+less than two circles are green .
+not four circles are magenta .
+not all circles but zero are green .
+at least five magenta shapes are circles .
+
+not five blue shapes are ellipses .
+less than all shapes but zero are ellipses .
+more than all ellipses but three are blue .
+more than all ellipses but two are blue ellipses .
+at most three ellipses are magenta .
+
+less than all magenta shapes but zero are semicircles .
+exactly all magenta shapes are semicircles .
+at most all semicircles but two are magenta .
+more than three magenta shapes are semicircles .
+more than all ellipses but two are red ellipses .
+
+at least all magenta shapes but zero are squares .
+not all squares but two are green .
+at least three squares are magenta squares .
+at most all squares but three are magenta .
+exactly all squares but two are green .
+
+exactly three circles are blue .
+at least four pentagons are gray .
+more than four gray shapes are gray pentagons .
+exactly two pentagons are blue pentagons .
+at least four cyan shapes are pentagons .
+
+more than three cyan shapes are semicircles .
+at most no cyan shape is a cyan circle .
+not all cyan shapes but two are crosses .
+not all semicircles are cyan semicircles .
+less than all cyan shapes but two are cyan pentagons .
+
+not all rectangles but one are magenta .
+less than two thirds of the red shapes are red semicircles .
+more than no shape is a green rectangle .
+exactly zero shapes are red pentagons .
+more than half the red shapes are red semicircles .
+
+not a quarter of the ellipses is magenta .
+exactly two thirds of the yellow shapes are triangles .
+less than all shapes but zero are ellipses .
+exactly all red shapes but zero are pentagons .
+less than one triangle is red .
+
+at most all squares but two are blue .
+exactly one gray shape is a square .
+less than all cyan shapes but two are circles .
+at least no circle is cyan .
+more than one cyan shape is a circle .
+
+less than three quarters of the magenta shapes are ellipses .
+not all blue shapes but three are ellipses .
+at least all blue shapes but one are ellipses .
+at least one cyan shape is a rectangle .
+more than zero blue shapes are ellipses .
+
+not three quarters of the cyan shapes are cyan ellipses .
+more than three quarters of the circles are red .
+less than half the red shapes are circles .
+at most two gray shapes are gray ellipses .
+at most all semicircles but one are gray .
+
+less than all triangles are red .
+exactly no ellipse is cyan .
+at least all red shapes but two are squares .
+at least all triangles are cyan triangles .
+less than five shapes are squares .
+
+at most all rectangles are cyan .
+at most three quarters of the crosses are gray .
+at most all rectangles but zero are magenta .
+at least five magenta shapes are rectangles .
+at least five gray shapes are gray crosses .
+
+at most four blue shapes are triangles .
+exactly all gray shapes but three are rectangles .
+more than all gray shapes but three are gray triangles .
+less than two thirds of the yellow shapes are triangles .
+not a quarter of the shapes is a gray cross .
+
+less than half the blue shapes are circles .
+exactly all red shapes but one are ellipses .
+at most all yellow shapes but three are semicircles .
+less than half the yellow shapes are yellow semicircles .
+less than two yellow shapes are circles .
+
+more than all cyan shapes but two are crosses .
+at least half the squares are cyan squares .
+not all shapes but two are green .
+not three shapes are cyan crosses .
+not three squares are cyan .
+
+at least two pentagons are yellow pentagons .
+exactly zero yellow shapes are semicircles .
+not one magenta shape is a pentagon .
+more than two thirds of the semicircles are magenta semicircles .
+more than a third of the yellow shapes is a semicircle .
+
+at least three red shapes are rectangles .
+exactly all red shapes but one are rectangles .
+more than one shape is a rectangle .
+at least zero red shapes are rectangles .
+at most all shapes but two are yellow pentagons .
+
+exactly a quarter of the semicircles is red .
+exactly two shapes are cyan crosses .
+at most no green shape is a green cross .
+at most half the shapes are green .
+not four cyan shapes are crosses .
+
+at least all rectangles but one are gray rectangles .
+exactly all shapes but three are cyan rectangles .
+at least all magenta shapes but three are ellipses .
+not two thirds of the shapes are magenta ellipses .
+at least no shape is a rectangle .
+
+exactly all magenta shapes are magenta triangles .
+exactly all yellow shapes but two are yellow rectangles .
+not two shapes are yellow .
+not one yellow shape is a pentagon .
+not no magenta shape is a triangle .
+
+at least a quarter of the squares is a green square .
+less than all rectangles but three are green .
+less than three quarters of the yellow shapes are squares .
+exactly five rectangles are cyan .
+exactly no rectangle is red .
+
+at most a quarter of the cyan shapes is a pentagon .
+exactly a quarter of the cyan shapes is a cyan pentagon .
+exactly four shapes are cyan .
+less than all cyan shapes but zero are circles .
+exactly all cyan shapes but three are cyan pentagons .
+
+less than all green shapes but zero are triangles .
+not four red shapes are red semicircles .
+at least a third of the green shapes is a triangle .
+less than a third of the triangles is a magenta triangle .
+at most all blue shapes but zero are blue crosses .
+
+at least four circles are green .
+more than all circles but three are green .
+at least three circles are green .
+more than two thirds of the shapes are squares .
+at most two shapes are circles .
+
+at most half the blue shapes are semicircles .
+at least half the crosses are cyan .
+at least all crosses but three are green .
+at least three quarters of the crosses are green crosses .
+exactly all crosses but three are green crosses .
+
+at least four cyan shapes are squares .
+exactly three gray shapes are gray pentagons .
+exactly two thirds of the magenta shapes are pentagons .
+less than half the pentagons are cyan pentagons .
+at least a third of the gray shapes is a gray semicircle .
+
+less than a third of the pentagons is cyan .
+exactly two thirds of the semicircles are magenta .
+at least no shape is cyan .
+at least three quarters of the magenta shapes are circles .
+exactly four ellipses are magenta .
+
+exactly a quarter of the rectangles is gray .
+exactly one rectangle is cyan .
+more than one rectangle is gray .
+exactly one rectangle is cyan .
+not a third of the rectangles is cyan .
+
+exactly zero gray shapes are ellipses .
+at most all ellipses are yellow .
+more than a third of the rectangles is gray .
+less than all rectangles but two are gray rectangles .
+more than a quarter of the yellow shapes is an ellipse .
+
+not a quarter of the green shapes is a pentagon .
+less than three red shapes are pentagons .
+more than three quarters of the red shapes are pentagons .
+more than one ellipse is green .
+not all green shapes but three are green pentagons .
+
+at most zero circles are cyan .
+less than half the gray shapes are circles .
+exactly two crosses are magenta .
+exactly four magenta shapes are crosses .
+at most three gray shapes are squares .
+
+at most all rectangles but one are blue .
+at most no rectangle is red .
+at least all red shapes are rectangles .
+more than a third of the magenta shapes is a circle .
+more than three quarters of the magenta shapes are squares .
+
+more than four magenta shapes are ellipses .
+at least all ellipses but zero are magenta .
+exactly zero ellipses are cyan ellipses .
+at least all shapes but two are crosses .
+less than one magenta shape is a magenta ellipse .
+
+not a third of the circles is cyan .
+more than two cyan shapes are circles .
+less than five cyan shapes are cyan circles .
+exactly half the cyan shapes are circles .
+exactly two thirds of the circles are cyan .
+
+exactly all blue shapes but zero are crosses .
+not no yellow shape is a cross .
+at most all crosses but two are yellow .
+at most three quarters of the crosses are yellow .
+not a third of the shapes is a rectangle .
+
+at least a quarter of the magenta shapes is a magenta pentagon .
+exactly three squares are blue .
+less than five semicircles are blue .
+exactly three quarters of the shapes are blue .
+exactly a quarter of the squares is green .
+
+exactly no cross is blue .
+more than two thirds of the gray shapes are squares .
+at least all shapes but two are gray .
+more than all shapes but one are gray crosses .
+exactly two shapes are squares .
+
+at least all triangles but one are cyan .
+at least all crosses are cyan .
+not no triangle is magenta .
+less than all triangles but zero are gray .
+less than one gray shape is a triangle .
+
+at least three ellipses are magenta ellipses .
+more than zero ellipses are yellow .
+more than a third of the crosses is yellow .
+exactly all yellow shapes but zero are ellipses .
+at least all ellipses but zero are yellow .
+
+exactly zero ellipses are gray .
+at most all cyan shapes but one are circles .
+not two thirds of the magenta shapes are magenta rectangles .
+at most all circles but two are cyan circles .
+at least four rectangles are magenta .
+
+exactly all pentagons but three are gray pentagons .
+not all circles are blue circles .
+at most all pentagons but zero are gray .
+at most all red shapes but two are pentagons .
+at least all pentagons but three are green .
+
+less than a quarter of the blue shapes is a rectangle .
+at least all crosses but zero are blue .
+more than all crosses but one are blue .
+exactly all triangles but zero are blue .
+exactly no blue shape is a triangle .
+
+exactly two thirds of the red shapes are red squares .
+at least all ellipses but three are gray .
+at least half the squares are magenta .
+at most a quarter of the gray shapes is a rectangle .
+less than a third of the gray shapes is a cross .
+
+less than all cyan shapes but two are rectangles .
+not no rectangle is magenta .
+at most two rectangles are magenta .
+less than four cyan shapes are crosses .
+not all crosses but zero are cyan .
+
+less than three semicircles are blue .
+at least three quarters of the semicircles are yellow .
+at least all blue shapes are semicircles .
+not a quarter of the blue shapes is a semicircle .
+not five triangles are blue .
+
+exactly a quarter of the cyan shapes is a triangle .
+at most half the shapes are magenta .
+at most two thirds of the shapes are rectangles .
+exactly all shapes are crosses .
+at most all semicircles but three are magenta .
+
+at least two green shapes are circles .
+not one circle is blue .
+not half the green shapes are green circles .
+not two blue shapes are blue circles .
+not a quarter of the squares is blue .
+
+at most a third of the gray shapes is a semicircle .
+more than no yellow shape is a semicircle .
+more than five yellow shapes are squares .
+more than two shapes are gray .
+less than five shapes are yellow squares .
+
+more than three pentagons are gray pentagons .
+more than four yellow shapes are pentagons .
+more than a quarter of the yellow shapes is a cross .
+exactly all blue shapes but zero are crosses .
+at most no blue shape is a pentagon .
+
+exactly two thirds of the ellipses are magenta .
+exactly zero ellipses are green .
+at least three pentagons are magenta .
+more than two shapes are magenta .
+less than four shapes are pentagons .
 
 exactly five green shapes are squares .
-less than all the four squares but one are cyan squares .
-not two of the two pentagons are yellow .
-at least one of the three pentagons is red .
-at most all red shapes but one are pentagons .
-
-exactly two semicircles are magenta .
-most of the three semicircles are magenta semicircles .
-exactly two magenta shapes are semicircles .
-exactly all the two red shapes but one are pentagons .
-exactly two of the two yellow shapes are semicircles .
-
-less than all semicircles but one are magenta .
-four more squares than semicircles are red .
-at most two shapes are cyan .
-four less ellipses than crosses are cyan .
-more than zero cyan shapes are pentagons .
-
-exactly four of the seven shapes are green crosses .
-not four of the seven shapes are squares .
-not three of the seven shapes are green .
-exactly four shapes are rectangles .
-exactly five of the seven shapes are crosses .
-
-exactly three of the eight shapes are red pentagons .
-less than two of the eight shapes are red .
-at least zero shapes are red ellipses .
-exactly three of the seven pentagons are red .
-exactly two of the four red shapes are red pentagons .
-
-exactly three of the six shapes are yellow .
-less than zero rectangles are cyan rectangles .
-less than all semicircles but one are yellow .
-most of the five yellow shapes are semicircles .
-most of the three yellow shapes are yellow semicircles .
-
-two thirds of the seven shapes are squares .
-not two of the five squares are gray squares .
-exactly zero squares are yellow .
-no square is blue .
-more than one cyan shape is a square .
-
-not all shapes but one are crosses .
-at most two of the eight gray shapes are gray rectangles .
-a quarter of the six crosses is a magenta cross .
-less than one of the five crosses is a cyan cross .
-at least four gray shapes are gray crosses .
-
-less than five of the five crosses are yellow crosses .
-at most all the five crosses but one are yellow crosses .
-more than one of the two yellow shapes is a cross .
-not all the four blue shapes but one are triangles .
-not all the six shapes but one are green .
-
-more than four of the eight magenta shapes are magenta circles .
-less than two of the eight magenta shapes are rectangles .
-not all the two blue shapes but one are blue circles .
-at least three of the eight magenta shapes are magenta crosses .
-exactly four circles are magenta circles .
-
-exactly one of the three crosses is a gray cross .
-less than three of the five red shapes are rectangles .
-at most zero pentagons are yellow .
-exactly one blue shape is an ellipse .
-not one of the two rectangles is red .
-
-as many circles as ellipses are yellow .
-no shape is a green ellipse .
-a few ellipses are red .
-not zero of the three blue shapes are circles .
-at least all red shapes but one are red ellipses .
-
-at least one of the two green shapes is an ellipse .
-more than one shape is a cross .
-at least all blue shapes but one are blue squares .
-not two blue shapes are ellipses .
-more than two shapes are blue .
-
-exactly three of the eight shapes are magenta .
-exactly one of the five green shapes is a semicircle .
-no yellow shape is an ellipse .
-exactly two shapes are green rectangles .
-exactly two of the three yellow shapes are semicircles .
-
-more than four shapes are red .
-at most four of the four red shapes are red pentagons .
-at most two pentagons are gray pentagons .
-none of the six shapes is a red triangle .
-a quarter of the four red shapes is a red rectangle .
-
-at least three of the eight shapes are gray circles .
-not two circles are green .
-at least all semicircles but one are green .
-more than three circles are yellow .
-three less circles than semicircles are green .
-
-less than two semicircles are green semicircles .
-less than one cross is magenta .
-less than five semicircles are green .
-not three green shapes are green crosses .
-exactly five of the six shapes are green .
-
-at most five of the five rectangles are yellow rectangles .
-not zero blue shapes are blue rectangles .
-exactly zero of the seven rectangles are red .
-more than three shapes are blue semicircles .
-at least three shapes are rectangles .
-
-less than all the two squares but one are cyan squares .
-at most one triangle is green .
-at most three squares are cyan .
-twice as many red shapes as cyan shapes are triangles .
-five more green shapes than magenta shapes are triangles .
-
-exactly all the four magenta shapes but one are magenta ellipses .
-at most five of the four circles are gray circles .
-less than all the six shapes but one are magenta semicircles .
-less than three of the three circles are blue .
-not three of the six shapes are semicircles .
-
-four more circles than rectangles are cyan .
-more than three of the seven cyan shapes are cyan circles .
-exactly one of the three rectangles is a blue rectangle .
-more than two circles are cyan circles .
-all circles are red .
-
-three quarters of the seven shapes are semicircles .
-less than one shape is a magenta ellipse .
-at least three of the eight shapes are magenta semicircles .
-exactly two of the two pentagons are magenta .
-at most all the six magenta shapes but one are semicircles .
-
-three less cyan shapes than red shapes are circles .
-not three green shapes are green circles .
-two more circles than rectangles are red .
-not zero circles are blue .
-a few of the four circles are green .
-
-at most five green shapes are ellipses .
-exactly all green shapes but one are ellipses .
-as many ellipses as circles are green .
-at most three of the three green shapes are ellipses .
-at least zero gray shapes are ellipses .
-
-most gray shapes are gray rectangles .
-less than three gray shapes are circles .
-at least two of the eight pentagons are red .
-at most three shapes are rectangles .
-at most two shapes are gray .
-
-at least zero yellow shapes are yellow squares .
-exactly one of the four ellipses is a cyan ellipse .
-exactly zero shapes are cyan triangles .
-a few of the three blue shapes are ellipses .
-two less blue shapes than cyan shapes are ellipses .
-
-at least two of the eight blue shapes are blue pentagons .
-exactly one shape is a blue cross .
-more than five shapes are blue crosses .
-at least all crosses but one are green .
-most green shapes are green semicircles .
-
-a few of the five semicircles are magenta .
-no cross is green .
-less than five of the four yellow shapes are semicircles .
-more than five semicircles are green .
-at most one yellow shape is a semicircle .
-
-more than one of the three yellow shapes is a yellow rectangle .
-at least one of the six rectangles is a yellow rectangle .
-less than three of the two blue shapes are blue rectangles .
-less than five blue shapes are blue rectangles .
-not one of the two gray shapes is a rectangle .
-
-five more cyan shapes than magenta shapes are triangles .
-at most five triangles are cyan triangles .
-not all cyan shapes but one are triangles .
-at least four of the eight triangles are magenta .
-not three shapes are cyan triangles .
-
-as many ellipses as pentagons are magenta .
-not all squares but one are magenta .
-less than four of the seven shapes are yellow circles .
-not four of the six shapes are rectangles .
-less than three magenta shapes are magenta semicircles .
-
-at most five of the three gray shapes are gray circles .
-more than two of the three circles are green circles .
-at most two crosses are gray .
-at most five of the five gray shapes are circles .
-less than four shapes are gray .
-
-a quarter of the seven pentagons is a green pentagon .
-more than all shapes but one are red pentagons .
-not one of the four green shapes is a cross .
-no red shape is a cross .
-not two of the seven pentagons are red pentagons .
-
-no semicircle is cyan .
-at least two magenta shapes are magenta triangles .
-at least two of the six magenta shapes are pentagons .
-as many semicircles as triangles are magenta .
-exactly one of the four shapes is blue .
-
-exactly two pentagons are gray .
-not two of the six pentagons are blue .
-not two of the six gray shapes are pentagons .
-as many red shapes as magenta shapes are circles .
-at least five pentagons are blue .
-
-three less crosses than ellipses are cyan .
-more than three cyan shapes are cyan crosses .
-exactly two of the eight cyan shapes are cyan crosses .
-at most five of the eight shapes are cyan crosses .
-more than five cyan shapes are crosses .
-
-at most three of the eight circles are green .
-more than all shapes but one are green circles .
-no shape is a cyan rectangle .
-exactly five blue shapes are blue crosses .
-at most three of the three blue shapes are blue circles .
-
-at least three of the six shapes are blue .
-at most all the two triangles but one are cyan .
-not one shape is a circle .
-at most zero of the six shapes are gray semicircles .
-as many green shapes as cyan shapes are triangles .
-
-at most zero of the two pentagons are green .
-not four of the two yellow shapes are pentagons .
-half the two green shapes are ellipses .
-at least four of the eight shapes are green rectangles .
-exactly two rectangles are gray .
-
-more than two of the six semicircles are cyan .
-a few of the two red shapes are red semicircles .
-at most two yellow shapes are semicircles .
-no cyan shape is a cyan semicircle .
-more than zero of the three cyan shapes are cyan semicircles .
-
-exactly all red shapes but one are squares .
-more than three shapes are red squares .
-more than three squares are red squares .
-not five shapes are blue .
-at most all shapes but one are red .
-
-a quarter of the shapes is a red ellipse .
-exactly all shapes but one are ellipses .
-at most three of the six ellipses are red .
-at most five of the five ellipses are magenta ellipses .
-a few of the two yellow shapes are ellipses .
-
-more than one yellow shape is a square .
-at most one square is yellow .
-more than four shapes are red .
-exactly one shape is a yellow triangle .
-not one cyan shape is a circle .
-
-five more crosses than circles are yellow .
-less than five shapes are cyan squares .
-less than five of the three yellow shapes are circles .
-most of the six yellow shapes are circles .
-more than one shape is a yellow triangle .
-
-at most four of the three shapes are triangles .
-less than all green shapes but one are green pentagons .
-not zero squares are green .
-not zero green shapes are rectangles .
-exactly four shapes are green semicircles .
-
-more than two of the four triangles are blue triangles .
-as many red shapes as yellow shapes are squares .
-at most three shapes are magenta triangles .
-exactly five of the four squares are blue squares .
-not all rectangles but one are magenta .
-
-at least five red shapes are red squares .
-at most five red shapes are ellipses .
-at most three shapes are squares .
-more than two ellipses are red ellipses .
-at least four of the four squares are red squares .
-
-more than all the two green shapes but one are circles .
-exactly two of the three cyan shapes are cyan circles .
-half the six circles are cyan .
-at most four of the four circles are green .
-not zero of the four circles are green .
-
-more than four red shapes are squares .
-exactly three of the two circles are blue .
-more than four of the two red shapes are red squares .
-exactly one of the five shapes is a square .
-more than all circles but one are gray circles .
-
-none of the six shapes is a gray cross .
-at most all the six shapes but one are yellow .
-at most one of the five yellow shapes is a pentagon .
-not one shape is a yellow triangle .
-not two of the four red shapes are red triangles .
-
-at most all the five blue shapes but one are blue ellipses .
-at most five blue shapes are blue ellipses .
-not zero of the three gray shapes are pentagons .
-more than all the two magenta shapes but one are magenta crosses .
-less than four of the three blue shapes are circles .
-
-at least four of the four yellow shapes are yellow rectangles .
-exactly zero of the six yellow shapes are rectangles .
-not all shapes but one are yellow rectangles .
-at least zero of the three crosses are magenta crosses .
-at most one cross is a magenta cross .
-
-not four pentagons are green pentagons .
-at most three circles are blue circles .
-not two of the five green shapes are green semicircles .
-at most two pentagons are green pentagons .
-exactly three shapes are semicircles .
-
-less than four of the two semicircles are blue .
-at most zero of the four rectangles are gray .
-not zero of the four cyan shapes are pentagons .
-exactly five shapes are blue semicircles .
-less than two of the two semicircles are cyan semicircles .
-
-twice as many cyan shapes as green shapes are semicircles .
-at most four of the three semicircles are green .
-at least two rectangles are green .
-at least one semicircle is green .
-at most four of the five green shapes are green squares .
-
-five more triangles than semicircles are blue .
-at most five of the six blue shapes are circles .
-not all the two triangles but one are blue .
-at most three circles are red .
-no shape is a square .
-
-at least two ellipses are magenta ellipses .
-more than all green shapes but one are triangles .
-less than all the eight shapes but one are magenta .
-less than all the eight shapes but one are green ellipses .
-not one shape is a green ellipse .
-
-more than three blue shapes are crosses .
-at most zero of the three ellipses are blue ellipses .
-two more crosses than ellipses are blue .
-more than two of the five ellipses are blue .
-less than one blue shape is a rectangle .
-
-exactly five shapes are red semicircles .
-more than one of the eight semicircles is green .
-at most two of the seven semicircles are yellow semicircles .
-no shape is a magenta semicircle .
-more than zero magenta shapes are crosses .
-
-five more blue shapes than yellow shapes are triangles .
-a few of the five green shapes are triangles .
-at least zero of the eight magenta shapes are triangles .
-at least three of the eight shapes are blue triangles .
-at most four triangles are yellow triangles .
-
-not four of the five shapes are red pentagons .
-at least five shapes are blue pentagons .
-at least two of the three pentagons are red .
-at least three pentagons are red .
-less than four shapes are red .
-
-at most five of the three circles are green circles .
-a few of the eight shapes are circles .
-exactly one semicircle is red .
-at most three red shapes are red pentagons .
-less than five of the four red shapes are circles .
-
-at most two shapes are ellipses .
-exactly five shapes are yellow ellipses .
-more than four shapes are cyan ellipses .
-at most four of the eight ellipses are magenta ellipses .
-less than two of the six magenta shapes are magenta ellipses .
-
-more than all magenta shapes but one are magenta ellipses .
-less than all the seven magenta shapes but one are crosses .
-exactly all the six semicircles but one are magenta semicircles .
-more than zero of the two circles are magenta .
-at least all the four circles but one are magenta .
-
-at most four of the four semicircles are red .
-less than two of the four red shapes are rectangles .
-less than two of the four red shapes are red semicircles .
-exactly five rectangles are red .
-no red shape is a red rectangle .
-
-at least zero crosses are green .
-at least one of the four yellow shapes is a cross .
-not four crosses are yellow .
-not one shape is a yellow rectangle .
-more than four circles are green circles .
-
-a quarter of the eight semicircles is a green semicircle .
-at most five magenta shapes are magenta semicircles .
-exactly zero magenta shapes are crosses .
-at most five of the three triangles are magenta .
-at least five crosses are magenta .
-
-more than all the five shapes but one are green .
-a quarter of the four rectangles is green .
-more than five of the five shapes are cyan .
-exactly zero of the four rectangles are yellow .
-at most five rectangles are green rectangles .
-
-more than five of the eight shapes are blue .
-at most four ellipses are blue ellipses .
-less than four of the three ellipses are yellow .
-less than five ellipses are blue ellipses .
-four less blue shapes than yellow shapes are crosses .
-
-no gray shape is a gray pentagon .
-at most five of the three gray shapes are gray pentagons .
-at most zero shapes are green semicircles .
-not five shapes are squares .
-exactly four gray shapes are gray squares .
-
-more than five circles are gray circles .
-not one of the three ellipses is red .
-not zero shapes are blue circles .
-not three shapes are yellow .
-less than four of the two pentagons are magenta .
-
-at most one shape is a blue semicircle .
-less than five of the six blue shapes are blue semicircles .
-more than one of the five semicircles is a blue semicircle .
-less than two shapes are blue circles .
-as many rectangles as pentagons are blue .
-
-three more crosses than squares are gray .
-exactly five pentagons are yellow pentagons .
-exactly four gray shapes are crosses .
-less than three of the six gray shapes are gray squares .
-exactly all gray shapes but one are crosses .
+exactly zero semicircles are green .
+not three semicircles are green .
+at most half the green shapes are crosses .
+at least three quarters of the squares are cyan .
+
+not all magenta shapes are rectangles .
+exactly all cyan shapes but two are semicircles .
+at most half the shapes are rectangles .
+more than a quarter of the circles is cyan .
+at least all shapes but zero are yellow .
+
+more than all yellow shapes but two are semicircles .
+at most one ellipse is yellow .
+less than two yellow shapes are squares .
+at most a quarter of the yellow shapes is a yellow semicircle .
+at least all yellow shapes but two are squares .
+
+exactly a quarter of the green shapes is a green triangle .
+exactly two ellipses are green .
+at least a third of the triangles is yellow .
+more than four blue shapes are rectangles .
+at most two thirds of the rectangles are blue .
+
+at least all pentagons but three are cyan pentagons .
+less than one pentagon is a yellow pentagon .
+at most all red shapes but three are triangles .
+at most five shapes are red ellipses .
+less than all cyan shapes but one are pentagons .
+
+more than four magenta shapes are circles .
+at most half the shapes are magenta crosses .
+not all yellow shapes but one are yellow rectangles .
+less than four magenta shapes are crosses .
+at most two thirds of the magenta shapes are crosses .
+
+at most three quarters of the semicircles are yellow .
+exactly three semicircles are yellow semicircles .
+exactly a quarter of the yellow shapes is a semicircle .
+at most two yellow shapes are yellow pentagons .
+at least a quarter of the semicircles is a cyan semicircle .
+
+less than four shapes are semicircles .
+at most a quarter of the semicircles is yellow .
+at most a third of the shapes is a blue semicircle .
+at least zero crosses are red .
+exactly two yellow shapes are semicircles .
+
+exactly two red shapes are squares .
+at most a third of the red shapes is a square .
+at most all gray shapes but three are rectangles .
+exactly three quarters of the gray shapes are semicircles .
+at least two shapes are gray squares .
+
+exactly five triangles are blue triangles .
+at most all crosses are blue crosses .
+exactly two crosses are blue .
+exactly zero gray shapes are crosses .
+less than a third of the shapes is a blue triangle .
+
+more than one triangle is yellow .
+more than all triangles but one are green .
+exactly two magenta shapes are magenta circles .
+less than all magenta shapes are triangles .
+less than all cyan shapes are cyan triangles .
+
+exactly all triangles are red .
+at most four triangles are blue triangles .
+less than all shapes are triangles .
+at most half the blue shapes are triangles .
+more than five blue shapes are triangles .
+
+more than one shape is a cyan triangle .
+not five shapes are green .
+not all shapes but one are triangles .
+at least all pentagons are cyan .
+more than zero pentagons are gray .
+
+less than one cyan shape is an ellipse .
+more than four crosses are green .
+more than a quarter of the triangles is yellow .
+exactly three shapes are red circles .
+not two cyan shapes are cyan ellipses .
+
+at least four red shapes are rectangles .
+at least three quarters of the blue shapes are rectangles .
+less than four red shapes are circles .
+less than two red shapes are rectangles .
+less than three quarters of the cyan shapes are pentagons .
+
+exactly all pentagons but three are magenta .
+at most four shapes are cyan ellipses .
+at most half the pentagons are red .
+at least three quarters of the rectangles are red .
+not three blue shapes are blue pentagons .
+
+more than four shapes are squares .
+less than all squares but three are green squares .
+not all rectangles but zero are cyan .
+at most half the pentagons are cyan .
+exactly a third of the cyan shapes is a pentagon .
+
+not all blue shapes but one are ellipses .
+at most four yellow shapes are pentagons .
+at least three quarters of the blue shapes are triangles .
+at least four gray shapes are triangles .
+more than no shape is a cross .
+
+at most a third of the crosses is blue .
+more than all blue shapes but two are pentagons .
+at least three quarters of the shapes are blue crosses .
+at most no magenta shape is a circle .
+at least three crosses are red .
+
+at least no shape is gray .
+at most a quarter of the circles is blue .
+at least five circles are gray circles .
+at least all blue shapes but one are blue circles .
+exactly three magenta shapes are crosses .
+
+exactly a quarter of the gray shapes is a triangle .
+at most all green shapes but two are green triangles .
+exactly all squares but two are gray .
+at most all gray shapes but three are gray triangles .
+less than one triangle is cyan .
+
+less than all pentagons are red pentagons .
+not half the gray shapes are pentagons .
+at most two shapes are gray pentagons .
+more than all pentagons but one are gray pentagons .
+more than two red shapes are red pentagons .
+
+more than four circles are green .
+exactly three quarters of the semicircles are green .
+at most three quarters of the triangles are cyan .
+less than a quarter of the red shapes is a circle .
+exactly all shapes but one are red rectangles .
+
+at least all yellow shapes but zero are semicircles .
+at least half the triangles are red .
+less than two thirds of the triangles are red .
+less than half the blue shapes are blue triangles .
+exactly one blue shape is a circle .
 

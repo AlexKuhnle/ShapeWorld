@@ -18,7 +18,7 @@ class ReinforcedAttributesGenerator(GenericGenerator):
         shade_range=0.4,
         collision_tolerance=0.25,
         collision_shade_difference=0.5,
-        boundary_tolerance=0.25,
+        boundary_tolerance=None,
         entity_counts=(1,),
         train_entity_counts=None,
         validation_entity_counts=None,

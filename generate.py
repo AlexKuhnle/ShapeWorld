@@ -6,7 +6,6 @@ import os
 import shutil
 import sys
 from shapeworld import Dataset, util
-from shapeworld.world import World
 
 
 if __name__ == '__main__':
@@ -18,8 +17,9 @@ if __name__ == '__main__':
 
     parser.add_argument('-t', '--type', default=None, help='Dataset type')
     parser.add_argument('-n', '--name', type=util.parse_tuple(parse_item=str, unary_tuple=False), default=None, help='Dataset name')
-    parser.add_argument('-l', '--language', default=None, help='Dataset language')
-    parser.add_argument('-c', '--config', type=util.parse_tuple(parse_item=str, unary_tuple=False), default=None, help='Dataset configuration file')
+    parser.add_argument('-v', '--variant', type=util.parse_tuple(parse_item=str, unary_tuple=False), default=None, help='Label for configuration variant')
+    parser.add_argument('-l', '--language', default=None, help='Language')
+    parser.add_argument('-c', '--config', type=util.parse_tuple(parse_item=str, unary_tuple=False), default=None, help='Configuration file/directory')
 
     parser.add_argument('-s', '--shards', type=util.parse_tuple(parse_item=util.parse_int_with_factor, unary_tuple=True, valid_sizes=(1, 3)), default=None, help='Number of shards to split data into (not specified implies --unmanaged)')
     parser.add_argument('-i', '--instances', type=util.parse_int_with_factor, default=128, help='Number of instances per shard')
@@ -33,19 +33,26 @@ if __name__ == '__main__':
     parser.add_argument('-T', '--tf-records', action='store_true', help='Additionally store data as TensorFlow records')
     parser.add_argument('-F', '--features', action='store_true', help='Additionally extract image features (conv4 of resnet_v2_101)')
     parser.add_argument('-C', '--clevr-format', action='store_true', help='Output in CLEVR format')
-    parser.add_argument('-N', '--png-format', action='store_true', help='Store images in PNG as opposed to bitmat format')
+    parser.add_argument('-N', '--png-format', action='store_true', help='Store images in PNG as opposed to bitmap format')
     parser.add_argument('-O', '--concatenate-images', action='store_true', help='Concatenate images per part into one image file')
 
     parser.add_argument('-Y', '--yes', action='store_true', help='Confirm all questions with yes')
     # parser.add_argument('-v', '--values', default=None, help='Comma-separated list of values to include')
+    parser.add_argument('--v1', action='store_true')
 
     parser.add_argument('--config-values', nargs=argparse.REMAINDER, default=(), help='Additional dataset configuration values passed as command line arguments')
+
     args = parser.parse_args()
     args.config_values = util.parse_config(values=args.config_values)
 
+    # TFRecords utility
     if args.tf_records:
         from shapeworld import tf_util
 
+    if args.v1:
+        util.set_version(1)
+
+    # does not include variant, as loading data for generation is not expected
     dataset = Dataset.create(dtype=args.type, name=args.name, language=args.language, config=args.config, **args.config_values)
     sys.stdout.write('{time} {dataset}\n'.format(time=datetime.now().strftime('%H:%M:%S'), dataset=dataset))
     if args.config is None:
@@ -107,12 +114,13 @@ if __name__ == '__main__':
             shards = args.shards
 
     else:
-        if dataset.language is None:
-            directory = os.path.join(args.directory, dataset.type, dataset.name)
-            specification_path = os.path.join(args.directory, '{}-{}.json'.format(dataset.type, dataset.name))
-        else:
-            directory = os.path.join(args.directory, '{}-{}'.format(dataset.type, dataset.language), dataset.name)
-            specification_path = os.path.join(args.directory, '{}-{}-{}.json'.format(dataset.type, dataset.language, dataset.name))
+        full_name = dataset.name
+        if args.variant is not None:
+            full_name = '{}-{}'.format(full_name, args.variant)
+        if args.language is not None:
+            full_name = '{}-{}'.format(full_name, args.language)
+        directory = os.path.join(args.directory, dataset.type, full_name)
+        specification_path = os.path.join(args.directory, '{}-{}.json'.format(dataset.type, full_name))
         shards = args.shards
 
     assert all(shard >= 0 for shard in shards)
@@ -127,6 +135,8 @@ if __name__ == '__main__':
         assert args.mode is None
         modes = ('train', 'validation', 'test')
         directories = tuple(os.path.join(directory, mode) for mode in modes)
+    if all(shard == 0 for shard in shards):
+        shards = tuple(None for _ in shards)
 
     assert args.begin is None or args.append
     assert args.begin is None or len(args.begin) == len(args.shards)
@@ -176,15 +186,16 @@ if __name__ == '__main__':
 
     for mode, directory, num_shards, shard_begin in zip(modes, directories, shards, shards_begin):
         sys.stdout.write('{time} generate {dtype} {name}{mode} data...\n'.format(time=datetime.now().strftime('%H:%M:%S'), dtype=dataset.type, name=dataset.name, mode=(' ' + mode if mode else '')))
-        sys.stdout.write('         0%  0/{shards}  (time per shard: n/a)'.format(shards=num_shards))
-        sys.stdout.flush()
+        if num_shards is not None:
+            sys.stdout.write('         0%  0/{shards}  (time per shard: n/a)'.format(shards=num_shards))
+            sys.stdout.flush()
 
         if args.clevr_format:  # validation --> val
             questions = list()
 
-        for shard in range(1, num_shards + (num_shards == 0) + 1):
+        for shard in range(1, (1 if num_shards is None else num_shards) + 1):
             before = datetime.now()
-            if num_shards == 0:
+            if num_shards is None:
                 path = directory
                 num_shards = 1
             else:
@@ -196,48 +207,8 @@ if __name__ == '__main__':
                 assert False
 
             elif args.clevr_format:
-
-                def parse(model, index, inputs):
-                    if model['component'] == 'Attribute':
-                        return [dict(inputs=inputs, function='attribute', value_inputs=['{}-{}'.format(model['predtype'], model['value'])])]
-                    elif model['component'] == 'EntityType':
-                        outputs = [dict(inputs=list(), function='scene', value_inputs=list())]
-                        for model in model['value']:
-                            outputs += parse(model=model, index=(index + len(outputs)), inputs=[index + len(outputs) - 1])
-                        return outputs
-                    elif model['component'] == 'Relation':  # should connect relation???
-                        if model['predtype'] in ('attribute', 'type'):
-                            value = parse(model=model['value'], index=index, inputs=list())
-                            return value + [dict(inputs=[index + len(value) - 1], function='relation', value_inputs=[model['predtype']])]
-                        else:
-                            reference = parse(model=model['reference'], index=index, inputs=list())
-                            if 'comparison' in model:
-                                comparison = parse(model=model['comparison'], index=(index + len(reference)), inputs=list())
-                                return reference + comparison + [dict(inputs=[index + len(reference) - 1, index + len(reference) + len(comparison) - 1], function='relation', value_inputs=['{}({})'.format(model['predtype'], model['value'])])]
-                            else:
-                                return reference + [dict(inputs=[index + len(reference) - 1], function='relation', value_inputs=['{}-{}'.format(model['predtype'], model['value'])])]
-                    elif model['component'] == 'Existential':  # should connect relation???
-                        restrictor = parse(model=model['restrictor'], index=index, inputs=list())
-                        body = parse(model=model['body'], index=(index + len(restrictor)), inputs=[index + len(restrictor) - 1])
-                        return restrictor + body + [dict(inputs=[index + len(restrictor) - 1, index + len(restrictor) + len(body) - 1], function='quantifier', value_inputs=['existential'])]
-                    elif model['component'] == 'Quantifier':
-                        restrictor = parse(model=model['restrictor'], index=index, inputs=list())
-                        body = parse(model=model['body'], index=(index + len(restrictor)), inputs=[index + len(restrictor) - 1])
-                        return restrictor + body + [dict(inputs=[index + len(restrictor) - 1, index + len(restrictor) + len(body) - 1], function='quantifier', value_inputs=['{}-{}-{}'.format(model['qtype'], model['qrange'], model['quantity'])])]
-                    elif model['component'] == 'NumberBound':
-                        quantifier = parse(model=model['quantifier'], index=index, inputs=list())
-                        return quantifier + [dict(inputs=[index + len(quantifier) - 1], function='number-bound', value_inputs=[str(model['bound'])])]
-                    elif model['component'] == 'ComparativeQuantifier':
-                        restrictor = parse(model=model['restrictor'], index=index, inputs=list())
-                        comparison = parse(model=model['comparison'], index=(index + len(restrictor)), inputs=list())
-                        restrictor_body = parse(model=model['body'], index=(index + len(restrictor) + len(comparison)), inputs=[index + len(restrictor) - 1])
-                        comparison_body = parse(model=model['body'], index=(index + len(restrictor) + len(comparison)), inputs=[index + len(restrictor) + len(comparison) - 1])
-                        return restrictor + comparison + restrictor_body + comparison_body + [dict(inputs=[index + len(restrictor) - 1, index + len(restrictor) + len(comparison) - 1, index + len(restrictor) + len(comparison) + len(restrictor_body) - 1, index + len(restrictor) + len(comparison) + len(restrictor_body) + len(comparison_body) - 1], function='comparative-quantifier', value_inputs=['{}-{}-{}'.format(model['qtype'], model['qrange'], model['quantity'])])]
-                    elif model['component'] == 'Proposition':
-                        assert False, model
-                    else:
-                        assert False, model
-
+                from shapeworld.world import World
+                from shapeworld.datasets.clevr_util import parse_program
                 assert args.type == 'agreement'
                 worlds = generated['world']
                 captions = generated['caption']
@@ -265,9 +236,13 @@ if __name__ == '__main__':
                         else:
                             assert False
                             answer = 'maybe'
+                        if caption_model is None:
+                            program = None
+                        else:
+                            program = parse_program(model=caption_model)
                         questions.append(dict(
                             image_index=index,
-                            program=(None if caption_model is None else parse(model=caption_model, index=0, inputs=list())),
+                            program=program,
                             question_index=0,
                             image_filename=filename,
                             question_family_index=0,

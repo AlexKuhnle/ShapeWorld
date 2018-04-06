@@ -10,7 +10,10 @@ pip3 install -e ShapeWorld  # optional: ShapeWorld[full] or ShapeWorld[full-gpu]
 
 ### Recently added features
 
+- Predefined agreement datasets re-structured and extended, `oneshape` and `spatial` removed
+- Coverage of ratio quantifier extended
 - Batch generator for datasets and epoch batch generator for loaded datasets
+- Generator option `-N` for PNG image format (as opposed to bitmap)
 - Support for Mac OS X (ACE, grammar)
 - New agreement baseline models
 - New agreement dataset parameters `worlds_per_instance` and `captions_per_instance`
@@ -58,22 +61,18 @@ If you use ShapeWorld in your work, please cite:
 
 ## Example data
 
+Command lines for generation can be found [here](https://github.com/AlexKuhnle/ShapeWorld/blob/master/examples/generate.sh).
+
 #### Caption agreement datasets
 
-- [Oneshape](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/oneshape/data.html)
-- [Multishape](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/multishape/data.html)
-- [Spatial](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/spatial/data.html)
-- [Relational](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/relational/data.html)
-- [Quantification (simple)](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/quantification_simple/data.html)
-- [Quantification](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/quantification/data.html)
-- [Quantification (complex)](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/quantification_complex/data.html)
-- [Combination](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/combination/data.html)
+- Existential:  &nbsp;  [[One shape]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/existential-oneshape/data.html)  ·  [[Collision-free]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/existential-colfree/data.html)  ·  [[Full]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/existential/data.html)
+- Relational:  &nbsp;  [[Spatial two shapes]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/relational-spatial_twoshapes/data.html)  ·  [[Spatial]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/relational-spatial/data.html)  ·  [[Comparative]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/relational-comparative/data.html)  ·  [[Full]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/relational/data.html)
+- Quantification:  &nbsp;  [[Count equal]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/quantification-count_equal/data.html)  ·  [[Count non-subtractive]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/quantification-count_nonsubtr/data.html)  ·  [[Count]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/quantification-count/data.html)  ·  [[Ratio equal]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/quantification-ratio_equal/data.html)  ·  [[Ratio]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/quantification-ratio/data.html)  ·  [[Full]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/quantification/data.html)  ·  [[Complex]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/quantification_complex/data.html)
+- Logical:  &nbsp;  [[Existential]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/logical-existential/data.html)  ·  [[Full]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/logical/data.html)
 
 #### Classification datasets
 
-- [Oneshape](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/classification/oneshape/data.html)
-- [Multishape](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/classification/multishape/data.html)
-- [Countshape](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/classification/countshape/data.html)
+- Shape:  &nbsp;  [[Single]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/classification/shape-single/data.html)  ·  [[Multi]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/classification/shape-multi/data.html)  ·  [[Count]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/classification/shape-count/data.html)
 
 
 
@@ -84,7 +83,7 @@ The easiest way to use the ShapeWorld data in your Python project is to directly
 ```python
 from shapeworld import Dataset
 
-dataset = Dataset.create(dtype='agreement', name='multishape')
+dataset = Dataset.create(dtype='agreement', name='existential')
 generated = dataset.generate(n=128, mode='train', include_model=True)
 
 print('world shape:', dataset.world_shape())
@@ -109,7 +108,7 @@ Alternatively, `dataset.iterate(...)` returns a batch generator, with the option
 ```python
 from shapeworld import Dataset
 
-dataset = Dataset.create(dtype='agreement', name='multishape')
+dataset = Dataset.create(dtype='agreement', name='existential')
 for batch in dataset.iterate(n=64, mode='train', include_model=True, iterations=5):
     # iterations argument optional
     print(len(batch['world']))
@@ -120,7 +119,7 @@ The agreement datasets offer a parameter `worlds_per_instance` or `captions_per_
 ```python
 from shapeworld import Dataset
 
-dataset = Dataset.create(dtype='agreement', name='multishape', captions_per_instance=3)
+dataset = Dataset.create(dtype='agreement', name='existential', captions_per_instance=3)
 
 generated = dataset.generate(n=1)
 print('caption:', generated['caption'][0])  # one caption
@@ -149,8 +148,9 @@ The following command line arguments are available:
 * `-U`, `--unmanaged`:  Do not automatically create sub-directories (implied if --shards not specified)
 * `-t`, `--type`:  Dataset type (**required**)
 * `-n`, `--name`:  Dataset name (**required**)
-* `-l`, `--language`:  Dataset language, if available (default: `none`, i.e. English)
-* `-c`, `--config`:  Dataset configuration file, otherwise use default configuration
+* `-v`, `--variant`:  Label for configuration variant (default: `none`)
+* `-l`, `--language`:  Language, if available (default: `none`, i.e. English)
+* `-c`, `--config`:  Configuration file/directory, otherwise use default configuration
 * `-s`, `--shards`:  Optional number of shards to split data into (not specified implies --unmanaged), either a number (with `--mode`) or a tuple of 3 comma-separated numbers (without `--mode`), for `train`, `validation` and `test` data respectively
 * `-i`, `--instances`:  Number of instances per shard (default: `128`)
 * `-m`, `--mode`:  Mode, one of `train`, `validation` or `test`, requires `--shards` to be a single number (default: `none`)
@@ -161,21 +161,21 @@ The following command line arguments are available:
 * `-T`, `--tf-records`:  Additionally store data as TensorFlow records
 * `-F`, `--features`:  Additionally extract image features (`conv4` of `resnet_v2_101`)
 * `-C`, `--clevr-format`:  Output in CLEVR format
-* `-N`, `--png-format`:  Store images in PNG as opposed to bitmat format
+* `-N`, `--png-format`:  Store images in PNG as opposed to bitmap format
 * `-O`, `--concatenate-images`:  Concatenate images per part into one image file
 * `-Y`, `--yes`:  Confirm all questions with yes
-* `--config-values`:  Additional dataset configuration values passed as command line arguments
+* `--config-values`:  Additional dataset configuration values passed as command line arguments (`--[key] [value]` with `[value]` being a string or in JSON format, put in single quotes `'...'` if necessary, see [dataset arguments](https://github.com/AlexKuhnle/ShapeWorld/tree/master/shapeworld/datasets) for details)
 
-When creating larger amounts of ShapeWorld data, it is advisable to store the data in a compressed archive (for example `-a tar:bz2`). For instance, the following command line generates one million *training* instances of the `multishape` configuration file included in this repository:
+When creating larger amounts of ShapeWorld data, it is advisable to store the data in a compressed archive (for example `-a tar:bz2`). For instance, the following command line generates one million *training* instances of the `existential` configuration file included in this repository:
 
 ```bash
-python generate.py -d [DIRECTORY] -a tar:bzip2 -t agreement -n multishape -m train -s 100 -i 10k -M
+python generate.py -d [DIRECTORY] -a tar:bzip2 -t agreement -n existential -m train -s 100 -i 10k -M
 ```
 
 For the purpose of this introduction, we generate a smaller amount of *all* training (TensorFlow records and raw), validation and test instances using the default configuration of the dataset:
 
 ```bash
-python generate.py -d examples/readme -a tar:bzip2 -t agreement -n multishape -s 3,2,1 -i 100 -M -T
+python generate.py -d examples/readme -a tar:bzip2 -t agreement -n existential -v readme -s 3,2,1 -i 100 -M -T
 ```
 
 
@@ -187,7 +187,7 @@ Extracted data can be loaded and accessed with the same `Dataset` interface as b
 ```python
 from shapeworld import Dataset
 
-dataset = Dataset.create(dtype='agreement', name='multishape', config='examples/readme')
+dataset = Dataset.create(dtype='agreement', name='existential', variant='readme', config='examples/readme')
 generated = dataset.generate(n=128, mode='train')
 ```
 
@@ -196,7 +196,7 @@ Besides the batch generator functionality `dataset.iterate(...)`, loaded dataset
 ```python
 from shapeworld import Dataset
 
-dataset = Dataset.create(dtype='agreement', name='multishape', config='examples/readme')
+dataset = Dataset.create(dtype='agreement', name='existential', variant='readme', config='examples/readme')
 for batch in dataset.epoch(n=64, mode='train', include_model=True):
     print(len(batch['world']))  # 64, 64, 64, 64, 44 (300 overall)
 ```
@@ -206,7 +206,7 @@ Loading the data in Python and then feeding it to a model is relatively slow. By
 ```python
 from shapeworld import Dataset, tf_util
 
-dataset = Dataset.create(dtype='agreement', name='multishape', config='examples/readme')
+dataset = Dataset.create(dtype='agreement', name='existential', variant='readme', config='examples/readme')
 generated = tf_util.batch_records(dataset=dataset, mode='train', batch_size=128)
 ```
 
@@ -248,8 +248,8 @@ rm -r CLEVR_v1.0
 Accordingly, in the case of CLEVR CoGenT:
 
 ```bash
-python generate.py -d [SHAPEWORLD_DIRECTORY] -a tar:bzip2 -t clevr_classification -n clevr -s 140,30,30 -i 500 -M -T --config-values --directory CLEVR_CoGenT_v1.0 --parts A,A,A
-python generate.py -d [SHAPEWORLD_DIRECTORY] -a tar:bzip2 -t clevr_classification -n clevr -s 0,30,30 -i 500 -M -T --config-values --directory CLEVR_CoGenT_v1.0 --parts A,B,B
+python generate.py -d [SHAPEWORLD_DIRECTORY] -a tar:bzip2 -t clevr_classification -n clevr -s 140,30,30 -i 500 -M -T --config-values --directory CLEVR_CoGenT_v1.0 --parts '["A", "A", "A"]'
+python generate.py -d [SHAPEWORLD_DIRECTORY] -a tar:bzip2 -t clevr_classification -n clevr -s 0,30,30 -i 500 -M -T --config-values --directory CLEVR_CoGenT_v1.0 --parts '["A", "B", "B"]'
 rm -r CLEVR_CoGenT_v1.0
 ```
 
@@ -288,8 +288,9 @@ The `models/` directory contains a few exemplary models based on [TFMacros](http
 
 * `-t`, `--type`:  Dataset type (**required**)
 * `-n`, `--name`:  Dataset name (**required**)
-* `-l`, `--language`:  Dataset language, if available (default: `none`, i.e. English)
-* `-c`, `--config`:  Dataset configuration file, otherwise use default configuration
+* `-v`, `--variant`:  Label of configuration variant (default: `none`)
+* `-l`, `--language`:  Language, if available (default: `none`, i.e. English)
+* `-c`, `--config`:  Configuration file/directory, otherwise use default configuration
 * `-m`, `--model`:  Model, one in `models/[TYPE]/` (**required**)
 * `-y`, `--hyperparams-file`:  Model hyperparameters file (default: hyperparams directory)
 * `-R`, `--restore` (t):  Restore model, requires `--model-file`
@@ -300,29 +301,26 @@ The `models/` directory contains a few exemplary models based on [TFMacros](http
 * `-q`, `--query`:  Additional values to query, separated by commas (default: `none`)
 * `-s`, `--serialize` (e):  Values to serialize, separated by commas (default: `none`) (**)
 * `-T`, `--tf-records` (t):  Use TensorFlow records (*)
-* `--model-dir`:  TensorFlow model directory, storing the model computation graph and parameters (default: `none`)
+* `--model-dir`:  TensorFlow model directory, storing the model computation graph and parameters ((t) default: `none`, (e) **required**)
 * `--save-frequency` (t):  Save frequency, in hours (default: `3`)
 * `--summary-dir` (t):  TensorFlow summary directory for TensorBoard (default: `none`)
 * `--report-file`:  CSV file reporting the training results throughout the learning process (default: `none`)
 * `-v`, `--verbosity'`:  Verbosity, one of `0` (no messages), `1` (default), `2` (plus TensorFlow messages) (default: `1`)
 * `-Y`, `--yes` (t):  Confirm all questions with yes
-* `--config-values`:  Additional dataset configuration values passed as command line arguments
+* `--config-values`:  Additional dataset configuration values passed as command line arguments (`--[key] [value]` with `[value]` being a string or in JSON format, put in single quotes `'...'` if necessary, see [dataset arguments](https://github.com/AlexKuhnle/ShapeWorld/tree/master/shapeworld/datasets) for details)
 
-For instance, the following command line trains an image caption agreement system on the dataset specified by the `multishape` configuration file included in this repository:
+For instance, the following command line trains an image caption agreement system on the `existential` dataset:
 
 ```bash
-python train.py -t agreement -n multishape -m cnn_bow -i 5k
+python train.py -t agreement -n existential -m cnn_bow -i 5k
 ```
 
 The previously generated data (here: TF records) can be loaded in the same way as was explained for loading the data in Python code:
 
 ```bash
-python train.py -t agreement -n multishape -c examples/readme -m cnn_bow -i 10 -T
+python train.py -t agreement -n existential -v readme -c examples/readme -m cnn_bow -i 10 -T --model-dir [MODEL_DIRECTORY]
 ```
 
-
-
-
 ```bash
-python evaluate.py -t agreement -n multishape -c examples/readme -m cnn_bow -i 10
+python evaluate.py -t agreement -n existential -v readme -c examples/readme -m cnn_bow -i 10 --model-dir [MODEL_DIRECTORY]
 ```

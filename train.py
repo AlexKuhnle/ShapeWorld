@@ -14,8 +14,9 @@ if __name__ == '__main__':
 
     parser.add_argument('-t', '--type', help='Dataset type')
     parser.add_argument('-n', '--name', type=util.parse_tuple(parse_item=str, unary_tuple=False), help='Dataset name')
-    parser.add_argument('-l', '--language', default=None, help='Dataset language')
-    parser.add_argument('-c', '--config', type=util.parse_tuple(parse_item=str, unary_tuple=False), default=None, help='Dataset configuration file')
+    parser.add_argument('-v', '--variant', type=util.parse_tuple(parse_item=str, unary_tuple=False), default=None, help='Label of configuration variant')
+    parser.add_argument('-l', '--language', default=None, help='Language')
+    parser.add_argument('-c', '--config', type=util.parse_tuple(parse_item=str, unary_tuple=False), default=None, help='Configuration file/directory')
 
     parser.add_argument('-m', '--model', help='Model')
     parser.add_argument('-y', '--hyperparams-file', default=None, help='Model hyperparameters file (default: hyperparams directory)')
@@ -33,26 +34,30 @@ if __name__ == '__main__':
     parser.add_argument('--summary-dir', default=None, help='TensorFlow summary directory for TensorBoard')
     parser.add_argument('--report-file', default=None, help='CSV file reporting the training results throughout the learning process')
 
-    parser.add_argument('-v', '--verbosity', type=int, choices=(0, 1, 2), default=1, help='Verbosity (0: no messages, 1: default, 2: plus TensorFlow messages)')
+    parser.add_argument('--verbosity', type=int, choices=(0, 1, 2), default=1, help='Verbosity (0: no messages, 1: default, 2: plus TensorFlow messages)')
     parser.add_argument('-Y', '--yes', action='store_true', help='Confirm all questions with yes')
+    parser.add_argument('--v1', action='store_true')
 
     parser.add_argument('--config-values', nargs=argparse.REMAINDER, default=(), help='Additional dataset configuration values passed as command line arguments')
+
     args = parser.parse_args()
     args.config_values = util.parse_config(values=args.config_values)
 
-    # import tensorflow
+    # TFRecords utility
+    if args.tf_records:
+        from shapeworld import tf_util
+
+    # tensorflow verbosity
     if args.verbosity >= 2:
         os.environ['TF_CPP_MIN_LOG_LEVEL'] = '0'
     else:
         os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
-    import tensorflow as tf
 
-    # import tf_util for TFRecords
-    if args.tf_records:
-        from shapeworld import tf_util
+    if args.v1:
+        util.set_version(1)
 
     # dataset
-    dataset = Dataset.create(dtype=args.type, name=args.name, language=args.language, config=args.config, **args.config_values)
+    dataset = Dataset.create(dtype=args.type, name=args.name, variant=args.variant, language=args.language, config=args.config, **args.config_values)
 
     # information about dataset and model
     if args.verbosity >= 1:
@@ -86,7 +91,7 @@ if __name__ == '__main__':
             world_shape=dataset.world_shape(),
             num_classes=dataset.num_classes,
             multi_class=dataset.multi_class,
-            class_count=dataset.class_count
+            count_class=dataset.count_class
         )
         for value_name in dataset.vectors:
             dataset_parameters[value_name + '_shape'] = dataset.vector_shape(value_name=value_name)

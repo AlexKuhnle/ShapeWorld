@@ -1,23 +1,17 @@
-from shapeworld import util
-from shapeworld.captions import Settings, Predicate
+from shapeworld.captions import Predicate
 
 
 class Attribute(Predicate):
 
-    predtypes = ('relation', 'shape', 'color', 'texture', 'combination', 'shapes', 'colors', 'textures', 'combinations', 'x-max', 'y-max', 'size-max', 'shade-max')
+    predtypes = ('relation', 'shape', 'color', 'texture')
 
     def __init__(self, predtype, value):
         assert predtype in Attribute.predtypes
         if predtype == 'relation':
             from shapeworld.captions import Relation
             assert isinstance(value, Relation)
-        elif predtype in ('shape', 'color', 'texture', 'combination'):
+        elif predtype in ('shape', 'color', 'texture'):
             assert isinstance(value, str)
-        elif predtype in ('shapes', 'colors', 'textures', 'combinations'):
-            assert isinstance(value, tuple) or isinstance(value, list)
-            value = tuple(value)
-        elif predtype in ('x-max', 'y-max', 'size-max', 'shade-max'):
-            assert value == -1 or value == 1
         else:
             assert False
         super(Attribute, self).__init__(predtype=predtype, value=value)
@@ -25,10 +19,8 @@ class Attribute(Predicate):
     def model(self):
         if self.predtype == 'relation':
             value = self.value.model()
-        elif self.predtype in ('shape', 'color', 'texture', 'combination', 'x-max', 'y-max', 'size-max', 'shade-max'):
+        elif self.predtype in ('shape', 'color', 'texture'):
             value = self.value
-        elif self.predtype in ('shapes', 'colors', 'textures', 'combinations'):
-            value = list(self.value)
         else:
             assert False
         return dict(
@@ -46,9 +38,9 @@ class Attribute(Predicate):
     def apply_to_predication(self, predication):
         predication.apply(predicate=self)
 
-    def pred_agreement(self, entity, predication):
+    def pred_agreement(self, entity):
         if self.predtype == 'relation':
-            return self.value.pred_agreement(entity=entity, predication=predication)
+            return self.value.pred_agreement(entity=entity)
 
         elif self.predtype == 'shape':
             return entity.shape.name == self.value
@@ -59,36 +51,9 @@ class Attribute(Predicate):
         elif self.predtype == 'texture':
             return entity.texture.name == self.value
 
-        elif self.predtype == 'combination':
-            return (entity.shape.name, entity.color.name, entity.texture.name) == self.value
-
-        elif self.predtype == 'shapes':
-            return entity.shape.name in self.value
-
-        elif self.predtype == 'colors':
-            return entity.color.name in self.value
-
-        elif self.predtype == 'textures':
-            return entity.texture.name in self.value
-
-        elif self.predtype == 'combinations':
-            return (entity.shape.name, entity.color.name, entity.texture.name) in self.value
-
-        elif self.predtype == 'x-max':
-            return util.all_and_any((entity.center.x - other.center.x) * self.value > Settings.min_axis_distance for other in predication.agreeing if other != entity)
-
-        elif self.predtype == 'y-max':
-            return util.all_and_any((entity.center.y - other.center.y) * self.value > Settings.min_axis_distance for other in predication.agreeing if other != entity)
-
-        elif self.predtype == 'size-max':
-            return util.all_and_any((entity.shape.area - other.shape.area) * self.value > Settings.min_area for other in predication.agreeing if other != entity)
-
-        elif self.predtype == 'shade-max':
-            return util.all_and_any((entity.color.shade - other.color.shade) * self.value > Settings.min_shade for other in predication.agreeing if other != entity and other.color == entity.color)
-
-    def pred_disagreement(self, entity, predication):
+    def pred_disagreement(self, entity):
         if self.predtype == 'relation':
-            return self.value.pred_disagreement(entity=entity, predication=predication)
+            return self.value.pred_disagreement(entity=entity)
 
         elif self.predtype == 'shape':
             return entity.shape.name != self.value
@@ -98,30 +63,3 @@ class Attribute(Predicate):
 
         elif self.predtype == 'texture':
             return entity.texture.name != self.value
-
-        elif self.predtype == 'combination':
-            return (entity.shape.name, entity.color.name, entity.texture.name) != self.value
-
-        elif self.predtype == 'shapes':
-            return entity.shape.name not in self.value
-
-        elif self.predtype == 'colors':
-            return entity.color.name not in self.value
-
-        elif self.predtype == 'textures':
-            return entity.texture.name not in self.value
-
-        elif self.predtype == 'combinations':
-            return (entity.shape.name, entity.color.name, entity.texture.name) not in self.value
-
-        elif self.predtype == 'x-max':
-            return any((other.center.x - entity.center.x) * self.value > Settings.min_axis_distance for other in predication.not_disagreeing if other != entity)
-
-        elif self.predtype == 'y-max':
-            return any((other.center.y - entity.center.y) * self.value > Settings.min_axis_distance for other in predication.not_disagreeing if other != entity)
-
-        elif self.predtype == 'size-max':
-            return any((other.shape.area - entity.shape.area) * self.value > Settings.min_area for other in predication.not_disagreeing if other != entity)
-
-        elif self.predtype == 'shade-max':
-            return any((other.color.shade - entity.color.shade) * self.value > Settings.min_shade for other in predication.not_disagreeing if other != entity and other.color == entity.color)

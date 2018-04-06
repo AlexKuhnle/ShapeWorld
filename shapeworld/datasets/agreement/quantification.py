@@ -1,9 +1,9 @@
 from shapeworld.dataset import CaptionAgreementDataset
 from shapeworld.generators import ReinforcedAttributesGenerator
-from shapeworld.captioners import CaptionerMixer, RegularAttributeCaptioner, RegularTypeCaptioner, AttributeTypeRelationCaptioner, QuantifierCaptioner, NumberBoundCaptioner, ComparativeQuantifierCaptioner
+from shapeworld.captioners import CaptionerMixer, RegularAttributeCaptioner, RegularTypeCaptioner, AttributeTypeRelationCaptioner, QuantifierCaptioner
 
 
-class Quantification(CaptionAgreementDataset):
+class QuantificationDataset(CaptionAgreementDataset):
 
     def __init__(
         self,
@@ -18,7 +18,7 @@ class Quantification(CaptionAgreementDataset):
         shade_range=0.4,
         collision_tolerance=0.25,
         collision_shade_difference=0.5,
-        boundary_tolerance=0.25,
+        boundary_tolerance=None,
         entity_counts=(5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15),
         train_entity_counts=(5, 6, 7, 9, 11, 12, 14),
         validation_entity_counts=(8, 13),
@@ -33,9 +33,9 @@ class Quantification(CaptionAgreementDataset):
         test_combination_rate=0.5,
         max_provoke_collision_rate=0.33,
         reinforcement_range=(1, 3),
-        quantifier_types=None,
+        quantifiers=None,
         caption_size=15,
-        vocabulary=('.', 'a', 'all', 'an', 'are', 'as', 'at', 'blue', 'but', 'circle', 'circles', 'cross', 'crosses', 'cyan', 'eight', 'ellipse', 'ellipses', 'exactly', 'few', 'five', 'four', 'gray', 'green', 'half', 'is', 'least', 'less', 'magenta', 'many', 'more', 'most', 'no', 'none', 'not', 'of', 'one', 'pentagon', 'pentagons', 'quarter', 'quarters', 'rectangle', 'rectangles', 'red', 'semicircle', 'semicircles', 'seven', 'shape', 'shapes', 'six', 'square', 'squares', 'than', 'the', 'third', 'thirds', 'three', 'triangle', 'triangles', 'twice', 'two', 'yellow', 'zero'),
+        vocabulary=('.', 'a', 'all', 'an', 'are', 'at', 'blue', 'but', 'circle', 'circles', 'cross', 'crosses', 'cyan', 'ellipse', 'ellipses', 'exactly', 'five', 'four', 'gray', 'green', 'half', 'is', 'least', 'less', 'magenta', 'more', 'most', 'no', 'not', 'of', 'one', 'pentagon', 'pentagons', 'quarter', 'quarters', 'rectangle', 'rectangles', 'red', 'semicircle', 'semicircles', 'shape', 'shapes', 'square', 'squares', 'than', 'the', 'third', 'thirds', 'three', 'triangle', 'triangles', 'two', 'yellow', 'zero'),
         correct_ratio=0.5,
         train_correct_ratio=None,
         validation_correct_ratio=None,
@@ -63,50 +63,38 @@ class Quantification(CaptionAgreementDataset):
             entity_counts=entity_counts,
             train_entity_counts=train_entity_counts,
             validation_entity_counts=validation_entity_counts,
+            validation_count_rate=validation_count_rate,
             test_entity_counts=test_entity_counts,
+            test_count_rate=test_count_rate,
             validation_combinations=validation_combinations,
+            validation_space_rate_range=validation_space_rate_range,
+            validation_combination_rate=validation_combination_rate,
             test_combinations=test_combinations,
+            test_space_rate_range=test_space_rate_range,
+            test_combination_rate=test_combination_rate,
             max_provoke_collision_rate=max_provoke_collision_rate,
             reinforcement_range=reinforcement_range
         )
 
-        body_captioner = AttributeTypeRelationCaptioner(
-            attribute_type_captioner=CaptionerMixer(
-                captioners=(
-                    RegularAttributeCaptioner(),
-                    RegularTypeCaptioner(
-                        hypernym_rate=0.0
-                    )
-                )
-            )
-        )
-        quantifier_captioner = QuantifierCaptioner(
+        world_captioner = QuantifierCaptioner(
             restrictor_captioner=RegularTypeCaptioner(
                 hypernym_rate=1.0,
                 logical_tautology_rate=1.0
             ),
-            body_captioner=body_captioner,
-            quantifier_types=quantifier_types
-        )
-        number_bound_captioner = NumberBoundCaptioner(
-            quantifier_captioner=quantifier_captioner
-        )
-        comparative_quantifier_captioner = ComparativeQuantifierCaptioner(
-            restrictor_captioner=RegularTypeCaptioner(
-                hypernym_rate=1.0
+            body_captioner=AttributeTypeRelationCaptioner(
+                attribute_type_captioner=CaptionerMixer(
+                    captioners=(
+                        RegularAttributeCaptioner(),
+                        RegularTypeCaptioner(
+                            hypernym_rate=0.0
+                        )
+                    )
+                )
             ),
-            comparison_captioner=RegularTypeCaptioner(
-                hypernym_rate=1.0
-            ),
-            body_captioner=body_captioner,
-            quantifier_types=quantifier_types
-        )
-        world_captioner = CaptionerMixer(
-            captioners=(quantifier_captioner, number_bound_captioner, comparative_quantifier_captioner),
-            distribution=[1, 1, 1]
+            quantifiers=quantifiers
         )
 
-        super(Quantification, self).__init__(
+        super(QuantificationDataset, self).__init__(
             world_generator=world_generator,
             world_captioner=world_captioner,
             caption_size=caption_size,
@@ -121,6 +109,3 @@ class Quantification(CaptionAgreementDataset):
             caption_realizer=caption_realizer,
             language=language
         )
-
-
-dataset = Quantification

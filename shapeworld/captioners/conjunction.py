@@ -1,4 +1,4 @@
-from random import choice
+from copy import deepcopy
 from shapeworld import util
 from shapeworld.captions import Proposition
 from shapeworld.captioners import WorldCaptioner
@@ -7,14 +7,22 @@ from shapeworld.captioners import WorldCaptioner
 class ConjunctionCaptioner(WorldCaptioner):
 
     # incorrect modes
-    # 0: correct (both correct)
-    # 1: incorrect (first incorrect)
-    # 2: incorrect (second incorrect)
-    # 3: incorrect (both incorrect)
+    # 0: incorrect (first incorrect)
+    # 1: incorrect (second incorrect)
+    # 2: incorrect (both incorrect)
 
-    def __init__(self, captioners, incorrect_distribution=None, pragmatical_redundancy_rate=None, pragmatical_tautology_rate=None, logical_redundancy_rate=None, logical_tautology_rate=None, logical_contradiction_rate=None):
+    def __init__(
+        self,
+        captioner,
+        pragmatical_redundancy_rate=1.0,
+        pragmatical_tautology_rate=0.0,
+        logical_redundancy_rate=1.0,
+        logical_tautology_rate=0.0,
+        logical_contradiction_rate=0.0,
+        incorrect_distribution=(1, 1, 1)
+    ):
         super(ConjunctionCaptioner, self).__init__(
-            internal_captioners=captioners,
+            internal_captioners=(captioner, deepcopy(captioner)),
             pragmatical_redundancy_rate=pragmatical_redundancy_rate,
             pragmatical_tautology_rate=pragmatical_tautology_rate,
             logical_redundancy_rate=logical_redundancy_rate,
@@ -22,7 +30,8 @@ class ConjunctionCaptioner(WorldCaptioner):
             logical_contradiction_rate=logical_contradiction_rate
         )
 
-        self.incorrect_distribution = util.cumulative_distribution(util.value_or_default(incorrect_distribution, [1, 1, 1]))
+        self.captioner1, self.captioner2 = self.internal_captioners
+        self.incorrect_distribution = util.cumulative_distribution(incorrect_distribution)
 
     def set_realizer(self, realizer):
         if not super(ConjunctionCaptioner, self).set_realizer(realizer=realizer):
@@ -39,27 +48,21 @@ class ConjunctionCaptioner(WorldCaptioner):
             set(str(n) for n in range(1, 3)) | \
             {'{}-{}'.format(Proposition.__name__, 'conjunction')}
 
-    def sample_values(self, mode, correct, predication):
+    def sample_values(self, mode, predication):
         assert predication.empty()
 
-        if not super(ConjunctionCaptioner, self).sample_values(mode=mode, correct=correct, predication=predication):
+        if not super(ConjunctionCaptioner, self).sample_values(mode=mode, predication=predication):
             return False
 
-        self.captioner1 = choice(self.internal_captioners)
-        self.captioner2 = choice(self.internal_captioners)
-
-        self.incorrect_mode = 0 if correct else 1 + util.sample(self.incorrect_distribution)
-
-        correct1 = (self.incorrect_mode != 1) and (self.incorrect_mode != 3)  # 1: first incorrect, 3: both incorrect
-        correct2 = (self.incorrect_mode != 2) and (self.incorrect_mode != 3)  # 2: second incorrect, 3: both incorrect
+        self.incorrect_mode = util.sample(self.incorrect_distribution)
 
         predication1 = predication.copy()
         predication2 = predication.copy()
 
-        if not self.captioner1.sample_values(mode=mode, correct=correct1, predication=predication1):
+        if not self.captioner1.sample_values(mode=mode, predication=predication1):
             return False
 
-        if not self.captioner2.sample_values(mode=mode, correct=correct2, predication=predication2):
+        if not self.captioner2.sample_values(mode=mode, predication=predication2):
             return False
 
         return True
@@ -92,29 +95,33 @@ class ConjunctionCaptioner(WorldCaptioner):
     def incorrect(self, caption, predication, world):
         assert predication.empty()
 
-        if self.incorrect_mode == 0:  # 0: both correct
-            caption.apply_to_predication(predication=predication)
-
-        elif self.incorrect_mode == 1:  # 1: first incorrect
+        if self.incorrect_mode == 0:  # 0: first incorrect
             predication1 = predication.sub_predication()
             if not self.captioner1.incorrect(caption=caption.clauses[0], predication=predication1, world=world):
                 return False
             predication2 = predication.sub_predication()
             caption.clauses[1].apply_to_predication(predication=predication2)
 
-        elif self.incorrect_mode == 2:  # 2: second incorrect
+        elif self.incorrect_mode == 1:  # 1: second incorrect
             predication1 = predication.sub_predication()
             caption.clauses[0].apply_to_predication(predication=predication1)
             predication2 = predication.sub_predication()
             if not self.captioner2.incorrect(caption=caption.clauses[1], predication=predication2, world=world):
                 return False
 
-        elif self.incorrect_mode == 3:  # 3: both incorrect
+        elif self.incorrect_mode == 2:  # 2: both incorrect
             predication1 = predication.sub_predication()
             if not self.captioner1.incorrect(caption=caption.clauses[0], predication=predication1, world=world):
                 return False
+            predication_test = predication1.copy(include_sub_predications=True)
+            if caption.clauses[0].agreement(predication=predication_test, world=world) >= 0.0:
+                return False
+
             predication2 = predication.sub_predication()
             if not self.captioner2.incorrect(caption=caption.clauses[1], predication=predication2, world=world):
+                return False
+            predication_test = predication2.copy(include_sub_predications=True)
+            if caption.clauses[1].agreement(predication=predication_test, world=world) >= 0.0:
                 return False
 
         return True
