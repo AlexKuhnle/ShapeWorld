@@ -37,7 +37,6 @@ class Dataset(object):
 
     @staticmethod
     def create(dtype=None, name=None, variant=None, language=None, config=None, **kwargs):
-        assert (dtype is None) is (name is None)
         assert variant is None or name is not None
         assert language is None or name is not None
 
@@ -99,31 +98,21 @@ class Dataset(object):
                 full_name = '{}-{}'.format(full_name, variant)
             if language is not None:
                 full_name = '{}-{}'.format(full_name, language)
-            directory = os.path.join(config, dtype, full_name)
             config = os.path.join(config, '{}-{}.json'.format(dtype, full_name))
             with open(config, 'r') as filehandle:
                 config = json.load(fp=filehandle)
-            if 'directory' not in config:
-                config['directory'] = directory
-            assert config.get('name', name) == name
             return Dataset.create(dtype=dtype, name=name, language=language, config=config, **kwargs)
 
         elif os.path.isfile(config):
-            directory = os.path.dirname(config)
             with open(config, 'r') as filehandle:
                 config = json.load(fp=filehandle)
-            if dtype is None:
-                dtype = config['type']
-            if name is None:
-                name = config['name']
-            if language is None:
-                language = config.get('language')
-            full_name = name
+            full_name = config.get('name', name)
             if variant is not None:
                 full_name = '{}-{}'.format(full_name, variant)
             if language is not None:
                 full_name = '{}-{}'.format(full_name, language)
-            config['directory'] = os.path.join(directory, dtype, full_name)
+            elif 'language' in config:
+                full_name = '{}-{}'.format(full_name, config['language'])
             return Dataset.create(dtype=dtype, name=name, language=language, config=config, **kwargs)
 
         else:
@@ -151,11 +140,13 @@ class Dataset(object):
             if dtype is None:
                 dtype = config.pop('type')
             else:
-                assert 'type' not in config or config['type'] == dtype
+                dtype_config = config.pop('type', dtype)
+                assert dtype_config == dtype
             if name is None:
                 name = config.pop('name')
             else:
-                assert 'name' not in config or config['name'] == name
+                name_config = config.pop('name', name)
+                assert name_config == name
             if 'language' in config:
                 assert language is None or config['language'] == language
             elif language is not None:
@@ -582,7 +573,10 @@ class LoadedDataset(Dataset):
 
         while (self.num_instances < n) if (self.random_sampling or alternatives) else (self.num_alternatives < n):
             if self.random_sampling:
-                self.part = randrange(len(self.parts[mode]))
+                next_part = self.part
+                while len(self.parts[mode]) > 1 and next_part == self.part:
+                    next_part = randrange(len(self.parts[mode]))
+                self.part = next_part
             else:
                 self.part = (self.part + 1) % len(self.parts[mode])
             self.num_instances = 0
@@ -904,7 +898,8 @@ class ClassificationDataset(Dataset):
 
 class CaptionAgreementDataset(Dataset):
 
-    INITIALIZE_CAPTIONER = 100
+    GENERATOR_INIT_FREQUENCY = 50
+    CAPTIONER_INIT_FREQUENCY = 100
 
     def __init__(self, world_generator, world_captioner, caption_size, vocabulary, pixel_noise_stddev=0.0, caption_realizer='dmrs', language=None, worlds_per_instance=1, captions_per_instance=1, correct_ratio=0.5, train_correct_ratio=None, validation_correct_ratio=None, test_correct_ratio=None):
         if worlds_per_instance > 1 or captions_per_instance > 1:
@@ -990,14 +985,25 @@ class CaptionAgreementDataset(Dataset):
 
             resample = 0
             while True:
-                self.world_generator.initialize(mode=mode)
 
-                if resample % self.__class__.INITIALIZE_CAPTIONER == 0:
-                    if resample // self.__class__.INITIALIZE_CAPTIONER >= 1:
-                        # print(i, resample, correct, self.world_captioner.model())
+                if resample % self.__class__.GENERATOR_INIT_FREQUENCY == 0:
+                    if resample // self.__class__.GENERATOR_INIT_FREQUENCY >= 1:
+                        # print(i, 'world')
                         pass
-                    while not self.world_captioner.initialize(mode=mode, correct=correct):
+                    self.world_generator.initialize(mode=mode)
+
+                if resample % self.__class__.CAPTIONER_INIT_FREQUENCY == 0:
+                    if resample // self.__class__.CAPTIONER_INIT_FREQUENCY >= 1:
+                        # print(i, 'caption')
+                        # print(i, 'caption', correct, self.world_captioner.model())
                         pass
+                    if self.worlds_per_instance > 1:
+                        correct = True
+                        while not self.world_captioner.initialize(mode=mode, correct=False):
+                            pass
+                    else:
+                        while not self.world_captioner.initialize(mode=mode, correct=correct):
+                            pass
 
                 resample += 1
 
@@ -1005,7 +1011,13 @@ class CaptionAgreementDataset(Dataset):
                 while world is None:
                     world = self.world_generator()
 
-                caption = self.world_captioner(world=world)
+                if self.worlds_per_instance > 1:
+                    caption = self.world_captioner(world=world)
+                    if caption is None:
+                        continue
+                    caption = self.world_captioner.get_correct_caption()
+                else:
+                    caption = self.world_captioner(world=world)
 
                 if caption is not None:
                     break
@@ -1019,7 +1031,6 @@ class CaptionAgreementDataset(Dataset):
                 batch['alternatives'][i] = self.captions_per_instance
                 batch['caption'][i].extend(batch['caption'][i][0].copy() for _ in range(self.captions_per_instance - 1))
                 batch['caption_rpn'][i].extend(batch['caption_rpn'][i][0].copy() for _ in range(self.captions_per_instance - 1))
-                caption_alternatives = [caption]
                 captions.append(caption)
                 rpn = caption.reverse_polish_notation()
                 assert len(rpn) <= rpn_size
@@ -1033,13 +1044,17 @@ class CaptionAgreementDataset(Dataset):
                     correct = random() < correct_ratio
                     resample = 0
                     while True:
-                        if resample % self.__class__.INITIALIZE_CAPTIONER == 0:
+                        if resample % 10 == 0:
+                            if resample // 10 >= 1:
+                                # print(i, j, '2nd caption')
+                                # print(i, 'caption', correct, self.world_captioner.model())
+                                pass
                             while not self.world_captioner.initialize(mode=mode, correct=correct):
                                 pass
+                        resample += 1
                         caption = self.world_captioner(world=world)
                         if caption is not None:
                             break
-                    caption_alternatives.append(caption)
                     captions.append(caption)
                     rpn = caption.reverse_polish_notation()
                     assert len(rpn) <= rpn_size
@@ -1052,7 +1067,6 @@ class CaptionAgreementDataset(Dataset):
                     batch['agreement'][i].append(float(correct))
 
             else:
-                caption_alternatives = [caption]
                 captions.append(caption)
                 rpn = caption.reverse_polish_notation()
                 assert len(rpn) <= rpn_size
@@ -1070,21 +1084,29 @@ class CaptionAgreementDataset(Dataset):
                 batch['world'][i][0] = self.apply_pixel_noise(world=world.get_array(world_array=batch['world'][i][0]))
                 if include_model:
                     batch['world_model'][i].append(world.model())
+
                 for j in range(1, self.worlds_per_instance):
                     correct = random() < correct_ratio
+
                     while True:
-                        self.world_generator.initialize(mode=mode)
                         world = self.world_generator()
                         if world is None:
                             continue
-                        for caption in caption_alternatives:
+
+                        caption = self.world_captioner.get_correct_caption()
+                        predication = PragmaticalPredication(agreeing=world.entities)
+                        caption.apply_to_predication(predication=predication)
+                        agreement = caption.agreement(predication=predication, world=world)
+                        if not correct:
+                            if agreement >= 0.0:
+                                continue
                             predication = PragmaticalPredication(agreeing=world.entities)
-                            caption.apply_to_predication(predication=predication)
+                            if not self.world_captioner.incorrect(caption=caption, predication=predication, world=world):
+                                continue
                             agreement = caption.agreement(predication=predication, world=world)
-                            if (correct and agreement <= 0.0) or (not correct and agreement >= 0.0):
-                                break
-                        else:
+                        if agreement > 0.0:
                             break
+
                     batch['world'][i][j] = self.apply_pixel_noise(world=world.get_array(world_array=batch['world'][i][j]))
                     if include_model:
                         batch['world_model'][i].append(world.model())
@@ -1169,15 +1191,13 @@ class CaptionAgreementDataset(Dataset):
 
             if self.worlds_per_instance > 1:
                 for i, agreement in enumerate(agreement):
-                    if i > 0:
-                        data_html.append('<div class="vertical"></div>')
                     if agreement == 1.0:
                         agreement = 'correct'
                     elif agreement == 0.0:
                         agreement = 'incorrect'
                     else:
                         agreement = 'ambiguous'
-                    data_html.append('<div class="{agreement}"><div class="world"><img src="world-{world}-{alt}.{format}" alt="world-{world}-{alt}.{format}"></div></div>'.format(
+                    data_html.append('<div class="{agreement}" style="padding: 5px;"><div class="world"><img src="world-{world}-{alt}.{format}" alt="world-{world}-{alt}.{format}"></div></div>'.format(
                         agreement=agreement,
                         world=n,
                         format=image_format,
@@ -1209,7 +1229,7 @@ class CaptionAgreementDataset(Dataset):
 
             data_html.append('</div>')
 
-        html = '<!DOCTYPE html><html><head><title>{dtype} {name}</title><style>.data{{width: 100%; height: 100%;}} .instance{{width: 100%; display: flex; margin-top: 1px; margin-bottom: 1px; background-color: #DDEEFF; vertical-align: middle; align-items: center;}} .world{{height: {world_height}px; display: inline-block; flex-grow: 0; vertical-align: middle;}} .vertical{{width: 2px; height: {world_height}px; display: inline-block; flex-grow: 0; background-color: #777777; vertical-align: middle;}} .num{{width: 50px; display: inline-block; flex-grow: 0; text-align: center; vertical-align: middle; margin-left: 10px;}} .caption{{display: inline-block; flex-grow: 1; vertical-align: middle; margin-left: 10px;}} .correct{{margin-top: 1px; margin-bottom: 1px; background-color: #BBFFBB;}} .incorrect{{margin-top: 1px; margin-bottom: 1px; background-color: #FFBBBB;}} .ambiguous{{margin-top: 1px; margin-bottom: 1px; background-color: #FFFFBB;}}</style></head><body><div class="data">{data}</div></body></html>'.format(
+        html = '<!DOCTYPE html><html><head><title>{dtype} {name}</title><style>.data{{width: 100%; height: 100%;}} .instance{{width: 100%; display: flex; margin-top: 1px; margin-bottom: 1px; background-color: #DDEEFF; vertical-align: middle; align-items: center;}} .world{{height: {world_height}px; display: inline-block; flex-grow: 0; vertical-align: middle;}} .num{{width: 50px; display: inline-block; flex-grow: 0; text-align: center; vertical-align: middle; margin-left: 10px;}} .caption{{display: inline-block; flex-grow: 1; vertical-align: middle; margin-left: 10px;}} .correct{{margin-top: 1px; margin-bottom: 1px; background-color: #BBFFBB;}} .incorrect{{margin-top: 1px; margin-bottom: 1px; background-color: #FFBBBB;}} .ambiguous{{margin-top: 1px; margin-bottom: 1px; background-color: #FFFFBB;}}</style></head><body><div class="data">{data}</div></body></html>'.format(
             dtype=self.type,
             name=self.name,
             world_height=self.world_shape()[0],

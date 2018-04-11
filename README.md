@@ -54,8 +54,8 @@ Contact: aok25 (at) cam.ac.uk
 
 If you use ShapeWorld in your work, please cite:
 
-> **ShapeWorld: A new test methodology for multimodal language understanding** ([arXiv](https://arxiv.org/abs/1704.04517)).
-> *Alexander Kuhnle and Ann Copestake* (April 2017).
+> **ShapeWorld: A new test methodology for multimodal language understanding** ([arXiv](https://arxiv.org/abs/1704.04517))  
+> *Alexander Kuhnle and Ann Copestake* (April 2017)
 
 
 

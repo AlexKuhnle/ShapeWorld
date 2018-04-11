@@ -1,4 +1,5 @@
 from random import random
+from shapeworld import util
 from shapeworld.world import Entity
 from shapeworld.generators import GenericGenerator
 
@@ -66,6 +67,14 @@ class RandomAttributesGenerator(GenericGenerator):
     def initialize(self, mode):
         super(RandomAttributesGenerator, self).initialize(mode=mode)
         self.provoke_collision_rate = random() * self.max_provoke_collision_rate
+
+    def model(self):
+        return util.merge_dicts(
+            dict1=super(RandomAttributesGenerator, self).model(),
+            dict2=dict(
+                provoke_collision_rate=self.provoke_collision_rate
+            )
+        )
 
     def sample_entity(self, world, last_entity, combinations=None):
         if last_entity == -1:

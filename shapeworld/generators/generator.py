@@ -41,6 +41,12 @@ class WorldGenerator(object):
         assert mode in (None, 'train', 'validation', 'test')
         self.mode = mode
 
+    def model(self):
+        return dict(
+            name=str(self),
+            mode=self.mode
+        )
+
     def __call__(self):
         if self.mode is None:
             generator = self.generate_world

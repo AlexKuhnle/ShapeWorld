@@ -1,4 +1,5 @@
 from random import choice, random
+from shapeworld import util
 from shapeworld.world import Entity
 from shapeworld.generators import GenericGenerator
 
@@ -32,9 +33,9 @@ class LimitedAttributesGenerator(GenericGenerator):
         test_space_rate_range=(0.0, 1.0),
         test_combination_rate=0.5,
         max_provoke_collision_rate=0.33,
-        shapes_range=(2, 4),
-        colors_range=(2, 4),
-        textures_range=(2, 4)
+        shapes_range=(3, 4),
+        colors_range=(3, 4),
+        textures_range=(1, 1)
     ):
         super(LimitedAttributesGenerator, self).__init__(
             world_size=world_size,
@@ -81,17 +82,11 @@ class LimitedAttributesGenerator(GenericGenerator):
         self.selected_colors = self.colors
         self.selected_textures = self.textures
 
-        if mode is None:
-            self.num_entities = choice(self.entity_counts)
-        elif mode == 'train':
-            self.num_entities = choice(self.train_entity_counts)
-        elif mode == 'validation':
-            self.num_entities = choice(self.validation_entity_counts)
+        if mode == 'validation':
             self.selected_shapes = self.validation_shapes
             self.selected_colors = self.validation_colors
             self.selected_textures = self.validation_textures
         elif mode == 'test':
-            self.num_entities = choice(self.test_entity_counts)
             self.selected_shapes = self.test_shapes
             self.selected_colors = self.test_colors
             self.selected_textures = self.test_textures
@@ -102,6 +97,17 @@ class LimitedAttributesGenerator(GenericGenerator):
             self.selected_colors = util.choice(items=self.selected_colors, num_range=self.colors_range, auxiliary=self.colors)
         if self.textures_range is not None:
             self.selected_textures = util.choice(items=self.selected_textures, num_range=self.textures_range, auxiliary=self.textures)
+
+    def model(self):
+        return util.merge_dicts(
+            dict1=super(LimitedAttributesGenerator, self).model(),
+            dict2=dict(
+                provoke_collision_rate=self.provoke_collision_rate,
+                selected_shapes=self.selected_shapes,
+                selected_colors=self.selected_colors,
+                selected_textures=self.selected_textures
+            )
+        )
 
     def sample_entity(self, world, last_entity, combinations=None):
         if last_entity == -1:

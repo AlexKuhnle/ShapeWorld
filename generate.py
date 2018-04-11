@@ -115,13 +115,15 @@ if __name__ == '__main__':
 
     else:
         full_name = dataset.name
-        if args.variant is not None:
+        if args.variant:
             full_name = '{}-{}'.format(full_name, args.variant)
-        if args.language is not None:
+        if args.language:
             full_name = '{}-{}'.format(full_name, args.language)
         directory = os.path.join(args.directory, dataset.type, full_name)
         specification_path = os.path.join(args.directory, '{}-{}.json'.format(dataset.type, full_name))
         shards = args.shards
+
+    specification['directory'] = directory
 
     assert all(shard >= 0 for shard in shards)
     assert args.shards is None or (args.mode is not None) == (len(shards) == 1)

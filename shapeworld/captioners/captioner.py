@@ -1,3 +1,4 @@
+from copy import deepcopy
 from random import random
 from shapeworld import util
 from shapeworld.world import World
@@ -117,7 +118,10 @@ class WorldCaptioner(object):
         else:
             return None
 
+        self.correct_caption = deepcopy(caption)
+
         if not self.correct:
+
             for _ in range(self.__class__.MAX_ATTEMPTS):
                 predication = PragmaticalPredication(agreeing=world.entities)
 
@@ -132,6 +136,9 @@ class WorldCaptioner(object):
                 return None
 
         return caption
+
+    def get_correct_caption(self):
+        return deepcopy(self.correct_caption)
 
     def caption(self, predication, world):
         raise NotImplementedError

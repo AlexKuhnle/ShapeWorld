@@ -107,6 +107,16 @@ class GenericGenerator(WorldGenerator):
         self.validation_space_rate = uniform(*self.validation_space_rate_range)
         self.test_space_rate = uniform(*self.test_space_rate_range)
 
+    def model(self):
+        return util.merge_dicts(
+            dict1=super(GenericGenerator, self).model(),
+            dict2=dict(
+                num_entities=self.num_entities,
+                validation_space_rate=self.validation_space_rate,
+                test_space_rate=self.test_space_rate
+            )
+        )
+
     def sample_entity(self, world, last_entity, combinations=None):
         raise NotImplementedError
 
