@@ -80,6 +80,8 @@ class Dmrs(ListDmrs):
                     nodeid_mapping[node2.nodeid] = node1.nodeid
         else:
             for anchor1, anchor2 in fusion.items():
+                # if anchor1 not in self.anchors or anchor2 not in other.anchors:
+                #     continue
                 node1 = self.anchors[anchor1]
                 node2 = other.anchors[anchor2]
                 node1.unify(node2, hierarchy=hierarchy)

@@ -8,7 +8,7 @@ from shapeworld.captioners import LogicalPredication, PragmaticalPredication
 class WorldCaptioner(object):
 
     MAX_SAMPLE_ATTEMPTS = 10
-    MAX_ATTEMPTS = 3
+    MAX_ATTEMPTS = 5
 
     def __init__(
         self,

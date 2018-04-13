@@ -1,600 +1,600 @@
-a yellow shape is smaller than a yellow circle .
-a yellow semicircle is darker than a yellow triangle .
-a gray circle is smaller than a yellow circle .
-a square is lighter than a semicircle .
-a yellow shape is lighter than a yellow ellipse .
-
-a red ellipse is darker than a square .
-a yellow ellipse is lighter than a circle .
-a yellow pentagon is lighter than a rectangle .
-a red ellipse is smaller than a blue shape .
-a red ellipse is darker than a square .
-
-a pentagon is darker than a red rectangle .
-a cyan pentagon is bigger than a red pentagon .
-a red pentagon is smaller than a gray pentagon .
-a pentagon is darker than a rectangle .
-a red rectangle is darker than a red pentagon .
-
-a yellow shape is lighter than a yellow ellipse .
-a rectangle is darker than a triangle .
-an ellipse is lighter than a square .
-a yellow triangle is darker than a triangle .
-a yellow ellipse is lighter than an ellipse .
-
-a green ellipse is lighter than an ellipse .
-a semicircle is lighter than a green cross .
-a cross is lighter than a cross .
-a cross is lighter than an ellipse .
-a green shape is lighter than a green ellipse .
-
-a red semicircle is bigger than a green semicircle .
-a green semicircle is bigger than a gray shape .
-a green shape is smaller than a red shape .
-a cyan pentagon is darker than a cyan square .
-a red shape is bigger than a cyan shape .
-
-a circle is darker than a pentagon .
-a blue pentagon is darker than an ellipse .
-a circle is darker than an ellipse .
-a circle is darker than an ellipse .
-a square is darker than a pentagon .
-
-a red shape is bigger than a yellow shape .
-a red square is smaller than a cross .
-a red square is darker than a red cross .
-a red cross is darker than a square .
-a square is lighter than a cross .
-
-a pentagon is darker than a red pentagon .
-a square is lighter than a square .
-a pentagon is lighter than a square .
-a red cross is darker than a red pentagon .
-a red square is darker than a red pentagon .
-
-a magenta shape is smaller than a magenta shape .
-a pentagon is bigger than a cyan shape .
-a cyan pentagon is bigger than a yellow pentagon .
-a red ellipse is smaller than a cyan ellipse .
-a cyan pentagon is smaller than an ellipse .
-
-a gray shape is smaller than a magenta shape .
-a red semicircle is smaller than a magenta shape .
-a cyan semicircle is bigger than a gray semicircle .
-a green circle is lighter than a triangle .
-a gray shape is smaller than a magenta shape .
-
-a green shape is lighter than a cross .
-a green cross is lighter than a green triangle .
-a red triangle is bigger than a cyan shape .
-a green cross is darker than a cross .
-a red shape is bigger than a cyan shape .
-
-a yellow rectangle is darker than a yellow rectangle .
-a cyan shape is smaller than a yellow shape .
-a rectangle is darker than a yellow rectangle .
-a yellow shape is smaller than a red shape .
-a green shape is lighter than a cross .
-
-a red ellipse is darker than a pentagon .
-a triangle is darker than a cyan rectangle .
-a gray triangle is bigger than a cyan shape .
-a cyan shape is bigger than a blue shape .
-a cyan semicircle is smaller than a cyan semicircle .
-
-a red shape is smaller than a yellow shape .
-a yellow shape is smaller than a yellow shape .
-a yellow shape is bigger than a blue ellipse .
-a blue shape is bigger than a blue ellipse .
-a magenta shape is bigger than a yellow shape .
-
-a gray triangle is bigger than a magenta shape .
-a gray triangle is bigger than a magenta shape .
-a red triangle is lighter than a semicircle .
-a gray shape is bigger than a yellow cross .
-a yellow shape is bigger than a cyan shape .
-
-a rectangle is darker than a rectangle .
-an ellipse is lighter than a semicircle .
-a gray ellipse is darker than a rectangle .
-a cross is lighter than an ellipse .
-an ellipse is darker than a rectangle .
-
-a yellow circle is bigger than a green shape .
-a circle is darker than a yellow semicircle .
-a cyan shape is bigger than a green shape .
-a yellow circle is bigger than a green circle .
-a cyan shape is bigger than a green circle .
-
-a triangle is darker than a circle .
-a triangle is darker than a circle .
-an ellipse is darker than a cyan circle .
-a blue triangle is bigger than a cyan triangle .
-a circle is smaller than a cyan triangle .
-
-a blue rectangle is lighter than a blue semicircle .
-a blue semicircle is darker than a rectangle .
-a blue shape is darker than a blue circle .
-a semicircle is lighter than a circle .
-a blue semicircle is darker than a blue circle .
-
-a yellow shape is smaller than a magenta ellipse .
-a magenta shape is smaller than a magenta shape .
-a cyan ellipse is smaller than a magenta ellipse .
-an ellipse is smaller than a gray ellipse .
-a magenta shape is smaller than a magenta ellipse .
-
-an ellipse is lighter than a cross .
-a yellow ellipse is bigger than a blue shape .
-a gray shape is smaller than a red shape .
-an ellipse is lighter than a square .
-an ellipse is lighter than a red ellipse .
-
-a blue shape is bigger than a cyan shape .
-a magenta shape is smaller than a blue shape .
-a blue semicircle is bigger than a magenta semicircle .
-a blue circle is bigger than a cyan shape .
-a pentagon is lighter than a blue semicircle .
-
-a gray pentagon is darker than a pentagon .
-a gray pentagon is darker than a rectangle .
-a gray shape is darker than a pentagon .
-a square is darker than a pentagon .
-a pentagon is darker than a gray pentagon .
-
-a circle is lighter than a semicircle .
-a blue circle is lighter than a rectangle .
-a triangle is lighter than a square .
-a magenta shape is bigger than a blue circle .
-a square is lighter than a square .
-
-a green pentagon is bigger than a red shape .
-a blue ellipse is smaller than a cyan shape .
-a green ellipse is smaller than a red shape .
-a cyan shape is smaller than a green pentagon .
-a pentagon is bigger than a red shape .
-
-a green triangle is smaller than a blue shape .
-a red shape is smaller than a yellow shape .
-a green triangle is smaller than a blue shape .
-a green shape is smaller than a yellow shape .
-a triangle is lighter than a yellow pentagon .
-
-a square is darker than an ellipse .
-a cross is smaller than a blue shape .
-a cross is lighter than a yellow square .
-a square is darker than a square .
-a green shape is bigger than a green shape .
-
-a rectangle is lighter than a triangle .
-a yellow rectangle is bigger than a yellow rectangle .
-a semicircle is lighter than a square .
-a rectangle is lighter than a triangle .
-a rectangle is smaller than a triangle .
-
-a red shape is smaller than a yellow triangle .
-a red triangle is smaller than a cyan shape .
-a square is darker than a pentagon .
-a red square is darker than a red pentagon .
-a red rectangle is darker than a red pentagon .
-
-a cyan shape is smaller than a magenta shape .
-a blue circle is smaller than a magenta shape .
-a cyan circle is bigger than a magenta shape .
-a red circle is smaller than a cyan shape .
-a cyan circle is bigger than a cyan shape .
-
-a magenta cross is lighter than a cross .
-a cyan shape is smaller than a gray shape .
-a magenta ellipse is darker than a cross .
-a magenta shape is darker than a magenta circle .
-an ellipse is darker than a magenta circle .
-
-a cross is bigger than a green cross .
-a magenta shape is bigger than a green shape .
-a gray pentagon is lighter than a gray pentagon .
-a gray ellipse is darker than a gray cross .
-a gray cross is lighter than a square .
-
-a magenta pentagon is bigger than a red shape .
-a magenta pentagon is smaller than a yellow shape .
-a magenta shape is bigger than a yellow shape .
-a gray shape is lighter than a triangle .
-a magenta shape is smaller than a magenta shape .
-
-a red square is darker than a square .
-a red square is bigger than a red square .
-a blue square is bigger than a red shape .
-a pentagon is darker than a square .
-a red shape is bigger than a red shape .
-
-a gray shape is smaller than a green shape .
-a green shape is smaller than a gray shape .
-a green shape is smaller than a yellow rectangle .
-a yellow rectangle is bigger than a green shape .
-a green rectangle is smaller than a gray shape .
-
-a cyan triangle is darker than a cross .
-a gray triangle is smaller than a magenta shape .
-a red shape is smaller than a gray shape .
-a cyan triangle is lighter than a cross .
-a rectangle is lighter than a cyan cross .
-
-a cyan shape is bigger than a green shape .
-a cyan shape is bigger than a cyan shape .
-a blue shape is smaller than a green shape .
-a cyan cross is smaller than a green shape .
-a gray cross is smaller than a green cross .
-
-a yellow ellipse is darker than a cross .
-a blue shape is bigger than a gray shape .
-a yellow ellipse is bigger than a gray shape .
-a gray shape is smaller than a blue ellipse .
-an ellipse is lighter than a blue triangle .
-
-a yellow shape is lighter than a semicircle .
-a rectangle is lighter than a rectangle .
-a semicircle is lighter than a circle .
-a yellow shape is darker than a yellow circle .
-a cyan rectangle is darker than a cyan ellipse .
-
-a magenta shape is smaller than a yellow shape .
-a yellow shape is bigger than a cyan shape .
-a red rectangle is smaller than a red rectangle .
-a gray ellipse is lighter than a cross .
-a cyan shape is bigger than a cyan shape .
-
-a semicircle is darker than an ellipse .
-a semicircle is darker than a triangle .
-a green triangle is darker than a green ellipse .
-a cyan semicircle is darker than a triangle .
-a green circle is lighter than an ellipse .
-
-a magenta shape is smaller than a blue shape .
-a yellow pentagon is bigger than a magenta shape .
-a yellow shape is smaller than a blue shape .
-a green ellipse is smaller than a blue ellipse .
-a yellow pentagon is smaller than a magenta shape .
-
-a red cross is bigger than a cyan shape .
-a yellow shape is smaller than a gray semicircle .
-a gray shape is bigger than a blue shape .
-a semicircle is darker than a gray triangle .
-a red shape is smaller than a gray shape .
-
-a cyan semicircle is bigger than a yellow shape .
-a magenta shape is smaller than a blue shape .
-a magenta shape is lighter than a magenta cross .
-a magenta shape is smaller than a blue shape .
-a magenta semicircle is lighter than a cross .
-
-a blue pentagon is darker than an ellipse .
-a rectangle is darker than a pentagon .
-a semicircle is lighter than a blue ellipse .
-a square is darker than a pentagon .
-a cyan semicircle is darker than a pentagon .
-
-a magenta ellipse is darker than a triangle .
-a triangle is darker than a triangle .
-a yellow ellipse is bigger than a blue shape .
-a magenta ellipse is smaller than a green ellipse .
-a magenta pentagon is lighter than a square .
-
-a cross is lighter than a triangle .
-a cyan semicircle is lighter than a cyan semicircle .
-a semicircle is lighter than a triangle .
-a triangle is lighter than a triangle .
-a cyan triangle is lighter than a semicircle .
-
-a magenta ellipse is smaller than a blue shape .
-a semicircle is darker than a semicircle .
-an ellipse is darker than a magenta semicircle .
-a magenta pentagon is lighter than a semicircle .
-a magenta ellipse is darker than a semicircle .
-
-a green rectangle is darker than a semicircle .
-a rectangle is darker than a pentagon .
-a red pentagon is smaller than a green pentagon .
-a rectangle is lighter than a pentagon .
-a green shape is darker than a circle .
-
-a gray rectangle is smaller than a cyan rectangle .
-a gray pentagon is darker than a gray square .
-a green shape is bigger than a green shape .
-a yellow shape is smaller than a cyan shape .
-a blue rectangle is smaller than a red shape .
-
-a magenta shape is darker than a circle .
-a green shape is smaller than a magenta shape .
-a circle is lighter than a circle .
-a magenta shape is darker than a circle .
-an ellipse is smaller than a magenta shape .
-
-a green shape is bigger than a green shape .
-a blue shape is smaller than a yellow shape .
-a gray triangle is smaller than a green shape .
-a green shape is bigger than a gray shape .
-a gray shape is bigger than a gray triangle .
-
-a cross is smaller than a semicircle .
-a gray semicircle is darker than a cross .
-a semicircle is darker than a cross .
-a rectangle is darker than a cross .
-a gray semicircle is darker than a cross .
-
-a gray shape is bigger than a triangle .
-an ellipse is lighter than a gray triangle .
-a cyan shape is smaller than a yellow cross .
-a cyan cross is lighter than a semicircle .
-a cyan triangle is lighter than a semicircle .
-
-a rectangle is darker than a blue rectangle .
-a magenta rectangle is bigger than a red rectangle .
-a magenta square is darker than an ellipse .
-a blue triangle is lighter than a rectangle .
-a magenta shape is darker than a magenta square .
-
-a blue shape is smaller than a green shape .
-a green shape is smaller than a blue shape .
-a red square is bigger than a yellow square .
-a green square is bigger than a blue shape .
-a red shape is bigger than a green square .
-
-an ellipse is lighter than a pentagon .
-a blue shape is lighter than a blue triangle .
-an ellipse is lighter than a triangle .
-an ellipse is lighter than a blue triangle .
-an ellipse is lighter than a pentagon .
-
-a red shape is smaller than a blue shape .
-a magenta shape is bigger than a cyan shape .
-a gray shape is bigger than a blue square .
-a magenta cross is bigger than a gray shape .
-a gray shape is smaller than a magenta shape .
-
-a gray shape is lighter than a triangle .
-an ellipse is lighter than a triangle .
-an ellipse is lighter than a triangle .
-a pentagon is lighter than a triangle .
-a gray triangle is lighter than a triangle .
-
-a magenta shape is bigger than a red shape .
-a cyan shape is darker than a cyan ellipse .
-a magenta shape is bigger than a red shape .
-a green ellipse is smaller than a cyan shape .
-a yellow cross is bigger than a magenta shape .
-
-a gray shape is smaller than a gray ellipse .
-a red ellipse is bigger than a yellow shape .
-a cyan ellipse is bigger than a yellow shape .
+a rectangle is lighter than a circle .
 a yellow shape is smaller than a gray shape .
-a gray ellipse is bigger than a yellow shape .
-
-a pentagon is smaller than a green pentagon .
-a square is lighter than an ellipse .
-a square is lighter than a triangle .
-a yellow square is bigger than a cyan shape .
-a yellow shape is smaller than a green shape .
-
-a cross is smaller than a blue shape .
-a blue shape is smaller than a yellow shape .
-a green cross is smaller than a blue shape .
-a red cross is smaller than a blue shape .
-a blue shape is smaller than a magenta cross .
-
-a gray shape is bigger than a yellow shape .
-a yellow rectangle is smaller than a yellow semicircle .
-a red ellipse is lighter than a red cross .
-a red shape is darker than an ellipse .
-a cyan pentagon is bigger than a yellow pentagon .
-
-a red semicircle is darker than a rectangle .
-a cross is lighter than a rectangle .
-a red semicircle is darker than a rectangle .
-a red triangle is darker than a red semicircle .
-a cross is lighter than a rectangle .
-
-a yellow triangle is bigger than a green shape .
-a yellow triangle is bigger than a cyan shape .
-an ellipse is lighter than a triangle .
-a yellow shape is darker than a cross .
-a magenta shape is bigger than a gray triangle .
-
-a semicircle is lighter than a red semicircle .
-a cyan cross is smaller than a gray shape .
-a yellow shape is bigger than a red shape .
-a green cross is smaller than a gray shape .
-a gray cross is bigger than a red shape .
-
-an ellipse is lighter than a pentagon .
-a cyan semicircle is lighter than a square .
-a cyan shape is lighter than a cyan semicircle .
-a cyan semicircle is darker than a cyan ellipse .
-a square is darker than a cyan ellipse .
-
-a magenta pentagon is smaller than a green shape .
-a green pentagon is bigger than a red shape .
-a red shape is smaller than a gray shape .
-a green pentagon is smaller than a green shape .
-a red semicircle is smaller than a magenta semicircle .
-
-a magenta triangle is smaller than a red shape .
-a green circle is lighter than a green pentagon .
-a magenta shape is bigger than a gray shape .
-a pentagon is lighter than a semicircle .
-a green ellipse is darker than an ellipse .
-
-a rectangle is lighter than a rectangle .
-a red pentagon is lighter than a rectangle .
-a blue shape is smaller than a red shape .
-a circle is lighter than a rectangle .
-a red triangle is darker than a semicircle .
-
-a cyan shape is bigger than a yellow circle .
-a green circle is smaller than a yellow circle .
-a magenta shape is smaller than a gray shape .
-a circle is bigger than a gray circle .
-a yellow shape is smaller than a green circle .
-
-a circle is lighter than a semicircle .
-a cyan rectangle is smaller than a blue shape .
-a rectangle is lighter than an ellipse .
-a red rectangle is bigger than a cyan shape .
-a cyan ellipse is bigger than a magenta ellipse .
-
-a cyan square is lighter than a circle .
-a cyan rectangle is bigger than a yellow rectangle .
-a cyan square is darker than a circle .
-a square is lighter than a cyan circle .
-a cyan rectangle is smaller than a yellow shape .
-
 a cyan shape is bigger than a gray shape .
-a cyan ellipse is bigger than a gray ellipse .
-a rectangle is lighter than a cross .
-a green circle is lighter than a cross .
-a cyan ellipse is bigger than a gray shape .
+a circle is bigger than a gray circle .
+a green shape is bigger than a green shape .
 
-a gray ellipse is lighter than a magenta shape .
-a green circle is lighter than a circle .
-a green ellipse is lighter than a green circle .
-a pentagon is lighter than a circle .
-a green shape is darker than a circle .
+a square is lighter than a square .
+a gray square is darker than a gray pentagon .
+a cross is smaller than a magenta shape .
+a red shape is bigger than a magenta shape .
+a magenta shape is smaller than a magenta shape .
 
-a cyan cross is lighter than a blue shape .
-a green shape is bigger than a blue shape .
-a square is darker than a pentagon .
-a semicircle is darker than a pentagon .
-a gray shape is smaller than a blue shape .
+a semicircle is darker than a magenta semicircle .
+a circle is darker than a rectangle .
+a yellow circle is darker than a yellow rectangle .
+a rectangle is darker than a yellow circle .
+a blue circle is bigger than a cyan shape .
 
-a magenta shape is smaller than a green shape .
-a green shape is smaller than a yellow triangle .
-a blue shape is lighter than a blue ellipse .
+a red circle is bigger than a yellow circle .
+a cyan circle is smaller than a red shape .
+a cyan shape is smaller than a red circle .
+a gray shape is smaller than a red shape .
+a circle is darker than a pentagon .
+
+a pentagon is darker than a rectangle .
+a yellow shape is lighter than a square .
+a magenta shape is bigger than a blue rectangle .
+a pentagon is darker than a rectangle .
+a magenta ellipse is darker than a rectangle .
+
 a pentagon is lighter than an ellipse .
+a green shape is smaller than a blue shape .
+a pentagon is darker than a gray rectangle .
+a red rectangle is lighter than an ellipse .
+a gray pentagon is smaller than a blue pentagon .
+
+a pentagon is lighter than a triangle .
+a blue pentagon is lighter than a blue triangle .
+a yellow square is darker than a circle .
+a blue pentagon is lighter than a triangle .
+a blue pentagon is smaller than a cyan shape .
+
+a gray semicircle is bigger than a blue shape .
+a gray shape is bigger than a magenta semicircle .
+a semicircle is lighter than a rectangle .
+a gray semicircle is lighter than a rectangle .
+a gray semicircle is darker than a rectangle .
+
+a magenta rectangle is lighter than a semicircle .
+an ellipse is darker than a semicircle .
+a magenta shape is smaller than a green rectangle .
+a green shape is bigger than a magenta rectangle .
+a magenta shape is smaller than a green shape .
+
+a semicircle is smaller than a yellow shape .
+a green shape is smaller than a yellow shape .
+a yellow semicircle is smaller than a yellow shape .
+a yellow semicircle is smaller than a yellow shape .
+a square is lighter than a green square .
+
+a square is smaller than a green square .
+a green shape is bigger than a yellow shape .
+a semicircle is lighter than a circle .
+a cyan semicircle is darker than a circle .
+a cyan circle is darker than a cyan semicircle .
+
+a green circle is darker than a circle .
+a circle is lighter than a rectangle .
+a green shape is lighter than a rectangle .
+a green circle is lighter than a rectangle .
+a semicircle is darker than a rectangle .
+
+an ellipse is lighter than an ellipse .
+a magenta circle is smaller than a gray circle .
+a blue triangle is lighter than a triangle .
+a blue shape is lighter than a triangle .
+a gray circle is bigger than a cyan shape .
+
+a red pentagon is lighter than a red square .
+a triangle is lighter than a square .
+a gray pentagon is bigger than a gray pentagon .
+a pentagon is lighter than a square .
+a red pentagon is lighter than a square .
+
+a blue semicircle is darker than a square .
+a circle is smaller than a magenta shape .
+a magenta shape is smaller than a magenta shape .
+a semicircle is darker than a semicircle .
+a blue shape is lighter than a semicircle .
+
+a yellow circle is smaller than a yellow shape .
+a circle is darker than a yellow semicircle .
+a green circle is smaller than a yellow shape .
+a green triangle is lighter than a green circle .
+a circle is smaller than a yellow circle .
+
+a yellow shape is darker than a blue shape .
+a red shape is bigger than a gray shape .
+a gray shape is bigger than a gray shape .
+a yellow shape is bigger than a gray shape .
+a yellow square is bigger than a blue shape .
+
+a pentagon is darker than a square .
+a green shape is smaller than a magenta shape .
+a gray ellipse is bigger than a yellow shape .
+a gray cross is lighter than a cross .
+a pentagon is darker than a square .
+
+a yellow shape is bigger than a yellow ellipse .
+an ellipse is lighter than a pentagon .
+a semicircle is darker than a blue ellipse .
+a magenta shape is smaller than a blue semicircle .
+a yellow ellipse is bigger than a yellow shape .
+
+a triangle is bigger than a red shape .
+a red triangle is bigger than a yellow triangle .
+a yellow triangle is darker than a red shape .
+a yellow shape is darker than an ellipse .
+a gray triangle is smaller than a red shape .
+
+a cyan semicircle is smaller than a gray shape .
+a cyan semicircle is smaller than a gray shape .
+a triangle is smaller than a gray triangle .
+a cyan semicircle is smaller than a gray shape .
+a cyan semicircle is lighter than a gray shape .
+
+a pentagon is lighter than a triangle .
+a green semicircle is lighter than a green square .
+a semicircle is darker than an ellipse .
+a green shape is smaller than a red semicircle .
+a cross is lighter than a cross .
+
+a red circle is bigger than a yellow circle .
+a circle is smaller than a red circle .
+a blue square is lighter than a square .
+a square is lighter than a blue rectangle .
+a blue shape is darker than a rectangle .
+
+an ellipse is lighter than a triangle .
+a triangle is lighter than a cross .
+a magenta triangle is lighter than a magenta pentagon .
+a yellow shape is darker than a semicircle .
+a yellow shape is smaller than a magenta ellipse .
+
+a blue ellipse is lighter than a blue circle .
+a square is darker than a square .
+a blue square is lighter than a circle .
+a blue ellipse is lighter than a circle .
+a blue shape is darker than a circle .
+
+a gray semicircle is bigger than a green shape .
+a green shape is smaller than a green shape .
+a semicircle is lighter than a circle .
+a semicircle is smaller than a green shape .
 a gray shape is smaller than a green shape .
 
-a cyan semicircle is smaller than a green shape .
-a cyan shape is bigger than a gray shape .
-a green shape is bigger than a gray square .
-a cyan semicircle is bigger than a gray shape .
-a cyan shape is bigger than a gray shape .
+a semicircle is lighter than a circle .
+a red semicircle is darker than a circle .
+a semicircle is darker than a semicircle .
+a green shape is smaller than a green triangle .
+a semicircle is lighter than a circle .
 
-a red ellipse is lighter than a circle .
-a red ellipse is darker than a red circle .
-a magenta shape is bigger than a red ellipse .
-a red ellipse is lighter than a red circle .
-a magenta shape is bigger than a red ellipse .
+a triangle is lighter than a cross .
+a triangle is lighter than a semicircle .
+a triangle is lighter than a cross .
+a magenta cross is lighter than a cross .
+a triangle is darker than a cross .
 
-a gray circle is bigger than a magenta shape .
-a gray rectangle is lighter than a pentagon .
-a magenta circle is smaller than a gray circle .
-a magenta shape is smaller than a magenta shape .
-a gray circle is smaller than a magenta circle .
+a green semicircle is lighter than a cross .
+a semicircle is lighter than a green cross .
+a green circle is lighter than a cross .
+a square is lighter than a cross .
+a circle is darker than a green cross .
 
-a cyan ellipse is smaller than a cyan shape .
-a semicircle is lighter than a pentagon .
-a blue ellipse is lighter than a pentagon .
-a green pentagon is smaller than a green shape .
-a circle is darker than a blue ellipse .
+a yellow shape is bigger than a green triangle .
+a green shape is bigger than a green shape .
+a triangle is bigger than a red shape .
+a gray triangle is bigger than a gray shape .
+a green shape is bigger than a gray shape .
 
-a magenta shape is smaller than a cyan shape .
-a magenta circle is darker than a cyan shape .
-a cyan shape is smaller than a cyan shape .
-a gray circle is smaller than a cyan shape .
-a gray circle is smaller than a cyan shape .
-
-a yellow shape is bigger than a yellow shape .
-a gray square is lighter than a gray rectangle .
+a red semicircle is bigger than a green shape .
+a blue shape is smaller than a green semicircle .
 a green shape is smaller than a green shape .
-a blue pentagon is darker than a triangle .
-a gray triangle is darker than a gray square .
+a semicircle is smaller than a green semicircle .
+a red shape is bigger than a green shape .
 
-a green triangle is smaller than a gray shape .
-a green triangle is smaller than a gray shape .
+a gray shape is darker than a circle .
+a square is darker than a gray rectangle .
+a rectangle is lighter than a circle .
+a semicircle is bigger than a magenta semicircle .
+a yellow shape is smaller than a cyan semicircle .
+
+a green ellipse is darker than a cross .
+a green ellipse is lighter than a green cross .
+a green cross is lighter than a square .
+a green cross is smaller than a gray shape .
+a circle is lighter than a square .
+
+a green shape is smaller than a blue shape .
+a cross is darker than a red ellipse .
+a rectangle is darker than a blue rectangle .
+a blue shape is bigger than a red ellipse .
+a semicircle is darker than a blue rectangle .
+
+an ellipse is lighter than a semicircle .
+an ellipse is darker than a gray semicircle .
 a triangle is smaller than a green shape .
-a circle is darker than a blue triangle .
-a blue cross is lighter than a circle .
+a gray semicircle is darker than a semicircle .
+a green triangle is bigger than a gray triangle .
 
-a rectangle is bigger than a green shape .
-a yellow rectangle is smaller than a red shape .
-a cyan shape is bigger than a yellow rectangle .
-a cyan shape is smaller than a green shape .
-a gray cross is smaller than a blue cross .
-
-a cyan cross is bigger than a gray shape .
-a gray ellipse is smaller than a blue shape .
-a gray shape is smaller than a blue shape .
-a cyan cross is smaller than a gray shape .
+a blue triangle is darker than a blue circle .
+a red shape is bigger than a red shape .
+a magenta shape is bigger than a green shape .
+a blue shape is smaller than a blue shape .
 a blue shape is smaller than a blue shape .
 
-a yellow semicircle is smaller than a green shape .
-a triangle is lighter than a rectangle .
-a yellow shape is smaller than a yellow semicircle .
-a triangle is lighter than a yellow rectangle .
-a green ellipse is darker than a green triangle .
+a red circle is smaller than a cyan shape .
+an ellipse is darker than a red ellipse .
+a magenta circle is smaller than a magenta shape .
+a magenta shape is smaller than a yellow shape .
+an ellipse is lighter than a semicircle .
+
+a green ellipse is bigger than a cyan shape .
+a green ellipse is darker than a cyan shape .
+a green shape is bigger than a cyan shape .
+a cyan shape is smaller than a green shape .
+an ellipse is bigger than a cyan shape .
+
+a green shape is smaller than a cyan shape .
+a gray shape is bigger than a green shape .
+a cyan circle is bigger than a green shape .
+a cyan circle is smaller than a green shape .
+a blue shape is smaller than a cyan circle .
+
+a rectangle is lighter than a cross .
+a magenta rectangle is darker than a magenta cross .
+a rectangle is darker than a cross .
+a magenta square is darker than a rectangle .
+an ellipse is lighter than a circle .
+
+a circle is lighter than a triangle .
+a square is smaller than a magenta shape .
+a blue shape is bigger than a blue shape .
+a red circle is lighter than a cross .
+a cross is darker than a circle .
+
+a magenta rectangle is darker than a magenta square .
+a rectangle is darker than a square .
+a rectangle is darker than a magenta cross .
+a cyan circle is smaller than a cyan shape .
+a rectangle is smaller than a magenta shape .
+
+a cyan cross is lighter than a rectangle .
+a pentagon is lighter than a red square .
+a cyan shape is smaller than a cyan cross .
+a rectangle is darker than a cross .
+a rectangle is darker than a cross .
+
+a gray shape is smaller than a magenta rectangle .
+a cyan rectangle is darker than a cyan ellipse .
+a cyan shape is lighter than an ellipse .
+a magenta rectangle is bigger than a gray shape .
+an ellipse is darker than a cyan ellipse .
+
+a magenta square is lighter than a circle .
+a red rectangle is bigger than a cyan shape .
+a cross is darker than a red rectangle .
+a rectangle is smaller than a red shape .
+a pentagon is lighter than a magenta circle .
+
+a magenta shape is smaller than a red shape .
+a pentagon is darker than a pentagon .
+an ellipse is smaller than a green shape .
+a magenta semicircle is darker than a cross .
+a magenta shape is smaller than a red ellipse .
+
+a green rectangle is smaller than a red rectangle .
+a green rectangle is smaller than a red shape .
+a red rectangle is smaller than a green rectangle .
+a green shape is smaller than a red rectangle .
+a gray pentagon is lighter than a gray rectangle .
+
+a rectangle is lighter than a square .
+a circle is darker than a red triangle .
+a rectangle is lighter than a magenta square .
+a red semicircle is lighter than a triangle .
+a red semicircle is darker than a triangle .
+
+a cyan shape is smaller than a red shape .
+a cyan triangle is smaller than a gray shape .
+a red shape is smaller than a red shape .
+a magenta triangle is smaller than a gray shape .
+a cyan triangle is smaller than a gray shape .
+
+a green shape is darker than a blue shape .
+a square is bigger than a magenta shape .
+a red square is bigger than a blue square .
+a cross is darker than a cross .
+a red shape is smaller than a blue shape .
+
+a triangle is darker than a cross .
+a circle is smaller than a yellow shape .
+a triangle is darker than a semicircle .
+a magenta circle is smaller than a semicircle .
+a yellow triangle is darker than a circle .
+
+a cross is bigger than a magenta pentagon .
+a magenta cross is darker than a cross .
+a triangle is darker than a magenta cross .
+a magenta pentagon is lighter than a cross .
+a cross is lighter than a pentagon .
+
+a pentagon is lighter than a cross .
+a red pentagon is lighter than a cross .
+an ellipse is lighter than a cross .
+a red shape is bigger than a magenta pentagon .
+a magenta triangle is smaller than a magenta shape .
+
+a red shape is bigger than a red shape .
+a yellow shape is smaller than a gray ellipse .
+an ellipse is bigger than a magenta shape .
+a red shape is smaller than a gray shape .
+a gray ellipse is bigger than a yellow shape .
+
+a triangle is darker than a semicircle .
+a magenta semicircle is lighter than a magenta triangle .
+a semicircle is lighter than a magenta circle .
+a magenta shape is smaller than a blue shape .
+a magenta cross is bigger than a magenta semicircle .
+
+a pentagon is darker than an ellipse .
+a blue pentagon is bigger than a green pentagon .
+a pentagon is darker than a cross .
+a green triangle is darker than a green pentagon .
+a pentagon is lighter than a green circle .
+
+a cyan rectangle is darker than a rectangle .
+a cyan ellipse is darker than a semicircle .
+a cyan shape is darker than a semicircle .
+an ellipse is darker than a cyan semicircle .
+a cyan semicircle is lighter than a semicircle .
+
+a yellow shape is smaller than a gray shape .
+a yellow shape is smaller than a gray shape .
+a yellow circle is bigger than a gray shape .
+a yellow shape is smaller than a gray shape .
+a green shape is smaller than a gray circle .
+
+a cross is lighter than a cross .
+a magenta semicircle is bigger than a gray shape .
+a gray semicircle is smaller than a green semicircle .
+a gray shape is smaller than a green shape .
+a cross is lighter than a cross .
+
+a cyan shape is smaller than a green square .
+a yellow square is smaller than a red shape .
+a green cross is lighter than a yellow shape .
+a red square is smaller than a cyan shape .
+a red shape is smaller than a red shape .
+
+a rectangle is darker than a gray triangle .
+a gray triangle is lighter than a rectangle .
+a gray rectangle is bigger than a triangle .
+a cyan shape is smaller than a yellow shape .
+a red ellipse is bigger than a magenta shape .
+
+a gray pentagon is bigger than a red shape .
+a circle is darker than a pentagon .
+a gray pentagon is lighter than a gray circle .
+a gray circle is lighter than a gray pentagon .
+a circle is bigger than a blue shape .
+
+an ellipse is darker than a pentagon .
+a circle is lighter than a rectangle .
+a green pentagon is lighter than a green ellipse .
+a blue ellipse is lighter than a blue rectangle .
+an ellipse is darker than a pentagon .
+
+a magenta shape is lighter than a semicircle .
+an ellipse is lighter than a cross .
+a cross is lighter than a magenta cross .
+a magenta semicircle is lighter than a magenta cross .
+a semicircle is lighter than a cross .
+
+a gray shape is bigger than a yellow shape .
+a blue circle is bigger than a cyan shape .
+a gray shape is smaller than a yellow shape .
+a circle is bigger than a gray shape .
+a circle is smaller than a gray circle .
+
+a gray circle is bigger than a blue shape .
+a square is darker than a pentagon .
+a gray circle is bigger than a yellow shape .
+a green circle is bigger than a blue shape .
+a blue pentagon is darker than a pentagon .
+
+a cyan triangle is smaller than a green triangle .
+a rectangle is lighter than a triangle .
+a cyan triangle is lighter than a triangle .
+a cyan square is bigger than a yellow square .
+a cyan shape is smaller than a green shape .
+
+a triangle is lighter than a triangle .
+a cyan triangle is lighter than a semicircle .
+a semicircle is lighter than a semicircle .
+a semicircle is lighter than a cyan cross .
+a cyan triangle is darker than a semicircle .
+
+a pentagon is lighter than a circle .
+a red shape is smaller than a red shape .
+a red pentagon is smaller than a gray shape .
+a green pentagon is smaller than a red shape .
+a pentagon is smaller than a red shape .
+
+a magenta pentagon is lighter than a magenta square .
+a magenta pentagon is lighter than a pentagon .
+a magenta shape is bigger than a blue pentagon .
+a blue shape is darker than a rectangle .
+a blue rectangle is darker than a rectangle .
+
+a cyan cross is darker than a semicircle .
+a pentagon is darker than a semicircle .
+a triangle is bigger than a blue triangle .
+a red triangle is bigger than a cyan triangle .
+a semicircle is darker than a semicircle .
+
+a green shape is bigger than a green shape .
+a cyan shape is bigger than a magenta shape .
+a magenta shape is bigger than a magenta shape .
+a green triangle is bigger than a gray shape .
+a magenta square is smaller than a cyan square .
+
+a triangle is bigger than a blue cross .
+a triangle is lighter than a blue cross .
+a red shape is bigger than a magenta shape .
+a gray shape is smaller than a yellow shape .
+a cross is darker than a triangle .
+
+a cyan shape is bigger than a cyan shape .
+a circle is lighter than a triangle .
+a rectangle is lighter than a triangle .
+a circle is darker than a triangle .
+an ellipse is lighter than a red triangle .
+
+a cyan shape is smaller than a green shape .
+a cyan shape is smaller than a green shape .
+a cyan shape is bigger than a green shape .
+a green cross is smaller than a green shape .
+a cyan cross is bigger than a green cross .
+
+a magenta shape is bigger than a magenta shape .
+a rectangle is darker than a semicircle .
+an ellipse is lighter than an ellipse .
+a yellow rectangle is lighter than a gray shape .
+a gray rectangle is smaller than a green shape .
+
+a rectangle is darker than a pentagon .
+a cyan rectangle is bigger than a green rectangle .
+a cyan rectangle is smaller than a green rectangle .
+a rectangle is smaller than a cyan shape .
+a pentagon is lighter than a cyan triangle .
+
+a circle is darker than a rectangle .
+a gray shape is darker than a gray pentagon .
+a blue semicircle is lighter than a rectangle .
+a triangle is darker than a rectangle .
+a semicircle is lighter than a rectangle .
+
+a gray shape is bigger than a gray shape .
+a pentagon is darker than a green rectangle .
+a green shape is darker than an ellipse .
+a yellow triangle is smaller than a gray shape .
+a green pentagon is darker than an ellipse .
+
+a blue triangle is darker than a blue rectangle .
+a triangle is lighter than a blue rectangle .
+a blue shape is smaller than a rectangle .
+a blue triangle is darker than a cross .
+a blue ellipse is lighter than a triangle .
+
+a blue semicircle is darker than a circle .
+a cyan triangle is smaller than a red shape .
+a yellow shape is darker than a cross .
+a triangle is darker than a blue circle .
+a rectangle is lighter than a cross .
+
+a red semicircle is bigger than a red shape .
+a square is darker than a triangle .
+a cyan triangle is lighter than a cyan semicircle .
+a red shape is bigger than a magenta semicircle .
+a magenta shape is smaller than a red semicircle .
+
+a rectangle is darker than a cyan cross .
+a rectangle is darker than a cross .
+a rectangle is lighter than a cyan rectangle .
+a cyan shape is darker than a rectangle .
+a cyan shape is darker than a triangle .
+
+a magenta shape is bigger than a yellow rectangle .
+a red rectangle is smaller than a magenta shape .
+a red rectangle is bigger than a yellow shape .
+a cyan rectangle is bigger than a magenta shape .
+a gray rectangle is bigger than a yellow shape .
+
+a yellow cross is smaller than a magenta shape .
+a yellow shape is smaller than a magenta cross .
+a yellow cross is smaller than a magenta shape .
+a green shape is smaller than a magenta shape .
+a yellow shape is smaller than a gray shape .
+
+a gray square is bigger than a cyan shape .
+a yellow shape is bigger than a cyan square .
+a square is darker than a cross .
+a cyan square is lighter than a cyan cross .
+a yellow shape is bigger than a gray square .
 
 a pentagon is darker than a semicircle .
-a pentagon is darker than a green semicircle .
-a green pentagon is lighter than a semicircle .
-a semicircle is lighter than a green pentagon .
-a semicircle is lighter than a green pentagon .
+a green ellipse is darker than an ellipse .
+a green shape is bigger than a yellow shape .
+a yellow semicircle is smaller than a red shape .
+a green square is darker than a green ellipse .
 
-a blue shape is bigger than a yellow shape .
-a blue semicircle is darker than a blue ellipse .
-a gray shape is bigger than a yellow shape .
-a circle is darker than a gray circle .
-a blue shape is darker than an ellipse .
+a square is lighter than a square .
+a gray shape is smaller than a yellow ellipse .
+a cyan ellipse is smaller than a yellow shape .
+a gray shape is smaller than a yellow shape .
+a square is lighter than a square .
 
-a yellow rectangle is bigger than a yellow shape .
-a yellow rectangle is smaller than a yellow rectangle .
-a yellow shape is smaller than a yellow shape .
-a yellow shape is smaller than a yellow rectangle .
-a yellow shape is bigger than a yellow shape .
+a green pentagon is darker than a triangle .
+a pentagon is lighter than a triangle .
+a semicircle is lighter than a triangle .
+a rectangle is lighter than a square .
+a cyan circle is bigger than a yellow circle .
 
-a green shape is darker than a rectangle .
-a square is bigger than a yellow shape .
-a cyan semicircle is bigger than a green semicircle .
-a pentagon is lighter than an ellipse .
-a yellow square is smaller than a gray square .
+a rectangle is darker than a magenta rectangle .
+a semicircle is darker than a rectangle .
+a rectangle is darker than a rectangle .
+a semicircle is darker than a magenta rectangle .
+a magenta rectangle is darker than a rectangle .
 
-a red shape is smaller than a gray cross .
-a gray cross is bigger than a yellow shape .
-a gray shape is lighter than a gray cross .
-a gray cross is smaller than a yellow shape .
-a gray cross is smaller than a yellow shape .
+a gray triangle is darker than a gray circle .
+an ellipse is lighter than a gray semicircle .
+a circle is lighter than a semicircle .
+a green triangle is smaller than a gray triangle .
+a red shape is smaller than a yellow shape .
 
-a green shape is bigger than a green square .
-a gray shape is bigger than a green square .
-a blue shape is smaller than a blue ellipse .
+a gray shape is bigger than a cyan shape .
+a pentagon is lighter than a cross .
+a cyan cross is darker than a cyan ellipse .
+a cyan ellipse is darker than a cyan cross .
+a gray shape is bigger than a yellow ellipse .
+
+a blue triangle is smaller than a cyan triangle .
+a rectangle is lighter than a square .
+a semicircle is lighter than a square .
+a green shape is smaller than a green shape .
+a triangle is bigger than a blue shape .
+
+a blue shape is bigger than a green shape .
+a magenta shape is smaller than a magenta shape .
+a magenta semicircle is darker than a magenta cross .
+a yellow semicircle is darker than a triangle .
+a cross is darker than a triangle .
+
+a green pentagon is darker than a green ellipse .
+a green shape is bigger than a gray shape .
+a pentagon is darker than an ellipse .
+a pentagon is bigger than a gray pentagon .
+an ellipse is darker than an ellipse .
+
+a cyan ellipse is smaller than a cyan shape .
+a rectangle is lighter than a cross .
+a magenta pentagon is lighter than a pentagon .
+a cyan shape is smaller than a cyan shape .
+a rectangle is lighter than a cross .
+
+a magenta shape is smaller than a magenta shape .
+a magenta semicircle is darker than a triangle .
+a magenta ellipse is lighter than a pentagon .
+a magenta triangle is lighter than a triangle .
+a green shape is smaller than a magenta ellipse .
+
+a gray shape is bigger than a blue triangle .
+a gray shape is darker than a semicircle .
+a gray shape is bigger than a blue triangle .
+a triangle is bigger than a blue triangle .
+a triangle is darker than a cross .
+
+a pentagon is darker than a triangle .
+a yellow shape is darker than a cross .
+a yellow shape is darker than a pentagon .
 an ellipse is darker than a pentagon .
-a green shape is lighter than a circle .
+a yellow rectangle is darker than a pentagon .
 
-a magenta shape is smaller than a green shape .
-a gray shape is smaller than a magenta shape .
-a magenta cross is darker than a semicircle .
-a red shape is smaller than a magenta shape .
-a magenta cross is lighter than a semicircle .
-
-a cross is darker than an ellipse .
-a green triangle is smaller than a blue triangle .
-a yellow shape is bigger than a yellow semicircle .
-a rectangle is darker than an ellipse .
-a semicircle is darker than an ellipse .
-
-a square is lighter than a magenta square .
-a cyan pentagon is smaller than a red shape .
-a magenta triangle is lighter than a magenta cross .
-a cross is darker than a pentagon .
-a magenta triangle is lighter than a square .
-
-a cross is darker than an ellipse .
-an ellipse is lighter than a magenta cross .
-a magenta cross is lighter than a magenta ellipse .
-a cross is lighter than a semicircle .
-a magenta shape is darker than a magenta cross .
-
-a red shape is smaller than a blue circle .
-a yellow triangle is smaller than a yellow shape .
-a green triangle is bigger than a yellow shape .
-a red shape is smaller than a blue shape .
-a square is darker than an ellipse .
+a circle is lighter than a cross .
+a red cross is darker than a pentagon .
+a triangle is lighter than a red ellipse .
+a square is lighter than a cross .
+an ellipse is darker than a pentagon .
 

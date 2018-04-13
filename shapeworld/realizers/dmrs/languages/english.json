@@ -47,7 +47,7 @@
     },
 
 
-    "type": {"key": "shape", "dmrs": "[attr,type]:shape_n x?[pers=3]"},
+    "type": {"key": "shape", "dmrs": "[type]:shape_n x?[pers=3]"},
 
 
     "relations": {
@@ -286,8 +286,8 @@
         },
         {
             "key": "shift-top-index",
-            "search": "***[cop]:_be_v_id e[ppi--] -2-> [obj]:_shape_n_sw x?[pers=3] <=1= [attr]:_?_a_? e?",
-            "replace": "[cop]:_be_v_id e[ppi--] -2-> [obj]:_shape_n_sw x?[pers=3] <=1= ***[attr]:_?_a_? e?"
+            "search": "**[cop]:_be_v_id e[ppi--] -2-> [obj]:_shape_n_sw x?[pers=3] <=1= [attr]:_?_a_? e?",
+            "replace": "[cop]:_be_v_id e[ppi--] -2-> [obj]:_shape_n_sw x?[pers=3] <=1= **[attr]:_?_a_? e?"
         },
         {
             "key": "adjective-to-verb",

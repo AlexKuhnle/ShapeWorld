@@ -900,6 +900,7 @@ class CaptionAgreementDataset(Dataset):
 
     GENERATOR_INIT_FREQUENCY = 50
     CAPTIONER_INIT_FREQUENCY = 100
+    CAPTIONER_INIT_FREQUENCY2 = 5
 
     def __init__(self, world_generator, world_captioner, caption_size, vocabulary, pixel_noise_stddev=0.0, caption_realizer='dmrs', language=None, worlds_per_instance=1, captions_per_instance=1, correct_ratio=0.5, train_correct_ratio=None, validation_correct_ratio=None, test_correct_ratio=None):
         if worlds_per_instance > 1 or captions_per_instance > 1:
@@ -1044,8 +1045,8 @@ class CaptionAgreementDataset(Dataset):
                     correct = random() < correct_ratio
                     resample = 0
                     while True:
-                        if resample % 10 == 0:
-                            if resample // 10 >= 1:
+                        if resample % self.__class__.CAPTIONER_INIT_FREQUENCY2 == 0:
+                            if resample // self.__class__.CAPTIONER_INIT_FREQUENCY2 >= 1:
                                 # print(i, j, '2nd caption')
                                 # print(i, 'caption', correct, self.world_captioner.model())
                                 pass
