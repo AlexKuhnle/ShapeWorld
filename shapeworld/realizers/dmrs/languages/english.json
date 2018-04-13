@@ -96,11 +96,7 @@
                 "2": {"key": "less_than_two", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(2) e? <=1= _less+than_x_deg e?; :rstr <-1- [body]:node"},
                 "3": {"key": "less_than_three", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(3) e? <=1= _less+than_x_deg e?; :rstr <-1- [body]:node"},
                 "4": {"key": "less_than_four", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(4) e? <=1= _less+than_x_deg e?; :rstr <-1- [body]:node"},
-                "5": {"key": "less_than_five", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(5) e? <=1= _less+than_x_deg e?; :rstr <-1- [body]:node"},
-                "-4": {"key": "less_than_all_but_three", "dmrs": "_less+than_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <=1= _but_p_except e? -2-> generic_entity x?[num=p] <=1= card(3) e?; :rstr <-1- [body]:node; :generic_entity <-- udef_q"},
-                "-3": {"key": "less_than_all_but_two", "dmrs": "_less+than_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <=1= _but_p_except e? -2-> generic_entity x?[num=p] <=1= card(2) e?; :rstr <-1- [body]:node; :generic_entity <-- udef_q"},
-                "-2": {"key": "less_than_all_but_one", "dmrs": "_less+than_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <=1= _but_p_except e? -2-> generic_entity x?[num=s] <=1= card(1) e?; :rstr <-1- [body]:node; :generic_entity <-- udef_q"},
-                "-1": {"key": "less_than_all_but_zero", "dmrs": "_less+than_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <=1= _but_p_except e? -2-> generic_entity x?[num=p] <=1= card(0) e?; :rstr <-1- [body]:node; :generic_entity <-- udef_q"}
+                "5": {"key": "less_than_five", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(5) e? <=1= _less+than_x_deg e?; :rstr <-1- [body]:node"}
             },
             "leq": {
                 "0": {"key": "at_most_zero", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(0) e? <=1= _at+most_x_deg e?; :rstr <-1- [body]:node"},
@@ -108,11 +104,7 @@
                 "2": {"key": "at_most_two", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(2) e? <=1= _at+most_x_deg e?; :rstr <-1- [body]:node"},
                 "3": {"key": "at_most_three", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(3) e? <=1= _at+most_x_deg e?; :rstr <-1- [body]:node"},
                 "4": {"key": "at_most_four", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(4) e? <=1= _at+most_x_deg e?; :rstr <-1- [body]:node"},
-                "5": {"key": "at_most_five", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(5) e? <=1= _at+most_x_deg e?; :rstr <-1- [body]:node"},
-                "-4": {"key": "at_most_all_but_three", "dmrs": "_at+most_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <=1= _but_p_except e? -2-> generic_entity x?[num=p] <=1= card(3) e?; :rstr <-1- [body]:node; :generic_entity <-- udef_q"},
-                "-3": {"key": "at_most_all_but_two", "dmrs": "_at+most_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <=1= _but_p_except e? -2-> generic_entity x?[num=p] <=1= card(2) e?; :rstr <-1- [body]:node; :generic_entity <-- udef_q"},
-                "-2": {"key": "at_most_all_but_one", "dmrs": "_at+most_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <=1= _but_p_except e? -2-> generic_entity x?[num=s] <=1= card(1) e?; :rstr <-1- [body]:node; :generic_entity <-- udef_q"},
-                "-1": {"key": "at_most_all_but_zero", "dmrs": "_at+most_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <=1= _but_p_except e? -2-> generic_entity x?[num=p] <=1= card(0) e?; :rstr <-1- [body]:node; :generic_entity <-- udef_q"}
+                "5": {"key": "at_most_five", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(5) e? <=1= _at+most_x_deg e?; :rstr <-1- [body]:node"}
             },
             "eq": {
                 "0": {"key": "exactly_zero", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(0) e? <=1= _exactly_x_deg e?; :rstr <-1- [body]:node"},
@@ -120,11 +112,7 @@
                 "2": {"key": "exactly_two", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(2) e? <=1= _exactly_x_deg e?; :rstr <-1- [body]:node"},
                 "3": {"key": "exactly_three", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(3) e? <=1= _exactly_x_deg e?; :rstr <-1- [body]:node"},
                 "4": {"key": "exactly_four", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(4) e? <=1= _exactly_x_deg e?; :rstr <-1- [body]:node"},
-                "5": {"key": "exactly_five", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(5) e? <=1= _exactly_x_deg e?; :rstr <-1- [body]:node"},
-                "-4": {"key": "exactly_all_but_three", "dmrs": "_exactly_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <=1= _but_p_except e? -2-> generic_entity x?[num=p] <=1= card(3) e?; :rstr <-1- [body]:node; :generic_entity <-- udef_q"},
-                "-3": {"key": "exactly_all_but_two", "dmrs": "_exactly_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <=1= _but_p_except e? -2-> generic_entity x?[num=p] <=1= card(2) e?; :rstr <-1- [body]:node; :generic_entity <-- udef_q"},
-                "-2": {"key": "exactly_all_but_one", "dmrs": "_exactly_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <=1= _but_p_except e? -2-> generic_entity x?[num=s] <=1= card(1) e?; :rstr <-1- [body]:node; :generic_entity <-- udef_q"},
-                "-1": {"key": "exactly_all_but_zero", "dmrs": "_exactly_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <=1= _but_p_except e? -2-> generic_entity x?[num=p] <=1= card(0) e?; :rstr <-1- [body]:node; :generic_entity <-- udef_q"}
+                "5": {"key": "exactly_five", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(5) e? <=1= _exactly_x_deg e?; :rstr <-1- [body]:node"}
             },
             "neq": {
                 "0": {"key": "not_zero", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(0) e? <=1= _not_x_deg e?; :rstr <-1- [body]:node"},
@@ -132,11 +120,7 @@
                 "2": {"key": "not_two", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(2) e? <=1= _not_x_deg e?; :rstr <-1- [body]:node"},
                 "3": {"key": "not_three", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(3) e? <=1= _not_x_deg e?; :rstr <-1- [body]:node"},
                 "4": {"key": "not_four", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(4) e? <=1= _not_x_deg e?; :rstr <-1- [body]:node"},
-                "5": {"key": "not_five", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(5) e? <=1= _not_x_deg e?; :rstr <-1- [body]:node"},
-                "-4": {"key": "not_all_but_three", "dmrs": "_not_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <=1= _but_p_except e? -2-> generic_entity x?[num=p] <=1= card(3) e?; :rstr <-1- [body]:node; :generic_entity <-- udef_q"},
-                "-3": {"key": "not_all_but_two", "dmrs": "_not_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <=1= _but_p_except e? -2-> generic_entity x?[num=p] <=1= card(2) e?; :rstr <-1- [body]:node; :generic_entity <-- udef_q"},
-                "-2": {"key": "not_all_but_one", "dmrs": "_not_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <=1= _but_p_except e? -2-> generic_entity x?[num=s] <=1= card(1) e?; :rstr <-1- [body]:node; :generic_entity <-- udef_q"},
-                "-1": {"key": "not_all_but_zero", "dmrs": "_not_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <=1= _but_p_except e? -2-> generic_entity x?[num=p] <=1= card(0) e?; :rstr <-1- [body]:node; :generic_entity <-- udef_q"}
+                "5": {"key": "not_five", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(5) e? <=1= _not_x_deg e?; :rstr <-1- [body]:node"}
             },
             "geq": {
                 "0": {"key": "at_least_zero", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(0) e? <=1= _at+least_x_deg e?; :rstr <-1- [body]:node"},
@@ -144,11 +128,7 @@
                 "2": {"key": "at_least_two", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(2) e? <=1= _at+least_x_deg e?; :rstr <-1- [body]:node"},
                 "3": {"key": "at_least_three", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(3) e? <=1= _at+least_x_deg e?; :rstr <-1- [body]:node"},
                 "4": {"key": "at_least_four", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(4) e? <=1= _at+least_x_deg e?; :rstr <-1- [body]:node"},
-                "5": {"key": "at_least_five", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(5) e? <=1= _at+least_x_deg e?; :rstr <-1- [body]:node"},
-                "-4": {"key": "at_least_all_but_three", "dmrs": "_at+least_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <=1= _but_p_except e? -2-> generic_entity x?[num=p] <=1= card(3) e?; :rstr <-1- [body]:node; :generic_entity <-- udef_q"},
-                "-3": {"key": "at_least_all_but_two", "dmrs": "_at+least_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <=1= _but_p_except e? -2-> generic_entity x?[num=p] <=1= card(2) e?; :rstr <-1- [body]:node; :generic_entity <-- udef_q"},
-                "-2": {"key": "at_least_all_but_one", "dmrs": "_at+least_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <=1= _but_p_except e? -2-> generic_entity x?[num=s] <=1= card(1) e?; :rstr <-1- [body]:node; :generic_entity <-- udef_q"},
-                "-1": {"key": "at_least_all_but_zero", "dmrs": "_at+least_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <=1= _but_p_except e? -2-> generic_entity x?[num=p] <=1= card(0) e?; :rstr <-1- [body]:node; :generic_entity <-- udef_q"}
+                "5": {"key": "at_least_five", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(5) e? <=1= _at+least_x_deg e?; :rstr <-1- [body]:node"}
             },
             "gt": {
                 "0": {"key": "more_than_zero", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(0) e? <=1= _more+than_x_deg e?; :rstr <-1- [body]:node"},
@@ -156,10 +136,7 @@
                 "2": {"key": "more_than_two", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(2) e? <=1= _more+than_x_deg e?; :rstr <-1- [body]:node"},
                 "3": {"key": "more_than_three", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(3) e? <=1= _more+than_x_deg e?; :rstr <-1- [body]:node"},
                 "4": {"key": "more_than_four", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(4) e? <=1= _more+than_x_deg e?; :rstr <-1- [body]:node"},
-                "5": {"key": "more_than_five", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(5) e? <=1= _more+than_x_deg e?; :rstr <-1- [body]:node"},
-                "-4": {"key": "more_than_all_but_three", "dmrs": "_more+than_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <=1= _but_p_except e? -2-> generic_entity x?[num=p] <=1= card(3) e?; :rstr <-1- [body]:node; :generic_entity <-- udef_q"},
-                "-3": {"key": "more_than_all_but_two", "dmrs": "_more+than_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <=1= _but_p_except e? -2-> generic_entity x?[num=p] <=1= card(2) e?; :rstr <-1- [body]:node; :generic_entity <-- udef_q"},
-                "-2": {"key": "more_than_all_but_one", "dmrs": "_more+than_x_deg e? ==> _all_q --> [rstr]:pred x?[num=p] <=1= _but_p_except e? -2-> generic_entity x?[num=s] <=1= card(1) e?; :rstr <-1- [body]:node; :generic_entity <-- udef_q"}
+                "5": {"key": "more_than_five", "dmrs": "udef_q --> [rstr]:pred x?[num=p] <=1= card(5) e? <=1= _more+than_x_deg e?; :rstr <-1- [body]:node"}
             }
         },
 

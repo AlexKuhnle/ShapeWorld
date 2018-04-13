@@ -36,10 +36,6 @@ python -O generate.py -d examples/agreement/quantification-count_equal -U -t agr
     -n quantification -i 100 -M -H -N --v1 --config-values --world-size 100 \
     --collision_tolerance 0.0 --quantifiers '[["count"], ["eq"], "+"]' --captions-per-instance 5
 
-python -O generate.py -d examples/agreement/quantification-count_nonsubtr -U -t agreement \
-    -n quantification -i 100 -M -H -N --v1 --config-values --world-size 100 \
-    --collision_tolerance 0.0 --quantifiers '[["count"], null, "+"]' --captions-per-instance 5
-
 python -O generate.py -d examples/agreement/quantification-count -U -t agreement -n quantification \
     -i 100 -M -H -N --v1 --config-values --world-size 100 --collision_tolerance 0.0 \
     --quantifiers '[["count"], null, null]' --captions-per-instance 5
