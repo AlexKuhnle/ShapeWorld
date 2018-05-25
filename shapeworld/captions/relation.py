@@ -3,9 +3,10 @@ from shapeworld.captions import Predicate, EntityType, Settings
 
 class Relation(Predicate):
 
-    predtypes = {'attribute', 'type', 'x-rel', 'y-rel', 'z-rel', 'size-rel', 'shade-rel', 'proximity-rel'}
-    meta_relations = set()
+    predtypes = {'attribute', 'type', 'negation', 'x-rel', 'y-rel', 'z-rel', 'proximity-rel', 'size-rel', 'shade-rel', 'shape-rel', 'color-rel', 'texture-rel'}
+    meta_relations = {'negation'}
     ternary_relations = {'proximity-rel'}
+    # reference_selectors = {'proximity-two', 'proximity-max'}
 
     __slots__ = ('predtype', 'value', 'reference', 'comparison')
 
@@ -18,6 +19,10 @@ class Relation(Predicate):
         elif predtype == 'type':
             assert isinstance(value, EntityType)
             assert reference is None and comparison is None
+        elif predtype in Relation.meta_relations:
+            assert value == -1 or value == 1
+            assert isinstance(reference, Relation)
+            assert comparison is None
         elif predtype in Relation.ternary_relations:
             assert value == -1 or value == 1
             assert isinstance(reference, EntityType)
@@ -83,23 +88,42 @@ class Relation(Predicate):
         if self.predtype in ('attribute', 'type'):
             return self.value.pred_agreement(entity=entity)
 
+        elif self.predtype in Relation.meta_relations:
+            sub_ref_predication = ref_predication.get_sub_predication(0)
+            sub_comp_predication = ref_predication.get_sub_predication(1)
+
+            if self.predtype == 'negation':
+                if self.value == -1:
+                    return self.reference.pred_disagreement(entity=entity, ref_predication=sub_ref_predication, comp_predication=sub_comp_predication)
+                else:
+                    return self.reference.pred_agreement(entity=entity, ref_predication=sub_ref_predication, comp_predication=sub_comp_predication)
+
         ref_entities = ref_predication.agreeing
 
         if self.predtype == 'x-rel':
             # min distance in case of overlap
-            return any((entity.center.x - reference.center.x) * self.value > max(Settings.min_axis_distance, abs(entity.center.y - reference.center.y)) for reference in ref_entities if reference != entity)
+            return any((entity.center.x - reference.center.x) * self.value > max(Settings.min_axis_distance, abs(entity.center.y - reference.center.y)) for reference in ref_entities)
 
         elif self.predtype == 'y-rel':
-            return any((entity.center.y - reference.center.y) * self.value > max(Settings.min_axis_distance, abs(entity.center.x - reference.center.x)) for reference in ref_entities if reference != entity)
+            return any((entity.center.y - reference.center.y) * self.value > max(Settings.min_axis_distance, abs(entity.center.x - reference.center.x)) for reference in ref_entities)
 
         elif self.predtype == 'z-rel':
-            return any(entity.collides(reference, ratio=True, symmetric=True) > Settings.min_overlap and (entity.id - reference.id) * self.value > 0 for reference in ref_entities if reference != entity)
+            return any(entity.collides(reference, ratio=True, symmetric=True) > Settings.min_overlap and (entity.id - reference.id) * self.value > 0 for reference in ref_entities)
 
         elif self.predtype == 'size-rel':
             return any((entity.shape.area - reference.shape.area) * self.value > Settings.min_area for reference in ref_entities if reference.shape == entity.shape)
 
         elif self.predtype == 'shade-rel':
             return any((entity.color.shade - reference.color.shade) * self.value > Settings.min_shade for reference in ref_entities if reference.color == entity.color)
+
+        elif self.predtype == 'shape-rel':
+            return any(entity.shape == reference.shape if self.value == 1 else entity.shape != reference.shape for reference in ref_entities if reference != entity)
+
+        elif self.predtype == 'color-rel':
+            return any(entity.color == reference.color if self.value == 1 else entity.color != reference.color for reference in ref_entities if reference != entity)
+
+        elif self.predtype == 'texture-rel':
+            return any(entity.texture == reference.texture if self.value == 1 else entity.texture != reference.texture for reference in ref_entities if reference != entity)
 
         comp_entities = comp_predication.agreeing
 
@@ -112,13 +136,26 @@ class Relation(Predicate):
                         return True
             return False
 
+        else:
+            assert False
+
     def pred_disagreement(self, entity, ref_predication=None, comp_predication=None):
         if self.predtype in ('attribute', 'type'):
             return self.value.pred_disagreement(entity=entity)
 
+        elif self.predtype in Relation.meta_relations:
+            sub_ref_predication = ref_predication.get_sub_predication(0)
+            sub_comp_predication = ref_predication.get_sub_predication(1)
+
+            if self.predtype == 'negation':
+                if self.value == -1:
+                    return self.reference.pred_agreement(entity=entity, ref_predication=sub_ref_predication, comp_predication=sub_comp_predication)
+                else:
+                    return self.reference.pred_disagreement(entity=entity, ref_predication=sub_ref_predication, comp_predication=sub_comp_predication)
+
         ref_entities = ref_predication.not_disagreeing
         if len(ref_entities) == 1 and ref_entities[0] == entity:
-            return True
+            return False
 
         if self.predtype == 'x-rel':
             return all((reference.center.x - entity.center.x) * self.value > Settings.min_axis_distance for reference in ref_entities)
@@ -139,9 +176,18 @@ class Relation(Predicate):
         elif self.predtype == 'shade-rel':
             return all((reference.color.shade - entity.color.shade) * self.value > Settings.min_shade for reference in ref_entities)  # and reference.color == entity.color)
 
+        elif self.predtype == 'shape-rel':
+            return all(entity.shape != reference.shape if self.value == 1 else entity.shape == reference.shape for reference in ref_entities if reference != entity)
+
+        elif self.predtype == 'color-rel':
+            return all(entity.color != reference.color if self.value == 1 else entity.color == reference.color for reference in ref_entities if reference != entity)
+
+        elif self.predtype == 'texture-rel':
+            return all(entity.texture != reference.texture if self.value == 1 else entity.texture == reference.texture for reference in ref_entities if reference != entity)
+
         comp_entities = comp_predication.not_disagreeing
         if len(comp_entities) == 1 and comp_entities[0] == entity:
-            return True
+            return False
 
         if self.predtype == 'proximity-rel':
             for reference in ref_entities:
@@ -151,3 +197,6 @@ class Relation(Predicate):
                     if ((comparison.center - reference.center).length() - (entity.center - reference.center).length()) * self.value < Settings.min_distance:
                         return False
             return True
+
+        else:
+            assert False

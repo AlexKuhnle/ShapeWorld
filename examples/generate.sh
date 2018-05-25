@@ -2,84 +2,117 @@
 rm -r examples/agreement
 
 # existential
-python -O generate.py -d examples/agreement/existential-oneshape -U -t agreement -n existential \
-    -i 100 -M -H -N --v1 --config-values --world-size 100 --collision_tolerance 0.0 \
-    --entity-counts [1] --train-entity-counts [1] --validation-entity-counts [1] \
-    --test-entity-counts [1] --captions-per-instance 5
+python generate.py -d examples/agreement/existential-oneshape -U -t agreement -n existential \
+    -c configs/agreement/existential-oneshape.json -i 100 -M -H -N --config-values \
+    --world-size 100 --captions-per-instance 5 \
+    | tee results.txt
 
-python -O generate.py -d examples/agreement/existential-colfree -U -t agreement -n existential \
-    -i 100 -M -H -N --v1 --config-values --world-size 100 --collision_tolerance 0.0 \
-    --captions-per-instance 5
+python generate.py -d examples/agreement/existential-colfree -U -t agreement -n existential \
+    -c configs/agreement/existential-colfree.json -i 100 -M -H -N --config-values \
+    --world-size 100 --captions-per-instance 5 \
+    | tee -a results.txt
 
-python -O generate.py -d examples/agreement/existential -U -t agreement -n existential -i 100 -M -H \
-    -N --v1 --config-values --world-size 100 --captions-per-instance 5
+python generate.py -d examples/agreement/existential-full -U -t agreement -n existential \
+    -c configs/agreement/existential-full.json -i 100 -M -H -N --config-values --world-size 100 \
+    --captions-per-instance 5 \
+    | tee -a results.txt
 
 # relational
-python -O generate.py -d examples/agreement/relational-spatial_twoshapes -U -t agreement \
-    -n relational -i 100 -M -H -N --v1 --config-values --world-size 100 --collision_tolerance 0.0 \
-    --entity-counts [2] --train-entity-counts [2] --validation-entity-counts [2] \
-    --test-entity-counts [2] --relations '[["x-rel", "y-rel"], null]' --captions-per-instance 5
+python generate.py -d examples/agreement/relational-spatial_twoshapes -U -t agreement \
+    -n relational -c configs/agreement/relational-spatial_twoshapes.json -i 100 -M -H -N \
+    --config-values --world-size 100 --captions-per-instance 5 \
+    | tee -a results.txt
 
-python -O generate.py -d examples/agreement/relational-spatial -U -t agreement -n relational -i 100 \
-    -M -H -N --v1 --config-values --world-size 100 --collision_tolerance 0.0 \
-    --relations '[["x-rel", "y-rel"], null]' --captions-per-instance 5
+python generate.py -d examples/agreement/relational-spatial -U -t agreement -n relational \
+    -c configs/agreement/relational-spatial.json -i 100 -M -H -N --config-values --world-size 100 \
+    --captions-per-instance 5 \
+    | tee -a results.txt
 
-python -O generate.py -d examples/agreement/relational-comparative -U -t agreement -n relational \
-     -i 100 -M -H -N --v1 --config-values --world-size 100 --collision_tolerance 0.0 \
-     --relations '[["size-rel", "shade-rel"], null]' --captions-per-instance 5
+python generate.py -d examples/agreement/relational-samediff -U -t agreement -n \
+    -c configs/agreement/relational-samediff.json -i 100 -M -H -N --config-values \
+    --world-size 100 --captions-per-instance 5 \
+    | tee -a results.txt
 
-python -O generate.py -d examples/agreement/relational -U -t agreement -n relational -i 100 -M -H -N \
-    --v1 --config-values --world-size 100 --captions-per-instance 5
+python generate.py -d examples/agreement/relational-comparative -U -t agreement -n \
+    -c configs/agreement/relational-comparative.json -i 100 -M -H -N --config-values \
+    --world-size 100 --captions-per-instance 5 \
+    | tee -a results.txt
+
+python generate.py -d examples/agreement/relational-full -U -t agreement -n relational \
+    -c configs/agreement/relational-full.json -i 100 -M -H -N --config-values --world-size 100 \
+    --captions-per-instance 5 \
+    | tee -a results.txt
+
+# selection
+python generate.py -d examples/agreement/selection-full -U -t agreement -n selection \
+    -c configs/agreement/selection-full.json -i 100 -M -H -N --config-values --world-size 100 \
+    --captions-per-instance 5 \
+    | tee -a results.txt
 
 # quantification
-python -O generate.py -d examples/agreement/quantification-count_equal -U -t agreement \
-    -n quantification -i 100 -M -H -N --v1 --config-values --world-size 100 \
-    --collision_tolerance 0.0 --quantifiers '[["count"], ["eq"], "+"]' --captions-per-instance 5
+python generate.py -d examples/agreement/quantification-count_equal -U -t agreement \
+    -n quantification -c configs/agreement/quantification-count_equal.json -i 100 -M -H -N \
+    --config-values --world-size 100 --captions-per-instance 5 \
+    | tee -a results.txt
 
-python -O generate.py -d examples/agreement/quantification-count -U -t agreement -n quantification \
-    -i 100 -M -H -N --v1 --config-values --world-size 100 --collision_tolerance 0.0 \
-    --quantifiers '[["count"], null, null]' --captions-per-instance 5
+python generate.py -d examples/agreement/quantification-count -U -t agreement -n quantification \
+    -c configs/agreement/quantification-count.json -i 100 -M -H -N --config-values \
+    --world-size 100 --captions-per-instance 5 \
+    | tee -a results.txt
 
-python -O generate.py -d examples/agreement/quantification-ratio_equal -U -t agreement \
-    -n quantification -i 100 -M -H -N --v1 --config-values --world-size 100 \
-    --collision_tolerance 0.0 --quantifiers '[["ratio"], ["eq"], null]' --captions-per-instance 5
+python generate.py -d examples/agreement/quantification-ratio_equal -U -t agreement \
+    -n quantification -c configs/agreement/quantification-ratio_equal.json -i 100 -M -H -N \
+    --config-values --world-size 100 --captions-per-instance 5 \
+    | tee -a results.txt
 
-python -O generate.py -d examples/agreement/quantification-ratio -U -t agreement -n quantification \
-    -i 100 -M -H -N --v1 --config-values --world-size 100 --collision_tolerance 0.0 \
-    --quantifiers '[["ratio"], null, null]' --captions-per-instance 5
+python generate.py -d examples/agreement/quantification-ratio -U -t agreement -n quantification \
+    -c configs/agreement/quantification-ratio.json -i 100 -M -H -N --config-values \
+    --world-size 100 --captions-per-instance 5 \
+    | tee -a results.txt
 
-python -O generate.py -d examples/agreement/quantification -U -t agreement -n quantification -i 100 \
-    -M -H -N --v1 --config-values --world-size 100 --captions-per-instance 5
+python generate.py -d examples/agreement/quantification-full -U -t agreement -n quantification \
+    -c configs/agreement/quantification-full.json -i 100 -M -H -N --config-values \
+    --world-size 100 --captions-per-instance 5 \
+    | tee -a results.txt
 
-python -O generate.py -d examples/agreement/quantification_complex -U -t agreement \
-    -n quantification_complex -i 100 -M -H -N --v1 --config-values --world-size 100 \
-    --captions-per-instance 5
+python generate.py -d examples/agreement/quantification_complex-full -U -t agreement \
+    -n quantification_complex -c configs/agreement/quantification_complex-full.json -i 100 -M -H \
+    -N --config-values --world-size 100 --captions-per-instance 5 \
+    | tee -a results.txt
 
 # logical
-python -O generate.py -d examples/agreement/logical-existential -U -t agreement -n logical -i 100 -M \
-    -H -N --v1 --config-values --world-size 100 --collision_tolerance 0.0 \
-    --captions '["existential"]' --captions-per-instance 5
+python generate.py -d examples/agreement/logical-existential -U -t agreement -n logical \
+    -c configs/agreement/logical-existential.json -i 100 -M -H -N --config-values \
+    --world-size 100 --captions-per-instance 5 \
+    | tee -a results.txt
 
-python -O generate.py -d examples/agreement/logical -U -t agreement -n logical -i 100 -M -H -N \
-    --v1 --config-values --world-size 100 --captions-per-instance 5
+python generate.py -d examples/agreement/logical-full -U -t agreement -n logical \
+    -c configs/agreement/logical-full.json -i 100 -M -H -N --config-values --world-size 100 \
+    --captions-per-instance 5 \
+    | tee -a results.txt
 
 # classification
 rm -r examples/classification
 
-python -O generate.py -d examples/classification/shape-single -U -t classification -n shape -i 100 \
-    -M -H -N --v1 --config-values --world-size 100 --multi-class false
+python generate.py -d examples/classification/shape-single -U -t classification -n shape \
+    -c configs/classification/shape-single.json -i 100 -M -H -N --config-values --world-size 100 \
+    | tee -a results.txt
 
-python -O generate.py -d examples/classification/shape-multi -U -t classification -n shape -i 100 -M \
-    -H -N --v1
+python generate.py -d examples/classification/shape-multi -U -t classification -n shape \
+    -c configs/classification/shape-multi.json -i 100 -M -H -N \
+    | tee -a results.txt
 
-python -O generate.py -d examples/classification/shape-count -U -t classification -n shape -i 100 -M \
-    -H -N --v1 --config-values --world-size 100 --count-class true
+python generate.py -d examples/classification/shape-count -U -t classification -n shape \
+    -c configs/classification/shape-count.json -i 100 -M -H -N --config-values --world-size 100 \
+    | tee -a results.txt
 
 # readme data
 rm -r examples/readme
 
 python -O generate.py -d examples/readme -a tar:bzip2 -t agreement -n existential -v readme -s 3,2,1 \
-    -i 100 -M -T --v1
+    -i 100 -M -T \
+    | tee -a results.txt
 
 python -O generate.py -d examples/readme -a tar:bzip2 -t agreement -n relational -v readme -s 3,2,1 \
-    -i 100 -M --v1
+    -i 100 -M \
+    | tee -a results.txt

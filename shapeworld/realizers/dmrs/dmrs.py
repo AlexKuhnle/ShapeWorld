@@ -120,8 +120,8 @@ class Dmrs(ListDmrs):
         if other_head:
             self.anchors = {anchor: self[node2.nodeid] for anchor, node2 in other.anchors.items()}
 
-    def apply_paraphrases(self, paraphrases, hierarchy=None):
-        return paraphrase(dmrs=self, paraphrases=paraphrases, hierarchy=hierarchy)
+    def apply_paraphrases(self, paraphrases, hierarchy=None, match_top_index=True):
+        return paraphrase(dmrs=self, paraphrases=paraphrases, hierarchy=hierarchy, match_top_index=match_top_index)
 
     def remove_underspecifications(self):
         for node in list(self.iter_nodes()):

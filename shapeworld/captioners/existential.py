@@ -52,24 +52,27 @@ class ExistentialCaptioner(WorldCaptioner):
         if not super(ExistentialCaptioner, self).sample_values(mode=mode, predication=predication):
             return False
 
-        self.incorrect_mode = util.sample(self.incorrect_distribution)
+        # predication = predication.copy()
 
-        predication = predication.copy()
+        if not self.body_captioner.sample_values(mode=mode, predication=predication):
+            return False
+        if not self.restrictor_captioner.sample_values(mode=mode, predication=predication):
+            return False
 
-        if self.incorrect_mode == 0:  # 0: incorrect restrictor
-            # incorrect after correct
-            if not self.body_captioner.sample_values(mode=mode, predication=predication):
-                return False
-            if not self.restrictor_captioner.sample_values(mode=mode, predication=predication):
-                return False
-
+        for _ in range(self.__class__.MAX_SAMPLE_ATTEMPTS):
+            self.incorrect_mode = util.sample(self.incorrect_distribution)
+            if self.incorrect_mode == 0 and not self.restrictor_captioner.incorrect_possible():
+                continue
+            elif self.incorrect_mode == 1 and not self.body_captioner.incorrect_possible():
+                continue
+            break
         else:
-            if not self.restrictor_captioner.sample_values(mode=mode, predication=predication):
-                return False
-            if not self.body_captioner.sample_values(mode=mode, predication=predication):
-                return False
+            return False
 
         return True
+
+    def incorrect_possible(self):
+        return self.restrictor_captioner.incorrect_possible() or self.body_captioner.incorrect_possible()
 
     def model(self):
         return util.merge_dicts(
@@ -98,8 +101,9 @@ class ExistentialCaptioner(WorldCaptioner):
             return None
         restrictor.apply_to_predication(predication=rstr_predication)
 
-        if not self.pragmatical_tautology and predication.num_entities > 1 and predication.equals(other=body_predication):
-            return None
+        # also for incorrect
+        # if not self.pragmatical_tautology and len(rstr_body_predication.agreeing) > 1 and (body_predication.equals(other=rstr_body_predication) or rstr_predication.equals(other=rstr_body_predication)):
+        #     return None
 
         return Existential(restrictor=restrictor, body=body)
 
@@ -124,7 +128,7 @@ class ExistentialCaptioner(WorldCaptioner):
             rstr_body_predication = predication.sub_predication(predication=rstr_predication.copy())
             caption.body.apply_to_predication(predication=rstr_body_predication)
 
-        if not self.pragmatical_tautology and rstr_predication.equals(other=body_predication):
-            return False
+        # if not self.pragmatical_tautology and rstr_predication.equals(other=body_predication):
+        #     return False
 
         return True

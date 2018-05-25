@@ -45,14 +45,11 @@ class RelationCaptioner(WorldCaptioner):
         if self.relations is None:
             self.relations = [(predtype, value) for predtype, values in realizer.relations.items() if predtype not in Relation.meta_relations for value in values]
         else:
-            assert len(self.relations) == 2
+            print(self.relations)
             self.relations = [
-                (predtype, value)
-                for predtype, values in realizer.relations.items() if self.relations[0] is None or predtype in self.relations[0]
-                for value in values if self.relations[1] is None or value in self.relations[1]
+                (predtype, value) for predtype, values in realizer.relations.items() for value in values
+                if any((p == '*' or predtype == p) and (v == '*' or value == v) for p, v in self.relations)
             ]
-
-        self.ternary_possible = any(predtype in Relation.ternary_relations for predtype, _ in self.relations)
 
         return True
 
@@ -66,26 +63,7 @@ class RelationCaptioner(WorldCaptioner):
         if not super(RelationCaptioner, self).sample_values(mode=mode, predication=predication):
             return False
 
-        self.predtype, self.value = choice(self.relations)
-
-        for _ in range(self.__class__.MAX_SAMPLE_ATTEMPTS):
-            self.incorrect_mode = util.sample(self.incorrect_distribution)
-            if self.incorrect_mode == 1 and self.predtype not in Relation.ternary_relations:
-                # if incorrect comparison but relation not ternary
-                continue
-            break
-        else:
-            return False
-
         ref_predication = predication.copy(reset=True)
-
-        if self.predtype == 'size-rel':
-            ref_predication.apply(predicate='shape')
-            predication.apply(predicate='shape')
-        elif self.predtype == 'shade-rel':
-            ref_predication.apply(predicate='color')
-            predication.apply(predicate='color')
-
         if not self.reference_captioner.sample_values(mode=mode, predication=ref_predication):
             return False
 
@@ -93,24 +71,67 @@ class RelationCaptioner(WorldCaptioner):
         if not self.comparison_captioner.sample_values(mode=mode, predication=comp_predication):
             return False
 
-        if self.incorrect_mode == 2:  # 2: incorrect spatial relation
-            self.incorrect_relations = [(predtype, value) for predtype, value in self.relations if predtype != self.predtype or value != self.value]
+        self.predtype, self.value = choice(self.relations)
+
+        for _ in range(self.__class__.MAX_SAMPLE_ATTEMPTS):
+            self.incorrect_mode = util.sample(self.incorrect_distribution)
+            if self.incorrect_mode == 0 and not self.reference_captioner.incorrect_possible():
+                continue
+            elif self.incorrect_mode == 1 and not self.comparison_captioner.incorrect_possible():
+                continue
+            elif self.incorrect_mode == 1 and self.predtype not in Relation.ternary_relations:
+                # if incorrect comparison but relation not ternary
+                continue
+            break
+        else:
+            return False
+
+        self.incorrect_predtype = self.predtype
+        self.incorrect_value = self.value
+
+        if self.incorrect_mode == 2:  # 2: incorrect relation
+            for _ in range(self.__class__.MAX_SAMPLE_ATTEMPTS):
+                self.incorrect_predtype, self.incorrect_value = choice(self.relations)
+                if self.incorrect_predtype == self.predtype and self.incorrect_value == self.value:
+                    continue
+                break
+            else:
+                return False
 
         predication.apply(predicate=self.predtype)
 
+        if (self.predtype == 'size-rel' or self.incorrect_predtype == 'size-rel') and ref_predication.redundant(predicate='shape'):
+            predication.apply(predicate='shape')
+        elif (self.predtype == 'shape-rel' or self.incorrect_predtype == 'shape-rel') and ref_predication.redundant(predicate='shape'):
+            predication.block(predicate='shape')
+        elif (self.predtype == 'shade-rel' or self.incorrect_predtype == 'shade-rel') and ref_predication.redundant(predicate='color'):
+            predication.apply(predicate='color')
+        elif (self.predtype == 'color-rel' or self.incorrect_predtype == 'color-rel') and ref_predication.redundant(predicate='color'):
+            predication.block(predicate='color')
+
+        return True
+
+    def incorrect_possible(self):
         return True
 
     def model(self):
-        return util.merge_dicts(
-            dict1=super(RelationCaptioner, self).model(),
-            dict2=dict(
-                predtype=self.predtype,
-                value=self.value,
-                incorrect_mode=self.incorrect_mode,
-                reference_captioner=self.reference_captioner.model(),
+        model = super(RelationCaptioner, self).model()
+        model.update(
+            predtype=self.predtype,
+            value=self.value,
+            incorrect_mode=self.incorrect_mode,
+            reference_captioner=self.reference_captioner.model()
+        )
+        if self.incorrect_mode == 2:  # 2: incorrect relation
+            model.update(
+                incorrect_predtype=self.incorrect_predtype,
+                incorrect_value=self.incorrect_value
+            )
+        if self.predtype in Relation.ternary_relations or self.incorrect_predtype in Relation.ternary_relations:
+            model.update(
                 comparison_captioner=self.comparison_captioner.model()
             )
-        )
+        return model
 
     def caption(self, predication, world):
         ref_predication = predication.sub_predication(reset=True)
@@ -118,7 +139,7 @@ class RelationCaptioner(WorldCaptioner):
         if reference is None:
             return None
 
-        if self.predtype in Relation.ternary_relations or (self.ternary_possible and self.incorrect_mode == 2):  # 2: incorrect relation
+        if self.predtype in Relation.ternary_relations or self.incorrect_predtype in Relation.ternary_relations:
             comp_predication = predication.sub_predication(reset=True)
             comparison = self.comparison_captioner.caption(predication=comp_predication, world=world)
             if comparison is None:
@@ -163,7 +184,8 @@ class RelationCaptioner(WorldCaptioner):
             predication.apply(predicate=caption, ref_predication=ref_predication, comp_predication=comp_predication)
 
         if self.incorrect_mode == 2:  # 2: incorrect relation
-            caption.predtype, caption.value = choice(self.incorrect_relations)
+            caption.predtype = self.incorrect_predtype
+            caption.value = self.incorrect_value
             ref_predication, comp_predication = caption.apply_to_predication(predication=predication)
 
         elif self.incorrect_mode == 3:  # 3: inverse relation

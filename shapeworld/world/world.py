@@ -3,16 +3,13 @@ from random import choice, random
 import numpy as np
 from PIL import Image
 from shapeworld import util
-from shapeworld.util import Point
-from shapeworld.world import Entity, Color, Texture
+from shapeworld.world import Point, Color, Texture, Entity
 from shapeworld.world.shape import WorldShape
 
 
 class World(Entity):
 
-    COLLISION_MIN_DISTANCE = 0.75
-
-    __slots__ = ('size', 'entities', 'shape', 'color', 'texture', 'center', 'rotation', 'rotation_sin', 'rotation_cos', 'relative_topleft', 'relative_bottomright', 'topleft', 'bottomright')
+    __slots__ = ('size', 'entities', 'shape', 'color', 'texture', 'center', 'rotation', 'rotation_sin', 'rotation_cos', 'relative_topleft', 'relative_bottomright', 'topleft', 'bottomright', 'meta')
 
     def __init__(self, size, color):
         assert isinstance(size, int) and size > 0
@@ -24,19 +21,25 @@ class World(Entity):
         self.bottomright = Point.one
         self.size = Point(size, size)
         self.entities = []
+        self.meta = dict()
 
     def __eq__(self, other):
         raise NotImplementedError
 
     def model(self):
-        return {'size': self.size.x, 'color': self.color.model(), 'entities': [entity.model() for entity in self.entities]}
+        return dict(size=self.size.x, color=self.color.model(), entities=[entity.model() for entity in self.entities], meta=self.meta)
 
     @staticmethod
     def from_model(model):
         world = World(size=model['size'], color=Color.from_model(model['color']))
         for entity_model in model['entities']:
             world.entities.append(Entity.from_model(entity_model))
+        if 'meta' in model:
+            world.meta.update(model['meta'])
         return world
+
+    def __str__(self):
+        return self.__class__.__name__
 
     def copy(self, include_entities=True):
         copy = World(size=self.size.x, color=str(self.color))
@@ -58,11 +61,17 @@ class World(Entity):
         for entity in self.entities:
             entity.draw(world_array=world_array, world_size=world_size, draw_fn=draw_fn)
 
-    def random_location(self, provoke_collision=False):
-        if provoke_collision and self.entities:
+    def random_location(self, provoke_collision=False, min_distance=0.75):
+        if isinstance(provoke_collision, Entity):
+            entity = provoke_collision
+            provoke_collision = True
+        elif provoke_collision and len(self.entities) > 0:
             entity = choice(self.entities)
+        else:
+            provoke_collision = False
+        if provoke_collision:
             angle = Point.from_angle(angle=random())
-            return entity.center + angle * entity.shape.size * (self.__class__.COLLISION_MIN_DISTANCE + random())
+            return entity.center + angle * entity.shape.size * (min_distance + random())
         else:
             return Point.random_instance(Point.zero, Point.one)
 

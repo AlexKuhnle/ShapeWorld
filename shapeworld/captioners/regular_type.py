@@ -64,12 +64,22 @@ class RegularTypeCaptioner(WorldCaptioner):
             return False
 
         self.valid_attributes = list()
-        if len(self.shapes) > 1 and (self.logical_redundancy or not predication.redundant(predicate='shape')):
-            self.valid_attributes.append('shape')
-        if len(self.colors) > 1 and (self.logical_redundancy or not predication.redundant(predicate='color')):
-            self.valid_attributes.append('color')
-        if len(self.textures) > 1 and (self.logical_redundancy or not predication.redundant(predicate='texture')):
-            self.valid_attributes.append('texture')
+        is_hypernym = 0
+        if len(self.shapes) > 1:
+            if (self.logical_redundancy or not predication.redundant(predicate='shape')) and (self.logical_contradiction or not predication.blocked(predicate='shape')):
+                self.valid_attributes.append('shape')
+            else:
+                is_hypernym = 1
+        if len(self.colors) > 1:
+            if (self.logical_redundancy or not predication.redundant(predicate='color')) and (self.logical_contradiction or not predication.blocked(predicate='color')):
+                self.valid_attributes.append('color')
+            else:
+                is_hypernym = 1
+        if len(self.textures) > 1:
+            if (self.logical_redundancy or not predication.redundant(predicate='texture')) and (self.logical_contradiction or not predication.blocked(predicate='texture')):
+                self.valid_attributes.append('texture')
+            else:
+                is_hypernym = 1
 
         if not self.logical_tautology and predication.tautological(predicates=self.valid_attributes):
             return False
@@ -82,13 +92,12 @@ class RegularTypeCaptioner(WorldCaptioner):
                 continue
             elif self.incorrect_mode == 2 and ('texture' not in self.valid_attributes or (not self.logical_contradiction and predication.redundant(predicate='texture'))):
                 continue
-            elif self.incorrect_mode == 3 and not self.logical_contradiction and all(predication.redundant(predicate=attribute) for attribute in self.valid_attributes):
+            elif self.incorrect_mode == 3 and (len(self.valid_attributes) == 0 or (not self.logical_contradiction and all(predication.redundant(predicate=attribute) for attribute in self.valid_attributes))):
                 continue
             break
         else:
             return False
 
-        is_hypernym = 0
         if not self.logical_contradiction and self.incorrect_mode == 3:
             # since otherwise an incorrect predicate might contradict parts of the predication
             for attribute in list(self.valid_attributes):
@@ -96,8 +105,7 @@ class RegularTypeCaptioner(WorldCaptioner):
                     self.valid_attributes.remove(attribute)
                     is_hypernym = 1  # attribute set is already smaller
 
-        assert len(self.valid_attributes) != 0
-        # if not self.logical_tautology and len(self.valid_attributes) != 0: return False
+        assert len(self.valid_attributes) > 0
 
         self.hypernym = random() < self.hypernym_rate
 
@@ -105,11 +113,9 @@ class RegularTypeCaptioner(WorldCaptioner):
 
         if self.hypernym:
             for _ in range(self.__class__.MAX_SAMPLE_ATTEMPTS):
-                self.attributes = choice([list(comb) for n in range(len(self.valid_attributes) + is_hypernym) for comb in combinations(self.valid_attributes, n)])
+                self.attributes = choice([list(comb) for n in range(1, len(self.valid_attributes) + int(is_hypernym)) for comb in combinations(self.valid_attributes, n)])
                 if not self.logical_tautology and predication.tautological(predicates=self.attributes):
                     continue
-                # elif len(self.attributes) == 0:
-                #     break
                 elif self.incorrect_mode == 0 and 'shape' not in self.attributes:
                     continue
                 elif self.incorrect_mode == 1 and 'color' not in self.attributes:
@@ -123,9 +129,7 @@ class RegularTypeCaptioner(WorldCaptioner):
         else:
             self.attributes = list(self.valid_attributes)
 
-        if len(self.attributes) == 0:
-            pass
-        elif self.incorrect_mode == 0:
+        if self.incorrect_mode == 0:
             self.attributes.remove('shape')
             self.attributes.insert(0, 'shape')
         elif self.incorrect_mode == 1:
@@ -135,16 +139,31 @@ class RegularTypeCaptioner(WorldCaptioner):
             self.attributes.remove('texture')
             self.attributes.insert(0, 'texture')
 
-        if self.existing_attribute_rate == 0.0 or (len(self.attributes) <= 1 and predication.empty()):
+        if self.existing_attribute_rate == 0.0:
             self.existing_attribute = False
         elif self.existing_attribute_rate == 1.0:
             self.existing_attribute = True
         else:
             self.existing_attribute = random() < self.existing_attribute_rate
 
+        assert len(self.attributes) > 0
+
         for predtype in self.attributes:
             predication.apply(predicate=predtype)
 
+        if self.incorrect_mode == 0:
+            predication.block(predicate='shape')
+        elif self.incorrect_mode == 1:
+            predication.block(predicate='color')
+        elif self.incorrect_mode == 2:
+            predication.block(predicate='texture')
+        elif self.incorrect_mode == 3:
+            for predtype in self.attributes:
+                predication.block(predicate=predtype)
+
+        return True
+
+    def incorrect_possible(self):
         return True
 
     def model(self):
@@ -162,21 +181,34 @@ class RegularTypeCaptioner(WorldCaptioner):
         if predication.num_agreeing == 0:
             return None
 
-        entity = predication.random_agreeing_entity()
-        attributes = list()
+        entities = list()
+        for entity in predication.agreeing:
+            entity_attributes = list()
+            for predtype in self.attributes:
+                if predtype == 'shape':
+                    entity_attributes.append(entity.shape.name)
+                elif predtype == 'color':
+                    entity_attributes.append(entity.color.name)
+                elif predtype == 'texture':
+                    entity_attributes.append(entity.texture.name)
+            entities.append(tuple(entity_attributes))
 
-        for predtype in self.attributes:
+        entity = choice(entities)
+
+        attributes = list()
+        for n, predtype in enumerate(self.attributes):
             if predtype == 'shape':
-                attributes.append(Attribute(predtype='shape', value=entity.shape.name))
+                attributes.append(Attribute(predtype='shape', value=entity[n]))
             elif predtype == 'color':
-                attributes.append(Attribute(predtype='color', value=entity.color.name))
+                attributes.append(Attribute(predtype='color', value=entity[n]))
             elif predtype == 'texture':
-                attributes.append(Attribute(predtype='texture', value=entity.texture.name))
+                attributes.append(Attribute(predtype='texture', value=entity[n]))
 
         for n in range(len(attributes) - 1, -1, -1):
             if predication.contradictory(predicate=attributes[n]):
                 assert False
             elif not self.pragmatical_redundancy and predication.num_entities > 1 and predication.redundant(predicate=attributes[n]):
+                assert False
                 attributes.pop(n)
 
         entity_type = EntityType(attributes=attributes)
@@ -192,7 +224,7 @@ class RegularTypeCaptioner(WorldCaptioner):
                 for predicate in caption.value:
                     if predicate.predtype == 'shape':
                         caption_shape = predicate.value
-                shapes = util.unique_list(entity.shape.name for entity in world.entities if entity.shape.name in self.shapes and entity.shape.name != caption_shape)
+                shapes = list(set(entity.shape.name for entity in world.entities if entity.shape.name in self.shapes and entity.shape.name != caption_shape))
             if not self.existing_attribute or len(shapes) == 0:
                 shapes = self.shapes
             if len(caption.value) == 0:
@@ -208,7 +240,7 @@ class RegularTypeCaptioner(WorldCaptioner):
                 for predicate in caption.value:
                     if predicate.predtype == 'color':
                         caption_color = predicate.value
-                colors = util.unique_list(entity.color.name for entity in world.entities if entity.color.name in self.colors and entity.color.name != caption_color)
+                colors = list(set(entity.color.name for entity in world.entities if entity.color.name in self.colors and entity.color.name != caption_color))
             if not self.existing_attribute or len(colors) == 0:
                 colors = self.colors
             if len(caption.value) == 0:
@@ -224,7 +256,7 @@ class RegularTypeCaptioner(WorldCaptioner):
                 for predicate in caption.value:
                     if predicate.predtype == 'texture':
                         caption_texture = predicate.value
-                textures = util.unique_list(entity.texture.name for entity in world.entities if entity.texture.name in self.textures and entity.texture.name != caption_texture)
+                textures = list(set(entity.texture.name for entity in world.entities if entity.texture.name in self.textures and entity.texture.name != caption_texture))
             if not self.existing_attribute or len(textures) == 0:
                 textures = self.textures
             if len(caption.value) == 0:
@@ -244,9 +276,9 @@ class RegularTypeCaptioner(WorldCaptioner):
                         caption_color = predicate.value
                     elif predicate.predtype == 'texture':
                         caption_texture = predicate.value
-                shapes = util.unique_list(entity.shape.name for entity in world.entities if entity.shape.name in self.shapes and entity.shape.name != caption_shape)
-                colors = util.unique_list(entity.color.name for entity in world.entities if entity.color.name in self.colors and entity.color.name != caption_color)
-                textures = util.unique_list(entity.texture.name for entity in world.entities if entity.texture.name in self.textures and entity.texture.name != caption_texture)
+                shapes = list(set(entity.shape.name for entity in world.entities if entity.shape.name in self.shapes and entity.shape.name != caption_shape))
+                colors = list(set(entity.color.name for entity in world.entities if entity.color.name in self.colors and entity.color.name != caption_color))
+                textures = list(set(entity.texture.name for entity in world.entities if entity.texture.name in self.textures and entity.texture.name != caption_texture))
             if not self.existing_attribute or len(shapes) == 0:
                 shapes = self.shapes
             if not self.existing_attribute or len(colors) == 0:

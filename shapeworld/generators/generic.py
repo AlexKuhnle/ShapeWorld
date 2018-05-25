@@ -6,7 +6,7 @@ from shapeworld.generators import WorldGenerator
 
 class GenericGenerator(WorldGenerator):
 
-    MAX_ATTEMPTS = 5
+    MAX_ATTEMPTS = 10
 
     def __init__(
         self,
@@ -25,14 +25,14 @@ class GenericGenerator(WorldGenerator):
         entity_counts=(1,),
         train_entity_counts=None,
         validation_entity_counts=None,
-        validation_count_rate=0.5,
         test_entity_counts=None,
+        validation_count_rate=0.5,
         test_count_rate=0.5,
         validation_combinations=None,
-        validation_space_rate_range=(0.0, 1.0),
-        validation_combination_rate=0.5,
         test_combinations=None,
+        validation_space_rate_range=(0.0, 1.0),
         test_space_rate_range=(0.0, 1.0),
+        validation_combination_rate=0.5,
         test_combination_rate=0.5
     ):
         super(GenericGenerator, self).__init__(
@@ -50,23 +50,20 @@ class GenericGenerator(WorldGenerator):
             boundary_tolerance=boundary_tolerance
         )
 
-        assert util.all_and_any(isinstance(n, int) and n >= 0 for n in entity_counts)
-        assert train_entity_counts is None or util.all_and_any(n in entity_counts for n in train_entity_counts)
-        assert validation_entity_counts is None or util.all_and_any(n in entity_counts for n in validation_entity_counts)
-        assert test_entity_counts is None or util.all_and_any(n in entity_counts for n in test_entity_counts)
-        self.entity_counts = entity_counts
-        self.train_entity_counts = util.value_or_default(train_entity_counts, entity_counts)
-        self.validation_entity_counts = util.value_or_default(validation_entity_counts, entity_counts)
+        assert entity_counts is None or util.all_and_any(isinstance(n, int) and n >= 0 for n in entity_counts)
+        assert train_entity_counts is None or util.all_and_any(isinstance(n, int) and n >= 0 for n in train_entity_counts)
+        assert validation_entity_counts is None or util.all_and_any(isinstance(n, int) and n >= 0 for n in validation_entity_counts)
+        assert test_entity_counts is None or util.all_and_any(isinstance(n, int) and n >= 0 for n in test_entity_counts)
+        self.entity_counts, self.train_entity_counts, self.validation_entity_counts, self.test_entity_counts = util.mode_specific_lists(entity_counts, train_entity_counts, validation_entity_counts, test_entity_counts)
+
         self.validation_count_rate = validation_count_rate
-        self.test_entity_counts = util.value_or_default(test_entity_counts, entity_counts)
         self.test_count_rate = test_count_rate
 
-        assert (validation_combinations is None) == (test_combinations is None)
         self.validation_combinations = validation_combinations
-        self.validation_space_rate_range = validation_space_rate_range
-        self.validation_combination_rate = validation_combination_rate
         self.test_combinations = test_combinations
+        self.validation_space_rate_range = validation_space_rate_range
         self.test_space_rate_range = test_space_rate_range
+        self.validation_combination_rate = validation_combination_rate
         self.test_combination_rate = test_combination_rate
         self.invalid_combinations = set()
         self.invalid_validation_combinations = set()
@@ -77,7 +74,7 @@ class GenericGenerator(WorldGenerator):
             validation_colors = set(color for _, color, _ in self.validation_combinations)
             validation_textures = set(texture for _, _, texture in self.validation_combinations)
             self.validation_space = [(shape, color, texture) for shape in validation_shapes for color in validation_colors for texture in validation_textures]
-            self.invalid_combinations.update(self.validation_combinations)
+            self.invalid_combinations.update(tuple(combination) for combination in self.validation_combinations)
 
         if self.test_combinations is not None:
             assert len(self.test_combinations) > 0
@@ -85,11 +82,13 @@ class GenericGenerator(WorldGenerator):
             test_colors = set(color for _, color, _ in self.test_combinations)
             test_textures = set(texture for _, _, texture in self.test_combinations)
             self.test_space = [(shape, color, texture) for shape in test_shapes for color in test_colors for texture in test_textures]
-            self.invalid_combinations.update(self.test_combinations)
-            self.invalid_validation_combinations.update(self.test_combinations)
+            self.invalid_combinations.update(tuple(combination) for combination in self.test_combinations)
+            self.invalid_validation_combinations.update(tuple(combination) for combination in self.test_combinations)
 
     def initialize(self, mode):
-        super(GenericGenerator, self).initialize(mode=mode)
+        if not super(GenericGenerator, self).initialize(mode=mode):
+            return False
+
         if mode is None:
             self.num_entities = choice(self.entity_counts)
         elif mode == 'train':
@@ -104,8 +103,16 @@ class GenericGenerator(WorldGenerator):
                 self.num_entities = choice(self.test_entity_counts)
             else:
                 self.num_entities = choice(self.train_entity_counts)
-        self.validation_space_rate = uniform(*self.validation_space_rate_range)
-        self.test_space_rate = uniform(*self.test_space_rate_range)
+        if self.validation_combinations is None:
+            self.validation_space_rate = 0.0
+        else:
+            self.validation_space_rate = uniform(*self.validation_space_rate_range)
+        if self.test_combinations is None:
+            self.test_space_rate = 0.0
+        else:
+            self.test_space_rate = uniform(*self.test_space_rate_range)
+
+        return True
 
     def model(self):
         return util.merge_dicts(

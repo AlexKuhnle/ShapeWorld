@@ -3,7 +3,8 @@ from shapeworld import util
 
 class WorldGenerator(object):
 
-    MAX_ATTEMPTS = 3
+    MAX_SAMPLE_ATTEMPTS = 10
+    MAX_ATTEMPTS = 5
 
     def __init__(
         self,
@@ -40,6 +41,7 @@ class WorldGenerator(object):
     def initialize(self, mode):
         assert mode in (None, 'train', 'validation', 'test')
         self.mode = mode
+        return True
 
     def model(self):
         return dict(
@@ -108,7 +110,7 @@ class GeneratorMixer(WorldGenerator):
         elif mode == 'test':
             self.generator = util.sample(self.test_distribution, self.generators)
 
-        self.generator.initialize(mode=mode)
+        return self.generator.initialize(mode=mode)
 
     def generate_world(self):
         return self.generator.generate_world()

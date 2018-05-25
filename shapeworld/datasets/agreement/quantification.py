@@ -1,6 +1,6 @@
 from shapeworld.dataset import CaptionAgreementDataset
 from shapeworld.generators import ReinforcedAttributesGenerator
-from shapeworld.captioners import CaptionerMixer, RegularAttributeCaptioner, RegularTypeCaptioner, AttributeTypeRelationCaptioner, QuantifierCaptioner
+from shapeworld.captioners import CaptionerMixer, EmptyTypeCaptioner, RegularAttributeCaptioner, RegularTypeCaptioner, AttributeTypeRelationCaptioner, QuantifierCaptioner
 
 
 class QuantificationDataset(CaptionAgreementDataset):
@@ -20,16 +20,16 @@ class QuantificationDataset(CaptionAgreementDataset):
         collision_shade_difference=0.5,
         boundary_tolerance=None,
         entity_counts=(5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15),
-        train_entity_counts=(5, 6, 7, 9, 11, 12, 14),
-        validation_entity_counts=(8, 13),
+        train_entity_counts=None,
+        validation_entity_counts=None,
+        test_entity_counts=None,
         validation_count_rate=0.5,
-        test_entity_counts=(10, 15),
         test_count_rate=0.5,
-        validation_combinations=(('square', 'red', 'solid'), ('triangle', 'green', 'solid'), ('circle', 'blue', 'solid')),
+        validation_combinations=None,
+        test_combinations=None,
         validation_space_rate_range=(0.0, 1.0),
-        validation_combination_rate=0.5,
-        test_combinations=(('rectangle', 'yellow', 'solid'), ('cross', 'magenta', 'solid'), ('ellipse', 'cyan', 'solid')),
         test_space_rate_range=(0.0, 1.0),
+        validation_combination_rate=0.5,
         test_combination_rate=0.5,
         max_provoke_collision_rate=0.33,
         reinforcement_range=(1, 3),
@@ -77,9 +77,13 @@ class QuantificationDataset(CaptionAgreementDataset):
         )
 
         world_captioner = QuantifierCaptioner(
-            restrictor_captioner=RegularTypeCaptioner(
-                hypernym_rate=1.0,
-                logical_tautology_rate=1.0
+            restrictor_captioner=CaptionerMixer(
+                captioners=(
+                    EmptyTypeCaptioner(),
+                    RegularTypeCaptioner(
+                        hypernym_rate=1.0
+                    )
+                )
             ),
             body_captioner=AttributeTypeRelationCaptioner(
                 attribute_type_captioner=CaptionerMixer(

@@ -506,29 +506,45 @@ class LoadedDataset(Dataset):
 
         super(LoadedDataset, self).__init__(values=specification.pop('values'), world_size=specification.pop('world_size'), pixel_noise_stddev=specification.pop('pixel_noise_stddev', 0.0), vectors=specification.pop('vectors', None), vocabularies=specification.pop('vocabularies', None), language=specification.pop('language', None))
 
-        self.parts = dict()
-        self.records_parts = dict()
+        self.shards = None
+        self.records_shards = None
         for root, dirs, files in os.walk(self.directory):
-            dirs = [d for d in dirs if d[0] != '.']
-            files = [f for f in files if f[0] != '.']
             if root == self.directory:
-                assert not files
-                assert len(dirs) <= 4 and 'train' in dirs and 'validation' in dirs and 'test' in dirs and len(dirs) == 3
-            elif root[len(self.directory) + 1:] in ('train', 'validation', 'test'):
-                mode = root[len(self.directory) + 1:]
-                if dirs:
+                dirs = sorted(d for d in dirs if d[0] != '.')
+                files = sorted(f for f in files if f[0] != '.')
+                if len(dirs) == 0:
+                    assert all(f[:5] == 'shard' or f[:4] == 'part' for f in files)
+                    if any(f[-13:] != '.tfrecords.gz' for f in files):
+                        self.shards = [os.path.join(root, f) for f in files if f[-13:] != '.tfrecords.gz']
+                    if any(f[-13:] == '.tfrecords.gz' for f in files):
+                        self.records_shards = [os.path.join(root, f) for f in files if f[-13:] == '.tfrecords.gz']
+                elif set(dirs) <= {'train', 'validation', 'test'}:
+                    assert len(files) == 0
+                    self.shards = dict()
+                    self.records_shards = dict()
+                else:
                     assert all(d[:5] == 'shard' or d[:4] == 'part' for d in dirs)
-                    self.parts[mode] = [os.path.join(root, d) for d in sorted(dirs)]
+                    self.shards = [os.path.join(root, d) for d in dirs]
+                    if len(files) > 0:
+                        assert all((f[:5] == 'shard' or f[:4] == 'part') and f[-13:] == '.tfrecords.gz' for f in files)
+                        self.records_shards = [os.path.join(root, f) for f in files]
+            elif root[len(self.directory) + 1:] in ('train', 'validation', 'test'):
+                dirs = sorted(d for d in dirs if d[0] != '.')
+                files = sorted(f for f in files if f[0] != '.')
+                mode = root[len(self.directory) + 1:]
+                if len(dirs) > 0:
+                    assert all(d[:5] == 'shard' or d[:4] == 'part' for d in dirs)
+                    self.shards[mode] = [os.path.join(root, d) for d in dirs]
                     if files:
                         assert all((f[:5] == 'shard' or f[:4] == 'part') and f[-13:] == '.tfrecords.gz' for f in files)
-                        self.records_parts[mode] = [os.path.join(root, f) for f in sorted(files)]
+                        self.records_shards[mode] = [os.path.join(root, f) for f in files]
                 else:
                     assert all(f[:5] == 'shard' or f[:4] == 'part' for f in files)
-                    self.parts[mode] = [os.path.join(root, f) for f in sorted(files) if f[-13:] != '.tfrecords.gz']
+                    if any(f[-13:] != '.tfrecords.gz' for f in files):
+                        self.shards[mode] = [os.path.join(root, f) for f in files if f[-13:] != '.tfrecords.gz']
                     if any(f[-13:] == '.tfrecords.gz' for f in files):
-                        self.records_parts[mode] = [os.path.join(root, f) for f in sorted(files) if f[-13:] == '.tfrecords.gz']
-        assert self.parts
-        self.mode = None
+                        self.records_shards[mode] = [os.path.join(root, f) for f in files if f[-13:] == '.tfrecords.gz']
+        self.mode = -1
 
     @property
     def name(self):
@@ -553,16 +569,26 @@ class LoadedDataset(Dataset):
                 raise
 
     def get_records_paths(self, mode):
-        assert mode in self.records_parts
-        return self.records_parts[mode]
+        assert (mode is None) != isinstance(self.records_shards, dict)
+        assert (mode is None and self.records_shards is not None) or mode in self.records_shards
+        if mode is None:
+            return self.records_shards
+        else:
+            assert mode in self.records_shards
+            return self.records_shards[mode]
 
-    def generate(self, n, mode, include_model=False, alternatives=False):
-        assert mode is not None
+    def generate(self, n, mode=None, include_model=False, alternatives=False):
+        assert (mode is None) != isinstance(self.shards, dict)
+        assert (mode is None and self.shards is not None) or mode in self.shards
         assert not include_model or self.include_model
 
         if self.mode != mode:
             self.mode = mode
-            self.part = -1
+            if mode is None:
+                self.mode_shards = self.shards
+            else:
+                self.mode_shards = self.shards[mode]
+            self.shard = -1
             self.loaded = dict()
             for value_name, value_type in self.values.items():
                 value_type, alts = util.alternatives_type(value_type=value_type)
@@ -573,14 +599,14 @@ class LoadedDataset(Dataset):
 
         while (self.num_instances < n) if (self.random_sampling or alternatives) else (self.num_alternatives < n):
             if self.random_sampling:
-                next_part = self.part
-                while len(self.parts[mode]) > 1 and next_part == self.part:
-                    next_part = randrange(len(self.parts[mode]))
-                self.part = next_part
+                next_shard = self.shard
+                while len(self.mode_shards) > 1 and next_shard == self.shard:
+                    next_shard = randrange(len(self.mode_shards))
+                self.shard = next_shard
             else:
-                self.part = (self.part + 1) % len(self.parts[mode])
+                self.shard = (self.shard + 1) % len(self.mode_shards)
             self.num_instances = 0
-            with util.Archive(path=self.parts[mode][self.part], mode='r', archive=self.archive) as read_file:
+            with util.Archive(path=self.mode_shards[self.shard], mode='r', archive=self.archive) as read_file:
                 for value_name, value in self.loaded.items():
                     value.extend(self.deserialize_value(
                         value_name=value_name,
@@ -643,11 +669,16 @@ class LoadedDataset(Dataset):
 
         return batch
 
-    def epoch(self, n, mode, include_model=False, alternatives=False):
-        assert mode is not None
+    def epoch(self, n, mode=None, include_model=False, alternatives=False):
+        assert (mode is None) != isinstance(self.shards, dict)
+        assert (mode is None and self.shards is not None) or mode in self.shards
         assert not include_model or self.include_model
 
-        available_parts = list(range(len(self.parts[mode])))
+        if mode is None:
+            mode_shards = self.shards
+        else:
+            mode_shards = self.shards[mode]
+        available_shards = list(range(len(mode_shards)))
         loaded = dict()
         for value_name, value_type in self.values.items():
             value_type, alts = util.alternatives_type(value_type=value_type)
@@ -655,13 +686,13 @@ class LoadedDataset(Dataset):
                 loaded[value_name] = list()
         num_instances = 0
 
-        while available_parts:
+        while available_shards:
             if self.random_sampling:
-                part = available_parts.pop(randrange(len(available_parts)))
+                shard = available_shards.pop(randrange(len(available_shards)))
             else:
-                part = available_parts.pop(0)
+                shard = available_shards.pop(0)
             num_instances = 0
-            with util.Archive(path=self.parts[mode][part], mode='r', archive=self.archive) as read_file:
+            with util.Archive(path=mode_shards[mode][shard], mode='r', archive=self.archive) as read_file:
                 for value_name, value in loaded.items():
                     value.extend(self.deserialize_value(
                         value_name=value_name,
@@ -726,7 +757,7 @@ class LoadedDataset(Dataset):
 
                 yield batch
 
-                if not available_parts:
+                if not available_shards:
                     if alternatives:
                         if 0 < num_instances < n:
                             n = num_instances
@@ -845,7 +876,9 @@ class ClassificationDataset(Dataset):
     def generate(self, n, mode=None, include_model=False, alternatives=False):
         batch = self.zero_batch(n, include_model=include_model, alternatives=alternatives)
         for i in range(n):
-            self.world_generator.initialize(mode=mode)
+
+            while not self.world_generator.initialize(mode=mode):
+                pass
 
             while True:
                 world = self.world_generator()
@@ -898,7 +931,7 @@ class ClassificationDataset(Dataset):
 
 class CaptionAgreementDataset(Dataset):
 
-    GENERATOR_INIT_FREQUENCY = 50
+    GENERATOR_INIT_FREQUENCY = 25
     CAPTIONER_INIT_FREQUENCY = 100
     CAPTIONER_INIT_FREQUENCY2 = 5
 
@@ -917,7 +950,7 @@ class CaptionAgreementDataset(Dataset):
             values.update(caption='language', caption_length='int', caption_rpn='rpn', caption_rpn_length='int', caption_model='model')
         assert isinstance(caption_size, int) and caption_size > 0
         vocabulary = list(vocabulary)
-        assert len(vocabulary) > 0 and vocabulary == sorted(vocabulary)
+        assert len(vocabulary) > 0 and vocabulary == sorted(vocabulary), [(w1, w2) for w1, w2 in zip(vocabulary, sorted(vocabulary)) if w1 != w2]
         self.world_generator = world_generator
         self.world_captioner = world_captioner
         from shapeworld.realizers import CaptionRealizer
@@ -981,8 +1014,8 @@ class CaptionAgreementDataset(Dataset):
         batch = self.zero_batch(n, include_model=include_model, alternatives=alternatives)
         captions = list()
         for i in range(n):
-            # print(i, end=', ', flush=True)
             correct = random() < correct_ratio
+            # print(i, correct, end=', ', flush=True)
 
             resample = 0
             while True:
@@ -991,12 +1024,15 @@ class CaptionAgreementDataset(Dataset):
                     if resample // self.__class__.GENERATOR_INIT_FREQUENCY >= 1:
                         # print(i, 'world')
                         pass
-                    self.world_generator.initialize(mode=mode)
+                    while not self.world_generator.initialize(mode=mode):
+                        pass
+                    # print(self.world_generator.model())
 
                 if resample % self.__class__.CAPTIONER_INIT_FREQUENCY == 0:
                     if resample // self.__class__.CAPTIONER_INIT_FREQUENCY >= 1:
                         # print(i, 'caption')
                         # print(i, 'caption', correct, self.world_captioner.model())
+                        # assert False
                         pass
                     if self.worlds_per_instance > 1:
                         correct = True
@@ -1005,12 +1041,14 @@ class CaptionAgreementDataset(Dataset):
                     else:
                         while not self.world_captioner.initialize(mode=mode, correct=correct):
                             pass
+                        assert self.world_captioner.incorrect_possible()
+                    # print(self.world_captioner.model())
 
                 resample += 1
 
-                world = None
-                while world is None:
-                    world = self.world_generator()
+                world = self.world_generator()
+                if world is None:
+                    continue
 
                 if self.worlds_per_instance > 1:
                     caption = self.world_captioner(world=world)
@@ -1019,6 +1057,7 @@ class CaptionAgreementDataset(Dataset):
                     caption = self.world_captioner.get_correct_caption()
                 else:
                     caption = self.world_captioner(world=world)
+                # print('c', caption)
 
                 if caption is not None:
                     break
@@ -1079,7 +1118,7 @@ class CaptionAgreementDataset(Dataset):
                     batch['caption_model'][i] = caption.model()
 
             if alternatives and self.worlds_per_instance > 1:
-                from shapeworld.captioners import PragmaticalPredication
+                from shapeworld.captions import PragmaticalPredication
                 batch['alternatives'][i] = self.worlds_per_instance
                 batch['world'][i].extend(batch['world'][i][0].copy() for _ in range(self.worlds_per_instance - 1))
                 batch['world'][i][0] = self.apply_pixel_noise(world=world.get_array(world_array=batch['world'][i][0]))

@@ -48,13 +48,19 @@ class Color(object):
         return Color.colors[name]
 
     @staticmethod
-    def random_instance(colors, shade_range):
-        name, rgb = choice([(color, Color.get_rgb(color)) for color in colors])
+    def random_instance(shade_range, color=None, colors=None):
+        if color is not None:
+            rgb = Color.get_rgb(color)
+        elif colors is not None:
+            color = choice(colors)
+            rgb = Color.get_rgb(color)
+        else:
+            assert False
         if shade_range > 0.0:
             shade = uniform(a=-shade_range, b=shade_range)
         else:
             shade = 0.0
-        return Color(name, rgb, shade)
+        return Color(color, rgb, shade)
 
 
 Color.colors = dict(
@@ -65,5 +71,6 @@ Color.colors = dict(
     yellow=(1.0, 1.0, 0.0),
     magenta=(1.0, 0.0, 1.0),
     cyan=(0.0, 1.0, 1.0),
-    gray=(0.5, 0.5, 0.5)
+    gray=(0.5, 0.5, 0.5),
+    white=(1.0, 1.0, 1.0)
 )

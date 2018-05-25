@@ -29,7 +29,6 @@ if __name__ == '__main__':
     parser.add_argument('--report-file', default=None, help='CSV file reporting the evaluation results')
 
     parser.add_argument('--verbosity', type=int, choices=(0, 1, 2), default=1, help='Verbosity (0: no messages, 1: default, 2: plus TensorFlow messages)')
-    parser.add_argument('--v1', action='store_true')
 
     parser.add_argument('--config-values', nargs=argparse.REMAINDER, default=(), help='Additional dataset configuration values passed as command line arguments')
 
@@ -41,9 +40,6 @@ if __name__ == '__main__':
         os.environ['TF_CPP_MIN_LOG_LEVEL'] = '0'
     else:
         os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
-
-    if args.v1:
-        util.set_version(1)
 
     # dataset
     dataset = Dataset.create(dtype=args.type, name=args.name, variant=args.variant, language=args.language, config=args.config, **args.config_values)

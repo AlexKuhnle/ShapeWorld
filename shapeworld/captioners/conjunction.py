@@ -7,9 +7,9 @@ from shapeworld.captioners import WorldCaptioner
 class ConjunctionCaptioner(WorldCaptioner):
 
     # incorrect modes
-    # 0: incorrect (first incorrect)
-    # 1: incorrect (second incorrect)
-    # 2: incorrect (both incorrect)
+    # 0: first incorrect
+    # 1: second incorrect
+    # 2: both incorrect
 
     def __init__(
         self,
@@ -54,8 +54,6 @@ class ConjunctionCaptioner(WorldCaptioner):
         if not super(ConjunctionCaptioner, self).sample_values(mode=mode, predication=predication):
             return False
 
-        self.incorrect_mode = util.sample(self.incorrect_distribution)
-
         predication1 = predication.copy()
         predication2 = predication.copy()
 
@@ -65,7 +63,20 @@ class ConjunctionCaptioner(WorldCaptioner):
         if not self.captioner2.sample_values(mode=mode, predication=predication2):
             return False
 
+        for _ in range(self.__class__.MAX_SAMPLE_ATTEMPTS):
+            self.incorrect_mode = util.sample(self.incorrect_distribution)
+            if self.incorrect_mode in (0, 2) and not self.captioner1.incorrect_possible():
+                continue
+            elif self.incorrect_mode in (1, 2) and not self.captioner2.incorrect_possible():
+                continue
+            break
+        else:
+            return False
+
         return True
+
+    def incorrect_possible(self):
+        return self.captioner1.incorrect_possible() or self.captioner2.incorrect_possible()
 
     def model(self):
         return util.merge_dicts(
@@ -81,11 +92,12 @@ class ConjunctionCaptioner(WorldCaptioner):
         assert predication.empty()
 
         predication1 = predication.sub_predication()
+        predication2 = predication.sub_predication()
+
         clause1 = self.captioner1.caption(predication=predication1, world=world)
         if clause1 is None:
             return None
 
-        predication2 = predication.sub_predication()
         clause2 = self.captioner2.caption(predication=predication2, world=world)
         if clause2 is None:
             return None
@@ -95,33 +107,32 @@ class ConjunctionCaptioner(WorldCaptioner):
     def incorrect(self, caption, predication, world):
         assert predication.empty()
 
+        predication1 = predication.sub_predication()
+        predication2 = predication.sub_predication()
+
         if self.incorrect_mode == 0:  # 0: first incorrect
-            predication1 = predication.sub_predication()
             if not self.captioner1.incorrect(caption=caption.clauses[0], predication=predication1, world=world):
                 return False
-            predication2 = predication.sub_predication()
+            if caption.clauses[0].agreement(predication=predication1, world=world) >= 0.0:
+                return False
             caption.clauses[1].apply_to_predication(predication=predication2)
 
         elif self.incorrect_mode == 1:  # 1: second incorrect
-            predication1 = predication.sub_predication()
             caption.clauses[0].apply_to_predication(predication=predication1)
-            predication2 = predication.sub_predication()
             if not self.captioner2.incorrect(caption=caption.clauses[1], predication=predication2, world=world):
+                return False
+            if caption.clauses[1].agreement(predication=predication2, world=world) >= 0.0:
                 return False
 
         elif self.incorrect_mode == 2:  # 2: both incorrect
-            predication1 = predication.sub_predication()
             if not self.captioner1.incorrect(caption=caption.clauses[0], predication=predication1, world=world):
                 return False
-            predication_test = predication1.copy(include_sub_predications=True)
-            if caption.clauses[0].agreement(predication=predication_test, world=world) >= 0.0:
+            if caption.clauses[0].agreement(predication=predication1, world=world) >= 0.0:
                 return False
 
-            predication2 = predication.sub_predication()
             if not self.captioner2.incorrect(caption=caption.clauses[1], predication=predication2, world=world):
                 return False
-            predication_test = predication2.copy(include_sub_predications=True)
-            if caption.clauses[1].agreement(predication=predication_test, world=world) >= 0.0:
+            if caption.clauses[1].agreement(predication=predication2, world=world) >= 0.0:
                 return False
 
         return True

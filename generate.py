@@ -38,7 +38,6 @@ if __name__ == '__main__':
 
     parser.add_argument('-Y', '--yes', action='store_true', help='Confirm all questions with yes')
     # parser.add_argument('-v', '--values', default=None, help='Comma-separated list of values to include')
-    parser.add_argument('--v1', action='store_true')
 
     parser.add_argument('--config-values', nargs=argparse.REMAINDER, default=(), help='Additional dataset configuration values passed as command line arguments')
 
@@ -48,9 +47,6 @@ if __name__ == '__main__':
     # TFRecords utility
     if args.tf_records:
         from shapeworld import tf_util
-
-    if args.v1:
-        util.set_version(1)
 
     # does not include variant, as loading data for generation is not expected
     dataset = Dataset.create(dtype=args.type, name=args.name, language=args.language, config=args.config, **args.config_values)
@@ -105,14 +101,15 @@ if __name__ == '__main__':
     if args.concatenate_images:
         specification['num_concat_worlds'] = args.instances
 
-    args.unmanaged = args.unmanaged or (args.shards is None)
     if args.unmanaged:
         directory = args.directory
         if args.shards is None:
-            shards = (0,)
+            shards = (None,)
         else:
-            shards = args.shards
-
+            if all(shard == 0 for shard in args.shards):
+                shards = tuple(None for _ in args.shards)
+            else:
+                shards = args.shards
     else:
         full_name = dataset.name
         if args.variant:
@@ -121,15 +118,17 @@ if __name__ == '__main__':
             full_name = '{}-{}'.format(full_name, args.language)
         directory = os.path.join(args.directory, dataset.type, full_name)
         specification_path = os.path.join(args.directory, '{}-{}.json'.format(dataset.type, full_name))
-        shards = args.shards
+        if args.shards is None:
+            shards = (None,)
+        else:
+            shards = args.shards
 
     specification['directory'] = directory
 
-    assert all(shard >= 0 for shard in shards)
-    assert args.shards is None or (args.mode is not None) == (len(shards) == 1)
+    assert all(shard is None or shard >= 0 for shard in shards)
     if len(shards) == 1:
         modes = (args.mode,)
-        if args.unmanaged:
+        if args.unmanaged or args.mode is None:
             directories = (directory,)
         else:
             directories = (os.path.join(directory, args.mode),)
@@ -137,16 +136,30 @@ if __name__ == '__main__':
         assert args.mode is None
         modes = ('train', 'validation', 'test')
         directories = tuple(os.path.join(directory, mode) for mode in modes)
-    if all(shard == 0 for shard in shards):
-        shards = tuple(None for _ in shards)
 
-    assert args.begin is None or args.append
+    # assert args.begin is None or args.append
     assert args.begin is None or len(args.begin) == len(args.shards)
-    if args.append:
-        if args.begin is not None:
-            shards_begin = args.begin
-        elif args.clevr_format:
-            shards_begin = tuple(0 for _ in directories)
+    # assert args.begin is None or not args.clevr_format
+    if args.begin is not None:
+        shards_begin = args.begin
+        if not args.unmanaged:
+            with open(specification_path, 'r') as filehandle:
+                loaded_specification = json.load(filehandle)
+                assert loaded_specification == specification, str(loaded_specification) + '\n' + str(specification)
+
+    elif args.append:
+        if args.clevr_format:
+            shards_begin = ()
+            for subdir in directories:
+                for root, dirs, files in os.walk(subdir):
+                    assert root == subdir
+                    assert not dirs
+                    if any(f[:6] == 'world_' for f in files):
+                        shard_begin = max(int(f[6:f.index('.')]) for f in files if f[:6] == 'world_') + 1
+                        assert shard_begin % args.instances == 0
+                        shards_begin += (shard_begin,)
+                    else:
+                        shards_begin += (0,)
         else:
             shards_begin = ()
             for subdir in directories:
@@ -154,10 +167,10 @@ if __name__ == '__main__':
                     if root == subdir:
                         if dirs:
                             assert all(d[:5] == 'shard' for d in dirs)
-                            shards_begin += (max(int(d[5:]) for d in dirs),)
+                            shards_begin += (max(int(d[5:]) for d in dirs) + 1,)
                         elif files:
                             assert all(f[:5] == 'shard' for f in files)
-                            shards_begin += (max(int(f[5:f.index('.')]) for f in files),)
+                            shards_begin += (max(int(f[5:f.index('.')]) for f in files) + 1,)
                         else:
                             shards_begin += (0,)
         if not args.unmanaged:
@@ -188,20 +201,19 @@ if __name__ == '__main__':
 
     for mode, directory, num_shards, shard_begin in zip(modes, directories, shards, shards_begin):
         sys.stdout.write('{time} generate {dtype} {name}{mode} data...\n'.format(time=datetime.now().strftime('%H:%M:%S'), dtype=dataset.type, name=dataset.name, mode=(' ' + mode if mode else '')))
-        if num_shards is not None:
-            sys.stdout.write('         0%  0/{shards}  (time per shard: n/a)'.format(shards=num_shards))
-            sys.stdout.flush()
+        sys.stdout.write('         0%  0/{shards}  (time per shard: n/a)'.format(shards=(1 if num_shards is None else num_shards)))
+        sys.stdout.flush()
 
-        if args.clevr_format:  # validation --> val
-            questions = list()
-
-        for shard in range(1, (1 if num_shards is None else num_shards) + 1):
+        for shard in range(1 if num_shards is None else num_shards):
             before = datetime.now()
             if num_shards is None:
                 path = directory
                 num_shards = 1
             else:
                 path = os.path.join(directory, 'shard{}'.format(shard_begin + shard))
+
+            if args.clevr_format:
+                questions = [list(), list()]
 
             generated = dataset.generate(n=args.instances, mode=mode, include_model=(args.include_model or args.clevr_format), alternatives=True)
 
@@ -218,7 +230,7 @@ if __name__ == '__main__':
                 captions_model = generated.get('caption_model')
                 agreements = generated['agreement']
                 for n in range(len(worlds)):
-                    index = (shard - 1) * args.instances + n
+                    index = (shard_begin + shard) * args.instances + n
                     filename = 'world_{}.png'.format(index)
                     image_bytes = BytesIO()
                     World.get_image(world_array=worlds[n]).save(image_bytes, format='png')
@@ -238,20 +250,21 @@ if __name__ == '__main__':
                         else:
                             assert False
                             answer = 'maybe'
-                        if caption_model is None:
-                            program = None
-                        else:
-                            program = parse_program(model=caption_model)
-                        questions.append(dict(
-                            image_index=index,
-                            program=program,
-                            question_index=0,
-                            image_filename=filename,
-                            question_family_index=0,
-                            split=mode,
-                            answer=answer,
-                            question=' '.join(id2word[caption[i]] for i in range(caption_length))
-                        ))
+                        for parse_mode in range(2):
+                            if caption_model is None:
+                                program = None
+                            else:
+                                program = parse_program(mode=parse_mode, model=caption_model)
+                            questions[parse_mode].append(dict(
+                                image_index=index,
+                                program=program,
+                                question_index=0,
+                                image_filename=filename,
+                                question_family_index=0,
+                                split=mode,
+                                answer=answer,
+                                question=' '.join(id2word[caption[i]] for i in range(caption_length))
+                            ))
 
             else:
                 if args.features:
@@ -265,12 +278,33 @@ if __name__ == '__main__':
                     tf_util.write_records(dataset=dataset, records=generated, path=path)
 
             after = datetime.now()
-            sys.stdout.write('\r         {completed:.0f}%  {shard}/{shards}  (time per shard: {duration})'.format(completed=(shard * 100 / num_shards), shard=shard, shards=num_shards, duration=str(after - before).split('.')[0]))
+            sys.stdout.write('\r         {completed:.0f}%  {shard}/{shards}  (time per shard: {duration})'.format(completed=((shard + 1) * 100 / num_shards), shard=(shard + 1), shards=num_shards, duration=str(after - before).split('.')[0]))
             sys.stdout.flush()
 
-        if args.clevr_format:
-            with open(os.path.join(directory, 'captions.json'), 'w') as filehandle:
-                json.dump({'questions': questions}, filehandle)
+            if args.clevr_format:
+                for parse_mode in range(2):
+                    if not args.append and shard_begin > 0:
+                        filename = 'captions{}-{}.json'.format('' if parse_mode == 0 else parse_mode, shard_begin)
+                    else:
+                        filename = 'captions{}.json'.format('' if parse_mode == 0 else parse_mode)
+                    if shard > 0 or (args.append and shard_begin > 0):
+                        if len(questions[parse_mode]) == 0:
+                            continue
+                        with open(os.path.join(directory, filename), 'r') as filehandle:
+                            json_string = filehandle.read()
+                        assert json_string[-2:] == ']}'
+                        assert json_string[-3] in '[}'
+                        with open(os.path.join(directory, filename), 'w') as filehandle:
+                            filehandle.write(json_string[:-2])
+                            if json_string[-3] == '}':
+                                filehandle.write(', ')
+                            json_string = json.dumps(questions[parse_mode])
+                            assert json_string[:2] == '[{'
+                            filehandle.write(json_string[1:])
+                            filehandle.write('}')
+                    else:
+                        with open(os.path.join(directory, filename), 'w') as filehandle:
+                            json.dump({'questions': questions[parse_mode]}, filehandle)
 
         sys.stdout.write('\n')
         sys.stdout.flush()

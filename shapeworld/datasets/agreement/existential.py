@@ -1,6 +1,6 @@
 from shapeworld.dataset import CaptionAgreementDataset
 from shapeworld.generators import RandomAttributesGenerator
-from shapeworld.captioners import CaptionerMixer, RegularAttributeCaptioner, RegularTypeCaptioner, AttributeTypeRelationCaptioner, ExistentialCaptioner
+from shapeworld.captioners import CaptionerMixer, EmptyTypeCaptioner, RegularAttributeCaptioner, RegularTypeCaptioner, AttributeTypeRelationCaptioner, ExistentialCaptioner
 
 
 class ExistentialDataset(CaptionAgreementDataset):
@@ -20,16 +20,16 @@ class ExistentialDataset(CaptionAgreementDataset):
         collision_shade_difference=0.5,
         boundary_tolerance=None,
         entity_counts=(1, 2, 3, 4, 5, 6, 7, 8),
-        train_entity_counts=(1, 2, 3, 4, 5, 7),
-        validation_entity_counts=(6,),
+        train_entity_counts=None,
+        validation_entity_counts=None,
+        test_entity_counts=None,
         validation_count_rate=0.5,
-        test_entity_counts=(8,),
         test_count_rate=0.5,
-        validation_combinations=(('square', 'red', 'solid'), ('triangle', 'green', 'solid'), ('circle', 'blue', 'solid')),
+        validation_combinations=None,
+        test_combinations=None,
         validation_space_rate_range=(0.0, 1.0),
-        validation_combination_rate=0.5,
-        test_combinations=(('rectangle', 'yellow', 'solid'), ('cross', 'magenta', 'solid'), ('ellipse', 'cyan', 'solid')),
         test_space_rate_range=(0.0, 1.0),
+        validation_combination_rate=0.5,
         test_combination_rate=0.5,
         max_provoke_collision_rate=0.33,
         caption_size=8,
@@ -75,11 +75,17 @@ class ExistentialDataset(CaptionAgreementDataset):
 
         world_captioner = CaptionerMixer(
             captioners=(
-                RegularTypeCaptioner(),
+                RegularTypeCaptioner(
+                    existing_attribute_rate=0.0
+                ),
                 ExistentialCaptioner(
-                    restrictor_captioner=RegularTypeCaptioner(
-                        hypernym_rate=1.0,
-                        logical_tautology_rate=1.0
+                    restrictor_captioner=CaptionerMixer(
+                        captioners=(
+                            EmptyTypeCaptioner(),
+                            RegularTypeCaptioner(
+                                hypernym_rate=1.0
+                            )
+                        )
                     ),
                     body_captioner=AttributeTypeRelationCaptioner(
                         attribute_type_captioner=CaptionerMixer(
@@ -92,7 +98,8 @@ class ExistentialDataset(CaptionAgreementDataset):
                         )
                     )
                 )
-            )
+            ),
+            distribution=(1, 2)
         )
 
         super(ExistentialDataset, self).__init__(

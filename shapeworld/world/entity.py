@@ -1,8 +1,7 @@
 from __future__ import division
 from math import cos, pi, sin
 from random import choice, random
-from shapeworld.util import Point
-from shapeworld.world import Shape, Color, Texture
+from shapeworld.world import Point, Shape, Color, Texture
 
 
 default_resolution = Point(100, 100)
@@ -239,17 +238,21 @@ class Entity(object):
                     return True
 
     @staticmethod
-    def random_instance(center, rotation, size_range, distortion_range, shade_range, shapes=None, colors=None, textures=None, combinations=None):
+    def random_instance(center, rotation, size_range, distortion_range, shade_range, combination=None, combinations=None, shapes=None, colors=None, textures=None):
         # random color in texture
-        assert (shapes and colors and textures) != bool(combinations)
         rotation = random() if rotation else 0.0
-        if combinations:
+        if combination is not None:
+            shape, color, texture = combination
+            shape = Shape.random_instance(size_range, distortion_range, shape=shape)
+            color = Color.random_instance(shade_range, color=color)
+            texture = Texture.random_instance([c for c in Color.colors if c != color.name], shade_range, texture=texture)
+        elif combinations is not None:
             shape, color, texture = choice(combinations)
-            shape = Shape.random_instance([shape], size_range, distortion_range)
-            color = Color.random_instance([color], shade_range)
-            texture = Texture.random_instance([texture], [c for c in Color.colors if c != color.name], shade_range)
+            shape = Shape.random_instance(size_range, distortion_range, shape=shape)
+            color = Color.random_instance(shade_range, color=color)
+            texture = Texture.random_instance([c for c in Color.colors if c != color.name], shade_range, texture=texture)
         else:
-            shape = Shape.random_instance(shapes, size_range, distortion_range)
-            color = Color.random_instance(colors, shade_range)
-            texture = Texture.random_instance(textures, [c for c in Color.colors if c != color.name], shade_range)
+            shape = Shape.random_instance(size_range, distortion_range, shapes=shapes)
+            color = Color.random_instance(shade_range, colors=colors)
+            texture = Texture.random_instance([c for c in Color.colors if c != color.name], shade_range, textures=textures)
         return Entity(shape, color, texture, center, rotation)

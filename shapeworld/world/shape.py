@@ -1,7 +1,8 @@
 from __future__ import division
 from math import cos, pi, sqrt
 from random import choice, uniform
-from shapeworld.util import Point
+from shapeworld.util import quadratic_uniform
+from shapeworld.world import Point
 
 
 golden_ratio = sqrt(5.0) / 2.0 - 0.5
@@ -9,13 +10,15 @@ sqrt34 = sqrt(0.75)
 cos18 = cos(0.1 * pi)
 cos45 = sqrt(2.0) / 2.0
 
+empirical_distortion_multiplier = 0.81  # for distortion_range = (2.0, 3.0)
+
 
 class Shape(object):
 
     __slots__ = ('size',)
 
     def __init__(self, size):
-        assert isinstance(size, Point) and 0.0 < size < 1.0
+        assert isinstance(size, Point) and 0.0 < size <= 1.0
         self.size = size / 2.0
 
     def __eq__(self, other):
@@ -48,6 +51,10 @@ class Shape(object):
     def area(self):
         raise NotImplementedError
 
+    @staticmethod
+    def relative_area():
+        raise NotImplementedError
+
     def polygon(self):
         return (Point(-self.size.x, -self.size.y),
                 Point(self.size.x, -self.size.y),
@@ -63,8 +70,29 @@ class Shape(object):
         return Shape.shapes[name]
 
     @staticmethod
-    def random_instance(shapes, size_range, distortion_range):
-        return choice([Shape.get_shape(shape) for shape in shapes]).random_instance(size_range, distortion_range)
+    def random_instance(size_range, distortion_range, shape=None, shapes=None):
+        if shape is not None:
+            shape = Shape.get_shape(shape)
+        elif shapes is not None:
+            shape = choice([Shape.get_shape(shape) for shape in shapes])
+        else:
+            assert False
+        return shape.random_instance(size_range, distortion_range)
+
+    @staticmethod
+    def test():
+        for shape in Shape.get_shapes():
+            shape_cls = Shape.get_shape(name=shape)
+            shape_obj = shape_cls.random_instance(size_range=(1.0, 1.0), distortion_range=(2.0, 2.0))
+            contains = 0
+            for point in Point.range(start=Point(-50, -50), end=Point(50, 50)):
+                if point / 100 in shape_obj:
+                    contains += 1
+            estimated_area = contains / 10000
+            assert shape_obj.area <= 1.0
+            assert shape_obj.area == shape_cls.relative_area()
+            assert abs(shape_obj.area - estimated_area) < 0.011
+        return True
 
 
 class WorldShape(Shape):
@@ -112,6 +140,10 @@ class Square(Shape):
     def area(self):
         return 4.0 * self.size.x * self.size.y
 
+    @staticmethod
+    def relative_area():
+        return 1.0
+
     def polygon(self):
         return (Point(-self.size.x, -self.size.y),
                 Point(self.size.x, -self.size.y),
@@ -120,7 +152,7 @@ class Square(Shape):
 
     @staticmethod
     def random_instance(size_range, distortion_range):
-        return Square(uniform(*size_range))
+        return Square(quadratic_uniform(*size_range))
 
 
 class Rectangle(Shape):
@@ -145,6 +177,10 @@ class Rectangle(Shape):
     def area(self):
         return 4.0 * self.size.x * self.size.y
 
+    @staticmethod
+    def relative_area():
+        return 0.5 * empirical_distortion_multiplier
+
     def polygon(self):
         return (Point(-self.size.x, -self.size.y),
                 Point(self.size.x, -self.size.y),
@@ -154,9 +190,12 @@ class Rectangle(Shape):
     @staticmethod
     def random_instance(size_range, distortion_range):
         distortion = uniform(*distortion_range)
-        distortion_ratio = (distortion - distortion_range[0]) / (distortion_range[1] - distortion_range[0])
-        min_size = size_range[0] + (size_range[1] - size_range[0]) * distortion_ratio * 0.5
-        size = uniform(min_size, size_range[1])
+        if distortion_range[0] < distortion_range[1]:
+            distortion_ratio = (distortion - distortion_range[0]) / (distortion_range[1] - distortion_range[0])
+            min_size = size_range[0] + (size_range[1] - size_range[0]) * distortion_ratio * 0.5
+            size = quadratic_uniform(min_size, size_range[1])
+        else:
+            size = quadratic_uniform(*size_range)
         return Rectangle(Point(size, size / distortion))
 
 
@@ -215,6 +254,10 @@ class Triangle(Shape):
     def area(self):
         return 2.0 * self.size.x * self.size.y
 
+    @staticmethod
+    def relative_area():
+        return 0.5 * sqrt34
+
     def polygon(self):
         return (Point(-self.size.x, -self.size.y),
                 Point(self.size.x, -self.size.y),
@@ -222,7 +265,7 @@ class Triangle(Shape):
 
     @staticmethod
     def random_instance(size_range, distortion_range):
-        return Triangle(uniform(*size_range))  # for equilateral
+        return Triangle(quadratic_uniform(*size_range))  # for equilateral
 
 
 class Pentagon(Shape):
@@ -291,6 +334,10 @@ class Pentagon(Shape):
                 2.0 * golden_ratio * (1.0 - golden_ratio) * self.size.x * self.size.y +
                 2.0 * (1.0 - golden_ratio) * self.size.x * self.size.y)
 
+    @staticmethod
+    def relative_area():
+        return cos18 * (golden_ratio * golden_ratio + 0.5 * golden_ratio * (1.0 - golden_ratio) + 0.5 * (1.0 - golden_ratio))
+
     def polygon(self):
         x_size = golden_ratio * self.size.x
         y_size = golden_ratio * 2.0 * self.size.y - self.size.y
@@ -302,7 +349,7 @@ class Pentagon(Shape):
 
     @staticmethod
     def random_instance(size_range, distortion_range):
-        return Pentagon(uniform(*size_range))  # for equilateral
+        return Pentagon(quadratic_uniform(*size_range))  # for equilateral
 
 
 class Cross(Shape):
@@ -344,6 +391,10 @@ class Cross(Shape):
     def area(self):
         return 20.0 * self.size.x * self.size.y / 9.0
 
+    @staticmethod
+    def relative_area():
+        return 5.0 / 9.0
+
     def polygon(self):
         return (Point(-self.size.x, -self.size.y / 3.0),
                 Point(-self.size.x / 3.0, -self.size.y),
@@ -356,7 +407,7 @@ class Cross(Shape):
 
     @staticmethod
     def random_instance(size_range, distortion_range):
-        return Cross(uniform(*size_range))
+        return Cross(quadratic_uniform(*size_range))
 
 
 class Circle(Shape):
@@ -383,6 +434,10 @@ class Circle(Shape):
     def area(self):
         return pi * self.size.x * self.size.y
 
+    @staticmethod
+    def relative_area():
+        return 0.25 * pi
+
     def polygon(self):
         curve_size = (1.0 - cos45) * self.size.x
         return (Point(-self.size.x, -curve_size),
@@ -396,7 +451,7 @@ class Circle(Shape):
 
     @staticmethod
     def random_instance(size_range, distortion_range):
-        return Circle(uniform(*size_range))
+        return Circle(quadratic_uniform(*size_range))
 
 
 class Semicircle(Shape):
@@ -432,6 +487,10 @@ class Semicircle(Shape):
     def area(self):
         return pi * self.size.x * self.size.y
 
+    @staticmethod
+    def relative_area():
+        return 0.125 * pi
+
     def polygon(self):
         curve_size = (1.0 - cos45) * self.size.x
         return (Point(-self.size.x, -self.size.y),
@@ -443,7 +502,7 @@ class Semicircle(Shape):
 
     @staticmethod
     def random_instance(size_range, distortion_range):
-        return Semicircle(uniform(*size_range))
+        return Semicircle(quadratic_uniform(*size_range))
 
 
 class Ellipse(Shape):
@@ -472,6 +531,10 @@ class Ellipse(Shape):
     def area(self):
         return pi * self.size.x * self.size.y
 
+    @staticmethod
+    def relative_area():
+        return 0.125 * pi * empirical_distortion_multiplier
+
     def polygon(self):
         curve_size = (1.0 - cos45) * self.size
         return (Point(-self.size.x, -curve_size.y),
@@ -486,9 +549,12 @@ class Ellipse(Shape):
     @staticmethod
     def random_instance(size_range, distortion_range):
         distortion = uniform(*distortion_range)
-        distortion_ratio = (distortion - distortion_range[0]) / (distortion_range[1] - distortion_range[0])
-        min_size = size_range[0] + (size_range[1] - size_range[0]) * distortion_ratio * 0.5
-        size = uniform(min_size, size_range[1])
+        if distortion_range[0] < distortion_range[1]:
+            distortion_ratio = (distortion - distortion_range[0]) / (distortion_range[1] - distortion_range[0])
+            min_size = size_range[0] + (size_range[1] - size_range[0]) * distortion_ratio * 0.5
+            size = quadratic_uniform(min_size, size_range[1])
+        else:
+            size = quadratic_uniform(*size_range)
         return Ellipse(Point(size, size / distortion))
 
 

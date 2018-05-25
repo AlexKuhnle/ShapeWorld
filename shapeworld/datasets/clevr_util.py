@@ -222,45 +222,185 @@ def json_list_generator(fp):
                     print('|', json_str, '|')
 
 
-def parse_program(model, index=0, inputs=None):
-    if inputs is None:
-        inputs = list()
+# CLEVR program vocab
+# <NULL>, <START>, <END>, <UNK>
+# scene, unique, exist, count,
+# intersect, union,
+# greater_than, less_than, equal_integer,
+# equal_color, equal_material, equal_shape, equal_size,
+# filter_size[large], filter_size[small],
+# "query_color": 29, "query_material": 30, "query_shape": 31, "query_size": 32,
+# "same_color": 37, "same_material": 38, "same_shape": 39, "same_size": 40
+
+
+def parse_program(mode, model, index=0, inputs=None):
+    assert 0 <= mode <= 1
+
     if model['component'] == 'Attribute':
-        return [dict(inputs=inputs, function='attribute', value_inputs=['{}-{}'.format(model['predtype'], model['value'])])]
-    elif model['component'] == 'EntityType':
-        outputs = [dict(inputs=list(), function='scene', value_inputs=list())]
-        for model in model['value']:
-            outputs += parse_program(model=model, index=(index + len(outputs)), inputs=[index + len(outputs) - 1])
-        return outputs
-    elif model['component'] == 'Relation':  # should connect relation???
-        if model['predtype'] in ('attribute', 'type'):
-            value = parse_program(model=model['value'], index=index, inputs=list())
-            return value + [dict(inputs=[index + len(value) - 1], function='relation', value_inputs=[model['predtype']])]
-        else:
-            reference = parse_program(model=model['reference'], index=index, inputs=list())
-            if 'comparison' in model:
-                comparison = parse_program(model=model['comparison'], index=(index + len(reference)), inputs=list())
-                return reference + comparison + [dict(inputs=[index + len(reference) - 1, index + len(reference) + len(comparison) - 1], function='relation', value_inputs=['{}({})'.format(model['predtype'], model['value'])])]
+        # predtype == 'relation' missing
+
+        if mode == 0:
+            assert len(inputs) == 1
+            return [
+                dict(inputs=inputs, function='attribute', value_inputs=['{}-{}'.format(model['predtype'], model['value'])])
+            ]
+
+        elif mode == 1:
+            assert len(inputs) == 1
+            if model['predtype'] in ('shape', 'color'):
+                function = 'filter_' + model['predtype']
+            elif model['predtype'] == 'texture':
+                function = 'filter_material'
             else:
-                return reference + [dict(inputs=[index + len(reference) - 1], function='relation', value_inputs=['{}-{}'.format(model['predtype'], model['value'])])]
-    elif model['component'] == 'Existential':  # should connect relation???
-        restrictor = parse_program(model=model['restrictor'], index=index, inputs=list())
-        body = parse_program(model=model['body'], index=(index + len(restrictor)), inputs=[index + len(restrictor) - 1])
-        return restrictor + body + [dict(inputs=[index + len(restrictor) - 1, index + len(restrictor) + len(body) - 1], function='quantifier', value_inputs=['existential'])]
+                assert False, model
+            return [
+                # dict(inputs=[], function='scene', value_inputs=[]),
+                dict(inputs=inputs, function=function, value_inputs=['{}-{}'.format(model['predtype'], model['value'])])
+            ]
+
+        else:
+            assert False, mode
+
+    elif model['component'] == 'EntityType':
+
+        if mode == 0 or mode == 1:
+            modules = list()
+            if inputs is None:
+                modules.append(dict(inputs=[], function='scene', value_inputs=[]))
+                inputs = [index]
+            else:
+                assert len(inputs) == 1
+            if len(model['value']) > 0:
+                modules += parse_program(mode=mode, model=model['value'][0], index=(index + len(modules)), inputs=inputs)
+                for model in model['value'][1:]:
+                    modules += parse_program(mode=mode, model=model, index=(index + len(modules)), inputs=[index + len(modules) - 1])
+            return modules
+
+        else:
+            assert False, mode
+
+    elif model['component'] == 'Relation':
+        # should connect relation???
+
+        if mode == 0:
+            assert len(inputs) == 1
+            if model['predtype'] in ('attribute', 'type'):
+                modules = parse_program(mode=mode, model=model['value'], index=index, inputs=inputs)
+                return modules + [
+                    dict(inputs=[index + len(modules) - 1], function='relation', value_inputs=[model['predtype']])
+                ]
+            else:
+                reference = parse_program(mode=mode, model=model['reference'], index=index)
+                if 'comparison' in model:
+                    comparison = parse_program(mode=mode, model=model['comparison'], index=(index + len(reference)))
+                    return reference + comparison + [
+                        dict(inputs=[inputs[0], index + len(reference) - 1, index + len(reference) + len(comparison) - 1], function='relation', value_inputs=['{}({})'.format(model['predtype'], model['value'])])
+                    ]
+                else:
+                    return reference + [
+                        dict(inputs=[inputs[0], index + len(reference) - 1], function='relation', value_inputs=['{}-{}'.format(model['predtype'], model['value'])])
+                    ]
+
+        elif mode == 1:
+            assert inputs is None
+            if model['predtype'] in ('attribute', 'type'):
+                modules = [dict(inputs=[], function='scene', value_inputs=[])]
+                modules.extend(parse_program(mode=mode, model=model['value'], index=index, inputs=[index]))
+                return modules + [
+                    dict(inputs=[index + len(modules) - 1], function='relate', value_inputs=[model['predtype']])
+                ]
+            else:
+                assert False, model
+
+        else:
+            assert False, mode
+
+    elif model['component'] == 'Existential':
+        # should connect relation???
+
+        if mode == 0:
+            assert inputs is None
+            restrictor = parse_program(mode=mode, model=model['restrictor'], index=index)
+            body = parse_program(mode=mode, model=model['body'], index=(index + len(restrictor)), inputs=[index + len(restrictor) - 1])
+            return restrictor + body + [
+                dict(inputs=[index + len(restrictor) - 1, index + len(restrictor) + len(body) - 1], function='quantifier', value_inputs=['existential'])
+            ]
+
+        elif mode == 1:
+            assert inputs is None
+            restrictor = parse_program(mode=mode, model=model['restrictor'], index=index)
+            body = parse_program(mode=mode, model=model['body'], index=(index + len(restrictor)))
+            return restrictor + body + [
+                dict(inputs=[index + len(restrictor) - 1, index + len(restrictor) + len(body) - 1], function='intersect', value_inputs=[]),
+                dict(inputs=[index + len(restrictor) + len(body)], function='exist', value_inputs=[])
+            ]
+
+        else:
+            assert False, mode
+
     elif model['component'] == 'Quantifier':
-        restrictor = parse_program(model=model['restrictor'], index=index, inputs=list())
-        body = parse_program(model=model['body'], index=(index + len(restrictor)), inputs=[index + len(restrictor) - 1])
-        return restrictor + body + [dict(inputs=[index + len(restrictor) - 1, index + len(restrictor) + len(body) - 1], function='quantifier', value_inputs=['{}-{}-{}'.format(model['qtype'], model['qrange'], model['quantity'])])]
+
+        if mode == 0:
+            assert inputs is None
+            restrictor = parse_program(mode=mode, model=model['restrictor'], index=index)
+            body = parse_program(mode=mode, model=model['body'], index=(index + len(restrictor)), inputs=[index + len(restrictor) - 1])
+            return restrictor + body + [
+                dict(inputs=[index + len(restrictor) - 1, index + len(restrictor) + len(body) - 1], function='quantifier', value_inputs=['{}-{}-{}'.format(model['qtype'], model['qrange'], model['quantity'])])
+            ]
+
+        elif mode == 1:
+            assert inputs is None
+            restrictor = parse_program(mode=mode, model=model['restrictor'], index=index)
+            body = parse_program(mode=mode, model=model['body'], index=(index + len(restrictor)))
+            return restrictor + body + [
+                dict(inputs=[index + len(restrictor) - 1, index + len(restrictor) + len(body) - 1], function='intersect', value_inputs=[]),
+                dict(inputs=[index + len(restrictor) - 1], function='count', value_inputs=[]),
+                dict(inputs=[index + len(restrictor) + len(body)], function='count', value_inputs=[]),
+                # equal_integer can take argument? tbd
+                dict(inputs=[index + len(restrictor) + len(body) + 1, index + len(restrictor) + len(body) + 2], function='equal_integer', value_inputs=['{}-{}-{}'.format(model['qtype'], model['qrange'], model['quantity'])])
+            ]
+
+        else:
+            assert False, mode
+
     elif model['component'] == 'NumberBound':
-        quantifier = parse_program(model=model['quantifier'], index=index, inputs=list())
-        return quantifier + [dict(inputs=[index + len(quantifier) - 1], function='number-bound', value_inputs=[str(model['bound'])])]
+
+        if mode == 0:
+            assert inputs is None
+            quantifier = parse_program(mode=mode, model=model['quantifier'], index=index)
+            return quantifier + [
+                dict(inputs=[index + len(quantifier) - 1], function='number-bound', value_inputs=[str(model['bound'])])
+            ]
+
+        elif mode == 1:
+            assert inputs is None
+            assert False, model
+
+        else:
+            assert False, mode
+
     elif model['component'] == 'ComparativeQuantifier':
-        restrictor = parse_program(model=model['restrictor'], index=index, inputs=list())
-        comparison = parse_program(model=model['comparison'], index=(index + len(restrictor)), inputs=list())
-        restrictor_body = parse_program(model=model['body'], index=(index + len(restrictor) + len(comparison)), inputs=[index + len(restrictor) - 1])
-        comparison_body = parse_program(model=model['body'], index=(index + len(restrictor) + len(comparison)), inputs=[index + len(restrictor) + len(comparison) - 1])
-        return restrictor + comparison + restrictor_body + comparison_body + [dict(inputs=[index + len(restrictor) - 1, index + len(restrictor) + len(comparison) - 1, index + len(restrictor) + len(comparison) + len(restrictor_body) - 1, index + len(restrictor) + len(comparison) + len(restrictor_body) + len(comparison_body) - 1], function='comparative-quantifier', value_inputs=['{}-{}-{}'.format(model['qtype'], model['qrange'], model['quantity'])])]
+
+        if mode == 0:
+            assert inputs is None
+            restrictor = parse_program(mode=mode, model=model['restrictor'], index=index)
+            comparison = parse_program(mode=mode, model=model['comparison'], index=(index + len(restrictor)))
+            restrictor_body = parse_program(mode=mode, model=model['body'], index=(index + len(restrictor) + len(comparison)), inputs=[index + len(restrictor) - 1])
+            comparison_body = parse_program(mode=mode, model=model['body'], index=(index + len(restrictor) + len(comparison)), inputs=[index + len(restrictor) + len(comparison) - 1])
+            return restrictor + comparison + restrictor_body + comparison_body + [
+                dict(inputs=[index + len(restrictor) - 1, index + len(restrictor) + len(comparison) - 1, index + len(restrictor) + len(comparison) + len(restrictor_body) - 1, index + len(restrictor) + len(comparison) + len(restrictor_body) + len(comparison_body) - 1], function='comparative-quantifier', value_inputs=['{}-{}-{}'.format(model['qtype'], model['qrange'], model['quantity'])])
+            ]
+
+        elif mode == 1:
+            assert inputs is None
+            assert False, model
+
+        else:
+            assert False, mode
+
     elif model['component'] == 'Proposition':
+        assert inputs is None
         assert False, model
+
     else:
         assert False, model

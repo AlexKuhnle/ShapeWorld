@@ -59,9 +59,15 @@ class NumberBoundCaptioner(WorldCaptioner):
         if not super(NumberBoundCaptioner, self).sample_values(mode=mode, predication=predication):
             return False
 
-        self.incorrect_mode = util.sample(self.incorrect_distribution)
-
         if not self.quantifier_captioner.sample_values(mode=mode, predication=predication):
+            return False
+
+        for _ in range(self.__class__.MAX_SAMPLE_ATTEMPTS):
+            self.incorrect_mode = util.sample(self.incorrect_distribution)
+            if self.incorrect_mode == 0 and not self.quantifier_captioner.incorrect_possible():
+                continue
+            break
+        else:
             return False
 
         # potentially option to choose fixed number bound?
@@ -69,14 +75,16 @@ class NumberBoundCaptioner(WorldCaptioner):
 
         return True
 
+    def incorrect_possible(self):
+        return True
+
     def model(self):
-        return util.merge_dicts(
-            dict1=super(NumberBoundCaptioner, self).model(),
-            dict2=dict(
-                incorrect_mode=self.incorrect_mode,
-                quantifier_captioner=self.quantifier_captioner.model()
-            )
+        model = super(NumberBoundCaptioner, self).model()
+        model.update(
+            incorrect_mode=self.incorrect_mode,
+            quantifier_captioner=self.quantifier_captioner.model()
         )
+        return model
 
     def caption(self, predication, world):
         assert predication.empty()

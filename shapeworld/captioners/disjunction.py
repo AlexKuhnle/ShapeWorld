@@ -7,9 +7,9 @@ from shapeworld.captioners import WorldCaptioner
 class DisjunctionCaptioner(WorldCaptioner):
 
     # correct modes
-    # 0: correct (first correct)
-    # 1: correct (second correct)
-    # 2: correct (both correct)
+    # 0: first correct
+    # 1: second correct
+    # 2: both correct
 
     def __init__(
         self,
@@ -54,8 +54,6 @@ class DisjunctionCaptioner(WorldCaptioner):
         if not super(DisjunctionCaptioner, self).sample_values(mode=mode, predication=predication):
             return False
 
-        self.correct_mode = util.sample(self.correct_distribution)
-
         predication1 = predication.copy()
         predication2 = predication.copy()
 
@@ -65,7 +63,20 @@ class DisjunctionCaptioner(WorldCaptioner):
         if not self.captioner2.sample_values(mode=mode, predication=predication2):
             return False
 
+        for _ in range(self.__class__.MAX_SAMPLE_ATTEMPTS):
+            self.correct_mode = util.sample(self.correct_distribution)
+            if self.correct_mode == 0 and not self.captioner2.incorrect_possible():
+                continue
+            elif self.correct_mode == 1 and not self.captioner1.incorrect_possible():
+                continue
+            break
+        else:
+            return False
+
         return True
+
+    def incorrect_possible(self):
+        return self.captioner1.incorrect_possible() and self.captioner2.incorrect_possible()
 
     def model(self):
         return util.merge_dicts(
@@ -81,6 +92,7 @@ class DisjunctionCaptioner(WorldCaptioner):
         assert predication.empty()
 
         predication1 = predication.sub_predication()
+        predication2 = predication.sub_predication()
 
         if self.correct_mode == 1:  # 1: second correct
             predication_copy = predication1.copy()
@@ -89,16 +101,13 @@ class DisjunctionCaptioner(WorldCaptioner):
                 return None
             if not self.captioner1.incorrect(caption=clause1, predication=predication1, world=world):
                 return None
-            predication_test = predication1.copy(include_sub_predications=True)
-            if clause1.agreement(predication=predication_test, world=world) >= 0.0:
+            if clause1.agreement(predication=predication1, world=world) >= 0.0:
                 return None
 
         else:
             clause1 = self.captioner1.caption(predication=predication1, world=world)
             if clause1 is None:
                 return None
-
-        predication2 = predication.sub_predication()
 
         if self.correct_mode == 0:  # 0: first correct
             predication_copy = predication2.copy()
@@ -107,8 +116,7 @@ class DisjunctionCaptioner(WorldCaptioner):
                 return None
             if not self.captioner2.incorrect(caption=clause2, predication=predication2, world=world):
                 return None
-            predication_test = predication2.copy(include_sub_predications=True)
-            if clause2.agreement(predication=predication_test, world=world) >= 0.0:
+            if clause2.agreement(predication=predication2, world=world) >= 0.0:
                 return None
 
         else:
@@ -122,15 +130,22 @@ class DisjunctionCaptioner(WorldCaptioner):
         assert predication.empty()
 
         predication1 = predication.sub_predication()
-        if self.correct_mode == 1:
-            caption.clauses[0].apply_to_predication(predication=predication1)
-        elif not self.captioner1.incorrect(caption=caption.clauses[0], predication=predication1, world=world):
-            return False
-
         predication2 = predication.sub_predication()
-        if self.correct_mode == 0:
+
+        if self.correct_mode == 1:  # 1: second correct
+            caption.clauses[0].apply_to_predication(predication=predication1)
+        else:
+            if not self.captioner1.incorrect(caption=caption.clauses[0], predication=predication1, world=world):
+                return False
+            if caption.clauses[0].agreement(predication=predication1, world=world) >= 0.0:
+                return False
+
+        if self.correct_mode == 0:  # 0: first correct
             caption.clauses[1].apply_to_predication(predication=predication2)
-        elif not self.captioner2.incorrect(caption=caption.clauses[1], predication=predication2, world=world):
-            return False
+        else:
+            if not self.captioner2.incorrect(caption=caption.clauses[1], predication=predication2, world=world):
+                return False
+            if caption.clauses[1].agreement(predication=predication2, world=world) >= 0.0:
+                return False
 
         return True

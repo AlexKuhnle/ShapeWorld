@@ -34,8 +34,14 @@ class Texture(object):
         return Texture.textures[name]
 
     @staticmethod
-    def random_instance(textures, colors, shade_range):
-        return choice([Texture.get_texture(texture) for texture in textures]).random_instance(colors, shade_range)
+    def random_instance(colors, shade_range, texture=None, textures=None):
+        if texture is not None:
+            texture = Texture.get_texture(texture)
+        elif textures is not None:
+            texture = choice([Texture.get_texture(texture) for texture in textures])
+        else:
+            assert False
+        return texture.random_instance(colors, shade_range)
 
 
 class Solid(Texture):

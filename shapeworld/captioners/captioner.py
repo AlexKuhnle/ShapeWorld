@@ -2,7 +2,7 @@ from copy import deepcopy
 from random import random
 from shapeworld import util
 from shapeworld.world import World
-from shapeworld.captioners import LogicalPredication, PragmaticalPredication
+from shapeworld.captions import LogicalPredication, PragmaticalPredication
 
 
 class WorldCaptioner(object):
@@ -91,6 +91,9 @@ class WorldCaptioner(object):
 
         return True
 
+    def incorrect_possible(self):
+        raise NotImplementedError
+
     def model(self):
         return dict(
             name=str(self),
@@ -99,6 +102,12 @@ class WorldCaptioner(object):
             logical_redundancy=self.logical_redundancy,
             pragmatical_redundancy=self.pragmatical_redundancy
         )
+
+    def caption(self, predication, world):
+        raise NotImplementedError
+
+    def incorrect(self, caption, predication, world):
+        raise NotImplementedError
 
     def __call__(self, world):
         assert self.realizer is not None
@@ -125,11 +134,13 @@ class WorldCaptioner(object):
             for _ in range(self.__class__.MAX_ATTEMPTS):
                 predication = PragmaticalPredication(agreeing=world.entities)
 
-                if not self.incorrect(caption=caption, predication=predication, world=world):
+                inc_caption = deepcopy(caption)
+                if not self.incorrect(caption=inc_caption, predication=predication, world=world):
                     continue
 
-                agreement = caption.agreement(predication=predication, world=world)
+                agreement = inc_caption.agreement(predication=predication, world=world)
                 if agreement < 0.0:
+                    caption = inc_caption
                     break
 
             else:
@@ -139,12 +150,6 @@ class WorldCaptioner(object):
 
     def get_correct_caption(self):
         return deepcopy(self.correct_caption)
-
-    def caption(self, predication, world):
-        raise NotImplementedError
-
-    def incorrect(self, caption, predication, world):
-        raise NotImplementedError
 
 
 class CaptionerMixer(WorldCaptioner):
@@ -195,6 +200,9 @@ class CaptionerMixer(WorldCaptioner):
             self.captioner = util.sample(self.test_distribution, self.internal_captioners)
 
         return self.captioner.sample_values(mode=mode, predication=predication)
+
+    def incorrect_possible(self):
+        return self.captioner.incorrect_possible()
 
     def model(self):
         return util.merge_dicts(

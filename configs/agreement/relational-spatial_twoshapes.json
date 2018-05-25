@@ -1,0 +1,7 @@
+{
+    "type": "agreement",
+    "name": "relational",
+    "collision_tolerance": 0.0,
+    "relations": [["x-rel", "*"], ["y-rel", "*"]],
+    "entity_counts": [2]
+}

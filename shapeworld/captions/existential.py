@@ -1,5 +1,5 @@
 from __future__ import division
-from shapeworld.captions import Caption, EntityType, Relation
+from shapeworld.captions import Caption, EntityType, Relation, Selector
 
 
 class Existential(Caption):
@@ -7,7 +7,7 @@ class Existential(Caption):
     __slots__ = ('restrictor', 'body')
 
     def __init__(self, restrictor, body):
-        assert isinstance(restrictor, EntityType)
+        assert isinstance(restrictor, (EntityType, Selector))
         assert isinstance(body, Relation)
         self.restrictor = restrictor
         self.body = body

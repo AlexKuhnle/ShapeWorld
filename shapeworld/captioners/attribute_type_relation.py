@@ -46,6 +46,9 @@ class AttributeTypeRelationCaptioner(WorldCaptioner):
             )
         )
 
+    def incorrect_possible(self):
+        return self.attribute_type_captioner.incorrect_possible()
+
     def caption(self, predication, world):
         caption = self.attribute_type_captioner.caption(predication=predication, world=world)
         if caption is None:

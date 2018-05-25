@@ -5,12 +5,28 @@ from shapeworld.captions import Caption, EntityType, Relation, Settings
 class Quantifier(Caption):
 
     zero_quantifiers = {
-        ('count', 'lt', 0), ('count', 'leq', 0), ('count', 'eq', 0), ('count', 'lt', 1),
-        ('ratio', 'lt', 0.0), ('ratio', 'leq', 0.0), ('ratio', 'eq', 0.0)
+        ('count', 'leq', 0), ('count', 'eq', 0), ('count', 'lt', 1),
+        ('ratio', 'leq', 0.0), ('ratio', 'eq', 0.0)
+    }
+    zero_included_quantifiers = {
+        ('count', 'lt', '!0'), ('count', 'leq', '*'), ('count', 'eq', 0), ('count', 'neq', '!0'), ('count', 'geq', 0),
+        ('ratio', 'lt', '!0'), ('ratio', 'leq', '*'), ('ratio', 'eq', 0.0), ('ratio', 'neq', '!0'), ('ratio', 'geq', 0.0)
+    }
+    zero_negated_quantifiers = {
+        ('count', 'neq', 0), ('count', 'geq', 1), ('count', 'gt', 0),
+        ('ratio', 'neq', 0.0), ('ratio', 'gt', 0.0),
     }
     all_quantifiers = {
-        ('count', 'gt', -1), ('count', 'geq', -1), ('count', 'eq', -1), ('count', 'gt', -2),
-        ('ratio', 'gt', 1.0), ('ratio', 'geq', 1.0), ('ratio', 'eq', 1.0)
+        ('count', 'geq', -1), ('count', 'eq', -1), ('count', 'gt', -2),
+        ('ratio', 'geq', 1.0), ('ratio', 'eq', 1.0)
+    }
+    all_included_quantifiers = {
+        ('count', 'gt', '!1'), ('count', 'geq', '*'), ('count', 'eq', -1), ('count', 'neq', '!1'), ('count', 'leq', -1),
+        ('ratio', 'gt', '!1'), ('ratio', 'geq', '*'), ('ratio', 'eq', 1.0), ('ratio', 'neq', '!1'), ('ratio', 'leq', 1.0)
+    }
+    all_negated_quantifiers = {
+        ('count', 'lt', -1), ('count', 'leq', -2), ('count', 'neq', -1),
+        ('ratio', 'lt', 1.0), ('ratio', 'neq', 1.0),
     }
     tautological_quantifiers = {
         ('count', 'geq', 0), ('count', 'leq', -1),
@@ -20,13 +36,22 @@ class Quantifier(Caption):
     __slots__ = ('qtype', 'qrange', 'quantity', 'restrictor', 'body')
 
     def __init__(self, qtype, qrange, quantity, restrictor, body):
-        assert qtype in ('count', 'ratio')
+        # if qtype == 'composed': qrange is identifier, quantity is list of quantifiers
+        assert qtype in ('count', 'ratio', 'composed')
         if qtype == 'count':
             assert qrange in ('lt', 'leq', 'eq', 'neq', 'geq', 'gt')
             assert isinstance(quantity, int)
+            assert qrange != 'lt' or quantity != 0
+            assert qrange != 'gt' or quantity != -1
         elif qtype == 'ratio':
             assert qrange in ('lt', 'leq', 'eq', 'neq', 'geq', 'gt')
             assert isinstance(quantity, float) and 0.0 <= quantity <= 1.0
+            assert qrange != 'lt' or quantity != 0.0
+            assert qrange != 'gt' or quantity != 1.0
+        elif qtype == 'composed':
+            assert isinstance(qrange, str)
+            assert all(len(quantifier) == 3 and quantifier[0] in ('count', 'ratio') for quantifier in quantity)
+            quantity = tuple(tuple(quantifier) for quantifier in quantity)
         assert isinstance(restrictor, EntityType)
         assert isinstance(body, Relation)
         self.qtype = qtype
@@ -40,15 +65,20 @@ class Quantifier(Caption):
             component=str(self),
             qtype=self.qtype,
             qrange=self.qrange,
-            quantity=self.quantity,
+            quantity=(list(self.quantity) if self.qtype == 'composed' else self.quantity),
             restrictor=self.restrictor.model(),
             body=self.body.model()
         )
 
     def reverse_polish_notation(self):
-        return self.restrictor.reverse_polish_notation() + \
-            self.body.reverse_polish_notation() + \
-            ['{}-{}-{}-{}'.format(self, self.qtype, self.qrange, self.quantity)]
+        if self.qtype == 'composed':
+            return self.restrictor.reverse_polish_notation() + \
+                self.body.reverse_polish_notation() + \
+                ['{}-{}-{}'.format(self, self.qtype, self.qrange)]
+        else:
+            return self.restrictor.reverse_polish_notation() + \
+                self.body.reverse_polish_notation() + \
+                ['{}-{}-{}-{}'.format(self, self.qtype, self.qrange, self.quantity)]
 
     def apply_to_predication(self, predication):
         rstr_predication = predication.sub_predication()
@@ -60,6 +90,10 @@ class Quantifier(Caption):
         return rstr_predication, body_predication, rstr_body_predication
 
     def agreement(self, predication, world):
+        if self.qtype == 'composed':
+            quantifiers = [Quantifier(qtype=quantifier[0], qrange=quantifier[1], quantity=quantifier[2], restrictor=self.restrictor, body=self.body) for quantifier in self.quantity]
+            return min(quantifier.agreement(predication=predication.copy(include_sub_predications=True), world=world) for quantifier in quantifiers)
+
         rstr_predication = predication.get_sub_predication(0)
         body_predication = predication.get_sub_predication(1)
         rstr_body_predication = predication.get_sub_predication(2)
@@ -90,8 +124,6 @@ class Quantifier(Caption):
             else:
                 upper = rstr_body_predication.num_not_disagreeing / rstr_predication.num_agreeing
 
-        assert lower >= 0.0 and lower_target >= 0.0
-
         return Quantifier.get_agreement(qrange=self.qrange, lower=lower, upper=upper, target=lower_target, upper_target=upper_target)
 
     @staticmethod
@@ -103,17 +135,17 @@ class Quantifier(Caption):
         assert lower_target <= upper_target, (lower_target, upper_target)
 
         if qrange == 'lt':
-            if upper < upper_target:
+            if upper < upper_target + Settings.min_quantifier:
                 return 1.0
-            elif lower >= lower_target:
+            elif lower >= lower_target - Settings.min_quantifier:
                 return -1.0
             else:
                 return 0.0
 
         elif qrange == 'leq':
-            if upper <= upper_target:
+            if upper <= upper_target + Settings.min_quantifier:
                 return 1.0
-            elif lower > lower_target:
+            elif lower > lower_target - Settings.min_quantifier:
                 return -1.0
             else:
                 return 0.0
@@ -151,17 +183,72 @@ class Quantifier(Caption):
                 return 0.0
 
         elif qrange == 'geq':
-            if lower >= lower_target:
+            if lower >= lower_target - Settings.min_quantifier:
                 return 1.0
-            elif upper < upper_target:
+            elif upper < upper_target + Settings.min_quantifier:
                 return -1.0
             else:
                 return 0.0
 
         elif qrange == 'gt':
-            if lower > lower_target:
+            if lower > lower_target - Settings.min_quantifier:
                 return 1.0
-            elif upper <= upper_target:
+            elif upper <= upper_target + Settings.min_quantifier:
                 return -1.0
             else:
                 return 0.0
+
+    @staticmethod
+    def tautological(qtype, qrange1, quantity1, qrange2, quantity2):
+        if qrange1 == qrange2 and quantity1 == quantity2:
+            return True
+        elif qrange1 == 'lt':
+            if qrange2 in ('lt', 'leq', 'neq') and quantity2 >= quantity1:
+                return True
+            elif qtype == 'count' and qrange2 == 'leq' and quantity2 == quantity1 - 1:
+                return True
+        elif qrange1 == 'leq':
+            if qrange2 in ('lt', 'leq', 'neq') and quantity2 > quantity1:
+                return True
+        elif qrange1 == 'eq':
+            if qrange2 == 'lt' and quantity2 > quantity1:
+                return True
+            elif qrange2 == 'leq' and quantity2 >= quantity1:
+                return True
+            elif qrange2 == 'neq' and quantity2 != quantity1:
+                return True
+            elif qrange2 == 'geq' and quantity2 <= quantity1:
+                return True
+            elif qrange2 == 'gt' and quantity2 < quantity1:
+                return True
+        elif qrange1 == 'neq':
+            if qrange2 == 'eq' and quantity2 != quantity1:
+                return True
+        elif qrange1 == 'geq':
+            if qrange2 in ('gt', 'geq', 'neq') and quantity2 < quantity1:
+                return True
+        elif qrange1 == 'gt':
+            if qrange2 in ('gt', 'geq', 'neq') and quantity2 <= quantity1:
+                return True
+            elif qtype == 'count' and qrange2 == 'geq' and quantity2 == quantity1 + 1:
+                return True
+        return False
+
+    @staticmethod
+    def filter(quantifiers, selection):
+        filtered = list()
+        for qtype, qrange, quantity in quantifiers:
+            for sel_qtype, sel_qrange, sel_quantity in selection:
+                if qtype != sel_qtype and sel_qtype != '*':
+                    continue
+                elif qrange != sel_qrange and sel_qrange != '*':
+                    continue
+                elif quantity != sel_quantity and sel_quantity != '*' \
+                        and (sel_quantity != '!0' or quantity == 0 or quantity == 0.0) \
+                        and (sel_quantity != '!1' or quantity == -1 or quantity == 1.0) \
+                        and (sel_quantity != '+' or quantity < 0) \
+                        and (sel_quantity != '-' or quantity > 0):
+                    continue
+                else:
+                    filtered.append((qtype, qrange, quantity))
+        return filtered

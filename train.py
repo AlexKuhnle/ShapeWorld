@@ -36,7 +36,6 @@ if __name__ == '__main__':
 
     parser.add_argument('--verbosity', type=int, choices=(0, 1, 2), default=1, help='Verbosity (0: no messages, 1: default, 2: plus TensorFlow messages)')
     parser.add_argument('-Y', '--yes', action='store_true', help='Confirm all questions with yes')
-    parser.add_argument('--v1', action='store_true')
 
     parser.add_argument('--config-values', nargs=argparse.REMAINDER, default=(), help='Additional dataset configuration values passed as command line arguments')
 
@@ -52,9 +51,6 @@ if __name__ == '__main__':
         os.environ['TF_CPP_MIN_LOG_LEVEL'] = '0'
     else:
         os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
-
-    if args.v1:
-        util.set_version(1)
 
     # dataset
     dataset = Dataset.create(dtype=args.type, name=args.name, variant=args.variant, language=args.language, config=args.config, **args.config_values)
@@ -76,7 +72,7 @@ if __name__ == '__main__':
         sys.stdout.write('         hyperparameters: {}\n'.format(args.hyperparams_file))
         sys.stdout.flush()
 
-    if args.type == 'agreement':
+    if dataset.type == 'agreement':
         dataset_parameters = dict(
             world_shape=dataset.world_shape(),
             vocabulary_size=dataset.vocabulary_size(value_type='language'),
@@ -86,7 +82,7 @@ if __name__ == '__main__':
             dataset_parameters[value_name + '_shape'] = dataset.vector_shape(value_name=value_name)
         query = ('agreement_accuracy',)
 
-    elif args.type == 'classification':
+    elif dataset.type == 'classification':
         dataset_parameters = dict(
             world_shape=dataset.world_shape(),
             num_classes=dataset.num_classes,
@@ -97,7 +93,7 @@ if __name__ == '__main__':
             dataset_parameters[value_name + '_shape'] = dataset.vector_shape(value_name=value_name)
         query = ('classification_fscore', 'classification_precision', 'classification_recall')
 
-    elif args.type == 'clevr_classification':
+    elif dataset.type == 'clevr_classification':
         dataset_parameters = dict(
             world_shape=dataset.world_shape(),
             vocabulary_size=dataset.vocabulary_size(value_type='language'),
@@ -191,7 +187,7 @@ if __name__ == '__main__':
     with Model(name=args.model, learning_rate=parameters.pop('learning_rate', 1e-3), weight_decay=parameters.pop('weight_decay', None), clip_gradients=parameters.pop('clip_gradients', None), model_directory=args.model_dir, summary_directory=args.summary_dir) as model:
         dropout = parameters.pop('dropout_rate', None)
 
-        module = import_module('models.{}.{}'.format(args.type, args.model))
+        module = import_module('models.{}.{}'.format(dataset.type, args.model))
         if args.tf_records:
             inputs = tf_util.batch_records(dataset=dataset, mode='train', batch_size=args.batch_size)
             module.model(model=model, inputs=inputs, dataset_parameters=dataset_parameters, **parameters)

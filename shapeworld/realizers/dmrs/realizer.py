@@ -5,8 +5,7 @@ import platform
 import re
 import stat
 import subprocess
-from shapeworld import util
-from shapeworld.captions import Attribute, Relation, EntityType, Existential, Quantifier, NumberBound, ComparativeQuantifier, Proposition
+from shapeworld.captions import Attribute, Relation, EntityType, Selector, Existential, Quantifier, NumberBound, ComparativeQuantifier, Proposition
 from shapeworld.realizers import CaptionRealizer
 from shapeworld.realizers.dmrs.dmrs import Dmrs, create_sortinfo
 
@@ -79,16 +78,12 @@ class DmrsRealizer(CaptionRealizer):
         self.ace_path = os.path.join(directory, 'resources', 'ace')
         self.erg_path = os.path.join(directory, 'languages', language + '.dat')
 
-        self.successful_regex = re.compile(pattern=r'^NOTE: [0-9]+ passive, [0-9]+ active edges in final generation chart; built [0-9]+ passives total. \[1 results\]$')
+        self.successful_regex = re.compile(pattern=r'^NOTE: [0-9]+ passive, [0-9]+ active edges in final generation chart; built [0-9]+ passives total. \[[1-9][0-9]* results\]$')
         self.unsuccessful_regex = re.compile(pattern=r'^NOTE: [0-9]+ passive, [0-9]+ active edges in final generation chart; built [0-9]+ passives total. \[0 results\]$')
         self.final_regex = re.compile(pattern=r'^(NOTE: generated [0-9]+ / [0-9]+ sentences, avg [0-9]+k, time [0-9]+.[0-9]+s)|(NOTE: transfer did [0-9]+ successful unifies and [0-9]+ failed ones)$')
 
-        if util.v2() and os.path.isfile(os.path.join(directory, 'languages', language + '_v2.json')):
-            with open(os.path.join(directory, 'languages', language + '_v2.json'), 'r') as filehandle:
-                language = json.load(fp=filehandle)
-        else:
-            with open(os.path.join(directory, 'languages', language + '.json'), 'r') as filehandle:
-                language = json.load(fp=filehandle)
+        with open(os.path.join(directory, 'languages', language + '.json'), 'r') as filehandle:
+            language = json.load(fp=filehandle)
 
         if 'sortinfos' in language:
             sortinfo_classes = dict()
@@ -126,6 +121,23 @@ class DmrsRealizer(CaptionRealizer):
         self.entity_type = None
         if 'type' in language:
             self.entity_type = Dmrs.parse(language['type']['dmrs'])
+
+        self.selectors = dict()
+        self.selector_by_key = dict()
+        self.unique_selector = None
+        if 'selectors' in language:
+            for predtype, values in language['selectors'].items():
+                predtype = parse_string(predtype)
+                if predtype == 'unique':
+                    self.unique_selector = Dmrs.parse(values['dmrs'])
+                    continue
+                elif predtype not in self.selectors:
+                    self.selectors[predtype] = dict()
+                for value, selector in values.items():
+                    value = parse_string(value)
+                    self.selectors[predtype][value] = Dmrs.parse(selector['dmrs'])
+                    assert selector['key'] not in self.selector_by_key
+                    self.selector_by_key[selector['key']] = (predtype, value)
 
         self.relations = dict()
         self.relation_by_key = dict()
@@ -236,7 +248,7 @@ class DmrsRealizer(CaptionRealizer):
 
     def realize(self, captions):
         try:
-            ace = subprocess.Popen([self.ace_path, '-g', self.erg_path, '-1e', '-r', 'root_strict'], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            ace = subprocess.Popen([self.ace_path, '-g', self.erg_path, '-1e', '-r', 'root_gen'], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         except Exception as e:
             import sys
             from datetime import datetime
@@ -254,7 +266,7 @@ class DmrsRealizer(CaptionRealizer):
             dmrs = self.caption_dmrs(caption=caption)
             # print(dmrs.dumps_xml())
             for (search, replace, disable_hierarchy) in self.post_processing:
-                dmrs = dmrs.apply_paraphrases(paraphrases=[(search, replace)], hierarchy=(None if disable_hierarchy else self.hierarchy))
+                dmrs = dmrs.apply_paraphrases(paraphrases=[(search, replace)], hierarchy=(None if disable_hierarchy else self.hierarchy), match_top_index=False)
             # print(dmrs.dumps_xml())
             dmrs.remove_underspecifications()
             dmrs_list.append(dmrs)
@@ -309,7 +321,20 @@ class DmrsRealizer(CaptionRealizer):
         assert self.entity_type is not None
         dmrs = copy.deepcopy(self.entity_type)
         for attribute in entity_type.value:
-            dmrs.compose(self.attribute_dmrs(attribute), fusion={'type': 'type'}, hierarchy=self.hierarchy)
+            dmrs.compose(self.attribute_dmrs(attribute), fusion={'type': 'type', 'quant': 'quant'}, hierarchy=self.hierarchy)
+        return dmrs
+
+    def selector_dmrs(self, selector):
+        if selector.predtype == 'unique':
+            assert self.unique_selector is not None
+            dmrs = copy.deepcopy(self.unique_selector)
+            dmrs.compose(self.type_dmrs(selector.scope), fusion={'type': 'type', 'quant': 'quant'}, hierarchy=self.hierarchy)
+        else:
+            assert selector.predtype in self.selectors and selector.value in self.selectors[selector.predtype], (selector.predtype, selector.value)
+            dmrs = copy.deepcopy(self.selectors[selector.predtype][selector.value])
+            dmrs.compose(self.type_dmrs(selector.scope), fusion={'type': 'type', 'quant': 'quant'}, hierarchy=self.hierarchy)
+            if selector.predtype in Selector.reference_selectors:
+                dmrs.compose(self.selector_dmrs(selector.reference), fusion={'ref': 'type'}, hierarchy=self.hierarchy)
         return dmrs
 
     def relation_dmrs(self, relation):
@@ -324,22 +349,31 @@ class DmrsRealizer(CaptionRealizer):
         else:
             assert relation.predtype in self.relations and relation.value in self.relations[relation.predtype], (relation.predtype, relation.value)
             dmrs = copy.deepcopy(self.relations[relation.predtype][relation.value])
-            dmrs.compose(self.type_dmrs(relation.reference), fusion={'ref': 'type'}, hierarchy=self.hierarchy)
+            if relation.predtype in Relation.meta_relations:
+                dmrs.compose(self.relation_dmrs(relation.reference), fusion={'ref': 'rel'}, hierarchy=self.hierarchy)
+            else:
+                dmrs.compose(self.type_dmrs(relation.reference), fusion={'ref': 'type', 'rquant': 'quant'}, hierarchy=self.hierarchy)
             if relation.predtype in Relation.ternary_relations:
-                dmrs.compose(self.type_dmrs(relation.comparison), fusion={'comp': 'type'}, hierarchy=self.hierarchy)
+                if relation.predtype in Relation.meta_relations:
+                    dmrs.compose(self.relation_dmrs(relation.comparison), fusion={'comp': 'rel'}, hierarchy=self.hierarchy)
+                else:
+                    dmrs.compose(self.type_dmrs(relation.comparison), fusion={'comp': 'type', 'cquant': 'quant'}, hierarchy=self.hierarchy)
         return dmrs
 
     def existential_dmrs(self, existential):
         assert self.existential is not None
         dmrs = copy.deepcopy(self.existential)
-        dmrs.compose(self.type_dmrs(existential.restrictor), fusion={'rstr': 'type'}, hierarchy=self.hierarchy)
+        if isinstance(existential.restrictor, Selector):
+            dmrs.compose(self.selector_dmrs(existential.restrictor), fusion={'rstr': 'type', 'quant': 'quant'}, hierarchy=self.hierarchy)
+        else:
+            dmrs.compose(self.type_dmrs(existential.restrictor), fusion={'rstr': 'type', 'quant': 'quant'}, hierarchy=self.hierarchy)
         dmrs.compose(self.relation_dmrs(existential.body), fusion={'body': 'rel'}, hierarchy=self.hierarchy)
         return dmrs
 
     def quantifier_dmrs(self, quantifier):
         assert quantifier.qtype in self.quantifiers and quantifier.qrange in self.quantifiers[quantifier.qtype] and quantifier.quantity in self.quantifiers[quantifier.qtype][quantifier.qrange], (quantifier.qtype, quantifier.qrange, quantifier.quantity)
         dmrs = copy.deepcopy(self.quantifiers[quantifier.qtype][quantifier.qrange][quantifier.quantity])
-        dmrs.compose(self.type_dmrs(quantifier.restrictor), fusion={'rstr': 'type'}, hierarchy=self.hierarchy)
+        dmrs.compose(self.type_dmrs(quantifier.restrictor), fusion={'rstr': 'type', 'quant': 'quant'}, hierarchy=self.hierarchy)
         dmrs.compose(self.relation_dmrs(quantifier.body), fusion={'body': 'rel'}, hierarchy=self.hierarchy)
         return dmrs
 
@@ -353,17 +387,17 @@ class DmrsRealizer(CaptionRealizer):
         quantifier = number_bound.quantifier
         assert quantifier.qtype in self.quantifiers and quantifier.qrange in self.quantifiers[quantifier.qtype] and quantifier.quantity in self.quantifiers[quantifier.qtype][quantifier.qrange]
         rstr_dmrs = copy.deepcopy(self.number_bounds[number_bound.bound])
-        rstr_dmrs.compose(self.type_dmrs(quantifier.restrictor), fusion={'scope': 'type'}, hierarchy=self.hierarchy)
+        rstr_dmrs.compose(self.type_dmrs(quantifier.restrictor), fusion={'scope': 'type', 'tquant': 'quant'}, hierarchy=self.hierarchy)
         dmrs = copy.deepcopy(self.quantifiers[quantifier.qtype][quantifier.qrange][quantifier.quantity])
-        dmrs.compose(rstr_dmrs, fusion={'rstr': 'type'}, hierarchy=self.hierarchy)
+        dmrs.compose(rstr_dmrs, fusion={'rstr': 'type', 'quant': 'quant'}, hierarchy=self.hierarchy)
         dmrs.compose(self.relation_dmrs(quantifier.body), fusion={'body': 'rel'}, hierarchy=self.hierarchy)
         return dmrs
 
     def comparative_quantifier_dmrs(self, comparative_quantifier):
         assert comparative_quantifier.qtype in self.comparative_quantifiers and comparative_quantifier.qrange in self.comparative_quantifiers[comparative_quantifier.qtype] and comparative_quantifier.quantity in self.comparative_quantifiers[comparative_quantifier.qtype][comparative_quantifier.qrange], (comparative_quantifier.qtype, comparative_quantifier.qrange, comparative_quantifier.quantity)
         dmrs = copy.deepcopy(self.comparative_quantifiers[comparative_quantifier.qtype][comparative_quantifier.qrange][comparative_quantifier.quantity])
-        dmrs.compose(self.type_dmrs(comparative_quantifier.restrictor), fusion={'rstr': 'type'}, hierarchy=self.hierarchy)
-        dmrs.compose(self.type_dmrs(comparative_quantifier.comparison), fusion={'comp': 'type'}, hierarchy=self.hierarchy)
+        dmrs.compose(self.type_dmrs(comparative_quantifier.restrictor), fusion={'rstr': 'type', 'rquant': 'quant'}, hierarchy=self.hierarchy)
+        dmrs.compose(self.type_dmrs(comparative_quantifier.comparison), fusion={'comp': 'type', 'cquant': 'quant'}, hierarchy=self.hierarchy)
         dmrs.compose(self.relation_dmrs(comparative_quantifier.body), fusion={'body': 'rel'}, hierarchy=self.hierarchy)
         return dmrs
 
@@ -395,6 +429,9 @@ class DmrsRealizer(CaptionRealizer):
         elif isinstance(caption, EntityType):
             dmrs = copy.deepcopy(self.propositions['type'])
             dmrs.compose(self.type_dmrs(caption), hierarchy=self.hierarchy)
+        elif isinstance(caption, Selector):
+            dmrs = copy.deepcopy(self.propositions['selector'])
+            dmrs.compose(self.selector_dmrs(caption), hierarchy=self.hierarchy)
         elif isinstance(caption, Relation):
             dmrs = copy.deepcopy(self.propositions['relation'])
             dmrs.compose(self.relation_dmrs(caption), hierarchy=self.hierarchy)

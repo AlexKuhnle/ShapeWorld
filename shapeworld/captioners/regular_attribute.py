@@ -1,5 +1,4 @@
 from random import choice, random
-from shapeworld import util
 from shapeworld.captions import Attribute
 from shapeworld.captioners import WorldCaptioner
 
@@ -64,7 +63,7 @@ class RegularAttributeCaptioner(WorldCaptioner):
 
         self.attribute = choice(attributes)
 
-        if self.existing_attribute_rate == 0.0 or predication.empty():
+        if self.existing_attribute_rate == 0.0:
             self.existing_attribute = False
         elif self.existing_attribute_rate == 1.0:
             self.existing_attribute = True
@@ -73,35 +72,49 @@ class RegularAttributeCaptioner(WorldCaptioner):
 
         predication.apply(predicate=self.attribute)
 
+        predication.block(predicate=self.attribute)
+
+        return True
+
+    def incorrect_possible(self):
         return True
 
     def model(self):
-        return util.merge_dicts(
-            dict1=super(RegularAttributeCaptioner, self).model(),
-            dict2=dict(
-                attribute=self.attribute,
-                existing_attribute=self.existing_attribute
-            )
+        model = super(RegularAttributeCaptioner, self).model()
+        model.update(
+            attribute=self.attribute,
+            existing_attribute=self.existing_attribute
         )
+        return model
 
     def caption(self, predication, world):
         if predication.num_agreeing == 0:
             return None
 
-        entity = predication.random_agreeing_entity()
+        entities = list()
+        for entity in predication.agreeing:
+            if self.attribute == 'shape':
+                entities.append(entity.shape.name)
+            elif self.attribute == 'color':
+                entities.append(entity.color.name)
+            elif self.attribute == 'texture':
+                entities.append(entity.texture.name)
+
+        entity = choice(entities)
 
         if self.attribute == 'shape':
-            attribute = Attribute(predtype='shape', value=entity.shape.name)
+            attribute = Attribute(predtype='shape', value=entity)
 
         elif self.attribute == 'color':
-            attribute = Attribute(predtype='color', value=entity.color.name)
+            attribute = Attribute(predtype='color', value=entity)
 
         elif self.attribute == 'texture':
-            attribute = Attribute(predtype='texture', value=entity.texture.name)
+            attribute = Attribute(predtype='texture', value=entity)
 
         if predication.contradictory(predicate=attribute):
             assert False
         elif not self.pragmatical_redundancy and predication.num_entities > 1 and predication.redundant(predicate=attribute):
+            assert False
             return None
 
         attribute.apply_to_predication(predication=predication)
@@ -111,19 +124,19 @@ class RegularAttributeCaptioner(WorldCaptioner):
     def incorrect(self, caption, predication, world):
         if self.attribute == 'shape':  # random (existing) shape
             if self.existing_attribute:
-                values = util.unique_list(entity.shape.name for entity in world.entities if entity.shape.name in self.shapes and entity.shape.name != caption.value)
+                values = list(set(entity.shape.name for entity in world.entities if entity.shape.name in self.shapes and entity.shape.name != caption.value))
             if not self.existing_attribute or len(values) == 0:
                 values = self.shapes
 
         elif self.attribute == 'color':  # random (existing) color
             if self.existing_attribute:
-                values = util.unique_list(entity.color.name for entity in world.entities if entity.color.name in self.colors and entity.color.name != caption.value)
+                values = list(set(entity.color.name for entity in world.entities if entity.color.name in self.colors and entity.color.name != caption.value))
             if not self.existing_attribute or len(values) == 0:
                 values = self.colors
 
         elif self.attribute == 'texture':  # random (existing) texture
             if self.existing_attribute:
-                values = util.unique_list(entity.texture.name for entity in world.entities if entity.texture.name in self.textures and entity.texture.name != caption.value)
+                values = list(set(entity.texture.name for entity in world.entities if entity.texture.name in self.textures and entity.texture.name != caption.value))
             if not self.existing_attribute or len(values) == 0:
                 values = self.textures
 

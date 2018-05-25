@@ -23,14 +23,14 @@ class ReinforcedAttributesGenerator(GenericGenerator):
         entity_counts=(1,),
         train_entity_counts=None,
         validation_entity_counts=None,
-        validation_count_rate=0.5,
         test_entity_counts=None,
+        validation_count_rate=0.5,
         test_count_rate=0.5,
         validation_combinations=None,
-        validation_space_rate_range=(0.0, 1.0),
-        validation_combination_rate=0.5,
         test_combinations=None,
+        validation_space_rate_range=(0.0, 1.0),
         test_space_rate_range=(0.0, 1.0),
+        validation_combination_rate=0.5,
         test_combination_rate=0.5,
         max_provoke_collision_rate=0.33,
         reinforcement_range=(1, 3)
@@ -51,15 +51,15 @@ class ReinforcedAttributesGenerator(GenericGenerator):
             entity_counts=entity_counts,
             train_entity_counts=train_entity_counts,
             validation_entity_counts=validation_entity_counts,
-            validation_count_rate=validation_count_rate,
             test_entity_counts=test_entity_counts,
+            validation_count_rate=validation_count_rate,
             test_count_rate=test_count_rate,
             validation_combinations=validation_combinations,
-            validation_combination_rate=validation_combination_rate,
-            validation_space_rate_range=validation_space_rate_range,
             test_combinations=test_combinations,
-            test_combination_rate=test_combination_rate,
-            test_space_rate_range=test_space_rate_range
+            validation_space_rate_range=validation_space_rate_range,
+            test_space_rate_range=test_space_rate_range,
+            validation_combination_rate=validation_combination_rate,
+            test_combination_rate=test_combination_rate
         )
 
         assert isinstance(max_provoke_collision_rate, float) and 0.0 <= max_provoke_collision_rate <= 1.0
@@ -69,8 +69,12 @@ class ReinforcedAttributesGenerator(GenericGenerator):
         self.reinforcement_range = reinforcement_range
 
     def initialize(self, mode):
-        super(ReinforcedAttributesGenerator, self).initialize(mode=mode)
+        if not super(ReinforcedAttributesGenerator, self).initialize(mode=mode):
+            return False
+
         self.provoke_collision_rate = random() * self.max_provoke_collision_rate
+
+        return True
 
     def model(self):
         return util.merge_dicts(

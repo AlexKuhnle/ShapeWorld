@@ -1,4 +1,4 @@
-from random import choice
+from random import choice, random
 from shapeworld import util
 from shapeworld.captions import Quantifier
 from shapeworld.captioners import WorldCaptioner
@@ -9,7 +9,10 @@ class QuantifierCaptioner(WorldCaptioner):
     # incorrect modes
     # 0: incorrect restrictor
     # 1: incorrect body
-    # 2: incorrect quantifier
+    # 2: closest quantity
+    # 3: incorrect range
+    # 4: incorrect quantity
+    # 5: incorrect quantifier of same type
 
     def __init__(
         self,
@@ -21,7 +24,9 @@ class QuantifierCaptioner(WorldCaptioner):
         logical_tautology_rate=0.0,
         logical_contradiction_rate=0.0,
         quantifiers=None,
-        incorrect_distribution=(1, 1, 2)
+        incorrect_distribution=(3, 3, 3, 1, 1, 1),
+        zero_quantification_rate=0.1,
+        all_quantification_rate=0.3
     ):
         super(QuantifierCaptioner, self).__init__(
             internal_captioners=(restrictor_captioner, body_captioner),
@@ -36,6 +41,8 @@ class QuantifierCaptioner(WorldCaptioner):
         self.body_captioner = body_captioner
         self.quantifiers = quantifiers
         self.incorrect_distribution = util.cumulative_distribution(incorrect_distribution)
+        self.zero_quantification_rate = zero_quantification_rate
+        self.all_quantification_rate = all_quantification_rate
 
     def set_realizer(self, realizer):
         if not super(QuantifierCaptioner, self).set_realizer(realizer):
@@ -44,13 +51,16 @@ class QuantifierCaptioner(WorldCaptioner):
         if self.quantifiers is None:
             self.quantifiers = [(qtype, qrange, quantity) for qtype, qranges in realizer.quantifiers.items() for qrange, quantities in qranges.items() for quantity in quantities]
         else:
-            assert len(self.quantifiers) == 3
-            self.quantifiers = [
-                (qtype, qrange, quantity)
-                for qtype, qranges in realizer.quantifiers.items() if self.quantifiers[0] is None or qtype in self.quantifiers[0]
-                for qrange, quantities in qranges.items() if self.quantifiers[1] is None or qrange in self.quantifiers[1]
-                for quantity in quantities if self.quantifiers[2] is None or (quantity >= 0 if self.quantifiers[2] == '+' else quantity in self.quantifiers[2])
-            ]
+            self.quantifiers = Quantifier.filter(quantifiers=((qtype, qrange, quantity) for qtype, qranges in realizer.quantifiers.items() for qrange, quantities in qranges.items() for quantity in quantities), selection=self.quantifiers)
+
+        self.zero_quantifiers = set(Quantifier.filter(quantifiers=self.quantifiers, selection=Quantifier.zero_quantifiers))
+        self.zero_included_quantifiers = set(Quantifier.filter(quantifiers=self.quantifiers, selection=Quantifier.zero_included_quantifiers))
+        self.zero_negated_quantifiers = set(Quantifier.filter(quantifiers=self.quantifiers, selection=Quantifier.zero_negated_quantifiers))
+        self.all_quantifiers = set(Quantifier.filter(quantifiers=self.quantifiers, selection=Quantifier.all_quantifiers))
+        self.all_included_quantifiers = set(Quantifier.filter(quantifiers=self.quantifiers, selection=Quantifier.all_included_quantifiers))
+        self.all_negated_quantifiers = set(Quantifier.filter(quantifiers=self.quantifiers, selection=Quantifier.all_negated_quantifiers))
+        self.tautological_quantifiers = set(Quantifier.filter(quantifiers=self.quantifiers, selection=Quantifier.tautological_quantifiers))
+        self.quantifiers = {qtype_key: [(qrange, quantity) for qtype, qrange, quantity in self.quantifiers if qtype == qtype_key] for qtype_key, _, _ in self.quantifiers}
 
         return True
 
@@ -58,7 +68,7 @@ class QuantifierCaptioner(WorldCaptioner):
         return self.restrictor_captioner.rpn_length() + self.body_captioner.rpn_length() + 1
 
     def rpn_symbols(self):
-        return super(QuantifierCaptioner, self).rpn_symbols() | {'{}-{}-{}-{}'.format(Quantifier.__name__, *quantifier[:3 - int(quantifier[0] == 'composed')]) for quantifier in self.quantifiers}
+        return super(QuantifierCaptioner, self).rpn_symbols() | {'{}-{}-{}-{}'.format(Quantifier.__name__, qtype, *quantifier[:2 - int(qtype == 'composed')]) for qtype, quantifiers in self.quantifiers.items() for quantifier in quantifiers}
 
     def sample_values(self, mode, predication):
         assert predication.empty()
@@ -66,61 +76,143 @@ class QuantifierCaptioner(WorldCaptioner):
         if not super(QuantifierCaptioner, self).sample_values(mode=mode, predication=predication):
             return False
 
-        self.incorrect_mode = util.sample(self.incorrect_distribution)
+        # predication = predication.copy()
+
+        if not self.body_captioner.sample_values(mode=mode, predication=predication):
+            return False
+        if not self.restrictor_captioner.sample_values(mode=mode, predication=predication):
+            return False
+
+        self.qtype = choice(list(self.quantifiers))
+        self.qrange, self.quantity = choice(self.quantifiers[self.qtype])
+
+        if (self.qtype, self.qrange, self.quantity) in self.zero_quantifiers:
+            assert self.body_captioner.incorrect_possible()
+            self.zero_quantification = True
+        elif (self.qtype, self.qrange, self.quantity) in self.zero_included_quantifiers:
+            self.zero_quantification = self.body_captioner.incorrect_possible() and random() < self.zero_quantification_rate
+        else:
+            self.zero_quantification = False
+
+        if (self.qtype, self.qrange, self.quantity) in self.all_quantifiers:
+            self.all_quantification = True
+        elif (self.qtype, self.qrange, self.quantity) in self.all_included_quantifiers:
+            self.all_quantification = random() < self.all_quantification_rate
+        else:
+            self.all_quantification = False
 
         for _ in range(self.__class__.MAX_SAMPLE_ATTEMPTS):
-            self.qtype, self.qrange, self.quantity = choice(self.quantifiers)
-            if self.incorrect_mode == 0 and (self.qtype, self.qrange, self.quantity) in Quantifier.zero_quantifiers:
+            self.incorrect_mode = util.sample(self.incorrect_distribution)
+            if self.incorrect_mode == 0 and not self.restrictor_captioner.incorrect_possible():
                 continue
-            elif self.incorrect_mode in (0, 1) and (self.qtype, self.qrange, self.quantity) in Quantifier.tautological_quantifiers:
+            elif self.incorrect_mode == 1 and not self.body_captioner.incorrect_possible():
+                continue
+            elif self.incorrect_mode == 0 and self.zero_quantification:
+                continue
+            elif self.incorrect_mode in (0, 1) and (self.qtype, self.qrange, self.quantity) in self.tautological_quantifiers:
                 # always true in whatever way restrictor/body is changed
+                continue
+            elif self.incorrect_mode == 3 and not any(q == self.quantity and r != self.qrange for r, q in self.quantifiers[self.qtype]):
+                continue
+            elif self.incorrect_mode == 4 and not any(r == self.qrange and q != self.quantity for r, q in self.quantifiers[self.qtype]):
                 continue
             break
         else:
             return False
 
-        predication = predication.copy()
+        if self.incorrect_mode < 2:
+            self.incorrect_qrange = self.qrange
+            self.incorrect_quantity = self.quantity
 
-        if self.incorrect_mode == 0:  # 0: incorrect restrictor
-            # incorrect after correct
-            if (self.qtype, self.qrange, self.quantity) in Quantifier.zero_quantifiers:
-                # always incorrect body for zero quantification, since we need an incorrect body for a correct caption
-                if not self.body_captioner.sample_values(mode=mode, predication=predication):
-                    return False
+        else:  # incorrect quantifier
+            if self.incorrect_mode == 2:
+                closest_quantities = list()
+            for _ in range(self.__class__.MAX_SAMPLE_ATTEMPTS):
+
+                if self.incorrect_mode == 2:  # 2: closest quantity
+                    self.incorrect_qrange = self.qrange
+                    self.incorrect_quantity = None
+                    if self.qrange in ('lt', 'leq') or (self.qrange in ('eq', 'neq') and random() < 0.5):
+                        for r, q in self.quantifiers[self.qtype]:
+                            if r != self.qrange:
+                                continue
+                            elif self.qtype == 'ratio' and q >= self.quantity:
+                                continue
+                            elif self.qtype == 'count' and (q + 1000 * (q < 0) >= self.quantity + 1000 * (self.quantity < 0)):
+                                continue
+                            elif q in closest_quantities:
+                                continue
+                            elif self.incorrect_quantity is None or q > self.incorrect_quantity:
+                                self.incorrect_quantity = q
+                    else:
+                        for r, q in self.quantifiers[self.qtype]:
+                            if r != self.qrange:
+                                continue
+                            elif self.qtype == 'ratio' and q <= self.quantity:
+                                continue
+                            elif self.qtype == 'count' and (q + 1000 * (q < 0) <= self.quantity + 1000 * (self.quantity < 0)):
+                                continue
+                            elif q in closest_quantities:
+                                continue
+                            elif self.incorrect_quantity is None or q < self.incorrect_quantity:
+                                self.incorrect_quantity = q
+                    if self.incorrect_quantity is None:
+                        return False
+                    closest_quantities.append(self.incorrect_quantity)
+                if self.incorrect_mode == 3:  # 3: incorrect range
+                    self.incorrect_qrange = choice([r for r, q in self.quantifiers[self.qtype] if q == self.quantity and r != self.qrange])
+                    self.incorrect_quantity = self.quantity
+                elif self.incorrect_mode == 4:  # 4: incorrect quantity
+                    self.incorrect_qrange = self.qrange
+                    self.incorrect_quantity = choice([q for r, q in self.quantifiers[self.qtype] if r == self.qrange and q != self.quantity])
+                elif self.incorrect_mode == 5:  # 5: incorrect quantifier of same type
+                    self.incorrect_qrange, self.incorrect_quantity = choice(self.quantifiers[self.qtype])
+
+                if Quantifier.tautological(qtype=self.qtype, qrange1=self.qrange, quantity1=self.quantity, qrange2=self.incorrect_qrange, quantity2=self.incorrect_quantity):
+                    continue
+                elif (self.qtype, self.incorrect_qrange, self.incorrect_quantity) in self.tautological_quantifiers:
+                    # always true, so never incorrect
+                    continue
+                elif self.zero_quantification and (self.qtype, self.incorrect_qrange, self.incorrect_quantity) in self.zero_included_quantifiers:
+                    # always true if zero, so never incorrect
+                    continue
+                elif not self.zero_quantification and (self.qtype, self.incorrect_qrange, self.incorrect_quantity) in Quantifier.zero_negated_quantifiers:
+                    # always true unless zero, so never incorrect
+                    continue
+                elif self.all_quantification and (self.qtype, self.incorrect_qrange, self.incorrect_quantity) in self.all_included_quantifiers:
+                    # always true if all, so never incorrect
+                    continue
+                elif not self.all_quantification and (self.qtype, self.incorrect_qrange, self.incorrect_quantity) in self.all_negated_quantifiers:
+                    # always true unless all, so never incorrect
+                    continue
+                break
+
             else:
-                if not self.body_captioner.sample_values(mode=mode, predication=predication):
-                    return False
-            if not self.restrictor_captioner.sample_values(mode=mode, predication=predication):
                 return False
-
-        else:
-            if not self.restrictor_captioner.sample_values(mode=mode, predication=predication):
-                return False
-            if (self.qtype, self.qrange, self.quantity) in Quantifier.zero_quantifiers:
-                # always incorrect body for zero quantification, since we need an incorrect body for a correct caption
-                if not self.body_captioner.sample_values(mode=mode, predication=predication):
-                    return False
-            else:
-                if not self.body_captioner.sample_values(mode=mode, predication=predication):
-                    return False
-
-        if self.incorrect_mode == 2:  # 2: incorrect quantifier
-            self.incorrect_quantifiers = [(qtype, qrange, quantity) for qtype, qrange, quantity in self.quantifiers if qtype != self.qtype or qrange != self.qrange or quantity != self.quantity]
 
         return True
 
+    def incorrect_possible(self):
+        return True
+
     def model(self):
-        return util.merge_dicts(
-            dict1=super(QuantifierCaptioner, self).model(),
-            dict2=dict(
-                qtype=self.qtype,
-                qrange=self.qrange,
-                quantity=self.quantity,
-                incorrect_mode=self.incorrect_mode,
-                restrictor_captioner=self.restrictor_captioner.model(),
-                body_captioner=self.body_captioner.model()
-            )
+        model = super(QuantifierCaptioner, self).model()
+        model.update(
+            qtype=self.qtype,
+            qrange=self.qrange,
+            quantity=self.quantity,
+            incorrect_mode=self.incorrect_mode,
+            zero_quantification=self.zero_quantification,
+            all_quantification=self.all_quantification,
+            restrictor_captioner=self.restrictor_captioner.model(),
+            body_captioner=self.body_captioner.model()
         )
+        if self.incorrect_mode >= 2:  # incorrect quantifier
+            model.update(
+                incorrect_qrange=self.incorrect_qrange,
+                incorrect_quantity=self.incorrect_quantity
+            )
+        return model
 
     def caption(self, predication, world):
         assert predication.empty()
@@ -129,7 +221,7 @@ class QuantifierCaptioner(WorldCaptioner):
         body_predication = predication.sub_predication()
         rstr_body_predication = predication.sub_predication()
 
-        if (self.qtype, self.qrange, self.quantity) in Quantifier.zero_quantifiers:
+        if self.zero_quantification:
             # special case: zero quantifier, hence incorrect body
             rstr_body_predication_copy = rstr_body_predication.copy()
             body = self.body_captioner.caption(predication=rstr_body_predication_copy, world=world)
@@ -158,9 +250,10 @@ class QuantifierCaptioner(WorldCaptioner):
         if self.quantity < 0 and -(self.quantity + 1) > rstr_predication.num_agreeing:
             return None
 
-        if not self.pragmatical_tautology and (self.qtype, self.qrange, self.quantity) not in Quantifier.all_quantifiers and rstr_predication.equals(other=body_predication):
-            # all quantification is inherently tautological
-            return None
+        # also for incorrect
+        # if not self.pragmatical_tautology and not self.all_quantification and len(rstr_body_predication.agreeing) > 1 and (body_predication.equals(other=rstr_body_predication) or rstr_predication.equals(other=rstr_body_predication)):
+        #     # all quantification is inherently tautological
+        #     return None
 
         return Quantifier(qtype=self.qtype, qrange=self.qrange, quantity=self.quantity, restrictor=restrictor, body=body)
 
@@ -181,8 +274,7 @@ class QuantifierCaptioner(WorldCaptioner):
             caption.restrictor.apply_to_predication(predication=rstr_predication)
             body_predication = predication.sub_predication()
             rstr_body_predication = predication.sub_predication(predication=rstr_predication.copy())
-            if (self.qtype, self.qrange, self.quantity) in Quantifier.zero_quantifiers:
-                # special case: zero quantifier, hence correct body
+            if self.zero_quantification:
                 caption.body = self.body_captioner.caption(predication=rstr_body_predication, world=world)
                 if caption.body is None:
                     return False
@@ -191,15 +283,16 @@ class QuantifierCaptioner(WorldCaptioner):
                     return False
             caption.body.apply_to_predication(predication=body_predication)
 
-        elif self.incorrect_mode == 2:  # 2: incorrect quantifier
-            caption.qtype, caption.qrange, caption.quantity = choice(self.quantifiers)
+        elif self.incorrect_mode >= 2:  # incorrect quantifier
+            caption.qrange = self.incorrect_qrange
+            caption.quantity = self.incorrect_quantity
             rstr_predication, body_predication, _ = caption.apply_to_predication(predication=predication)
 
         if caption.quantity < 0 and -(caption.quantity + 1) > rstr_predication.num_agreeing:
             return None
 
-        if not self.pragmatical_tautology and (caption.qtype, caption.qrange, caption.quantity) not in Quantifier.all_quantifiers and rstr_predication.equals(other=body_predication):
-            # all quantification is inherently tautological
-            return False
+        # if not self.pragmatical_tautology and not self.all_quantification and rstr_predication.equals(other=body_predication):
+        #     # all quantification is inherently tautological
+        #     return False
 
         return True

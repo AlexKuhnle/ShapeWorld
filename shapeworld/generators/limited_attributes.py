@@ -1,4 +1,4 @@
-from random import choice, random
+from random import random
 from shapeworld import util
 from shapeworld.world import Entity
 from shapeworld.generators import GenericGenerator
@@ -23,14 +23,14 @@ class LimitedAttributesGenerator(GenericGenerator):
         entity_counts=(1,),
         train_entity_counts=None,
         validation_entity_counts=None,
-        validation_count_rate=0.5,
         test_entity_counts=None,
+        validation_count_rate=0.5,
         test_count_rate=0.5,
         validation_combinations=None,
-        validation_space_rate_range=(0.0, 1.0),
-        validation_combination_rate=0.5,
         test_combinations=None,
+        validation_space_rate_range=(0.0, 1.0),
         test_space_rate_range=(0.0, 1.0),
+        validation_combination_rate=0.5,
         test_combination_rate=0.5,
         max_provoke_collision_rate=0.33,
         shapes_range=(3, 4),
@@ -53,15 +53,15 @@ class LimitedAttributesGenerator(GenericGenerator):
             entity_counts=entity_counts,
             train_entity_counts=train_entity_counts,
             validation_entity_counts=validation_entity_counts,
-            validation_count_rate=validation_count_rate,
             test_entity_counts=test_entity_counts,
+            validation_count_rate=validation_count_rate,
             test_count_rate=test_count_rate,
             validation_combinations=validation_combinations,
-            validation_combination_rate=validation_combination_rate,
-            validation_space_rate_range=validation_space_rate_range,
             test_combinations=test_combinations,
-            test_combination_rate=test_combination_rate,
-            test_space_rate_range=test_space_rate_range
+            validation_space_rate_range=validation_space_rate_range,
+            test_space_rate_range=test_space_rate_range,
+            validation_combination_rate=validation_combination_rate,
+            test_combination_rate=test_combination_rate
         )
 
         assert isinstance(max_provoke_collision_rate, float) and 0.0 <= max_provoke_collision_rate <= 1.0
@@ -75,7 +75,9 @@ class LimitedAttributesGenerator(GenericGenerator):
         self.textures_range = textures_range
 
     def initialize(self, mode):
-        super(LimitedAttributesGenerator, self).initialize(mode=mode)
+        if not super(LimitedAttributesGenerator, self).initialize(mode=mode):
+            return False
+
         self.provoke_collision_rate = random() * self.max_provoke_collision_rate
 
         self.selected_shapes = self.shapes
@@ -97,6 +99,8 @@ class LimitedAttributesGenerator(GenericGenerator):
             self.selected_colors = util.choice(items=self.selected_colors, num_range=self.colors_range, auxiliary=self.colors)
         if self.textures_range is not None:
             self.selected_textures = util.choice(items=self.selected_textures, num_range=self.textures_range, auxiliary=self.textures)
+
+        return True
 
     def model(self):
         return util.merge_dicts(

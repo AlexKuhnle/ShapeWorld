@@ -19,23 +19,16 @@ class ShapeDataset(ClassificationDataset):
         collision_shade_difference=0.5,
         boundary_tolerance=None,
         entity_counts=(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15),
-        train_entity_counts=(1, 2, 4, 6, 7, 9, 11, 12, 14),
-        validation_entity_counts=(3, 8, 13),
+        train_entity_counts=None,
+        validation_entity_counts=None,
         validation_count_rate=0.5,
-        test_entity_counts=(5, 10, 15),
+        test_entity_counts=None,
         test_count_rate=0.5,
         max_provoke_collision_rate=0.33,
         multi_class=True,
         count_class=False,
         pixel_noise_stddev=0.0
     ):
-
-        if not multi_class and entity_counts == (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15) and train_entity_counts == (1, 2, 4, 6, 7, 9, 11, 12, 14) and validation_entity_counts == (3, 8, 13) and test_entity_counts == (5, 10, 15):
-            # correct entity_counts for not multi_class in default setting
-            entity_counts = (1,)
-            train_entity_counts = (1,)
-            validation_entity_counts = (1,)
-            test_entity_counts = (1,)
 
         world_generator = RandomAttributesGenerator(
             world_size=world_size,
@@ -59,7 +52,6 @@ class ShapeDataset(ClassificationDataset):
             max_provoke_collision_rate=max_provoke_collision_rate
         )
 
-        assert multi_class == (len(entity_counts) > 1 or entity_counts[0] != 1)
         num_classes = len(world_generator.shapes) * len(world_generator.colors) * len(world_generator.textures)
 
         super(ShapeDataset, self).__init__(

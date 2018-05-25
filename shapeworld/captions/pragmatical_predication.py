@@ -39,9 +39,6 @@ class PragmaticalPredication(object):
     def empty(self):
         return len(self.ambiguous) == 0 and len(self.disagreeing) == 0
 
-    def random_agreeing_entity(self):
-        return choice(list(self.agreeing))
-
     def redundant(self, predicate, **kwargs):
         assert isinstance(predicate, Predicate)
         return util.all_and_any(predicate.pred_agreement(entity=entity, **kwargs) for entity in self.agreeing)
@@ -113,6 +110,10 @@ class PragmaticalPredication(object):
     def __ge__(self, other):
         assert all(entity1 == entity2 for entity1, entity2 in zip(self.entities, other.entities))
         return all(entity in self.agreeing for entity in other.agreeing) and all(entity in self.not_disagreeing for entity in other.ambiguous)
+
+    def disjoint(self, other):
+        assert all(entity1 == entity2 for entity1, entity2 in zip(self.entities, other.entities))
+        return (len(self.agreeing) == 0 or len(other.agreeing) == 0) or all(entity not in other.not_disagreeing for entity in self.agreeing) and all(entity not in self.not_disagreeing for entity in other.agreeing)
 
     def equals(self, other):
         assert all(entity1 == entity2 for entity1, entity2 in zip(self.entities, other.entities))

@@ -1,0 +1,9 @@
+{
+    "type": "agreement",
+    "name": "existential",
+    "train_entity_counts": [1, 2, 3, 4, 5, 7],
+    "validation_entity_counts": [6],
+    "test_entity_counts": [8],
+    "validation_combinations": [["square", "red", "solid"], ["triangle", "green", "solid"], ["circle", "blue", "solid"]],
+    "test_combinations": [["rectangle", "yellow", "solid"], ["cross", "magenta", "solid"], ["ellipse", "cyan", "solid"]]
+}
