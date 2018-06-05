@@ -1,5 +1,6 @@
 {
     "type": "agreement",
     "name": "relational",
-    "relations": [["x-rel", "*"], ["y-rel", "*"], ["z-rel", "*"], ["proximity-rel", "*"]]
+    "relations": [["x-rel", "*"], ["y-rel", "*"], ["z-rel", "*"], ["proximity-rel", "*"]],
+    "negation": false
 }

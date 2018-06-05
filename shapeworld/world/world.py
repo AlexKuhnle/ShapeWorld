@@ -31,7 +31,7 @@ class World(Entity):
 
     @staticmethod
     def from_model(model):
-        world = World(size=model['size'], color=Color.from_model(model['color']))
+        world = World(size=model['size'], color=Color.from_model(model['color']['name']))
         for entity_model in model['entities']:
             world.entities.append(Entity.from_model(entity_model))
         if 'meta' in model:

@@ -28,12 +28,12 @@ python generate.py -d examples/agreement/relational-spatial -U -t agreement -n r
     --captions-per-instance 5 \
     | tee -a results.txt
 
-python generate.py -d examples/agreement/relational-samediff -U -t agreement -n \
-    -c configs/agreement/relational-samediff.json -i 100 -M -H -N --config-values \
+python generate.py -d examples/agreement/relational-attribute -U -t agreement -n relational \
+    -c configs/agreement/relational-attribute.json -i 100 -M -H -N --config-values \
     --world-size 100 --captions-per-instance 5 \
     | tee -a results.txt
 
-python generate.py -d examples/agreement/relational-comparative -U -t agreement -n \
+python generate.py -d examples/agreement/relational-comparative -U -t agreement -n relational \
     -c configs/agreement/relational-comparative.json -i 100 -M -H -N --config-values \
     --world-size 100 --captions-per-instance 5 \
     | tee -a results.txt
@@ -50,19 +50,9 @@ python generate.py -d examples/agreement/selection-full -U -t agreement -n selec
     | tee -a results.txt
 
 # quantification
-python generate.py -d examples/agreement/quantification-count_equal -U -t agreement \
-    -n quantification -c configs/agreement/quantification-count_equal.json -i 100 -M -H -N \
-    --config-values --world-size 100 --captions-per-instance 5 \
-    | tee -a results.txt
-
 python generate.py -d examples/agreement/quantification-count -U -t agreement -n quantification \
     -c configs/agreement/quantification-count.json -i 100 -M -H -N --config-values \
     --world-size 100 --captions-per-instance 5 \
-    | tee -a results.txt
-
-python generate.py -d examples/agreement/quantification-ratio_equal -U -t agreement \
-    -n quantification -c configs/agreement/quantification-ratio_equal.json -i 100 -M -H -N \
-    --config-values --world-size 100 --captions-per-instance 5 \
     | tee -a results.txt
 
 python generate.py -d examples/agreement/quantification-ratio -U -t agreement -n quantification \

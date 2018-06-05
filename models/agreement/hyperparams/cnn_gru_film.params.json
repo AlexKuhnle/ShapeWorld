@@ -1,0 +1,19 @@
+{
+    "learning_rate": 3e-4,
+    "weight_decay": 1e-5,
+    "clip_gradients": null,
+    "dropout_rate": 0.0,
+    "cnn_size": 128,
+    "cnn_depth": 3,
+    "cnn_block_depth": 2,
+    "embedding_size": 200,
+    "gru_size": 4096,
+    "caption_reduction": "state",
+    "film_size": 128,
+    "film_depth": 4,
+    "conv_size": 512,
+    "world_reduction": "max",
+    "mlp_size": 1024,
+    "mlp_depth": 1,
+    "soft": 0.0
+}

@@ -1,5 +1,0 @@
-{
-    "type": "agreement",
-    "name": "quantification",
-    "quantifiers": [["count", "eq", "*"]]
-}

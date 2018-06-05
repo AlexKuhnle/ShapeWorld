@@ -1,0 +1,600 @@
+a yellow shape is a different shape from a red triangle .
+a cross is a different shape from a red shape .
+a red shape is a different shape from a red cross .
+a yellow shape is a different shape from a red cross .
+a red triangle is the same shape as a magenta shape .
+
+an ellipse is a different color from a gray shape .
+a gray shape is a different shape from a yellow ellipse .
+a blue shape is the same color as a gray rectangle .
+a gray shape is a different shape from a square .
+a circle is the same color as a gray rectangle .
+
+a pentagon is the same color as a magenta triangle .
+a red shape is the same shape as a gray cross .
+a blue shape is the same shape as a blue triangle .
+a blue shape is the same shape as a gray cross .
+a cross is a different color from a blue triangle .
+
+a green shape is the same color as an ellipse .
+a cyan shape is the same shape as a blue circle .
+a semicircle is the same color as a blue shape .
+a green shape is a different color from a circle .
+a magenta shape is a different color from a green ellipse .
+
+a magenta shape is a different shape from a cyan square .
+a red shape is the same shape as a yellow pentagon .
+a pentagon is a different color from a red pentagon .
+a red pentagon is the same shape as a red shape .
+a magenta shape is a different shape from a blue pentagon .
+
+a magenta shape is a different color from a magenta pentagon .
+an ellipse is a different color from a pentagon .
+a cross is a different color from a pentagon .
+a magenta shape is a different shape from a magenta pentagon .
+a gray shape is the same color as a cross .
+
+a red pentagon is the same shape as a red shape .
+a square is the same color as a green circle .
+a square is the same color as a circle .
+a yellow shape is a different shape from a red shape .
+a gray shape is the same color as a green circle .
+
+a gray shape is a different shape from a yellow semicircle .
+a semicircle is the same shape as a blue shape .
+a blue shape is a different shape from a yellow semicircle .
+a blue semicircle is a different color from a pentagon .
+a yellow shape is a different shape from a red rectangle .
+
+a triangle is a different color from a yellow shape .
+a pentagon is a different color from a red shape .
+a semicircle is a different color from a yellow triangle .
+a triangle is a different color from a red cross .
+a green pentagon is a different shape from a red shape .
+
+a circle is a different color from a gray rectangle .
+a rectangle is the same color as a cyan rectangle .
+a gray shape is a different shape from a red rectangle .
+a circle is the same color as a cyan shape .
+a cyan shape is a different shape from a cyan rectangle .
+
+a green shape is a different shape from a blue circle .
+a green shape is the same shape as an ellipse .
+a magenta shape is the same color as a magenta ellipse .
+a red shape is the same shape as a magenta shape .
+a gray shape is a different shape from a pentagon .
+
+a triangle is a different color from a red shape .
+a red shape is the same shape as a pentagon .
+a pentagon is the same shape as a red shape .
+a red shape is the same shape as a red triangle .
+a green shape is a different color from a triangle .
+
+a green shape is a different shape from a circle .
+a cyan shape is a different shape from an ellipse .
+a circle is a different color from a red ellipse .
+a cyan ellipse is a different shape from a yellow shape .
+a cyan shape is the same shape as a green ellipse .
+
+a red shape is the same shape as a magenta cross .
+a triangle is the same shape as a red shape .
+a magenta shape is the same shape as a red triangle .
+an ellipse is a different shape from a magenta shape .
+a cross is the same color as a red triangle .
+
+a triangle is the same color as a red square .
+a green shape is a different shape from an ellipse .
+a triangle is a different shape from a magenta shape .
+a green shape is a different shape from a yellow triangle .
+a semicircle is a different color from a yellow triangle .
+
+a gray shape is a different shape from a cyan cross .
+a gray shape is a different shape from an ellipse .
+a pentagon is a different color from a semicircle .
+a rectangle is a different shape from a gray shape .
+a semicircle is the same color as a red square .
+
+a cyan pentagon is a different shape from a yellow shape .
+a red shape is the same shape as a cyan pentagon .
+a square is the same color as a green semicircle .
+a circle is the same color as a cyan cross .
+a magenta shape is the same shape as a cyan pentagon .
+
+a pentagon is a different color from a cyan shape .
+a cross is a different color from a green square .
+a pentagon is a different color from a cyan cross .
+an ellipse is the same color as a cyan shape .
+a blue shape is a different shape from a gray ellipse .
+
+a green shape is the same color as a pentagon .
+a circle is the same color as a cyan pentagon .
+a red shape is the same shape as a triangle .
+a green square is the same color as a pentagon .
+a triangle is a different color from a green pentagon .
+
+a triangle is a different color from a gray rectangle .
+a pentagon is a different color from a red shape .
+a cyan shape is a different shape from a triangle .
+a gray triangle is a different shape from a gray shape .
+a red triangle is a different color from a triangle .
+
+a yellow shape is a different color from a magenta rectangle .
+a cross is a different shape from a gray shape .
+a cyan shape is the same shape as a rectangle .
+a rectangle is the same color as a gray cross .
+a yellow shape is a different shape from a cyan circle .
+
+a red shape is a different shape from a red pentagon .
+a cyan shape is the same shape as a rectangle .
+a rectangle is the same color as a green shape .
+a gray shape is a different shape from a square .
+a rectangle is the same color as a red shape .
+
+a cyan ellipse is the same shape as a gray shape .
+a gray ellipse is the same shape as a cyan shape .
+a triangle is a different color from a gray ellipse .
+a gray shape is a different color from a gray ellipse .
+a gray shape is the same shape as an ellipse .
+
+a triangle is a different color from a yellow circle .
+a green shape is the same color as a yellow circle .
+a red shape is the same shape as a yellow circle .
+a circle is a different color from a yellow shape .
+a magenta shape is a different shape from a green triangle .
+
+a square is a different color from a blue pentagon .
+a red shape is the same shape as a blue square .
+a square is the same color as a blue shape .
+a cyan shape is a different shape from a red ellipse .
+a blue shape is the same color as a square .
+
+a magenta shape is the same color as a triangle .
+a cross is a different color from a red shape .
+a magenta shape is a different shape from a rectangle .
+a magenta shape is the same shape as a magenta rectangle .
+a red shape is the same color as a triangle .
+
+a cyan shape is the same shape as a magenta triangle .
+a pentagon is the same color as a cyan shape .
+a magenta pentagon is the same shape as a cyan shape .
+a cyan shape is a different color from a green semicircle .
+a green semicircle is a different shape from a gray shape .
+
+a blue shape is the same shape as a green semicircle .
+a square is the same color as a blue pentagon .
+a semicircle is the same color as a green pentagon .
+an ellipse is the same color as a magenta shape .
+a cyan shape is a different shape from a blue pentagon .
+
+a semicircle is the same color as a gray shape .
+a rectangle is a different color from a gray pentagon .
+a pentagon is a different color from a gray pentagon .
+a cross is a different color from a cross .
+a gray shape is a different shape from a rectangle .
+
+a blue rectangle is the same color as an ellipse .
+an ellipse is a different color from a magenta rectangle .
+a cyan shape is the same shape as a magenta rectangle .
+an ellipse is the same color as a blue ellipse .
+a blue shape is the same shape as a rectangle .
+
+a pentagon is the same color as a cyan square .
+a yellow rectangle is a different shape from a blue shape .
+a triangle is a different color from a cyan rectangle .
+a cyan square is the same color as a rectangle .
+a red shape is a different shape from a rectangle .
+
+a semicircle is the same color as a cyan ellipse .
+a magenta square is a different color from a triangle .
+a square is the same color as a cyan triangle .
+a cyan shape is the same color as a blue square .
+a magenta pentagon is a different shape from a cyan shape .
+
+a cyan square is a different color from a rectangle .
+a gray shape is a different shape from a yellow rectangle .
+a red shape is a different shape from a square .
+a blue shape is the same shape as a red semicircle .
+a red shape is the same color as a rectangle .
+
+a square is a different color from a yellow shape .
+a blue shape is the same shape as a yellow square .
+a yellow shape is a different color from a semicircle .
+a gray shape is a different shape from a magenta cross .
+a yellow shape is the same shape as a yellow square .
+
+a rectangle is a different shape from a cyan shape .
+a cyan shape is the same shape as a rectangle .
+a triangle is the same color as a cyan shape .
+a semicircle is a different color from a yellow ellipse .
+a gray shape is a different color from a cyan rectangle .
+
+a red shape is the same shape as a blue semicircle .
+a red shape is the same shape as a green semicircle .
+a cross is the same color as a cyan shape .
+a square is the same shape as a cyan shape .
+a blue shape is a different shape from a cyan triangle .
+
+a semicircle is the same shape as a yellow shape .
+a rectangle is a different color from a blue semicircle .
+a square is the same color as a green ellipse .
+a yellow shape is the same color as a blue semicircle .
+a semicircle is the same color as a blue square .
+
+a cyan shape is a different shape from a magenta ellipse .
+a square is a different color from a blue ellipse .
+a gray shape is a different color from a blue ellipse .
+a yellow shape is a different shape from a blue ellipse .
+a yellow shape is a different shape from a blue ellipse .
+
+a blue shape is the same color as a gray rectangle .
+a gray shape is the same shape as a blue square .
+a gray shape is the same shape as a rectangle .
+a blue cross is a different shape from a blue shape .
+a gray shape is a different shape from a gray semicircle .
+
+a cyan shape is a different shape from a yellow circle .
+a rectangle is the same shape as a cyan shape .
+a cyan shape is the same shape as a yellow circle .
+a gray shape is a different color from a yellow rectangle .
+a rectangle is the same color as a circle .
+
+a semicircle is the same color as a magenta shape .
+a green shape is the same shape as a magenta square .
+a green shape is the same shape as a magenta square .
+a gray shape is the same shape as a square .
+a green shape is the same color as a cross .
+
+a cyan shape is the same shape as a gray cross .
+a semicircle is the same color as a gray triangle .
+a magenta shape is a different shape from a gray cross .
+a gray ellipse is the same color as a cross .
+a rectangle is the same color as a gray triangle .
+
+a yellow pentagon is a different shape from a blue shape .
+a triangle is a different shape from a blue shape .
+a gray shape is a different shape from a blue shape .
+a blue triangle is a different color from a triangle .
+a triangle is the same color as a red triangle .
+
+a yellow shape is the same shape as a pentagon .
+a red ellipse is a different color from a pentagon .
+a blue square is a different color from a pentagon .
+a cyan shape is the same shape as a blue square .
+a gray shape is a different shape from a yellow pentagon .
+
+a square is the same color as a rectangle .
+an ellipse is the same color as a gray cross .
+a magenta shape is a different shape from a cyan rectangle .
+a rectangle is a different color from a blue semicircle .
+a pentagon is the same color as a blue shape .
+
+a cyan shape is a different color from an ellipse .
+a gray shape is a different shape from a square .
+a square is a different shape from a gray shape .
+a rectangle is a different color from a cyan pentagon .
+a rectangle is the same color as a cyan pentagon .
+
+a magenta shape is the same color as a blue pentagon .
+a gray triangle is the same shape as a red shape .
+a magenta shape is the same shape as a yellow shape .
+a red shape is the same shape as a blue triangle .
+a circle is a different color from a red ellipse .
+
+a circle is the same color as a cyan circle .
+a red shape is a different shape from a circle .
+a gray shape is a different shape from a cyan circle .
+a yellow shape is the same shape as a cyan circle .
+a cyan shape is the same shape as a gray triangle .
+
+a square is a different color from a blue shape .
+an ellipse is the same color as a cyan cross .
+a magenta shape is the same shape as a blue ellipse .
+an ellipse is a different color from a cyan shape .
+a gray shape is the same shape as a magenta cross .
+
+a gray cross is the same color as a cross .
+an ellipse is a different shape from a gray shape .
+a gray shape is the same shape as a red semicircle .
+a gray shape is the same color as an ellipse .
+a cross is a different shape from a gray shape .
+
+a square is a different shape from a yellow shape .
+a pentagon is the same color as a gray pentagon .
+a gray shape is a different shape from a pentagon .
+a green pentagon is the same color as a pentagon .
+a blue shape is a different shape from a green pentagon .
+
+a cross is the same shape as a green shape .
+a cross is a different color from a cyan cross .
+a green shape is a different color from a blue cross .
+a magenta shape is a different shape from a cyan rectangle .
+a yellow shape is the same shape as a cyan cross .
+
+a green shape is the same shape as a semicircle .
+a circle is a different color from a green shape .
+a semicircle is the same color as a yellow shape .
+a cyan triangle is the same color as a semicircle .
+a pentagon is the same shape as a green shape .
+
+a semicircle is the same shape as a blue shape .
+a green semicircle is the same shape as a red shape .
+a red shape is a different color from a green semicircle .
+a rectangle is a different color from a blue shape .
+an ellipse is the same color as a blue shape .
+
+a magenta triangle is a different color from an ellipse .
+a blue triangle is the same shape as a cyan shape .
+a yellow shape is the same shape as a cyan square .
+a triangle is the same color as a magenta ellipse .
+a semicircle is a different color from a blue shape .
+
+a cyan shape is the same shape as a green pentagon .
+a pentagon is the same color as a blue triangle .
+a pentagon is the same color as a yellow shape .
+a pentagon is the same color as a blue triangle .
+a pentagon is the same color as a yellow shape .
+
+a triangle is a different color from a red pentagon .
+a blue shape is a different color from a triangle .
+an ellipse is a different color from a magenta shape .
+a blue shape is a different shape from a yellow triangle .
+a red shape is a different shape from a magenta cross .
+
+a blue cross is a different color from a rectangle .
+a yellow shape is a different shape from a rectangle .
+a rectangle is a different color from a magenta rectangle .
+a gray triangle is the same color as a pentagon .
+a gray shape is the same shape as a magenta rectangle .
+
+a triangle is a different color from a gray circle .
+a circle is the same color as a cyan shape .
+an ellipse is a different shape from a green shape .
+a rectangle is a different shape from a cyan shape .
+a magenta shape is a different color from a cyan rectangle .
+
+a cross is a different color from a cyan shape .
+a gray shape is the same color as a square .
+a cyan shape is a different color from a semicircle .
+a cyan square is the same shape as a magenta shape .
+a cyan shape is a different shape from a magenta shape .
+
+a magenta shape is a different shape from a cyan circle .
+a magenta shape is a different shape from a cross .
+a square is a different color from a gray shape .
+a red shape is a different shape from a square .
+a red shape is the same shape as a cyan circle .
+
+a semicircle is the same color as a red cross .
+a triangle is a different color from a red ellipse .
+a triangle is a different color from a red ellipse .
+a blue shape is a different shape from a gray triangle .
+a gray shape is the same shape as a cross .
+
+a cyan cross is the same shape as a cyan shape .
+a circle is the same color as a cyan square .
+a yellow shape is a different color from a triangle .
+a red shape is the same shape as a cyan cross .
+a cyan shape is the same shape as a yellow triangle .
+
+a yellow shape is a different shape from a cyan square .
+a magenta shape is a different shape from a gray pentagon .
+a triangle is the same color as a gray shape .
+a red pentagon is a different color from a pentagon .
+a gray shape is a different shape from a red semicircle .
+
+a cross is the same color as a red shape .
+a cyan shape is a different shape from a red cross .
+a green rectangle is a different shape from a blue shape .
+a cross is the same color as a gray shape .
+a gray shape is a different shape from a rectangle .
+
+a pentagon is a different color from a red pentagon .
+a green shape is a different shape from a triangle .
+a semicircle is the same shape as a cyan shape .
+a circle is a different color from a cyan pentagon .
+a circle is a different color from a cyan pentagon .
+
+a green shape is a different shape from a yellow rectangle .
+a gray shape is a different shape from a yellow rectangle .
+a rectangle is the same color as a cyan ellipse .
+a square is the same shape as a blue shape .
+a cross is the same color as a yellow shape .
+
+a cyan square is a different color from a semicircle .
+a triangle is the same color as a cyan square .
+a triangle is a different color from a cyan shape .
+a cyan triangle is a different color from a square .
+a semicircle is a different color from a yellow square .
+
+a red shape is the same shape as a magenta circle .
+a semicircle is a different shape from a magenta shape .
+a yellow shape is a different shape from a gray circle .
+a magenta shape is the same color as a magenta rectangle .
+a circle is a different shape from a blue shape .
+
+a red shape is the same shape as a blue ellipse .
+a cross is a different color from a green circle .
+a blue shape is the same shape as a red circle .
+a blue circle is a different shape from a green shape .
+a green pentagon is a different shape from a green shape .
+
+a square is the same color as a magenta square .
+a square is the same color as a magenta square .
+a semicircle is a different color from a semicircle .
+a blue shape is a different color from a semicircle .
+a cyan shape is the same shape as a magenta square .
+
+a square is the same shape as a red shape .
+a red shape is the same shape as a cross .
+an ellipse is a different color from a pentagon .
+a red shape is the same shape as a cross .
+a red shape is a different shape from a cross .
+
+a semicircle is a different color from a semicircle .
+a square is the same shape as a cyan shape .
+a pentagon is the same shape as a gray shape .
+a square is a different color from a cyan shape .
+a triangle is a different color from a gray semicircle .
+
+a triangle is the same color as a yellow cross .
+a gray shape is the same shape as a yellow circle .
+a triangle is a different color from a yellow shape .
+a square is a different shape from a yellow shape .
+a rectangle is the same color as a yellow cross .
+
+a circle is the same color as a yellow shape .
+a gray shape is the same color as a rectangle .
+a semicircle is a different color from a yellow rectangle .
+a gray shape is a different shape from a yellow rectangle .
+a cyan shape is a different color from a rectangle .
+
+a square is a different color from a yellow ellipse .
+a green shape is a different shape from a yellow semicircle .
+a rectangle is a different color from a magenta semicircle .
+a green shape is the same color as an ellipse .
+a triangle is a different color from a magenta semicircle .
+
+a red shape is the same shape as a rectangle .
+a gray shape is a different shape from a gray rectangle .
+a red shape is the same color as a red square .
+a red shape is a different shape from a red square .
+a rectangle is the same color as a red shape .
+
+a cyan shape is the same shape as a gray semicircle .
+a triangle is a different color from a gray semicircle .
+a gray shape is a different shape from a pentagon .
+a gray shape is a different shape from a green rectangle .
+a semicircle is the same color as a gray shape .
+
+a magenta shape is a different color from a semicircle .
+a magenta circle is the same shape as a yellow shape .
+a magenta shape is the same shape as a magenta rectangle .
+a blue shape is the same shape as a yellow shape .
+a semicircle is the same color as a blue rectangle .
+
+a gray shape is a different shape from a yellow square .
+a red shape is the same color as a rectangle .
+a yellow square is the same shape as a gray shape .
+a yellow shape is a different shape from a gray ellipse .
+a rectangle is a different color from a red rectangle .
+
+a cross is a different color from a blue cross .
+a blue shape is a different shape from a blue cross .
+a triangle is the same color as a gray cross .
+a rectangle is a different color from a red shape .
+a gray cross is the same color as a rectangle .
+
+a pentagon is the same color as a pentagon .
+a gray shape is a different shape from a cyan pentagon .
+a red shape is the same shape as a cyan triangle .
+a cyan shape is a different color from a triangle .
+a red shape is a different shape from a pentagon .
+
+a triangle is a different color from a blue pentagon .
+a blue shape is the same shape as a green triangle .
+a yellow shape is a different shape from a blue pentagon .
+a circle is the same color as a green triangle .
+a cyan shape is the same color as a red square .
+
+a cross is a different color from a cyan shape .
+a gray shape is a different shape from a blue cross .
+a cyan pentagon is a different color from a cross .
+a cross is the same color as a circle .
+a blue shape is the same shape as a gray shape .
+
+an ellipse is a different color from a magenta shape .
+a magenta shape is a different shape from a magenta ellipse .
+a magenta shape is a different shape from a magenta ellipse .
+a magenta shape is the same shape as a magenta ellipse .
+a rectangle is a different color from a red pentagon .
+
+a square is the same color as a circle .
+a green shape is a different shape from a blue square .
+an ellipse is a different color from a cyan shape .
+an ellipse is the same color as a circle .
+a square is the same color as a blue triangle .
+
+a yellow shape is the same shape as an ellipse .
+a semicircle is a different color from a gray shape .
+a rectangle is a different color from a blue shape .
+a triangle is a different color from a gray square .
+a triangle is the same color as a yellow shape .
+
+a gray shape is a different shape from a red ellipse .
+an ellipse is the same shape as a yellow shape .
+a square is a different color from a yellow shape .
+a semicircle is the same color as a red shape .
+a yellow shape is a different shape from a yellow shape .
+
+a semicircle is a different color from a yellow shape .
+a yellow shape is the same shape as a cyan cross .
+a cyan shape is the same color as a cross .
+a pentagon is a different shape from a cyan shape .
+a red shape is a different shape from a cross .
+
+a red shape is a different shape from a cyan ellipse .
+a magenta shape is a different shape from a pentagon .
+a cyan shape is the same color as a triangle .
+a blue shape is the same shape as a cyan pentagon .
+a blue shape is a different color from a triangle .
+
+a cyan shape is the same shape as a yellow circle .
+a yellow shape is a different shape from a cross .
+a circle is a different color from a gray cross .
+a yellow shape is the same shape as a gray cross .
+a blue circle is the same shape as a gray shape .
+
+a gray shape is the same shape as a cross .
+a circle is a different shape from a gray shape .
+a gray cross is the same color as a cross .
+a green shape is the same color as a green ellipse .
+a pentagon is a different color from a cross .
+
+a green shape is a different shape from a red semicircle .
+a red shape is the same color as a red semicircle .
+a semicircle is the same color as a red semicircle .
+a cyan shape is a different color from a semicircle .
+a rectangle is a different color from a blue pentagon .
+
+an ellipse is a different color from a yellow triangle .
+a triangle is a different shape from a green shape .
+a magenta shape is the same shape as a gray triangle .
+a red shape is the same shape as a gray pentagon .
+a red triangle is a different color from a square .
+
+a blue shape is a different color from a cross .
+a gray shape is the same shape as a blue pentagon .
+a pentagon is a different shape from a blue shape .
+a red shape is the same shape as a blue cross .
+a blue shape is the same shape as a blue pentagon .
+
+a triangle is the same color as a magenta shape .
+a gray shape is the same shape as a cross .
+a circle is a different color from a magenta shape .
+a cross is the same color as a gray rectangle .
+a magenta shape is the same shape as a cross .
+
+a blue shape is the same shape as a square .
+a pentagon is a different color from a cyan shape .
+a rectangle is a different color from a cyan shape .
+a triangle is a different color from a cyan pentagon .
+an ellipse is the same color as a gray rectangle .
+
+a green shape is the same shape as a square .
+a square is a different color from a gray square .
+a green shape is a different shape from a gray cross .
+a red shape is a different shape from a gray square .
+a red shape is the same color as a green triangle .
+
+a semicircle is a different color from a green ellipse .
+a magenta pentagon is the same shape as a green shape .
+a rectangle is the same color as a green semicircle .
+a gray shape is the same shape as an ellipse .
+a gray circle is a different color from a semicircle .
+
+an ellipse is the same color as a yellow shape .
+an ellipse is a different color from a blue triangle .
+a triangle is the same color as a yellow ellipse .
+a yellow shape is the same shape as a cyan ellipse .
+a yellow shape is a different shape from an ellipse .
+

@@ -45,7 +45,6 @@ class RelationCaptioner(WorldCaptioner):
         if self.relations is None:
             self.relations = [(predtype, value) for predtype, values in realizer.relations.items() if predtype not in Relation.meta_relations for value in values]
         else:
-            print(self.relations)
             self.relations = [
                 (predtype, value) for predtype, values in realizer.relations.items() for value in values
                 if any((p == '*' or predtype == p) and (v == '*' or value == v) for p, v in self.relations)

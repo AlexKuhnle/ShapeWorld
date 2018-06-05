@@ -89,9 +89,9 @@ class Shape(object):
                 if point / 100 in shape_obj:
                     contains += 1
             estimated_area = contains / 10000
-            assert shape_obj.area <= 1.0
-            assert shape_obj.area == shape_cls.relative_area()
-            assert abs(shape_obj.area - estimated_area) < 0.011
+            assert shape_obj.area <= 1.0, (shape, shape_obj.area)
+            assert shape_obj.area == shape_cls.relative_area() or shape_obj.area == shape_cls.relative_area() / empirical_distortion_multiplier, (shape, shape_obj.area, shape_cls.relative_area())
+            assert abs(shape_obj.area - estimated_area) < 0.011, (shape, abs(shape_obj.area - estimated_area))
         return True
 
 

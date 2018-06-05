@@ -3,5 +3,6 @@
     "name": "relational",
     "collision_tolerance": 0.0,
     "relations": [["x-rel", "*"], ["y-rel", "*"]],
+    "negation": false,
     "entity_counts": [2]
 }

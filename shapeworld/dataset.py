@@ -647,12 +647,14 @@ class LoadedDataset(Dataset):
 
             for value_name, value_type in self.values.items():
                 value_type, alts = util.alternatives_type(value_type=value_type)
-                if value_type == 'model' and not include_model:
+                if value_type == 'model' and not self.include_model:
                     continue
                 if self.random_sampling or alt_index == -1:
                     value = self.loaded[value_name].pop(index)
                 else:
                     value = self.loaded[value_name][index]
+                if value_type == 'model' and not include_model:
+                    continue
                 if not alternatives and alts:
                     value = value.pop(alt_index)
                 if not alternatives and value_name == 'alternatives':
@@ -692,7 +694,7 @@ class LoadedDataset(Dataset):
             else:
                 shard = available_shards.pop(0)
             num_instances = 0
-            with util.Archive(path=mode_shards[mode][shard], mode='r', archive=self.archive) as read_file:
+            with util.Archive(path=mode_shards[shard], mode='r', archive=self.archive) as read_file:
                 for value_name, value in loaded.items():
                     value.extend(self.deserialize_value(
                         value_name=value_name,

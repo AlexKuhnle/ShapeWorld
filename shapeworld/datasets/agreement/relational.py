@@ -1,6 +1,6 @@
 from shapeworld.dataset import CaptionAgreementDataset
 from shapeworld.generators import ReinforcedAttributesGenerator
-from shapeworld.captioners import RegularTypeCaptioner, RelationCaptioner, ExistentialCaptioner
+from shapeworld.captioners import RegularTypeCaptioner, RelationCaptioner, NegationRelationCaptioner, ExistentialCaptioner
 
 
 class RelationalDataset(CaptionAgreementDataset):
@@ -33,8 +33,9 @@ class RelationalDataset(CaptionAgreementDataset):
         test_combination_rate=0.5,
         max_provoke_collision_rate=0.33,
         relations=None,
-        caption_size=14,
-        vocabulary=('.', 'a', 'above', 'an', 'as', 'behind', 'below', 'bigger', 'blue', 'circle', 'closer', 'color', 'cross', 'cyan', 'darker', 'different', 'ellipse', 'farther', 'from', 'front', 'gray', 'green', 'in', 'is', 'left', 'lighter', 'magenta', 'of', 'pentagon', 'rectangle', 'red', 'right', 'same', 'semicircle', 'shape', 'smaller', 'square', 'than', 'the', 'to', 'triangle', 'yellow'),
+        negation=True,
+        caption_size=15,
+        vocabulary=('.', 'a', 'above', 'an', 'as', 'behind', 'below', 'bigger', 'blue', 'circle', 'closer', 'color', 'cross', 'cyan', 'darker', 'different', 'ellipse', 'farther', 'from', 'front', 'gray', 'green', 'in', 'is', 'left', 'lighter', 'magenta', 'not', 'of', 'pentagon', 'rectangle', 'red', 'right', 'same', 'semicircle', 'shape', 'smaller', 'square', 'than', 'the', 'to', 'triangle', 'yellow'),
         correct_ratio=0.5,
         train_correct_ratio=None,
         validation_correct_ratio=None,
@@ -75,13 +76,19 @@ class RelationalDataset(CaptionAgreementDataset):
             reinforcement_range=(1, 1)
         )
 
+        relation_captioner = RelationCaptioner(
+            reference_captioner=RegularTypeCaptioner(),
+            comparison_captioner=RegularTypeCaptioner(),
+            relations=relations
+        )
+        if negation:
+            relation_captioner = NegationRelationCaptioner(
+                relation_captioner=relation_captioner
+            )
+
         world_captioner = ExistentialCaptioner(
             restrictor_captioner=RegularTypeCaptioner(),
-            body_captioner=RelationCaptioner(
-                reference_captioner=RegularTypeCaptioner(),
-                comparison_captioner=RegularTypeCaptioner(),
-                relations=relations
-            )
+            body_captioner=relation_captioner
         )
 
         super(RelationalDataset, self).__init__(

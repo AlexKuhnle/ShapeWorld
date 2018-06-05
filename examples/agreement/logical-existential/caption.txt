@@ -1,600 +1,600 @@
-a red shape is a red square or a pentagon is a cyan pentagon .
-there is a cyan triangle or a cyan shape is a triangle .
-a cyan shape is a semicircle or a pentagon is a magenta shape .
-a red shape is a square or a shape is a gray shape .
-there is a red square or a magenta shape is a triangle .
+a shape is a red shape if there is a pentagon .
+there is a semicircle if and only if a yellow shape is a square .
+a blue shape is a square if and only if there is a yellow pentagon .
+a shape is a yellow square if and only if a shape is a cyan shape .
+there is a yellow semicircle or a shape is a green shape .
 
-a shape is a triangle or there is a triangle .
-there is a yellow shape and a cross is a green shape .
-a cyan shape is a semicircle and there is a yellow square .
-a shape is a triangle or a shape is a square .
-a semicircle is a gray shape and a yellow shape is a semicircle .
+a rectangle is a yellow shape if and only if a shape is a yellow semicircle .
+there is a magenta shape if there is a yellow semicircle .
+a shape is a square if and only if there is a cyan ellipse .
+a shape is a blue shape and a semicircle is a yellow shape .
+there is a semicircle and a semicircle is a yellow shape .
 
-there is a yellow ellipse or a semicircle is a green semicircle .
-a cyan shape is a square or a semicircle is a yellow shape .
-a blue shape is a triangle or a gray shape is an ellipse .
-a gray shape is a square or a cross is a yellow shape .
-a cross is a gray shape and there is a yellow ellipse .
+a shape is a cross if and only if there is a magenta cross .
+a yellow shape is a circle and a pentagon is a green shape .
+there is a rectangle and a shape is a cyan cross .
+there is a green shape and there is a magenta square .
+a shape is a red shape if and only if there is a cross .
 
-there is a blue triangle and a rectangle is a yellow shape .
-there is a cyan shape and there is a cyan shape .
-there is a circle or a cyan shape is a cyan rectangle .
-there is a green square or there is a red circle .
-there is a cyan rectangle and there is a cyan square .
+there is a yellow rectangle or a shape is a red shape .
+a shape is a rectangle if and only if a gray shape is a semicircle .
+there is a yellow triangle and there is a green square .
+there is a blue square or a shape is a red shape .
+a triangle is a yellow shape or a blue shape is a square .
 
-a semicircle is a gray shape or a gray shape is an ellipse .
-there is a cyan ellipse or a gray shape is a semicircle .
-there is a semicircle and a semicircle is a gray semicircle .
-there is an ellipse or there is a red shape .
-a gray shape is a rectangle and there is a magenta shape .
+there is an ellipse or a rectangle is a red shape .
+a shape is a circle and a blue shape is a semicircle .
+if a shape is a magenta rectangle a magenta shape is an ellipse .
+a shape is a red circle and a shape is a magenta rectangle .
+a cyan shape is an ellipse or there is a cyan ellipse .
 
-there is a green circle or a magenta shape is a cross .
-there is an ellipse or there is a rectangle .
-there is a red pentagon or there is a magenta rectangle .
-a gray shape is a circle and a cyan shape is a rectangle .
-a red shape is a rectangle and there is a green rectangle .
+a shape is a magenta shape if and only if a shape is a blue shape .
+there is a green square if and only if a shape is a gray semicircle .
+a shape is a red square if and only if a shape is a yellow semicircle .
+if a shape is a yellow rectangle a shape is a cross .
+there is a cyan circle or a shape is a gray shape .
 
-a cross is a blue shape or there is a circle .
-there is a blue shape and there is a blue cross .
-a red shape is a cross and there is a blue cross .
-there is a blue cross and a blue shape is an ellipse .
-a cross is a green shape or a blue shape is a square .
+a shape is a cyan square and an ellipse is a blue shape .
+a square is a yellow shape and a shape is a green ellipse .
+there is a cyan rectangle if a shape is a yellow rectangle .
+if a shape is a blue square a shape is a gray square .
+there is a blue shape if a cyan shape is a square .
 
-there is a green pentagon and a shape is a square .
-there is a magenta pentagon or a blue shape is a cross .
-a red shape is a pentagon or there is a red pentagon .
-an ellipse is a cyan shape and a circle is a gray shape .
-a cyan shape is an ellipse and there is a cyan shape .
+there is a magenta shape or a triangle is a yellow shape .
+a shape is a yellow cross and a yellow shape is a cross .
+a yellow shape is a rectangle if and only if there is a yellow cross .
+a shape is a blue pentagon if there is a triangle .
+if a shape is a yellow cross there is a semicircle .
 
-there is a cyan shape and a square is a green shape .
-a rectangle is a magenta shape and there is a gray pentagon .
-there is a blue shape or there is a magenta pentagon .
-a triangle is a cyan shape and there is a magenta ellipse .
-there is a green circle or a rectangle is a magenta shape .
+a shape is a blue pentagon and a pentagon is a blue shape .
+a shape is a blue pentagon if and only if there is an ellipse .
+if there is a magenta pentagon a shape is a blue pentagon .
+a gray shape is a pentagon and a shape is a yellow shape .
+a blue shape is a pentagon and a shape is a pentagon .
 
-there is a circle and a gray shape is a semicircle .
-there is a yellow ellipse and an ellipse is a gray shape .
-a shape is a gray semicircle and there is a gray semicircle .
-there is a yellow shape or a gray shape is an ellipse .
-there is a gray shape and there is a green shape .
+there is a cyan circle if a shape is a pentagon .
+a cyan shape is a cross and there is a square .
+a shape is an ellipse or a gray shape is an ellipse .
+a cyan shape is a cross if and only if a circle is a red shape .
+a shape is a magenta pentagon and there is a cyan circle .
 
-a red shape is a triangle or a blue shape is an ellipse .
-a shape is a magenta semicircle or there is a cyan ellipse .
-there is a pentagon or a blue shape is a rectangle .
-there is a triangle and a circle is a gray shape .
-there is a magenta rectangle or a semicircle is a gray semicircle .
+a shape is a green shape or a cyan shape is a rectangle .
+if a shape is a cyan circle a shape is a pentagon .
+a shape is a cyan shape and there is a cyan shape .
+a shape is a yellow circle or a green shape is a circle .
+a shape is a cyan circle and there is a magenta cross .
 
-there is a gray rectangle and there is a blue shape .
-there is a gray shape or a green shape is a pentagon .
-there is a magenta pentagon and there is a red shape .
-a magenta shape is a semicircle or a semicircle is a magenta semicircle .
-there is a blue ellipse and a shape is a yellow shape .
+a shape is a green rectangle if and only if a cross is a green shape .
+a shape is a green circle and there is a magenta semicircle .
+a green shape is a square if a shape is a rectangle .
+a shape is a green rectangle or a shape is a green shape .
+there is a semicircle or a shape is an ellipse .
 
-there is a magenta rectangle or a cyan shape is an ellipse .
-there is a green pentagon and there is a gray shape .
-there is a magenta shape and an ellipse is a magenta shape .
-a cross is a red shape or there is a red shape .
-a cross is a gray cross and there is a rectangle .
+there is a blue cross or a shape is a cyan square .
+there is a square and there is a gray shape .
+a shape is a red semicircle or there is a green shape .
+a shape is an ellipse if and only if a shape is a gray square .
+if there is a blue shape a shape is a blue shape .
 
-there is a yellow ellipse and a triangle is a red triangle .
-there is a cyan triangle or a magenta shape is a magenta cross .
-a shape is an ellipse and there is a gray shape .
-there is a cyan triangle and a shape is a yellow shape .
-a magenta shape is a rectangle and there is an ellipse .
+a shape is a cyan square or a square is a blue shape .
+a shape is a blue shape and a shape is a gray triangle .
+a cyan shape is a rectangle if and only if a shape is a cyan rectangle .
+a shape is a square if and only if a shape is an ellipse .
+a shape is a gray cross if a shape is a triangle .
 
-there is a rectangle or a cross is a cyan shape .
-a magenta shape is a triangle or there is a cross .
-there is a magenta triangle and there is a magenta triangle .
-there is a magenta cross or a pentagon is a green shape .
-there is a gray rectangle and there is a green shape .
+there is a cyan shape if a shape is a gray semicircle .
+a shape is a green shape and a gray shape is a rectangle .
+there is a magenta circle if and only if there is a green circle .
+a pentagon is a yellow shape if and only if a shape is a green pentagon .
+a shape is a cross if and only if a green shape is a rectangle .
 
-a shape is a yellow ellipse or there is a gray rectangle .
-a semicircle is a blue shape or a shape is a semicircle .
-there is a gray rectangle or there is a cyan ellipse .
-there is a yellow ellipse and there is a magenta ellipse .
-there is a green pentagon or there is a red pentagon .
+a shape is a gray shape and there is a gray semicircle .
+if there is a magenta rectangle a square is a magenta shape .
+there is a gray shape if there is a gray shape .
+a shape is a blue triangle and there is a yellow rectangle .
+there is an ellipse or a shape is a magenta rectangle .
 
-an ellipse is a cyan shape and a triangle is a green shape .
-there is a yellow cross and there is a pentagon .
-there is a pentagon or there is a red triangle .
-there is a red ellipse or an ellipse is a magenta shape .
-there is a green cross and there is a gray ellipse .
+a pentagon is a yellow shape if and only if a shape is a gray square .
+if there is a blue square an ellipse is a blue shape .
+a shape is a cyan shape if there is a circle .
+there is a square and there is a red shape .
+a square is a gray shape if and only if a triangle is a gray shape .
 
-there is a blue semicircle and a gray shape is a circle .
-a shape is a square or a green shape is a cross .
-there is a cyan rectangle and a shape is a cross .
-a green shape is a rectangle and a green shape is a square .
-there is a blue circle and a green shape is a green cross .
+an ellipse is a red shape or there is a red ellipse .
+a shape is a yellow pentagon if a shape is a pentagon .
+a rectangle is a red shape if and only if a yellow shape is a pentagon .
+there is a yellow triangle or a shape is a yellow pentagon .
+if an ellipse is a yellow shape there is a rectangle .
 
-there is a cyan pentagon or there is a pentagon .
-there is a cyan shape or a magenta shape is a pentagon .
-there is a red pentagon and a shape is a pentagon .
-a shape is a pentagon and a cyan shape is a pentagon .
-there is a red semicircle and there is a cross .
+a shape is a cyan square and there is a magenta shape .
+if there is a red ellipse a shape is a gray ellipse .
+a shape is a green square and a cyan shape is a square .
+an ellipse is a cyan shape and a shape is a gray semicircle .
+a cyan shape is an ellipse or there is a gray square .
 
-there is a cyan triangle or a cross is a gray cross .
-there is a red triangle and a circle is a red shape .
-there is a red shape or there is a gray triangle .
-a triangle is a red triangle and there is a red cross .
-a gray shape is a cross and there is a circle .
+there is a pentagon and a shape is a green semicircle .
+there is a cyan pentagon if there is a red cross .
+there is a cyan pentagon if a shape is a red pentagon .
+a shape is a red cross if and only if there is a green pentagon .
+a shape is a green shape and there is a cyan square .
 
-there is a cyan shape and there is a cyan shape .
-a cyan shape is a square and there is a magenta shape .
-there is a blue shape and a cyan shape is a circle .
-there is a pentagon and there is a magenta pentagon .
-a square is a gray shape or there is a cyan semicircle .
+if a shape is a yellow shape a shape is an ellipse .
+there is a rectangle if and only if there is a semicircle .
+a shape is a rectangle and a shape is a gray shape .
+there is a cyan rectangle and a cyan shape is a pentagon .
+there is a yellow rectangle and a shape is a gray square .
 
-a gray shape is a semicircle or there is a semicircle .
-a gray shape is a semicircle and there is a gray triangle .
-a gray shape is a gray semicircle and there is a gray shape .
-a gray shape is a circle or a gray shape is a gray square .
-there is a cross and there is a red square .
-
-there is a red ellipse and there is a cyan shape .
-a cyan shape is a rectangle and a red shape is a cross .
-a triangle is a green shape or a red shape is a triangle .
-there is a red shape or there is a cyan triangle .
-a triangle is a gray shape or a triangle is a cyan triangle .
-
-a blue shape is a triangle or there is a cyan circle .
-there is a green triangle and a triangle is a green shape .
-there is a blue shape and a blue shape is a blue semicircle .
-a semicircle is a green semicircle or there is a cyan circle .
-there is a blue triangle and a triangle is a magenta shape .
-
-an ellipse is a yellow shape and a pentagon is a red pentagon .
-there is a red circle and a cyan shape is a triangle .
-there is a semicircle and there is an ellipse .
-a cyan shape is a semicircle or a shape is a yellow shape .
-an ellipse is a yellow shape and there is a yellow rectangle .
-
-there is a yellow semicircle and a yellow shape is a square .
-an ellipse is a cyan shape and there is a gray triangle .
-there is a yellow square and there is a square .
-a triangle is a cyan shape and there is a semicircle .
-a yellow shape is an ellipse and a pentagon is a yellow shape .
-
-a red shape is a rectangle and a pentagon is a gray pentagon .
-a cyan shape is a pentagon or there is a red rectangle .
-there is a rectangle and there is a magenta shape .
-there is a magenta shape and there is a square .
-a pentagon is a red shape and a magenta shape is a pentagon .
-
-a square is a gray shape or there is a gray ellipse .
-there is a pentagon or there is a cyan ellipse .
-there is an ellipse and there is a green semicircle .
-there is a magenta shape and there is a gray ellipse .
-an ellipse is a blue shape or an ellipse is a gray ellipse .
-
-there is a red rectangle and there is a magenta shape .
-a shape is a cyan ellipse and a magenta shape is a pentagon .
-a pentagon is a blue shape or there is a green shape .
-a gray shape is a triangle or there is a square .
-there is a square and there is a cyan pentagon .
-
-a green shape is a semicircle and a red shape is a cross .
-there is a yellow semicircle or a semicircle is a yellow shape .
-a yellow shape is a cross and a shape is a cross .
-a red shape is a cross and a shape is a green cross .
-there is a yellow shape or there is a yellow rectangle .
-
-there is a cyan ellipse or there is an ellipse .
-a square is a cyan shape or a rectangle is a blue rectangle .
-there is a yellow rectangle and a triangle is a blue shape .
-there is a cyan shape and an ellipse is a yellow shape .
-a shape is a cyan circle or a triangle is a green shape .
-
-there is a blue pentagon and there is a blue shape .
-there is a green triangle or there is a cyan shape .
-there is a red square or a cross is a blue shape .
-a gray shape is a gray square and a cross is a gray shape .
-a cross is a cyan shape or there is a cyan triangle .
-
-there is a pentagon and a semicircle is a yellow shape .
-a triangle is a red shape and there is a rectangle .
-there is a blue triangle or a pentagon is a red shape .
-there is a cross and there is a cyan triangle .
-there is a magenta rectangle and there is a cyan shape .
-
-a red shape is a red cross and there is a red circle .
-a gray shape is a cross and there is a yellow shape .
-there is a green shape or a yellow shape is a circle .
-a gray shape is a cross or a cross is a gray cross .
-there is a red shape and there is a red shape .
-
-there is a red shape or there is a cyan circle .
-there is a triangle and there is a yellow square .
-there is a red shape and there is a blue ellipse .
-a cyan shape is a circle and there is a cross .
-there is a circle and there is a yellow shape .
-
-there is a cyan shape and there is a yellow rectangle .
-a triangle is a red shape and there is a triangle .
-a red shape is a triangle or a red shape is a red circle .
-there is a triangle and a cyan shape is a circle .
-there is a yellow shape or there is a yellow shape .
-
-a magenta shape is a circle or a pentagon is a cyan pentagon .
-there is a rectangle or a red shape is a semicircle .
-there is a blue triangle or there is a magenta shape .
-a red shape is a red semicircle and there is a red shape .
-there is a magenta ellipse or there is a yellow shape .
-
-there is a pentagon or a yellow shape is an ellipse .
-a yellow shape is a cross and there is a blue cross .
-there is a pentagon or a red shape is a cross .
-there is a blue shape and a shape is a red shape .
-there is a cross and a red shape is a red rectangle .
-
-a magenta shape is a circle or there is a gray ellipse .
-there is a circle and an ellipse is a gray shape .
-there is a green shape or a circle is a magenta circle .
-a circle is a blue circle and there is a circle .
-there is an ellipse and there is a magenta shape .
-
-a cross is a yellow shape and there is a gray cross .
-there is a magenta shape and a gray shape is a square .
-a gray shape is a cross or a cross is a yellow shape .
-a shape is a yellow shape and there is a gray pentagon .
-there is a gray triangle and there is a gray cross .
-
-a cross is a red shape or there is a triangle .
-a cross is a red shape or a green shape is a green cross .
-there is an ellipse or a pentagon is a yellow shape .
-there is a pentagon or a square is a cyan shape .
-there is a green shape and there is a magenta pentagon .
-
-a shape is a yellow shape and a blue shape is a blue semicircle .
-there is a blue ellipse and there is a blue circle .
-a rectangle is a cyan rectangle or a rectangle is a red shape .
-an ellipse is a cyan shape and there is a pentagon .
-there is a red square and there is a blue semicircle .
-
-a shape is a green semicircle or there is a blue shape .
-there is a gray triangle or a shape is a yellow pentagon .
-there is a cross and a gray shape is a circle .
-a rectangle is a green shape and there is a gray shape .
+a magenta shape is a circle and there is a semicircle .
+a shape is a green semicircle if and only if a red shape is a semicircle .
+a shape is a red semicircle and a shape is a rectangle .
+if there is a cyan semicircle a shape is a red pentagon .
 a rectangle is a yellow shape and a cyan shape is a square .
 
-a shape is a green rectangle or a cyan shape is a circle .
-there is a yellow ellipse or there is a pentagon .
-a cyan shape is an ellipse and a rectangle is a green shape .
-there is a red ellipse or there is a square .
-there is a yellow ellipse and a green shape is a circle .
+there is a pentagon and there is a green shape .
+there is a magenta shape and a semicircle is a green shape .
+a shape is a yellow cross and a yellow shape is a semicircle .
+a green shape is a pentagon or a semicircle is a cyan shape .
+a shape is a semicircle or a shape is a magenta cross .
 
-there is a green shape or there is a gray circle .
-there is a red ellipse and there is a gray circle .
-a yellow shape is a circle and a magenta shape is a magenta circle .
-there is a semicircle or there is a red triangle .
-an ellipse is a blue ellipse and there is a yellow shape .
-
-there is a rectangle and there is a yellow semicircle .
-a cyan shape is a semicircle or there is a cyan rectangle .
-a cyan shape is a semicircle or a green shape is a pentagon .
-there is a gray shape and a cyan shape is a cyan semicircle .
-there is a green pentagon and there is a green shape .
-
-a cyan shape is a circle and there is a square .
-there is a circle and there is a cyan cross .
-there is a cyan triangle or there is a green shape .
-there is a blue cross or a gray shape is a circle .
-a cross is a blue shape and there is a cyan triangle .
-
-a pentagon is a red shape and there is a red square .
-a shape is a red shape and a triangle is a red shape .
-there is a gray cross or there is a red pentagon .
-there is a red triangle and a shape is a triangle .
-a shape is a cross or a yellow shape is a semicircle .
-
-a cross is a yellow shape or there is a yellow cross .
-a magenta shape is a cross or a yellow shape is a cross .
-there is a cyan cross and there is a circle .
-a semicircle is a blue shape and there is a semicircle .
-a blue shape is a cross or a semicircle is a blue shape .
-
-there is a square and there is a gray shape .
-there is a triangle and there is a magenta semicircle .
-a magenta shape is a rectangle and a shape is a circle .
-a cyan shape is a cross and a cross is a cyan shape .
-a semicircle is a magenta shape and there is a yellow cross .
-
-there is a green triangle or there is a yellow square .
-a yellow shape is a yellow triangle and a red shape is a semicircle .
-a triangle is a yellow shape and there is a green rectangle .
-a green shape is a green triangle or there is a red semicircle .
-a green shape is a triangle or a magenta shape is a triangle .
-
-there is a red circle and there is a red rectangle .
-a shape is a yellow shape and a green shape is a green rectangle .
-there is a magenta semicircle and there is a magenta semicircle .
-a yellow shape is a yellow rectangle and there is a blue shape .
-there is a yellow semicircle and there is a yellow rectangle .
-
-there is an ellipse or a magenta shape is a square .
-there is a magenta shape and a red shape is a rectangle .
-a triangle is a red shape or a cyan shape is a pentagon .
-there is a cross and a square is a magenta shape .
-there is a magenta triangle and a pentagon is a gray shape .
-
-a red shape is a semicircle and a semicircle is a red shape .
-there is a pentagon and a cyan shape is a cyan square .
-a cyan shape is a cross or there is a magenta circle .
-a circle is a cyan shape or there is a red shape .
-there is a red triangle or a red shape is a semicircle .
-
-a yellow shape is a triangle or there is a cross .
-there is a square or there is a magenta shape .
-there is a cross and a green shape is a triangle .
-there is a cross or there is a red shape .
-there is a red square or there is a magenta shape .
-
-a gray shape is a pentagon and a shape is a semicircle .
-a square is a cyan shape or there is an ellipse .
-there is a rectangle or a cyan shape is a square .
-there is a red shape and a square is a yellow shape .
-a pentagon is a yellow shape or a cyan shape is a circle .
-
-there is a gray semicircle or a shape is a green pentagon .
-a blue shape is a pentagon or a cross is a blue shape .
-there is a blue semicircle and a magenta shape is a pentagon .
-a pentagon is a cyan shape or there is a cyan pentagon .
-a red shape is a semicircle and there is a cyan pentagon .
-
-a blue shape is a semicircle or a shape is a blue semicircle .
-a cross is a cyan shape or there is a yellow pentagon .
-a triangle is a green shape and there is a magenta shape .
-a magenta shape is a semicircle or there is a magenta semicircle .
-there is a red shape or a circle is a magenta shape .
-
-a square is a green shape and there is a red shape .
-there is an ellipse or there is an ellipse .
-there is a green triangle or there is a red shape .
-a rectangle is a green shape and there is a red pentagon .
-a rectangle is a green rectangle and there is a blue triangle .
-
-there is a red triangle and there is a cyan triangle .
-a green shape is a triangle or a shape is a blue circle .
-a circle is a gray shape and a red shape is a circle .
-there is a rectangle or a semicircle is a red semicircle .
-a blue shape is a square or there is a cyan triangle .
-
-a red shape is a semicircle or there is a blue shape .
-there is an ellipse or a cross is a red shape .
-a cross is a gray cross or there is a cyan shape .
-there is a cyan cross and a cyan shape is a cyan cross .
-a cyan shape is a cross and an ellipse is a red shape .
-
-there is a yellow semicircle and there is a cyan semicircle .
-there is an ellipse and a shape is a magenta shape .
-there is a yellow square or there is a green rectangle .
-there is a red shape or there is a green shape .
-a square is a magenta shape or a rectangle is a magenta shape .
-
-there is an ellipse and there is a semicircle .
-there is a magenta square or there is a cyan shape .
-there is a cyan pentagon and a cyan shape is a cyan pentagon .
-a circle is a green shape or a cyan shape is a cyan ellipse .
-a cyan shape is a cross or there is a gray cross .
-
-a semicircle is a red shape or there is a blue cross .
-a shape is a cross and there is a blue shape .
-there is a blue shape and there is a cross .
-a shape is a cyan shape and a green shape is a circle .
-there is a pentagon and a cross is a cyan cross .
-
-a magenta shape is a rectangle or there is a red triangle .
-a yellow shape is a rectangle and there is a gray pentagon .
-a cross is a cyan shape and a cyan shape is a rectangle .
-a square is a cyan shape or there is a semicircle .
-there is an ellipse and a yellow shape is a pentagon .
-
-a cross is a red shape and there is a green shape .
-a green shape is a rectangle and a triangle is a cyan shape .
-a red shape is a cross or there is a cross .
-there is a gray cross or a yellow shape is a triangle .
-a blue shape is a cross or a triangle is a magenta shape .
-
-a green shape is a square or there is a red square .
-there is a triangle and a red shape is a red circle .
-there is a yellow cross and a red shape is a square .
-a square is a yellow shape or there is a cyan shape .
-there is a green ellipse or a circle is a red shape .
-
-there is a yellow ellipse and there is a green shape .
-there is a yellow semicircle or a blue shape is a circle .
-there is a cyan semicircle or there is a cyan shape .
-a blue shape is a circle or there is a pentagon .
-a gray shape is a semicircle or there is a yellow ellipse .
-
-a magenta shape is a magenta pentagon or a gray shape is a semicircle .
-there is a gray triangle and there is a cyan semicircle .
-there is a cyan ellipse or there is a yellow cross .
-a pentagon is a gray shape or there is a gray ellipse .
-a cyan shape is an ellipse and a pentagon is a magenta shape .
-
-there is a red triangle or there is a square .
-there is a yellow circle and a yellow shape is a semicircle .
-there is a magenta shape or there is a yellow triangle .
-a triangle is a yellow shape or a triangle is a yellow shape .
-a triangle is a cyan shape and there is a yellow pentagon .
-
-there is a gray triangle and a green shape is a semicircle .
-a magenta shape is a rectangle and there is a gray rectangle .
-there is a green triangle or there is a yellow semicircle .
-there is a gray shape and there is a gray shape .
-a shape is a semicircle and there is a green semicircle .
-
-there is a magenta semicircle or a semicircle is a blue shape .
-a shape is a blue shape and there is a green shape .
-a semicircle is a gray shape and there is a triangle .
-a green shape is a triangle and a cyan shape is a semicircle .
-there is a green shape and a yellow shape is a semicircle .
-
-there is an ellipse and there is a gray shape .
-a triangle is a red shape and there is a cyan shape .
-a red shape is a red pentagon or a red shape is a pentagon .
-there is a triangle or a square is a blue shape .
-there is a blue shape or a shape is a gray semicircle .
-
-there is a red triangle or a cross is a gray shape .
-there is a cyan shape and there is a square .
-a cyan shape is a triangle or there is a circle .
-a yellow shape is a cross and there is a triangle .
-a pentagon is a yellow shape and a shape is a circle .
-
-there is a square and a blue shape is a pentagon .
-there is a yellow semicircle or a semicircle is a blue shape .
-a gray shape is a gray semicircle and a green shape is a rectangle .
-there is a rectangle or a gray shape is a triangle .
-there is a blue semicircle or a cyan shape is a cross .
-
-there is a magenta circle and a green shape is a semicircle .
-a semicircle is a magenta shape or a blue shape is a cross .
-there is a circle and a triangle is a magenta shape .
-a rectangle is a blue shape and a semicircle is a blue shape .
-there is a blue triangle or there is a green rectangle .
-
-a magenta shape is a rectangle and there is a magenta shape .
-there is a cyan triangle and a triangle is a cyan triangle .
-a rectangle is a blue shape and there is a blue semicircle .
-there is a green circle and there is a cyan semicircle .
-there is a gray rectangle or there is a red shape .
-
-there is a blue square and there is a cyan rectangle .
-an ellipse is a gray shape and there is a cross .
-a rectangle is a magenta shape or a pentagon is a red shape .
-a magenta shape is a cross or there is a cross .
-a gray shape is a cross or there is a gray shape .
-
-a yellow shape is an ellipse and there is a red ellipse .
-an ellipse is a yellow shape and a square is a yellow shape .
-there is an ellipse and there is a red ellipse .
-there is a blue shape or there is a cross .
-there is a yellow rectangle or a yellow shape is an ellipse .
-
-a red shape is a cross or there is a yellow shape .
-a square is a green shape and there is a red pentagon .
-there is a blue shape or a pentagon is a red shape .
-there is a square and there is a green shape .
-a shape is a red pentagon and there is a circle .
-
-a magenta shape is a cross or there is a square .
-there is a red circle or there is a cyan semicircle .
-a cyan shape is a square or a gray shape is a rectangle .
-a shape is a cross and there is a magenta cross .
-a cyan shape is a semicircle or a shape is a gray cross .
-
-a magenta shape is a triangle and there is a magenta square .
-there is a rectangle or there is an ellipse .
-a magenta shape is a rectangle and an ellipse is a green shape .
-a cross is a magenta shape and there is a magenta shape .
-a green shape is a green pentagon and there is a magenta rectangle .
-
-there is a magenta cross or a red shape is a pentagon .
-a green shape is a rectangle or there is a cyan cross .
-there is a magenta triangle and there is a blue shape .
-there is a gray rectangle and there is a yellow square .
-there is a circle and there is a circle .
-
-there is a cyan circle and there is a blue ellipse .
-there is a cyan shape and there is a red shape .
-there is a gray pentagon and an ellipse is a yellow ellipse .
-there is a red pentagon and there is a pentagon .
-a red shape is a semicircle or there is a gray cross .
-
-there is a red shape and there is a yellow shape .
-an ellipse is a yellow ellipse and there is a yellow shape .
-there is a red shape and there is a yellow circle .
-there is a square or there is a pentagon .
-an ellipse is a cyan ellipse or there is a red circle .
-
-a cross is a gray shape or a gray shape is a cross .
-a circle is a gray shape or there is a magenta cross .
-a green shape is a cross or a pentagon is a gray shape .
-there is a blue shape or a gray shape is a gray rectangle .
-there is a gray cross and a triangle is a yellow shape .
-
-there is a cyan rectangle or a red shape is a pentagon .
-there is a cyan pentagon or there is a red pentagon .
-there is a magenta shape or a pentagon is a gray shape .
-there is a gray shape or there is a square .
-there is a green shape and a red shape is a circle .
-
-there is a gray circle or a cyan shape is a cross .
-there is a semicircle or there is a red semicircle .
-a cross is a magenta shape or a shape is a red cross .
-a shape is a blue semicircle and a magenta shape is a cross .
-there is a semicircle or a semicircle is a gray shape .
-
-there is a cyan pentagon and a pentagon is a magenta shape .
-a blue shape is a circle or there is a cyan rectangle .
-there is a circle and there is a cyan pentagon .
-a gray shape is a gray rectangle and there is a gray pentagon .
-a pentagon is a cyan pentagon or a magenta shape is a circle .
-
-there is a cyan circle or a green shape is a cross .
-a rectangle is a red rectangle and there is a cross .
-there is a magenta cross and there is a blue ellipse .
-there is a yellow square or there is a yellow triangle .
-there is a blue shape and there is a blue square .
-
-a red shape is a circle or there is a pentagon .
-a blue shape is a square and there is a cyan ellipse .
-there is a pentagon and there is an ellipse .
-a gray shape is a square and a blue shape is an ellipse .
-an ellipse is a magenta shape and there is a semicircle .
-
+a circle is a blue shape or there is a red circle .
 a circle is a blue shape and there is a blue circle .
-there is a blue triangle and a triangle is a blue shape .
-a triangle is a blue triangle or there is a yellow shape .
-there is a semicircle or there is a semicircle .
-there is a red square or a blue shape is a circle .
+a square is a red shape and a shape is a square .
+a square is a red shape and a shape is a red circle .
+a shape is a blue shape if a blue shape is a circle .
 
-a blue shape is a circle or a magenta shape is a square .
-there is a blue shape and there is a magenta shape .
-there is a cross and there is a gray ellipse .
-there is a magenta rectangle or there is a green shape .
-a cyan shape is a cyan semicircle or a yellow shape is a yellow square .
+if there is a magenta shape a shape is a cyan ellipse .
+a cyan shape is a triangle if there is a cross .
+a shape is a cyan ellipse if and only if a cyan shape is an ellipse .
+a shape is a cyan cross or a shape is a cyan shape .
+if a shape is a cyan ellipse a shape is a cyan ellipse .
 
-a red shape is a red ellipse and there is a red shape .
-a magenta shape is an ellipse and a blue shape is an ellipse .
-there is a red shape and a semicircle is a red shape .
-an ellipse is a blue shape and there is a square .
-there is a yellow circle and there is a red shape .
+there is a cyan circle or a shape is a gray cross .
+a shape is a cyan pentagon and a shape is a circle .
+a shape is a yellow ellipse or there is a yellow shape .
+there is a red cross if and only if there is a magenta shape .
+there is a yellow cross if a shape is a green pentagon .
 
-there is a rectangle and there is a yellow circle .
-there is a yellow shape and there is a yellow rectangle .
-there is a gray rectangle and a shape is a yellow shape .
-there is a circle or there is a gray triangle .
-there is a cyan rectangle and there is a yellow pentagon .
+a shape is a magenta circle if a cyan shape is a circle .
+there is a blue rectangle if there is a cyan shape .
+a shape is a blue circle if and only if a circle is a yellow shape .
+a shape is a gray circle if and only if there is a green shape .
+a shape is a gray shape if and only if a shape is a blue shape .
 
-there is an ellipse and a yellow shape is a square .
-an ellipse is a yellow shape and there is a green triangle .
-there is a yellow square or a square is a yellow shape .
-a triangle is a yellow shape and there is a green shape .
-a triangle is a green triangle or a semicircle is a magenta shape .
+a shape is a cyan circle and a green shape is a cross .
+there is a cross and a circle is a yellow shape .
+there is a cyan shape if and only if a magenta shape is a circle .
+a shape is a magenta rectangle if a magenta shape is a circle .
+a yellow shape is a circle or a magenta shape is a cross .
 
-a triangle is a gray shape or there is a triangle .
-a cyan shape is a cross and there is a yellow semicircle .
-there is a cyan pentagon and a cyan shape is a semicircle .
-a yellow shape is a triangle or there is a magenta triangle .
-a magenta shape is a pentagon or a magenta shape is a semicircle .
+there is a blue shape and a shape is a gray circle .
+if there is a blue semicircle there is a cross .
+a cross is a blue shape if and only if a shape is a rectangle .
+a cross is a green shape or a shape is a green cross .
+a blue shape is a triangle or a red shape is a cross .
 
-a triangle is a gray shape and a semicircle is a green shape .
-there is a gray shape or there is a gray shape .
-there is a circle or there is a gray shape .
-there is a green shape and there is a magenta rectangle .
-there is a cyan triangle and a blue shape is a square .
+there is a magenta triangle or a shape is a yellow triangle .
+there is a yellow ellipse if and only if there is a gray ellipse .
+a shape is a magenta cross or a shape is a magenta triangle .
+if a rectangle is a green shape there is a pentagon .
+a shape is a yellow shape if and only if a shape is a gray ellipse .
 
-a red shape is a pentagon or a shape is a green pentagon .
-there is a red square and there is a circle .
-a pentagon is a red shape or there is a gray square .
-there is a green square and there is a red shape .
-a square is a gray shape and there is a green shape .
+a shape is a triangle and a square is a cyan shape .
+an ellipse is a green shape if and only if there is a green semicircle .
+there is a rectangle or a shape is a yellow shape .
+a shape is a cyan shape if and only if a shape is an ellipse .
+if a shape is an ellipse a cyan shape is an ellipse .
 
-there is a red pentagon or there is a blue pentagon .
-there is a blue shape and a shape is a pentagon .
-there is a green semicircle and there is an ellipse .
-there is a cyan circle and a blue shape is a circle .
-a pentagon is a cyan shape and there is a blue pentagon .
+a green shape is a rectangle if and only if a shape is a yellow pentagon .
+if a shape is a cyan ellipse a shape is a green circle .
+there is a magenta ellipse and there is a rectangle .
+a cyan shape is an ellipse and a red shape is a square .
+if an ellipse is a magenta shape there is a red rectangle .
+
+there is a yellow circle or a shape is a cross .
+there is a red ellipse or a triangle is a magenta shape .
+there is a square and a red shape is a semicircle .
+if a yellow shape is an ellipse a shape is a blue shape .
+a shape is a red ellipse if and only if there is a green ellipse .
+
+a shape is a green square if a red shape is a square .
+there is a blue square if there is a circle .
+there is a blue circle and there is a cyan shape .
+a square is a red shape and a circle is a cyan shape .
+if there is a red square a shape is a gray shape .
+
+there is a cyan circle if and only if a shape is a red circle .
+a red shape is a cross and a shape is a red semicircle .
+there is a yellow shape if and only if a shape is a pentagon .
+there is a gray semicircle and a shape is a green semicircle .
+a shape is a yellow shape and there is a gray shape .
+
+there is a red pentagon or there is a gray cross .
+a green shape is a rectangle if and only if a blue shape is a triangle .
+a cyan shape is a pentagon or a cross is a blue shape .
+a shape is a yellow pentagon if and only if there is a blue pentagon .
+if a shape is a gray semicircle a shape is a semicircle .
+
+a shape is a gray triangle if a yellow shape is a rectangle .
+a shape is a gray rectangle if and only if a shape is a blue shape .
+there is a pentagon and there is a gray shape .
+a shape is a green shape and a triangle is a blue shape .
+a shape is a magenta rectangle and a shape is a magenta semicircle .
+
+a cross is a magenta shape and there is a magenta pentagon .
+if there is a green triangle a shape is a green triangle .
+if there is a red semicircle a red shape is a cross .
+there is a red shape and a cyan shape is a semicircle .
+there is a red triangle and there is a red pentagon .
+
+there is a gray semicircle if there is a yellow ellipse .
+there is a cyan shape if and only if there is a rectangle .
+a cyan shape is an ellipse if and only if there is a yellow circle .
+there is a red pentagon if and only if there is a gray rectangle .
+there is a green cross if and only if a shape is a circle .
+
+a shape is a green shape if and only if there is a gray circle .
+there is a semicircle and a shape is a rectangle .
+if a cross is a yellow shape a cross is a gray shape .
+a green shape is a cross and a shape is a yellow shape .
+a shape is a gray cross and there is a square .
+
+there is a magenta rectangle if a shape is a blue cross .
+if there is a cyan square a yellow shape is a pentagon .
+there is a magenta shape and a shape is a cyan pentagon .
+if a shape is a green circle a red shape is a pentagon .
+a shape is a green cross if there is a pentagon .
+
+a shape is a red pentagon and there is a blue semicircle .
+a square is a cyan shape or there is a magenta triangle .
+there is a red semicircle if and only if there is a yellow triangle .
+a shape is a cyan circle or there is a blue semicircle .
+there is a gray circle if a square is a red shape .
+
+a shape is a yellow cross or a shape is a green rectangle .
+there is a green shape if there is a yellow square .
+a shape is a cross if and only if a magenta shape is a pentagon .
+there is a yellow square if there is a red rectangle .
+if a shape is a red rectangle a semicircle is a green shape .
+
+a shape is a blue cross or there is a cyan triangle .
+if there is a magenta pentagon a shape is a cross .
+if a shape is a magenta square a shape is a red triangle .
+if a magenta shape is an ellipse there is a cyan triangle .
+a blue shape is a rectangle and there is a magenta ellipse .
+
+there is a blue cross if there is a cross .
+a shape is a blue cross if and only if there is a magenta shape .
+there is a triangle and a cross is a yellow shape .
+a shape is a red shape or there is a red cross .
+a gray shape is a cross if and only if there is a magenta triangle .
+
+there is a yellow triangle if and only if a blue shape is a cross .
+there is a blue square if and only if there is a cyan shape .
+there is a blue shape if and only if a shape is a cross .
+there is a green triangle and a shape is a cross .
+a yellow shape is a triangle or there is a blue cross .
+
+a triangle is a blue shape and a shape is a cyan semicircle .
+there is a cyan pentagon or there is a cross .
+a shape is a blue cross or there is a cyan shape .
+there is a gray cross and a red shape is a pentagon .
+a shape is a cyan semicircle and a cyan shape is a square .
+
+a green shape is an ellipse or there is a blue ellipse .
+there is a blue square if a rectangle is a yellow shape .
+a shape is a cross or there is a circle .
+if a pentagon is a gray shape a shape is a square .
+there is a pentagon and there is a blue cross .
+
+a cross is a gray shape and a gray shape is a cross .
+if a shape is a gray cross a cross is a yellow shape .
+a shape is a blue cross and a shape is a green shape .
+there is a magenta cross or a shape is a blue shape .
+a shape is a cross if and only if there is a gray shape .
+
+there is a cyan square if and only if a square is a yellow shape .
+a shape is a rectangle if and only if a blue shape is a square .
+there is a red circle and a shape is a yellow square .
+there is a gray semicircle and a cross is a cyan shape .
+if a semicircle is a red shape a shape is a cyan shape .
+
+a shape is a pentagon or a red shape is an ellipse .
+there is a gray ellipse and there is a gray ellipse .
+a shape is a gray ellipse if and only if a gray shape is an ellipse .
+a shape is a gray ellipse or there is a rectangle .
+there is a gray cross or a magenta shape is an ellipse .
+
+there is an ellipse and a shape is a triangle .
+if a shape is a cyan rectangle a shape is a cyan shape .
+a shape is a yellow cross or a rectangle is a magenta shape .
+a shape is a rectangle if and only if a shape is a cyan shape .
+there is a cyan ellipse and a shape is a cyan rectangle .
+
+a shape is a yellow shape and a circle is a yellow shape .
+a shape is a yellow square and a shape is a red shape .
+there is a red circle and a shape is an ellipse .
+if a semicircle is a red shape a green shape is a semicircle .
+there is a green triangle and a shape is a red square .
+
+there is a red pentagon and a pentagon is a green shape .
+a blue shape is a triangle if and only if there is a green rectangle .
+a shape is a circle or there is a magenta shape .
+there is a semicircle and a shape is a gray shape .
+if a shape is a red circle a shape is a blue shape .
+
+there is a gray shape or there is a gray triangle .
+a shape is a triangle if and only if a shape is a gray shape .
+there is a gray pentagon if and only if there is a green triangle .
+there is a green circle and a shape is a circle .
+there is a green circle and there is a gray pentagon .
+
+there is a red ellipse and there is a gray cross .
+a shape is a red triangle if a shape is a cross .
+there is a yellow semicircle if and only if a shape is a yellow cross .
+a red shape is an ellipse and there is a magenta circle .
+a yellow shape is a circle if and only if a shape is a red square .
+
+a shape is a gray circle and there is a gray shape .
+a blue shape is a circle and a shape is a cyan triangle .
+a shape is a cyan shape if a shape is a square .
+a shape is a magenta shape if and only if a shape is a triangle .
+a magenta shape is a circle and a shape is a pentagon .
+
+there is a gray ellipse and there is a rectangle .
+a shape is a triangle or a shape is a cyan rectangle .
+there is a rectangle or a shape is a green square .
+a shape is a square if a cyan shape is a square .
+a shape is a gray ellipse and a shape is a pentagon .
+
+there is a blue cross or a shape is a green pentagon .
+there is a gray triangle if a triangle is a yellow shape .
+a shape is a green triangle or a pentagon is a red shape .
+a red shape is a cross if and only if a yellow shape is a semicircle .
+a shape is a pentagon and there is a semicircle .
+
+a shape is a green ellipse and a shape is a gray square .
+a cross is a cyan shape if and only if a magenta shape is a pentagon .
+if there is a magenta pentagon a shape is a cross .
+a shape is a magenta ellipse if and only if there is a blue pentagon .
+a pentagon is a magenta shape and a shape is a red shape .
+
+a shape is a triangle and a shape is a green shape .
+a shape is a cyan shape and there is a pentagon .
+a shape is a magenta shape if a magenta shape is a rectangle .
+if there is a gray shape a shape is a magenta rectangle .
+there is a semicircle or a green shape is a rectangle .
+
+a blue shape is a semicircle or there is a pentagon .
+a semicircle is a gray shape if and only if there is a yellow semicircle .
+there is a yellow triangle if there is a yellow shape .
+there is a yellow semicircle if and only if there is a green shape .
+a circle is a yellow shape if and only if a shape is a green shape .
+
+a shape is a cross if and only if there is a gray shape .
+there is a cyan circle or a cross is a blue shape .
+if a shape is a cyan circle an ellipse is a magenta shape .
+there is a square and a shape is a gray triangle .
+a cross is a cyan shape and there is a red cross .
+
+a shape is a yellow semicircle or a shape is a blue triangle .
+a shape is a yellow semicircle if a red shape is a triangle .
+there is a green ellipse and there is a yellow rectangle .
+there is a cyan shape or a shape is a blue ellipse .
+there is an ellipse and there is a green ellipse .
+
+if there is a cyan shape a shape is a red shape .
+a shape is a red cross and a shape is a magenta semicircle .
+a shape is a square if a shape is a pentagon .
+a shape is a red shape if and only if a shape is a gray rectangle .
+there is a green circle or there is a yellow rectangle .
+
+a shape is a triangle and there is a blue ellipse .
+if a shape is a magenta square a rectangle is a gray shape .
+if a rectangle is a gray shape a shape is a triangle .
+a square is a gray shape and a shape is a triangle .
+if there is a gray rectangle a magenta shape is a square .
+
+a yellow shape is a cross if and only if a shape is a gray square .
+if a shape is a green cross a pentagon is a green shape .
+a shape is a green semicircle or a shape is a cross .
+a shape is a cyan triangle and a shape is a red rectangle .
+a triangle is a red shape if and only if there is a gray rectangle .
+
+a shape is a red shape if and only if a shape is a red circle .
+a circle is a red shape if there is a rectangle .
+a circle is a green shape if and only if there is a gray shape .
+a red shape is a circle if and only if there is a red cross .
+a shape is a red semicircle or a shape is a red rectangle .
+
+a shape is a red semicircle if and only if a shape is a gray circle .
+a triangle is a gray shape and there is a square .
+a shape is a magenta rectangle and a triangle is a yellow shape .
+a shape is a cross if and only if there is a blue triangle .
+a gray shape is a triangle if a magenta shape is a triangle .
+
+there is a semicircle and there is a green semicircle .
+there is a cross or a shape is a yellow shape .
+a shape is a semicircle if and only if a shape is a green shape .
+a shape is a red shape if there is a semicircle .
+there is a green semicircle or a shape is a green rectangle .
+
+a shape is a blue shape and a circle is a yellow shape .
+there is a magenta pentagon or a shape is a red shape .
+there is a yellow pentagon and a shape is a yellow shape .
+there is a red ellipse if there is a green pentagon .
+a shape is a circle and a shape is a green shape .
+
+a cross is a magenta shape if and only if a yellow shape is a semicircle .
+a gray shape is a square if and only if a green shape is a pentagon .
+a gray shape is an ellipse if there is a rectangle .
+there is a green ellipse and a shape is a green circle .
+a rectangle is a blue shape or a shape is a green cross .
+
+a shape is a green shape and a shape is a red circle .
+a shape is a gray circle if and only if a blue shape is a triangle .
+if a shape is a red square a shape is a green shape .
+a square is a cyan shape or there is a blue ellipse .
+a shape is a triangle or there is a gray shape .
+
+there is a red triangle if a blue shape is a pentagon .
+a rectangle is a blue shape or a shape is a red pentagon .
+a blue shape is a pentagon and a cyan shape is a rectangle .
+there is a red triangle and a cyan shape is a rectangle .
+there is a blue pentagon if and only if there is a green shape .
+
+a shape is a blue pentagon or a shape is an ellipse .
+a blue shape is a circle if and only if there is a red shape .
+there is a magenta square and there is a green rectangle .
+there is a magenta rectangle and a pentagon is a green shape .
+a shape is a blue rectangle and a shape is a blue pentagon .
+
+if there is a yellow ellipse a shape is a green ellipse .
+a shape is a green cross if and only if there is a cyan rectangle .
+there is a gray ellipse and there is a yellow pentagon .
+there is a blue pentagon if and only if there is a red shape .
+a cyan shape is a triangle if and only if a shape is a gray rectangle .
+
+there is a pentagon if and only if a yellow shape is a square .
+a gray shape is a pentagon if and only if there is a magenta shape .
+there is a gray circle if and only if a gray shape is a semicircle .
+a shape is a gray pentagon if and only if a shape is a cyan ellipse .
+a shape is a blue semicircle or there is a green circle .
+
+a shape is a magenta shape or there is a gray cross .
+a rectangle is a green shape or there is a red triangle .
+a red shape is a square if and only if a triangle is a cyan shape .
+a gray shape is a rectangle if there is a rectangle .
+there is a yellow square if and only if there is a green shape .
+
+a shape is a yellow shape or a shape is a cyan triangle .
+there is a blue square and there is a green square .
+a cyan shape is a cross or a shape is a gray circle .
+there is a yellow shape or there is a gray triangle .
+there is a gray square or a shape is a yellow shape .
+
+a shape is a magenta ellipse or a shape is a cyan shape .
+there is a red ellipse and a triangle is a gray shape .
+a shape is a gray ellipse or there is a gray cross .
+a shape is a green square or there is a yellow cross .
+there is a green shape and an ellipse is a red shape .
+
+there is a green shape and there is a cyan rectangle .
+if there is a cyan shape a shape is a pentagon .
+there is a cyan ellipse or there is a red rectangle .
+there is a rectangle if and only if a shape is a cyan rectangle .
+there is a cyan rectangle and a pentagon is a green shape .
+
+a rectangle is a magenta shape if and only if a triangle is a magenta shape .
+if a shape is a green rectangle a shape is a magenta triangle .
+a magenta shape is a circle and there is a yellow circle .
+there is a square if and only if there is a magenta shape .
+a shape is a red rectangle or a green shape is a circle .
+
+a shape is a square if and only if a shape is an ellipse .
+a shape is a blue pentagon and there is a green shape .
+there is a rectangle if and only if a green shape is a circle .
+there is a pentagon if and only if a triangle is a yellow shape .
+a shape is a gray ellipse and a yellow shape is a pentagon .
+
+if a shape is a magenta cross a shape is a gray ellipse .
+there is a cyan circle and a square is a red shape .
+there is a green shape if there is a gray cross .
+there is a gray shape and a shape is a magenta cross .
+a magenta shape is a pentagon if and only if a shape is a cyan cross .
+
+a shape is a red cross or there is a green shape .
+a shape is a green semicircle and a semicircle is a green shape .
+there is a magenta cross and there is a red cross .
+a shape is a green rectangle or there is a blue semicircle .
+there is a red pentagon and a shape is a yellow rectangle .
+
+a semicircle is a yellow shape and there is a blue pentagon .
+a shape is a yellow square if and only if there is a cyan shape .
+there is a green semicircle or there is a triangle .
+a shape is a blue square if and only if a shape is a magenta shape .
+there is a green square if a shape is a blue square .
+
+a cross is a red shape and a yellow shape is a triangle .
+a yellow shape is a triangle if and only if a shape is a yellow shape .
+a red shape is a cross if and only if there is a red rectangle .
+a shape is a green square and a shape is a cyan triangle .
+a shape is a blue shape and there is a red cross .
+
+there is a rectangle and there is a cross .
+a shape is a gray triangle and a shape is a cross .
+a semicircle is a gray shape and a shape is a magenta ellipse .
+there is a red square or a cross is a magenta shape .
+there is a circle and there is a yellow square .
+
+if there is an ellipse there is a circle .
+there is a red shape if and only if a shape is a yellow shape .
+there is a yellow ellipse if and only if a shape is a red circle .
+a shape is a red ellipse if and only if a shape is a yellow ellipse .
+there is a red circle or a shape is a red ellipse .
+
+a shape is a pentagon and a red shape is a rectangle .
+there is a cross and there is a green ellipse .
+a pentagon is a red shape if and only if a shape is a green rectangle .
+a shape is a magenta triangle or there is a yellow square .
+a shape is a magenta triangle and a shape is a green shape .
+
+there is a blue semicircle if and only if there is a magenta shape .
+a shape is a blue semicircle or there is a cyan shape .
+if a shape is a blue semicircle a shape is a magenta ellipse .
+a shape is a gray rectangle if and only if a yellow shape is a rectangle .
+a shape is a blue semicircle if and only if a yellow shape is a semicircle .
+
+if there is a blue circle a shape is a blue square .
+a shape is a magenta ellipse if and only if there is a blue shape .
+if there is a gray circle a triangle is a blue shape .
+a shape is a blue cross if and only if a circle is a blue shape .
+there is a red ellipse if there is a blue cross .
+
+there is a rectangle or there is a yellow shape .
+there is a yellow semicircle if there is a blue shape .
+there is a yellow rectangle and a semicircle is a yellow shape .
+there is a yellow ellipse if and only if there is a yellow shape .
+if a shape is a yellow shape a shape is a yellow semicircle .
+
+a semicircle is a blue shape if and only if a cross is a magenta shape .
+a gray shape is a pentagon or there is a yellow square .
+a cross is a magenta shape if and only if there is a square .
+a shape is a blue semicircle and there is a cross .
+a shape is a rectangle or there is a green rectangle .
+
+there is a magenta shape and a shape is a circle .
+there is a red shape or a rectangle is a cyan shape .
+there is a blue circle and a shape is a yellow rectangle .
+there is a triangle or there is a magenta circle .
+there is a triangle or a yellow shape is a circle .
+
+a shape is a yellow ellipse or there is a square .
+a magenta shape is a semicircle and there is a magenta shape .
+there is a magenta triangle or there is a magenta triangle .
+there is a magenta shape if there is a magenta shape .
+a magenta shape is a triangle if and only if a shape is a magenta shape .
+
+a shape is a yellow cross if and only if there is a yellow shape .
+a square is a yellow shape or a gray shape is a cross .
+a shape is a yellow cross and there is a yellow shape .
+there is a cross or a yellow shape is a cross .
+a shape is a yellow cross and a shape is a cross .
+
+a pentagon is a red shape if and only if there is a cyan triangle .
+if a shape is a magenta pentagon a magenta shape is a circle .
+a red shape is a pentagon and there is a cross .
+there is a magenta circle if a shape is a red circle .
+there is a yellow ellipse or there is a yellow shape .
+
+there is a magenta square if a shape is a red square .
+if there is a gray triangle a blue shape is an ellipse .
+a shape is a yellow shape or there is a cyan pentagon .
+there is a red semicircle if a shape is a gray cross .
+if there is a magenta shape a shape is a magenta pentagon .
+
+there is a yellow ellipse if there is a magenta rectangle .
+a shape is a yellow circle if and only if a shape is a magenta square .
+a shape is a square or there is a magenta pentagon .
+if a shape is a yellow shape a shape is a yellow semicircle .
+a shape is a blue square and a shape is a yellow ellipse .
 
