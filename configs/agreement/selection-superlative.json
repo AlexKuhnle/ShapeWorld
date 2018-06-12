@@ -1,0 +1,5 @@
+{
+    "type": "agreement",
+    "name": "selection",
+    "selectors": [["x-max", "*"], ["y-max", "*"], ["size-max", "*"], ["shade-max", "*"], ["proximity-max", "*"]]
+}

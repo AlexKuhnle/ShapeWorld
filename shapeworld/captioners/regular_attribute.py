@@ -91,25 +91,25 @@ class RegularAttributeCaptioner(WorldCaptioner):
         if predication.num_agreeing == 0:
             return None
 
-        entities = list()
+        values = list()
         for entity in predication.agreeing:
             if self.attribute == 'shape':
-                entities.append(entity.shape.name)
+                values.append(entity.shape.name)
             elif self.attribute == 'color':
-                entities.append(entity.color.name)
+                values.append(entity.color.name)
             elif self.attribute == 'texture':
-                entities.append(entity.texture.name)
+                values.append(entity.texture.name)
 
-        entity = choice(entities)
+        value = choice(values)
 
         if self.attribute == 'shape':
-            attribute = Attribute(predtype='shape', value=entity)
+            attribute = Attribute(predtype='shape', value=value)
 
         elif self.attribute == 'color':
-            attribute = Attribute(predtype='color', value=entity)
+            attribute = Attribute(predtype='color', value=value)
 
         elif self.attribute == 'texture':
-            attribute = Attribute(predtype='texture', value=entity)
+            attribute = Attribute(predtype='texture', value=value)
 
         if predication.contradictory(predicate=attribute):
             assert False

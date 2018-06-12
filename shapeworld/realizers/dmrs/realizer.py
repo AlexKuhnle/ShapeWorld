@@ -160,9 +160,13 @@ class DmrsRealizer(CaptionRealizer):
                     assert relation['key'] not in self.relation_by_key
                     self.relation_by_key[relation['key']] = (predtype, value)
 
-        self.existential = None
+        self.type_existential = None
+        self.selector_existential = None
         if 'existential' in language:
-            self.existential = Dmrs.parse(language['existential']['dmrs'])
+            if 'type' in language['existential']:
+                self.type_existential = Dmrs.parse(language['existential']['type']['dmrs'])
+            if 'selector' in language['existential']:
+                self.selector_existential = Dmrs.parse(language['existential']['selector']['dmrs'])
 
         self.quantifiers = dict()
         self.quantifier_by_key = dict()
@@ -304,6 +308,7 @@ class DmrsRealizer(CaptionRealizer):
         caption_strings = [line for line in stdout_data if line != '']
         for n in none_indices:
             caption_strings.insert(n, '')
+
         assert len(caption_strings) == len(captions), '\n'.join(stdout_data) + '\n' + '\n'.join(stderr_data)
         return caption_strings
 
@@ -333,8 +338,8 @@ class DmrsRealizer(CaptionRealizer):
             assert selector.predtype in self.selectors and selector.value in self.selectors[selector.predtype], (selector.predtype, selector.value)
             dmrs = copy.deepcopy(self.selectors[selector.predtype][selector.value])
             dmrs.compose(self.type_dmrs(selector.scope), fusion={'type': 'type', 'quant': 'quant'}, hierarchy=self.hierarchy)
-            if selector.predtype in Selector.reference_selectors:
-                dmrs.compose(self.selector_dmrs(selector.reference), fusion={'ref': 'type'}, hierarchy=self.hierarchy)
+            if selector.predtype in Selector.comparison_selectors:
+                dmrs.compose(self.selector_dmrs(selector.comparison), fusion={'comp': 'type'}, hierarchy=self.hierarchy)
         return dmrs
 
     def relation_dmrs(self, relation):
@@ -352,20 +357,22 @@ class DmrsRealizer(CaptionRealizer):
             if relation.predtype in Relation.meta_relations:
                 dmrs.compose(self.relation_dmrs(relation.reference), fusion={'ref': 'rel'}, hierarchy=self.hierarchy)
             else:
-                dmrs.compose(self.type_dmrs(relation.reference), fusion={'ref': 'type', 'rquant': 'quant'}, hierarchy=self.hierarchy)
+                dmrs.compose(self.type_dmrs(relation.reference), fusion={'ref': 'type', 'quant': 'quant'}, hierarchy=self.hierarchy)
             if relation.predtype in Relation.ternary_relations:
                 if relation.predtype in Relation.meta_relations:
                     dmrs.compose(self.relation_dmrs(relation.comparison), fusion={'comp': 'rel'}, hierarchy=self.hierarchy)
                 else:
-                    dmrs.compose(self.type_dmrs(relation.comparison), fusion={'comp': 'type', 'cquant': 'quant'}, hierarchy=self.hierarchy)
+                    dmrs.compose(self.selector_dmrs(relation.comparison), fusion={'comp': 'type'}, hierarchy=self.hierarchy)
         return dmrs
 
     def existential_dmrs(self, existential):
-        assert self.existential is not None
-        dmrs = copy.deepcopy(self.existential)
         if isinstance(existential.restrictor, Selector):
-            dmrs.compose(self.selector_dmrs(existential.restrictor), fusion={'rstr': 'type', 'quant': 'quant'}, hierarchy=self.hierarchy)
+            assert self.selector_existential is not None
+            dmrs = copy.deepcopy(self.selector_existential)
+            dmrs.compose(self.selector_dmrs(existential.restrictor), fusion={'rstr': 'type'}, hierarchy=self.hierarchy)
         else:
+            assert self.type_existential is not None
+            dmrs = copy.deepcopy(self.type_existential)
             dmrs.compose(self.type_dmrs(existential.restrictor), fusion={'rstr': 'type', 'quant': 'quant'}, hierarchy=self.hierarchy)
         dmrs.compose(self.relation_dmrs(existential.body), fusion={'body': 'rel'}, hierarchy=self.hierarchy)
         return dmrs

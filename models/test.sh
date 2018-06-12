@@ -21,42 +21,42 @@ python -O evaluate.py -t agreement -n existential -m type_prior -b 2 -i 1 --mode
 echo "  cnn_only"
 python -O train.py -t agreement -n existential -m cnn_only -b 1 -i 2 -e 2 -f 2 --model-dir models/test/ --summary-dir models/summary/ --report-file models/test.csv --verbosity 0 -Y
 python -O evaluate.py -t agreement -n existential -m cnn_only -b 2 -i 1 --model-dir models/test/ --report-file models/test.csv --verbosity 0
-echo "  lstm_only"
-python -O train.py -t agreement -n existential -m lstm_only -b 1 -i 2 -e 2 -f 2 --model-dir models/test/ --summary-dir models/summary/ --report-file models/test.csv --verbosity 0 -Y
-python -O evaluate.py -t agreement -n existential -m lstm_only -b 2 -i 1 --model-dir models/test/ --report-file models/test.csv --verbosity 0
+echo "  rnn_only"
+python -O train.py -t agreement -n existential -m rnn_only -b 1 -i 2 -e 2 -f 2 --model-dir models/test/ --summary-dir models/summary/ --report-file models/test.csv --verbosity 0 -Y
+python -O evaluate.py -t agreement -n existential -m rnn_only -b 2 -i 1 --model-dir models/test/ --report-file models/test.csv --verbosity 0
 echo "  cnn_bow"
 python -O train.py -t agreement -n existential -m cnn_bow -b 1 -i 2 -e 2 -f 2 --model-dir models/test/ --summary-dir models/summary/ --report-file models/test.csv --verbosity 0 -Y
 python -O evaluate.py -t agreement -n existential -m cnn_bow -b 2 -i 1 --model-dir models/test/ --report-file models/test.csv --verbosity 0
-echo "  cnn_lstm"
-python -O train.py -t agreement -n existential -m cnn_lstm -b 1 -i 2 -e 2 -f 2 --model-dir models/test/ --summary-dir models/summary/ --report-file models/test.csv --verbosity 0 -Y
-python -O evaluate.py -t agreement -n existential -m cnn_lstm -b 2 -i 1 --model-dir models/test/ --report-file models/test.csv --verbosity 0
-echo "  resnet_lstm"
-python -O train.py -t agreement -n existential -m resnet_lstm -b 1 -i 2 -e 2 -f 2 --model-dir models/test/ --summary-dir models/summary/ --report-file models/test.csv --verbosity 0 -Y
-python -O evaluate.py -t agreement -n existential -m resnet_lstm -b 2 -i 1 --model-dir models/test/ --report-file models/test.csv --verbosity 0
-echo "  fracnet_lstm"
-# python -O train.py -t agreement -n existential -m fracnet_lstm -b 1 -i 2 -e 2 -f 2 --model-dir models/test/ --summary-dir models/summary/ --report-file models/test.csv --verbosity 0 -Y
-# python -O evaluate.py -t agreement -n existential -m fracnet_lstm -b 2 -i 1 --model-dir models/test/ --report-file models/test.csv --verbosity 0
+echo "  cnn_rnn"
+python -O train.py -t agreement -n existential -m cnn_rnn -b 1 -i 2 -e 2 -f 2 --model-dir models/test/ --summary-dir models/summary/ --report-file models/test.csv --verbosity 0 -Y
+python -O evaluate.py -t agreement -n existential -m cnn_rnn -b 2 -i 1 --model-dir models/test/ --report-file models/test.csv --verbosity 0
+echo "  resnet_rnn"
+python -O train.py -t agreement -n existential -m resnet_rnn -b 1 -i 2 -e 2 -f 2 --model-dir models/test/ --summary-dir models/summary/ --report-file models/test.csv --verbosity 0 -Y
+python -O evaluate.py -t agreement -n existential -m resnet_rnn -b 2 -i 1 --model-dir models/test/ --report-file models/test.csv --verbosity 0
+echo "  fracnet_rnn"
+# python -O train.py -t agreement -n existential -m fracnet_rnn -b 1 -i 2 -e 2 -f 2 --model-dir models/test/ --summary-dir models/summary/ --report-file models/test.csv --verbosity 0 -Y
+# python -O evaluate.py -t agreement -n existential -m fracnet_rnn -b 2 -i 1 --model-dir models/test/ --report-file models/test.csv --verbosity 0
 echo "  cnn_conv"
 python -O train.py -t agreement -n existential -m cnn_conv -b 1 -i 2 -e 2 -f 2 --model-dir models/test/ --summary-dir models/summary/ --report-file models/test.csv --verbosity 0 -Y
 python -O evaluate.py -t agreement -n existential -m cnn_conv -b 2 -i 1 --model-dir models/test/ --report-file models/test.csv --verbosity 0
-echo "  cnn_lstm_att1"
-python -O train.py -t agreement -n existential -m cnn_lstm_att1 -b 1 -i 2 -e 2 -f 2 --model-dir models/test/ --summary-dir models/summary/ --report-file models/test.csv --verbosity 0 -Y
-python -O evaluate.py -t agreement -n existential -m cnn_lstm_att1 -b 2 -i 1 --model-dir models/test/ --report-file models/test.csv --verbosity 0
-echo "  cnn_lstm_att2"
-python -O train.py -t agreement -n existential -m cnn_lstm_att2 -b 1 -i 2 -e 2 -f 2 --model-dir models/test/ --summary-dir models/summary/ --report-file models/test.csv --verbosity 0 -Y
-python -O evaluate.py -t agreement -n existential -m cnn_lstm_att2 -b 2 -i 1 --model-dir models/test/ --report-file models/test.csv --verbosity 0
-echo "  cnn_lstm_san"
-python -O train.py -t agreement -n existential -m cnn_lstm_san -b 1 -i 2 -e 2 -f 2 --model-dir models/test/ --summary-dir models/summary/ --report-file models/test.csv --verbosity 0 -Y
-python -O evaluate.py -t agreement -n existential -m cnn_lstm_san -b 2 -i 1 --model-dir models/test/ --report-file models/test.csv --verbosity 0
+echo "  cnn_rnn_att1"
+python -O train.py -t agreement -n existential -m cnn_rnn_att1 -b 1 -i 2 -e 2 -f 2 --model-dir models/test/ --summary-dir models/summary/ --report-file models/test.csv --verbosity 0 -Y
+python -O evaluate.py -t agreement -n existential -m cnn_rnn_att1 -b 2 -i 1 --model-dir models/test/ --report-file models/test.csv --verbosity 0
+echo "  cnn_rnn_att2"
+python -O train.py -t agreement -n existential -m cnn_rnn_att2 -b 1 -i 2 -e 2 -f 2 --model-dir models/test/ --summary-dir models/summary/ --report-file models/test.csv --verbosity 0 -Y
+python -O evaluate.py -t agreement -n existential -m cnn_rnn_att2 -b 2 -i 1 --model-dir models/test/ --report-file models/test.csv --verbosity 0
+echo "  cnn_rnn_san"
+python -O train.py -t agreement -n existential -m cnn_rnn_san -b 1 -i 2 -e 2 -f 2 --model-dir models/test/ --summary-dir models/summary/ --report-file models/test.csv --verbosity 0 -Y
+python -O evaluate.py -t agreement -n existential -m cnn_rnn_san -b 2 -i 1 --model-dir models/test/ --report-file models/test.csv --verbosity 0
 echo "  cnn_conv_san"
 python -O train.py -t agreement -n existential -m cnn_conv_san -b 1 -i 2 -e 2 -f 2 --model-dir models/test/ --summary-dir models/summary/ --report-file models/test.csv --verbosity 0 -Y
 python -O evaluate.py -t agreement -n existential -m cnn_conv_san -b 2 -i 1 --model-dir models/test/ --report-file models/test.csv --verbosity 0
-echo "  cnn_lstm_film"
-python -O train.py -t agreement -n existential -m cnn_lstm_film -b 1 -i 2 -e 2 -f 2 --model-dir models/test/ --summary-dir models/summary/ --report-file models/test.csv --verbosity 0 -Y
-python -O evaluate.py -t agreement -n existential -m cnn_lstm_film -b 2 -i 1 --model-dir models/test/ --report-file models/test.csv --verbosity 0
-echo "  cnn_lstm_rel"
-python -O train.py -t agreement -n existential -m cnn_lstm_rel -b 1 -i 2 -e 2 -f 2 --model-dir models/test/ --summary-dir models/summary/ --report-file models/test.csv --verbosity 0 -Y
-python -O evaluate.py -t agreement -n existential -m cnn_lstm_rel -b 2 -i 1 --model-dir models/test/ --report-file models/test.csv --verbosity 0
+echo "  cnn_rnn_film"
+python -O train.py -t agreement -n existential -m cnn_rnn_film -b 1 -i 2 -e 2 -f 2 --model-dir models/test/ --summary-dir models/summary/ --report-file models/test.csv --verbosity 0 -Y
+python -O evaluate.py -t agreement -n existential -m cnn_rnn_film -b 2 -i 1 --model-dir models/test/ --report-file models/test.csv --verbosity 0
+echo "  cnn_rnn_rel"
+#python -O train.py -t agreement -n existential -m cnn_rnn_rel -b 1 -i 2 -e 2 -f 2 --model-dir models/test/ --summary-dir models/summary/ --report-file models/test.csv --verbosity 0 -Y
+#python -O evaluate.py -t agreement -n existential -m cnn_rnn_rel -b 2 -i 1 --model-dir models/test/ --report-file models/test.csv --verbosity 0
 
 echo "  cnn_only (python2)"
 python2 -O train.py -t agreement -n existential -m cnn_only -b 1 -i 2 -e 2 -f 2 --model-dir models/test/ --summary-dir models/summary/ --report-file models/test.csv --verbosity 0 -Y

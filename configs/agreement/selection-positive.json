@@ -1,0 +1,5 @@
+{
+    "type": "agreement",
+    "name": "selection",
+    "selectors": [["x-two", "*"], ["y-two", "*"], ["size-two", "*"], ["shade-two", "*"], ["proximity-two", "*"]]
+}

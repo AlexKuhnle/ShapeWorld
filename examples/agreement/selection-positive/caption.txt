@@ -1,0 +1,600 @@
+the lower square is gray .
+the right ellipse is green .
+the darker square is cyan .
+the upper ellipse is green .
+the darker ellipse is blue .
+
+the lighter triangle is magenta .
+the lower triangle is green .
+the darker magenta shape is a triangle .
+the darker magenta shape is a triangle .
+the gray shape closer to the red ellipse is a triangle .
+
+the smaller red shape is an ellipse .
+the lower rectangle is magenta .
+the bigger red shape is an ellipse .
+the upper red shape is a rectangle .
+the smaller red shape is an ellipse .
+
+the lighter circle is gray .
+the ellipse farther from the square is gray .
+the left ellipse is blue .
+the bigger ellipse is green .
+the bigger ellipse is cyan .
+
+the lighter cross is yellow .
+the left red shape is a semicircle .
+the cyan shape closer to the blue circle is a square .
+the bigger red shape is an ellipse .
+the lower red shape is a square .
+
+the cross farther from the cyan shape is blue .
+the right red shape is a cross .
+the bigger cross is red .
+the left green shape is an ellipse .
+the lighter green shape is a semicircle .
+
+the square farther from the cyan shape is yellow .
+the lower square is red .
+the square farther from the blue triangle is red .
+the left square is yellow .
+the left square is cyan .
+
+the lighter cyan shape is a circle .
+the smaller ellipse is blue .
+the ellipse closer to the yellow shape is cyan .
+the lower ellipse is blue .
+the cyan shape closer to the yellow pentagon is an ellipse .
+
+the left magenta shape is an ellipse .
+the magenta shape farther from the cyan cross is a cross .
+the cross closer to the magenta semicircle is magenta .
+the cross closer to the magenta semicircle is red .
+the magenta shape closer to the triangle is a cross .
+
+the triangle closer to the yellow shape is green .
+the right rectangle is red .
+the lower cross is cyan .
+the lighter cross is blue .
+the cross closer to the yellow shape is blue .
+
+the gray shape farther from the magenta shape is a rectangle .
+the left ellipse is gray .
+the smaller ellipse is red .
+the right gray shape is a semicircle .
+the darker gray shape is a rectangle .
+
+the darker square is yellow .
+the darker square is yellow .
+the right blue shape is a circle .
+the lower blue shape is a cross .
+the square farther from the yellow ellipse is red .
+
+the left triangle is magenta .
+the lower triangle is cyan .
+the right magenta shape is a rectangle .
+the upper triangle is gray .
+the lower yellow shape is a square .
+
+the rectangle farther from the cyan square is gray .
+the rectangle farther from the red circle is gray .
+the darker red shape is a triangle .
+the upper gray shape is a rectangle .
+the left red shape is a square .
+
+the left green shape is a square .
+the left green shape is a square .
+the square closer to the cyan rectangle is green .
+the left green shape is a square .
+the right green shape is a square .
+
+the semicircle closer to the yellow triangle is green .
+the left semicircle is blue .
+the right semicircle is gray .
+the lighter semicircle is green .
+the semicircle closer to the yellow triangle is green .
+
+the smaller gray shape is a pentagon .
+the bigger gray shape is a pentagon .
+the bigger gray shape is a circle .
+the left gray shape is a pentagon .
+the gray shape farther from the blue shape is a cross .
+
+the bigger gray shape is a semicircle .
+the right red shape is a circle .
+the upper square is cyan .
+the bigger gray shape is a semicircle .
+the upper square is cyan .
+
+the darker cross is yellow .
+the smaller rectangle is yellow .
+the upper rectangle is red .
+the cross closer to the yellow rectangle is yellow .
+the darker ellipse is green .
+
+the lower pentagon is gray .
+the left yellow shape is a square .
+the lower yellow shape is a pentagon .
+the upper pentagon is gray .
+the left yellow shape is a semicircle .
+
+the left magenta shape is a rectangle .
+the upper cross is gray .
+the darker cross is gray .
+the right magenta shape is a cross .
+the left magenta shape is a square .
+
+the pentagon closer to the blue semicircle is gray .
+the pentagon closer to the blue semicircle is red .
+the right blue shape is an ellipse .
+the bigger pentagon is yellow .
+the right rectangle is green .
+
+the smaller cross is gray .
+the smaller cross is cyan .
+the lower green shape is a cross .
+the left cyan shape is a rectangle .
+the cross closer to the green triangle is green .
+
+the yellow shape closer to the cross is a circle .
+the lower ellipse is blue .
+the upper ellipse is blue .
+the upper blue shape is a triangle .
+the lower ellipse is yellow .
+
+the lighter magenta shape is a triangle .
+the lower red shape is a cross .
+the smaller magenta shape is a square .
+the right magenta shape is a triangle .
+the lower red shape is a cross .
+
+the left gray shape is a pentagon .
+the left gray shape is a cross .
+the upper red shape is a pentagon .
+the right gray shape is a cross .
+the right red shape is a cross .
+
+the lighter yellow shape is a semicircle .
+the right semicircle is yellow .
+the bigger semicircle is magenta .
+the right semicircle is magenta .
+the right circle is magenta .
+
+the blue shape farther from the gray semicircle is a circle .
+the lower blue shape is a triangle .
+the upper semicircle is gray .
+the triangle closer to the red shape is magenta .
+the bigger semicircle is cyan .
+
+the blue shape closer to the square is a pentagon .
+the bigger blue shape is a pentagon .
+the darker pentagon is blue .
+the bigger pentagon is green .
+the left rectangle is magenta .
+
+the circle farther from the magenta ellipse is gray .
+the darker cyan shape is a circle .
+the lower semicircle is gray .
+the upper cyan shape is a square .
+the upper circle is cyan .
+
+the lower square is green .
+the upper square is magenta .
+the lower square is gray .
+the right ellipse is cyan .
+the right ellipse is cyan .
+
+the square farther from the yellow shape is gray .
+the lighter gray shape is a square .
+the bigger square is magenta .
+the left square is magenta .
+the lighter gray shape is a pentagon .
+
+the rectangle closer to the blue triangle is magenta .
+the left rectangle is blue .
+the left triangle is magenta .
+the left rectangle is blue .
+the rectangle farther from the blue triangle is blue .
+
+the smaller red shape is a square .
+the darker red shape is a cross .
+the lower red shape is a square .
+the upper red shape is a square .
+the right gray shape is a circle .
+
+the green shape farther from the magenta shape is a semicircle .
+the smaller cross is yellow .
+the lower green shape is a cross .
+the left cross is red .
+the upper cross is yellow .
+
+the darker rectangle is cyan .
+the rectangle farther from the red ellipse is cyan .
+the darker rectangle is cyan .
+the lower cyan shape is a rectangle .
+the right rectangle is cyan .
+
+the lower pentagon is blue .
+the left blue shape is an ellipse .
+the lighter blue shape is a circle .
+the lighter rectangle is green .
+the right rectangle is green .
+
+the upper green shape is a triangle .
+the lighter green shape is a pentagon .
+the darker green shape is an ellipse .
+the triangle closer to the green semicircle is red .
+the red shape closer to the semicircle is a triangle .
+
+the lower green shape is a triangle .
+the semicircle closer to the red triangle is blue .
+the lower semicircle is cyan .
+the lower green shape is a square .
+the lower semicircle is blue .
+
+the bigger red shape is a semicircle .
+the lower square is green .
+the right red shape is a triangle .
+the upper yellow shape is a circle .
+the upper square is gray .
+
+the smaller pentagon is cyan .
+the pentagon farther from the green cross is green .
+the bigger pentagon is yellow .
+the right green shape is an ellipse .
+the upper cross is green .
+
+the darker rectangle is red .
+the right rectangle is gray .
+the rectangle closer to the gray cross is gray .
+the rectangle closer to the gray circle is red .
+the left rectangle is red .
+
+the darker blue shape is a semicircle .
+the bigger ellipse is green .
+the right blue shape is a pentagon .
+the blue shape farther from the yellow shape is an ellipse .
+the right ellipse is cyan .
+
+the left pentagon is blue .
+the upper red shape is a semicircle .
+the right pentagon is cyan .
+the red shape closer to the gray shape is a pentagon .
+the smaller pentagon is blue .
+
+the magenta shape closer to the gray semicircle is a pentagon .
+the lower cross is gray .
+the smaller semicircle is gray .
+the magenta shape farther from the square is a cross .
+the upper magenta shape is a cross .
+
+the bigger circle is yellow .
+the blue shape closer to the red cross is a circle .
+the upper cross is green .
+the bigger cross is green .
+the left blue shape is an ellipse .
+
+the smaller cyan shape is a pentagon .
+the darker cyan shape is a triangle .
+the bigger cyan shape is a semicircle .
+the right cyan shape is a cross .
+the bigger cyan shape is a triangle .
+
+the left cross is cyan .
+the smaller cross is green .
+the right cross is cyan .
+the upper cross is green .
+the cross closer to the triangle is red .
+
+the circle closer to the green square is gray .
+the left blue shape is an ellipse .
+the darker blue shape is a circle .
+the right circle is gray .
+the lighter blue shape is a circle .
+
+the gray shape farther from the cyan rectangle is a pentagon .
+the bigger rectangle is blue .
+the darker gray shape is a pentagon .
+the bigger rectangle is cyan .
+the lighter gray shape is an ellipse .
+
+the darker green shape is a cross .
+the upper green shape is a pentagon .
+the darker green shape is a cross .
+the left green shape is a pentagon .
+the darker green shape is a pentagon .
+
+the right red shape is a square .
+the lower red shape is a square .
+the right red shape is a square .
+the lighter yellow shape is an ellipse .
+the upper red shape is a triangle .
+
+the smaller circle is green .
+the cyan shape farther from the gray shape is a circle .
+the bigger circle is gray .
+the cyan shape closer to the ellipse is an ellipse .
+the smaller circle is gray .
+
+the lighter ellipse is gray .
+the darker ellipse is magenta .
+the blue shape farther from the red shape is a square .
+the darker blue shape is a square .
+the left blue shape is a square .
+
+the cross farther from the rectangle is blue .
+the lighter red shape is a cross .
+the red shape farther from the magenta shape is a cross .
+the bigger cross is red .
+the lighter red shape is a rectangle .
+
+the left red shape is a circle .
+the left cyan shape is a circle .
+the blue shape farther from the yellow shape is a circle .
+the left blue shape is a circle .
+the right red shape is a triangle .
+
+the left cross is red .
+the bigger cross is red .
+the lower ellipse is yellow .
+the left ellipse is magenta .
+the smaller cross is blue .
+
+the cyan shape closer to the green circle is a rectangle .
+the lower cyan shape is a pentagon .
+the lower cyan shape is a rectangle .
+the cyan shape farther from the green circle is a rectangle .
+the cyan shape closer to the green shape is a rectangle .
+
+the lighter yellow shape is a rectangle .
+the yellow shape farther from the circle is a rectangle .
+the lower yellow shape is a rectangle .
+the bigger rectangle is gray .
+the lighter gray shape is a square .
+
+the upper circle is cyan .
+the cyan shape farther from the green circle is a square .
+the bigger circle is green .
+the darker cyan shape is a semicircle .
+the lower circle is cyan .
+
+the left blue shape is a rectangle .
+the upper blue shape is a rectangle .
+the lower magenta shape is a rectangle .
+the lower blue shape is a cross .
+the blue shape farther from the yellow shape is a circle .
+
+the right circle is magenta .
+the circle farther from the yellow ellipse is magenta .
+the lower circle is cyan .
+the left magenta shape is a circle .
+the lower magenta shape is a circle .
+
+the lower circle is yellow .
+the upper green shape is a square .
+the bigger cross is blue .
+the upper cross is yellow .
+the upper circle is blue .
+
+the bigger green shape is an ellipse .
+the right green shape is a square .
+the left green shape is a cross .
+the lower green shape is a square .
+the lighter green shape is a cross .
+
+the lower triangle is yellow .
+the left rectangle is magenta .
+the right triangle is magenta .
+the upper rectangle is yellow .
+the lower rectangle is yellow .
+
+the red shape closer to the green ellipse is a pentagon .
+the left red shape is a pentagon .
+the left red shape is an ellipse .
+the red shape closer to the green ellipse is a pentagon .
+the darker red shape is a pentagon .
+
+the darker red shape is a circle .
+the right red shape is a triangle .
+the lower square is blue .
+the upper square is blue .
+the square closer to the yellow rectangle is magenta .
+
+the right pentagon is magenta .
+the lower red shape is an ellipse .
+the lower pentagon is red .
+the upper pentagon is red .
+the upper red shape is a circle .
+
+the bigger yellow shape is a square .
+the lighter yellow shape is a semicircle .
+the right yellow shape is a square .
+the upper yellow shape is a square .
+the left yellow shape is an ellipse .
+
+the upper gray shape is a semicircle .
+the left gray shape is a semicircle .
+the lighter gray shape is a semicircle .
+the lighter gray shape is a semicircle .
+the right gray shape is a semicircle .
+
+the upper gray shape is a semicircle .
+the lighter gray shape is a pentagon .
+the ellipse closer to the green pentagon is red .
+the lighter gray shape is a semicircle .
+the right green shape is a pentagon .
+
+the red shape closer to the magenta shape is a semicircle .
+the lighter red shape is a semicircle .
+the red shape closer to the magenta triangle is a pentagon .
+the left red shape is a pentagon .
+the lighter red shape is a square .
+
+the lower rectangle is magenta .
+the right gray shape is a square .
+the rectangle closer to the cyan shape is magenta .
+the right gray shape is a circle .
+the right gray shape is a square .
+
+the right semicircle is blue .
+the semicircle farther from the rectangle is blue .
+the lower magenta shape is a semicircle .
+the right semicircle is blue .
+the left semicircle is blue .
+
+the cross farther from the ellipse is cyan .
+the lower cyan shape is a cross .
+the right cross is blue .
+the cyan shape farther from the blue cross is a cross .
+the lower blue shape is a pentagon .
+
+the left green shape is a cross .
+the upper green shape is a square .
+the left green shape is a cross .
+the pentagon closer to the green square is cyan .
+the right green shape is a square .
+
+the smaller cross is red .
+the smaller cross is blue .
+the upper semicircle is cyan .
+the left semicircle is cyan .
+the left semicircle is red .
+
+the bigger yellow shape is a pentagon .
+the darker ellipse is yellow .
+the lower ellipse is blue .
+the smaller ellipse is gray .
+the left yellow shape is a circle .
+
+the lighter yellow shape is a rectangle .
+the yellow shape farther from the triangle is an ellipse .
+the right cross is blue .
+the lighter yellow shape is an ellipse .
+the yellow shape farther from the gray shape is a triangle .
+
+the darker green shape is a circle .
+the yellow shape farther from the magenta shape is a pentagon .
+the lower yellow shape is a pentagon .
+the upper green shape is a rectangle .
+the darker green shape is a semicircle .
+
+the lower yellow shape is a square .
+the yellow shape farther from the triangle is a square .
+the circle closer to the yellow cross is green .
+the red shape closer to the triangle is a square .
+the yellow shape farther from the red square is a circle .
+
+the left cyan shape is an ellipse .
+the upper semicircle is yellow .
+the upper semicircle is green .
+the left semicircle is green .
+the semicircle closer to the cyan ellipse is yellow .
+
+the right green shape is a pentagon .
+the blue shape farther from the gray triangle is a pentagon .
+the pentagon closer to the gray triangle is blue .
+the right blue shape is a circle .
+the upper pentagon is blue .
+
+the bigger magenta shape is a rectangle .
+the lower square is cyan .
+the smaller square is magenta .
+the right magenta shape is a rectangle .
+the smaller square is cyan .
+
+the darker triangle is cyan .
+the bigger triangle is blue .
+the left square is blue .
+the lower triangle is blue .
+the square closer to the magenta shape is blue .
+
+the darker triangle is gray .
+the lower blue shape is a square .
+the lower triangle is cyan .
+the bigger square is red .
+the upper square is gray .
+
+the lighter green shape is a triangle .
+the lower pentagon is gray .
+the lighter ellipse is green .
+the green shape farther from the square is an ellipse .
+the darker green shape is a square .
+
+the square closer to the cross is red .
+the square closer to the green cross is magenta .
+the smaller yellow shape is a pentagon .
+the upper yellow shape is a pentagon .
+the lighter green shape is a cross .
+
+the smaller magenta shape is a square .
+the darker magenta shape is a triangle .
+the right magenta shape is a circle .
+the right triangle is magenta .
+the upper triangle is yellow .
+
+the lower gray shape is a semicircle .
+the right gray shape is a cross .
+the upper gray shape is a semicircle .
+the darker gray shape is a triangle .
+the lower gray shape is a rectangle .
+
+the lighter red shape is a triangle .
+the darker red shape is a circle .
+the lighter red shape is a circle .
+the upper triangle is cyan .
+the left triangle is red .
+
+the right blue shape is a triangle .
+the left blue shape is a triangle .
+the bigger blue shape is a circle .
+the upper blue shape is a triangle .
+the bigger blue shape is a circle .
+
+the upper rectangle is magenta .
+the lower rectangle is gray .
+the upper gray shape is a triangle .
+the lower rectangle is gray .
+the upper gray shape is a rectangle .
+
+the bigger cross is magenta .
+the right cyan shape is a semicircle .
+the triangle closer to the magenta shape is gray .
+the bigger triangle is cyan .
+the darker cyan shape is a semicircle .
+
+the right ellipse is blue .
+the upper blue shape is a triangle .
+the darker ellipse is magenta .
+the right blue shape is a cross .
+the ellipse farther from the blue cross is magenta .
+
+the lower cross is gray .
+the right cross is blue .
+the upper cross is yellow .
+the cross closer to the pentagon is blue .
+the bigger cross is magenta .
+
+the gray shape closer to the semicircle is an ellipse .
+the smaller square is yellow .
+the yellow shape closer to the gray square is an ellipse .
+the smaller triangle is magenta .
+the smaller square is cyan .
+
+the green shape farther from the ellipse is a square .
+the left green shape is a square .
+the green shape farther from the ellipse is an ellipse .
+the right green shape is a square .
+the right green shape is a square .
+
+the blue shape closer to the square is a pentagon .
+the lower blue shape is a pentagon .
+the lower blue shape is a cross .
+the upper blue shape is a cross .
+the ellipse closer to the red cross is red .
+
+the upper magenta shape is a cross .
+the left red shape is a pentagon .
+the magenta shape closer to the blue shape is a semicircle .
+the lighter red shape is a cross .
+the red shape farther from the yellow cross is a semicircle .
+

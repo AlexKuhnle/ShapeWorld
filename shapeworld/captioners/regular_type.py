@@ -53,7 +53,7 @@ class RegularTypeCaptioner(WorldCaptioner):
 
     def rpn_symbols(self):
         return super(RegularTypeCaptioner, self).rpn_symbols() | \
-            set(str(n) for n in range(4)) | \
+            set(str(n) for n in range(1, 4)) | \
             {EntityType.__name__} | \
             {'{}-{}-{}'.format(Attribute.__name__, 'shape', value) for value in self.shapes} | \
             {'{}-{}-{}'.format(Attribute.__name__, 'color', value) for value in self.colors} | \
@@ -181,28 +181,28 @@ class RegularTypeCaptioner(WorldCaptioner):
         if predication.num_agreeing == 0:
             return None
 
-        entities = list()
+        values = list()
         for entity in predication.agreeing:
-            entity_attributes = list()
+            value = list()
             for predtype in self.attributes:
                 if predtype == 'shape':
-                    entity_attributes.append(entity.shape.name)
+                    value.append(entity.shape.name)
                 elif predtype == 'color':
-                    entity_attributes.append(entity.color.name)
+                    value.append(entity.color.name)
                 elif predtype == 'texture':
-                    entity_attributes.append(entity.texture.name)
-            entities.append(tuple(entity_attributes))
+                    value.append(entity.texture.name)
+            values.append(tuple(value))
 
-        entity = choice(entities)
+        value = choice(values)
 
         attributes = list()
         for n, predtype in enumerate(self.attributes):
             if predtype == 'shape':
-                attributes.append(Attribute(predtype='shape', value=entity[n]))
+                attributes.append(Attribute(predtype='shape', value=value[n]))
             elif predtype == 'color':
-                attributes.append(Attribute(predtype='color', value=entity[n]))
+                attributes.append(Attribute(predtype='color', value=value[n]))
             elif predtype == 'texture':
-                attributes.append(Attribute(predtype='texture', value=entity[n]))
+                attributes.append(Attribute(predtype='texture', value=value[n]))
 
         for n in range(len(attributes) - 1, -1, -1):
             if predication.contradictory(predicate=attributes[n]):

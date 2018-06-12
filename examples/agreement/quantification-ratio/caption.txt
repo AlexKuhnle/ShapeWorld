@@ -1,600 +1,600 @@
-less than two thirds of the shapes are cyan shapes .
-at most three quarters of the shapes are cyan squares .
-less than two thirds of the shapes are cyan rectangles .
-at least a third of the circles are red shapes .
-less than a third of the squares are cyan shapes .
+more than half the shapes are gray circles .
+at most half the circles are gray .
+at least no cyan shape is a circle .
+at most a third of the shapes is cyan .
+at least half the gray shapes are circles .
 
-more than half the pentagons are gray shapes .
-at most all shapes are red .
-not all rectangles are magenta .
-at most all rectangles are cyan .
-less than two thirds of the shapes are semicircles .
+more than a quarter of the pentagons are yellow .
+less than a third of the shapes are ellipses .
+at most all shapes are red triangles .
+at most all ellipses are green .
+exactly half the ellipses are magenta .
 
-less than three quarters of the shapes are magenta triangles .
-exactly three quarters of the shapes are green pentagons .
-at most a quarter of the shapes are green triangles .
-at least half the triangles are yellow shapes .
-less than all shapes are yellow crosses .
+at most three quarters of the shapes are cyan .
+at most two thirds of the semicircles are cyan .
+exactly a third of the ellipses is green .
+at most two thirds of the ellipses are cyan .
+more than two thirds of the shapes are gray .
 
-at most a third of the shapes are cyan pentagons .
-at most a third of the shapes are pentagons .
-at most three quarters of the shapes are blue squares .
-more than half the yellow shapes are squares .
-not no shape is a green square .
-
-more than a third of the gray shapes are rectangles .
-at least a quarter of the shapes are gray shapes .
-at most a third of the gray shapes are pentagons .
-exactly two thirds of the shapes are gray pentagons .
-at least a quarter of the yellow shapes are semicircles .
-
-at most half the shapes are triangles .
-not a quarter of the squares are blue shapes .
-more than half the shapes are yellow triangles .
-exactly no shape is a pentagon .
-at most a quarter of the shapes are yellow triangles .
-
-at most a third of the semicircles are green shapes .
-not a quarter of the cyan shapes are triangles .
-not two thirds of the shapes are green semicircles .
-exactly a quarter of the shapes are magenta shapes .
-at least a third of the shapes are magenta semicircles .
-
-not a third of the shapes are crosses .
-less than three quarters of the shapes are green crosses .
-exactly all shapes are gray ellipses .
-less than three quarters of the yellow shapes are ellipses .
-more than a third of the yellow shapes are ellipses .
-
-exactly a quarter of the circles are cyan shapes .
-exactly a quarter of the magenta shapes are squares .
-less than all shapes are yellow squares .
-less than a quarter of the yellow shapes are squares .
-at most two thirds of the circles are magenta shapes .
-
-exactly a quarter of the pentagons are green shapes .
-at most all shapes are gray pentagons .
-at most a third of the shapes are gray shapes .
-not a third of the shapes are green shapes .
-not three quarters of the rectangles are gray shapes .
-
-at most a quarter of the triangles are yellow shapes .
-at most a quarter of the shapes are yellow triangles .
-exactly no yellow shape is a triangle .
-exactly no red shape is a circle .
-exactly all shapes are blue triangles .
-
-less than two thirds of the shapes are red semicircles .
-not no red shape is an ellipse .
-exactly all shapes are semicircles .
-less than two thirds of the shapes are gray semicircles .
-less than a quarter of the ellipses are cyan shapes .
-
-less than all shapes are blue pentagons .
-less than a third of the crosses are blue shapes .
-not all crosses are gray .
-at most a third of the shapes are gray shapes .
-less than two thirds of the shapes are yellow pentagons .
-
-at least a third of the red shapes are semicircles .
-not a third of the shapes are red crosses .
-at least a third of the crosses are red shapes .
-less than all red shapes are ellipses .
-more than half the ellipses are red shapes .
-
-more than a third of the crosses are red shapes .
-exactly no shape is a semicircle .
-exactly all yellow shapes are semicircles .
-at most two thirds of the shapes are red crosses .
-at least two thirds of the shapes are yellow shapes .
-
-not half the shapes are yellow shapes .
-more than a third of the squares are gray shapes .
-at least two thirds of the shapes are yellow crosses .
-more than no shape is a gray rectangle .
-exactly no shape is a rectangle .
-
-at most a quarter of the shapes are cyan rectangles .
-at least three quarters of the magenta shapes are squares .
-more than half the magenta shapes are crosses .
-at most two thirds of the shapes are squares .
-exactly half the blue shapes are triangles .
-
-at most a third of the squares are green shapes .
-not two thirds of the squares are gray shapes .
-at least a third of the squares are red shapes .
-less than half the shapes are squares .
-at most two thirds of the rectangles are gray shapes .
-
-at most all shapes are yellow semicircles .
-not two thirds of the shapes are red shapes .
-more than a quarter of the shapes are gray shapes .
-not two thirds of the semicircles are red shapes .
-at most a quarter of the shapes are yellow shapes .
-
-more than three quarters of the blue shapes are squares .
-more than two thirds of the shapes are squares .
-at least two thirds of the shapes are green shapes .
-more than a third of the squares are green shapes .
-less than a quarter of the shapes are squares .
-
-at most a quarter of the shapes are magenta shapes .
-at most three quarters of the shapes are rectangles .
-at least a quarter of the shapes are gray shapes .
-exactly a third of the blue shapes are squares .
-at least half the shapes are cyan squares .
-
-not a quarter of the magenta shapes are pentagons .
-not a third of the shapes are crosses .
-at least no shape is a magenta circle .
-more than a third of the magenta shapes are circles .
-not a quarter of the shapes are red shapes .
-
-less than two thirds of the rectangles are magenta shapes .
-not a quarter of the shapes are magenta crosses .
-at most three quarters of the circles are cyan shapes .
-at most a quarter of the shapes are circles .
-at least a quarter of the ellipses are cyan shapes .
-
-exactly a quarter of the shapes are cyan shapes .
-less than a quarter of the crosses are blue shapes .
-at most two thirds of the shapes are gray triangles .
-at least a third of the red shapes are rectangles .
-at least two thirds of the shapes are cyan rectangles .
-
-at least a third of the shapes are cyan circles .
-less than a third of the shapes are circles .
-at least a third of the green shapes are rectangles .
-less than a quarter of the green shapes are triangles .
-at most three quarters of the triangles are green shapes .
-
-at least three quarters of the blue shapes are pentagons .
-at least a third of the shapes are pentagons .
-not no shape is a square .
-at most all gray shapes are pentagons .
-not three quarters of the shapes are blue pentagons .
-
-at most two thirds of the green shapes are squares .
-at most two thirds of the gray shapes are semicircles .
-not a third of the shapes are green shapes .
-more than a third of the shapes are green shapes .
-at most half the shapes are squares .
-
-more than half the shapes are gray shapes .
-not half the shapes are blue squares .
-less than a third of the semicircles are blue shapes .
-not half the shapes are gray shapes .
-at most a quarter of the shapes are squares .
-
-not a quarter of the cyan shapes are pentagons .
-at most a third of the shapes are rectangles .
-at least a quarter of the cyan shapes are crosses .
-exactly half the shapes are cyan shapes .
-at least two thirds of the rectangles are green shapes .
-
-less than a quarter of the shapes are crosses .
-less than all shapes are ellipses .
-at least a quarter of the shapes are squares .
-not no shape is a cyan circle .
-at most three quarters of the shapes are cyan shapes .
-
-exactly half the magenta shapes are circles .
-not two thirds of the magenta shapes are circles .
-not half the shapes are magenta squares .
-at most three quarters of the shapes are red circles .
-exactly a quarter of the shapes are green shapes .
-
-not half the green shapes are triangles .
-at most a quarter of the shapes are pentagons .
-at most all shapes are red .
-exactly all shapes are gray pentagons .
-at most a quarter of the shapes are gray rectangles .
-
-at least two thirds of the green shapes are triangles .
-at most half the green shapes are triangles .
-at least a third of the rectangles are green shapes .
-not three quarters of the shapes are rectangles .
-more than a quarter of the shapes are green triangles .
-
-exactly two thirds of the shapes are ellipses .
-at least two thirds of the red shapes are ellipses .
-exactly all red shapes are ellipses .
-at most a quarter of the shapes are gray shapes .
-more than a third of the shapes are crosses .
-
-more than half the shapes are cyan circles .
-more than half the shapes are circles .
-exactly half the shapes are circles .
-at least a quarter of the semicircles are red shapes .
-at least no shape is a cyan circle .
-
-more than half the shapes are green shapes .
-not two thirds of the shapes are blue shapes .
-not no cross is blue .
-more than a third of the shapes are red shapes .
-less than half the circles are red shapes .
-
-at most all shapes are yellow ellipses .
-exactly all green shapes are pentagons .
-more than a quarter of the shapes are ellipses .
-more than three quarters of the shapes are gray shapes .
-less than three quarters of the yellow shapes are squares .
-
-exactly half the shapes are yellow rectangles .
-at least a third of the shapes are rectangles .
-at least a quarter of the shapes are triangles .
-exactly all shapes are yellow rectangles .
-more than a third of the shapes are gray rectangles .
-
-at most half the green shapes are rectangles .
-less than two thirds of the green shapes are rectangles .
-less than three quarters of the shapes are blue rectangles .
-not a third of the shapes are green shapes .
-less than a quarter of the shapes are rectangles .
-
-more than half the shapes are green rectangles .
-not no shape is green .
-at least a third of the shapes are cyan pentagons .
-at most a quarter of the shapes are cyan pentagons .
-less than two thirds of the shapes are rectangles .
-
-at most all shapes are blue semicircles .
+less than a quarter of the shapes are yellow crosses .
+at most half the shapes are magenta crosses .
+at most two thirds of the shapes are crosses .
 exactly no shape is a magenta pentagon .
-at most a quarter of the shapes are magenta shapes .
-not all semicircles are gray .
-at most a quarter of the shapes are magenta ellipses .
+exactly no shape is a magenta pentagon .
 
-less than half the shapes are gray circles .
-at least half the pentagons are cyan shapes .
-at most half the shapes are ellipses .
-more than a quarter of the shapes are gray triangles .
-not half the shapes are circles .
+more than two thirds of the shapes are red squares .
+less than a third of the shapes are magenta circles .
+less than three quarters of the shapes are red crosses .
+not no ellipse is magenta .
+not half the magenta shapes are circles .
 
-less than a third of the rectangles are green shapes .
-less than all circles are gray .
-not a third of the shapes are green circles .
-not all magenta shapes are triangles .
-at most three quarters of the green shapes are triangles .
-
-at least half the shapes are green shapes .
-exactly a third of the squares are magenta shapes .
-not two thirds of the squares are gray shapes .
-less than a quarter of the shapes are magenta squares .
-at most three quarters of the shapes are gray squares .
-
-at most three quarters of the pentagons are yellow shapes .
-less than a third of the shapes are triangles .
-exactly no shape is a magenta semicircle .
-more than no yellow shape is a triangle .
-exactly a quarter of the crosses are cyan shapes .
-
-less than a quarter of the shapes are magenta ellipses .
-more than two thirds of the circles are cyan shapes .
-more than no magenta shape is an ellipse .
-exactly no shape is a red pentagon .
-at least half the shapes are ellipses .
-
-exactly no shape is a yellow rectangle .
-exactly no green shape is a cross .
-not no pentagon is red .
-less than all green shapes are crosses .
-more than a third of the green shapes are rectangles .
-
+more than two thirds of the pentagons are blue .
 at most a quarter of the shapes are pentagons .
-at least a quarter of the rectangles are magenta shapes .
-at most two thirds of the pentagons are blue shapes .
-at least no shape is a yellow rectangle .
-at most three quarters of the rectangles are magenta shapes .
+less than half the green shapes are pentagons .
+not three quarters of the shapes are green pentagons .
+not three quarters of the shapes are pentagons .
 
-exactly three quarters of the shapes are magenta circles .
-at least half the cyan shapes are circles .
-at most two thirds of the shapes are gray squares .
-less than two thirds of the gray shapes are pentagons .
-not a quarter of the shapes are ellipses .
+not two thirds of the pentagons are green .
+at least three quarters of the gray shapes are circles .
+exactly half the circles are green .
+exactly a third of the shapes are circles .
+at least half the shapes are gray circles .
 
-more than a third of the semicircles are green shapes .
-at most a quarter of the gray shapes are ellipses .
-not all circles are magenta .
-not two thirds of the gray shapes are circles .
-exactly three quarters of the circles are gray shapes .
+exactly three quarters of the rectangles are green .
+at most all green shapes are circles .
+at least a third of the shapes is red .
+more than half the green shapes are circles .
+at least three quarters of the cyan shapes are circles .
 
-at least a third of the shapes are red rectangles .
-less than a quarter of the shapes are squares .
-not a quarter of the shapes are rectangles .
-more than a third of the crosses are yellow shapes .
-less than a third of the shapes are red rectangles .
-
-exactly all shapes are blue .
-more than a quarter of the shapes are circles .
-at most a quarter of the shapes are circles .
-at least a third of the shapes are cyan circles .
-not no cyan shape is a circle .
-
-exactly a third of the yellow shapes are semicircles .
-more than half the shapes are rectangles .
-more than a quarter of the shapes are ellipses .
-at most all blue shapes are circles .
-more than a third of the shapes are rectangles .
-
-more than two thirds of the green shapes are ellipses .
-at least a quarter of the shapes are green shapes .
-more than a third of the ellipses are green shapes .
-not no ellipse is yellow .
-less than two thirds of the shapes are yellow semicircles .
-
-exactly half the shapes are magenta shapes .
-more than half the red shapes are crosses .
-less than all shapes are green .
-exactly no shape is a cyan semicircle .
-exactly half the shapes are green ellipses .
-
-at least three quarters of the shapes are green shapes .
-at most two thirds of the shapes are green crosses .
-not no shape is a pentagon .
-not a third of the rectangles are blue shapes .
-more than a quarter of the shapes are blue shapes .
-
-exactly all shapes are squares .
-not no gray shape is a cross .
-less than two thirds of the shapes are gray ellipses .
-at most a quarter of the pentagons are gray shapes .
-less than three quarters of the pentagons are gray shapes .
-
-more than a quarter of the shapes are red triangles .
-at most two thirds of the red shapes are triangles .
-at most a third of the shapes are triangles .
-not a quarter of the red shapes are triangles .
-at least three quarters of the shapes are squares .
-
-less than a third of the squares are green shapes .
-not no triangle is green .
-at least two thirds of the blue shapes are triangles .
-exactly a third of the shapes are green shapes .
-at most three quarters of the shapes are magenta semicircles .
-
-exactly all blue shapes are semicircles .
-at least a third of the shapes are cyan shapes .
-less than a quarter of the semicircles are magenta shapes .
-at most half the circles are cyan shapes .
-at most a quarter of the circles are blue shapes .
-
-exactly a quarter of the shapes are gray shapes .
-not two thirds of the shapes are gray triangles .
-less than two thirds of the pentagons are magenta shapes .
-not half the shapes are cyan triangles .
-at least a third of the shapes are ellipses .
-
-exactly three quarters of the triangles are cyan shapes .
-at most a quarter of the shapes are cyan triangles .
-more than half the cyan shapes are squares .
-exactly no shape is a green semicircle .
-exactly no shape is a cyan triangle .
-
-exactly a quarter of the shapes are blue shapes .
-less than all shapes are triangles .
-exactly no magenta shape is a rectangle .
-exactly three quarters of the semicircles are red shapes .
-exactly all shapes are magenta rectangles .
-
-exactly a third of the shapes are magenta shapes .
-more than a quarter of the semicircles are magenta shapes .
-more than three quarters of the shapes are semicircles .
-less than all blue shapes are semicircles .
-not two thirds of the magenta shapes are semicircles .
-
-less than half the shapes are blue shapes .
-at least half the blue shapes are triangles .
-not a third of the shapes are blue triangles .
-more than half the rectangles are green shapes .
-more than three quarters of the squares are blue shapes .
-
-exactly half the shapes are rectangles .
-not a quarter of the shapes are magenta rectangles .
-not two thirds of the blue shapes are crosses .
-exactly a quarter of the rectangles are magenta shapes .
-not half the magenta shapes are ellipses .
-
-at most a quarter of the blue shapes are triangles .
-at least half the ellipses are red shapes .
-at most all shapes are triangles .
-less than half the shapes are blue semicircles .
-exactly half the shapes are blue crosses .
-
-less than three quarters of the shapes are green shapes .
-less than two thirds of the shapes are green shapes .
-exactly a third of the semicircles are yellow shapes .
-more than three quarters of the shapes are green shapes .
-not half the shapes are green ellipses .
-
-more than two thirds of the blue shapes are semicircles .
-not a third of the shapes are yellow semicircles .
-at least a quarter of the shapes are gray shapes .
-more than three quarters of the shapes are yellow shapes .
-at most a quarter of the shapes are semicircles .
-
-at most a quarter of the pentagons are magenta shapes .
-not a third of the red shapes are circles .
-at most three quarters of the shapes are magenta pentagons .
-more than a third of the shapes are magenta triangles .
-at most a quarter of the red shapes are squares .
-
-at least a quarter of the shapes are red shapes .
-less than a quarter of the shapes are red circles .
-at most all circles are red .
-at most three quarters of the shapes are red triangles .
-less than all shapes are yellow .
-
-more than no shape is a blue semicircle .
-at most a quarter of the shapes are blue semicircles .
-at most a third of the shapes are cyan pentagons .
-at most half the semicircles are blue shapes .
-less than a third of the shapes are semicircles .
-
-exactly two thirds of the green shapes are ellipses .
-at least two thirds of the blue shapes are squares .
-exactly a third of the pentagons are cyan shapes .
-more than half the green shapes are ellipses .
-more than a third of the green shapes are ellipses .
-
-less than half the shapes are yellow rectangles .
-more than half the red shapes are rectangles .
-exactly no shape is a red ellipse .
-at least no shape is yellow .
-at most a third of the shapes are yellow rectangles .
-
-at most half the shapes are crosses .
-at least a quarter of the shapes are green rectangles .
-at most three quarters of the shapes are rectangles .
-less than a third of the shapes are cyan shapes .
-exactly all shapes are green .
-
-less than a quarter of the gray shapes are pentagons .
-less than all shapes are gray .
-at least half the shapes are red crosses .
-at least three quarters of the ellipses are red shapes .
-more than no shape is gray .
-
-at least half the blue shapes are crosses .
-not two thirds of the shapes are cyan shapes .
-more than a third of the shapes are blue semicircles .
-not three quarters of the green shapes are rectangles .
-at most a quarter of the shapes are green shapes .
-
-more than half the shapes are circles .
-not a third of the shapes are cyan ellipses .
-not a quarter of the circles are cyan shapes .
-at most a third of the shapes are circles .
-at least three quarters of the shapes are circles .
-
-exactly all shapes are gray .
-at least a quarter of the ellipses are gray shapes .
-at most a third of the shapes are gray shapes .
-at least a third of the rectangles are yellow shapes .
-more than a quarter of the ellipses are yellow shapes .
-
-at least three quarters of the shapes are yellow pentagons .
-not three quarters of the rectangles are yellow shapes .
-at least a quarter of the shapes are gray rectangles .
-at least a third of the crosses are gray shapes .
-at least a third of the shapes are magenta shapes .
-
-not half the shapes are blue pentagons .
-exactly no shape is a yellow cross .
-at least a quarter of the shapes are blue pentagons .
-less than a quarter of the shapes are blue pentagons .
-at most two thirds of the shapes are blue ellipses .
-
-less than two thirds of the ellipses are cyan shapes .
-more than a quarter of the triangles are cyan shapes .
-at least half the cyan shapes are triangles .
-not two thirds of the semicircles are green shapes .
-at most a third of the cyan shapes are pentagons .
-
-more than two thirds of the shapes are pentagons .
-exactly a third of the shapes are blue pentagons .
-more than half the triangles are magenta shapes .
-exactly all triangles are blue .
-less than half the shapes are blue triangles .
-
-not half the magenta shapes are triangles .
-less than a quarter of the shapes are magenta shapes .
-at least a quarter of the shapes are magenta pentagons .
-at least three quarters of the red shapes are triangles .
+at least a third of the shapes are red ellipses .
+more than no shape is a magenta circle .
+more than a quarter of the shapes are red ellipses .
+less than half the ellipses are red .
 less than two thirds of the shapes are ellipses .
 
-less than a third of the shapes are green shapes .
-at least two thirds of the blue shapes are circles .
-not all circles are green .
-at most half the shapes are green shapes .
-not no shape is gray .
+at least half the shapes are cyan .
+more than half the shapes are cyan squares .
+less than half the squares are blue .
+at least three quarters of the cyan shapes are squares .
+at least half the shapes are blue .
 
-exactly all blue shapes are ellipses .
-not all triangles are gray .
-exactly all triangles are gray .
-at least a quarter of the shapes are green rectangles .
-not a third of the gray shapes are ellipses .
+at most a third of the shapes are green triangles .
+at most a third of the triangles is gray .
+less than a third of the shapes are green triangles .
+more than three quarters of the shapes are green triangles .
+not no gray shape is a triangle .
 
-at least a third of the shapes are blue shapes .
-exactly two thirds of the triangles are magenta shapes .
-exactly all shapes are green rectangles .
-at least three quarters of the triangles are cyan shapes .
-less than a quarter of the shapes are cyan shapes .
+at least half the shapes are cyan semicircles .
+at most three quarters of the semicircles are green .
+not two thirds of the semicircles are cyan .
+at most half the semicircles are cyan .
+less than all shapes are cyan semicircles .
 
-at most a quarter of the shapes are green circles .
-less than two thirds of the shapes are circles .
-more than a third of the shapes are circles .
-at most half the shapes are gray circles .
-not no shape is a magenta circle .
+less than a quarter of the shapes are yellow rectangles .
+more than a quarter of the shapes are crosses .
+more than no shape is red .
+at most half the squares are gray .
+at least half the cyan shapes are rectangles .
 
-at most a quarter of the shapes are triangles .
-not a quarter of the yellow shapes are semicircles .
-at most a third of the shapes are green shapes .
-more than three quarters of the semicircles are yellow shapes .
-exactly no shape is a red semicircle .
-
-exactly three quarters of the gray shapes are crosses .
-exactly all shapes are semicircles .
-not all shapes are gray ellipses .
+at least three quarters of the shapes are red .
+exactly a quarter of the shapes are magenta .
 not a quarter of the shapes are ellipses .
-more than a third of the gray shapes are crosses .
+at most three quarters of the green shapes are triangles .
+not no shape is a cross .
 
-at most a third of the pentagons are blue shapes .
-exactly a quarter of the shapes are ellipses .
-at least a third of the shapes are pentagons .
-at least no shape is a blue ellipse .
-at most half the shapes are blue shapes .
+more than no shape is a yellow rectangle .
+more than a third of the shapes are green circles .
+not no magenta shape is a semicircle .
+at least a quarter of the semicircles are magenta .
+at least two thirds of the shapes are rectangles .
 
-less than two thirds of the shapes are gray triangles .
-exactly half the blue shapes are crosses .
-less than half the squares are magenta shapes .
-more than a quarter of the crosses are magenta shapes .
-at least a third of the ellipses are gray shapes .
+more than a third of the shapes is green .
+exactly all shapes are rectangles .
+at least a third of the ellipses is yellow .
+at most half the shapes are yellow triangles .
+not half the ellipses are green .
 
-less than half the magenta shapes are triangles .
-at most three quarters of the magenta shapes are triangles .
-not a third of the triangles are magenta shapes .
-not half the shapes are triangles .
-at least a quarter of the shapes are magenta triangles .
+less than a third of the shapes are triangles .
+not all shapes are yellow .
+not all shapes are yellow ellipses .
+more than three quarters of the squares are cyan .
+at most three quarters of the shapes are yellow triangles .
 
-more than two thirds of the circles are blue shapes .
-not three quarters of the shapes are blue shapes .
-not a third of the shapes are gray triangles .
-less than a quarter of the shapes are squares .
+at least a third of the shapes are blue pentagons .
+exactly a quarter of the shapes are cyan .
+at least three quarters of the blue shapes are circles .
+at least two thirds of the shapes are green semicircles .
+more than a quarter of the shapes are magenta .
+
+less than three quarters of the shapes are gray circles .
+not two thirds of the magenta shapes are circles .
+at most half the shapes are magenta .
+at most half the cyan shapes are semicircles .
+at least a third of the squares is gray .
+
+at most half the shapes are gray triangles .
+not all triangles are cyan .
+more than no ellipse is yellow .
+not two thirds of the shapes are gray triangles .
+at most three quarters of the yellow shapes are rectangles .
+
+at least a quarter of the circles are gray .
+at most a third of the yellow shapes are rectangles .
+not no pentagon is gray .
+more than no shape is a blue circle .
+at least a third of the circles is gray .
+
+at most half the shapes are magenta circles .
+not a quarter of the shapes are magenta .
+more than a quarter of the shapes are magenta .
+at most three quarters of the shapes are circles .
+not a quarter of the circles are yellow .
+
+not a third of the semicircles is blue .
+at least two thirds of the gray shapes are crosses .
+exactly half the shapes are blue .
+less than a third of the shapes is blue .
+not no red shape is a triangle .
+
+exactly two thirds of the shapes are cyan rectangles .
+exactly no shape is red .
+more than half the shapes are rectangles .
+not no cyan shape is a rectangle .
+not no cyan shape is a rectangle .
+
+at most all blue shapes are semicircles .
+exactly all shapes are red .
+less than a third of the shapes are gray semicircles .
+more than three quarters of the shapes are red rectangles .
+exactly no shape is red .
+
+less than a third of the yellow shapes are rectangles .
+exactly half the shapes are cyan circles .
+more than no shape is a cyan square .
+less than a quarter of the shapes are green .
+more than a quarter of the shapes are cyan .
+
+at least a third of the shapes are ellipses .
+not no shape is a magenta pentagon .
+at most two thirds of the shapes are ellipses .
+more than two thirds of the yellow shapes are ellipses .
+more than no shape is a cyan rectangle .
+
+at least two thirds of the shapes are gray pentagons .
+less than half the shapes are green pentagons .
+not no shape is a green pentagon .
+not no shape is a green pentagon .
+more than a quarter of the shapes are crosses .
+
+at most a third of the magenta shapes are rectangles .
+less than half the shapes are rectangles .
+at least no shape is a triangle .
+less than three quarters of the rectangles are green .
+at most half the shapes are circles .
+
+more than three quarters of the shapes are magenta .
+not half the shapes are magenta crosses .
+at most a quarter of the magenta shapes are rectangles .
+exactly no magenta shape is a pentagon .
+not all shapes are magenta triangles .
+
+at most all magenta shapes are triangles .
+at most half the shapes are red semicircles .
+less than a quarter of the shapes are green rectangles .
+less than half the shapes are magenta triangles .
+at least half the cyan shapes are rectangles .
+
+exactly no circle is red .
+more than three quarters of the blue shapes are pentagons .
+exactly a quarter of the shapes are blue pentagons .
+exactly three quarters of the shapes are blue semicircles .
+at most half the circles are blue .
+
+less than two thirds of the shapes are crosses .
+at most three quarters of the squares are blue .
+at least half the gray shapes are crosses .
+more than a third of the shapes are crosses .
+at most a third of the shapes are blue circles .
+
+at most a third of the shapes are crosses .
+less than two thirds of the shapes are green .
+not no shape is a gray ellipse .
+more than two thirds of the red shapes are semicircles .
+less than three quarters of the shapes are green semicircles .
+
+exactly no cyan shape is a circle .
+at most two thirds of the green shapes are pentagons .
+more than a quarter of the rectangles are cyan .
+not no shape is a cyan circle .
+not a quarter of the shapes are green .
+
+at most half the ellipses are green .
+exactly all pentagons are gray .
+more than two thirds of the shapes are magenta .
+more than a third of the shapes is green .
+at least three quarters of the shapes are gray triangles .
+
+exactly three quarters of the semicircles are red .
+less than a third of the ellipses is cyan .
+more than a third of the magenta shapes are squares .
+less than three quarters of the shapes are squares .
+less than two thirds of the shapes are yellow semicircles .
+
+exactly a third of the circles is yellow .
+exactly a third of the semicircles is yellow .
+at most all semicircles are gray .
+at most a third of the shapes are cyan crosses .
+more than a quarter of the shapes are cyan crosses .
+
+more than a third of the ellipses is gray .
+more than a third of the shapes is yellow .
+exactly a third of the shapes are semicircles .
+exactly a quarter of the shapes are yellow ellipses .
+less than a quarter of the ellipses are yellow .
+
+not a quarter of the shapes are semicircles .
+more than two thirds of the magenta shapes are semicircles .
+at most a third of the shapes are yellow semicircles .
+exactly all shapes are semicircles .
+exactly all circles are blue .
+
+at least a quarter of the triangles are yellow .
+exactly a third of the shapes are crosses .
+at least a third of the shapes is magenta .
+less than two thirds of the crosses are green .
+at least half the shapes are yellow .
+
+less than all shapes are red rectangles .
+at most a quarter of the shapes are red .
+not all shapes are yellow rectangles .
+more than a third of the shapes are circles .
+at most half the shapes are red squares .
+
+at most a quarter of the red shapes are semicircles .
+more than a quarter of the triangles are red .
+not a third of the semicircles is red .
+more than no shape is a magenta ellipse .
+more than two thirds of the shapes are red .
+
+less than three quarters of the shapes are red .
+more than half the shapes are red pentagons .
+at least a quarter of the shapes are red .
+more than half the shapes are red pentagons .
+more than a third of the rectangles is red .
+
+not a third of the circles is blue .
+at most half the circles are green .
+less than half the blue shapes are pentagons .
+at most three quarters of the ellipses are blue .
+more than a third of the shapes are circles .
+
+exactly no shape is red .
+exactly no shape is red .
+not no circle is red .
+not half the shapes are red circles .
+at most a quarter of the red shapes are circles .
+
+at most all red shapes are triangles .
+at least half the triangles are blue .
+not a quarter of the triangles are magenta .
+at least two thirds of the shapes are magenta .
+at most half the magenta shapes are crosses .
+
+at least three quarters of the triangles are red .
+at least a quarter of the squares are cyan .
+less than a quarter of the shapes are semicircles .
+not a third of the shapes is gray .
+at least a quarter of the shapes are circles .
+
+less than two thirds of the shapes are crosses .
+less than all shapes are gray crosses .
+less than a third of the blue shapes are semicircles .
+more than no semicircle is blue .
+less than a quarter of the shapes are cyan crosses .
+
+not a quarter of the green shapes are semicircles .
+more than a third of the gray shapes are rectangles .
+at most a third of the shapes are circles .
+at least half the rectangles are cyan .
+less than a third of the shapes is green .
+
+at least a quarter of the shapes are gray .
+more than two thirds of the gray shapes are triangles .
+at least two thirds of the shapes are pentagons .
+more than half the gray shapes are triangles .
+more than no shape is a gray triangle .
+
+at least half the shapes are circles .
+at most a third of the circles is red .
+not half the yellow shapes are pentagons .
+less than a third of the shapes are pentagons .
+not two thirds of the shapes are gray .
+
+exactly a quarter of the blue shapes are triangles .
+at least three quarters of the shapes are yellow .
+exactly no triangle is green .
+not all crosses are blue .
+exactly all shapes are crosses .
+
+more than a quarter of the pentagons are gray .
+not no pentagon is magenta .
+more than a quarter of the shapes are blue pentagons .
+at least no shape is a magenta rectangle .
+more than a third of the crosses is cyan .
+
+at most half the shapes are yellow rectangles .
+exactly no shape is a green semicircle .
+at least a quarter of the shapes are yellow rectangles .
+less than three quarters of the shapes are gray semicircles .
+more than a third of the gray shapes are ellipses .
+
+exactly a third of the circles is magenta .
+exactly no shape is green .
+not no semicircle is green .
+more than no shape is a blue triangle .
+at most three quarters of the circles are magenta .
+
+exactly no blue shape is a circle .
+at most three quarters of the shapes are cyan squares .
+less than half the shapes are green .
+exactly no green shape is a rectangle .
+exactly a quarter of the cyan shapes are ellipses .
+
+more than a quarter of the magenta shapes are triangles .
+at least half the shapes are magenta semicircles .
+more than three quarters of the rectangles are magenta .
+more than two thirds of the rectangles are magenta .
+less than half the rectangles are magenta .
+
+more than no shape is cyan .
+exactly no yellow shape is a cross .
+more than a third of the gray shapes are semicircles .
+at least a quarter of the shapes are yellow crosses .
+exactly a quarter of the shapes are red circles .
+
+less than half the shapes are blue .
+more than half the gray shapes are crosses .
+less than half the semicircles are blue .
+at most half the shapes are gray semicircles .
+exactly half the shapes are blue circles .
+
+less than two thirds of the shapes are gray .
+not half the shapes are pentagons .
+at most half the shapes are cyan pentagons .
+less than two thirds of the yellow shapes are pentagons .
+less than three quarters of the shapes are yellow .
+
+exactly two thirds of the shapes are magenta .
+exactly two thirds of the shapes are cyan .
+more than three quarters of the cyan shapes are triangles .
 not all shapes are gray .
+more than a quarter of the shapes are cyan squares .
 
-more than half the shapes are yellow rectangles .
-exactly a quarter of the shapes are yellow rectangles .
-more than a quarter of the shapes are yellow squares .
-at least no shape is a yellow rectangle .
-at least a third of the shapes are rectangles .
+at least no shape is a yellow square .
+more than a quarter of the shapes are ellipses .
+more than a quarter of the shapes are gray .
+exactly no yellow shape is a cross .
+at most two thirds of the shapes are yellow .
 
-more than two thirds of the shapes are green shapes .
-less than a quarter of the circles are green shapes .
-exactly all circles are green .
-exactly three quarters of the circles are green shapes .
-less than a quarter of the shapes are triangles .
+more than a quarter of the pentagons are magenta .
+not all blue shapes are rectangles .
+more than no blue shape is a rectangle .
+at least half the shapes are rectangles .
+exactly no shape is a rectangle .
 
-less than all shapes are cyan squares .
-exactly all squares are cyan .
-more than half the shapes are squares .
-exactly two thirds of the shapes are squares .
-less than three quarters of the cyan shapes are semicircles .
+more than a quarter of the shapes are green .
+more than no shape is cyan .
+less than half the cyan shapes are triangles .
+less than three quarters of the shapes are triangles .
+at most a third of the shapes are green squares .
 
-at least two thirds of the shapes are gray shapes .
-not half the pentagons are gray shapes .
-not no shape is a circle .
-less than three quarters of the shapes are red squares .
-at most a third of the magenta shapes are ellipses .
+not all gray shapes are triangles .
+exactly a quarter of the circles are cyan .
+exactly no shape is magenta .
+exactly no pentagon is red .
+exactly a third of the cyan shapes are rectangles .
 
-exactly all shapes are pentagons .
-exactly a third of the shapes are squares .
-less than half the squares are magenta shapes .
-exactly three quarters of the shapes are squares .
-at least a quarter of the shapes are yellow squares .
+not two thirds of the pentagons are blue .
+at least a quarter of the shapes are blue pentagons .
+not no magenta shape is an ellipse .
+exactly a third of the blue shapes are semicircles .
+more than no shape is a green circle .
 
-at most three quarters of the shapes are gray semicircles .
-at most half the shapes are yellow squares .
-more than three quarters of the shapes are yellow shapes .
-not no shape is a gray square .
-not a third of the shapes are semicircles .
+at most two thirds of the shapes are triangles .
+exactly a quarter of the shapes are yellow triangles .
+less than a third of the yellow shapes are ellipses .
+more than two thirds of the yellow shapes are rectangles .
+more than two thirds of the shapes are red .
+
+exactly a quarter of the ellipses are cyan .
+not a quarter of the shapes are cyan pentagons .
+exactly a quarter of the shapes are magenta ellipses .
+less than a third of the shapes is green .
+more than a third of the shapes are circles .
+
+not a third of the shapes are magenta ellipses .
+at least three quarters of the shapes are magenta .
+at least no green shape is a semicircle .
+exactly all shapes are magenta .
+more than a third of the shapes is gray .
+
+exactly a third of the shapes are pentagons .
+exactly all shapes are magenta pentagons .
+less than three quarters of the squares are red .
+more than no shape is a red pentagon .
+more than a third of the pentagons is cyan .
+
+at least half the shapes are rectangles .
+less than a third of the magenta shapes are rectangles .
+less than three quarters of the red shapes are rectangles .
+not half the rectangles are yellow .
+not no red shape is a rectangle .
+
+not a third of the shapes is red .
+at least a quarter of the shapes are cyan ellipses .
+at least half the shapes are red semicircles .
+exactly all shapes are cyan ellipses .
+at least a quarter of the shapes are yellow crosses .
+
+exactly a quarter of the shapes are yellow squares .
+at least no shape is yellow .
+more than half the shapes are yellow squares .
+at least two thirds of the shapes are yellow squares .
+more than a quarter of the shapes are cyan .
+
+at least a quarter of the shapes are yellow circles .
+at most a quarter of the shapes are red .
+exactly no circle is green .
+at most a quarter of the shapes are green rectangles .
+more than three quarters of the shapes are rectangles .
+
+exactly half the ellipses are yellow .
+not a quarter of the triangles are yellow .
+not a quarter of the yellow shapes are pentagons .
+exactly three quarters of the shapes are red pentagons .
+more than no shape is a yellow triangle .
+
+exactly a quarter of the shapes are circles .
+more than no red shape is an ellipse .
+at most half the shapes are blue semicircles .
+at most all shapes are blue ellipses .
+not a third of the shapes are ellipses .
+
+at most all shapes are cyan pentagons .
+not a quarter of the shapes are cyan pentagons .
+more than half the pentagons are magenta .
+less than three quarters of the triangles are cyan .
+not two thirds of the shapes are cyan ellipses .
+
+at most all ellipses are cyan .
+not three quarters of the shapes are cyan circles .
+exactly a third of the shapes is cyan .
+exactly a quarter of the green shapes are ellipses .
+at least two thirds of the magenta shapes are circles .
+
+not a third of the shapes are magenta triangles .
+more than two thirds of the shapes are blue .
+at least half the shapes are semicircles .
+at least two thirds of the shapes are blue triangles .
+not three quarters of the shapes are blue semicircles .
+
+less than a quarter of the shapes are squares .
+at most a third of the magenta shapes are semicircles .
+exactly half the shapes are red squares .
+at most a quarter of the shapes are red rectangles .
+at most half the shapes are magenta .
+
+exactly no shape is a yellow cross .
+less than three quarters of the shapes are squares .
+at least a third of the magenta shapes are crosses .
+at least a quarter of the shapes are cyan crosses .
+exactly no shape is cyan .
+
+at least half the shapes are cyan triangles .
+less than a third of the shapes is cyan .
+at least a third of the triangles is blue .
+at least a third of the shapes is blue .
+more than half the shapes are triangles .
+
+at least two thirds of the shapes are red pentagons .
+at least a quarter of the pentagons are yellow .
+not three quarters of the shapes are yellow .
+exactly three quarters of the shapes are yellow squares .
+exactly a third of the pentagons is red .
+
+more than a third of the red shapes are ellipses .
+exactly no red shape is an ellipse .
+less than a quarter of the red shapes are ellipses .
+at most a third of the shapes are triangles .
+exactly no red shape is a triangle .
+
+at least three quarters of the shapes are green crosses .
+exactly three quarters of the shapes are ellipses .
+more than three quarters of the green shapes are rectangles .
+at least a third of the shapes are yellow semicircles .
+more than three quarters of the shapes are cyan ellipses .
+
+more than a third of the yellow shapes are pentagons .
+exactly a third of the shapes is yellow .
+exactly two thirds of the shapes are gray .
+at least two thirds of the pentagons are yellow .
+not two thirds of the shapes are yellow rectangles .
+
+more than three quarters of the crosses are magenta .
+less than two thirds of the cyan shapes are crosses .
+at most a third of the shapes is cyan .
+less than a quarter of the shapes are cyan .
+at most three quarters of the cyan shapes are crosses .
+
+at least half the shapes are triangles .
+at most a quarter of the triangles are yellow .
+less than half the shapes are blue semicircles .
+at most a third of the shapes are red squares .
+more than a quarter of the triangles are green .
+
+at most all shapes are magenta ellipses .
+more than half the magenta shapes are ellipses .
+not three quarters of the blue shapes are pentagons .
+not three quarters of the shapes are blue .
+not all ellipses are blue .
+
+less than half the red shapes are semicircles .
+less than a quarter of the circles are yellow .
+less than a third of the circles is gray .
+at most a third of the shapes are circles .
+not two thirds of the yellow shapes are circles .
+
+less than a third of the shapes is cyan .
+not half the yellow shapes are semicircles .
+not a third of the shapes are gray ellipses .
+less than a third of the shapes is magenta .
+at most three quarters of the shapes are magenta .
+
+not half the shapes are yellow circles .
+less than a quarter of the blue shapes are ellipses .
+not half the gray shapes are pentagons .
+more than two thirds of the cyan shapes are semicircles .
+exactly two thirds of the shapes are blue .
+
+at least half the triangles are gray .
+at least a quarter of the cyan shapes are pentagons .
+at least two thirds of the red shapes are crosses .
+exactly half the red shapes are squares .
+more than two thirds of the shapes are red triangles .
+
+at least half the shapes are yellow crosses .
+less than a quarter of the shapes are yellow .
+at most two thirds of the shapes are yellow .
+at least two thirds of the pentagons are yellow .
+more than a quarter of the shapes are gray pentagons .
+
+exactly a third of the shapes are ellipses .
+at most a third of the shapes is green .
+exactly two thirds of the shapes are ellipses .
+at most half the shapes are blue semicircles .
+exactly a quarter of the green shapes are circles .
+
+at most three quarters of the shapes are blue .
+exactly half the magenta shapes are rectangles .
+less than three quarters of the shapes are gray pentagons .
+at most half the magenta shapes are rectangles .
+at most two thirds of the shapes are circles .
+
+at least three quarters of the yellow shapes are squares .
+at most a third of the shapes are yellow squares .
+exactly two thirds of the yellow shapes are circles .
+at least no shape is a yellow circle .
+at most two thirds of the shapes are cyan .
+
+at most a quarter of the cyan shapes are rectangles .
+at least no shape is a magenta cross .
+at most three quarters of the semicircles are gray .
+at least a quarter of the shapes are crosses .
+exactly no shape is a gray cross .
+
+exactly three quarters of the crosses are gray .
+at least half the squares are red .
+at most half the shapes are blue .
+exactly a quarter of the magenta shapes are semicircles .
+more than a quarter of the shapes are blue .
 

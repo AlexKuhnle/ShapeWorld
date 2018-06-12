@@ -134,66 +134,72 @@ class Quantifier(Caption):
         assert lower <= upper, (lower, upper)
         assert lower_target <= upper_target, (lower_target, upper_target)
 
+        if lower_target % 1.0 == 0.0 and upper_target % 1.0 == 0.0:
+            # no min_quantifier tolerance if quantity is integer
+            tolerance = 0.0
+        else:
+            tolerance = Settings.min_quantifier
+
         if qrange == 'lt':
-            if upper < upper_target + Settings.min_quantifier:
+            if upper < upper_target + tolerance:
                 return 1.0
-            elif lower >= lower_target - Settings.min_quantifier:
+            elif lower >= lower_target - tolerance:
                 return -1.0
             else:
                 return 0.0
 
         elif qrange == 'leq':
-            if upper <= upper_target + Settings.min_quantifier:
+            if upper <= upper_target + tolerance:
                 return 1.0
-            elif lower > lower_target - Settings.min_quantifier:
+            elif lower > lower_target - tolerance:
                 return -1.0
             else:
                 return 0.0
 
         elif qrange == 'eq':
-            if lower_target % 1.0 == 0.0:
-                # special case: no min_quantifier tolerance if quantity is integer
-                if lower == lower_target and upper == upper_target:
-                    return 1.0
-                elif lower > lower_target or upper < upper_target:
-                    return -1.0
-                else:
-                    return 0.0
-            elif max(upper - upper_target, lower_target - lower) < Settings.min_quantifier:
+            # if lower_target % 1.0 == 0.0:
+            #     # special case: no min_quantifier tolerance if quantity is integer
+            #     if lower == lower_target and upper == upper_target:
+            #         return 1.0
+            #     elif lower > lower_target or upper < upper_target:
+            #         return -1.0
+            #     else:
+            #         return 0.0
+            if max(upper - upper_target, lower_target - lower) <= tolerance:
                 return 1.0
-            elif max(lower_target - upper, lower - upper_target) >= Settings.min_quantifier:
+            elif max(lower_target - upper, lower - upper_target) > tolerance:
                 return -1.0
             else:
                 return 0.0
 
         elif qrange == 'neq':
-            if lower_target % 1.0 == 0.0:
-                # special case: no min_quantifier tolerance if quantity is integer
-                if lower > lower_target or upper < upper_target:
-                    return 1.0
-                elif lower == lower_target and upper == upper_target:
-                    return -1.0
-                else:
-                    return 0.0
-            elif max(lower_target - upper, lower - upper_target) >= Settings.min_quantifier:
+            # if lower_target % 1.0 == 0.0:
+            #     # special case: no min_quantifier tolerance if quantity is integer
+            #     if lower > lower_target or upper < upper_target:
+            #         return 1.0
+            #     elif lower == lower_target and upper == upper_target:
+            #         return -1.0
+            #     else:
+            #         return 0.0
+            if max(lower_target - upper, lower - upper_target) > tolerance:
                 return 1.0
-            elif max(upper - upper_target, lower_target - lower) < Settings.min_quantifier:
+            elif max(upper - upper_target, lower_target - lower) <= tolerance:
                 return -1.0
             else:
                 return 0.0
 
         elif qrange == 'geq':
-            if lower >= lower_target - Settings.min_quantifier:
+            if lower >= lower_target - tolerance:
                 return 1.0
-            elif upper < upper_target + Settings.min_quantifier:
+            elif upper < upper_target + tolerance:
                 return -1.0
             else:
                 return 0.0
 
         elif qrange == 'gt':
-            if lower > lower_target - Settings.min_quantifier:
+            if lower > lower_target - tolerance:
                 return 1.0
-            elif upper <= upper_target + Settings.min_quantifier:
+            elif upper <= upper_target + tolerance:
                 return -1.0
             else:
                 return 0.0

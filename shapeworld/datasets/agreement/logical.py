@@ -1,6 +1,6 @@
 from shapeworld.dataset import CaptionAgreementDataset
 from shapeworld.generators import GeneratorMixer, RandomAttributesGenerator, ReinforcedAttributesGenerator
-from shapeworld.captioners import CaptionerMixer, EmptyTypeCaptioner, RegularAttributeCaptioner, RegularTypeCaptioner, AttributeTypeRelationCaptioner, RelationCaptioner, ExistentialCaptioner, QuantifierCaptioner, ConjunctionCaptioner, DisjunctionCaptioner, ImplicationCaptioner, EquivalenceCaptioner
+from shapeworld.captioners import CaptionerMixer, EmptyTypeCaptioner, RegularAttributeCaptioner, RegularTypeCaptioner, UniqueTypeCaptioner, SelectorCaptioner, AttributeTypeRelationCaptioner, RelationCaptioner, ExistentialCaptioner, QuantifierCaptioner, ConjunctionCaptioner, DisjunctionCaptioner, ImplicationCaptioner, EquivalenceCaptioner
 
 
 class LogicalDataset(CaptionAgreementDataset):
@@ -36,8 +36,8 @@ class LogicalDataset(CaptionAgreementDataset):
         generators=None,
         captioners=None,
         connectives=None,
-        caption_size=28,
-        vocabulary=('.', 'a', 'above', 'all', 'an', 'and', 'are', 'as', 'at', 'behind', 'below', 'bigger', 'blue', 'but', 'circle', 'circles', 'closer', 'color', 'cross', 'crosses', 'cyan', 'darker', 'different', 'eight', 'either', 'ellipse', 'ellipses', 'exactly', 'farther', 'few', 'five', 'four', 'from', 'front', 'gray', 'green', 'half', 'if', 'in', 'is', 'least', 'left', 'less', 'lighter', 'magenta', 'many', 'more', 'most', 'no', 'none', 'not', 'of', 'one', 'only', 'or', 'pentagon', 'pentagons', 'quarter', 'quarters', 'rectangle', 'rectangles', 'red', 'right', 'same', 'semicircle', 'semicircles', 'seven', 'shape', 'shapes', 'six', 'smaller', 'square', 'squares', 'than', 'the', 'there', 'third', 'thirds', 'three', 'to', 'triangle', 'triangles', 'twice', 'two', 'yellow', 'zero'),
+        caption_size=29,
+        vocabulary=('.', 'a', 'above', 'all', 'an', 'and', 'are', 'as', 'at', 'behind', 'below', 'bigger', 'biggest', 'blue', 'but', 'circle', 'circles', 'closer', 'closest', 'color', 'cross', 'crosses', 'cyan', 'darker', 'darkest', 'different', 'eight', 'either', 'ellipse', 'ellipses', 'exactly', 'farther', 'farthest', 'few', 'five', 'four', 'from', 'front', 'gray', 'green', 'half', 'if', 'in', 'is', 'least', 'left', 'leftmost', 'less', 'lighter', 'lightest', 'lower', 'lowermost', 'magenta', 'many', 'more', 'most', 'no', 'none', 'not', 'of', 'one', 'only', 'or', 'pentagon', 'pentagons', 'quarter', 'quarters', 'rectangle', 'rectangles', 'red', 'right', 'rightmost', 'same', 'semicircle', 'semicircles', 'seven', 'shape', 'shapes', 'six', 'smaller', 'smallest', 'square', 'squares', 'than', 'the', 'there', 'third', 'thirds', 'three', 'to', 'triangle', 'triangles', 'twice', 'two', 'upper', 'uppermost', 'yellow', 'zero'),
         correct_ratio=0.5,
         train_correct_ratio=None,
         validation_correct_ratio=None,
@@ -156,10 +156,22 @@ class LogicalDataset(CaptionAgreementDataset):
                 restrictor_captioner=RegularTypeCaptioner(),
                 body_captioner=RelationCaptioner(
                     reference_captioner=RegularTypeCaptioner(),
-                    comparison_captioner=RegularTypeCaptioner()
+                    comparison_captioner=UniqueTypeCaptioner()
                 )
             )
             captioner_list.append(relational_captioner)
+
+        if captioners is None or 'selection' in captioners:
+            selection_captioner = ExistentialCaptioner(
+                restrictor_captioner=SelectorCaptioner(
+                    scope_captioner=RegularTypeCaptioner(
+                        hypernym_rate=1.0
+                    ),
+                    comparison_captioner=UniqueTypeCaptioner()
+                ),
+                body_captioner=body_captioner
+            )
+            captioner_list.append(selection_captioner)
 
         if captioners is None or 'quantification' in captioners:
             quantification_captioner = QuantifierCaptioner(

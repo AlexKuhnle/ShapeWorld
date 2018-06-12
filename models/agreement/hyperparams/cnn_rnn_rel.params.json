@@ -1,0 +1,19 @@
+{
+    "learning_rate": 2.5e-4,
+    "weight_decay": 1e-5,
+    "dropout_rate": 0.0,
+    "cnn_size": 64,
+    "cnn_depth": 3,
+    "cnn_block_depth": 1,
+    "embedding_size": 64,
+    "rnn": "lstm",
+    "rnn_size": 128,
+    "caption_reduction": "state",
+    "relnet_size": 256,
+    "relnet_depth": 4,
+    "relnet_relreduce": "concat",
+    "relnet_reduce": "sum",
+    "mlp_size": 512,
+    "mlp_depth": 2,
+    "soft": 0.0
+}

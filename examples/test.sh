@@ -4,6 +4,8 @@ echo "  existential"
 python -O generate.py -d examples/test1 -U -t agreement -n existential -i 1 -M -H
 echo "  relational"
 python -O generate.py -d examples/test1 -U -t agreement -n relational -i 1 -M -H
+echo "  selection"
+python -O generate.py -d examples/test1 -U -t agreement -n selection -i 1 -M -H
 echo "  quantification"
 python -O generate.py -d examples/test1 -U -t agreement -n quantification -i 1 -M -H
 echo "  quantification_complex"

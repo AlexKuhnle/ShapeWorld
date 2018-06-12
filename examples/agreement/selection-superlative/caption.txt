@@ -1,0 +1,600 @@
+the darkest semicircle is yellow .
+the uppermost blue shape is a semicircle .
+the leftmost semicircle is blue .
+the rightmost semicircle is yellow .
+the leftmost blue shape is a semicircle .
+
+the blue shape farthest from the gray square is a semicircle .
+the smallest semicircle is blue .
+the leftmost blue shape is a square .
+the blue shape farthest from the yellow rectangle is a semicircle .
+the rightmost semicircle is blue .
+
+the biggest red shape is a cross .
+the lightest red shape is a triangle .
+the lowermost yellow shape is an ellipse .
+the leftmost yellow shape is a circle .
+the biggest pentagon is red .
+
+the lightest cyan shape is a triangle .
+the uppermost cyan shape is a triangle .
+the rightmost magenta shape is a triangle .
+the lowermost cyan shape is a triangle .
+the cyan shape farthest from the square is a semicircle .
+
+the uppermost red shape is a square .
+the smallest red shape is a pentagon .
+the lowermost red shape is a triangle .
+the leftmost circle is green .
+the biggest circle is red .
+
+the triangle closest to the gray square is cyan .
+the lightest gray shape is a square .
+the leftmost red shape is a triangle .
+the lightest gray shape is a square .
+the leftmost gray shape is a triangle .
+
+the darkest triangle is gray .
+the darkest gray shape is a triangle .
+the rectangle farthest from the cross is green .
+the biggest gray shape is a rectangle .
+the rectangle closest to the square is yellow .
+
+the pentagon closest to the semicircle is gray .
+the rightmost ellipse is magenta .
+the smallest pentagon is yellow .
+the lightest green shape is a circle .
+the darkest gray shape is a pentagon .
+
+the rightmost magenta shape is a circle .
+the smallest semicircle is magenta .
+the magenta shape farthest from the ellipse is a circle .
+the darkest magenta shape is a circle .
+the rightmost green shape is a triangle .
+
+the rightmost pentagon is yellow .
+the lightest pentagon is gray .
+the magenta shape closest to the triangle is a triangle .
+the lowermost yellow shape is a pentagon .
+the darkest yellow shape is a pentagon .
+
+the leftmost semicircle is magenta .
+the uppermost blue shape is a cross .
+the lightest blue shape is a pentagon .
+the lowermost magenta shape is a semicircle .
+the lightest blue shape is a cross .
+
+the rightmost gray shape is a square .
+the square closest to the gray rectangle is red .
+the rightmost magenta shape is a square .
+the leftmost gray shape is a rectangle .
+the uppermost gray shape is a square .
+
+the lightest circle is gray .
+the lightest yellow shape is a rectangle .
+the biggest circle is green .
+the lightest yellow shape is a rectangle .
+the rightmost gray shape is a circle .
+
+the leftmost cyan shape is a pentagon .
+the lowermost red shape is a rectangle .
+the lowermost cyan shape is an ellipse .
+the lowermost ellipse is red .
+the lowermost ellipse is red .
+
+the biggest green shape is an ellipse .
+the uppermost green shape is an ellipse .
+the lowermost green shape is an ellipse .
+the rightmost green shape is an ellipse .
+the uppermost ellipse is gray .
+
+the uppermost magenta shape is a triangle .
+the rightmost triangle is red .
+the lowermost ellipse is gray .
+the darkest magenta shape is a triangle .
+the lightest ellipse is magenta .
+
+the lightest rectangle is green .
+the lowermost green shape is a rectangle .
+the lightest green shape is a rectangle .
+the rightmost rectangle is green .
+the darkest rectangle is yellow .
+
+the leftmost pentagon is gray .
+the lowermost yellow shape is a circle .
+the lowermost yellow shape is a cross .
+the darkest yellow shape is a pentagon .
+the rightmost semicircle is red .
+
+the rightmost magenta shape is a rectangle .
+the gray shape farthest from the cyan shape is an ellipse .
+the rightmost rectangle is cyan .
+the lightest magenta shape is a square .
+the lightest gray shape is a semicircle .
+
+the lightest circle is blue .
+the circle closest to the blue pentagon is blue .
+the smallest circle is blue .
+the leftmost blue shape is a cross .
+the smallest circle is blue .
+
+the lightest cross is cyan .
+the cyan shape farthest from the circle is a pentagon .
+the biggest cross is cyan .
+the darkest cross is cyan .
+the leftmost cross is red .
+
+the smallest pentagon is green .
+the darkest rectangle is blue .
+the biggest cyan shape is a rectangle .
+the rightmost rectangle is magenta .
+the smallest rectangle is gray .
+
+the uppermost gray shape is a triangle .
+the ellipse farthest from the magenta shape is gray .
+the darkest green shape is a semicircle .
+the lightest ellipse is gray .
+the darkest ellipse is green .
+
+the rightmost yellow shape is an ellipse .
+the biggest yellow shape is an ellipse .
+the leftmost cross is yellow .
+the circle farthest from the green ellipse is blue .
+the lowermost circle is yellow .
+
+the lowermost red shape is a triangle .
+the rightmost triangle is yellow .
+the uppermost triangle is red .
+the lightest cyan shape is an ellipse .
+the leftmost ellipse is cyan .
+
+the lowermost red shape is a pentagon .
+the rightmost red shape is an ellipse .
+the darkest red shape is a pentagon .
+the lowermost triangle is yellow .
+the pentagon farthest from the cyan shape is gray .
+
+the smallest yellow shape is a cross .
+the lightest yellow shape is a cross .
+the lightest triangle is blue .
+the triangle closest to the magenta shape is cyan .
+the smallest pentagon is red .
+
+the lightest gray shape is a square .
+the biggest gray shape is a square .
+the biggest rectangle is green .
+the biggest gray shape is a circle .
+the gray shape closest to the green square is a pentagon .
+
+the lowermost triangle is gray .
+the uppermost green shape is a triangle .
+the uppermost triangle is red .
+the uppermost triangle is red .
+the green shape closest to the red shape is a triangle .
+
+the biggest cyan shape is an ellipse .
+the uppermost rectangle is yellow .
+the uppermost gray shape is a rectangle .
+the lowermost yellow shape is a triangle .
+the biggest ellipse is cyan .
+
+the biggest triangle is yellow .
+the lowermost cyan shape is a pentagon .
+the cyan shape closest to the circle is a circle .
+the smallest blue shape is a triangle .
+the leftmost triangle is yellow .
+
+the biggest circle is yellow .
+the smallest magenta shape is a circle .
+the uppermost magenta shape is a circle .
+the magenta shape closest to the blue shape is a circle .
+the rightmost rectangle is cyan .
+
+the blue shape closest to the yellow circle is an ellipse .
+the blue shape farthest from the yellow semicircle is an ellipse .
+the uppermost yellow shape is a semicircle .
+the lowermost semicircle is blue .
+the uppermost yellow shape is an ellipse .
+
+the triangle farthest from the green cross is red .
+the cyan shape closest to the yellow triangle is a rectangle .
+the biggest cross is green .
+the leftmost rectangle is red .
+the uppermost red shape is a semicircle .
+
+the biggest gray shape is a rectangle .
+the biggest rectangle is gray .
+the rectangle farthest from the ellipse is yellow .
+the rightmost rectangle is gray .
+the lightest rectangle is gray .
+
+the biggest blue shape is a cross .
+the lightest cyan shape is a pentagon .
+the lowermost blue shape is a semicircle .
+the yellow shape farthest from the blue semicircle is a semicircle .
+the cyan shape closest to the green cross is an ellipse .
+
+the rightmost cross is gray .
+the uppermost gray shape is a square .
+the rightmost gray shape is a rectangle .
+the lowermost cross is gray .
+the cross farthest from the pentagon is red .
+
+the smallest cyan shape is a pentagon .
+the uppermost yellow shape is a square .
+the lightest square is yellow .
+the ellipse closest to the yellow cross is gray .
+the square closest to the magenta ellipse is gray .
+
+the darkest square is yellow .
+the uppermost yellow shape is a triangle .
+the lowermost blue shape is a rectangle .
+the leftmost square is yellow .
+the yellow shape closest to the blue semicircle is a square .
+
+the smallest semicircle is yellow .
+the lightest green shape is a cross .
+the semicircle closest to the green circle is green .
+the rightmost pentagon is blue .
+the uppermost semicircle is gray .
+
+the lowermost blue shape is a rectangle .
+the leftmost red shape is a pentagon .
+the leftmost blue shape is a triangle .
+the leftmost blue shape is a triangle .
+the leftmost rectangle is blue .
+
+the lowermost square is magenta .
+the leftmost square is magenta .
+the ellipse farthest from the magenta semicircle is magenta .
+the lightest ellipse is magenta .
+the smallest square is magenta .
+
+the darkest gray shape is a triangle .
+the biggest cross is cyan .
+the smallest pentagon is gray .
+the rightmost pentagon is magenta .
+the smallest cross is yellow .
+
+the rightmost square is yellow .
+the uppermost red shape is a circle .
+the lowermost square is green .
+the lowermost yellow shape is a triangle .
+the uppermost square is yellow .
+
+the lightest blue shape is a triangle .
+the lowermost blue shape is a pentagon .
+the rightmost blue shape is a rectangle .
+the rightmost blue shape is a rectangle .
+the uppermost blue shape is a cross .
+
+the biggest blue shape is a circle .
+the circle farthest from the magenta semicircle is blue .
+the blue shape farthest from the magenta semicircle is a pentagon .
+the biggest blue shape is a circle .
+the uppermost circle is blue .
+
+the lightest red shape is a square .
+the rightmost square is red .
+the uppermost red shape is a square .
+the darkest square is green .
+the darkest square is magenta .
+
+the rightmost magenta shape is a rectangle .
+the red shape closest to the square is a rectangle .
+the biggest magenta shape is a rectangle .
+the lowermost rectangle is blue .
+the rectangle closest to the blue square is blue .
+
+the rightmost square is gray .
+the smallest square is yellow .
+the leftmost magenta shape is an ellipse .
+the lowermost magenta shape is a square .
+the lightest cyan shape is a triangle .
+
+the biggest cyan shape is a cross .
+the leftmost rectangle is blue .
+the biggest cyan shape is a cross .
+the biggest cyan shape is a cross .
+the leftmost cross is blue .
+
+the lowermost gray shape is a semicircle .
+the leftmost cross is gray .
+the leftmost cross is green .
+the darkest semicircle is red .
+the semicircle farthest from the green cross is gray .
+
+the blue shape closest to the cross is a square .
+the uppermost square is blue .
+the darkest semicircle is blue .
+the lowermost cyan shape is a square .
+the leftmost semicircle is magenta .
+
+the biggest cyan shape is a semicircle .
+the cyan shape closest to the cross is a semicircle .
+the rightmost semicircle is gray .
+the smallest cyan shape is a square .
+the uppermost cyan shape is a semicircle .
+
+the uppermost cyan shape is a circle .
+the uppermost red shape is an ellipse .
+the uppermost red shape is an ellipse .
+the uppermost red shape is an ellipse .
+the lowermost red shape is a cross .
+
+the uppermost green shape is a pentagon .
+the rightmost pentagon is blue .
+the leftmost pentagon is cyan .
+the pentagon farthest from the green semicircle is yellow .
+the biggest green shape is a pentagon .
+
+the darkest cyan shape is an ellipse .
+the biggest square is gray .
+the lowermost cyan shape is an ellipse .
+the biggest square is yellow .
+the biggest cyan shape is an ellipse .
+
+the square farthest from the cyan shape is red .
+the square closest to the gray rectangle is red .
+the lightest blue shape is a rectangle .
+the rightmost pentagon is blue .
+the darkest blue shape is a pentagon .
+
+the leftmost square is green .
+the gray shape farthest from the blue shape is a square .
+the leftmost square is green .
+the green shape farthest from the gray square is a rectangle .
+the leftmost gray shape is a rectangle .
+
+the leftmost triangle is red .
+the darkest red shape is a triangle .
+the rightmost blue shape is a triangle .
+the smallest triangle is blue .
+the leftmost semicircle is green .
+
+the smallest green shape is a pentagon .
+the lowermost pentagon is yellow .
+the lowermost yellow shape is a cross .
+the darkest pentagon is green .
+the uppermost yellow shape is a semicircle .
+
+the smallest blue shape is a cross .
+the rightmost green shape is a cross .
+the uppermost cross is green .
+the rightmost green shape is a circle .
+the lightest blue shape is a semicircle .
+
+the rightmost magenta shape is a triangle .
+the leftmost triangle is cyan .
+the rightmost yellow shape is a triangle .
+the biggest yellow shape is a semicircle .
+the uppermost ellipse is magenta .
+
+the smallest cyan shape is a triangle .
+the leftmost triangle is cyan .
+the smallest rectangle is blue .
+the leftmost blue shape is a rectangle .
+the leftmost blue shape is a rectangle .
+
+the uppermost triangle is yellow .
+the green shape farthest from the gray triangle is a triangle .
+the triangle farthest from the rectangle is blue .
+the lowermost square is gray .
+the green shape closest to the gray triangle is a rectangle .
+
+the lightest cross is cyan .
+the lowermost cross is green .
+the uppermost cross is gray .
+the cross closest to the triangle is gray .
+the rightmost cross is gray .
+
+the smallest circle is gray .
+the ellipse farthest from the gray rectangle is red .
+the magenta shape closest to the green ellipse is a cross .
+the leftmost magenta shape is a rectangle .
+the ellipse farthest from the gray shape is red .
+
+the triangle farthest from the cyan shape is green .
+the rightmost triangle is cyan .
+the darkest square is blue .
+the lightest blue shape is a pentagon .
+the lightest green shape is a circle .
+
+the uppermost green shape is a cross .
+the cross farthest from the pentagon is red .
+the uppermost green shape is an ellipse .
+the leftmost green shape is a pentagon .
+the green shape closest to the magenta shape is an ellipse .
+
+the darkest cyan shape is a triangle .
+the leftmost cyan shape is a cross .
+the biggest cross is gray .
+the leftmost cyan shape is a cross .
+the darkest cross is blue .
+
+the smallest red shape is a triangle .
+the rectangle farthest from the gray shape is blue .
+the smallest red shape is a rectangle .
+the uppermost red shape is a circle .
+the smallest rectangle is green .
+
+the darkest yellow shape is a triangle .
+the lightest yellow shape is a triangle .
+the rightmost yellow shape is a circle .
+the leftmost semicircle is magenta .
+the lowermost semicircle is magenta .
+
+the magenta shape farthest from the red circle is an ellipse .
+the lowermost magenta shape is an ellipse .
+the leftmost pentagon is yellow .
+the biggest pentagon is red .
+the leftmost red shape is a circle .
+
+the rightmost semicircle is red .
+the leftmost cross is red .
+the semicircle farthest from the circle is gray .
+the rightmost gray shape is a semicircle .
+the gray shape farthest from the green cross is a cross .
+
+the smallest triangle is yellow .
+the smallest triangle is yellow .
+the biggest triangle is yellow .
+the rightmost triangle is gray .
+the lowermost gray shape is a cross .
+
+the rightmost magenta shape is a rectangle .
+the lowermost cyan shape is a triangle .
+the rightmost magenta shape is a semicircle .
+the lowermost rectangle is blue .
+the rectangle closest to the triangle is magenta .
+
+the rightmost cross is cyan .
+the darkest cross is blue .
+the smallest rectangle is magenta .
+the uppermost cross is cyan .
+the leftmost cross is blue .
+
+the rightmost cyan shape is a cross .
+the biggest cyan shape is a square .
+the uppermost circle is cyan .
+the cyan shape closest to the green shape is a triangle .
+the lowermost circle is gray .
+
+the lowermost rectangle is red .
+the biggest ellipse is red .
+the darkest magenta shape is a semicircle .
+the smallest magenta shape is an ellipse .
+the darkest red shape is a rectangle .
+
+the gray shape farthest from the square is a circle .
+the leftmost semicircle is cyan .
+the semicircle farthest from the cyan pentagon is gray .
+the rightmost semicircle is gray .
+the lowermost semicircle is gray .
+
+the cross farthest from the red pentagon is green .
+the uppermost cross is magenta .
+the cross farthest from the red pentagon is yellow .
+the leftmost cross is yellow .
+the leftmost cross is yellow .
+
+the smallest rectangle is gray .
+the biggest rectangle is red .
+the biggest rectangle is gray .
+the uppermost rectangle is gray .
+the biggest rectangle is gray .
+
+the smallest semicircle is yellow .
+the lowermost semicircle is yellow .
+the uppermost semicircle is yellow .
+the rightmost yellow shape is a cross .
+the biggest semicircle is yellow .
+
+the rightmost gray shape is a semicircle .
+the uppermost cyan shape is a circle .
+the smallest circle is gray .
+the lightest gray shape is a circle .
+the biggest gray shape is a triangle .
+
+the uppermost gray shape is an ellipse .
+the rightmost gray shape is a circle .
+the uppermost gray shape is an ellipse .
+the gray shape farthest from the cyan shape is an ellipse .
+the lowermost gray shape is a circle .
+
+the blue shape farthest from the magenta rectangle is a circle .
+the rightmost ellipse is gray .
+the rightmost magenta shape is a square .
+the magenta shape farthest from the circle is a rectangle .
+the lowermost magenta shape is an ellipse .
+
+the lightest ellipse is red .
+the darkest red shape is a pentagon .
+the lowermost red shape is a cross .
+the leftmost red shape is a cross .
+the leftmost red shape is a triangle .
+
+the gray shape farthest from the magenta semicircle is a cross .
+the darkest gray shape is a pentagon .
+the smallest gray shape is a cross .
+the darkest gray shape is a cross .
+the lowermost gray shape is a cross .
+
+the rightmost square is gray .
+the uppermost green shape is a square .
+the green shape farthest from the gray circle is an ellipse .
+the square farthest from the gray circle is green .
+the square farthest from the gray circle is red .
+
+the lightest yellow shape is an ellipse .
+the smallest square is cyan .
+the uppermost yellow shape is a rectangle .
+the yellow shape closest to the blue square is a square .
+the red shape closest to the circle is a cross .
+
+the leftmost cross is red .
+the red shape farthest from the green shape is a cross .
+the lowermost cross is yellow .
+the rightmost red shape is a semicircle .
+the cyan shape closest to the red cross is a semicircle .
+
+the lightest semicircle is gray .
+the leftmost gray shape is a pentagon .
+the uppermost semicircle is gray .
+the magenta shape farthest from the blue shape is a square .
+the lightest ellipse is magenta .
+
+the biggest square is magenta .
+the uppermost yellow shape is a triangle .
+the rightmost square is green .
+the rightmost square is magenta .
+the square farthest from the yellow triangle is magenta .
+
+the leftmost triangle is blue .
+the leftmost cyan shape is a semicircle .
+the lowermost rectangle is cyan .
+the cyan shape closest to the blue shape is a square .
+the triangle closest to the blue shape is magenta .
+
+the lightest pentagon is blue .
+the semicircle farthest from the blue ellipse is blue .
+the darkest semicircle is green .
+the biggest blue shape is a circle .
+the darkest pentagon is green .
+
+the smallest pentagon is blue .
+the darkest yellow shape is a circle .
+the darkest yellow shape is a rectangle .
+the rectangle farthest from the blue pentagon is blue .
+the uppermost blue shape is a circle .
+
+the rightmost cyan shape is a square .
+the smallest square is cyan .
+the darkest square is red .
+the uppermost square is cyan .
+the uppermost cyan shape is a cross .
+
+the red shape farthest from the yellow shape is a square .
+the rightmost triangle is blue .
+the lowermost triangle is blue .
+the blue shape closest to the red cross is an ellipse .
+the blue shape farthest from the green cross is a square .
+
+the green shape closest to the cyan semicircle is a triangle .
+the biggest green shape is a rectangle .
+the rightmost cyan shape is a semicircle .
+the lightest ellipse is green .
+the lowermost green shape is a rectangle .
+
+the biggest red shape is a rectangle .
+the rightmost rectangle is red .
+the leftmost rectangle is red .
+the leftmost red shape is a semicircle .
+the lightest red shape is an ellipse .
+
+the darkest cross is gray .
+the gray shape closest to the red shape is a circle .
+the biggest cross is red .
+the lowermost cyan shape is a cross .
+the lowermost cross is red .
+

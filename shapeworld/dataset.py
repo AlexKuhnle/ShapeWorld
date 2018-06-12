@@ -98,14 +98,20 @@ class Dataset(object):
                 full_name = '{}-{}'.format(full_name, variant)
             if language is not None:
                 full_name = '{}-{}'.format(full_name, language)
+            directory = config
             config = os.path.join(config, '{}-{}.json'.format(dtype, full_name))
             with open(config, 'r') as filehandle:
                 config = json.load(fp=filehandle)
+            if 'directory' not in config:
+                config['directory'] = directory
             return Dataset.create(dtype=dtype, name=name, language=language, config=config, **kwargs)
 
         elif os.path.isfile(config):
+            directory = os.path.dirname(config)
             with open(config, 'r') as filehandle:
                 config = json.load(fp=filehandle)
+            if 'directory' not in config:
+                config['directory'] = directory
             full_name = config.get('name', name)
             if variant is not None:
                 full_name = '{}-{}'.format(full_name, variant)
@@ -116,11 +122,11 @@ class Dataset(object):
             return Dataset.create(dtype=dtype, name=name, language=language, config=config, **kwargs)
 
         else:
-            assert False
+            raise Exception('Invalid config value.')
 
         assert variant is None
 
-        if 'type' in config and 'name' in config and 'directory' in config:
+        if config.pop('generated', False):
             assert dtype is None or config['type'] == dtype
             assert name is None or config['name'] == name
             assert language is None or config['language'] == language
@@ -133,6 +139,8 @@ class Dataset(object):
             return dataset
 
         else:
+            config.pop('directory', None)
+
             for key, value in kwargs.items():
                 assert key not in config
                 config[key] = value
@@ -497,6 +505,9 @@ class LoadedDataset(Dataset):
         self._type = specification.pop('type')
         self._name = specification.pop('name')
         self.directory = specification.pop('directory')
+        relative_directory = specification.get('relative_directory')
+        if relative_directory is not None:
+            self.directory = os.path.join(self.directory, relative_directory)
         self.archive = specification.pop('archive', None)
         self.include_model = specification.pop('include_model', False)
         self.image_format = specification.pop('image_format', 'bmp')

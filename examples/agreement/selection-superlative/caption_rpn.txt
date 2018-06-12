@@ -1,0 +1,600 @@
+Attribute-shape-semicircle 1 EntityType Selector-shade-max--1 Attribute-color-yellow Relation-attribute Existential
+Attribute-color-blue 1 EntityType Selector-y-max--1 Attribute-shape-semicircle Relation-attribute Existential
+Attribute-shape-semicircle 1 EntityType Selector-x-max--1 Attribute-color-blue Relation-attribute Existential
+Attribute-shape-semicircle 1 EntityType Selector-x-max-1 Attribute-color-yellow Relation-attribute Existential
+Attribute-color-blue 1 EntityType Selector-x-max--1 Attribute-shape-semicircle Relation-attribute Existential
+
+Attribute-color-blue 1 EntityType Attribute-shape-square Attribute-color-gray 2 EntityType Selector-unique Selector-proximity-max-1 Attribute-shape-semicircle Relation-attribute Existential
+Attribute-shape-semicircle 1 EntityType Selector-size-max--1 Attribute-color-blue Relation-attribute Existential
+Attribute-color-blue 1 EntityType Selector-x-max--1 Attribute-shape-square Relation-attribute Existential
+Attribute-color-blue 1 EntityType Attribute-shape-rectangle Attribute-color-yellow 2 EntityType Selector-unique Selector-proximity-max-1 Attribute-shape-semicircle Relation-attribute Existential
+Attribute-shape-semicircle 1 EntityType Selector-x-max-1 Attribute-color-blue Relation-attribute Existential
+
+Attribute-color-red 1 EntityType Selector-size-max-1 Attribute-shape-cross Relation-attribute Existential
+Attribute-color-red 1 EntityType Selector-shade-max-1 Attribute-shape-triangle Relation-attribute Existential
+Attribute-color-yellow 1 EntityType Selector-y-max-1 Attribute-shape-ellipse Relation-attribute Existential
+Attribute-color-yellow 1 EntityType Selector-x-max--1 Attribute-shape-circle Relation-attribute Existential
+Attribute-shape-pentagon 1 EntityType Selector-size-max-1 Attribute-color-red Relation-attribute Existential
+
+Attribute-color-cyan 1 EntityType Selector-shade-max-1 Attribute-shape-triangle Relation-attribute Existential
+Attribute-color-cyan 1 EntityType Selector-y-max--1 Attribute-shape-triangle Relation-attribute Existential
+Attribute-color-magenta 1 EntityType Selector-x-max-1 Attribute-shape-triangle Relation-attribute Existential
+Attribute-color-cyan 1 EntityType Selector-y-max-1 Attribute-shape-triangle Relation-attribute Existential
+Attribute-color-cyan 1 EntityType Attribute-shape-square 1 EntityType Selector-unique Selector-proximity-max-1 Attribute-shape-semicircle Relation-attribute Existential
+
+Attribute-color-red 1 EntityType Selector-y-max--1 Attribute-shape-square Relation-attribute Existential
+Attribute-color-red 1 EntityType Selector-size-max--1 Attribute-shape-pentagon Relation-attribute Existential
+Attribute-color-red 1 EntityType Selector-y-max-1 Attribute-shape-triangle Relation-attribute Existential
+Attribute-shape-circle 1 EntityType Selector-x-max--1 Attribute-color-green Relation-attribute Existential
+Attribute-shape-circle 1 EntityType Selector-size-max-1 Attribute-color-red Relation-attribute Existential
+
+Attribute-shape-triangle 1 EntityType Attribute-color-gray Attribute-shape-square 2 EntityType Selector-unique Selector-proximity-max--1 Attribute-color-cyan Relation-attribute Existential
+Attribute-color-gray 1 EntityType Selector-shade-max-1 Attribute-shape-square Relation-attribute Existential
+Attribute-color-red 1 EntityType Selector-x-max--1 Attribute-shape-triangle Relation-attribute Existential
+Attribute-color-gray 1 EntityType Selector-shade-max-1 Attribute-shape-square Relation-attribute Existential
+Attribute-color-gray 1 EntityType Selector-x-max--1 Attribute-shape-triangle Relation-attribute Existential
+
+Attribute-shape-triangle 1 EntityType Selector-shade-max--1 Attribute-color-gray Relation-attribute Existential
+Attribute-color-gray 1 EntityType Selector-shade-max--1 Attribute-shape-triangle Relation-attribute Existential
+Attribute-shape-rectangle 1 EntityType Attribute-shape-cross 1 EntityType Selector-unique Selector-proximity-max-1 Attribute-color-green Relation-attribute Existential
+Attribute-color-gray 1 EntityType Selector-size-max-1 Attribute-shape-rectangle Relation-attribute Existential
+Attribute-shape-rectangle 1 EntityType Attribute-shape-square 1 EntityType Selector-unique Selector-proximity-max--1 Attribute-color-yellow Relation-attribute Existential
+
+Attribute-shape-pentagon 1 EntityType Attribute-shape-semicircle 1 EntityType Selector-unique Selector-proximity-max--1 Attribute-color-gray Relation-attribute Existential
+Attribute-shape-ellipse 1 EntityType Selector-x-max-1 Attribute-color-magenta Relation-attribute Existential
+Attribute-shape-pentagon 1 EntityType Selector-size-max--1 Attribute-color-yellow Relation-attribute Existential
+Attribute-color-green 1 EntityType Selector-shade-max-1 Attribute-shape-circle Relation-attribute Existential
+Attribute-color-gray 1 EntityType Selector-shade-max--1 Attribute-shape-pentagon Relation-attribute Existential
+
+Attribute-color-magenta 1 EntityType Selector-x-max-1 Attribute-shape-circle Relation-attribute Existential
+Attribute-shape-semicircle 1 EntityType Selector-size-max--1 Attribute-color-magenta Relation-attribute Existential
+Attribute-color-magenta 1 EntityType Attribute-shape-ellipse 1 EntityType Selector-unique Selector-proximity-max-1 Attribute-shape-circle Relation-attribute Existential
+Attribute-color-magenta 1 EntityType Selector-shade-max--1 Attribute-shape-circle Relation-attribute Existential
+Attribute-color-green 1 EntityType Selector-x-max-1 Attribute-shape-triangle Relation-attribute Existential
+
+Attribute-shape-pentagon 1 EntityType Selector-x-max-1 Attribute-color-yellow Relation-attribute Existential
+Attribute-shape-pentagon 1 EntityType Selector-shade-max-1 Attribute-color-gray Relation-attribute Existential
+Attribute-color-magenta 1 EntityType Attribute-shape-triangle 1 EntityType Selector-unique Selector-proximity-max--1 Attribute-shape-triangle Relation-attribute Existential
+Attribute-color-yellow 1 EntityType Selector-y-max-1 Attribute-shape-pentagon Relation-attribute Existential
+Attribute-color-yellow 1 EntityType Selector-shade-max--1 Attribute-shape-pentagon Relation-attribute Existential
+
+Attribute-shape-semicircle 1 EntityType Selector-x-max--1 Attribute-color-magenta Relation-attribute Existential
+Attribute-color-blue 1 EntityType Selector-y-max--1 Attribute-shape-cross Relation-attribute Existential
+Attribute-color-blue 1 EntityType Selector-shade-max-1 Attribute-shape-pentagon Relation-attribute Existential
+Attribute-color-magenta 1 EntityType Selector-y-max-1 Attribute-shape-semicircle Relation-attribute Existential
+Attribute-color-blue 1 EntityType Selector-shade-max-1 Attribute-shape-cross Relation-attribute Existential
+
+Attribute-color-gray 1 EntityType Selector-x-max-1 Attribute-shape-square Relation-attribute Existential
+Attribute-shape-square 1 EntityType Attribute-shape-rectangle Attribute-color-gray 2 EntityType Selector-unique Selector-proximity-max--1 Attribute-color-red Relation-attribute Existential
+Attribute-color-magenta 1 EntityType Selector-x-max-1 Attribute-shape-square Relation-attribute Existential
+Attribute-color-gray 1 EntityType Selector-x-max--1 Attribute-shape-rectangle Relation-attribute Existential
+Attribute-color-gray 1 EntityType Selector-y-max--1 Attribute-shape-square Relation-attribute Existential
+
+Attribute-shape-circle 1 EntityType Selector-shade-max-1 Attribute-color-gray Relation-attribute Existential
+Attribute-color-yellow 1 EntityType Selector-shade-max-1 Attribute-shape-rectangle Relation-attribute Existential
+Attribute-shape-circle 1 EntityType Selector-size-max-1 Attribute-color-green Relation-attribute Existential
+Attribute-color-yellow 1 EntityType Selector-shade-max-1 Attribute-shape-rectangle Relation-attribute Existential
+Attribute-color-gray 1 EntityType Selector-x-max-1 Attribute-shape-circle Relation-attribute Existential
+
+Attribute-color-cyan 1 EntityType Selector-x-max--1 Attribute-shape-pentagon Relation-attribute Existential
+Attribute-color-red 1 EntityType Selector-y-max-1 Attribute-shape-rectangle Relation-attribute Existential
+Attribute-color-cyan 1 EntityType Selector-y-max-1 Attribute-shape-ellipse Relation-attribute Existential
+Attribute-shape-ellipse 1 EntityType Selector-y-max-1 Attribute-color-red Relation-attribute Existential
+Attribute-shape-ellipse 1 EntityType Selector-y-max-1 Attribute-color-red Relation-attribute Existential
+
+Attribute-color-green 1 EntityType Selector-size-max-1 Attribute-shape-ellipse Relation-attribute Existential
+Attribute-color-green 1 EntityType Selector-y-max--1 Attribute-shape-ellipse Relation-attribute Existential
+Attribute-color-green 1 EntityType Selector-y-max-1 Attribute-shape-ellipse Relation-attribute Existential
+Attribute-color-green 1 EntityType Selector-x-max-1 Attribute-shape-ellipse Relation-attribute Existential
+Attribute-shape-ellipse 1 EntityType Selector-y-max--1 Attribute-color-gray Relation-attribute Existential
+
+Attribute-color-magenta 1 EntityType Selector-y-max--1 Attribute-shape-triangle Relation-attribute Existential
+Attribute-shape-triangle 1 EntityType Selector-x-max-1 Attribute-color-red Relation-attribute Existential
+Attribute-shape-ellipse 1 EntityType Selector-y-max-1 Attribute-color-gray Relation-attribute Existential
+Attribute-color-magenta 1 EntityType Selector-shade-max--1 Attribute-shape-triangle Relation-attribute Existential
+Attribute-shape-ellipse 1 EntityType Selector-shade-max-1 Attribute-color-magenta Relation-attribute Existential
+
+Attribute-shape-rectangle 1 EntityType Selector-shade-max-1 Attribute-color-green Relation-attribute Existential
+Attribute-color-green 1 EntityType Selector-y-max-1 Attribute-shape-rectangle Relation-attribute Existential
+Attribute-color-green 1 EntityType Selector-shade-max-1 Attribute-shape-rectangle Relation-attribute Existential
+Attribute-shape-rectangle 1 EntityType Selector-x-max-1 Attribute-color-green Relation-attribute Existential
+Attribute-shape-rectangle 1 EntityType Selector-shade-max--1 Attribute-color-yellow Relation-attribute Existential
+
+Attribute-shape-pentagon 1 EntityType Selector-x-max--1 Attribute-color-gray Relation-attribute Existential
+Attribute-color-yellow 1 EntityType Selector-y-max-1 Attribute-shape-circle Relation-attribute Existential
+Attribute-color-yellow 1 EntityType Selector-y-max-1 Attribute-shape-cross Relation-attribute Existential
+Attribute-color-yellow 1 EntityType Selector-shade-max--1 Attribute-shape-pentagon Relation-attribute Existential
+Attribute-shape-semicircle 1 EntityType Selector-x-max-1 Attribute-color-red Relation-attribute Existential
+
+Attribute-color-magenta 1 EntityType Selector-x-max-1 Attribute-shape-rectangle Relation-attribute Existential
+Attribute-color-gray 1 EntityType Attribute-color-cyan 1 EntityType Selector-unique Selector-proximity-max-1 Attribute-shape-ellipse Relation-attribute Existential
+Attribute-shape-rectangle 1 EntityType Selector-x-max-1 Attribute-color-cyan Relation-attribute Existential
+Attribute-color-magenta 1 EntityType Selector-shade-max-1 Attribute-shape-square Relation-attribute Existential
+Attribute-color-gray 1 EntityType Selector-shade-max-1 Attribute-shape-semicircle Relation-attribute Existential
+
+Attribute-shape-circle 1 EntityType Selector-shade-max-1 Attribute-color-blue Relation-attribute Existential
+Attribute-shape-circle 1 EntityType Attribute-color-blue Attribute-shape-pentagon 2 EntityType Selector-unique Selector-proximity-max--1 Attribute-color-blue Relation-attribute Existential
+Attribute-shape-circle 1 EntityType Selector-size-max--1 Attribute-color-blue Relation-attribute Existential
+Attribute-color-blue 1 EntityType Selector-x-max--1 Attribute-shape-cross Relation-attribute Existential
+Attribute-shape-circle 1 EntityType Selector-size-max--1 Attribute-color-blue Relation-attribute Existential
+
+Attribute-shape-cross 1 EntityType Selector-shade-max-1 Attribute-color-cyan Relation-attribute Existential
+Attribute-color-cyan 1 EntityType Attribute-shape-circle 1 EntityType Selector-unique Selector-proximity-max-1 Attribute-shape-pentagon Relation-attribute Existential
+Attribute-shape-cross 1 EntityType Selector-size-max-1 Attribute-color-cyan Relation-attribute Existential
+Attribute-shape-cross 1 EntityType Selector-shade-max--1 Attribute-color-cyan Relation-attribute Existential
+Attribute-shape-cross 1 EntityType Selector-x-max--1 Attribute-color-red Relation-attribute Existential
+
+Attribute-shape-pentagon 1 EntityType Selector-size-max--1 Attribute-color-green Relation-attribute Existential
+Attribute-shape-rectangle 1 EntityType Selector-shade-max--1 Attribute-color-blue Relation-attribute Existential
+Attribute-color-cyan 1 EntityType Selector-size-max-1 Attribute-shape-rectangle Relation-attribute Existential
+Attribute-shape-rectangle 1 EntityType Selector-x-max-1 Attribute-color-magenta Relation-attribute Existential
+Attribute-shape-rectangle 1 EntityType Selector-size-max--1 Attribute-color-gray Relation-attribute Existential
+
+Attribute-color-gray 1 EntityType Selector-y-max--1 Attribute-shape-triangle Relation-attribute Existential
+Attribute-shape-ellipse 1 EntityType Attribute-color-magenta 1 EntityType Selector-unique Selector-proximity-max-1 Attribute-color-gray Relation-attribute Existential
+Attribute-color-green 1 EntityType Selector-shade-max--1 Attribute-shape-semicircle Relation-attribute Existential
+Attribute-shape-ellipse 1 EntityType Selector-shade-max-1 Attribute-color-gray Relation-attribute Existential
+Attribute-shape-ellipse 1 EntityType Selector-shade-max--1 Attribute-color-green Relation-attribute Existential
+
+Attribute-color-yellow 1 EntityType Selector-x-max-1 Attribute-shape-ellipse Relation-attribute Existential
+Attribute-color-yellow 1 EntityType Selector-size-max-1 Attribute-shape-ellipse Relation-attribute Existential
+Attribute-shape-cross 1 EntityType Selector-x-max--1 Attribute-color-yellow Relation-attribute Existential
+Attribute-shape-circle 1 EntityType Attribute-shape-ellipse Attribute-color-green 2 EntityType Selector-unique Selector-proximity-max-1 Attribute-color-blue Relation-attribute Existential
+Attribute-shape-circle 1 EntityType Selector-y-max-1 Attribute-color-yellow Relation-attribute Existential
+
+Attribute-color-red 1 EntityType Selector-y-max-1 Attribute-shape-triangle Relation-attribute Existential
+Attribute-shape-triangle 1 EntityType Selector-x-max-1 Attribute-color-yellow Relation-attribute Existential
+Attribute-shape-triangle 1 EntityType Selector-y-max--1 Attribute-color-red Relation-attribute Existential
+Attribute-color-cyan 1 EntityType Selector-shade-max-1 Attribute-shape-ellipse Relation-attribute Existential
+Attribute-shape-ellipse 1 EntityType Selector-x-max--1 Attribute-color-cyan Relation-attribute Existential
+
+Attribute-color-red 1 EntityType Selector-y-max-1 Attribute-shape-pentagon Relation-attribute Existential
+Attribute-color-red 1 EntityType Selector-x-max-1 Attribute-shape-ellipse Relation-attribute Existential
+Attribute-color-red 1 EntityType Selector-shade-max--1 Attribute-shape-pentagon Relation-attribute Existential
+Attribute-shape-triangle 1 EntityType Selector-y-max-1 Attribute-color-yellow Relation-attribute Existential
+Attribute-shape-pentagon 1 EntityType Attribute-color-cyan 1 EntityType Selector-unique Selector-proximity-max-1 Attribute-color-gray Relation-attribute Existential
+
+Attribute-color-yellow 1 EntityType Selector-size-max--1 Attribute-shape-cross Relation-attribute Existential
+Attribute-color-yellow 1 EntityType Selector-shade-max-1 Attribute-shape-cross Relation-attribute Existential
+Attribute-shape-triangle 1 EntityType Selector-shade-max-1 Attribute-color-blue Relation-attribute Existential
+Attribute-shape-triangle 1 EntityType Attribute-color-magenta 1 EntityType Selector-unique Selector-proximity-max--1 Attribute-color-cyan Relation-attribute Existential
+Attribute-shape-pentagon 1 EntityType Selector-size-max--1 Attribute-color-red Relation-attribute Existential
+
+Attribute-color-gray 1 EntityType Selector-shade-max-1 Attribute-shape-square Relation-attribute Existential
+Attribute-color-gray 1 EntityType Selector-size-max-1 Attribute-shape-square Relation-attribute Existential
+Attribute-shape-rectangle 1 EntityType Selector-size-max-1 Attribute-color-green Relation-attribute Existential
+Attribute-color-gray 1 EntityType Selector-size-max-1 Attribute-shape-circle Relation-attribute Existential
+Attribute-color-gray 1 EntityType Attribute-shape-square Attribute-color-green 2 EntityType Selector-unique Selector-proximity-max--1 Attribute-shape-pentagon Relation-attribute Existential
+
+Attribute-shape-triangle 1 EntityType Selector-y-max-1 Attribute-color-gray Relation-attribute Existential
+Attribute-color-green 1 EntityType Selector-y-max--1 Attribute-shape-triangle Relation-attribute Existential
+Attribute-shape-triangle 1 EntityType Selector-y-max--1 Attribute-color-red Relation-attribute Existential
+Attribute-shape-triangle 1 EntityType Selector-y-max--1 Attribute-color-red Relation-attribute Existential
+Attribute-color-green 1 EntityType Attribute-color-red 1 EntityType Selector-unique Selector-proximity-max--1 Attribute-shape-triangle Relation-attribute Existential
+
+Attribute-color-cyan 1 EntityType Selector-size-max-1 Attribute-shape-ellipse Relation-attribute Existential
+Attribute-shape-rectangle 1 EntityType Selector-y-max--1 Attribute-color-yellow Relation-attribute Existential
+Attribute-color-gray 1 EntityType Selector-y-max--1 Attribute-shape-rectangle Relation-attribute Existential
+Attribute-color-yellow 1 EntityType Selector-y-max-1 Attribute-shape-triangle Relation-attribute Existential
+Attribute-shape-ellipse 1 EntityType Selector-size-max-1 Attribute-color-cyan Relation-attribute Existential
+
+Attribute-shape-triangle 1 EntityType Selector-size-max-1 Attribute-color-yellow Relation-attribute Existential
+Attribute-color-cyan 1 EntityType Selector-y-max-1 Attribute-shape-pentagon Relation-attribute Existential
+Attribute-color-cyan 1 EntityType Attribute-shape-circle 1 EntityType Selector-unique Selector-proximity-max--1 Attribute-shape-circle Relation-attribute Existential
+Attribute-color-blue 1 EntityType Selector-size-max--1 Attribute-shape-triangle Relation-attribute Existential
+Attribute-shape-triangle 1 EntityType Selector-x-max--1 Attribute-color-yellow Relation-attribute Existential
+
+Attribute-shape-circle 1 EntityType Selector-size-max-1 Attribute-color-yellow Relation-attribute Existential
+Attribute-color-magenta 1 EntityType Selector-size-max--1 Attribute-shape-circle Relation-attribute Existential
+Attribute-color-magenta 1 EntityType Selector-y-max--1 Attribute-shape-circle Relation-attribute Existential
+Attribute-color-magenta 1 EntityType Attribute-color-blue 1 EntityType Selector-unique Selector-proximity-max--1 Attribute-shape-circle Relation-attribute Existential
+Attribute-shape-rectangle 1 EntityType Selector-x-max-1 Attribute-color-cyan Relation-attribute Existential
+
+Attribute-color-blue 1 EntityType Attribute-shape-circle Attribute-color-yellow 2 EntityType Selector-unique Selector-proximity-max--1 Attribute-shape-ellipse Relation-attribute Existential
+Attribute-color-blue 1 EntityType Attribute-color-yellow Attribute-shape-semicircle 2 EntityType Selector-unique Selector-proximity-max-1 Attribute-shape-ellipse Relation-attribute Existential
+Attribute-color-yellow 1 EntityType Selector-y-max--1 Attribute-shape-semicircle Relation-attribute Existential
+Attribute-shape-semicircle 1 EntityType Selector-y-max-1 Attribute-color-blue Relation-attribute Existential
+Attribute-color-yellow 1 EntityType Selector-y-max--1 Attribute-shape-ellipse Relation-attribute Existential
+
+Attribute-shape-triangle 1 EntityType Attribute-color-green Attribute-shape-cross 2 EntityType Selector-unique Selector-proximity-max-1 Attribute-color-red Relation-attribute Existential
+Attribute-color-cyan 1 EntityType Attribute-color-yellow Attribute-shape-triangle 2 EntityType Selector-unique Selector-proximity-max--1 Attribute-shape-rectangle Relation-attribute Existential
+Attribute-shape-cross 1 EntityType Selector-size-max-1 Attribute-color-green Relation-attribute Existential
+Attribute-shape-rectangle 1 EntityType Selector-x-max--1 Attribute-color-red Relation-attribute Existential
+Attribute-color-red 1 EntityType Selector-y-max--1 Attribute-shape-semicircle Relation-attribute Existential
+
+Attribute-color-gray 1 EntityType Selector-size-max-1 Attribute-shape-rectangle Relation-attribute Existential
+Attribute-shape-rectangle 1 EntityType Selector-size-max-1 Attribute-color-gray Relation-attribute Existential
+Attribute-shape-rectangle 1 EntityType Attribute-shape-ellipse 1 EntityType Selector-unique Selector-proximity-max-1 Attribute-color-yellow Relation-attribute Existential
+Attribute-shape-rectangle 1 EntityType Selector-x-max-1 Attribute-color-gray Relation-attribute Existential
+Attribute-shape-rectangle 1 EntityType Selector-shade-max-1 Attribute-color-gray Relation-attribute Existential
+
+Attribute-color-blue 1 EntityType Selector-size-max-1 Attribute-shape-cross Relation-attribute Existential
+Attribute-color-cyan 1 EntityType Selector-shade-max-1 Attribute-shape-pentagon Relation-attribute Existential
+Attribute-color-blue 1 EntityType Selector-y-max-1 Attribute-shape-semicircle Relation-attribute Existential
+Attribute-color-yellow 1 EntityType Attribute-color-blue Attribute-shape-semicircle 2 EntityType Selector-unique Selector-proximity-max-1 Attribute-shape-semicircle Relation-attribute Existential
+Attribute-color-cyan 1 EntityType Attribute-shape-cross Attribute-color-green 2 EntityType Selector-unique Selector-proximity-max--1 Attribute-shape-ellipse Relation-attribute Existential
+
+Attribute-shape-cross 1 EntityType Selector-x-max-1 Attribute-color-gray Relation-attribute Existential
+Attribute-color-gray 1 EntityType Selector-y-max--1 Attribute-shape-square Relation-attribute Existential
+Attribute-color-gray 1 EntityType Selector-x-max-1 Attribute-shape-rectangle Relation-attribute Existential
+Attribute-shape-cross 1 EntityType Selector-y-max-1 Attribute-color-gray Relation-attribute Existential
+Attribute-shape-cross 1 EntityType Attribute-shape-pentagon 1 EntityType Selector-unique Selector-proximity-max-1 Attribute-color-red Relation-attribute Existential
+
+Attribute-color-cyan 1 EntityType Selector-size-max--1 Attribute-shape-pentagon Relation-attribute Existential
+Attribute-color-yellow 1 EntityType Selector-y-max--1 Attribute-shape-square Relation-attribute Existential
+Attribute-shape-square 1 EntityType Selector-shade-max-1 Attribute-color-yellow Relation-attribute Existential
+Attribute-shape-ellipse 1 EntityType Attribute-color-yellow Attribute-shape-cross 2 EntityType Selector-unique Selector-proximity-max--1 Attribute-color-gray Relation-attribute Existential
+Attribute-shape-square 1 EntityType Attribute-color-magenta Attribute-shape-ellipse 2 EntityType Selector-unique Selector-proximity-max--1 Attribute-color-gray Relation-attribute Existential
+
+Attribute-shape-square 1 EntityType Selector-shade-max--1 Attribute-color-yellow Relation-attribute Existential
+Attribute-color-yellow 1 EntityType Selector-y-max--1 Attribute-shape-triangle Relation-attribute Existential
+Attribute-color-blue 1 EntityType Selector-y-max-1 Attribute-shape-rectangle Relation-attribute Existential
+Attribute-shape-square 1 EntityType Selector-x-max--1 Attribute-color-yellow Relation-attribute Existential
+Attribute-color-yellow 1 EntityType Attribute-shape-semicircle Attribute-color-blue 2 EntityType Selector-unique Selector-proximity-max--1 Attribute-shape-square Relation-attribute Existential
+
+Attribute-shape-semicircle 1 EntityType Selector-size-max--1 Attribute-color-yellow Relation-attribute Existential
+Attribute-color-green 1 EntityType Selector-shade-max-1 Attribute-shape-cross Relation-attribute Existential
+Attribute-shape-semicircle 1 EntityType Attribute-color-green Attribute-shape-circle 2 EntityType Selector-unique Selector-proximity-max--1 Attribute-color-green Relation-attribute Existential
+Attribute-shape-pentagon 1 EntityType Selector-x-max-1 Attribute-color-blue Relation-attribute Existential
+Attribute-shape-semicircle 1 EntityType Selector-y-max--1 Attribute-color-gray Relation-attribute Existential
+
+Attribute-color-blue 1 EntityType Selector-y-max-1 Attribute-shape-rectangle Relation-attribute Existential
+Attribute-color-red 1 EntityType Selector-x-max--1 Attribute-shape-pentagon Relation-attribute Existential
+Attribute-color-blue 1 EntityType Selector-x-max--1 Attribute-shape-triangle Relation-attribute Existential
+Attribute-color-blue 1 EntityType Selector-x-max--1 Attribute-shape-triangle Relation-attribute Existential
+Attribute-shape-rectangle 1 EntityType Selector-x-max--1 Attribute-color-blue Relation-attribute Existential
+
+Attribute-shape-square 1 EntityType Selector-y-max-1 Attribute-color-magenta Relation-attribute Existential
+Attribute-shape-square 1 EntityType Selector-x-max--1 Attribute-color-magenta Relation-attribute Existential
+Attribute-shape-ellipse 1 EntityType Attribute-shape-semicircle Attribute-color-magenta 2 EntityType Selector-unique Selector-proximity-max-1 Attribute-color-magenta Relation-attribute Existential
+Attribute-shape-ellipse 1 EntityType Selector-shade-max-1 Attribute-color-magenta Relation-attribute Existential
+Attribute-shape-square 1 EntityType Selector-size-max--1 Attribute-color-magenta Relation-attribute Existential
+
+Attribute-color-gray 1 EntityType Selector-shade-max--1 Attribute-shape-triangle Relation-attribute Existential
+Attribute-shape-cross 1 EntityType Selector-size-max-1 Attribute-color-cyan Relation-attribute Existential
+Attribute-shape-pentagon 1 EntityType Selector-size-max--1 Attribute-color-gray Relation-attribute Existential
+Attribute-shape-pentagon 1 EntityType Selector-x-max-1 Attribute-color-magenta Relation-attribute Existential
+Attribute-shape-cross 1 EntityType Selector-size-max--1 Attribute-color-yellow Relation-attribute Existential
+
+Attribute-shape-square 1 EntityType Selector-x-max-1 Attribute-color-yellow Relation-attribute Existential
+Attribute-color-red 1 EntityType Selector-y-max--1 Attribute-shape-circle Relation-attribute Existential
+Attribute-shape-square 1 EntityType Selector-y-max-1 Attribute-color-green Relation-attribute Existential
+Attribute-color-yellow 1 EntityType Selector-y-max-1 Attribute-shape-triangle Relation-attribute Existential
+Attribute-shape-square 1 EntityType Selector-y-max--1 Attribute-color-yellow Relation-attribute Existential
+
+Attribute-color-blue 1 EntityType Selector-shade-max-1 Attribute-shape-triangle Relation-attribute Existential
+Attribute-color-blue 1 EntityType Selector-y-max-1 Attribute-shape-pentagon Relation-attribute Existential
+Attribute-color-blue 1 EntityType Selector-x-max-1 Attribute-shape-rectangle Relation-attribute Existential
+Attribute-color-blue 1 EntityType Selector-x-max-1 Attribute-shape-rectangle Relation-attribute Existential
+Attribute-color-blue 1 EntityType Selector-y-max--1 Attribute-shape-cross Relation-attribute Existential
+
+Attribute-color-blue 1 EntityType Selector-size-max-1 Attribute-shape-circle Relation-attribute Existential
+Attribute-shape-circle 1 EntityType Attribute-shape-semicircle Attribute-color-magenta 2 EntityType Selector-unique Selector-proximity-max-1 Attribute-color-blue Relation-attribute Existential
+Attribute-color-blue 1 EntityType Attribute-color-magenta Attribute-shape-semicircle 2 EntityType Selector-unique Selector-proximity-max-1 Attribute-shape-pentagon Relation-attribute Existential
+Attribute-color-blue 1 EntityType Selector-size-max-1 Attribute-shape-circle Relation-attribute Existential
+Attribute-shape-circle 1 EntityType Selector-y-max--1 Attribute-color-blue Relation-attribute Existential
+
+Attribute-color-red 1 EntityType Selector-shade-max-1 Attribute-shape-square Relation-attribute Existential
+Attribute-shape-square 1 EntityType Selector-x-max-1 Attribute-color-red Relation-attribute Existential
+Attribute-color-red 1 EntityType Selector-y-max--1 Attribute-shape-square Relation-attribute Existential
+Attribute-shape-square 1 EntityType Selector-shade-max--1 Attribute-color-green Relation-attribute Existential
+Attribute-shape-square 1 EntityType Selector-shade-max--1 Attribute-color-magenta Relation-attribute Existential
+
+Attribute-color-magenta 1 EntityType Selector-x-max-1 Attribute-shape-rectangle Relation-attribute Existential
+Attribute-color-red 1 EntityType Attribute-shape-square 1 EntityType Selector-unique Selector-proximity-max--1 Attribute-shape-rectangle Relation-attribute Existential
+Attribute-color-magenta 1 EntityType Selector-size-max-1 Attribute-shape-rectangle Relation-attribute Existential
+Attribute-shape-rectangle 1 EntityType Selector-y-max-1 Attribute-color-blue Relation-attribute Existential
+Attribute-shape-rectangle 1 EntityType Attribute-color-blue Attribute-shape-square 2 EntityType Selector-unique Selector-proximity-max--1 Attribute-color-blue Relation-attribute Existential
+
+Attribute-shape-square 1 EntityType Selector-x-max-1 Attribute-color-gray Relation-attribute Existential
+Attribute-shape-square 1 EntityType Selector-size-max--1 Attribute-color-yellow Relation-attribute Existential
+Attribute-color-magenta 1 EntityType Selector-x-max--1 Attribute-shape-ellipse Relation-attribute Existential
+Attribute-color-magenta 1 EntityType Selector-y-max-1 Attribute-shape-square Relation-attribute Existential
+Attribute-color-cyan 1 EntityType Selector-shade-max-1 Attribute-shape-triangle Relation-attribute Existential
+
+Attribute-color-cyan 1 EntityType Selector-size-max-1 Attribute-shape-cross Relation-attribute Existential
+Attribute-shape-rectangle 1 EntityType Selector-x-max--1 Attribute-color-blue Relation-attribute Existential
+Attribute-color-cyan 1 EntityType Selector-size-max-1 Attribute-shape-cross Relation-attribute Existential
+Attribute-color-cyan 1 EntityType Selector-size-max-1 Attribute-shape-cross Relation-attribute Existential
+Attribute-shape-cross 1 EntityType Selector-x-max--1 Attribute-color-blue Relation-attribute Existential
+
+Attribute-color-gray 1 EntityType Selector-y-max-1 Attribute-shape-semicircle Relation-attribute Existential
+Attribute-shape-cross 1 EntityType Selector-x-max--1 Attribute-color-gray Relation-attribute Existential
+Attribute-shape-cross 1 EntityType Selector-x-max--1 Attribute-color-green Relation-attribute Existential
+Attribute-shape-semicircle 1 EntityType Selector-shade-max--1 Attribute-color-red Relation-attribute Existential
+Attribute-shape-semicircle 1 EntityType Attribute-shape-cross Attribute-color-green 2 EntityType Selector-unique Selector-proximity-max-1 Attribute-color-gray Relation-attribute Existential
+
+Attribute-color-blue 1 EntityType Attribute-shape-cross 1 EntityType Selector-unique Selector-proximity-max--1 Attribute-shape-square Relation-attribute Existential
+Attribute-shape-square 1 EntityType Selector-y-max--1 Attribute-color-blue Relation-attribute Existential
+Attribute-shape-semicircle 1 EntityType Selector-shade-max--1 Attribute-color-blue Relation-attribute Existential
+Attribute-color-cyan 1 EntityType Selector-y-max-1 Attribute-shape-square Relation-attribute Existential
+Attribute-shape-semicircle 1 EntityType Selector-x-max--1 Attribute-color-magenta Relation-attribute Existential
+
+Attribute-color-cyan 1 EntityType Selector-size-max-1 Attribute-shape-semicircle Relation-attribute Existential
+Attribute-color-cyan 1 EntityType Attribute-shape-cross 1 EntityType Selector-unique Selector-proximity-max--1 Attribute-shape-semicircle Relation-attribute Existential
+Attribute-shape-semicircle 1 EntityType Selector-x-max-1 Attribute-color-gray Relation-attribute Existential
+Attribute-color-cyan 1 EntityType Selector-size-max--1 Attribute-shape-square Relation-attribute Existential
+Attribute-color-cyan 1 EntityType Selector-y-max--1 Attribute-shape-semicircle Relation-attribute Existential
+
+Attribute-color-cyan 1 EntityType Selector-y-max--1 Attribute-shape-circle Relation-attribute Existential
+Attribute-color-red 1 EntityType Selector-y-max--1 Attribute-shape-ellipse Relation-attribute Existential
+Attribute-color-red 1 EntityType Selector-y-max--1 Attribute-shape-ellipse Relation-attribute Existential
+Attribute-color-red 1 EntityType Selector-y-max--1 Attribute-shape-ellipse Relation-attribute Existential
+Attribute-color-red 1 EntityType Selector-y-max-1 Attribute-shape-cross Relation-attribute Existential
+
+Attribute-color-green 1 EntityType Selector-y-max--1 Attribute-shape-pentagon Relation-attribute Existential
+Attribute-shape-pentagon 1 EntityType Selector-x-max-1 Attribute-color-blue Relation-attribute Existential
+Attribute-shape-pentagon 1 EntityType Selector-x-max--1 Attribute-color-cyan Relation-attribute Existential
+Attribute-shape-pentagon 1 EntityType Attribute-shape-semicircle Attribute-color-green 2 EntityType Selector-unique Selector-proximity-max-1 Attribute-color-yellow Relation-attribute Existential
+Attribute-color-green 1 EntityType Selector-size-max-1 Attribute-shape-pentagon Relation-attribute Existential
+
+Attribute-color-cyan 1 EntityType Selector-shade-max--1 Attribute-shape-ellipse Relation-attribute Existential
+Attribute-shape-square 1 EntityType Selector-size-max-1 Attribute-color-gray Relation-attribute Existential
+Attribute-color-cyan 1 EntityType Selector-y-max-1 Attribute-shape-ellipse Relation-attribute Existential
+Attribute-shape-square 1 EntityType Selector-size-max-1 Attribute-color-yellow Relation-attribute Existential
+Attribute-color-cyan 1 EntityType Selector-size-max-1 Attribute-shape-ellipse Relation-attribute Existential
+
+Attribute-shape-square 1 EntityType Attribute-color-cyan 1 EntityType Selector-unique Selector-proximity-max-1 Attribute-color-red Relation-attribute Existential
+Attribute-shape-square 1 EntityType Attribute-color-gray Attribute-shape-rectangle 2 EntityType Selector-unique Selector-proximity-max--1 Attribute-color-red Relation-attribute Existential
+Attribute-color-blue 1 EntityType Selector-shade-max-1 Attribute-shape-rectangle Relation-attribute Existential
+Attribute-shape-pentagon 1 EntityType Selector-x-max-1 Attribute-color-blue Relation-attribute Existential
+Attribute-color-blue 1 EntityType Selector-shade-max--1 Attribute-shape-pentagon Relation-attribute Existential
+
+Attribute-shape-square 1 EntityType Selector-x-max--1 Attribute-color-green Relation-attribute Existential
+Attribute-color-gray 1 EntityType Attribute-color-blue 1 EntityType Selector-unique Selector-proximity-max-1 Attribute-shape-square Relation-attribute Existential
+Attribute-shape-square 1 EntityType Selector-x-max--1 Attribute-color-green Relation-attribute Existential
+Attribute-color-green 1 EntityType Attribute-color-gray Attribute-shape-square 2 EntityType Selector-unique Selector-proximity-max-1 Attribute-shape-rectangle Relation-attribute Existential
+Attribute-color-gray 1 EntityType Selector-x-max--1 Attribute-shape-rectangle Relation-attribute Existential
+
+Attribute-shape-triangle 1 EntityType Selector-x-max--1 Attribute-color-red Relation-attribute Existential
+Attribute-color-red 1 EntityType Selector-shade-max--1 Attribute-shape-triangle Relation-attribute Existential
+Attribute-color-blue 1 EntityType Selector-x-max-1 Attribute-shape-triangle Relation-attribute Existential
+Attribute-shape-triangle 1 EntityType Selector-size-max--1 Attribute-color-blue Relation-attribute Existential
+Attribute-shape-semicircle 1 EntityType Selector-x-max--1 Attribute-color-green Relation-attribute Existential
+
+Attribute-color-green 1 EntityType Selector-size-max--1 Attribute-shape-pentagon Relation-attribute Existential
+Attribute-shape-pentagon 1 EntityType Selector-y-max-1 Attribute-color-yellow Relation-attribute Existential
+Attribute-color-yellow 1 EntityType Selector-y-max-1 Attribute-shape-cross Relation-attribute Existential
+Attribute-shape-pentagon 1 EntityType Selector-shade-max--1 Attribute-color-green Relation-attribute Existential
+Attribute-color-yellow 1 EntityType Selector-y-max--1 Attribute-shape-semicircle Relation-attribute Existential
+
+Attribute-color-blue 1 EntityType Selector-size-max--1 Attribute-shape-cross Relation-attribute Existential
+Attribute-color-green 1 EntityType Selector-x-max-1 Attribute-shape-cross Relation-attribute Existential
+Attribute-shape-cross 1 EntityType Selector-y-max--1 Attribute-color-green Relation-attribute Existential
+Attribute-color-green 1 EntityType Selector-x-max-1 Attribute-shape-circle Relation-attribute Existential
+Attribute-color-blue 1 EntityType Selector-shade-max-1 Attribute-shape-semicircle Relation-attribute Existential
+
+Attribute-color-magenta 1 EntityType Selector-x-max-1 Attribute-shape-triangle Relation-attribute Existential
+Attribute-shape-triangle 1 EntityType Selector-x-max--1 Attribute-color-cyan Relation-attribute Existential
+Attribute-color-yellow 1 EntityType Selector-x-max-1 Attribute-shape-triangle Relation-attribute Existential
+Attribute-color-yellow 1 EntityType Selector-size-max-1 Attribute-shape-semicircle Relation-attribute Existential
+Attribute-shape-ellipse 1 EntityType Selector-y-max--1 Attribute-color-magenta Relation-attribute Existential
+
+Attribute-color-cyan 1 EntityType Selector-size-max--1 Attribute-shape-triangle Relation-attribute Existential
+Attribute-shape-triangle 1 EntityType Selector-x-max--1 Attribute-color-cyan Relation-attribute Existential
+Attribute-shape-rectangle 1 EntityType Selector-size-max--1 Attribute-color-blue Relation-attribute Existential
+Attribute-color-blue 1 EntityType Selector-x-max--1 Attribute-shape-rectangle Relation-attribute Existential
+Attribute-color-blue 1 EntityType Selector-x-max--1 Attribute-shape-rectangle Relation-attribute Existential
+
+Attribute-shape-triangle 1 EntityType Selector-y-max--1 Attribute-color-yellow Relation-attribute Existential
+Attribute-color-green 1 EntityType Attribute-shape-triangle Attribute-color-gray 2 EntityType Selector-unique Selector-proximity-max-1 Attribute-shape-triangle Relation-attribute Existential
+Attribute-shape-triangle 1 EntityType Attribute-shape-rectangle 1 EntityType Selector-unique Selector-proximity-max-1 Attribute-color-blue Relation-attribute Existential
+Attribute-shape-square 1 EntityType Selector-y-max-1 Attribute-color-gray Relation-attribute Existential
+Attribute-color-green 1 EntityType Attribute-shape-triangle Attribute-color-gray 2 EntityType Selector-unique Selector-proximity-max--1 Attribute-shape-rectangle Relation-attribute Existential
+
+Attribute-shape-cross 1 EntityType Selector-shade-max-1 Attribute-color-cyan Relation-attribute Existential
+Attribute-shape-cross 1 EntityType Selector-y-max-1 Attribute-color-green Relation-attribute Existential
+Attribute-shape-cross 1 EntityType Selector-y-max--1 Attribute-color-gray Relation-attribute Existential
+Attribute-shape-cross 1 EntityType Attribute-shape-triangle 1 EntityType Selector-unique Selector-proximity-max--1 Attribute-color-gray Relation-attribute Existential
+Attribute-shape-cross 1 EntityType Selector-x-max-1 Attribute-color-gray Relation-attribute Existential
+
+Attribute-shape-circle 1 EntityType Selector-size-max--1 Attribute-color-gray Relation-attribute Existential
+Attribute-shape-ellipse 1 EntityType Attribute-shape-rectangle Attribute-color-gray 2 EntityType Selector-unique Selector-proximity-max-1 Attribute-color-red Relation-attribute Existential
+Attribute-color-magenta 1 EntityType Attribute-color-green Attribute-shape-ellipse 2 EntityType Selector-unique Selector-proximity-max--1 Attribute-shape-cross Relation-attribute Existential
+Attribute-color-magenta 1 EntityType Selector-x-max--1 Attribute-shape-rectangle Relation-attribute Existential
+Attribute-shape-ellipse 1 EntityType Attribute-color-gray 1 EntityType Selector-unique Selector-proximity-max-1 Attribute-color-red Relation-attribute Existential
+
+Attribute-shape-triangle 1 EntityType Attribute-color-cyan 1 EntityType Selector-unique Selector-proximity-max-1 Attribute-color-green Relation-attribute Existential
+Attribute-shape-triangle 1 EntityType Selector-x-max-1 Attribute-color-cyan Relation-attribute Existential
+Attribute-shape-square 1 EntityType Selector-shade-max--1 Attribute-color-blue Relation-attribute Existential
+Attribute-color-blue 1 EntityType Selector-shade-max-1 Attribute-shape-pentagon Relation-attribute Existential
+Attribute-color-green 1 EntityType Selector-shade-max-1 Attribute-shape-circle Relation-attribute Existential
+
+Attribute-color-green 1 EntityType Selector-y-max--1 Attribute-shape-cross Relation-attribute Existential
+Attribute-shape-cross 1 EntityType Attribute-shape-pentagon 1 EntityType Selector-unique Selector-proximity-max-1 Attribute-color-red Relation-attribute Existential
+Attribute-color-green 1 EntityType Selector-y-max--1 Attribute-shape-ellipse Relation-attribute Existential
+Attribute-color-green 1 EntityType Selector-x-max--1 Attribute-shape-pentagon Relation-attribute Existential
+Attribute-color-green 1 EntityType Attribute-color-magenta 1 EntityType Selector-unique Selector-proximity-max--1 Attribute-shape-ellipse Relation-attribute Existential
+
+Attribute-color-cyan 1 EntityType Selector-shade-max--1 Attribute-shape-triangle Relation-attribute Existential
+Attribute-color-cyan 1 EntityType Selector-x-max--1 Attribute-shape-cross Relation-attribute Existential
+Attribute-shape-cross 1 EntityType Selector-size-max-1 Attribute-color-gray Relation-attribute Existential
+Attribute-color-cyan 1 EntityType Selector-x-max--1 Attribute-shape-cross Relation-attribute Existential
+Attribute-shape-cross 1 EntityType Selector-shade-max--1 Attribute-color-blue Relation-attribute Existential
+
+Attribute-color-red 1 EntityType Selector-size-max--1 Attribute-shape-triangle Relation-attribute Existential
+Attribute-shape-rectangle 1 EntityType Attribute-color-gray 1 EntityType Selector-unique Selector-proximity-max-1 Attribute-color-blue Relation-attribute Existential
+Attribute-color-red 1 EntityType Selector-size-max--1 Attribute-shape-rectangle Relation-attribute Existential
+Attribute-color-red 1 EntityType Selector-y-max--1 Attribute-shape-circle Relation-attribute Existential
+Attribute-shape-rectangle 1 EntityType Selector-size-max--1 Attribute-color-green Relation-attribute Existential
+
+Attribute-color-yellow 1 EntityType Selector-shade-max--1 Attribute-shape-triangle Relation-attribute Existential
+Attribute-color-yellow 1 EntityType Selector-shade-max-1 Attribute-shape-triangle Relation-attribute Existential
+Attribute-color-yellow 1 EntityType Selector-x-max-1 Attribute-shape-circle Relation-attribute Existential
+Attribute-shape-semicircle 1 EntityType Selector-x-max--1 Attribute-color-magenta Relation-attribute Existential
+Attribute-shape-semicircle 1 EntityType Selector-y-max-1 Attribute-color-magenta Relation-attribute Existential
+
+Attribute-color-magenta 1 EntityType Attribute-color-red Attribute-shape-circle 2 EntityType Selector-unique Selector-proximity-max-1 Attribute-shape-ellipse Relation-attribute Existential
+Attribute-color-magenta 1 EntityType Selector-y-max-1 Attribute-shape-ellipse Relation-attribute Existential
+Attribute-shape-pentagon 1 EntityType Selector-x-max--1 Attribute-color-yellow Relation-attribute Existential
+Attribute-shape-pentagon 1 EntityType Selector-size-max-1 Attribute-color-red Relation-attribute Existential
+Attribute-color-red 1 EntityType Selector-x-max--1 Attribute-shape-circle Relation-attribute Existential
+
+Attribute-shape-semicircle 1 EntityType Selector-x-max-1 Attribute-color-red Relation-attribute Existential
+Attribute-shape-cross 1 EntityType Selector-x-max--1 Attribute-color-red Relation-attribute Existential
+Attribute-shape-semicircle 1 EntityType Attribute-shape-circle 1 EntityType Selector-unique Selector-proximity-max-1 Attribute-color-gray Relation-attribute Existential
+Attribute-color-gray 1 EntityType Selector-x-max-1 Attribute-shape-semicircle Relation-attribute Existential
+Attribute-color-gray 1 EntityType Attribute-shape-cross Attribute-color-green 2 EntityType Selector-unique Selector-proximity-max-1 Attribute-shape-cross Relation-attribute Existential
+
+Attribute-shape-triangle 1 EntityType Selector-size-max--1 Attribute-color-yellow Relation-attribute Existential
+Attribute-shape-triangle 1 EntityType Selector-size-max--1 Attribute-color-yellow Relation-attribute Existential
+Attribute-shape-triangle 1 EntityType Selector-size-max-1 Attribute-color-yellow Relation-attribute Existential
+Attribute-shape-triangle 1 EntityType Selector-x-max-1 Attribute-color-gray Relation-attribute Existential
+Attribute-color-gray 1 EntityType Selector-y-max-1 Attribute-shape-cross Relation-attribute Existential
+
+Attribute-color-magenta 1 EntityType Selector-x-max-1 Attribute-shape-rectangle Relation-attribute Existential
+Attribute-color-cyan 1 EntityType Selector-y-max-1 Attribute-shape-triangle Relation-attribute Existential
+Attribute-color-magenta 1 EntityType Selector-x-max-1 Attribute-shape-semicircle Relation-attribute Existential
+Attribute-shape-rectangle 1 EntityType Selector-y-max-1 Attribute-color-blue Relation-attribute Existential
+Attribute-shape-rectangle 1 EntityType Attribute-shape-triangle 1 EntityType Selector-unique Selector-proximity-max--1 Attribute-color-magenta Relation-attribute Existential
+
+Attribute-shape-cross 1 EntityType Selector-x-max-1 Attribute-color-cyan Relation-attribute Existential
+Attribute-shape-cross 1 EntityType Selector-shade-max--1 Attribute-color-blue Relation-attribute Existential
+Attribute-shape-rectangle 1 EntityType Selector-size-max--1 Attribute-color-magenta Relation-attribute Existential
+Attribute-shape-cross 1 EntityType Selector-y-max--1 Attribute-color-cyan Relation-attribute Existential
+Attribute-shape-cross 1 EntityType Selector-x-max--1 Attribute-color-blue Relation-attribute Existential
+
+Attribute-color-cyan 1 EntityType Selector-x-max-1 Attribute-shape-cross Relation-attribute Existential
+Attribute-color-cyan 1 EntityType Selector-size-max-1 Attribute-shape-square Relation-attribute Existential
+Attribute-shape-circle 1 EntityType Selector-y-max--1 Attribute-color-cyan Relation-attribute Existential
+Attribute-color-cyan 1 EntityType Attribute-color-green 1 EntityType Selector-unique Selector-proximity-max--1 Attribute-shape-triangle Relation-attribute Existential
+Attribute-shape-circle 1 EntityType Selector-y-max-1 Attribute-color-gray Relation-attribute Existential
+
+Attribute-shape-rectangle 1 EntityType Selector-y-max-1 Attribute-color-red Relation-attribute Existential
+Attribute-shape-ellipse 1 EntityType Selector-size-max-1 Attribute-color-red Relation-attribute Existential
+Attribute-color-magenta 1 EntityType Selector-shade-max--1 Attribute-shape-semicircle Relation-attribute Existential
+Attribute-color-magenta 1 EntityType Selector-size-max--1 Attribute-shape-ellipse Relation-attribute Existential
+Attribute-color-red 1 EntityType Selector-shade-max--1 Attribute-shape-rectangle Relation-attribute Existential
+
+Attribute-color-gray 1 EntityType Attribute-shape-square 1 EntityType Selector-unique Selector-proximity-max-1 Attribute-shape-circle Relation-attribute Existential
+Attribute-shape-semicircle 1 EntityType Selector-x-max--1 Attribute-color-cyan Relation-attribute Existential
+Attribute-shape-semicircle 1 EntityType Attribute-shape-pentagon Attribute-color-cyan 2 EntityType Selector-unique Selector-proximity-max-1 Attribute-color-gray Relation-attribute Existential
+Attribute-shape-semicircle 1 EntityType Selector-x-max-1 Attribute-color-gray Relation-attribute Existential
+Attribute-shape-semicircle 1 EntityType Selector-y-max-1 Attribute-color-gray Relation-attribute Existential
+
+Attribute-shape-cross 1 EntityType Attribute-color-red Attribute-shape-pentagon 2 EntityType Selector-unique Selector-proximity-max-1 Attribute-color-green Relation-attribute Existential
+Attribute-shape-cross 1 EntityType Selector-y-max--1 Attribute-color-magenta Relation-attribute Existential
+Attribute-shape-cross 1 EntityType Attribute-shape-pentagon Attribute-color-red 2 EntityType Selector-unique Selector-proximity-max-1 Attribute-color-yellow Relation-attribute Existential
+Attribute-shape-cross 1 EntityType Selector-x-max--1 Attribute-color-yellow Relation-attribute Existential
+Attribute-shape-cross 1 EntityType Selector-x-max--1 Attribute-color-yellow Relation-attribute Existential
+
+Attribute-shape-rectangle 1 EntityType Selector-size-max--1 Attribute-color-gray Relation-attribute Existential
+Attribute-shape-rectangle 1 EntityType Selector-size-max-1 Attribute-color-red Relation-attribute Existential
+Attribute-shape-rectangle 1 EntityType Selector-size-max-1 Attribute-color-gray Relation-attribute Existential
+Attribute-shape-rectangle 1 EntityType Selector-y-max--1 Attribute-color-gray Relation-attribute Existential
+Attribute-shape-rectangle 1 EntityType Selector-size-max-1 Attribute-color-gray Relation-attribute Existential
+
+Attribute-shape-semicircle 1 EntityType Selector-size-max--1 Attribute-color-yellow Relation-attribute Existential
+Attribute-shape-semicircle 1 EntityType Selector-y-max-1 Attribute-color-yellow Relation-attribute Existential
+Attribute-shape-semicircle 1 EntityType Selector-y-max--1 Attribute-color-yellow Relation-attribute Existential
+Attribute-color-yellow 1 EntityType Selector-x-max-1 Attribute-shape-cross Relation-attribute Existential
+Attribute-shape-semicircle 1 EntityType Selector-size-max-1 Attribute-color-yellow Relation-attribute Existential
+
+Attribute-color-gray 1 EntityType Selector-x-max-1 Attribute-shape-semicircle Relation-attribute Existential
+Attribute-color-cyan 1 EntityType Selector-y-max--1 Attribute-shape-circle Relation-attribute Existential
+Attribute-shape-circle 1 EntityType Selector-size-max--1 Attribute-color-gray Relation-attribute Existential
+Attribute-color-gray 1 EntityType Selector-shade-max-1 Attribute-shape-circle Relation-attribute Existential
+Attribute-color-gray 1 EntityType Selector-size-max-1 Attribute-shape-triangle Relation-attribute Existential
+
+Attribute-color-gray 1 EntityType Selector-y-max--1 Attribute-shape-ellipse Relation-attribute Existential
+Attribute-color-gray 1 EntityType Selector-x-max-1 Attribute-shape-circle Relation-attribute Existential
+Attribute-color-gray 1 EntityType Selector-y-max--1 Attribute-shape-ellipse Relation-attribute Existential
+Attribute-color-gray 1 EntityType Attribute-color-cyan 1 EntityType Selector-unique Selector-proximity-max-1 Attribute-shape-ellipse Relation-attribute Existential
+Attribute-color-gray 1 EntityType Selector-y-max-1 Attribute-shape-circle Relation-attribute Existential
+
+Attribute-color-blue 1 EntityType Attribute-color-magenta Attribute-shape-rectangle 2 EntityType Selector-unique Selector-proximity-max-1 Attribute-shape-circle Relation-attribute Existential
+Attribute-shape-ellipse 1 EntityType Selector-x-max-1 Attribute-color-gray Relation-attribute Existential
+Attribute-color-magenta 1 EntityType Selector-x-max-1 Attribute-shape-square Relation-attribute Existential
+Attribute-color-magenta 1 EntityType Attribute-shape-circle 1 EntityType Selector-unique Selector-proximity-max-1 Attribute-shape-rectangle Relation-attribute Existential
+Attribute-color-magenta 1 EntityType Selector-y-max-1 Attribute-shape-ellipse Relation-attribute Existential
+
+Attribute-shape-ellipse 1 EntityType Selector-shade-max-1 Attribute-color-red Relation-attribute Existential
+Attribute-color-red 1 EntityType Selector-shade-max--1 Attribute-shape-pentagon Relation-attribute Existential
+Attribute-color-red 1 EntityType Selector-y-max-1 Attribute-shape-cross Relation-attribute Existential
+Attribute-color-red 1 EntityType Selector-x-max--1 Attribute-shape-cross Relation-attribute Existential
+Attribute-color-red 1 EntityType Selector-x-max--1 Attribute-shape-triangle Relation-attribute Existential
+
+Attribute-color-gray 1 EntityType Attribute-shape-semicircle Attribute-color-magenta 2 EntityType Selector-unique Selector-proximity-max-1 Attribute-shape-cross Relation-attribute Existential
+Attribute-color-gray 1 EntityType Selector-shade-max--1 Attribute-shape-pentagon Relation-attribute Existential
+Attribute-color-gray 1 EntityType Selector-size-max--1 Attribute-shape-cross Relation-attribute Existential
+Attribute-color-gray 1 EntityType Selector-shade-max--1 Attribute-shape-cross Relation-attribute Existential
+Attribute-color-gray 1 EntityType Selector-y-max-1 Attribute-shape-cross Relation-attribute Existential
+
+Attribute-shape-square 1 EntityType Selector-x-max-1 Attribute-color-gray Relation-attribute Existential
+Attribute-color-green 1 EntityType Selector-y-max--1 Attribute-shape-square Relation-attribute Existential
+Attribute-color-green 1 EntityType Attribute-color-gray Attribute-shape-circle 2 EntityType Selector-unique Selector-proximity-max-1 Attribute-shape-ellipse Relation-attribute Existential
+Attribute-shape-square 1 EntityType Attribute-color-gray Attribute-shape-circle 2 EntityType Selector-unique Selector-proximity-max-1 Attribute-color-green Relation-attribute Existential
+Attribute-shape-square 1 EntityType Attribute-color-gray Attribute-shape-circle 2 EntityType Selector-unique Selector-proximity-max-1 Attribute-color-red Relation-attribute Existential
+
+Attribute-color-yellow 1 EntityType Selector-shade-max-1 Attribute-shape-ellipse Relation-attribute Existential
+Attribute-shape-square 1 EntityType Selector-size-max--1 Attribute-color-cyan Relation-attribute Existential
+Attribute-color-yellow 1 EntityType Selector-y-max--1 Attribute-shape-rectangle Relation-attribute Existential
+Attribute-color-yellow 1 EntityType Attribute-shape-square Attribute-color-blue 2 EntityType Selector-unique Selector-proximity-max--1 Attribute-shape-square Relation-attribute Existential
+Attribute-color-red 1 EntityType Attribute-shape-circle 1 EntityType Selector-unique Selector-proximity-max--1 Attribute-shape-cross Relation-attribute Existential
+
+Attribute-shape-cross 1 EntityType Selector-x-max--1 Attribute-color-red Relation-attribute Existential
+Attribute-color-red 1 EntityType Attribute-color-green 1 EntityType Selector-unique Selector-proximity-max-1 Attribute-shape-cross Relation-attribute Existential
+Attribute-shape-cross 1 EntityType Selector-y-max-1 Attribute-color-yellow Relation-attribute Existential
+Attribute-color-red 1 EntityType Selector-x-max-1 Attribute-shape-semicircle Relation-attribute Existential
+Attribute-color-cyan 1 EntityType Attribute-color-red Attribute-shape-cross 2 EntityType Selector-unique Selector-proximity-max--1 Attribute-shape-semicircle Relation-attribute Existential
+
+Attribute-shape-semicircle 1 EntityType Selector-shade-max-1 Attribute-color-gray Relation-attribute Existential
+Attribute-color-gray 1 EntityType Selector-x-max--1 Attribute-shape-pentagon Relation-attribute Existential
+Attribute-shape-semicircle 1 EntityType Selector-y-max--1 Attribute-color-gray Relation-attribute Existential
+Attribute-color-magenta 1 EntityType Attribute-color-blue 1 EntityType Selector-unique Selector-proximity-max-1 Attribute-shape-square Relation-attribute Existential
+Attribute-shape-ellipse 1 EntityType Selector-shade-max-1 Attribute-color-magenta Relation-attribute Existential
+
+Attribute-shape-square 1 EntityType Selector-size-max-1 Attribute-color-magenta Relation-attribute Existential
+Attribute-color-yellow 1 EntityType Selector-y-max--1 Attribute-shape-triangle Relation-attribute Existential
+Attribute-shape-square 1 EntityType Selector-x-max-1 Attribute-color-green Relation-attribute Existential
+Attribute-shape-square 1 EntityType Selector-x-max-1 Attribute-color-magenta Relation-attribute Existential
+Attribute-shape-square 1 EntityType Attribute-color-yellow Attribute-shape-triangle 2 EntityType Selector-unique Selector-proximity-max-1 Attribute-color-magenta Relation-attribute Existential
+
+Attribute-shape-triangle 1 EntityType Selector-x-max--1 Attribute-color-blue Relation-attribute Existential
+Attribute-color-cyan 1 EntityType Selector-x-max--1 Attribute-shape-semicircle Relation-attribute Existential
+Attribute-shape-rectangle 1 EntityType Selector-y-max-1 Attribute-color-cyan Relation-attribute Existential
+Attribute-color-cyan 1 EntityType Attribute-color-blue 1 EntityType Selector-unique Selector-proximity-max--1 Attribute-shape-square Relation-attribute Existential
+Attribute-shape-triangle 1 EntityType Attribute-color-blue 1 EntityType Selector-unique Selector-proximity-max--1 Attribute-color-magenta Relation-attribute Existential
+
+Attribute-shape-pentagon 1 EntityType Selector-shade-max-1 Attribute-color-blue Relation-attribute Existential
+Attribute-shape-semicircle 1 EntityType Attribute-color-blue Attribute-shape-ellipse 2 EntityType Selector-unique Selector-proximity-max-1 Attribute-color-blue Relation-attribute Existential
+Attribute-shape-semicircle 1 EntityType Selector-shade-max--1 Attribute-color-green Relation-attribute Existential
+Attribute-color-blue 1 EntityType Selector-size-max-1 Attribute-shape-circle Relation-attribute Existential
+Attribute-shape-pentagon 1 EntityType Selector-shade-max--1 Attribute-color-green Relation-attribute Existential
+
+Attribute-shape-pentagon 1 EntityType Selector-size-max--1 Attribute-color-blue Relation-attribute Existential
+Attribute-color-yellow 1 EntityType Selector-shade-max--1 Attribute-shape-circle Relation-attribute Existential
+Attribute-color-yellow 1 EntityType Selector-shade-max--1 Attribute-shape-rectangle Relation-attribute Existential
+Attribute-shape-rectangle 1 EntityType Attribute-color-blue Attribute-shape-pentagon 2 EntityType Selector-unique Selector-proximity-max-1 Attribute-color-blue Relation-attribute Existential
+Attribute-color-blue 1 EntityType Selector-y-max--1 Attribute-shape-circle Relation-attribute Existential
+
+Attribute-color-cyan 1 EntityType Selector-x-max-1 Attribute-shape-square Relation-attribute Existential
+Attribute-shape-square 1 EntityType Selector-size-max--1 Attribute-color-cyan Relation-attribute Existential
+Attribute-shape-square 1 EntityType Selector-shade-max--1 Attribute-color-red Relation-attribute Existential
+Attribute-shape-square 1 EntityType Selector-y-max--1 Attribute-color-cyan Relation-attribute Existential
+Attribute-color-cyan 1 EntityType Selector-y-max--1 Attribute-shape-cross Relation-attribute Existential
+
+Attribute-color-red 1 EntityType Attribute-color-yellow 1 EntityType Selector-unique Selector-proximity-max-1 Attribute-shape-square Relation-attribute Existential
+Attribute-shape-triangle 1 EntityType Selector-x-max-1 Attribute-color-blue Relation-attribute Existential
+Attribute-shape-triangle 1 EntityType Selector-y-max-1 Attribute-color-blue Relation-attribute Existential
+Attribute-color-blue 1 EntityType Attribute-color-red Attribute-shape-cross 2 EntityType Selector-unique Selector-proximity-max--1 Attribute-shape-ellipse Relation-attribute Existential
+Attribute-color-blue 1 EntityType Attribute-color-green Attribute-shape-cross 2 EntityType Selector-unique Selector-proximity-max-1 Attribute-shape-square Relation-attribute Existential
+
+Attribute-color-green 1 EntityType Attribute-color-cyan Attribute-shape-semicircle 2 EntityType Selector-unique Selector-proximity-max--1 Attribute-shape-triangle Relation-attribute Existential
+Attribute-color-green 1 EntityType Selector-size-max-1 Attribute-shape-rectangle Relation-attribute Existential
+Attribute-color-cyan 1 EntityType Selector-x-max-1 Attribute-shape-semicircle Relation-attribute Existential
+Attribute-shape-ellipse 1 EntityType Selector-shade-max-1 Attribute-color-green Relation-attribute Existential
+Attribute-color-green 1 EntityType Selector-y-max-1 Attribute-shape-rectangle Relation-attribute Existential
+
+Attribute-color-red 1 EntityType Selector-size-max-1 Attribute-shape-rectangle Relation-attribute Existential
+Attribute-shape-rectangle 1 EntityType Selector-x-max-1 Attribute-color-red Relation-attribute Existential
+Attribute-shape-rectangle 1 EntityType Selector-x-max--1 Attribute-color-red Relation-attribute Existential
+Attribute-color-red 1 EntityType Selector-x-max--1 Attribute-shape-semicircle Relation-attribute Existential
+Attribute-color-red 1 EntityType Selector-shade-max-1 Attribute-shape-ellipse Relation-attribute Existential
+
+Attribute-shape-cross 1 EntityType Selector-shade-max--1 Attribute-color-gray Relation-attribute Existential
+Attribute-color-gray 1 EntityType Attribute-color-red 1 EntityType Selector-unique Selector-proximity-max--1 Attribute-shape-circle Relation-attribute Existential
+Attribute-shape-cross 1 EntityType Selector-size-max-1 Attribute-color-red Relation-attribute Existential
+Attribute-color-cyan 1 EntityType Selector-y-max-1 Attribute-shape-cross Relation-attribute Existential
+Attribute-shape-cross 1 EntityType Selector-y-max-1 Attribute-color-red Relation-attribute Existential
+

@@ -13,7 +13,7 @@ class SelectorCaptioner(WorldCaptioner):
     def __init__(
         self,
         scope_captioner,
-        reference_captioner,
+        comparison_captioner,
         pragmatical_redundancy_rate=1.0,
         pragmatical_tautology_rate=0.0,
         logical_redundancy_rate=1.0,
@@ -23,7 +23,7 @@ class SelectorCaptioner(WorldCaptioner):
         incorrect_distribution=(1, 1)
     ):
         super(SelectorCaptioner, self).__init__(
-            internal_captioners=(scope_captioner, reference_captioner),
+            internal_captioners=(scope_captioner, comparison_captioner),
             pragmatical_redundancy_rate=pragmatical_redundancy_rate,
             pragmatical_tautology_rate=pragmatical_tautology_rate,
             logical_redundancy_rate=logical_redundancy_rate,
@@ -32,7 +32,7 @@ class SelectorCaptioner(WorldCaptioner):
         )
 
         self.scope_captioner = scope_captioner
-        self.reference_captioner = reference_captioner
+        self.comparison_captioner = comparison_captioner
         self.selectors = selectors
         self.incorrect_distribution = util.cumulative_distribution(incorrect_distribution)
 
@@ -43,7 +43,6 @@ class SelectorCaptioner(WorldCaptioner):
         if self.selectors is None:
             self.selectors = [(predtype, value) for predtype, values in realizer.selectors.items() for value in values]
         else:
-            assert len(self.selectors) == 2
             self.selectors = [
                 (predtype, value) for predtype, values in realizer.selectors.items() for value in values
                 if any((p == '*' or predtype == p) and (v == '*' or value == v) for p, v in self.selectors)
@@ -80,9 +79,9 @@ class SelectorCaptioner(WorldCaptioner):
             else:
                 return False
 
-        if self.predtype in Selector.reference_selectors or self.incorrect_predtype in Selector.reference_selectors:
-            ref_predication = predication.copy(reset=True)
-            if not self.reference_captioner.sample_values(mode=mode, predication=ref_predication):
+        if self.predtype in Selector.comparison_selectors or self.incorrect_predtype in Selector.comparison_selectors:
+            comp_predication = predication.copy(reset=True)
+            if not self.comparison_captioner.sample_values(mode=mode, predication=comp_predication):
                 return False
 
         if self.predtype in ('size-two', 'size-max') or self.incorrect_predtype in ('size-two', 'size-max'):
@@ -108,9 +107,9 @@ class SelectorCaptioner(WorldCaptioner):
                 incorrect_predtype=self.incorrect_predtype,
                 incorrect_value=self.incorrect_value
             )
-        if self.predtype in Selector.reference_selectors or self.incorrect_predtype in Selector.reference_selectors:
+        if self.predtype in Selector.comparison_selectors or self.incorrect_predtype in Selector.comparison_selectors:
             model.update(
-                reference_captioner=self.reference_captioner.model()
+                comparison_captioner=self.comparison_captioner.model()
             )
         return model
 
@@ -122,20 +121,20 @@ class SelectorCaptioner(WorldCaptioner):
             return None
         scope.apply_to_predication(predication=scope_predication)
 
-        if self.predtype in Selector.reference_selectors or self.incorrect_predtype in Selector.reference_selectors:
-            ref_predication = predication.sub_predication(reset=True)
-            reference = self.reference_captioner.caption(predication=ref_predication, world=world)
-            if reference is None:
+        if self.predtype in Selector.comparison_selectors or self.incorrect_predtype in Selector.comparison_selectors:
+            comp_predication = predication.sub_predication(reset=True)
+            comparison = self.comparison_captioner.caption(predication=comp_predication, world=world)
+            if comparison is None:
                 return None
-            if not ref_predication.disjoint(other=scope_predication):
+            if not comp_predication.disjoint(other=scope_predication):
                 return None
         else:
-            ref_predication = None
-            reference = None
+            comp_predication = None
+            comparison = None
 
-        selector = Selector(predtype=self.predtype, value=self.value, scope=scope, reference=reference)
+        selector = Selector(predtype=self.predtype, value=self.value, scope=scope, comparison=comparison)
 
-        predication.apply(predicate=selector, scope_predication=scope_predication, ref_predication=ref_predication)
+        predication.apply(predicate=selector, scope_predication=scope_predication, comp_predication=comp_predication)
 
         return selector
 
@@ -144,11 +143,11 @@ class SelectorCaptioner(WorldCaptioner):
         caption.scope.apply_to_predication(predication=predication)
         caption.scope.apply_to_predication(predication=scope_predication)
 
-        if self.predtype in Selector.reference_selectors or self.incorrect_predtype in Selector.reference_selectors:
-            ref_predication = predication.sub_predication(reset=True)
-            caption.reference.apply_to_predication(predication=ref_predication)
+        if self.predtype in Selector.comparison_selectors or self.incorrect_predtype in Selector.comparison_selectors:
+            comp_predication = predication.sub_predication(reset=True)
+            caption.comparison.apply_to_predication(predication=comp_predication)
         else:
-            ref_predication = None
+            comp_predication = None
 
         if self.incorrect_mode == 0:  # 0: incorrect selector
             caption.predtype = self.incorrect_predtype
@@ -162,6 +161,6 @@ class SelectorCaptioner(WorldCaptioner):
         else:
             assert False
 
-        predication.apply(predicate=caption, scope_predication=scope_predication, ref_predication=ref_predication)
+        predication.apply(predicate=caption, scope_predication=scope_predication, comp_predication=comp_predication)
 
         return True

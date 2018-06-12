@@ -8,9 +8,8 @@ class RelationCaptioner(WorldCaptioner):
 
     # incorrect modes
     # 0: incorrect reference
-    # 1: incorrect comparison
-    # 2: incorrect relation
-    # 3: inverse relation
+    # 1: incorrect relation
+    # 2: inverse relation
 
     def __init__(
         self,
@@ -22,7 +21,7 @@ class RelationCaptioner(WorldCaptioner):
         logical_tautology_rate=0.0,
         logical_contradiction_rate=0.0,
         relations=None,
-        incorrect_distribution=(1, 1, 1, 1)
+        incorrect_distribution=(1, 1, 1)
     ):
         super(RelationCaptioner, self).__init__(
             internal_captioners=(reference_captioner, comparison_captioner),
@@ -76,11 +75,6 @@ class RelationCaptioner(WorldCaptioner):
             self.incorrect_mode = util.sample(self.incorrect_distribution)
             if self.incorrect_mode == 0 and not self.reference_captioner.incorrect_possible():
                 continue
-            elif self.incorrect_mode == 1 and not self.comparison_captioner.incorrect_possible():
-                continue
-            elif self.incorrect_mode == 1 and self.predtype not in Relation.ternary_relations:
-                # if incorrect comparison but relation not ternary
-                continue
             break
         else:
             return False
@@ -88,7 +82,7 @@ class RelationCaptioner(WorldCaptioner):
         self.incorrect_predtype = self.predtype
         self.incorrect_value = self.value
 
-        if self.incorrect_mode == 2:  # 2: incorrect relation
+        if self.incorrect_mode == 1:  # 1: incorrect relation
             for _ in range(self.__class__.MAX_SAMPLE_ATTEMPTS):
                 self.incorrect_predtype, self.incorrect_value = choice(self.relations)
                 if self.incorrect_predtype == self.predtype and self.incorrect_value == self.value:
@@ -121,7 +115,7 @@ class RelationCaptioner(WorldCaptioner):
             incorrect_mode=self.incorrect_mode,
             reference_captioner=self.reference_captioner.model()
         )
-        if self.incorrect_mode == 2:  # 2: incorrect relation
+        if self.incorrect_mode == 1:  # 1: incorrect relation
             model.update(
                 incorrect_predtype=self.incorrect_predtype,
                 incorrect_value=self.incorrect_value
@@ -171,23 +165,12 @@ class RelationCaptioner(WorldCaptioner):
                 comp_predication = None
             predication.apply(predicate=caption, ref_predication=ref_predication, comp_predication=comp_predication)
 
-        elif self.incorrect_mode == 1:  # 1: incorrect comparison
-            ref_predication = predication.sub_predication(reset=True)
-            caption.reference.apply_to_predication(predication=ref_predication)
-            comp_predication = predication.sub_predication(reset=True)
-            if not self.comparison_captioner.incorrect(caption=caption.comparison, predication=comp_predication, world=world):
-                return False
-            if ref_predication.equals(other=comp_predication):
-                # reference and comparison should not be equal
-                return False
-            predication.apply(predicate=caption, ref_predication=ref_predication, comp_predication=comp_predication)
-
-        if self.incorrect_mode == 2:  # 2: incorrect relation
+        if self.incorrect_mode == 1:  # 1: incorrect relation
             caption.predtype = self.incorrect_predtype
             caption.value = self.incorrect_value
             ref_predication, comp_predication = caption.apply_to_predication(predication=predication)
 
-        elif self.incorrect_mode == 3:  # 3: inverse relation
+        elif self.incorrect_mode == 2:  # 2: inverse relation
             caption.value = -caption.value
             if (caption.predtype, caption.value) not in self.relations:
                 return False

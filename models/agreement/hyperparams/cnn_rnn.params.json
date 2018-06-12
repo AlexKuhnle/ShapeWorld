@@ -1,0 +1,17 @@
+{
+    "learning_rate": 3e-4,
+    "weight_decay": 1e-5,
+    "clip_gradients": null,
+    "dropout_rate": 0.0,
+    "cnn_size": 64,
+    "cnn_depth": 3,
+    "cnn_block_depth": 2,
+    "world_reduction": "max",
+    "embedding_size": 200,
+    "rnn": "lstm",
+    "caption_reduction": "state",
+    "multimodal_reduction": "prod",
+    "mlp_size": 1024,
+    "mlp_depth": 2,
+    "soft": 0.0
+}

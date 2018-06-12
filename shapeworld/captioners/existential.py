@@ -33,13 +33,6 @@ class ExistentialCaptioner(WorldCaptioner):
         self.body_captioner = body_captioner
         self.incorrect_distribution = util.cumulative_distribution(incorrect_distribution)
 
-    def set_realizer(self, realizer):
-        if not super(ExistentialCaptioner, self).set_realizer(realizer=realizer):
-            return False
-
-        assert realizer.existential is not None
-        return True
-
     def rpn_length(self):
         return self.restrictor_captioner.rpn_length() + self.body_captioner.rpn_length() + 1
 

@@ -10,6 +10,9 @@ pip3 install -e ShapeWorld  # optional: ShapeWorld[full] or ShapeWorld[full-gpu]
 
 ### Recently added features
 
+- New selection dataset covering statements beginning with "the + positive/superlative"
+- New relations: "same/different shape/color", negated relations
+- New logical connectives: implication, equivalence
 - Predefined agreement datasets re-structured and extended, `oneshape` and `spatial` removed
 - Coverage of ratio quantifier extended
 - Batch generator for datasets and epoch batch generator for loaded datasets
@@ -67,6 +70,7 @@ Command lines for generation can be found [here](https://github.com/AlexKuhnle/S
 
 - Existential:  &nbsp;  [[One shape]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/existential-oneshape/data.html)  ·  [[Collision-free]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/existential-colfree/data.html)  ·  [[Full]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/existential/data.html)
 - Relational:  &nbsp;  [[Spatial two shapes]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/relational-spatial_twoshapes/data.html)  ·  [[Spatial]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/relational-spatial/data.html)  ·  [[Attribute]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/relational-attribute/data.html)  ·  [[Comparative]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/relational-comparative/data.html)  ·  [[Full]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/relational-full/data.html)
+- Selection:  &nbsp;  [[Positive]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/selection-positive/data.html)  ·  [[Superlative]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/selection-superlative/data.html)  ·  [[Full]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/selection-full/data.html)
 - Quantification:  &nbsp;  [[Count]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/quantification-count/data.html)  ·  [[Ratio]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/quantification-ratio/data.html)  ·  [[Full]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/quantification-full/data.html)  ·  [[Complex]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/quantification_complex-full/data.html)
 - Logical:  &nbsp;  [[Existential]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/logical-existential/data.html)  ·  [[Full]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/logical-full/data.html)
 
@@ -154,8 +158,9 @@ The following command line arguments are available:
 * `-s`, `--shards`:  Optional number of shards to split data into (not specified implies --unmanaged), either a number (with `--mode`) or a tuple of 3 comma-separated numbers (without `--mode`), for `train`, `validation` and `test` data respectively
 * `-i`, `--instances`:  Number of instances per shard (default: `128`)
 * `-m`, `--mode`:  Mode, one of `train`, `validation` or `test`, requires `--shards` to be a single number (default: `none`)
-* `-A`, `--append`:  Append to existing data (when used without `--unmanaged`)
 * `-b`, `--begin`: Optional begin from shard number (requires `--append`), same format as `--shards`
+* `-A`, `--append`:  Append to existing data (when used without `--unmanaged`)
+* `-P`, `--delay-pixel-noise`: Do not infuse pixel noise now, but when dataset is loaded
 * `-M`, `--include-model`:  Include world/caption model (as json file)
 * `-H`, `--html`:  Create HTML file (`data.html`) visualizing the generated data
 * `-T`, `--tf-records`:  Additionally store data as TensorFlow records

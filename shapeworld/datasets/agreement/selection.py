@@ -1,6 +1,6 @@
 from shapeworld.dataset import CaptionAgreementDataset
-from shapeworld.generators import RandomAttributesGenerator
-from shapeworld.captioners import CaptionerMixer, UniqueTypeCaptioner, RegularAttributeCaptioner, RegularTypeCaptioner, SelectorCaptioner, AttributeTypeRelationCaptioner, ExistentialCaptioner
+from shapeworld.generators import ReinforcedAttributesGenerator
+from shapeworld.captioners import CaptionerMixer, RegularAttributeCaptioner, RegularTypeCaptioner, UniqueTypeCaptioner, SelectorCaptioner, AttributeTypeRelationCaptioner, ExistentialCaptioner
 
 
 class SelectionDataset(CaptionAgreementDataset):
@@ -34,7 +34,7 @@ class SelectionDataset(CaptionAgreementDataset):
         max_provoke_collision_rate=0.33,
         selectors=None,
         caption_size=14,
-        vocabulary=('.', 'a', 'an', 'bigger', 'biggest', 'blue', 'circle', 'circles', 'closer', 'closest', 'cross', 'cyan', 'darker', 'darkest', 'ellipse', 'farther', 'farthest', 'from', 'gray', 'green', 'is', 'left', 'leftmost', 'lighter', 'lightest', 'lower', 'lowermost', 'magenta', 'pentagon', 'rectangle', 'red', 'right', 'rightmost', 'semicircle', 'shape', 'smaller', 'smallest', 'square', 'the', 'to', 'triangle', 'upper', 'uppermost', 'yellow'),
+        vocabulary=('.', 'a', 'an', 'are', 'bigger', 'biggest', 'blue', 'circle', 'circles', 'closer', 'closest', 'cross', 'crosses', 'cyan', 'darker', 'darkest', 'ellipse', 'ellipses', 'farther', 'farthest', 'five', 'four', 'from', 'gray', 'green', 'is', 'left', 'leftmost', 'lighter', 'lightest', 'lower', 'lowermost', 'magenta', 'one', 'pentagon', 'pentagons', 'rectangle', 'rectangles', 'red', 'right', 'rightmost', 'semicircle', 'semicircles', 'shape', 'shapes', 'smaller', 'smallest', 'square', 'squares', 'the', 'three', 'to', 'triangle', 'triangles', 'two', 'upper', 'uppermost', 'yellow'),
         correct_ratio=0.5,
         train_correct_ratio=None,
         validation_correct_ratio=None,
@@ -46,7 +46,7 @@ class SelectionDataset(CaptionAgreementDataset):
         language=None
     ):
 
-        world_generator = RandomAttributesGenerator(
+        world_generator = ReinforcedAttributesGenerator(
             world_size=world_size,
             world_color=world_color,
             shapes=shapes,
@@ -71,7 +71,8 @@ class SelectionDataset(CaptionAgreementDataset):
             test_combinations=test_combinations,
             test_space_rate_range=test_space_rate_range,
             test_combination_rate=test_combination_rate,
-            max_provoke_collision_rate=max_provoke_collision_rate
+            max_provoke_collision_rate=max_provoke_collision_rate,
+            reinforcement_range=(1, 1)
         )
 
         world_captioner = ExistentialCaptioner(
@@ -79,7 +80,7 @@ class SelectionDataset(CaptionAgreementDataset):
                 scope_captioner=RegularTypeCaptioner(
                     hypernym_rate=1.0
                 ),
-                reference_captioner=UniqueTypeCaptioner(),
+                comparison_captioner=UniqueTypeCaptioner(),
                 selectors=selectors
             ),
             body_captioner=AttributeTypeRelationCaptioner(

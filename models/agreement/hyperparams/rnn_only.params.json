@@ -1,0 +1,12 @@
+{
+    "learning_rate": 2.5e-4,
+    "weight_decay": 1e-5,
+    "dropout_rate": 0.0,
+    "embedding_size": 64,
+    "rnn": "lstm",
+    "rnn_size": 128,
+    "caption_reduction": "state",
+    "mlp_size": 512,
+    "mlp_depth": 2,
+    "soft": 0.0
+}

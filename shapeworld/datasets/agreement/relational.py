@@ -1,6 +1,6 @@
 from shapeworld.dataset import CaptionAgreementDataset
 from shapeworld.generators import ReinforcedAttributesGenerator
-from shapeworld.captioners import RegularTypeCaptioner, RelationCaptioner, NegationRelationCaptioner, ExistentialCaptioner
+from shapeworld.captioners import RegularTypeCaptioner, UniqueTypeCaptioner, RelationCaptioner, NegationRelationCaptioner, ExistentialCaptioner
 
 
 class RelationalDataset(CaptionAgreementDataset):
@@ -78,7 +78,7 @@ class RelationalDataset(CaptionAgreementDataset):
 
         relation_captioner = RelationCaptioner(
             reference_captioner=RegularTypeCaptioner(),
-            comparison_captioner=RegularTypeCaptioner(),
+            comparison_captioner=UniqueTypeCaptioner(),
             relations=relations
         )
         if negation:

@@ -44,6 +44,16 @@ python generate.py -d examples/agreement/relational-full -U -t agreement -n rela
     | tee -a results.txt
 
 # selection
+python generate.py -d examples/agreement/selection-positive -U -t agreement -n selection \
+    -c configs/agreement/selection-positive.json -i 100 -M -H -N --config-values --world-size 100 \
+    --captions-per-instance 5 \
+    | tee -a results.txt
+
+python generate.py -d examples/agreement/selection-superlative -U -t agreement -n selection \
+    -c configs/agreement/selection-superlative.json -i 100 -M -H -N --config-values --world-size 100 \
+    --captions-per-instance 5 \
+    | tee -a results.txt
+
 python generate.py -d examples/agreement/selection-full -U -t agreement -n selection \
     -c configs/agreement/selection-full.json -i 100 -M -H -N --config-values --world-size 100 \
     --captions-per-instance 5 \

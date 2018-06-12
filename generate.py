@@ -24,8 +24,8 @@ if __name__ == '__main__':
     parser.add_argument('-s', '--shards', type=util.parse_tuple(parse_item=util.parse_int_with_factor, unary_tuple=True, valid_sizes=(1, 3)), default=None, help='Number of shards to split data into (not specified implies --unmanaged)')
     parser.add_argument('-i', '--instances', type=util.parse_int_with_factor, default=128, help='Number of instances per shard')
     parser.add_argument('-m', '--mode', default=None, choices=('train', 'validation', 'test'), help='Mode')
-    parser.add_argument('-A', '--append', action='store_true', help='Append to existing data (when used without --unmanaged)')
     parser.add_argument('-b', '--begin', type=util.parse_tuple(parse_item=util.parse_int_with_factor, unary_tuple=True, valid_sizes=(1, 3)), default=None, help='Begin from shard number (requires --append)')
+    parser.add_argument('-A', '--append', action='store_true', help='Append to existing data (when used without --unmanaged)')
 
     parser.add_argument('-P', '--delay-pixel-noise', action='store_true', help='Do not infuse pixel noise now, but when dataset is loaded')
     parser.add_argument('-M', '--include-model', action='store_true', help='Include world/caption model (as json file)')
@@ -89,6 +89,7 @@ if __name__ == '__main__':
                 dataset.vectors[value_name + '_features'] = pretrained_model.features_shape
 
     specification = dataset.specification()
+    specification['generated'] = True
     if args.archive:
         specification['archive'] = args.archive
     if args.delay_pixel_noise and dataset.pixel_noise_stddev > 0.0:
@@ -116,14 +117,13 @@ if __name__ == '__main__':
             full_name = '{}-{}'.format(full_name, args.variant)
         if args.language:
             full_name = '{}-{}'.format(full_name, args.language)
+        specification['relative_directory'] = os.path.join(dataset.type, full_name)
         directory = os.path.join(args.directory, dataset.type, full_name)
         specification_path = os.path.join(args.directory, '{}-{}.json'.format(dataset.type, full_name))
         if args.shards is None:
             shards = (None,)
         else:
             shards = args.shards
-
-    specification['directory'] = directory
 
     assert all(shard is None or shard >= 0 for shard in shards)
     if len(shards) == 1:

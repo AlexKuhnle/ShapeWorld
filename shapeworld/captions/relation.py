@@ -1,4 +1,4 @@
-from shapeworld.captions import Predicate, EntityType, Settings
+from shapeworld.captions import Predicate, EntityType, Selector, Settings
 
 
 class Relation(Predicate):
@@ -26,11 +26,11 @@ class Relation(Predicate):
         elif predtype in Relation.ternary_relations:
             assert value == -1 or value == 1
             assert isinstance(reference, EntityType)
-            assert isinstance(comparison, EntityType)
+            assert isinstance(comparison, Selector)
         else:
             assert value == -1 or value == 1
             assert isinstance(reference, EntityType)
-            assert comparison is None or isinstance(comparison, EntityType)
+            assert comparison is None or isinstance(comparison, Selector)
         super(Relation, self).__init__(predtype=predtype, value=value)
         self.reference = reference
         self.comparison = comparison

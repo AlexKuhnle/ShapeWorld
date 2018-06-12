@@ -25,14 +25,14 @@
         "relation": {"key": "relation-attribute", "dmrs": "[attr]:pred e[ppi--] =1=> [type]:node <-- [quant]:default_q"},
 
         "shape": {
-            "square": {"key": "square", "dmrs": "[attr,type]:_square_n_sw x?[pers=3] <-- [quant]:default_q"},
-            "rectangle": {"key": "rectangle", "dmrs": "[attr,type]:_rectangle_n_sw x?[pers=3] <-- [quant]:default_q"},
-            "triangle": {"key": "triangle", "dmrs": "[attr,type]:_triangle_n_sw x?[pers=3] <-- [quant]:default_q"},
-            "pentagon": {"key": "pentagon", "dmrs": "[attr,type]:_pentagon_n_sw x?[pers=3] <-- [quant]:default_q"},
-            "cross": {"key": "cross", "dmrs": "[attr,type]:_cross_n_sw x?[pers=3] <-- [quant]:default_q"},
-            "circle": {"key": "circle", "dmrs": "[attr,type]:_circle_n_sw x?[pers=3] <-- [quant]:default_q"},
-            "semicircle": {"key": "semicircle", "dmrs": "[attr,type]:_semicircle_n_sw x?[pers=3] <-- [quant]:default_q"},
-            "ellipse": {"key": "ellipse", "dmrs": "[attr,type]:_ellipse_n_sw x?[pers=3] <-- [quant]:default_q"}
+            "square": {"key": "square", "dmrs": "[attr,type]:_square_n_sw x? <-- [quant]:default_q"},
+            "rectangle": {"key": "rectangle", "dmrs": "[attr,type]:_rectangle_n_sw x? <-- [quant]:default_q"},
+            "triangle": {"key": "triangle", "dmrs": "[attr,type]:_triangle_n_sw x? <-- [quant]:default_q"},
+            "pentagon": {"key": "pentagon", "dmrs": "[attr,type]:_pentagon_n_sw x? <-- [quant]:default_q"},
+            "cross": {"key": "cross", "dmrs": "[attr,type]:_cross_n_sw x? <-- [quant]:default_q"},
+            "circle": {"key": "circle", "dmrs": "[attr,type]:_circle_n_sw x? <-- [quant]:default_q"},
+            "semicircle": {"key": "semicircle", "dmrs": "[attr,type]:_semicircle_n_sw x? <-- [quant]:default_q"},
+            "ellipse": {"key": "ellipse", "dmrs": "[attr,type]:_ellipse_n_sw x? <-- [quant]:default_q"}
         },
 
         "color": {
@@ -102,13 +102,13 @@
         },
 
         "proximity-two": {
-            "-1": {"key": "closer", "dmrs": "more_comp e? =1=> [sel]:_close_a_to e? =1=> [type]:pred x?[num=s] <-- [quant]:_the_q; :sel -2-> [ref]:node"},
-            "1": {"key": "farther", "dmrs": "more_comp e? =1=> [sel]:_far_a_from e? =1=> [type]:pred x?[num=s] <-- [quant]:_the_q; :sel -2-> [ref]:node"}
+            "-1": {"key": "closer", "dmrs": "more_comp e? =1=> [sel]:_close_a_to e? =1=> [type]:pred x?[num=s] <-- [quant]:_the_q; :sel -2-> [comp]:node"},
+            "1": {"key": "farther", "dmrs": "more_comp e? =1=> [sel]:_far_a_from e? =1=> [type]:pred x?[num=s] <-- [quant]:_the_q; :sel -2-> [comp]:node"}
         },
 
         "proximity-max": {
-            "-1": {"key": "closest", "dmrs": "superl e? =1=> [sel]:_close_a_to e? =1=> [type]:pred x?[num=s] <-- [quant]:_the_q; :sel -2-> [ref]:node"},
-            "1": {"key": "farthest", "dmrs": "superl e? =1=> [sel]:_far_a_from e? =1=> [type]:pred x?[num=s] <-- [quant]:_the_q; :sel -2-> [ref]:node"}
+            "-1": {"key": "closest", "dmrs": "superl e? =1=> [sel]:_close_a_to e? =1=> [type]:pred x?[num=s] <-- [quant]:_the_q; :sel -2-> [comp]:node"},
+            "1": {"key": "farthest", "dmrs": "superl e? =1=> [sel]:_far_a_from e? =1=> [type]:pred x?[num=s] <-- [quant]:_the_q; :sel -2-> [comp]:node"}
         }
     },
 
@@ -123,48 +123,51 @@
         },
 
         "x-rel": {
-            "-1": {"key": "left_of", "dmrs": "[rel]:_to_p e? -2-> _left_n_of x?[num=sg] <-- _the_q; :_left_n_of -1-> [ref]:node <-- [rquant]:_a_q"},
-            "1": {"key": "right_of", "dmrs": "[rel]:_to_p e? -2-> _right_n_of x?[num=sg] <-- _the_q; :_right_n_of -1-> [ref]:node <-- [rquant]:_a_q"}
+            "-1": {"key": "left_of", "dmrs": "[rel]:_to_p e? -2-> _left_n_of x?[num=sg] <-- _the_q; :_left_n_of -1-> [ref]:node <-- [quant]:_a_q"},
+            "1": {"key": "right_of", "dmrs": "[rel]:_to_p e? -2-> _right_n_of x?[num=sg] <-- _the_q; :_right_n_of -1-> [ref]:node <-- [quant]:_a_q"}
         },
 
         "y-rel": {
-            "-1": {"key": "above", "dmrs": "[rel]:_above_p e? -2-> [ref]:node <-- [rquant]:_a_q"},
-            "1": {"key": "below", "dmrs": "[rel]:_below_p e? -2-> [ref]:node <-- [rquant]:_a_q"}
+            "-1": {"key": "above", "dmrs": "[rel]:_above_p e? -2-> [ref]:node <-- [quant]:_a_q"},
+            "1": {"key": "below", "dmrs": "[rel]:_below_p e? -2-> [ref]:node <-- [quant]:_a_q"}
         },
 
         "z-rel": {
-            "-1": {"key": "behind", "dmrs": "[rel]:_behind_p e? -2-> [ref]:node <-- [rquant]:_a_q"},
-            "1": {"key": "front_of", "dmrs": "[rel]:_in+front+of_p e? -2-> [ref]:node <-- [rquant]:_a_q"}
-        },
-
-        "size-rel": {
-            "-1": {"key": "smaller_than", "dmrs": "[rel]:_small_a_1 e? <=1= more_comp e? -2-> [ref]:node <-- [rquant]:_a_q"},
-            "1": {"key": "bigger_than", "dmrs": "[rel]:_big_a_1 e? <=1= more_comp e? -2-> [ref]:node <-- [rquant]:_a_q"}
-        },
-
-        "shade-rel": {
-            "-1": {"key": "darker_than", "dmrs": "[rel]:_dark_a_1 e? <=1= more_comp e? -2-> [ref]:node <-- [rquant]:_a_q"},
-            "1": {"key": "lighter_than", "dmrs": "[rel]:_light_a_1 e? <=1= more_comp e? -2-> [ref]:node <-- [rquant]:_a_q"}
-        },
-
-        "shape-rel": {
-            "-1": {"key": "different_shape", "dmrs": "[rel]:_be_v_id e? -2-> _shape_n_sw x?[num=sg] <=1= _different_a_than-from e? <=1= comp e? -2-> [ref]:node <-- [rquant]:_a_q; :_shape_n_sw <-- _a_q"},
-            "1": {"key": "same_shape", "dmrs": "[rel]:_be_v_id e? -2-> _shape_n_sw x?[num=sg] <=1= _same_a_as e? <=1= comp_equal e? -2-> [ref]:node <-- [rquant]:_a_q; :_shape_n_sw <-- _the_q"}
-        },
-
-        "color-rel": {
-            "-1": {"key": "different_color", "dmrs": "[rel]:_be_v_id e? -2-> _color_n_1 x?[num=sg] <=1= _different_a_than-from e? <=1= comp e? -2-> [ref]:node <-- [rquant]:_a_q; :_color_n_1 <-- _a_q"},
-            "1": {"key": "same_color", "dmrs": "[rel]:_be_v_id e? -2-> _color_n_1 x?[num=sg] <=1= _same_a_as e? <=1= comp_equal e? -2-> [ref]:node <-- [rquant]:_a_q; :_color_n_1 <-- _the_q"}
+            "-1": {"key": "behind", "dmrs": "[rel]:_behind_p e? -2-> [ref]:node <-- [quant]:_a_q"},
+            "1": {"key": "front_of", "dmrs": "[rel]:_in+front+of_p e? -2-> [ref]:node <-- [quant]:_a_q"}
         },
 
         "proximity-rel": {
-            "-1": {"key": "closer_than", "dmrs": "[rel]:_close_a_to e? -2-> [ref]:node <-- [rquant]:_a_q; :rel <=1= more_comp e? -2-> [comp]:node <-- [cquant]:_a_q"},
-            "1": {"key": "farther_than", "dmrs": "[rel]:_far_a_from e? -2-> [ref]:node <-- [rquant]:_a_q; :rel <=1= more_comp e? -2-> [comp]:node <-- [cquant]:_a_q"}
+            "-1": {"key": "closer_than", "dmrs": "[rel]:_close_a_to e? -2-> [ref]:node <-- [quant]:_a_q; :rel <=1= more_comp e? -2-> [comp]:node"},
+            "1": {"key": "farther_than", "dmrs": "[rel]:_far_a_from e? -2-> [ref]:node <-- [quant]:_a_q; :rel <=1= more_comp e? -2-> [comp]:node"}
+        },
+
+        "shape-rel": {
+            "-1": {"key": "different_shape", "dmrs": "[rel]:_be_v_id e? -2-> _shape_n_sw x?[num=sg] <=1= _different_a_than-from e? <=1= comp e? -2-> [ref]:node <-- [quant]:_a_q; :_shape_n_sw <-- _a_q"},
+            "1": {"key": "same_shape", "dmrs": "[rel]:_be_v_id e? -2-> _shape_n_sw x?[num=sg] <=1= _same_a_as e? <=1= comp_equal e? -2-> [ref]:node <-- [quant]:_a_q; :_shape_n_sw <-- _the_q"}
+        },
+
+        "color-rel": {
+            "-1": {"key": "different_color", "dmrs": "[rel]:_be_v_id e? -2-> _color_n_1 x?[num=sg] <=1= _different_a_than-from e? <=1= comp e? -2-> [ref]:node <-- [quant]:_a_q; :_color_n_1 <-- _a_q"},
+            "1": {"key": "same_color", "dmrs": "[rel]:_be_v_id e? -2-> _color_n_1 x?[num=sg] <=1= _same_a_as e? <=1= comp_equal e? -2-> [ref]:node <-- [quant]:_a_q; :_color_n_1 <-- _the_q"}
+        },
+
+        "size-rel": {
+            "-1": {"key": "smaller_than", "dmrs": "[rel]:_small_a_1 e? <=1= more_comp e? -2-> [ref]:node <-- [quant]:_a_q"},
+            "1": {"key": "bigger_than", "dmrs": "[rel]:_big_a_1 e? <=1= more_comp e? -2-> [ref]:node <-- [quant]:_a_q"}
+        },
+
+        "shade-rel": {
+            "-1": {"key": "darker_than", "dmrs": "[rel]:_dark_a_1 e? <=1= more_comp e? -2-> [ref]:node <-- [quant]:_a_q"},
+            "1": {"key": "lighter_than", "dmrs": "[rel]:_light_a_1 e? <=1= more_comp e? -2-> [ref]:node <-- [quant]:_a_q"}
         }
     },
 
 
-    "existential": {"key": "existential", "dmrs": "[quant]:_a_q --> [rstr]:pred x?[num=sg] <-1- [body]:node"},
+    "existential": {
+        "type": {"key": "type-existential", "dmrs": "[quant]:_a_q --> [rstr]:pred x?[num=sg] <-1- [body]:node"},
+        "selector": {"key": "selector-existential", "dmrs": "[rstr]:pred x? <-1- [body]:node"}
+    },
 
 
     "quantifiers": {
@@ -338,7 +341,7 @@
     "hierarchy": {
         "_shape_n_sw": ["_square_n_sw", "_rectangle_n_sw", "_triangle_n_sw", "_pentagon_n_sw", "_cross_n_sw", "_circle_n_sw", "_semicircle_n_sw", "_ellipse_n_sw"],
         "shape_n_only": ["_shape_n_sw"],
-        "noun_n": ["generic_entity", "_shape_n_sw", "_square_n_sw", "_rectangle_n_sw", "_triangle_n_sw", "_pentagon_n_sw", "_cross_n_sw", "_circle_n_sw", "_semicircle_n_sw", "_ellipse_n_sw"],
+        "noun_n": ["generic_entity", "part_of", "_quarter_n_of", "_third_n_of", "_shape_n_sw", "_square_n_sw", "_rectangle_n_sw", "_triangle_n_sw", "_pentagon_n_sw", "_cross_n_sw", "_circle_n_sw", "_semicircle_n_sw", "_ellipse_n_sw"],
         "default_q": ["_a_q", "udef_q", "_no_q", "_the_q", "_all_q"],
         "_a_q": ["_the_q"],
         "fraction_n": ["part_of", "_quarter_n_of", "_third_n_of"],
@@ -375,8 +378,9 @@
         },
         {
             "key": "none-partof",
-            "search": "[part]:part_of x?[pers=3,num=sg]",
-            "replace": "[part]:part_of x"
+            "search": "[part]:nomatch x?",
+            "replace": "[part]:part_of x",
+            "reverse": "[part]:part_of x?[pers=3,num=sg]"
         },
         {
             "key": "deg-part-erg-fix",

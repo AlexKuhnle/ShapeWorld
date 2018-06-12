@@ -43,8 +43,8 @@ class UniqueTypeCaptioner(WorldCaptioner):
 
     def rpn_symbols(self):
         return super(UniqueTypeCaptioner, self).rpn_symbols() | \
-            set(str(n) for n in range(4)) | \
-            {EntityType.__name__} | \
+            set(str(n) for n in range(1, 4)) | \
+            {EntityType.__name__, Selector.__name__ + '-unique'} | \
             {'{}-{}-{}'.format(Attribute.__name__, 'shape', value) for value in self.shapes} | \
             {'{}-{}-{}'.format(Attribute.__name__, 'color', value) for value in self.colors} | \
             {'{}-{}-{}'.format(Attribute.__name__, 'texture', value) for value in self.textures}
