@@ -1,7 +1,10 @@
 {
     "type": "agreement",
-    "name": "relational",
-    "train_entity_counts": [4, 5, 6, 7, 9],
+    "name": "logical",
+    "generators": ["random"],
+    "captioners": ["existential"],
+    "train_entity_counts": [3, 4, 5, 6, 7, 9],
+    "collision_tolerance": 0.0,
     "validation_entity_counts": [8],
     "test_entity_counts": [10],
     "validation_combinations": [["square", "red", "solid"], ["triangle", "green", "solid"], ["circle", "blue", "solid"]],

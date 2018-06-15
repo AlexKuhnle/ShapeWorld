@@ -1,0 +1,6 @@
+{
+    "type": "agreement",
+    "name": "quantification",
+    "quantifiers": [["count", "*", "*"]],
+    "collision_tolerance": 0.0
+}

@@ -1,0 +1,7 @@
+{
+    "type": "agreement",
+    "name": "relational",
+    "relations": [["shape-rel", "*"], ["color-rel", "*"]],
+    "negation": false,
+    "collision_tolerance": 0.0
+}

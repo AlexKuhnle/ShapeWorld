@@ -21,7 +21,7 @@ class RegularTypeCaptioner(WorldCaptioner):
         logical_tautology_rate=0.0,
         logical_contradiction_rate=0.0,
         hypernym_rate=0.5,
-        existing_attribute_rate=0.5,
+        existing_attribute_rate=1.0,
         incorrect_distribution=(1, 1, 1, 1)
     ):
         super(RegularTypeCaptioner, self).__init__(

@@ -1,6 +1,6 @@
 from shapeworld.dataset import CaptionAgreementDataset
 from shapeworld.generators import ReinforcedAttributesGenerator
-from shapeworld.captioners import CaptionerMixer, RegularAttributeCaptioner, RegularTypeCaptioner, UniqueTypeCaptioner, SelectorCaptioner, AttributeTypeRelationCaptioner, ExistentialCaptioner
+from shapeworld.captioners import CaptionerMixer, EmptyTypeCaptioner, RegularAttributeCaptioner, RegularTypeCaptioner, UniqueTypeCaptioner, SelectorCaptioner, AttributeTypeRelationCaptioner, ExistentialCaptioner
 
 
 class SelectionDataset(CaptionAgreementDataset):
@@ -77,8 +77,13 @@ class SelectionDataset(CaptionAgreementDataset):
 
         world_captioner = ExistentialCaptioner(
             restrictor_captioner=SelectorCaptioner(
-                scope_captioner=RegularTypeCaptioner(
-                    hypernym_rate=1.0
+                scope_captioner=CaptionerMixer(
+                    captioners=(
+                        EmptyTypeCaptioner(),
+                        RegularTypeCaptioner(
+                            hypernym_rate=1.0
+                        )
+                    )
                 ),
                 comparison_captioner=UniqueTypeCaptioner(),
                 selectors=selectors

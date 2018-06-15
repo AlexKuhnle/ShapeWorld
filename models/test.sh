@@ -33,7 +33,7 @@ python -O evaluate.py -t agreement -n existential -m cnn_rnn -b 2 -i 1 --model-d
 echo "  resnet_rnn"
 python -O train.py -t agreement -n existential -m resnet_rnn -b 1 -i 2 -e 2 -f 2 --model-dir models/test/ --summary-dir models/summary/ --report-file models/test.csv --verbosity 0 -Y
 python -O evaluate.py -t agreement -n existential -m resnet_rnn -b 2 -i 1 --model-dir models/test/ --report-file models/test.csv --verbosity 0
-echo "  fracnet_rnn"
+# echo "  fracnet_rnn"
 # python -O train.py -t agreement -n existential -m fracnet_rnn -b 1 -i 2 -e 2 -f 2 --model-dir models/test/ --summary-dir models/summary/ --report-file models/test.csv --verbosity 0 -Y
 # python -O evaluate.py -t agreement -n existential -m fracnet_rnn -b 2 -i 1 --model-dir models/test/ --report-file models/test.csv --verbosity 0
 echo "  cnn_conv"
@@ -54,7 +54,7 @@ python -O evaluate.py -t agreement -n existential -m cnn_conv_san -b 2 -i 1 --mo
 echo "  cnn_rnn_film"
 python -O train.py -t agreement -n existential -m cnn_rnn_film -b 1 -i 2 -e 2 -f 2 --model-dir models/test/ --summary-dir models/summary/ --report-file models/test.csv --verbosity 0 -Y
 python -O evaluate.py -t agreement -n existential -m cnn_rnn_film -b 2 -i 1 --model-dir models/test/ --report-file models/test.csv --verbosity 0
-echo "  cnn_rnn_rel"
+# echo "  cnn_rnn_rel"
 #python -O train.py -t agreement -n existential -m cnn_rnn_rel -b 1 -i 2 -e 2 -f 2 --model-dir models/test/ --summary-dir models/summary/ --report-file models/test.csv --verbosity 0 -Y
 #python -O evaluate.py -t agreement -n existential -m cnn_rnn_rel -b 2 -i 1 --model-dir models/test/ --report-file models/test.csv --verbosity 0
 

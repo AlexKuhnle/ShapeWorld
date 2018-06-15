@@ -138,8 +138,8 @@
         },
 
         "proximity-rel": {
-            "-1": {"key": "closer_than", "dmrs": "[rel]:_close_a_to e? -2-> [ref]:node <-- [quant]:_a_q; :rel <=1= more_comp e? -2-> [comp]:node"},
-            "1": {"key": "farther_than", "dmrs": "[rel]:_far_a_from e? -2-> [ref]:node <-- [quant]:_a_q; :rel <=1= more_comp e? -2-> [comp]:node"}
+            "-1": {"key": "closer_than", "dmrs": "[comp]:node <-2- [rel]:_close_a_to e? <=1= more_comp e? -2-> [ref]:node <-- [quant]:_a_q"},
+            "1": {"key": "farther_than", "dmrs": "[comp]:node <-2- [rel]:_far_a_from e? <=1= more_comp e? -2-> [ref]:node <-- [quant]:_a_q"}
         },
 
         "shape-rel": {

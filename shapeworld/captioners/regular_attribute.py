@@ -12,7 +12,7 @@ class RegularAttributeCaptioner(WorldCaptioner):
         logical_redundancy_rate=1.0,
         logical_tautology_rate=0.0,
         logical_contradiction_rate=0.0,
-        existing_attribute_rate=0.5
+        existing_attribute_rate=1.0
     ):
         super(RegularAttributeCaptioner, self).__init__(
             internal_captioners=(),

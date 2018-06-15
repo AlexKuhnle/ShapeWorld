@@ -21,7 +21,7 @@ class RelationCaptioner(WorldCaptioner):
         logical_tautology_rate=0.0,
         logical_contradiction_rate=0.0,
         relations=None,
-        incorrect_distribution=(1, 1, 1)
+        incorrect_distribution=(2, 1, 1)
     ):
         super(RelationCaptioner, self).__init__(
             internal_captioners=(reference_captioner, comparison_captioner),

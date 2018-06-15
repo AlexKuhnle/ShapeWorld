@@ -1,0 +1,5 @@
+{
+    "type": "agreement",
+    "name": "logical",
+    "collision_tolerance": 0.0
+}

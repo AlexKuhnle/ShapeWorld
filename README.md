@@ -10,6 +10,7 @@ pip3 install -e ShapeWorld  # optional: ShapeWorld[full] or ShapeWorld[full-gpu]
 
 ### Recently added features
 
+- PyTorch Dataset interface implementation (shapeworld.torch_util)
 - New selection dataset covering statements beginning with "the + positive/superlative"
 - New relations: "same/different shape/color", negated relations
 - New logical connectives: implication, equivalence
@@ -68,7 +69,7 @@ Command lines for generation can be found [here](https://github.com/AlexKuhnle/S
 
 #### Caption agreement datasets
 
-- Existential:  &nbsp;  [[One shape]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/existential-oneshape/data.html)  ·  [[Collision-free]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/existential-colfree/data.html)  ·  [[Full]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/existential/data.html)
+- Existential:  &nbsp;  [[One shape]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/existential-oneshape/data.html)  ·  [[Collision-free]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/existential-colfree/data.html)  ·  [[Full]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/existential-full/data.html)
 - Relational:  &nbsp;  [[Spatial two shapes]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/relational-spatial_twoshapes/data.html)  ·  [[Spatial]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/relational-spatial/data.html)  ·  [[Attribute]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/relational-attribute/data.html)  ·  [[Comparative]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/relational-comparative/data.html)  ·  [[Full]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/relational-full/data.html)
 - Selection:  &nbsp;  [[Positive]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/selection-positive/data.html)  ·  [[Superlative]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/selection-superlative/data.html)  ·  [[Full]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/selection-full/data.html)
 - Quantification:  &nbsp;  [[Count]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/quantification-count/data.html)  ·  [[Ratio]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/quantification-ratio/data.html)  ·  [[Full]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/quantification-full/data.html)  ·  [[Complex]](https://rawgit.com/AlexKuhnle/ShapeWorld/master/examples/agreement/quantification_complex-full/data.html)

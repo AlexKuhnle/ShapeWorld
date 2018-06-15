@@ -11,7 +11,7 @@ from shapeworld import util
 
 class Dataset(object):
 
-    def __init__(self, values, world_size, pixel_noise_stddev=0.0, vectors=None, vocabularies=None, language=None):
+    def __init__(self, values, world_size, pixel_noise_stddev=None, vectors=None, vocabularies=None, language=None):
         assert self.type and self.name
         assert all(value_name != 'alternatives' or value_type == 'int' for value_name, value_type in values.items())
         self.values = values
@@ -249,7 +249,7 @@ class Dataset(object):
             assert False
 
     def apply_pixel_noise(self, world):
-        if self.pixel_noise_stddev > 0.0:
+        if self.pixel_noise_stddev is not None and self.pixel_noise_stddev > 0.0:
             noise = np.random.normal(loc=0.0, scale=self.pixel_noise_stddev, size=world.shape)
             mask = (noise < -2.0 * self.pixel_noise_stddev) + (noise > 2.0 * self.pixel_noise_stddev)
             while np.any(a=mask):
@@ -501,7 +501,7 @@ class Dataset(object):
 
 class LoadedDataset(Dataset):
 
-    def __init__(self, specification, random_sampling=True):
+    def __init__(self, specification, random_sampling=True, pixel_noise_stddev=None):
         self._type = specification.pop('type')
         self._name = specification.pop('name')
         self.directory = specification.pop('directory')
@@ -515,7 +515,12 @@ class LoadedDataset(Dataset):
         self._specification = specification
         self.random_sampling = random_sampling
 
-        super(LoadedDataset, self).__init__(values=specification.pop('values'), world_size=specification.pop('world_size'), pixel_noise_stddev=specification.pop('pixel_noise_stddev', 0.0), vectors=specification.pop('vectors', None), vocabularies=specification.pop('vocabularies', None), language=specification.pop('language', None))
+        if pixel_noise_stddev is None:
+            pixel_noise_stddev = specification.pop('pixel_noise_stddev', None)
+        else:
+            assert 'pixel_noise_stddev' not in specification
+
+        super(LoadedDataset, self).__init__(values=specification.pop('values'), world_size=specification.pop('world_size'), pixel_noise_stddev=pixel_noise_stddev, vectors=specification.pop('vectors', None), vocabularies=specification.pop('vocabularies', None), language=specification.pop('language', None))
 
         self.shards = None
         self.records_shards = None
@@ -862,7 +867,7 @@ class DatasetMixer(Dataset):
 
 class ClassificationDataset(Dataset):
 
-    def __init__(self, world_generator, num_classes, multi_class=False, count_class=False, pixel_noise_stddev=0.0):
+    def __init__(self, world_generator, num_classes, multi_class=False, count_class=False, pixel_noise_stddev=None):
         values = dict(world='world', world_model='model', classification='vector(float)')
         vectors = dict(classification=num_classes)
         super(ClassificationDataset, self).__init__(values=values, world_size=world_generator.world_size, vectors=vectors, pixel_noise_stddev=pixel_noise_stddev)
@@ -948,7 +953,7 @@ class CaptionAgreementDataset(Dataset):
     CAPTIONER_INIT_FREQUENCY = 100
     CAPTIONER_INIT_FREQUENCY2 = 5
 
-    def __init__(self, world_generator, world_captioner, caption_size, vocabulary, pixel_noise_stddev=0.0, caption_realizer='dmrs', language=None, worlds_per_instance=1, captions_per_instance=1, correct_ratio=0.5, train_correct_ratio=None, validation_correct_ratio=None, test_correct_ratio=None):
+    def __init__(self, world_generator, world_captioner, caption_size, vocabulary, pixel_noise_stddev=None, caption_realizer='dmrs', language=None, worlds_per_instance=1, captions_per_instance=1, correct_ratio=0.5, train_correct_ratio=None, validation_correct_ratio=None, test_correct_ratio=None):
         if worlds_per_instance > 1 or captions_per_instance > 1:
             values = dict(agreement='alternatives(float)')
         else:

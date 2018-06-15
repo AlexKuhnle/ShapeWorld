@@ -1,0 +1,5 @@
+{
+    "type": "agreement",
+    "name": "quantification",
+    "quantifiers": [["ratio", "lt", 0.5], ["ratio", "gt", 0.5]]
+}

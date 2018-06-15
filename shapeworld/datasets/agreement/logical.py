@@ -164,9 +164,7 @@ class LogicalDataset(CaptionAgreementDataset):
         if captioners is None or 'selection' in captioners:
             selection_captioner = ExistentialCaptioner(
                 restrictor_captioner=SelectorCaptioner(
-                    scope_captioner=RegularTypeCaptioner(
-                        hypernym_rate=1.0
-                    ),
+                    scope_captioner=restrictor_captioner,
                     comparison_captioner=UniqueTypeCaptioner()
                 ),
                 body_captioner=body_captioner

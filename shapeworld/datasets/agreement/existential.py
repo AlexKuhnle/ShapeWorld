@@ -75,9 +75,7 @@ class ExistentialDataset(CaptionAgreementDataset):
 
         world_captioner = CaptionerMixer(
             captioners=(
-                RegularTypeCaptioner(
-                    existing_attribute_rate=0.0
-                ),
+                RegularTypeCaptioner(),
                 ExistentialCaptioner(
                     restrictor_captioner=CaptionerMixer(
                         captioners=(

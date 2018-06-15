@@ -1,0 +1,9 @@
+{
+    "type": "agreement",
+    "name": "quantification",
+    "quantifiers": [["ratio", "*", "*"]],
+    "collision_tolerance": 0.0,
+    "train_entity_counts": [6, 7, 8, 9, 11, 12, 13, 14],
+    "test_entity_counts": [5, 10, 15],
+    "test_combinations": [["square", "red", "solid"], ["triangle", "green", "solid"], ["circle", "blue", "solid"], ["rectangle", "yellow", "solid"], ["cross", "magenta", "solid"], ["ellipse", "cyan", "solid"]]
+}

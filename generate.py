@@ -60,7 +60,7 @@ if __name__ == '__main__':
             sys.stdout.write('                 {config}\n'.format(config=args.config_values))
     sys.stdout.flush()
 
-    if args.archive is not None and not args.delay_pixel_noise and dataset.pixel_noise_stddev > 0.0:
+    if args.archive is not None and not args.delay_pixel_noise and dataset.pixel_noise_stddev is not None:
         sys.stdout.write('Warning: best compression results without pixel noise, continue? ')
         sys.stdout.flush()
         if args.yes:
@@ -92,9 +92,9 @@ if __name__ == '__main__':
     specification['generated'] = True
     if args.archive:
         specification['archive'] = args.archive
-    if args.delay_pixel_noise and dataset.pixel_noise_stddev > 0.0:
+    if args.delay_pixel_noise and dataset.pixel_noise_stddev is not None:
         specification['pixel_noise_stddev'] = dataset.pixel_noise_stddev
-        dataset.pixel_noise_stddev = 0.0
+        dataset.pixel_noise_stddev = None
     if args.include_model:
         specification['include_model'] = args.include_model
     if args.png_format:
@@ -222,7 +222,7 @@ if __name__ == '__main__':
 
             elif args.clevr_format:
                 from shapeworld.world import World
-                from shapeworld.datasets.clevr_util import parse_program
+                from shapeworld.datasets import clevr_util
                 assert args.type == 'agreement'
                 worlds = generated['world']
                 captions = generated['caption']
@@ -254,7 +254,7 @@ if __name__ == '__main__':
                             if caption_model is None:
                                 program = None
                             else:
-                                program = parse_program(mode=parse_mode, model=caption_model)
+                                program = clevr_util.parse_program(mode=parse_mode, model=caption_model)
                             questions[parse_mode].append(dict(
                                 image_index=index,
                                 program=program,
