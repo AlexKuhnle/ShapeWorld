@@ -3,7 +3,7 @@ from models.TFMacros.tf_macros import *
 
 def model(model, inputs, dataset_parameters, cnn_size, cnn_depth, cnn_block_depth, embedding_size, rnn, rnn_size, caption_reduction, film_size, film_depth, conv_size, world_reduction, mlp_size, mlp_depth, soft):
 
-    cnn_sizes = [cnn_size * 2**n for n in range(cnn_depth)]
+    cnn_sizes = [cnn_size for n in range(cnn_depth)]  # * 2**n
     cnn_depths = [cnn_block_depth for _ in range(cnn_depth)]
     if caption_reduction == 'state':
         rnn_state_size = rnn_size
@@ -15,7 +15,7 @@ def model(model, inputs, dataset_parameters, cnn_size, cnn_depth, cnn_block_dept
 
     world = (
         Input(name='world', shape=dataset_parameters['world_shape'], tensor=inputs.get('world')) >>
-        ConvolutionalNet(sizes=cnn_sizes, depths=cnn_depths)
+        ConvolutionalNet(sizes=cnn_sizes, depths=cnn_depths, final_pool=True)
     )
 
     caption = (
@@ -46,7 +46,7 @@ def model(model, inputs, dataset_parameters, cnn_size, cnn_depth, cnn_block_dept
 
     agreement = (
         world >>
-        Convolution(size=film_sizes[0], index=True, window=(3, 3)) >>
+        # Convolution(size=film_sizes[0], index=True, window=(3, 3)) >>
         # customize(unit_=Residual, unit=CustomFilmLayer, depth=1)
         Repeat(layer=CustomFilmLayer, sizes=film_sizes) >>
         Convolution(size=conv_size, index=True, window=(1, 1)) >>

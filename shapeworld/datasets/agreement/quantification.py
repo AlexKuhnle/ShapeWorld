@@ -42,7 +42,7 @@ class QuantificationDataset(CaptionAgreementDataset):
         test_correct_ratio=None,
         worlds_per_instance=1,
         captions_per_instance=1,
-        pixel_noise_stddev=0.0,
+        pixel_noise_stddev=None,
         caption_realizer='dmrs',
         language=None
     ):

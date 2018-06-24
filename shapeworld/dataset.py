@@ -4,6 +4,7 @@ import json
 from math import ceil, sqrt
 import os
 from random import random, randrange
+import sys
 import numpy as np
 from PIL import Image
 from shapeworld import util
@@ -296,10 +297,8 @@ class Dataset(object):
         raise NotImplementedError
 
     def iterate(self, n, mode=None, include_model=False, alternatives=False, iterations=None):
-        if iterations is None:
-            iterations = -1
         i = 0
-        while i < iterations:
+        while iterations is None or i < iterations:
             yield self.generate(n=n, mode=mode, include_model=include_model, alternatives=alternatives)
             i += 1
 
@@ -751,7 +750,7 @@ class LoadedDataset(Dataset):
 
                     for value_name, value_type in self.values.items():
                         value_type, alts = util.alternatives_type(value_type=value_type)
-                        if value_type == 'model' and not include_model:
+                        if value_type == 'model' and not self.include_model:
                             continue
                         if alt_index == -1:
                             value = loaded[value_name].pop(index)
@@ -761,6 +760,8 @@ class LoadedDataset(Dataset):
                             value = loaded[value_name][index].pop(alt_index)
                         else:
                             value = loaded[value_name][index]
+                        if value_type == 'model' and not include_model:
+                            continue
                         if not alternatives and value_name == 'alternatives':
                             continue
                         if value_type in self.vocabularies:

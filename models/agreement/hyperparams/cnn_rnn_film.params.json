@@ -4,7 +4,7 @@
     "clip_gradients": null,
     "dropout_rate": 0.0,
     "cnn_size": 128,
-    "cnn_depth": 3,
+    "cnn_depth": 2,
     "cnn_block_depth": 2,
     "embedding_size": 200,
     "rnn": "gru",
