@@ -10,7 +10,7 @@ pip3 install -e ShapeWorld  # optional: ShapeWorld[full] or ShapeWorld[full-gpu]
 
 ### Recently added features
 
-- PyTorch Dataset interface implementation (shapeworld.torch_util)
+- PyTorch Dataset/DataLoader interface implementation (shapeworld.torch_util)
 - New selection dataset covering statements beginning with "the + positive/superlative"
 - New relations: "same/different shape/color", negated relations
 - New logical connectives: implication, equivalence

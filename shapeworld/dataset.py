@@ -41,13 +41,25 @@ class Dataset(object):
         assert variant is None or name is not None
         assert language is None or name is not None
 
+        if isinstance(name, str):
+            try:
+                name = json.loads(name)
+            except json.decoder.JSONDecodeError:
+                pass
+
+        if isinstance(variant, str):
+            try:
+                variant = json.loads(variant)
+            except json.decoder.JSONDecodeError:
+                pass
+
         if name is not None and not isinstance(name, str):
             try:
                 datasets = list()
                 if variant is not None and not isinstance(variant, str):
-                    for n, vs in zip(name, variant):
-                        for v in vs:
-                            datasets.append(Dataset.create(dtype=dtype, name=n, variant=v, language=language, config=config))
+                    for n, v in zip(name, variant):
+                        # for v in vs:
+                        datasets.append(Dataset.create(dtype=dtype, name=n, variant=v, language=language, config=config))
                 else:
                     for n in name:
                         datasets.append(Dataset.create(dtype=dtype, name=n, variant=variant, language=language, config=config))
@@ -584,6 +596,8 @@ class LoadedDataset(Dataset):
                 raise
 
     def get_records_paths(self, mode):
+        if mode == 'none':
+            mode = None
         assert (mode is None) != isinstance(self.records_shards, dict)
         assert (mode is None and self.records_shards is not None) or mode in self.records_shards
         if mode is None:
@@ -593,6 +607,8 @@ class LoadedDataset(Dataset):
             return self.records_shards[mode]
 
     def generate(self, n, mode=None, include_model=False, alternatives=False):
+        if mode == 'none':
+            mode = None
         assert (mode is None) != isinstance(self.shards, dict)
         assert (mode is None and self.shards is not None) or mode in self.shards
         assert not include_model or self.include_model
@@ -687,6 +703,8 @@ class LoadedDataset(Dataset):
         return batch
 
     def epoch(self, n, mode=None, include_model=False, alternatives=False):
+        if mode == 'none':
+            mode = None
         assert (mode is None) != isinstance(self.shards, dict)
         assert (mode is None and self.shards is not None) or mode in self.shards
         assert not include_model or self.include_model
@@ -818,9 +836,17 @@ class DatasetMixer(Dataset):
             vocabularies[name] = sorted(set(word for dataset in self.datasets for word in dataset.vocabularies[name]))
         language = self.datasets[0].language
         super(DatasetMixer, self).__init__(values=values, world_size=world_size, vectors=vectors, vocabularies=vocabularies, language=language)
+        self.translations = list()
         for dataset in self.datasets:
-            dataset.vectors = self.vectors
-            dataset.vocabularies = self.vocabularies
+            if isinstance(dataset, LoadedDataset):
+                translation = dict()
+                for name, vocabulary in dataset.vocabularies.items():
+                    translation[name] = np.vectorize({index: self.vocabularies[name][word] for word, index in vocabulary.items()}.__getitem__)
+                self.translations.append(translation)
+            else:
+                dataset.vectors = self.vectors
+                dataset.vocabularies = self.vocabularies
+                self.translations.append(None)
         self.consistent_batches = consistent_batches
         assert not distribution or len(distribution) == len(self.datasets)
         distribution = util.value_or_default(distribution, [1] * len(self.datasets))
@@ -837,9 +863,11 @@ class DatasetMixer(Dataset):
 
     @property
     def name(self):
-        return '+'.join(dataset.name for dataset in self.datasets)
+        return '+'.join(set(dataset.name for dataset in self.datasets))
 
     def generate(self, n, mode=None, include_model=False, alternatives=False):
+        if mode == 'none':
+            mode = None
         if mode is None:
             distribution = self.distribution
         if mode == 'train':
@@ -854,15 +882,17 @@ class DatasetMixer(Dataset):
         else:
             batch = self.zero_batch(n, include_model=include_model, alternatives=alternatives)
             for i in range(n):
-                dataset = util.sample(distribution, self.datasets)
-                generated = dataset.generate(n=1, mode=mode, include_model=include_model, alternatives=alternatives)
-                for value_name, value_type in self.values.items():
-                    value_type, alts = util.alternatives_type(value_type=value_type)
-                    value = generated[value_name][0]
+                sample = util.sample(distribution)
+                generated = self.datasets[sample].generate(n=1, mode=mode, include_model=include_model, alternatives=alternatives)
+                for value_name, value in generated.items():
+                    value_type = self.values[value_name]
                     if value_type in self.vocabularies:
-                        batch[value_name][i][:len(value)] = value
+                        if self.translations[sample] is None:
+                            batch[value_name][i][:value.shape[1]] = value[0]
+                        else:
+                            batch[value_name][i][:value.shape[1]] = self.translations[sample][value_type](value[0])
                     else:
-                        batch[value_name][i] = value
+                        batch[value_name][i] = value[0]
         return batch
 
 
@@ -893,6 +923,9 @@ class ClassificationDataset(Dataset):
         raise NotImplementedError
 
     def generate(self, n, mode=None, include_model=False, alternatives=False):
+        if mode == 'none':
+            mode = None
+
         batch = self.zero_batch(n, include_model=include_model, alternatives=alternatives)
         for i in range(n):
 
@@ -1017,6 +1050,8 @@ class CaptionAgreementDataset(Dataset):
         return specification
 
     def generate(self, n, mode=None, include_model=False, alternatives=False):
+        if mode == 'none':
+            mode = None
         if mode == 'train':
             correct_ratio = self.train_correct_ratio
         elif mode == 'validation':
