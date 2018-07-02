@@ -858,7 +858,6 @@ class DatasetMixer(Dataset):
             if isinstance(dataset, LoadedDataset):
                 translation = dict()
                 for name, vocabulary in dataset.vocabularies.items():
-                    print({index: (word, self.vocabularies[name][word]) for word, index in vocabulary.items()})
                     translation[name] = np.vectorize({index: self.vocabularies[name][word] for word, index in vocabulary.items()}.__getitem__)
                 self.translations.append(translation)
             else:
