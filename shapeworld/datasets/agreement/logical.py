@@ -19,7 +19,7 @@ class LogicalDataset(CaptionAgreementDataset):
         collision_tolerance=0.25,
         collision_shade_difference=0.5,
         boundary_tolerance=None,
-        entity_counts=(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15),
+        entity_counts=(3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15),
         train_entity_counts=None,
         validation_entity_counts=None,
         test_entity_counts=None,

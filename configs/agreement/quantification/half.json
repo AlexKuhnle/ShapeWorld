@@ -1,5 +1,7 @@
 {
     "type": "agreement",
     "name": "quantification",
-    "quantifiers": [["ratio", "lt", 0.5], ["ratio", "gt", 0.5]]
+    "quantifiers": [["ratio", "lt", 0.5], ["ratio", "gt", 0.5]],
+    "collision_tolerance": 0.25,
+    "entity_counts": [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
 }

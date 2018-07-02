@@ -1,7 +1,8 @@
 {
     "type": "agreement",
     "name": "logical",
-    "train_entity_counts": [1, 2, 4, 6, 7, 9, 11, 12, 14],
+    "collision_tolerance": 0.25,
+    "train_entity_counts": [4, 6, 7, 9, 11, 12, 14],
     "validation_entity_counts": [3, 8, 13],
     "test_entity_counts": [5, 10, 15],
     "validation_combinations": [["square", "red", "solid"], ["triangle", "green", "solid"], ["circle", "blue", "solid"]],

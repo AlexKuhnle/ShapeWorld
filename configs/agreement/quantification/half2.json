@@ -2,6 +2,7 @@
     "type": "agreement",
     "name": "quantification",
     "quantifiers": [["ratio", "lt", 0.5], ["ratio", "gt", 0.5]],
+    "collision_tolerance": 0.25,
     "train_entity_counts": [5, 6, 7, 9, 11, 12, 14],
     "validation_entity_counts": [8, 13],
     "test_entity_counts": [10, 15],

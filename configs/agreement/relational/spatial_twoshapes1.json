@@ -1,9 +1,9 @@
 {
     "type": "agreement",
     "name": "relational",
-    "collision_tolerance": 0.0,
     "relations": [["x-rel", "*"], ["y-rel", "*"]],
     "negation": false,
+    "collision_tolerance": 0.0,
     "entity_counts": [2],
     "test_combinations": [["square", "red", "solid"], ["triangle", "green", "solid"], ["circle", "blue", "solid"], ["rectangle", "yellow", "solid"], ["cross", "magenta", "solid"], ["ellipse", "cyan", "solid"]]
 }

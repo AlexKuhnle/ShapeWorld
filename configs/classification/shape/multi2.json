@@ -3,7 +3,7 @@
     "name": "shape",
     "multi_class": true,
     "count_class": false,
-    "entity_counts": null,
+    "collision_tolerance": 0.25,
     "train_entity_counts": [1, 2, 4, 6, 7, 9, 11, 12, 14],
     "validation_entity_counts": [3, 8, 13],
     "test_entity_counts": [5, 10, 15]

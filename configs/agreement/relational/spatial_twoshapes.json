@@ -1,8 +1,8 @@
 {
     "type": "agreement",
     "name": "relational",
-    "collision_tolerance": 0.0,
     "relations": [["x-rel", "*"], ["y-rel", "*"]],
     "negation": false,
+    "collision_tolerance": 0.0,
     "entity_counts": [2]
 }

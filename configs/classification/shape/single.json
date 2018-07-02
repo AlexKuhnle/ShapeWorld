@@ -2,5 +2,6 @@
     "type": "classification",
     "name": "shape",
     "multi_class": false,
-    "count_class": false
+    "count_class": false,
+    "entity_counts": [1]
 }
