@@ -1,6 +1,7 @@
 {
     "type": "agreement",
     "name": "relational",
-    "collision_tolerance": 0.0,
-    "relations": [["x-rel", "*"], ["y-rel", "*"], ["proximity-rel", "*"], ["shape-rel", "*"], ["color-rel", "*"], ["size-rel", "*"], ["shade-rel", "*"]]
+    "relations": [["x-rel", "*"], ["y-rel", "*"], ["proximity-rel", "*"], ["shape-rel", "*"], ["color-rel", "*"], ["size-rel", "*"], ["shade-rel", "*"]],
+    "negation": false,
+    "collision_tolerance": 0.0
 }

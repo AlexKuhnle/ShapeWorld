@@ -32,6 +32,7 @@ class SelectionDataset(CaptionAgreementDataset):
         validation_combination_rate=0.5,
         test_combination_rate=0.5,
         max_provoke_collision_rate=0.33,
+        allow_empty_scope=True,
         selectors=None,
         caption_size=14,
         vocabulary=('.', 'a', 'an', 'are', 'bigger', 'biggest', 'blue', 'circle', 'circles', 'closer', 'closest', 'cross', 'crosses', 'cyan', 'darker', 'darkest', 'ellipse', 'ellipses', 'farther', 'farthest', 'five', 'four', 'from', 'gray', 'green', 'is', 'left', 'leftmost', 'lighter', 'lightest', 'lower', 'lowermost', 'magenta', 'one', 'pentagon', 'pentagons', 'rectangle', 'rectangles', 'red', 'right', 'rightmost', 'semicircle', 'semicircles', 'shape', 'shapes', 'smaller', 'smallest', 'square', 'squares', 'the', 'three', 'to', 'triangle', 'triangles', 'two', 'upper', 'uppermost', 'yellow'),
@@ -75,15 +76,13 @@ class SelectionDataset(CaptionAgreementDataset):
             reinforcement_range=(1, 1)
         )
 
+        scope_captioners = [RegularTypeCaptioner(hypernym_rate=1.0)]
+        if allow_empty_scope:
+            scope_captioners.append(EmptyTypeCaptioner())
         world_captioner = ExistentialCaptioner(
             restrictor_captioner=SelectorCaptioner(
                 scope_captioner=CaptionerMixer(
-                    captioners=(
-                        EmptyTypeCaptioner(),
-                        RegularTypeCaptioner(
-                            hypernym_rate=1.0
-                        )
-                    )
+                    captioners=scope_captioners
                 ),
                 comparison_captioner=UniqueTypeCaptioner(),
                 selectors=selectors

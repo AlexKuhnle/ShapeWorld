@@ -90,6 +90,8 @@ if __name__ == '__main__':
 
     specification = dataset.specification()
     specification['generated'] = True
+    if args.variant is not None:
+        specification['variant'] = args.variant
     if args.archive:
         specification['archive'] = args.archive
     if args.delay_pixel_noise and dataset.pixel_noise_stddev is not None:

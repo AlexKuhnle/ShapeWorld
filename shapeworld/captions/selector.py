@@ -83,10 +83,16 @@ class Selector(Predicate):
             # print('c', len(scope_entities), len(scope_predication.agreeing))
             return False
 
-        elif self.predtype == 'x-two' or self.predtype == 'x-max':
+        elif self.predtype == 'x-two':
+            return util.all_and_any((entity.center.x - other.center.x) * self.value > max(Settings.min_axis_distance, abs(entity.center.y - other.center.y)) for other in scope_entities if other != entity)
+
+        elif self.predtype == 'x-max':
             return util.all_and_any((entity.center.x - other.center.x) * self.value > Settings.min_axis_distance for other in scope_entities if other != entity)
 
-        elif self.predtype == 'y-two' or self.predtype == 'y-max':
+        elif self.predtype == 'y-two':
+            return util.all_and_any((entity.center.y - other.center.y) * self.value > max(Settings.min_axis_distance, abs(entity.center.x - other.center.x)) for other in scope_entities if other != entity)
+
+        elif self.predtype == 'y-max':
             return util.all_and_any((entity.center.y - other.center.y) * self.value > Settings.min_axis_distance for other in scope_entities if other != entity)
 
         elif self.predtype == 'size-two' or self.predtype == 'size-max':

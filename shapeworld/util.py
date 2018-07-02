@@ -26,7 +26,7 @@ def value_or_default(value, default):
 
 
 def mode_specific_lists(general, train, validation, test, allow_none=False):
-    assert (general is None) or (train is None) or (test is None)
+    assert (general is None) or (train is None) or (test is None) or (set(general) == set(train) | set(test))
     if general is None:
         if test is None:
             assert allow_none
@@ -46,7 +46,6 @@ def mode_specific_lists(general, train, validation, test, allow_none=False):
             test = list(test)
             general = list(set(train + validation + test))
     elif train is not None:
-        assert test is None
         general = list(general)
         train = list(train)
         validation = list(train) if validation is None else list(n for n in general if n not in train)

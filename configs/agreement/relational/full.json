@@ -1,4 +1,5 @@
 {
     "type": "agreement",
-    "name": "relational"
+    "name": "relational",
+    "negation": false
 }

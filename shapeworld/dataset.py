@@ -117,7 +117,7 @@ class Dataset(object):
                 config = json.load(fp=filehandle)
             if 'directory' not in config:
                 config['directory'] = directory
-            return Dataset.create(dtype=dtype, name=name, language=language, config=config, **kwargs)
+            return Dataset.create(dtype=dtype, name=name, variant=variant, language=language, config=config, **kwargs)
 
         elif os.path.isfile(config):
             directory = os.path.dirname(config)
@@ -125,33 +125,36 @@ class Dataset(object):
                 config = json.load(fp=filehandle)
             if 'directory' not in config:
                 config['directory'] = directory
-            full_name = config.get('name', name)
-            if variant is not None:
-                full_name = '{}-{}'.format(full_name, variant)
-            if language is not None:
-                full_name = '{}-{}'.format(full_name, language)
-            elif 'language' in config:
-                full_name = '{}-{}'.format(full_name, config['language'])
-            return Dataset.create(dtype=dtype, name=name, language=language, config=config, **kwargs)
+            if dtype is None:
+                dtype = config.get('dtype')
+            if name is None:
+                name = config.get('name')
+            if variant is None:
+                variant = config.get('variant')
+            if language is None:
+                language = config.get('language')
+            return Dataset.create(dtype=dtype, name=name, variant=variant, language=language, config=config, **kwargs)
 
         else:
             raise Exception('Invalid config value.')
 
-        assert variant is None
-
         if config.pop('generated', False):
             assert dtype is None or config['type'] == dtype
             assert name is None or config['name'] == name
+            assert variant is None or config['variant'] == variant
             assert language is None or config['language'] == language
             dtype = config['type']
             name = config['name']
+            variant = config['variant']
             dataset = LoadedDataset(specification=config, **kwargs)
             assert dtype == dataset.type
             assert name == dataset.name
+            assert variant == dataset.variant
             assert language is None or language == dataset.language
             return dataset
 
         else:
+            assert variant is None
             config.pop('directory', None)
 
             for key, value in kwargs.items():
@@ -515,6 +518,7 @@ class LoadedDataset(Dataset):
     def __init__(self, specification, random_sampling=True, pixel_noise_stddev=None):
         self._type = specification.pop('type')
         self._name = specification.pop('name')
+        self.variant = specification.pop('variant')
         self.directory = specification.pop('directory')
         relative_directory = specification.get('relative_directory')
         if relative_directory is not None:
@@ -572,6 +576,14 @@ class LoadedDataset(Dataset):
                     if any(f[-13:] == '.tfrecords.gz' for f in files):
                         self.records_shards[mode] = [os.path.join(root, f) for f in files if f[-13:] == '.tfrecords.gz']
         self.mode = -1
+
+    def __str__(self):
+        name = '{} {}'.format(self.type, self.name)
+        if self.variant is not None:
+            name += '-{}'.format(self.variant)
+        if self.language is not None:
+            name += ' ({})'.format(self.language)
+        return name
 
     @property
     def name(self):
@@ -807,7 +819,10 @@ class LoadedDataset(Dataset):
 
     def get_html(self, generated, image_format='bmp'):
         module = import_module('shapeworld.datasets.{}.{}'.format(self.type, self.name))
-        dclass = module.dataset
+        class_name = util.class_name(self.name) + 'Dataset'
+        for key, dclass in module.__dict__.items():
+            if key == class_name:
+                break
         return dclass.get_html(self, generated=generated, image_format=image_format)
 
 
@@ -838,14 +853,15 @@ class DatasetMixer(Dataset):
         super(DatasetMixer, self).__init__(values=values, world_size=world_size, vectors=vectors, vocabularies=vocabularies, language=language)
         self.translations = list()
         for dataset in self.datasets:
+            dataset.vectors = self.vectors
+            dataset.vocabularies = self.vocabularies
             if isinstance(dataset, LoadedDataset):
                 translation = dict()
                 for name, vocabulary in dataset.vocabularies.items():
+                    print({index: (word, self.vocabularies[name][word]) for word, index in vocabulary.items()})
                     translation[name] = np.vectorize({index: self.vocabularies[name][word] for word, index in vocabulary.items()}.__getitem__)
                 self.translations.append(translation)
             else:
-                dataset.vectors = self.vectors
-                dataset.vocabularies = self.vocabularies
                 self.translations.append(None)
         self.consistent_batches = consistent_batches
         assert not distribution or len(distribution) == len(self.datasets)
@@ -887,10 +903,7 @@ class DatasetMixer(Dataset):
                 for value_name, value in generated.items():
                     value_type = self.values[value_name]
                     if value_type in self.vocabularies:
-                        if self.translations[sample] is None:
-                            batch[value_name][i][:value.shape[1]] = value[0]
-                        else:
-                            batch[value_name][i][:value.shape[1]] = self.translations[sample][value_type](value[0])
+                        batch[value_name][i][:value.shape[1]] = value[0]
                     else:
                         batch[value_name][i] = value[0]
         return batch
@@ -1127,7 +1140,7 @@ class CaptionAgreementDataset(Dataset):
                 batch['caption_rpn'][i].extend(batch['caption_rpn'][i][0].copy() for _ in range(self.captions_per_instance - 1))
                 captions.append(caption)
                 rpn = caption.reverse_polish_notation()
-                assert len(rpn) <= rpn_size
+                assert len(rpn) <= rpn_size, (len(rpn), rpn_size, rpn)
                 for k, rpn_symbol in enumerate(rpn):
                     assert rpn_symbol in rpn2id, (rpn_symbol, rpn2id)
                     batch['caption_rpn'][i][0][k] = rpn2id.get(rpn_symbol, unknown)
@@ -1151,7 +1164,7 @@ class CaptionAgreementDataset(Dataset):
                             break
                     captions.append(caption)
                     rpn = caption.reverse_polish_notation()
-                    assert len(rpn) <= rpn_size
+                    assert len(rpn) <= rpn_size, (len(rpn), rpn_size, rpn)
                     for k, rpn_symbol in enumerate(rpn):
                         assert rpn_symbol in rpn2id, (rpn_symbol, rpn2id)
                         batch['caption_rpn'][i][j][k] = rpn2id.get(rpn_symbol, unknown)

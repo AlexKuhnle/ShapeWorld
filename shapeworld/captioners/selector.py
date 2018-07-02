@@ -51,7 +51,7 @@ class SelectorCaptioner(WorldCaptioner):
         return True
 
     def rpn_length(self):
-        return super(SelectorCaptioner, self).rpn_length() + 1
+        return self.scope_captioner.rpn_length() + self.comparison_captioner.rpn_length() + 1
 
     def rpn_symbols(self):
         return super(SelectorCaptioner, self).rpn_symbols() | {'{}-{}-{}'.format(Selector.__name__, *selector) for selector in self.selectors}
@@ -60,10 +60,13 @@ class SelectorCaptioner(WorldCaptioner):
         if not super(SelectorCaptioner, self).sample_values(mode=mode, predication=predication):
             return False
 
-        if not self.scope_captioner.sample_values(mode=mode, predication=predication):
-            return False
-
-        self.predtype, self.value = choice(self.selectors)
+        for _ in range(self.__class__.MAX_SAMPLE_ATTEMPTS):
+            self.predtype, self.value = choice(self.selectors)
+            if self.predtype in ('size-two', 'size-max') and predication.redundant(predicate='shape'):
+                continue
+            elif self.predtype in ('shade-two', 'shade-max') and predication.redundant(predicate='color'):
+                continue
+            break
 
         self.incorrect_mode = util.sample(self.incorrect_distribution)
 
@@ -75,9 +78,16 @@ class SelectorCaptioner(WorldCaptioner):
                 self.incorrect_predtype, self.incorrect_value = choice(self.selectors)
                 if self.incorrect_predtype == self.predtype and self.incorrect_value == self.value:
                     continue
+                elif self.incorrect_predtype in ('size-two', 'size-max') and predication.redundant(predicate='shape'):
+                    continue
+                elif self.incorrect_predtype in ('shade-two', 'shade-max') and predication.redundant(predicate='color'):
+                    continue
                 break
             else:
                 return False
+
+        if not self.scope_captioner.sample_values(mode=mode, predication=predication):
+            return False
 
         if self.predtype in Selector.comparison_selectors or self.incorrect_predtype in Selector.comparison_selectors:
             comp_predication = predication.copy(reset=True)
