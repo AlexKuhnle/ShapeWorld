@@ -53,16 +53,22 @@ class Dataset(object):
             except json.decoder.JSONDecodeError:
                 pass
 
-        if name is not None and not isinstance(name, str):
+        if isinstance(config, str):
             try:
+                config = json.loads(config)
+            except json.decoder.JSONDecodeError:
+                pass
+
+        if isinstance(name, list):
+            try:
+                if not isinstance(variant, list):
+                    variant = [variant for _ in name]
+                if not isinstance(config, list):
+                    config = [config for _ in name]
                 datasets = list()
-                if variant is not None and not isinstance(variant, str):
-                    for n, v in zip(name, variant):
-                        # for v in vs:
-                        datasets.append(Dataset.create(dtype=dtype, name=n, variant=v, language=language, config=config))
-                else:
-                    for n in name:
-                        datasets.append(Dataset.create(dtype=dtype, name=n, variant=variant, language=language, config=config))
+                for n, v, c in zip(name, variant, config):
+                    # for v in vs:
+                    datasets.append(Dataset.create(dtype=dtype, name=n, variant=v, language=language, config=c))
                 dataset = DatasetMixer(datasets=datasets, **kwargs)
                 assert dtype == dataset.type
                 assert language is None or language == dataset.language
@@ -70,11 +76,13 @@ class Dataset(object):
             except TypeError:
                 assert False
 
-        if variant is not None and not isinstance(variant, str):
+        if isinstance(variant, list):
             try:
+                if not isinstance(config, list):
+                    config = [config for _ in variant]
                 datasets = list()
-                for v in variant:
-                    datasets.append(Dataset.create(dtype=dtype, name=name, variant=v, language=language, config=config))
+                for v, c in zip(variant, config):
+                    datasets.append(Dataset.create(dtype=dtype, name=name, variant=v, language=language, config=c))
                 dataset = DatasetMixer(datasets=datasets, **kwargs)
                 assert dtype == dataset.type
                 assert name == dataset.name
@@ -83,14 +91,15 @@ class Dataset(object):
             except TypeError:
                 assert False
 
-        if config is not None and not isinstance(config, str) and not isinstance(config, dict):
+        if isinstance(config, list):
             assert len(kwargs) == 0
             try:
                 datasets = list()
                 for c in config:
-                    if isinstance(c, dict):
-                        c = dict(c)
-                    datasets.append(c)
+                    # if isinstance(c, dict):
+                    #     c = dict(c)
+                    # datasets.append(c)
+                    datasets.append(Dataset.create(dtype=dtype, name=name, variant=variant, language=language, config=c))
                 dataset = DatasetMixer(datasets=datasets, **kwargs)
                 assert dtype is None or dtype == dataset.type
                 assert language is None or language == dataset.language
@@ -120,19 +129,32 @@ class Dataset(object):
             return Dataset.create(dtype=dtype, name=name, variant=variant, language=language, config=config, **kwargs)
 
         elif os.path.isfile(config):
-            directory = os.path.dirname(config)
             with open(config, 'r') as filehandle:
                 config = json.load(fp=filehandle)
-            if 'directory' not in config:
-                config['directory'] = directory
+            d = config.pop('type', None)
             if dtype is None:
-                dtype = config.get('dtype')
+                dtype = d
+            else:
+                assert dtype == d
+            n = config.pop('name', None)
             if name is None:
-                name = config.get('name')
+                name = n
+            else:
+                assert name == n
+            v = config.pop('variant', None)
             if variant is None:
-                variant = config.get('variant')
+                variant = v
+            else:
+                assert variant == v
+            l = config.pop('language', None)
             if language is None:
-                language = config.get('language')
+                language = l
+            else:
+                assert language == l
+            if 'config' in config:
+                assert not kwargs
+                kwargs = config
+                config = kwargs.pop('config')
             return Dataset.create(dtype=dtype, name=name, variant=variant, language=language, config=config, **kwargs)
 
         else:
