@@ -9,7 +9,7 @@ class RandomAttributesGenerator(GenericGenerator):
     def __init__(
         self,
         world_size=64,
-        world_color='black',
+        world_colors=('black',),
         shapes=('square', 'rectangle', 'triangle', 'pentagon', 'cross', 'circle', 'semicircle', 'ellipse'),
         colors=('red', 'green', 'blue', 'yellow', 'magenta', 'cyan', 'gray'),
         textures=('solid',),
@@ -36,7 +36,7 @@ class RandomAttributesGenerator(GenericGenerator):
     ):
         super(RandomAttributesGenerator, self).__init__(
             world_size=world_size,
-            world_color=world_color,
+            world_colors=world_colors,
             shapes=shapes,
             colors=colors,
             textures=textures,

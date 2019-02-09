@@ -18,12 +18,13 @@ from pydmrs.mapping.paraphrase import paraphrase
 def create_sortinfo(cvarsort, features):
     assert len(cvarsort) == 1 and cvarsort != 'i'
     assert isinstance(features, tuple)
+    features = [feature.replace('-', '_dash_').replace('.', '_dot_') for feature in features]
     if cvarsort == 'e' and features == ('sf', 'tense', 'mood', 'perf', 'prog'):
         return EventSortinfo
     elif cvarsort == 'x' and features == ('pers', 'num', 'gend', 'ind', 'pt'):
         return InstanceSortinfo
     else:
-        return type((cvarsort.upper() + 'Sortinfo'), (Sortinfo,), dict(cvarsort=cvarsort, __slots__=features))
+        return type(str(cvarsort.upper() + 'Sortinfo'), (Sortinfo,), dict(cvarsort=cvarsort, __slots__=features))
 
 
 class Dmrs(ListDmrs):
@@ -135,7 +136,7 @@ class Dmrs(ListDmrs):
             if node.carg == '?':
                 node.carg = None
 
-    def get_mrs(self):
+    def get_mrs(self, requires_rel_suffix=False):
         # labels = dict(zip(self, range(1, len(self) + 1)))
         # redirected = []
         quantifiers = dict()
@@ -223,10 +224,26 @@ class Dmrs(ListDmrs):
             carg_string = 'CARG: "{}" '.format(cargs[nodeid]) if nodeid in cargs else ''
             if nodeid in quantifiers:
                 intrinsic_string = variables[quantifiers[nodeid]][0]
+                # TODO: Hack for Chinese
+                if intrinsic_string[0] == 'e':
+                    for nodeid2, (variable, _) in variables.items():
+                        if intrinsic_string == variable:
+                            for nodeid3, label in labels.items():
+                                if label == hcons[int(args[nodeid2]['ARG1'][1:])]:
+                                    intrinsic_string = variables[nodeid3][0]
+                                    break
+                            else:
+                                assert False
+                            break
+                    else:
+                        assert False
             else:
-                intrinsic_string = '{} [ {} {}]'.format(variables[nodeid][0], variables[nodeid][1].cvarsort, ''.join('{}: {} '.format(feature.upper(), value.lower()) for feature, value in variables[nodeid][1].iter_specified() if value is not None))
+                intrinsic_string = '{} [ {} {}]'.format(variables[nodeid][0], variables[nodeid][1].cvarsort, ''.join('{}: {} '.format(feature.upper().replace('_DASH_', '-').replace('_DOT_', '.'), value.lower()) for feature, value in variables[nodeid][1].iter_specified() if value is not None))
             args_string = ''.join('{}: {} '.format(role.upper(), arg) for role, arg in args[nodeid].items()) if nodeid in args else ''
-            elempred_string = '[ {} LBL: h{} {}ARG0: {} {}]'.format(predicates[nodeid], labels[nodeid], carg_string, intrinsic_string, args_string)
+            if requires_rel_suffix:
+                elempred_string = '[ {}_rel LBL: h{} {}ARG0: {} {}]'.format(predicates[nodeid], labels[nodeid], carg_string, intrinsic_string, args_string)
+            else:
+                elempred_string = '[ {} LBL: h{} {}ARG0: {} {}]'.format(predicates[nodeid], labels[nodeid], carg_string, intrinsic_string, args_string)
             elempreds.append(elempred_string)
 
         top_string = '' if self.top is None else 'TOP: h0 '

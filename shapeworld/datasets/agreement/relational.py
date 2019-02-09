@@ -8,7 +8,7 @@ class RelationalDataset(CaptionAgreementDataset):
     def __init__(
         self,
         world_size=64,
-        world_color='black',
+        world_colors=('black',),
         shapes=('square', 'rectangle', 'triangle', 'pentagon', 'cross', 'circle', 'semicircle', 'ellipse'),
         colors=('red', 'green', 'blue', 'yellow', 'magenta', 'cyan', 'gray'),
         textures=('solid',),
@@ -35,7 +35,7 @@ class RelationalDataset(CaptionAgreementDataset):
         relations=None,
         negation=True,
         caption_size=15,
-        vocabulary=('.', 'a', 'above', 'an', 'as', 'behind', 'below', 'bigger', 'blue', 'circle', 'closer', 'color', 'cross', 'cyan', 'darker', 'different', 'ellipse', 'farther', 'from', 'front', 'gray', 'green', 'in', 'is', 'left', 'lighter', 'magenta', 'not', 'of', 'pentagon', 'rectangle', 'red', 'right', 'same', 'semicircle', 'shape', 'smaller', 'square', 'than', 'the', 'to', 'triangle', 'yellow'),
+        vocabulary=('.', 'a', 'above', 'an', 'as', 'behind', 'below', 'besides', 'bigger', 'blue', 'circle', 'closer', 'color', 'cross', 'cyan', 'darker', 'different', 'ellipse', 'exists', 'farther', 'from', 'front', 'gray', 'green', 'in', 'is', 'left', 'lighter', 'magenta', 'not', 'of', 'pentagon', 'rectangle', 'red', 'right', 'same', 'semicircle', 'shape', 'smaller', 'square', 'than', 'the', 'to', 'triangle', 'yellow'),
         correct_ratio=0.5,
         train_correct_ratio=None,
         validation_correct_ratio=None,
@@ -49,7 +49,7 @@ class RelationalDataset(CaptionAgreementDataset):
 
         world_generator = ReinforcedAttributesGenerator(
             world_size=world_size,
-            world_color=world_color,
+            world_colors=world_colors,
             shapes=shapes,
             colors=colors,
             textures=textures,

@@ -3,8 +3,9 @@ from shapeworld.captions import Predicate, EntityType, Selector, Settings
 
 class Relation(Predicate):
 
-    predtypes = {'attribute', 'type', 'negation', 'x-rel', 'y-rel', 'z-rel', 'proximity-rel', 'size-rel', 'shade-rel', 'shape-rel', 'color-rel', 'texture-rel'}
+    predtypes = {'attribute', 'type', 'negation', 'unspecific', 'x-rel', 'y-rel', 'z-rel', 'proximity-rel', 'size-rel', 'shade-rel', 'shape-rel', 'color-rel', 'texture-rel'}
     meta_relations = {'negation'}
+    no_inverse_relations = {'unspecific'}
     ternary_relations = {'proximity-rel'}
     # reference_selectors = {'proximity-two', 'proximity-max'}
 
@@ -100,7 +101,10 @@ class Relation(Predicate):
 
         ref_entities = ref_predication.agreeing
 
-        if self.predtype == 'x-rel':
+        if self.predtype == 'unspecific':
+            return any(True for reference in ref_entities if reference != entity)
+
+        elif self.predtype == 'x-rel':
             # min distance in case of overlap
             return any((entity.center.x - reference.center.x) * self.value > max(Settings.min_axis_distance, abs(entity.center.y - reference.center.y)) for reference in ref_entities)
 
@@ -157,7 +161,10 @@ class Relation(Predicate):
         if len(ref_entities) == 1 and ref_entities[0] == entity:
             return False
 
-        if self.predtype == 'x-rel':
+        if self.predtype == 'unspecific':
+            return all(False for reference in ref_entities if reference != entity)
+
+        elif self.predtype == 'x-rel':
             return all((reference.center.x - entity.center.x) * self.value > Settings.min_axis_distance for reference in ref_entities)
 
         elif self.predtype == 'y-rel':

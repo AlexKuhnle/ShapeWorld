@@ -89,8 +89,10 @@ class World(Entity):
                 if collision > collision_tolerance or (collision > 0.0 and entity.color == other.color and abs(entity.color.shade - other.color.shade) < collision_shade_difference):
                     # can't distinguish shapes of same color
                     return False
-                if entity.overall_collision() > collision_tolerance:
+                if other.overall_collision() > collision_tolerance:
                     return False
+            if entity.overall_collision() > collision_tolerance:
+                return False
         else:
             if any(entity.collides(other, resolution=self.size) for other in self.entities):
                 return False

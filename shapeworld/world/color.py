@@ -24,7 +24,7 @@ class Color(object):
         self.shaded_rgb = np.array(object=shaded_rgb, dtype=np.float32)
 
     def __eq__(self, other):
-        return isinstance(other, Color) and self.name == other.name
+        return (isinstance(other, Color) and self.name == other.name) or (isinstance(other, str) and self.name == other)
 
     def model(self):
         return dict(name=self.name, rgb=list(self.rgb), shade=self.shade)

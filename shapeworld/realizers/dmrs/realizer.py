@@ -85,6 +85,9 @@ class DmrsRealizer(CaptionRealizer):
         with open(os.path.join(directory, 'languages', language + '.json'), 'r') as filehandle:
             language = json.load(fp=filehandle)
 
+        self.ace_arguments = language.get('ace-arguments', list())
+        self.requires_rel_suffix =  language.get('requires-rel-suffix', False)
+
         if 'sortinfos' in language:
             sortinfo_classes = dict()
             sortinfo_shortforms = dict()
@@ -108,19 +111,19 @@ class DmrsRealizer(CaptionRealizer):
             for predtype, values in language['attributes'].items():
                 predtype = parse_string(predtype)
                 if predtype == 'relation':
-                    self.relation_attribute = Dmrs.parse(values['dmrs'])
+                    self.relation_attribute = Dmrs.parse(values['dmrs'], sortinfo_classes=sortinfo_classes, sortinfo_shortforms=sortinfo_shortforms)
                     continue
                 elif predtype not in self.attributes:
                     self.attributes[predtype] = dict()
                 for value, attribute in values.items():
                     value = parse_string(value)
-                    self.attributes[predtype][value] = Dmrs.parse(attribute['dmrs'])
+                    self.attributes[predtype][value] = Dmrs.parse(attribute['dmrs'], sortinfo_classes=sortinfo_classes, sortinfo_shortforms=sortinfo_shortforms)
                     assert attribute['key'] not in self.attribute_by_key
                     self.attribute_by_key[attribute['key']] = (predtype, value)
 
         self.entity_type = None
         if 'type' in language:
-            self.entity_type = Dmrs.parse(language['type']['dmrs'])
+            self.entity_type = Dmrs.parse(language['type']['dmrs'], sortinfo_classes=sortinfo_classes, sortinfo_shortforms=sortinfo_shortforms)
 
         self.selectors = dict()
         self.selector_by_key = dict()
@@ -129,13 +132,13 @@ class DmrsRealizer(CaptionRealizer):
             for predtype, values in language['selectors'].items():
                 predtype = parse_string(predtype)
                 if predtype == 'unique':
-                    self.unique_selector = Dmrs.parse(values['dmrs'])
+                    self.unique_selector = Dmrs.parse(values['dmrs'], sortinfo_classes=sortinfo_classes, sortinfo_shortforms=sortinfo_shortforms)
                     continue
                 elif predtype not in self.selectors:
                     self.selectors[predtype] = dict()
                 for value, selector in values.items():
                     value = parse_string(value)
-                    self.selectors[predtype][value] = Dmrs.parse(selector['dmrs'])
+                    self.selectors[predtype][value] = Dmrs.parse(selector['dmrs'], sortinfo_classes=sortinfo_classes, sortinfo_shortforms=sortinfo_shortforms)
                     assert selector['key'] not in self.selector_by_key
                     self.selector_by_key[selector['key']] = (predtype, value)
 
@@ -147,16 +150,16 @@ class DmrsRealizer(CaptionRealizer):
             for predtype, values in language['relations'].items():
                 predtype = parse_string(predtype)
                 if predtype == 'attribute':
-                    self.attribute_relation = Dmrs.parse(values['dmrs'])
+                    self.attribute_relation = Dmrs.parse(values['dmrs'], sortinfo_classes=sortinfo_classes, sortinfo_shortforms=sortinfo_shortforms)
                     continue
                 elif predtype == 'type':
-                    self.type_relation = Dmrs.parse(values['dmrs'])
+                    self.type_relation = Dmrs.parse(values['dmrs'], sortinfo_classes=sortinfo_classes, sortinfo_shortforms=sortinfo_shortforms)
                     continue
                 elif predtype not in self.relations:
                     self.relations[predtype] = dict()
                 for value, relation in values.items():
                     value = parse_string(value)
-                    self.relations[predtype][value] = Dmrs.parse(relation['dmrs'])
+                    self.relations[predtype][value] = Dmrs.parse(relation['dmrs'], sortinfo_classes=sortinfo_classes, sortinfo_shortforms=sortinfo_shortforms)
                     assert relation['key'] not in self.relation_by_key
                     self.relation_by_key[relation['key']] = (predtype, value)
 
@@ -164,9 +167,9 @@ class DmrsRealizer(CaptionRealizer):
         self.selector_existential = None
         if 'existential' in language:
             if 'type' in language['existential']:
-                self.type_existential = Dmrs.parse(language['existential']['type']['dmrs'])
+                self.type_existential = Dmrs.parse(language['existential']['type']['dmrs'], sortinfo_classes=sortinfo_classes, sortinfo_shortforms=sortinfo_shortforms)
             if 'selector' in language['existential']:
-                self.selector_existential = Dmrs.parse(language['existential']['selector']['dmrs'])
+                self.selector_existential = Dmrs.parse(language['existential']['selector']['dmrs'], sortinfo_classes=sortinfo_classes, sortinfo_shortforms=sortinfo_shortforms)
 
         self.quantifiers = dict()
         self.quantifier_by_key = dict()
@@ -179,7 +182,7 @@ class DmrsRealizer(CaptionRealizer):
                     for identifier, quantifier in qranges.items():
                         identifier = parse_string(identifier)
                         definition = tuple((str(qtype), str(qrange), quantity) for qtype, qrange, quantity in quantifier.pop('definition'))
-                        self.quantifiers[qtype][identifier] = {definition: Dmrs.parse(quantifier['dmrs'])}
+                        self.quantifiers[qtype][identifier] = {definition: Dmrs.parse(quantifier['dmrs'], sortinfo_classes=sortinfo_classes, sortinfo_shortforms=sortinfo_shortforms)}
                         assert identifier not in self.quantifier_by_key
                         self.quantifier_by_key[identifier] = (qtype, identifier, definition)
                     continue
@@ -189,7 +192,7 @@ class DmrsRealizer(CaptionRealizer):
                         self.quantifiers[qtype][qrange] = dict()
                     for quantity, quantifier in quantities.items():
                         quantity = parse_string(quantity)
-                        self.quantifiers[qtype][qrange][quantity] = Dmrs.parse(quantifier['dmrs'])
+                        self.quantifiers[qtype][qrange][quantity] = Dmrs.parse(quantifier['dmrs'], sortinfo_classes=sortinfo_classes, sortinfo_shortforms=sortinfo_shortforms)
                         assert quantifier['key'] not in self.quantifier_by_key
                         self.quantifier_by_key[quantifier['key']] = (qtype, qrange, quantity)
 
@@ -198,7 +201,7 @@ class DmrsRealizer(CaptionRealizer):
         if 'number-bounds' in language:
             for bound, number_bound in language['number-bounds'].items():
                 bound = parse_string(bound)
-                self.number_bounds[bound] = Dmrs.parse(number_bound['dmrs'])
+                self.number_bounds[bound] = Dmrs.parse(number_bound['dmrs'], sortinfo_classes=sortinfo_classes, sortinfo_shortforms=sortinfo_shortforms)
                 assert number_bound['key'] not in self.number_bound_by_key
                 self.number_bound_by_key[number_bound['key']] = (bound,)
 
@@ -213,7 +216,7 @@ class DmrsRealizer(CaptionRealizer):
                     for identifier, comparative_quantifier in qranges.items():
                         identifier = parse_string(identifier)
                         definition = tuple((str(qtype), str(qrange), quantity) for qtype, qrange, quantity in comparative_quantifier.pop('definition'))
-                        self.comparative_quantifiers[qtype][identifier] = {definition: Dmrs.parse(comparative_quantifier['dmrs'])}
+                        self.comparative_quantifiers[qtype][identifier] = {definition: Dmrs.parse(comparative_quantifier['dmrs'], sortinfo_classes=sortinfo_classes, sortinfo_shortforms=sortinfo_shortforms)}
                         assert identifier not in self.comparative_quantifier_by_key
                         self.comparative_quantifier_by_key[identifier] = (qtype, identifier, definition)
                     continue
@@ -223,7 +226,7 @@ class DmrsRealizer(CaptionRealizer):
                         self.comparative_quantifiers[qtype][qrange] = dict()
                     for quantity, quantifier in quantities.items():
                         quantity = parse_string(quantity)
-                        self.comparative_quantifiers[qtype][qrange][quantity] = Dmrs.parse(quantifier['dmrs'])
+                        self.comparative_quantifiers[qtype][qrange][quantity] = Dmrs.parse(quantifier['dmrs'], sortinfo_classes=sortinfo_classes, sortinfo_shortforms=sortinfo_shortforms)
                         assert quantifier['key'] not in self.comparative_quantifier_by_key
                         self.comparative_quantifier_by_key[quantifier['key']] = (qtype, qrange, quantity)
 
@@ -232,9 +235,9 @@ class DmrsRealizer(CaptionRealizer):
         for connective, proposition in language['propositions'].items():
             connective = parse_string(connective)
             if isinstance(proposition['dmrs'], list):
-                self.propositions[connective] = tuple(Dmrs.parse(dmrs) for dmrs in proposition['dmrs'])
+                self.propositions[connective] = tuple(Dmrs.parse(dmrs, sortinfo_classes=sortinfo_classes, sortinfo_shortforms=sortinfo_shortforms) for dmrs in proposition['dmrs'])
             else:
-                self.propositions[connective] = Dmrs.parse(proposition['dmrs'])
+                self.propositions[connective] = Dmrs.parse(proposition['dmrs'], sortinfo_classes=sortinfo_classes, sortinfo_shortforms=sortinfo_shortforms)
             assert proposition['key'] not in self.proposition_by_key
             self.proposition_by_key[proposition['key']] = connective
 
@@ -243,8 +246,8 @@ class DmrsRealizer(CaptionRealizer):
         self.post_processing = list()
         self.post_processing_by_key = dict()
         for n, paraphrase in enumerate(language['post-processing']):
-            search = Dmrs.parse(paraphrase['search'])
-            replace = Dmrs.parse(paraphrase['replace'])
+            search = Dmrs.parse(paraphrase['search'], sortinfo_classes=sortinfo_classes, sortinfo_shortforms=sortinfo_shortforms)
+            replace = Dmrs.parse(paraphrase['replace'], sortinfo_classes=sortinfo_classes, sortinfo_shortforms=sortinfo_shortforms)
             disable_hierarchy = paraphrase.get('disable_hierarchy', False)
             self.post_processing.append((search, replace, disable_hierarchy))
             assert paraphrase['key'] not in self.post_processing_by_key
@@ -252,7 +255,7 @@ class DmrsRealizer(CaptionRealizer):
 
     def realize(self, captions):
         try:
-            ace = subprocess.Popen([self.ace_path, '-g', self.erg_path, '-1e', '-r', 'root_gen'], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            ace = subprocess.Popen([self.ace_path, '-g', self.erg_path, '-1e'] + self.ace_arguments, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         except Exception as e:
             import sys
             from datetime import datetime
@@ -274,7 +277,7 @@ class DmrsRealizer(CaptionRealizer):
             # print(dmrs.dumps_xml())
             dmrs.remove_underspecifications()
             dmrs_list.append(dmrs)
-            mrs_list.append(dmrs.get_mrs() + '\n')
+            mrs_list.append(dmrs.get_mrs(requires_rel_suffix=self.requires_rel_suffix) + '\n')
             # print(n, dmrs.get_mrs())
         stdout_data, stderr_data = ace.communicate(input=''.join(mrs_list).encode())
         stderr_data = stderr_data.decode('utf-8').splitlines()
@@ -289,8 +292,8 @@ class DmrsRealizer(CaptionRealizer):
                 continue
             if self.successful_regex.match(line):
                 if unexpected:
-                    print(dmrs_list[n].dumps_xml().decode())
-                    print(mrs_list[n])
+                    # print(dmrs_list[n].dumps_xml().decode())
+                    # print(mrs_list[n])
                     unexpected = False
                 n += 1
             elif self.unsuccessful_regex.match(line):
@@ -333,13 +336,13 @@ class DmrsRealizer(CaptionRealizer):
         if selector.predtype == 'unique':
             assert self.unique_selector is not None
             dmrs = copy.deepcopy(self.unique_selector)
-            dmrs.compose(self.type_dmrs(selector.scope), fusion={'type': 'type', 'quant': 'quant'}, hierarchy=self.hierarchy)
+            dmrs.compose(self.type_dmrs(selector.scope), fusion={'scope': 'type', 'quant': 'quant'}, hierarchy=self.hierarchy)
         else:
             assert selector.predtype in self.selectors and selector.value in self.selectors[selector.predtype], (selector.predtype, selector.value)
             dmrs = copy.deepcopy(self.selectors[selector.predtype][selector.value])
-            dmrs.compose(self.type_dmrs(selector.scope), fusion={'type': 'type', 'quant': 'quant'}, hierarchy=self.hierarchy)
+            dmrs.compose(self.type_dmrs(selector.scope), fusion={'scope': 'type', 'quant': 'quant'}, hierarchy=self.hierarchy)
             if selector.predtype in Selector.comparison_selectors:
-                dmrs.compose(self.selector_dmrs(selector.comparison), fusion={'comp': 'type'}, hierarchy=self.hierarchy)
+                dmrs.compose(self.selector_dmrs(selector.comparison), fusion={'comp': 'scope'}, hierarchy=self.hierarchy)
         return dmrs
 
     def relation_dmrs(self, relation):
@@ -362,14 +365,14 @@ class DmrsRealizer(CaptionRealizer):
                 if relation.predtype in Relation.meta_relations:
                     dmrs.compose(self.relation_dmrs(relation.comparison), fusion={'comp': 'rel'}, hierarchy=self.hierarchy)
                 else:
-                    dmrs.compose(self.selector_dmrs(relation.comparison), fusion={'comp': 'type'}, hierarchy=self.hierarchy)
+                    dmrs.compose(self.selector_dmrs(relation.comparison), fusion={'comp': 'scope'}, hierarchy=self.hierarchy)
         return dmrs
 
     def existential_dmrs(self, existential):
         if isinstance(existential.restrictor, Selector):
             assert self.selector_existential is not None
             dmrs = copy.deepcopy(self.selector_existential)
-            dmrs.compose(self.selector_dmrs(existential.restrictor), fusion={'rstr': 'type'}, hierarchy=self.hierarchy)
+            dmrs.compose(self.selector_dmrs(existential.restrictor), fusion={'rstr': 'scope'}, hierarchy=self.hierarchy)
         else:
             assert self.type_existential is not None
             dmrs = copy.deepcopy(self.type_existential)

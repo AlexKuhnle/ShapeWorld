@@ -7,7 +7,7 @@ class ShapeDataset(ClassificationDataset):
     def __init__(
         self,
         world_size=64,
-        world_color='black',
+        world_colors=('black',),
         shapes=('square', 'rectangle', 'triangle', 'pentagon', 'cross', 'circle', 'semicircle', 'ellipse'),
         colors=('red', 'green', 'blue', 'yellow', 'magenta', 'cyan', 'gray'),
         textures=('solid',),
@@ -32,7 +32,7 @@ class ShapeDataset(ClassificationDataset):
 
         world_generator = RandomAttributesGenerator(
             world_size=world_size,
-            world_color=world_color,
+            world_colors=world_colors,
             shapes=shapes,
             colors=colors,
             textures=textures,
@@ -52,7 +52,7 @@ class ShapeDataset(ClassificationDataset):
             max_provoke_collision_rate=max_provoke_collision_rate
         )
 
-        num_classes = len(world_generator.shapes) * len(world_generator.colors) * len(world_generator.textures)
+        num_classes = len(world_generator.shapes) * len(world_generator.all_colors) * len(world_generator.textures)
 
         super(ShapeDataset, self).__init__(
             world_generator=world_generator,
@@ -64,8 +64,8 @@ class ShapeDataset(ClassificationDataset):
 
     def get_classes(self, world):
         if self.count_class:
-            return [self.world_generator.shapes.index(entity.shape.name) * len(self.world_generator.colors) * len(self.world_generator.textures) + self.world_generator.colors.index(entity.color.name) * len(self.world_generator.textures) + self.world_generator.textures.index(entity.texture.name) for entity in world.entities]
+            return [self.world_generator.shapes.index(entity.shape.name) * len(self.world_generator.all_colors) * len(self.world_generator.textures) + self.world_generator.all_colors.index(entity.color.name) * len(self.world_generator.textures) + self.world_generator.textures.index(entity.texture.name) for entity in world.entities]
         elif self.multi_class:
-            return {self.world_generator.shapes.index(entity.shape.name) * len(self.world_generator.colors) * len(self.world_generator.textures) + self.world_generator.colors.index(entity.color.name) * len(self.world_generator.textures) + self.world_generator.textures.index(entity.texture.name) for entity in world.entities}
+            return {self.world_generator.shapes.index(entity.shape.name) * len(self.world_generator.all_colors) * len(self.world_generator.textures) + self.world_generator.all_colors.index(entity.color.name) * len(self.world_generator.textures) + self.world_generator.textures.index(entity.texture.name) for entity in world.entities}
         else:
-            return (self.world_generator.shapes.index(world.entities[0].shape.name) * len(self.world_generator.colors) * len(self.world_generator.textures) + self.world_generator.colors.index(world.entities[0].color.name) * len(self.world_generator.textures) + self.world_generator.textures.index(world.entities[0].texture.name),)
+            return (self.world_generator.shapes.index(world.entities[0].shape.name) * len(self.world_generator.all_colors) * len(self.world_generator.textures) + self.world_generator.all_colors.index(world.entities[0].color.name) * len(self.world_generator.textures) + self.world_generator.textures.index(world.entities[0].texture.name),)

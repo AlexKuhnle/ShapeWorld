@@ -4,7 +4,6 @@ import json
 from math import ceil, sqrt
 import os
 from random import random, randrange
-import sys
 import numpy as np
 from PIL import Image
 from shapeworld import util
@@ -44,22 +43,22 @@ class Dataset(object):
         if isinstance(name, str):
             try:
                 name = json.loads(name)
-            except json.decoder.JSONDecodeError:
+            except Exception:
                 pass
 
         if isinstance(variant, str):
             try:
                 variant = json.loads(variant)
-            except json.decoder.JSONDecodeError:
+            except Exception:
                 pass
 
         if isinstance(config, str):
             try:
                 config = json.loads(config)
-            except json.decoder.JSONDecodeError:
+            except Exception:
                 pass
 
-        if isinstance(name, list):
+        if isinstance(name, (tuple, list)):
             try:
                 if not isinstance(variant, list):
                     variant = [variant for _ in name]
@@ -76,7 +75,7 @@ class Dataset(object):
             except TypeError:
                 assert False
 
-        if isinstance(variant, list):
+        if isinstance(variant, (tuple, list)):
             try:
                 if not isinstance(config, list):
                     config = [config for _ in variant]
@@ -91,7 +90,7 @@ class Dataset(object):
             except TypeError:
                 assert False
 
-        if isinstance(config, list):
+        if isinstance(config, (tuple, list)):
             assert len(kwargs) == 0
             try:
                 datasets = list()
@@ -158,16 +157,31 @@ class Dataset(object):
             return Dataset.create(dtype=dtype, name=name, variant=variant, language=language, config=config, **kwargs)
 
         else:
-            raise Exception('Invalid config value.')
+            raise Exception('Invalid config value: ' + str(config))
 
         if config.pop('generated', False):
-            assert dtype is None or config['type'] == dtype
-            assert name is None or config['name'] == name
-            assert variant is None or config['variant'] == variant
-            assert language is None or config['language'] == language
-            dtype = config['type']
-            name = config['name']
-            variant = config['variant']
+            assert dtype is None or 'type' not in config or config['type'] == dtype
+            assert name is None or 'name' not in config or config['name'] == name
+            assert variant is None or 'variant' not in config or config['variant'] == variant
+            assert language is None or 'language' not in config or config['language'] == language
+            if 'dtype' in config:
+                assert dtype == config['type']
+                dtype = config['type']
+            else:
+                assert dtype is not None
+                config['type'] = dtype
+            if 'name' in config:
+                assert name == config['name']
+                name = config['name']
+            else:
+                assert name is not None
+                config['name'] = name
+            if 'variant' in config:
+                assert variant == config['variant']
+                variant = config.get('variant')
+            else:
+                assert variant is not None
+                config['variant'] = variant
             dataset = LoadedDataset(specification=config, **kwargs)
             assert dtype == dataset.type
             assert name == dataset.name
@@ -540,7 +554,7 @@ class LoadedDataset(Dataset):
     def __init__(self, specification, random_sampling=True, pixel_noise_stddev=None):
         self._type = specification.pop('type')
         self._name = specification.pop('name')
-        self.variant = specification.pop('variant')
+        self.variant = specification.pop('variant', None)
         self.directory = specification.pop('directory')
         relative_directory = specification.get('relative_directory')
         if relative_directory is not None:
@@ -900,7 +914,7 @@ class DatasetMixer(Dataset):
 
     @property
     def name(self):
-        return '+'.join(set(dataset.name for dataset in self.datasets))
+        return '+'.join(dataset.name for dataset in self.datasets)
 
     def generate(self, n, mode=None, include_model=False, alternatives=False):
         if mode == 'none':
@@ -1036,7 +1050,7 @@ class CaptionAgreementDataset(Dataset):
             values.update(caption='language', caption_length='int', caption_rpn='rpn', caption_rpn_length='int', caption_model='model')
         assert isinstance(caption_size, int) and caption_size > 0
         vocabulary = list(vocabulary)
-        assert len(vocabulary) > 0 and vocabulary == sorted(vocabulary), [(w1, w2) for w1, w2 in zip(vocabulary, sorted(vocabulary)) if w1 != w2]
+        assert len(vocabulary) > 0 and vocabulary == sorted(vocabulary), sorted(vocabulary)  # [(w1, w2) for w1, w2 in zip(vocabulary, sorted(vocabulary)) if w1 != w2]
         self.world_generator = world_generator
         self.world_captioner = world_captioner
         from shapeworld.realizers import CaptionRealizer
@@ -1259,7 +1273,6 @@ class CaptionAgreementDataset(Dataset):
         captions = self.caption_realizer.realize(captions=captions)
 
         for i, caption in enumerate(captions):
-            assert caption[-1] == '.'
             caption = util.sentence2tokens(sentence=caption)
 
             if len(caption) > caption_size:

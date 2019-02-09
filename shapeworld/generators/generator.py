@@ -1,3 +1,4 @@
+from random import choice
 from shapeworld import util
 
 
@@ -9,7 +10,7 @@ class WorldGenerator(object):
     def __init__(
         self,
         world_size=64,
-        world_color='black',
+        world_colors=('black',),
         shapes=('square', 'rectangle', 'triangle', 'pentagon', 'cross', 'circle', 'semicircle', 'ellipse'),
         colors=('red', 'green', 'blue', 'yellow', 'magenta', 'cyan', 'gray'),
         textures=('solid',),
@@ -21,11 +22,10 @@ class WorldGenerator(object):
         collision_shade_difference=0.5,
         boundary_tolerance=None
     ):
-        assert world_color not in colors
         self.world_size = world_size
-        self.world_color = world_color
+        self.world_colors = list(world_colors)
         self.shapes = list(shapes)
-        self.colors = list(colors)
+        self.all_colors = list(colors)
         self.textures = list(textures)
         self.rotation = rotation
         self.size_range = size_range
@@ -41,12 +41,15 @@ class WorldGenerator(object):
     def initialize(self, mode):
         assert mode in (None, 'train', 'validation', 'test')
         self.mode = mode
+        self.world_color = choice(self.world_colors)
+        self.colors = [color for color in self.all_colors if color != self.world_color]
         return True
 
     def model(self):
         return dict(
             name=str(self),
-            mode=self.mode
+            mode=self.mode,
+            world_color=self.world_color
         )
 
     def __call__(self):
@@ -90,7 +93,7 @@ class GeneratorMixer(WorldGenerator):
         assert not distribution or len(distribution) == len(generators)
         assert bool(train_distribution) == bool(validation_distribution) == bool(test_distribution)
         assert not train_distribution or len(train_distribution) == len(validation_distribution) == len(test_distribution) == len(distribution)
-        super(GeneratorMixer, self).__init__(world_size=generators[0].world_size, world_color=generators[0].world_color, shapes=generators[0].shapes, colors=generators[0].colors, textures=generators[0].textures, rotation=generators[0].rotation, size_range=generators[0].size_range, distortion_range=generators[0].distortion_range, shade_range=generators[0].shade_range, collision_tolerance=generators[0].collision_tolerance, boundary_tolerance=generators[0].boundary_tolerance)
+        super(GeneratorMixer, self).__init__(world_size=generators[0].world_size, world_colors=generators[0].world_colors, shapes=generators[0].shapes, colors=generators[0].all_colors, textures=generators[0].textures, rotation=generators[0].rotation, size_range=generators[0].size_range, distortion_range=generators[0].distortion_range, shade_range=generators[0].shade_range, collision_tolerance=generators[0].collision_tolerance, boundary_tolerance=generators[0].boundary_tolerance)
         self.generators = generators
         distribution = util.value_or_default(distribution, [1] * len(generators))
         self.distribution = util.cumulative_distribution(distribution)

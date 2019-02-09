@@ -5,12 +5,13 @@ import torch.utils.data
 
 class ShapeWorldDataset(torch.utils.data.Dataset):
 
-    def __init__(self, dataset, mode=None, include_model=False, epoch=False):
+    def __init__(self, dataset, mode=None, include_model=False, epoch=False, is_channels_first=True):
         super(ShapeWorldDataset, self).__init__()
         self.dataset = dataset
         self.mode = mode
         self.include_model = include_model
         self.epoch = epoch
+        self.is_channels_first = is_channels_first
         self.initialize_iterator()
         self.index = -1
 
@@ -26,7 +27,7 @@ class ShapeWorldDataset(torch.utils.data.Dataset):
         try:
             generated = next(self.iterator)
             for value_name in generated:
-                if self.dataset.values[value_name] == 'world':
+                if self.is_channels_first and self.dataset.values[value_name] == 'world':
                     generated[value_name] = np.transpose(generated[value_name], axes=(0, 3, 1, 2))
             return {value_name: value[0] for value_name, value in generated.items()}
         except StopIteration:

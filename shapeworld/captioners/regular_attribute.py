@@ -93,11 +93,11 @@ class RegularAttributeCaptioner(WorldCaptioner):
 
         values = list()
         for entity in predication.agreeing:
-            if self.attribute == 'shape':
+            if self.attribute == 'shape' and entity.shape.name in self.shapes:
                 values.append(entity.shape.name)
-            elif self.attribute == 'color':
+            elif self.attribute == 'color' and entity.color.name in self.colors:
                 values.append(entity.color.name)
-            elif self.attribute == 'texture':
+            elif self.attribute == 'texture' and entity.texture.name in self.textures:
                 values.append(entity.texture.name)
 
         value = choice(values)

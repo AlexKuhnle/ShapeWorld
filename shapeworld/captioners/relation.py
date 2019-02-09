@@ -75,6 +75,8 @@ class RelationCaptioner(WorldCaptioner):
             self.incorrect_mode = util.sample(self.incorrect_distribution)
             if self.incorrect_mode == 0 and not self.reference_captioner.incorrect_possible():
                 continue
+            elif self.incorrect_mode == 2 and self.predtype in Relation.no_inverse_relations:
+                continue
             break
         else:
             return False

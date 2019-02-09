@@ -181,28 +181,32 @@ class RegularTypeCaptioner(WorldCaptioner):
         if predication.num_agreeing == 0:
             return None
 
-        values = list()
+        entities = list()
         for entity in predication.agreeing:
-            value = list()
+            entity_attributes = list()
             for predtype in self.attributes:
-                if predtype == 'shape':
-                    value.append(entity.shape.name)
-                elif predtype == 'color':
-                    value.append(entity.color.name)
-                elif predtype == 'texture':
-                    value.append(entity.texture.name)
-            values.append(tuple(value))
+                if predtype == 'shape' and entity.shape.name in self.shapes:
+                    entity_attributes.append(entity.shape.name)
+                elif predtype == 'color' and entity.color.name in self.colors:
+                    entity_attributes.append(entity.color.name)
+                elif predtype == 'texture' and entity.texture.name in self.textures:
+                    entity_attributes.append(entity.texture.name)
+                else:
+                    break
+            else:
+                entity = tuple(entity_attributes)
+                entities.append(entity)
 
-        value = choice(values)
+        entity = choice(entities)
 
         attributes = list()
         for n, predtype in enumerate(self.attributes):
             if predtype == 'shape':
-                attributes.append(Attribute(predtype='shape', value=value[n]))
+                attributes.append(Attribute(predtype='shape', value=entity[n]))
             elif predtype == 'color':
-                attributes.append(Attribute(predtype='color', value=value[n]))
+                attributes.append(Attribute(predtype='color', value=entity[n]))
             elif predtype == 'texture':
-                attributes.append(Attribute(predtype='texture', value=value[n]))
+                attributes.append(Attribute(predtype='texture', value=entity[n]))
 
         for n in range(len(attributes) - 1, -1, -1):
             if predication.contradictory(predicate=attributes[n]):

@@ -6,7 +6,7 @@ class Texture(object):
     __slots__ = ()
 
     def __eq__(self, other):
-        return isinstance(other, Texture) and self.name == other.name
+        return (isinstance(other, Texture) and self.name == other.name) or (isinstance(other, str) and self.name == other)
 
     @property
     def name(self):

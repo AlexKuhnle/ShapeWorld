@@ -22,7 +22,7 @@ class Shape(object):
         self.size = size / 2.0
 
     def __eq__(self, other):
-        return isinstance(other, Shape) and self.name == other.name
+        return (isinstance(other, Shape) and self.name == other.name) or (isinstance(other, str) and self.name == other)
 
     @property
     def name(self):

@@ -90,6 +90,7 @@ if __name__ == '__main__':
 
     specification = dataset.specification()
     specification['generated'] = True
+    specification['directory'] = args.directory
     if args.variant is not None:
         specification['variant'] = args.variant
     if args.archive:

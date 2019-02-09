@@ -119,17 +119,20 @@ class UniqueTypeCaptioner(WorldCaptioner):
         for entity in predication.agreeing:
             entity_attributes = list()
             for predtype in self.attributes:
-                if predtype == 'shape':
+                if predtype == 'shape' and entity.shape.name in self.shapes:
                     entity_attributes.append(entity.shape.name)
-                elif predtype == 'color':
+                elif predtype == 'color' and entity.color.name in self.colors:
                     entity_attributes.append(entity.color.name)
-                elif predtype == 'texture':
+                elif predtype == 'texture' and entity.texture.name in self.textures:
                     entity_attributes.append(entity.texture.name)
-            entity = tuple(entity_attributes)
-            if entity in entities:
-                entities[entity] += 1
+                else:
+                    break
             else:
-                entities[entity] = 1
+                entity = tuple(entity_attributes)
+                if entity in entities:
+                    entities[entity] += 1
+                else:
+                    entities[entity] = 1
 
         entities = [entity for entity, count in entities.items() if count == 1]
         if len(entities) == 0:

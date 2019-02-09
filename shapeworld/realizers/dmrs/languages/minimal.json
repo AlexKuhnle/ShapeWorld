@@ -1,4 +1,7 @@
 {
+    "ace-arguments": ["-r", "root_gen"],
+
+
     "sortinfos": {
         "e": {
             "features": ["sf", "tense", "mood", "perf", "prog"]
@@ -10,7 +13,6 @@
 
 
     "attributes": {
-        "empty": {"key": "shape", "dmrs": "[attr,type]:_shape_n_sw x?[pers=3]"},
         "relation": {"key": "relation-attribute", "dmrs": "[attr]:pred e[ppi--] =1=> [type]:node"},
 
         "shape": {
@@ -34,6 +36,9 @@
             "gray": {"key": "gray", "dmrs": "[attr]:_gray_a_sw e? =1=> [type]:node"}
         }
     },
+
+
+    "type": {"key": "shape", "dmrs": "[type]:_shape_n_sw x?[pers=3] <-- [quant]:default_q"},
 
 
     "relations": {
