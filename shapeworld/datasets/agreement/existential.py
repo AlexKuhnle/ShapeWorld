@@ -32,6 +32,7 @@ class ExistentialDataset(CaptionAgreementDataset):
         validation_combination_rate=0.5,
         test_combination_rate=0.5,
         max_provoke_collision_rate=0.33,
+        captioner_distribution=(1, 2),
         caption_size=8,
         vocabulary=('.', 'a', 'an', 'blue', 'circle', 'cross', 'cyan', 'ellipse', 'gray', 'green', 'is', 'magenta', 'pentagon', 'rectangle', 'red', 'semicircle', 'shape', 'square', 'there', 'triangle', 'yellow'),
         correct_ratio=0.5,
@@ -97,7 +98,7 @@ class ExistentialDataset(CaptionAgreementDataset):
                     )
                 )
             ),
-            distribution=(1, 2)
+            distribution=captioner_distribution
         )
 
         super(ExistentialDataset, self).__init__(

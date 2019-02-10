@@ -1,0 +1,62 @@
+{
+    "requires-rel-suffix": true,
+
+
+    "sortinfos": {
+        "e": {
+            "features": ["e.aspect", "sf"]
+        },
+        "x": {
+            "features": ["cog-st", "png.animacy", "png.gender", "png.pernum", "sf", "speci"]
+        }
+    },
+
+
+
+    "attributes": {
+        "shape": {
+            "square": {"key": "square", "dmrs": "[attr,type]:_正方形_n_1 x? <-- [quant]:exist_q"},
+            "rectangle": {"key": "rectangle", "dmrs": "[attr,type]:_长方形_n_1 x? <-- [quant]:exist_q"},
+            "triangle": {"key": "triangle", "dmrs": "[attr,type]:_三角形_n_1 x? <-- [quant]:exist_q"},
+            "pentagon": {"key": "pentagon", "dmrs": "[attr,type]:_五角形_n_1 x? <-- [quant]:exist_q"},
+            "cross": {"key": "cross", "dmrs": "[attr,type]:_十字形_n_1 x? <-- [quant]:exist_q"},
+            "circle": {"key": "circle", "dmrs": "[attr,type]:_圆形_n_1 x? <-- [quant]:exist_q"},
+            "semicircle": {"key": "semicircle", "dmrs": "[attr,type]:_半圆形_n_1 x? <-- [quant]:exist_q"},
+            "ellipse": {"key": "ellipse", "dmrs": "[attr,type]:_椭圆形_n_1 x? <-- [quant]:exist_q"}
+        },
+
+        "color": {
+            "red": {"key": "red", "dmrs": "exist_q --> [attr]:_红色_n_1 x? =1=> [type]:node <-- [quant]:exist_q"},
+            "green": {"key": "green", "dmrs": "exist_q --> [attr]:_绿色_n_1 x? =1=> [type]:node <-- [quant]:exist_q"},
+            "blue": {"key": "blue", "dmrs": "exist_q --> [attr]:_蓝色_n_1 x? =1=> [type]:node <-- [quant]:exist_q"},
+            "yellow": {"key": "yellow", "dmrs": "exist_q --> [attr]:_黄色_n_1 x? =1=> [type]:node <-- [quant]:exist_q"},
+            "magenta": {"key": "magenta", "dmrs": "exist_q --> [attr]:_紫色_n_1 x? =1=> [type]:node <-- [quant]:exist_q"},
+            "cyan": {"key": "cyan", "dmrs": "exist_q --> [attr]:_青色_n_1 x? =1=> [type]:node <-- [quant]:exist_q"},
+            "gray": {"key": "gray", "dmrs": "exist_q --> [attr]:_灰色_n_1 x? =1=> [type]:node <-- [quant]:exist_q"}
+        }
+    },
+
+
+    "type": {"key": "shape", "dmrs": "[type]:_形状_n_1 x[sf=prop,cog-st=activ-or-less] <-- [quant]:exist_q"},
+
+
+    "propositions": {
+        "type": {"key": "type-proposition", "dmrs": "*_有_p e -2-> [type,attr]:pred x? <-- [quant]:exist_q; card(1) x =1=> :type <=1= _个_x i"}
+    },
+
+
+    "hierarchy": {
+        "_形状_n_1": ["_正方形_n_1", "_长方形_n_1", "_三角形_n_1", "_五角形_n_1", "_十字形_n_1", "_圆形_n_1", "_半圆形_n_1", "_椭圆形_n_1"],
+        "_色_n_1": ["_红色_n_1", "_绿色_n_1", "_蓝色_n_1", "_黄色_n_1", "_紫色_n_1", "_青色_n_1", "_灰色_n_1"],
+        "default_q": ["_个_x"]
+    },
+
+
+    "post-processing": [
+        {
+            "key": "color-attribute",
+            "search": "[attr]:_色_n_1 x? =1=> [type]:_形状_n_1 x?",
+            "replace": "[type]:_形状_n_1 x? <=1= compound_p e -2-> [attr]:pred x[sf=prop]"
+        }
+    ]
+}

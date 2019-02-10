@@ -145,7 +145,7 @@ class Dataset(object):
                 variant = v
             else:
                 assert variant == v
-            l = config.pop('language', None)
+            l = config.pop('language', language)
             if language is None:
                 language = l
             else:

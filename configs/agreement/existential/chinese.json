@@ -1,0 +1,8 @@
+{
+    "type": "agreement",
+    "name": "existential",
+    "collision_tolerance": 0.25,
+    "entity_counts": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    "captioner_distribution": [1.0, 0.0],
+    "vocabulary": ["一", "三角形", "个", "五角形", "十字形", "半圆形", "圆形", "形状", "有", "某", "椭圆形", "正方形", "灰色", "紫色", "红色", "绿色", "蓝色", "长方形", "青色", "黄色"]
+}

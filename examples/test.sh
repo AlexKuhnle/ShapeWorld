@@ -2,6 +2,8 @@ echo "agreement:"
 
 echo "  existential"
 python -O generate.py -d examples/test1 -U -t agreement -n existential -i 1 -M -H
+echo "  existential chinese"
+python -O generate.py -d examples/test1 -U -t agreement -n existential -l chinese -c configs/agreement/existential/chinese.json -i 1 -M -H
 echo "  relational"
 python -O generate.py -d examples/test1 -U -t agreement -n relational -i 1 -M -H
 echo "  selection"

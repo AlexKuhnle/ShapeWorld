@@ -1,0 +1,7382 @@
+[
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "square"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "ellipse"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "ellipse"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "square"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "square"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "triangle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "square"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "square"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "square"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "ellipse"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "ellipse"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "ellipse"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "ellipse"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "square"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "triangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "triangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "square"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "ellipse"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "square"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "triangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "ellipse"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "ellipse"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "square"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "ellipse"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "square"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "square"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "ellipse"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "triangle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "triangle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "triangle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "triangle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "triangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "triangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "triangle"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "triangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "triangle"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "square"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "square"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "triangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "square"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "square"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "square"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "triangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "triangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "ellipse"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "square"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "triangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "ellipse"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "triangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "square"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "ellipse"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "square"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "triangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "square"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "ellipse"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "ellipse"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "ellipse"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "ellipse"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "ellipse"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "triangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "triangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "triangle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "ellipse"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "ellipse"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "ellipse"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "ellipse"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "ellipse"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "ellipse"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "square"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "square"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "triangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "triangle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "triangle"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "square"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "square"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "square"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "triangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "triangle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "triangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "ellipse"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "triangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "ellipse"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "ellipse"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "ellipse"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "square"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "triangle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "triangle"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "square"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "triangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "square"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "square"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "triangle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "triangle"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "ellipse"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "square"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "square"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "ellipse"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "ellipse"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "square"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "triangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "triangle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "ellipse"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "triangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "ellipse"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "ellipse"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "ellipse"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "triangle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "triangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "triangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "ellipse"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "ellipse"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "square"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "square"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "square"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "square"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "square"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "triangle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "ellipse"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "ellipse"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "ellipse"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "ellipse"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "ellipse"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "ellipse"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "square"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "square"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "square"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "triangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "triangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "ellipse"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "ellipse"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "triangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "square"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "square"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "rectangle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "square"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "gray"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "triangle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "magenta"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "triangle"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "triangle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "red"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "pentagon"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "circle"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "blue"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "semicircle"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "square"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "cyan"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "ellipse"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "green"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        }
+      ]
+    },
+    {
+      "component": "EntityType",
+      "predtype": "type",
+      "value": [
+        {
+          "component": "Attribute",
+          "predtype": "shape",
+          "value": "cross"
+        },
+        {
+          "component": "Attribute",
+          "predtype": "color",
+          "value": "yellow"
+        }
+      ]
+    }
+  ]
+]

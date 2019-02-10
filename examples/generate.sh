@@ -17,6 +17,11 @@ python generate.py -d examples/agreement/existential-full -U -t agreement -n exi
     --captions-per-instance 5 \
     | tee -a results.txt
 
+python generate.py -d examples/agreement/existential-chinese -U -t agreement -n existential \
+    -l chinese -c configs/agreement/existential/chinese.json -i 100 -M -H -N --config-values \
+    --world-size 100 --captions-per-instance 5 \
+    | tee -a results.txt
+
 # relational
 python generate.py -d examples/agreement/relational-spatial_twoshapes -U -t agreement \
     -n relational -c configs/agreement/relational/spatial_twoshapes.json -i 100 -M -H -N \

@@ -13,27 +13,27 @@
 
 
     "attributes": {
-        "relation": {"key": "relation-attribute", "dmrs": "[attr]:pred e[ppi--] =1=> [type]:node"},
+        "relation": {"key": "relation-attribute", "dmrs": "[attr]:pred e[ppi--] =1=> [type]:node <-- [quant]:default_q"},
 
         "shape": {
-            "square": {"key": "square", "dmrs": "[attr,type]:_square_n_sw x?[pers=3]"},
-            "rectangle": {"key": "rectangle", "dmrs": "[attr,type]:_rectangle_n_sw x?[pers=3]"},
-            "triangle": {"key": "triangle", "dmrs": "[attr,type]:_triangle_n_sw x?[pers=3]"},
-            "pentagon": {"key": "pentagon", "dmrs": "[attr,type]:_pentagon_n_sw x?[pers=3]"},
-            "cross": {"key": "cross", "dmrs": "[attr,type]:_cross_n_sw x?[pers=3]"},
-            "circle": {"key": "circle", "dmrs": "[attr,type]:_circle_n_sw x?[pers=3]"},
-            "semicircle": {"key": "semicircle", "dmrs": "[attr,type]:_semicircle_n_sw x?[pers=3]"},
-            "ellipse": {"key": "ellipse", "dmrs": "[attr,type]:_ellipse_n_sw x?[pers=3]"}
+            "square": {"key": "square", "dmrs": "[attr,type]:_square_n_sw x? <-- [quant]:default_q"},
+            "rectangle": {"key": "rectangle", "dmrs": "[attr,type]:_rectangle_n_sw x? <-- [quant]:default_q"},
+            "triangle": {"key": "triangle", "dmrs": "[attr,type]:_triangle_n_sw x? <-- [quant]:default_q"},
+            "pentagon": {"key": "pentagon", "dmrs": "[attr,type]:_pentagon_n_sw x? <-- [quant]:default_q"},
+            "cross": {"key": "cross", "dmrs": "[attr,type]:_cross_n_sw x? <-- [quant]:default_q"},
+            "circle": {"key": "circle", "dmrs": "[attr,type]:_circle_n_sw x? <-- [quant]:default_q"},
+            "semicircle": {"key": "semicircle", "dmrs": "[attr,type]:_semicircle_n_sw x? <-- [quant]:default_q"},
+            "ellipse": {"key": "ellipse", "dmrs": "[attr,type]:_ellipse_n_sw x? <-- [quant]:default_q"}
         },
 
         "color": {
-            "red": {"key": "red", "dmrs": "[attr]:_red_a_sw e? =1=> [type]:node"},
-            "green": {"key": "green", "dmrs": "[attr]:_green_a_sw e? =1=> [type]:node"},
-            "blue": {"key": "blue", "dmrs": "[attr]:_blue_a_sw e? =1=> [type]:node"},
-            "yellow": {"key": "yellow", "dmrs": "[attr]:_yellow_a_sw e? =1=> [type]:node"},
-            "magenta": {"key": "magenta", "dmrs": "[attr]:_magenta_a_sw e? =1=> [type]:node"},
-            "cyan": {"key": "cyan", "dmrs": "[attr]:_cyan_a_sw e? =1=> [type]:node"},
-            "gray": {"key": "gray", "dmrs": "[attr]:_gray_a_sw e? =1=> [type]:node"}
+            "red": {"key": "red", "dmrs": "[attr]:_red_a_sw e? =1=> [type]:node <-- [quant]:default_q"},
+            "green": {"key": "green", "dmrs": "[attr]:_green_a_sw e? =1=> [type]:node <-- [quant]:default_q"},
+            "blue": {"key": "blue", "dmrs": "[attr]:_blue_a_sw e? =1=> [type]:node <-- [quant]:default_q"},
+            "yellow": {"key": "yellow", "dmrs": "[attr]:_yellow_a_sw e? =1=> [type]:node <-- [quant]:default_q"},
+            "magenta": {"key": "magenta", "dmrs": "[attr]:_magenta_a_sw e? =1=> [type]:node <-- [quant]:default_q"},
+            "cyan": {"key": "cyan", "dmrs": "[attr]:_cyan_a_sw e? =1=> [type]:node <-- [quant]:default_q"},
+            "gray": {"key": "gray", "dmrs": "[attr]:_gray_a_sw e? =1=> [type]:node <-- [quant]:default_q"}
         }
     },
 
@@ -42,17 +42,19 @@
 
 
     "relations": {
-        "attribute": {"key": "attribute-relation", "dmrs": "[rel]:_be_v_id e? -2-> [ref]:_shape_n_sw x? <-- default_q"},
-        "type": {"key": "type-relation", "dmrs": "[rel]:_be_v_id e? -2-> [ref]:node <-- default_q"}
+        "attribute": {"key": "attribute-relation", "dmrs": "[rel]:_be_v_id e? -2-> [type]:_shape_n_sw x?[pers=3]"},
+        "type": {"key": "type-relation", "dmrs": "[rel]:_be_v_id e? -2-> [type]:node"}
     },
 
 
-    "existential": {"key": "existential", "dmrs": "_a_q --> [rstr]:pred x?[num=s] <-1- [body]:node"},
+    "existential": {
+        "type": {"key": "type-existential", "dmrs": "[quant]:_a_q --> [rstr]:pred x?[num=sg] <-1- [body]:node"}
+    },
 
 
     "propositions": {
-        "type": {"key": "type-proposition", "dmrs": "***[head]:_be_v_there e[ppi--] -1-> [type]:pred x? <-- _a_q"},
-        "existential": {"key": "existential-proposition", "dmrs": "***[head,body]:pred e[ppi--]"}
+        "type": {"key": "type-proposition", "dmrs": "**[head]:_be_v_there e[ppi--] -1-> [type]:pred x? <-- [quant]:_a_q"},
+        "existential": {"key": "existential-proposition", "dmrs": "**[head,body]:pred e[ppi--]"}
     },
 
 
@@ -63,30 +65,22 @@
 
     "post-processing": [
         {
-            "key": "unspecified-shape",
-            "search": "[type]:shape_n x?",
-            "replace": "[type]:_shape_n_sw x?",
-            "disable_hierarchy": true
-        },
-        {
-            "key": "shift-top-index",
-            "search": "***[cop]:_be_v_id e[ppi--] -2-> [obj]:_shape_n_sw x?[pers=3] <=1= [attr]:_?_a_? e?",
-            "replace": "[cop]:_be_v_id e[ppi--] -2-> [obj]:_shape_n_sw x?[pers=3] <=1= ***[attr]:_?_a_? e?"
-        },
-        {
             "key": "adjective-to-verb",
-            "search": "[subj]:node <-1- _be_v_id e[ppi--] -2-> _shape_n_sw x?[pers=3] <=1= [attr]:_?_a_? e?; :_shape_n_sw <-- default_q",
-            "replace": "[subj]:node <-1- [attr]:_?_a_? e[ppi--]"
+            "search": "[subj]:noun_n x? <-1- **_be_v_id e[ppi--] -2-> shape_n_only x?[pers=3] <=1= [attr]:_?_a_sw e?; :shape_n_only <-- default_q",
+            "replace": "[subj]:noun_n x? <-1- **[attr]:_?_a_sw e[ppi--]",
+            "reverse": "[subj]:noun_n x? <-1- **_be_v_id e[ppi--] -2-> _shape_n_sw x?[pers=3] <=1= [attr]:_?_a_sw e?; :_shape_n_sw <-- default_q"
         },
         {
             "key": "default-q-singular",
-            "search": "[subj]:pred x?[num=s] <-1- [cop]:_be_v_id e? -2-> [obj]:pred x? <-- default_q",
-            "replace": "[subj]:pred x?[num=s] <-1- [cop]:_be_v_id e? -2-> [obj]:pred x?[num=s] <-- _a_q"
+            "search": "[subj]:noun_n x?[num=sg] <-1- [cop]:_be_v_id e? -2-> [obj]:noun_n x? <-- [quant]:default_q_only",
+            "replace": "[subj]:noun_n x?[num=sg] <-1- [cop]:_be_v_id e? -2-> [obj]:noun_n x?[num=sg] <-- [quant]:_a_q",
+            "reverse": "[subj]:noun_n x?[num=sg] <-1- [cop]:_be_v_id e? -2-> [obj]:noun_n x? <-- [quant]:default_q"
         },
         {
             "key": "default-q-plural",
-            "search": "[subj]:pred x?[num=p] <-1- [cop]:_be_v_id e? -2-> [obj]:pred x? <-- default_q",
-            "replace": "[subj]:pred x?[num=p] <-1- [cop]:_be_v_id e? -2-> [obj]:pred x?[num=p] <-- udef_q"
+            "search": "[subj]:noun_n x?[num=pl] <-1- [cop]:_be_v_id e? -2-> [obj]:noun_n x? <-- [quant]:default_q_only",
+            "replace": "[subj]:noun_n x?[num=pl] <-1- [cop]:_be_v_id e? -2-> [obj]:noun_n x?[num=pl] <-- [quant]:udef_q",
+            "reverse": "[subj]:noun_n x?[num=pl] <-1- [cop]:_be_v_id e? -2-> [obj]:noun_n x? <-- [quant]:default_q"
         }
     ]
 }
