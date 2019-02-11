@@ -86,7 +86,7 @@ class DmrsRealizer(CaptionRealizer):
             language = json.load(fp=filehandle)
 
         self.ace_arguments = language.get('ace-arguments', list())
-        self.requires_rel_suffix =  language.get('requires-rel-suffix', False)
+        self.requires_rel_suffix = language.get('requires-rel-suffix', False)
 
         if 'sortinfos' in language:
             sortinfo_classes = dict()
@@ -248,8 +248,10 @@ class DmrsRealizer(CaptionRealizer):
         for n, paraphrase in enumerate(language['post-processing']):
             search = Dmrs.parse(paraphrase['search'], sortinfo_classes=sortinfo_classes, sortinfo_shortforms=sortinfo_shortforms)
             replace = Dmrs.parse(paraphrase['replace'], sortinfo_classes=sortinfo_classes, sortinfo_shortforms=sortinfo_shortforms)
+            reverse = Dmrs.parse(paraphrase.get('reverse', paraphrase['search']), sortinfo_classes=sortinfo_classes, sortinfo_shortforms=sortinfo_shortforms)
             disable_hierarchy = paraphrase.get('disable_hierarchy', False)
-            self.post_processing.append((search, replace, disable_hierarchy))
+            match_top_index = paraphrase.get('match_top_index', False)
+            self.post_processing.append((search, replace, reverse, disable_hierarchy, match_top_index))
             assert paraphrase['key'] not in self.post_processing_by_key
             self.post_processing_by_key[paraphrase['key']] = n
 
@@ -272,8 +274,8 @@ class DmrsRealizer(CaptionRealizer):
                 continue
             dmrs = self.caption_dmrs(caption=caption)
             # print(dmrs.dumps_xml())
-            for (search, replace, disable_hierarchy) in self.post_processing:
-                dmrs = dmrs.apply_paraphrases(paraphrases=[(search, replace)], hierarchy=(None if disable_hierarchy else self.hierarchy), match_top_index=False)
+            for search, replace, _, disable_hierarchy, match_top_index in self.post_processing:
+                dmrs = dmrs.apply_paraphrases(paraphrases=[(search, replace)], hierarchy=(None if disable_hierarchy else self.hierarchy), match_top_index=match_top_index)
             # print(dmrs.dumps_xml())
             dmrs.remove_underspecifications()
             dmrs_list.append(dmrs)
@@ -434,27 +436,35 @@ class DmrsRealizer(CaptionRealizer):
 
     def caption_dmrs(self, caption):
         if isinstance(caption, Attribute):
+            assert 'attribute' in self.propositions
             dmrs = copy.deepcopy(self.propositions['attribute'])
             dmrs.compose(self.attribute_dmrs(caption), hierarchy=self.hierarchy)
         elif isinstance(caption, EntityType):
+            assert 'type' in self.propositions
             dmrs = copy.deepcopy(self.propositions['type'])
             dmrs.compose(self.type_dmrs(caption), hierarchy=self.hierarchy)
         elif isinstance(caption, Selector):
+            assert 'selector' in self.propositions
             dmrs = copy.deepcopy(self.propositions['selector'])
             dmrs.compose(self.selector_dmrs(caption), hierarchy=self.hierarchy)
         elif isinstance(caption, Relation):
+            assert 'relation' in self.propositions
             dmrs = copy.deepcopy(self.propositions['relation'])
             dmrs.compose(self.relation_dmrs(caption), hierarchy=self.hierarchy)
         elif isinstance(caption, Existential):
+            assert 'existential' in self.propositions
             dmrs = copy.deepcopy(self.propositions['existential'])
             dmrs.compose(self.existential_dmrs(caption), hierarchy=self.hierarchy)
         elif isinstance(caption, Quantifier):
+            assert 'quantifier' in self.propositions
             dmrs = copy.deepcopy(self.propositions['quantifier'])
             dmrs.compose(self.quantifier_dmrs(caption), hierarchy=self.hierarchy)
         elif isinstance(caption, NumberBound):
+            assert 'number-bound' in self.propositions
             dmrs = copy.deepcopy(self.propositions['number-bound'])
             dmrs.compose(self.number_bound_dmrs(caption), hierarchy=self.hierarchy)
         elif isinstance(caption, ComparativeQuantifier):
+            assert 'comparative-quantifier' in self.propositions
             dmrs = copy.deepcopy(self.propositions['comparative-quantifier'])
             dmrs.compose(self.comparative_quantifier_dmrs(caption), hierarchy=self.hierarchy)
         elif isinstance(caption, Proposition):

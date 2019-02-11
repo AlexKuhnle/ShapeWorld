@@ -75,18 +75,19 @@ class NegationRelationCaptioner(WorldCaptioner):
 
         if self.negation:
             predication_copy = ref_predication.copy()
-            reference = self.relation_captioner.caption(predication=predication_copy, world=world)
-            if reference is None:
+            relation = self.relation_captioner.caption(predication=predication_copy, world=world)
+            if relation is None:
                 return None
-            if not self.relation_captioner.incorrect(caption=reference, predication=ref_predication, world=world):
+            if not self.relation_captioner.incorrect(caption=relation, predication=ref_predication, world=world):
                 return None
 
         else:
-            reference = self.relation_captioner.caption(predication=ref_predication, world=world)
-            if reference is None:
+            relation = self.relation_captioner.caption(predication=ref_predication, world=world)
+            if relation is None:
                 return None
 
-        relation = Relation(predtype='negation', value=(-1 if self.negation else 1), reference=reference)
+        if self.negation:
+            relation = Relation(predtype='negation', value=1, reference=relation)
 
         predication.apply(predicate=relation, ref_predication=ref_predication)
 
@@ -105,7 +106,16 @@ class NegationRelationCaptioner(WorldCaptioner):
             predication.apply(predicate=caption, ref_predication=ref_predication)
 
         elif self.incorrect_mode == 1:  # 0: inverse negation
-            caption.value = -caption.value
+            if predication.predtype == 'negation':
+                caption.predtype = caption.reference.predtype
+                caption.value = caption.reference.value
+                caption.comparison = caption.reference.comparison
+                caption.reference = caption.reference.reference
+            else:
+                caption.reference = Relation(predtype=caption.predtype, value=caption.value, reference=caption.reference, comparison=caption.comparison)
+                caption.predtype = 'negation'
+                caption.value = 1
+                caption.comparison = None
             caption.apply_to_predication(predication=predication)
 
         return True

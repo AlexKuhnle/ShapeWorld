@@ -121,8 +121,7 @@
         "type": {"key": "type-relation", "dmrs": "[rel]:_be_v_id e? -2-> [type]:node"},
 
         "negation": {
-            "-1": {"key": "neg-relation", "dmrs": "neg e? -1h-> [rel,ref]:node"},
-            "1": {"key": "id-relation", "dmrs": "[rel,ref]:node"}
+            "1": {"key": "neg-relation", "dmrs": "neg e? -1h-> [rel,ref]:node"}
         },
 
         "unspecific": {
@@ -150,7 +149,7 @@
         },
 
         "shape-rel": {
-            "-1": {"key": "different_shape", "dmrs": "[rel]:_be_v_id e? -2-> _shape_n_sw x?[num=sg] <=1= _different_a_than-from e? <=1= comp e? -2-> [ref]:node <-- [quant]:_a_q; :_shape_n_sw <-- _a_q"},
+            "-1": {"key": "different_shape", "dmrs": "[rel]:_be_v_id e? -2-> _shape_n_sw x?[num=sg] <=1= _different_a_than-from e? <=1= comp e? -2-> [ref]:node <-- [quant]:_a_q; :_shape_n_sw <-- default_q"},
             "1": {"key": "same_shape", "dmrs": "[rel]:_be_v_id e? -2-> _shape_n_sw x?[num=sg] <=1= _same_a_as e? <=1= comp_equal e? -2-> [ref]:node <-- [quant]:_a_q; :_shape_n_sw <-- _the_q"}
         },
 
@@ -330,9 +329,7 @@
 
 
     "propositions": {
-        "attribute": {"key": "attribute-proposition", "dmrs": "**[head]:_be_v_there e[ppi--] -1-> [type]:_shape_n_sw x?[pers=3] <-- [quant]:_a_q"},
         "type": {"key": "type-proposition", "dmrs": "**[head]:_be_v_there e[ppi--] -1-> [type]:pred x? <-- [quant]:_a_q"},
-        "relation": {"key": "relation-proposition", "dmrs": "**[head,rel]:pred e[ppi--] -1-> _shape_n_sw x?[pers=3] <-- _a_q"},
         "existential": {"key": "existential-proposition", "dmrs": "**[head,body]:pred e[ppi--]"},
         "quantifier": {"key": "quantifier-proposition", "dmrs": "**[head,body]:pred e[ppi--]"},
         "number-bound": {"key": "number-bound-proposition", "dmrs": "**[head,body]:pred e[ppi--]"},
@@ -351,18 +348,41 @@
         "noun_n": ["generic_entity", "part_of", "_quarter_n_of", "_third_n_of", "_shape_n_sw", "_square_n_sw", "_rectangle_n_sw", "_triangle_n_sw", "_pentagon_n_sw", "_cross_n_sw", "_circle_n_sw", "_semicircle_n_sw", "_ellipse_n_sw"],
         "default_q": ["_a_q", "udef_q", "_no_q", "_the_q", "_all_q"],
         "default_q_only": ["default_q"],
-        "_a_q": ["_the_q"],
-        "fraction_n": ["part_of", "_quarter_n_of", "_third_n_of"],
-        "fraction_q": ["_a_q", "udef_q", "_half_q"]
+        "fraction_n": ["_quarter_n_of", "_third_n_of"]
     },
 
 
     "post-processing": [
         {
-            "key": "adjective-to-verb",
+            "key": "adjective-to-verb-index",
             "search": "[subj]:noun_n x? <-1- **_be_v_id e[ppi--] -2-> shape_n_only x?[pers=3] <=1= [attr]:_?_a_sw e?; :shape_n_only <-- default_q",
             "replace": "[subj]:noun_n x? <-1- **[attr]:_?_a_sw e[ppi--]",
-            "reverse": "[subj]:noun_n x? <-1- **_be_v_id e[ppi--] -2-> _shape_n_sw x?[pers=3] <=1= [attr]:_?_a_sw e?; :_shape_n_sw <-- default_q"
+            "reverse": "[subj]:noun_n x? <-1- **_be_v_id e[ppi--] -2-> _shape_n_sw x?[pers=3] <=1= [attr]:_?_a_sw e?; :_shape_n_sw <-- default_q",
+            "match_top_index": true
+        },
+        {
+            "key": "adjective-to-verb-1eq",
+            "search": "[subj]:noun_n x? <-1- _be_v_id e[ppi--] -2-> shape_n_only x?[pers=3] <=1= [attr]:_?_a_sw e?; :shape_n_only <-- default_q; :_be_v_id <=1= [head]:node",
+            "replace": "[subj]:noun_n x? <-1- [attr]:_?_a_sw e[ppi--] <=1= [head]:node",
+            "reverse": "[subj]:noun_n x? <-1- _be_v_id e[ppi--] -2-> _shape_n_sw x?[pers=3] <=1= [attr]:_?_a_sw e?; :_shape_n_sw <-- default_q; :_be_v_id <=1= [head]:node"
+        },
+        {
+            "key": "adjective-to-verb-2eq",
+            "search": "[subj]:noun_n x? <-1- _be_v_id e[ppi--] -2-> shape_n_only x?[pers=3] <=1= [attr]:_?_a_sw e?; :shape_n_only <-- default_q; :_be_v_id <=2= [head]:node",
+            "replace": "[subj]:noun_n x? <-1- [attr]:_?_a_sw e[ppi--] <=2= [head]:node",
+            "reverse": "[subj]:noun_n x? <-1- _be_v_id e[ppi--] -2-> _shape_n_sw x?[pers=3] <=1= [attr]:_?_a_sw e?; :_shape_n_sw <-- default_q; :_be_v_id <=2= [head]:node"
+        },
+        {
+            "key": "adjective-to-verb-1h",
+            "search": "[subj]:noun_n x? <-1- _be_v_id e[ppi--] -2-> shape_n_only x?[pers=3] <=1= [attr]:_?_a_sw e?; :shape_n_only <-- default_q; :_be_v_id <-1h- [head]:node",
+            "replace": "[subj]:noun_n x? <-1- [attr]:_?_a_sw e[ppi--] <-1h- [head]:node",
+            "reverse": "[subj]:noun_n x? <-1- _be_v_id e[ppi--] -2-> _shape_n_sw x?[pers=3] <=1= [attr]:_?_a_sw e?; :_shape_n_sw <-- default_q; :_be_v_id <-1h- [head]:node"
+        },
+        {
+            "key": "adjective-to-verb-2h",
+            "search": "[subj]:noun_n x? <-1- _be_v_id e[ppi--] -2-> shape_n_only x?[pers=3] <=1= [attr]:_?_a_sw e?; :shape_n_only <-- default_q; :_be_v_id <-2h- [head]:node",
+            "replace": "[subj]:noun_n x? <-1- [attr]:_?_a_sw e[ppi--] <-2h- [head]:node",
+            "reverse": "[subj]:noun_n x? <-1- _be_v_id e[ppi--] -2-> _shape_n_sw x?[pers=3] <=1= [attr]:_?_a_sw e?; :_shape_n_sw <-- default_q; :_be_v_id <-2h- [head]:node"
         },
         {
             "key": "default-q-singular",
@@ -383,9 +403,14 @@
             "reverse": "[subj]:fraction_n x? <-1- [cop]:_be_v_id e? -2-> [obj]:noun_n x? <-- [quant]:default_q"
         },
         {
-            "key": "remove-partof",
-            "search": "[quant]:fraction_q --> [part]:fraction_n x? -1-> part_of x?[pers=3,num=pl] -1-> [type]:noun_n x? <=1= [num]:card(?) e?; :part_of <-- _the_q",
-            "replace": "[quant]:fraction_q --> [part]:fraction_n x? -1-> [type]:noun_n x? <=1= [num]:card(?) e?"
+            "key": "remove-partof-fraction",
+            "search": "[part]:fraction_n x? -1-> part_of x?[pers=3,num=pl] -1-> [type]:noun_n x? <=1= [num]:card(?) e?; :part_of <-- _the_q",
+            "replace": "[part]:fraction_n x? -1-> [type]:noun_n x? <=1= [num]:card(?) e?"
+        },
+        {
+            "key": "remove-partof-half",
+            "search": "[quant]:_half_q --> [part]:part_of x? -1-> part_of x?[pers=3,num=pl] -1-> [type]:noun_n x? <=1= [num]:card(?) e?; :part_of <-- _the_q",
+            "replace": "[quant]:_half_q --> [part]:part_of x? -1-> [type]:noun_n x? <=1= [num]:card(?) e?"
         },
         {
             "key": "none-partof",
