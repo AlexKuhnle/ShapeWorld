@@ -71,9 +71,9 @@ class NegationRelationCaptioner(WorldCaptioner):
         )
 
     def caption(self, predication, world):
-        ref_predication = predication.sub_predication(reset=True)
-
         if self.negation:
+            ref_predication = predication.sub_predication(reset=True)
+
             predication_copy = ref_predication.copy()
             relation = self.relation_captioner.caption(predication=predication_copy, world=world)
             if relation is None:
@@ -81,41 +81,43 @@ class NegationRelationCaptioner(WorldCaptioner):
             if not self.relation_captioner.incorrect(caption=relation, predication=ref_predication, world=world):
                 return None
 
-        else:
-            relation = self.relation_captioner.caption(predication=ref_predication, world=world)
-            if relation is None:
-                return None
-
-        if self.negation:
             relation = Relation(predtype='negation', value=1, reference=relation)
 
-        predication.apply(predicate=relation, ref_predication=ref_predication)
+            predication.apply(predicate=relation, ref_predication=ref_predication)
+
+        else:
+            relation = self.relation_captioner.caption(predication=predication, world=world)
+            if relation is None:
+                return None
 
         return relation
 
     def incorrect(self, caption, predication, world):
         if self.incorrect_mode == 0:  # 0: incorrect relation
-            ref_predication = predication.sub_predication(reset=True)
             if self.negation:
+                ref_predication = predication.sub_predication(reset=True)
                 caption.reference = self.relation_captioner.caption(predication=ref_predication, world=world)
                 if caption.reference is None:
                     return False
+                predication.apply(predicate=caption, ref_predication=ref_predication)
             else:
-                if not self.relation_captioner.incorrect(caption=caption.reference, predication=ref_predication, world=world):
+                if not self.relation_captioner.incorrect(caption=caption, predication=predication, world=world):
                     return False
-            predication.apply(predicate=caption, ref_predication=ref_predication)
 
         elif self.incorrect_mode == 1:  # 0: inverse negation
-            if predication.predtype == 'negation':
+            if self.negation:
                 caption.predtype = caption.reference.predtype
                 caption.value = caption.reference.value
                 caption.comparison = caption.reference.comparison
                 caption.reference = caption.reference.reference
+                caption.reference.apply_to_predication(predication=predication)
             else:
+                ref_predication = predication.sub_predication(reset=True)
+                caption.apply_to_predication(predication=ref_predication)
                 caption.reference = Relation(predtype=caption.predtype, value=caption.value, reference=caption.reference, comparison=caption.comparison)
                 caption.predtype = 'negation'
                 caption.value = 1
                 caption.comparison = None
-            caption.apply_to_predication(predication=predication)
+                predication.apply(predicate=caption, ref_predication=ref_predication)
 
         return True

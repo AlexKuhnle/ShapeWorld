@@ -20,8 +20,12 @@ class Relation(Predicate):
         elif predtype == 'type':
             assert isinstance(value, EntityType)
             assert reference is None and comparison is None
+        elif predtype == 'unspecific':
+            assert value == 1
+            assert isinstance(reference, EntityType)
+            assert comparison is None or isinstance(comparison, Selector)
         elif predtype in Relation.meta_relations:
-            assert value == -1 or value == 1
+            assert value == 1
             assert isinstance(reference, Relation)
             assert comparison is None
         elif predtype in Relation.ternary_relations:

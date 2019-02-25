@@ -6,8 +6,9 @@ from shapeworld.world import World
 
 
 def clevr(directory, mode, parts=None):
-    assert len(parts) == 3
-    parts = dict(train=parts[0], validation=parts[1], test=parts[2])
+    if parts is not None:
+        assert len(parts) == 3
+        parts = dict(train=parts[0], validation=parts[1], test=parts[2])
     worlds = images_iter(directory=directory, mode=mode, parts=parts)
     world_models = scenes_iter(directory=directory, mode=mode, parts=parts)
     questions_answers = questions_iter(directory=directory, mode=mode, parts=parts)
@@ -148,7 +149,7 @@ def questions_iter(directory, mode, parts=None):
             question = question_dict['question'].lower()
             if question[-1] != '?':
                 question += '?'
-            question = util.string2tokens(string=question)
+            question = util.sentence2tokens(sentence=question)
             if mode == 'test':
                 question_model = dict()
                 answer = '[UNKNOWN]'
@@ -159,7 +160,7 @@ def questions_iter(directory, mode, parts=None):
                 answer = question_dict['answer'].lower()
             if answer in numbers:
                 answer = numbers[answer]
-            answer = util.string2tokens(string=answer)
+            answer = util.sentence2tokens(sentence=answer)
             assert question_dict['question_index'] == n
             assert question_dict['split'] == split
             assert question_dict['image_filename'] == 'CLEVR_{}_{:0>6}.png'.format(split, image_index)

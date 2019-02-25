@@ -120,12 +120,12 @@
         "attribute": {"key": "attribute-relation", "dmrs": "[rel]:_be_v_id e? -2-> [type]:_shape_n_sw x?[pers=3]"},
         "type": {"key": "type-relation", "dmrs": "[rel]:_be_v_id e? -2-> [type]:node"},
 
-        "negation": {
-            "1": {"key": "neg-relation", "dmrs": "neg e? -1h-> [rel,ref]:node"}
-        },
-
         "unspecific": {
             "1": {"key": "unspecific", "dmrs": "[rel]:_exist_v_1 e? <=1= _besides_p e -2-> [ref]:node <-- [quant]:_a_q"}
+        },
+
+        "negation": {
+            "1": {"key": "neg-relation", "dmrs": "neg e? -1h-> [rel,ref]:node"}
         },
 
         "x-rel": {

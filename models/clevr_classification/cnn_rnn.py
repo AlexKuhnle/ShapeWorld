@@ -19,7 +19,7 @@ def model(model, inputs, dataset_parameters, cnn_size, cnn_depth, cnn_block_dept
         Reduction(reduction=world_reduction, axis=(1, 2))
     )
 
-    question = (
+    caption = (
         (
             Input(name='question', shape=dataset_parameters['question_shape'], dtype='int', tensor=inputs.get('question')) >>
             Embedding(indices=dataset_parameters['vocabulary_size'], size=embedding_size),
@@ -34,10 +34,10 @@ def model(model, inputs, dataset_parameters, cnn_size, cnn_depth, cnn_block_dept
         caption >>= Select(index=0) >> Reduction(reduction=caption_reduction, axis=1)
 
     answer = (
-        (world, question) >>
+        (world, caption) >>
         Reduction(reduction=multimodal_reduction) >>
-        Repeat(layer=Dense, sizes=mlp_sizes) >>
-        Classification(name='answer', num_classes=dataset_parameters['num_answers'], multi_class=False, soft=soft, tensor=inputs.get('answer'))
+        Repeat(layer=Dense, sizes=mlp_sizes, dropout=True) >>
+        Classification(name='answer', num_classes=dataset_parameters['num_answers'], soft=soft, tensor=inputs.get('answer'))
     )
 
     return answer

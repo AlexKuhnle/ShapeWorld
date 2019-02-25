@@ -158,7 +158,7 @@ if __name__ == '__main__':
                     assert root == subdir
                     assert not dirs
                     if any(f[:6] == 'world_' for f in files):
-                        shard_begin = max(int(f[6:f.index('.')]) for f in files if f[:6] == 'world_') + 1
+                        shard_begin = max(int(f[6:f.index('.')]) for f in files if f[:6] == 'world_' and not f.endswith('.npy')) + 1
                         assert shard_begin % args.instances == 0
                         shards_begin += (shard_begin,)
                     else:
@@ -173,7 +173,7 @@ if __name__ == '__main__':
                             shards_begin += (max(int(d[5:]) for d in dirs) + 1,)
                         elif files:
                             assert all(f[:5] == 'shard' for f in files)
-                            shards_begin += (max(int(f[5:f.index('.')]) for f in files) + 1,)
+                            shards_begin += (max(int(f[5:f.index('.')]) for f in files if not f.endswith('.npy')) + 1,)
                         else:
                             shards_begin += (0,)
         if not args.unmanaged:

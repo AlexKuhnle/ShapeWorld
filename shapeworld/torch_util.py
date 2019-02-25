@@ -27,7 +27,7 @@ class ShapeWorldDataset(torch.utils.data.Dataset):
         try:
             generated = next(self.iterator)
             for value_name in generated:
-                if self.is_channels_first and self.dataset.values[value_name] == 'world':
+                if self.is_channels_first and (self.dataset.values[value_name] == 'world' or (value_name.endswith('_features') and self.dataset.values[value_name[:-9]] == 'world')):
                     generated[value_name] = np.transpose(generated[value_name], axes=(0, 3, 1, 2))
             return {value_name: value[0] for value_name, value in generated.items()}
         except StopIteration:

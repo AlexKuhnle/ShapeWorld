@@ -6,9 +6,10 @@ from shapeworld.datasets import clevr_util
 
 class ClevrDataset(Dataset):
 
-    def __init__(self, directory, parts=None, pixel_noise_stddev=0.0):
-        parts = parts.split(',')
+    def __init__(self, directory, parts=None, pixel_noise_stddev=None):
         values = dict(world='world', world_model='model', question='alternatives(language)', question_length='alternatives(int)', question_model='alternatives(model)', answer='alternatives(int)', alternatives='int')
+        if parts is not None:
+            parts = parts.split(',')
         world_size = tuple(next(clevr_util.images_iter(directory=directory, parts=parts, mode='train')).shape[:2])
         self.question_size = 0
         unique_answers = set()

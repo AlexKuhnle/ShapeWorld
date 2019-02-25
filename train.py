@@ -117,9 +117,16 @@ if __name__ == '__main__':
                 parameters = json.load(fp=filehandle)
         else:
             parameters = dict()
-    else:
+    elif os.path.isfile(args.hyperparams_file):
         with open(args.hyperparams_file, 'r') as filehandle:
             parameters = json.load(fp=filehandle)
+    else:
+        hyperparams_file = os.path.join('models', dataset.type, 'hyperparams', args.hyperparams_file + '.params.json')
+        if os.path.isfile(hyperparams_file):
+            with open(hyperparams_file, 'r') as filehandle:
+                parameters = json.load(fp=filehandle)
+        else:
+            parameters = dict()
 
     # restore
     iteration_start = 1

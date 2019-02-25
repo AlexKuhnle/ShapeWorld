@@ -179,13 +179,17 @@ class Dataset(object):
             if 'variant' in config:
                 assert variant == config['variant']
                 variant = config.get('variant')
-            else:
-                assert variant is not None
+            elif variant is not None:
                 config['variant'] = variant
+            if 'language' in config:
+                assert language == config['language']
+                language = config.get('language')
+            elif language is not None:
+                config['language'] = language
             dataset = LoadedDataset(specification=config, **kwargs)
             assert dtype == dataset.type
             assert name == dataset.name
-            assert variant == dataset.variant
+            assert variant is None or variant == dataset.variant
             assert language is None or language == dataset.language
             return dataset
 
@@ -364,6 +368,7 @@ class Dataset(object):
         with util.Archive(path=path, mode='w', archive=archive) as write_file:
             for value_name, value in generated.items():
                 self.serialize_value(
+                    path=path,
                     value=value,
                     value_name=value_name,
                     write_file=write_file,
@@ -373,6 +378,7 @@ class Dataset(object):
             if additional:
                 for value_name, (value, value_type) in additional.items():
                     self.serialize_value(
+                        path=path,
                         value=value,
                         value_name=value_name,
                         write_file=write_file,
@@ -385,7 +391,7 @@ class Dataset(object):
                 assert html is not None
                 write_file(filename='data.html', value=html)
 
-    def serialize_value(self, value, value_name, write_file, value_type=None, image_format='bmp', concat_worlds=False):
+    def serialize_value(self, path, value, value_name, write_file, value_type=None, image_format='bmp', concat_worlds=False):
         if value_type is None:
             value_type = self.values[value_name]
         value_type, alts = util.alternatives_type(value_type=value_type)
@@ -393,11 +399,17 @@ class Dataset(object):
             assert value_type == 'int'
             value = '\n'.join(str(int(x)) for x in value) + '\n'
             write_file('alternatives.txt', value)
-        elif value_type == 'int' or value_type == 'float':
+        elif value_type == 'int':
             if alts:
                 value = '\n'.join(';'.join(str(x)for x in xs) for xs in value) + '\n'
             else:
                 value = '\n'.join(str(x) for x in value) + '\n'
+            write_file(value_name + '.txt', value)
+        elif value_type == 'float':
+            if alts:
+                value = '\n'.join(';'.join(str(round(x, 3))for x in xs) for xs in value) + '\n'
+            else:
+                value = '\n'.join(str(round(x, 3)) for x in value) + '\n'
             write_file(value_name + '.txt', value)
         elif value_type == 'vector(int)':
             if alts:
@@ -406,11 +418,14 @@ class Dataset(object):
                 value = '\n'.join(','.join(str(x) for x in vector.flatten()) for vector in value) + '\n'
             write_file(value_name + '.txt', value)
         elif value_type == 'vector(float)':
-            if alts:
-                value = '\n'.join(';'.join(','.join(str(x)[:6] if x < 0 else str(x)[:5] for x in vector.flatten()) for vector in vectors) for vectors in value) + '\n'
+            if value.ndim > 1:
+                np.save(path + '-' + value_name + '.npy', value)
             else:
-                value = '\n'.join(','.join(str(x)[:6] if x < 0 else str(x)[:5] for x in vector.flatten()) for vector in value) + '\n'
-            write_file(value_name + '.txt', value)
+                if alts:
+                    value = '\n'.join(';'.join(','.join(str(round(x, 3)) for x in vector.flatten()) for vector in vectors) for vectors in value) + '\n'
+                else:
+                    value = '\n'.join(','.join(str(round(x, 3)) for x in vector.flatten()) for vector in value) + '\n'
+                write_file(value_name + '.txt', value)
         elif value_type == 'world':
             from shapeworld.world import World
             if concat_worlds:
@@ -454,7 +469,7 @@ class Dataset(object):
                 value = '\n'.join(' '.join(id2word[word_id] for word_id in words if word_id) for words in value) + '\n'
             write_file(value_name + '.txt', value)
 
-    def deserialize_value(self, value_name, read_file, value_type=None, image_format='bmp', num_concat_worlds=0):
+    def deserialize_value(self, path, value_name, read_file, value_type=None, image_format='bmp', num_concat_worlds=0):
         if value_type is None:
             value_type = self.values[value_name]
         value_type, alts = util.alternatives_type(value_type=value_type)
@@ -485,12 +500,15 @@ class Dataset(object):
                 value = [np.array(object=[int(x) for x in vector.split(',')], dtype=np.int32).reshape(shape) for vector in value.split('\n')[:-1]]
             return value
         elif value_type == 'vector(float)':
-            value = read_file(value_name + '.txt')
             shape = self.vector_shape(value_name=value_name)
-            if alts:
-                value = [[np.array(object=[float(x) for x in vector.split(',')], dtype=np.float32).reshape(shape) for vector in vectors.split(';')] for vectors in value.split('\n')[:-1]]
+            if len(shape) > 1:
+                value = np.load(path[:path.index('.', path.rindex('/'))] + '-' + value_name + '.npy')
             else:
-                value = [np.array(object=[float(x) for x in vector.split(',')], dtype=np.float32).reshape(shape) for vector in value.split('\n')[:-1]]
+                value = read_file(value_name + '.txt')
+                if alts:
+                    value = [[np.array(object=[float(x) for x in vector.split(',')], dtype=np.float32).reshape(shape) for vector in vectors.split(';')] for vectors in value.split('\n')[:-1]]
+                else:
+                    value = [np.array(object=[0.0 if 'e' in x else float(x) for x in vector.split(',')], dtype=np.float32).reshape(shape) for vector in value.split('\n')[:-1]]
             return value
         elif value_type == 'world':
             from shapeworld.world import World
@@ -578,7 +596,7 @@ class LoadedDataset(Dataset):
         for root, dirs, files in os.walk(self.directory):
             if root == self.directory:
                 dirs = sorted(d for d in dirs if d[0] != '.')
-                files = sorted(f for f in files if f[0] != '.')
+                files = sorted(f for f in files if f[0] != '.' and not f.endswith('.npy'))
                 if len(dirs) == 0:
                     assert all(f[:5] == 'shard' or f[:4] == 'part' for f in files)
                     if any(f[-13:] != '.tfrecords.gz' for f in files):
@@ -597,7 +615,7 @@ class LoadedDataset(Dataset):
                         self.records_shards = [os.path.join(root, f) for f in files]
             elif root[len(self.directory) + 1:] in ('train', 'validation', 'test'):
                 dirs = sorted(d for d in dirs if d[0] != '.')
-                files = sorted(f for f in files if f[0] != '.')
+                files = sorted(f for f in files if f[0] != '.' and not f.endswith('.npy'))
                 mode = root[len(self.directory) + 1:]
                 if len(dirs) > 0:
                     assert all(d[:5] == 'shard' or d[:4] == 'part' for d in dirs)
@@ -688,6 +706,7 @@ class LoadedDataset(Dataset):
             with util.Archive(path=self.mode_shards[self.shard], mode='r', archive=self.archive) as read_file:
                 for value_name, value in self.loaded.items():
                     value.extend(self.deserialize_value(
+                        path=self.mode_shards[self.shard],
                         value_name=value_name,
                         read_file=read_file,
                         image_format=self.image_format,
@@ -778,6 +797,7 @@ class LoadedDataset(Dataset):
             with util.Archive(path=mode_shards[shard], mode='r', archive=self.archive) as read_file:
                 for value_name, value in loaded.items():
                     value.extend(self.deserialize_value(
+                        path=mode_shards[shard],
                         value_name=value_name,
                         read_file=read_file,
                         image_format=self.image_format,

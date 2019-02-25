@@ -275,6 +275,8 @@ class Archive(object):
         assert archive in (None, 'zip', 'zip:none', 'zip:deflate', 'zip:bzip2', 'zip:lzma', 'tar', 'tar:none', 'tar:gzip', 'tar:bzip2', 'tar:lzma')
         self.archive = path
         self.mode = mode
+        if not os.path.isdir(self.archive[:self.archive.rindex('/')]):
+            os.mkdir(self.archive[:self.archive.rindex('/')])
         if not os.path.isdir('/tmp/shapeworld'):
             os.makedirs('/tmp/shapeworld')
         self.temp_directory = os.path.join('/tmp/shapeworld', str(time.time()))
