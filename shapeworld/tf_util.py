@@ -74,7 +74,7 @@ def batch_records(dataset, mode, batch_size):
         records, sequence_records = read_records(dataset=dataset, mode=mode)
         if not isinstance(dataset, LoadedDataset) or dataset.random_sampling:
             if 'alternatives' in records:
-                sample = tf.cast(x=tf.floor(x=tf.multiply(x=tf.cast(x=records['alternatives'], dtype=tf.float32), y=tf.random_uniform(shape=()))), dtype=tf.int32)
+                sample = tf.random_uniform(shape=(), maxval=records['alternatives'], dtype=tf.int64)
                 for value_name, sequence_record in sequence_records.items():
                     records[value_name] = sequence_record[sample]
                 records.pop('alternatives')

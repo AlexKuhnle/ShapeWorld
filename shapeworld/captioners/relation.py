@@ -17,7 +17,7 @@ class RelationCaptioner(WorldCaptioner):
         comparison_captioner,
         pragmatical_redundancy_rate=1.0,
         pragmatical_tautology_rate=0.0,
-        logical_redundancy_rate=1.0,
+        logical_redundancy_rate=0.0,
         logical_tautology_rate=0.0,
         logical_contradiction_rate=0.0,
         relations=None,
@@ -51,31 +51,63 @@ class RelationCaptioner(WorldCaptioner):
 
         return True
 
-    def rpn_length(self):
-        return self.reference_captioner.rpn_length() + self.comparison_captioner.rpn_length() + 1
+    def pn_length(self):
+        return self.reference_captioner.pn_length() + self.comparison_captioner.pn_length() + 1
 
-    def rpn_symbols(self):
-        return super(RelationCaptioner, self).rpn_symbols() | {'{}-{}-{}'.format(Relation.__name__, *relation) for relation in self.relations}
+    def pn_symbols(self):
+        return super(RelationCaptioner, self).pn_symbols() | {'{}-{}-{}'.format(Relation.__name__, *relation) for relation in self.relations}
+
+    def pn_arity(self):
+        arity = super(RelationCaptioner, self).pn_arity()
+        arity.update({
+            '{}-{}-{}'.format(Relation.__name__, *relation): 2 if relation[0] in Relation.ternary_relations else 1
+            for relation in self.relations
+        })
+        return arity
 
     def sample_values(self, mode, predication):
         if not super(RelationCaptioner, self).sample_values(mode=mode, predication=predication):
             return False
 
-        ref_predication = predication.copy(reset=True)
-        if not self.reference_captioner.sample_values(mode=mode, predication=ref_predication):
+        for _ in range(self.__class__.MAX_SAMPLE_ATTEMPTS):
+            self.predtype, self.value = choice(self.relations)
+            if self.predtype == 'size-rel' and not self.logical_contradiction and predication.blocked(predicate='shape'):
+                continue
+            elif self.predtype == 'shape-rel' and ((not self.logical_redundancy and predication.redundant(predicate='shape')) or (not self.logical_contradiction and predication.blocked(predicate='shape'))):
+                continue
+            elif self.predtype == 'shade-rel' and not self.logical_contradiction and predication.blocked(predicate='color'):
+                continue
+            elif self.predtype == 'color-rel' and ((not self.logical_redundancy and predication.redundant(predicate='color')) or (not self.logical_contradiction and predication.blocked(predicate='color'))):
+                continue
+            break
+        else:
             return False
 
-        comp_predication = predication.copy(reset=True)
-        if not self.comparison_captioner.sample_values(mode=mode, predication=comp_predication):
+        for _ in range(self.__class__.MAX_SAMPLE_ATTEMPTS):
+            ref_predication = predication.copy(reset=True)
+            if not self.reference_captioner.sample_values(mode=mode, predication=ref_predication):
+                continue
+            elif self.predtype == 'size-rel' and ((not predication.redundant(predicate='shape') and not ref_predication.redundant(predicate='shape')) or (not self.logical_redundancy and predication.redundant(predicate='shape') and ref_predication.redundant(predicate='shape')) or (not self.logical_contradiction and ref_predication.blocked(predicate='shape'))):
+                continue
+            elif self.predtype == 'shape-rel' and ((not self.logical_redundancy and ref_predication.redundant(predicate='shape')) or (not self.logical_contradiction and ref_predication.blocked(predicate='shape'))):
+                continue
+            elif self.predtype == 'shade-rel' and ((not predication.redundant(predicate='color') and not ref_predication.redundant(predicate='color')) or (not self.logical_redundancy and predication.redundant(predicate='color') and ref_predication.redundant(predicate='color')) or (not self.logical_contradiction and ref_predication.blocked(predicate='color'))):
+                continue
+            elif self.predtype == 'color-rel' and ((not self.logical_redundancy and ref_predication.redundant(predicate='color')) or (not self.logical_contradiction and ref_predication.blocked(predicate='color'))):
+                continue
+            break
+        else:
             return False
-
-        self.predtype, self.value = choice(self.relations)
 
         for _ in range(self.__class__.MAX_SAMPLE_ATTEMPTS):
             self.incorrect_mode = util.sample(self.incorrect_distribution)
             if self.incorrect_mode == 0 and not self.reference_captioner.incorrect_possible():
                 continue
             elif self.incorrect_mode == 2 and self.predtype in Relation.no_inverse_relations:
+                continue
+            elif self.incorrect_mode in (0, 2) and self.predtype == 'shape-rel' and not self.logical_contradiction and predication.redundant(predicate='shape'):
+                continue
+            elif self.incorrect_mode in (0, 2) and self.predtype == 'color-rel' and not self.logical_contradiction and predication.redundant(predicate='color'):
                 continue
             break
         else:
@@ -89,20 +121,31 @@ class RelationCaptioner(WorldCaptioner):
                 self.incorrect_predtype, self.incorrect_value = choice(self.relations)
                 if self.incorrect_predtype == self.predtype and self.incorrect_value == self.value:
                     continue
+                elif self.incorrect_predtype == 'size-rel' and not self.logical_contradiction and (predication.blocked(predicate='shape') or ref_predication.blocked(predicate='shape')):
+                    continue
+                elif self.incorrect_predtype == 'shape-rel' and not self.logical_contradiction and (predication.redundant(predicate='shape') or ref_predication.redundant(predicate='shape')):
+                    continue
+                elif self.incorrect_predtype == 'shade-rel' and not self.logical_contradiction and (predication.blocked(predicate='color') or ref_predication.blocked(predicate='color')):
+                    continue
+                elif self.incorrect_predtype == 'color-rel' and not self.logical_contradiction and (predication.redundant(predicate='color') or ref_predication.redundant(predicate='color')):
+                    continue
                 break
             else:
                 return False
 
-        predication.apply(predicate=self.predtype)
+        if self.predtype in Relation.ternary_relations or self.incorrect_predtype in Relation.ternary_relations:
+            comp_predication = predication.copy(reset=True)
+            if not self.comparison_captioner.sample_values(mode=mode, predication=comp_predication):
+                return False
 
-        if (self.predtype == 'size-rel' or self.incorrect_predtype == 'size-rel') and ref_predication.redundant(predicate='shape'):
+        if self.predtype in ('size-rel', 'shape-rel') or self.incorrect_predtype in ('size-rel', 'shape-rel'):
             predication.apply(predicate='shape')
-        elif (self.predtype == 'shape-rel' or self.incorrect_predtype == 'shape-rel') and ref_predication.redundant(predicate='shape'):
-            predication.block(predicate='shape')
-        elif (self.predtype == 'shade-rel' or self.incorrect_predtype == 'shade-rel') and ref_predication.redundant(predicate='color'):
+            if not self.logical_redundancy or (not self.logical_contradiction and ref_predication.redundant(predicate='shape') and (self.incorrect_mode == 0 or self.incorrect_predtype in ('size-rel', 'shape-rel'))):
+                predication.block(predicate='shape')
+        elif self.predtype in ('shade-rel', 'color-rel') or self.incorrect_predtype in ('shade-rel', 'color-rel'):
             predication.apply(predicate='color')
-        elif (self.predtype == 'color-rel' or self.incorrect_predtype == 'color-rel') and ref_predication.redundant(predicate='color'):
-            predication.block(predicate='color')
+            if not self.logical_redundancy or (not self.logical_contradiction and ref_predication.redundant(predicate='color') and (self.incorrect_mode == 0 or self.incorrect_predtype in ('shade-rel', 'color-rel'))):
+                predication.block(predicate='color')
 
         return True
 
@@ -129,53 +172,50 @@ class RelationCaptioner(WorldCaptioner):
         return model
 
     def caption(self, predication, world):
-        ref_predication = predication.sub_predication(reset=True)
+        ref_predication = predication.copy(reset=True)
         reference = self.reference_captioner.caption(predication=ref_predication, world=world)
         if reference is None:
             return None
 
         if self.predtype in Relation.ternary_relations or self.incorrect_predtype in Relation.ternary_relations:
-            comp_predication = predication.sub_predication(reset=True)
+            comp_predication = predication.copy(reset=True)
             comparison = self.comparison_captioner.caption(predication=comp_predication, world=world)
             if comparison is None:
                 return None
-            if ref_predication.equals(other=comp_predication):
-                # reference and comparison should not be equal
+            if comp_predication.implies(predicate=reference) or comp_predication.implied_by(predicate=reference):
+                # reference and comparison should not overlap
                 return None
+
         else:
-            comp_predication = None
             comparison = None
 
         relation = Relation(predtype=self.predtype, value=self.value, reference=reference, comparison=comparison)
 
-        predication.apply(predicate=relation, ref_predication=ref_predication, comp_predication=comp_predication)
+        if not self.correct(caption=relation, predication=predication):
+            return None
 
         return relation
 
     def incorrect(self, caption, predication, world):
         if self.incorrect_mode == 0:  # 0: incorrect reference
-            ref_predication = predication.sub_predication(reset=True)
+            ref_predication = predication.copy(reset=True)
             if not self.reference_captioner.incorrect(caption=caption.reference, predication=ref_predication, world=world):
                 return False
             if self.predtype in Relation.ternary_relations:
-                comp_predication = predication.sub_predication(reset=True)
-                caption.comparison.apply_to_predication(predication=comp_predication)
-                if ref_predication.equals(other=comp_predication):
+                comp_predication = predication.copy(reset=True)
+                if not self.comparison_captioner.correct(caption=caption.comparison, predication=comp_predication):
+                    return False
+                if comp_predication.implies(predicate=caption.reference) or comp_predication.implied_by(predicate=caption.reference):
                     # reference and comparison should not be equal
                     return False
-            else:
-                comp_predication = None
-            predication.apply(predicate=caption, ref_predication=ref_predication, comp_predication=comp_predication)
 
         if self.incorrect_mode == 1:  # 1: incorrect relation
             caption.predtype = self.incorrect_predtype
             caption.value = self.incorrect_value
-            ref_predication, comp_predication = caption.apply_to_predication(predication=predication)
 
         elif self.incorrect_mode == 2:  # 2: inverse relation
             caption.value = -caption.value
             if (caption.predtype, caption.value) not in self.relations:
                 return False
-            ref_predication, comp_predication = caption.apply_to_predication(predication=predication)
 
-        return True
+        return self.correct(caption=caption, predication=predication)

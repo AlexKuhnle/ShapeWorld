@@ -4,29 +4,26 @@ from shapeworld.captioners import WorldCaptioner
 
 class EmptyTypeCaptioner(WorldCaptioner):
 
-    def __init__(
-        self,
-        pragmatical_redundancy_rate=1.0,
-        pragmatical_tautology_rate=0.0,
-        logical_redundancy_rate=1.0,
-        logical_tautology_rate=1.0,
-        logical_contradiction_rate=0.0
-    ):
-        assert logical_tautology_rate == 1.0
+    def __init__(self):
         super(EmptyTypeCaptioner, self).__init__(
             internal_captioners=(),
-            pragmatical_redundancy_rate=pragmatical_redundancy_rate,
-            pragmatical_tautology_rate=pragmatical_tautology_rate,
-            logical_redundancy_rate=logical_redundancy_rate,
-            logical_tautology_rate=logical_tautology_rate,
-            logical_contradiction_rate=logical_contradiction_rate
+            pragmatical_redundancy_rate=1.0,
+            pragmatical_tautology_rate=1.0,
+            logical_redundancy_rate=1.0,
+            logical_tautology_rate=1.0,
+            logical_contradiction_rate=0.0
         )
 
-    def rpn_length(self):
+    def pn_length(self):
         return 2
 
-    def rpn_symbols(self):
-        return super(EmptyTypeCaptioner, self).rpn_symbols() | {'0', EntityType.__name__}
+    def pn_symbols(self):
+        return super(EmptyTypeCaptioner, self).pn_symbols() | {EntityType.__name__ + '0'}
+
+    def pn_arity(self):
+        arity = super(EmptyTypeCaptioner, self).pn_arity()
+        arity[EntityType.__name__ + '0'] = 0
+        return arity
 
     def incorrect_possible(self):
         return False
@@ -37,9 +34,7 @@ class EmptyTypeCaptioner(WorldCaptioner):
 
         entity_type = EntityType()
 
-        entity_type.apply_to_predication(predication=predication)
+        if not self.correct(caption=entity_type, predication=predication):
+            return None
 
         return entity_type
-
-    def incorrect(self, caption, predication, world):
-        assert False

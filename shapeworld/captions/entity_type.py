@@ -21,9 +21,13 @@ class EntityType(Predicate):
             value=[attribute.model() for attribute in self.value]
         )
 
-    def reverse_polish_notation(self):
-        return [rpn_symbol for attribute in self.value for rpn_symbol in attribute.reverse_polish_notation()] + \
-            [str(len(self.value)), str(self)]
+    def polish_notation(self, reverse=False):
+        if reverse:
+            return [rpn_symbol for attribute in self.value for rpn_symbol in attribute.polish_notation(reverse=reverse)] + \
+                [str(self) + str(len(self.value))]
+        else:
+            return [str(self) + str(len(self.value))] + \
+                [rpn_symbol for attribute in self.value for rpn_symbol in attribute.polish_notation(reverse=reverse)]
 
     def apply_to_predication(self, predication):
         for attribute in self.value:

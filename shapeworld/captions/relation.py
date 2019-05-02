@@ -63,15 +63,29 @@ class Relation(Predicate):
                 reference=self.reference.model()
             )
 
-    def reverse_polish_notation(self):
-        if self.predtype in ('attribute', 'type'):
-            return self.value.reverse_polish_notation() + ['{}-{}'.format(self, self.predtype)]
-        elif self.predtype in Relation.ternary_relations:
-            return self.reference.reverse_polish_notation() + \
-                self.comparison.reverse_polish_notation() + \
-                ['{}-{}-{}'.format(self, self.predtype, self.value)]
+    def polish_notation(self, reverse=False):
+        if reverse:
+            if self.predtype in ('attribute', 'type'):
+                return self.value.polish_notation(reverse=reverse) + \
+                    ['{}-{}'.format(self, self.predtype)]
+            elif self.predtype in Relation.ternary_relations:
+                return self.reference.polish_notation(reverse=reverse) + \
+                    self.comparison.polish_notation(reverse=reverse) + \
+                    ['{}-{}-{}'.format(self, self.predtype, self.value)]
+            else:
+                return self.reference.polish_notation(reverse=reverse) + \
+                    ['{}-{}-{}'.format(self, self.predtype, self.value)]
         else:
-            return self.reference.reverse_polish_notation() + ['{}-{}-{}'.format(self, self.predtype, self.value)]
+            if self.predtype in ('attribute', 'type'):
+                return ['{}-{}'.format(self, self.predtype)] + \
+                    self.value.polish_notation(reverse=reverse)
+            elif self.predtype in Relation.ternary_relations:
+                return ['{}-{}-{}'.format(self, self.predtype, self.value)] + \
+                    self.reference.polish_notation(reverse=reverse) + \
+                    self.comparison.polish_notation(reverse=reverse)
+            else:
+                return ['{}-{}-{}'.format(self, self.predtype, self.value)] + \
+                    self.reference.polish_notation(reverse=reverse)
 
     def apply_to_predication(self, predication):
         if self.predtype in ('attribute', 'type'):
@@ -140,7 +154,7 @@ class Relation(Predicate):
                 for comparison in comp_entities:
                     if reference == comparison or entity == reference or entity == comparison:
                         continue
-                    if ((entity.center - reference.center).length() - (comparison.center - reference.center).length()) * self.value > Settings.min_distance:
+                    if ((entity.center - comparison.center).length() - (reference.center - comparison.center).length()) * self.value > Settings.min_distance:
                         return True
             return False
 
@@ -205,7 +219,7 @@ class Relation(Predicate):
                 for comparison in comp_entities:
                     if comparison == reference:
                         continue
-                    if ((comparison.center - reference.center).length() - (entity.center - reference.center).length()) * self.value < Settings.min_distance:
+                    if ((reference.center - comparison.center).length() - (entity.center - comparison.center).length()) * self.value < Settings.min_distance:
                         return False
             return True
 

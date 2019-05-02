@@ -29,6 +29,7 @@ class LogicalPredication(object):
 
     def block(self, predicate):
         assert isinstance(predicate, str)
+        assert predicate in self.predicates
         self.blocked_preds.add(predicate)
 
     def equals(self, other):

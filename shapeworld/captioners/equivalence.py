@@ -12,7 +12,7 @@ class EquivalenceCaptioner(WorldCaptioner):
         captioner,
         pragmatical_redundancy_rate=1.0,
         pragmatical_tautology_rate=0.0,
-        logical_redundancy_rate=1.0,
+        logical_redundancy_rate=0.0,
         logical_tautology_rate=0.0,
         logical_contradiction_rate=0.0,
         both_correct_rate=0.5,
@@ -38,13 +38,17 @@ class EquivalenceCaptioner(WorldCaptioner):
         assert 'equivalence' in realizer.propositions
         return True
 
-    def rpn_length(self):
-        return super(EquivalenceCaptioner, self).rpn_length() * 2 + 2
+    def pn_length(self):
+        return super(EquivalenceCaptioner, self).pn_length() * 2 + 1
 
-    def rpn_symbols(self):
-        return super(EquivalenceCaptioner, self).rpn_symbols() | \
-            set(str(n) for n in range(1, 3)) | \
-            {'{}-{}'.format(Proposition.__name__, 'equivalence')}
+    def pn_symbols(self):
+        return super(EquivalenceCaptioner, self).pn_symbols() | \
+            {'{}-{}{}'.format(Proposition.__name__, 'equivalence', n) for n in range(2, 3)}
+
+    def pn_arity(self):
+        arity = super(EquivalenceCaptioner, self).pn_arity()
+        arity.update({'{}-{}{}'.format(Proposition.__name__, 'equivalence', n): n for n in range(2, 3)})
+        return arity
 
     def sample_values(self, mode, predication):
         assert predication.empty()
@@ -93,30 +97,20 @@ class EquivalenceCaptioner(WorldCaptioner):
     def caption(self, predication, world):
         assert predication.empty()
 
-        predication1 = predication.sub_predication()
-        predication2 = predication.sub_predication()
+        predication1 = predication.copy()
+        predication2 = predication1.sub_predication()
 
         if self.both_correct:
-            clause1 = self.captioner1.caption(predication=predication1, world=world)
-            if clause1 is None:
-                return None
-
             clause2 = self.captioner2.caption(predication=predication2, world=world)
             if clause2 is None:
                 return None
 
-        else:
-            predication_copy = predication.sub_predication()
-            clause1 = self.captioner1.caption(predication=predication_copy, world=world)
+            clause1 = self.captioner1.caption(predication=predication1, world=world)
             if clause1 is None:
                 return None
-            if not self.captioner1.incorrect(caption=clause1, predication=predication1, world=world):
-                return None
-            if clause1.agreement(predication=predication1, world=world) >= 0.0:
-                return None
 
-            predication_copy = predication.sub_predication()
-            clause2 = self.captioner2.caption(predication=predication_copy, world=world)
+        else:
+            clause2 = self.captioner2.caption(predication=predication2.copy(), world=world)
             if clause2 is None:
                 return None
             if not self.captioner2.incorrect(caption=clause2, predication=predication2, world=world):
@@ -124,40 +118,51 @@ class EquivalenceCaptioner(WorldCaptioner):
             if clause2.agreement(predication=predication2, world=world) >= 0.0:
                 return None
 
-        return Proposition(proptype='equivalence', clauses=(clause1, clause2))
+            clause1 = self.captioner1.caption(predication=predication1.copy(), world=world)
+            if clause1 is None:
+                return None
+            if not self.captioner1.incorrect(caption=clause1, predication=predication1, world=world):
+                return None
+            predication1.sub_predications.append(predication1.sub_predications.pop(0))
+            if clause1.agreement(predication=predication1, world=world) >= 0.0:
+                return None
+
+        proposition = Proposition(proptype='equivalence', clauses=(clause1, clause2))
+
+        if not self.correct(caption=proposition, predication=predication):
+            return None
+
+        return proposition
 
     def incorrect(self, caption, predication, world):
         assert predication.empty()
 
-        predication1 = predication.sub_predication()
-        predication2 = predication.sub_predication()
-
         if self.first_only_correct:
             if self.both_correct:
-                caption.clauses[0].apply_to_predication(predication=predication1)
+                predication2 = predication.copy()
                 if not self.captioner2.incorrect(caption=caption.clauses[1], predication=predication2, world=world):
                     return False
                 if caption.clauses[1].agreement(predication=predication2, world=world) >= 0.0:
                     return False
 
             else:
+                predication1 = predication.copy()
                 caption.clauses[0] = self.captioner1.caption(predication=predication1, world=world)
                 if caption.clauses[0] is None:
                     return False
-                caption.clauses[1].apply_to_predication(predication=predication2)
 
         else:
             if self.both_correct:
+                predication1 = predication.copy()
                 if not self.captioner1.incorrect(caption=caption.clauses[0], predication=predication1, world=world):
                     return False
                 if caption.clauses[0].agreement(predication=predication1, world=world) >= 0.0:
                     return False
-                caption.clauses[1].apply_to_predication(predication=predication2)
 
             else:
-                caption.clauses[0].apply_to_predication(predication=predication1)
+                predication2 = predication.copy()
                 caption.clauses[1] = self.captioner2.caption(predication=predication2, world=world)
                 if caption.clauses[1] is None:
                     return False
 
-        return True
+        return self.correct(caption=caption, predication=predication)

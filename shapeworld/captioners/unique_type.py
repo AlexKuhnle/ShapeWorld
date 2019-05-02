@@ -11,7 +11,7 @@ class UniqueTypeCaptioner(WorldCaptioner):
         self,
         pragmatical_redundancy_rate=1.0,
         pragmatical_tautology_rate=0.0,
-        logical_redundancy_rate=1.0,
+        logical_redundancy_rate=0.0,
         logical_tautology_rate=0.0,
         logical_contradiction_rate=0.0,
         hypernym_rate=0.5
@@ -38,16 +38,25 @@ class UniqueTypeCaptioner(WorldCaptioner):
 
         return True
 
-    def rpn_length(self):
-        return 5
+    def pn_length(self):
+        return 4
 
-    def rpn_symbols(self):
-        return super(UniqueTypeCaptioner, self).rpn_symbols() | \
-            set(str(n) for n in range(1, 4)) | \
-            {EntityType.__name__, Selector.__name__ + '-unique'} | \
+    def pn_symbols(self):
+        return super(UniqueTypeCaptioner, self).pn_symbols() | \
+            {EntityType.__name__ + str(n) for n in range(0, 4)} | \
+            {Selector.__name__ + '-unique'} | \
             {'{}-{}-{}'.format(Attribute.__name__, 'shape', value) for value in self.shapes} | \
             {'{}-{}-{}'.format(Attribute.__name__, 'color', value) for value in self.colors} | \
             {'{}-{}-{}'.format(Attribute.__name__, 'texture', value) for value in self.textures}
+
+    def pn_arity(self):
+        arity = super(UniqueTypeCaptioner, self).pn_arity()
+        arity.update({EntityType.__name__ + str(n): n for n in range(0, 4)})
+        arity[Selector.__name__ + '-unique'] = 1
+        arity.update({'{}-{}-{}'.format(Attribute.__name__, 'shape', value): 0 for value in self.shapes})
+        arity.update({'{}-{}-{}'.format(Attribute.__name__, 'color', value): 0 for value in self.colors})
+        arity.update({'{}-{}-{}'.format(Attribute.__name__, 'texture', value): 0 for value in self.textures})
+        return arity
 
     def sample_values(self, mode, predication):
         if not super(UniqueTypeCaptioner, self).sample_values(mode=mode, predication=predication):
@@ -151,16 +160,22 @@ class UniqueTypeCaptioner(WorldCaptioner):
 
         for n in range(len(attributes) - 1, -1, -1):
             if predication.contradictory(predicate=attributes[n]):
-                assert False
+                raise NotImplementedError
             elif not self.pragmatical_redundancy and predication.num_entities > 1 and predication.redundant(predicate=attributes[n]):
-                assert False
+                raise NotImplementedError
                 attributes.pop(n)
 
         entity_type = Selector(predtype='unique', scope=EntityType(attributes=attributes))
 
-        entity_type.apply_to_predication(predication=predication)
+        if not self.correct(caption=entity_type, predication=predication):
+            return None
 
         return entity_type
 
-    def incorrect(self, caption, predication, world):
-        assert False
+    def correct(self, caption, predication):
+        for sub_predication in predication.get_sub_predications():
+            if sub_predication.implies(predicate=caption) or sub_predication.implied_by(predicate=caption):
+                raise NotImplementedError
+                return None
+
+        return super().correct(caption=caption, predication=predication)

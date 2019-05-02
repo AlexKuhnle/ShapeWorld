@@ -17,7 +17,7 @@ class RegularTypeCaptioner(WorldCaptioner):
         self,
         pragmatical_redundancy_rate=1.0,
         pragmatical_tautology_rate=0.0,
-        logical_redundancy_rate=1.0,
+        logical_redundancy_rate=0.0,
         logical_tautology_rate=0.0,
         logical_contradiction_rate=0.0,
         hypernym_rate=0.5,
@@ -48,16 +48,23 @@ class RegularTypeCaptioner(WorldCaptioner):
 
         return True
 
-    def rpn_length(self):
-        return 5
+    def pn_length(self):
+        return 4
 
-    def rpn_symbols(self):
-        return super(RegularTypeCaptioner, self).rpn_symbols() | \
-            set(str(n) for n in range(1, 4)) | \
-            {EntityType.__name__} | \
+    def pn_symbols(self):
+        return super(RegularTypeCaptioner, self).pn_symbols() | \
+            {EntityType.__name__ + str(n) for n in range(0, 4)} | \
             {'{}-{}-{}'.format(Attribute.__name__, 'shape', value) for value in self.shapes} | \
             {'{}-{}-{}'.format(Attribute.__name__, 'color', value) for value in self.colors} | \
             {'{}-{}-{}'.format(Attribute.__name__, 'texture', value) for value in self.textures}
+
+    def pn_arity(self):
+        arity = super(RegularTypeCaptioner, self).pn_arity()
+        arity.update({EntityType.__name__ + str(n): n for n in range(0, 4)})
+        arity.update({'{}-{}-{}'.format(Attribute.__name__, 'shape', value): 0 for value in self.shapes})
+        arity.update({'{}-{}-{}'.format(Attribute.__name__, 'color', value): 0 for value in self.colors})
+        arity.update({'{}-{}-{}'.format(Attribute.__name__, 'texture', value): 0 for value in self.textures})
+        return arity
 
     def sample_values(self, mode, predication):
         if not super(RegularTypeCaptioner, self).sample_values(mode=mode, predication=predication):
@@ -112,16 +119,18 @@ class RegularTypeCaptioner(WorldCaptioner):
         shuffle(self.valid_attributes)
 
         if self.hypernym:
-            for _ in range(self.__class__.MAX_SAMPLE_ATTEMPTS):
-                self.attributes = choice([list(comb) for n in range(1, len(self.valid_attributes) + int(is_hypernym)) for comb in combinations(self.valid_attributes, n)])
-                if not self.logical_tautology and predication.tautological(predicates=self.attributes):
+            hypernym_attributes = [list(comb) for n in range(1, len(self.valid_attributes) + int(is_hypernym)) for comb in combinations(self.valid_attributes, n)]
+            shuffle(hypernym_attributes)
+            for attributes in hypernym_attributes:
+                if not self.logical_tautology and predication.tautological(predicates=attributes):
                     continue
-                elif self.incorrect_mode == 0 and 'shape' not in self.attributes:
+                elif self.incorrect_mode == 0 and 'shape' not in attributes:
                     continue
-                elif self.incorrect_mode == 1 and 'color' not in self.attributes:
+                elif self.incorrect_mode == 1 and 'color' not in attributes:
                     continue
-                elif self.incorrect_mode == 2 and 'texture' not in self.attributes:
+                elif self.incorrect_mode == 2 and 'texture' not in attributes:
                     continue
+                self.attributes = attributes
                 break
             else:
                 return False
@@ -181,7 +190,7 @@ class RegularTypeCaptioner(WorldCaptioner):
         if predication.num_agreeing == 0:
             return None
 
-        entities = list()
+        entities = set()
         for entity in predication.agreeing:
             entity_attributes = list()
             for predtype in self.attributes:
@@ -195,9 +204,9 @@ class RegularTypeCaptioner(WorldCaptioner):
                     break
             else:
                 entity = tuple(entity_attributes)
-                entities.append(entity)
+                entities.add(entity)
 
-        entity = choice(entities)
+        entity = choice(list(entities))
 
         attributes = list()
         for n, predtype in enumerate(self.attributes):
@@ -210,16 +219,24 @@ class RegularTypeCaptioner(WorldCaptioner):
 
         for n in range(len(attributes) - 1, -1, -1):
             if predication.contradictory(predicate=attributes[n]):
-                assert False
-            elif not self.pragmatical_redundancy and predication.num_entities > 1 and predication.redundant(predicate=attributes[n]):
-                assert False
+                raise NotImplementedError
+            elif not self.pragmatical_redundancy and predication.num_entities > 1 and predication.implies(predicate=attributes[n]):
+                raise NotImplementedError
                 attributes.pop(n)
 
         entity_type = EntityType(attributes=attributes)
 
-        entity_type.apply_to_predication(predication=predication)
+        if not self.correct(caption=entity_type, predication=predication):
+            return None
 
         return entity_type
+
+    def correct(self, caption, predication):
+        for sub_predication in predication.get_sub_predications():
+            if sub_predication.implies(predicate=caption) or sub_predication.implied_by(predicate=caption):
+                return False
+
+        return super().correct(caption=caption, predication=predication)
 
     def incorrect(self, caption, predication, world):
         if self.incorrect_mode == 0:  # random (existing) shape
@@ -306,6 +323,4 @@ class RegularTypeCaptioner(WorldCaptioner):
                     elif predicate.predtype == 'texture':
                         caption.value[n] = Attribute(predtype='texture', value=choice(textures))
 
-        caption.apply_to_predication(predication=predication)
-
-        return True
+        return self.correct(caption=caption, predication=predication)

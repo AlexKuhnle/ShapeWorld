@@ -20,7 +20,7 @@ class QuantifierCaptioner(WorldCaptioner):
         body_captioner,
         pragmatical_redundancy_rate=1.0,
         pragmatical_tautology_rate=0.0,
-        logical_redundancy_rate=1.0,
+        logical_redundancy_rate=0.0,
         logical_tautology_rate=0.0,
         logical_contradiction_rate=0.0,
         quantifiers=None,
@@ -64,11 +64,16 @@ class QuantifierCaptioner(WorldCaptioner):
 
         return True
 
-    def rpn_length(self):
-        return self.restrictor_captioner.rpn_length() + self.body_captioner.rpn_length() + 1
+    def pn_length(self):
+        return self.restrictor_captioner.pn_length() + self.body_captioner.pn_length() + 1
 
-    def rpn_symbols(self):
-        return super(QuantifierCaptioner, self).rpn_symbols() | {'{}-{}-{}-{}'.format(Quantifier.__name__, qtype, *quantifier[:2 - int(qtype == 'composed')]) for qtype, quantifiers in self.quantifiers.items() for quantifier in quantifiers}
+    def pn_symbols(self):
+        return super(QuantifierCaptioner, self).pn_symbols() | {'{}-{}-{}-{}'.format(Quantifier.__name__, qtype, *quantifier[:2 - int(qtype == 'composed')]) for qtype, quantifiers in self.quantifiers.items() for quantifier in quantifiers}
+
+    def pn_arity(self):
+        arity = super(QuantifierCaptioner, self).pn_arity()
+        arity.update({'{}-{}-{}-{}'.format(Quantifier.__name__, qtype, *quantifier[:2 - int(qtype == 'composed')]): 2 for qtype, quantifiers in self.quantifiers.items() for quantifier in quantifiers})
+        return arity
 
     def sample_values(self, mode, predication):
         assert predication.empty()
@@ -217,23 +222,20 @@ class QuantifierCaptioner(WorldCaptioner):
     def caption(self, predication, world):
         assert predication.empty()
 
-        rstr_predication = predication.sub_predication()
-        body_predication = predication.sub_predication()
-        rstr_body_predication = predication.sub_predication()
-
+        rstr_body_predication = predication.copy()
         if self.zero_quantification:
             # special case: zero quantifier, hence incorrect body
-            rstr_body_predication_copy = rstr_body_predication.copy()
-            body = self.body_captioner.caption(predication=rstr_body_predication_copy, world=world)
+            body = self.body_captioner.caption(predication=rstr_body_predication, world=world)
             if body is None:
                 return None
-            if not self.body_captioner.incorrect(caption=body, predication=rstr_body_predication, world=world):
-                return None
 
-            restrictor = self.restrictor_captioner.caption(predication=rstr_body_predication_copy, world=world)
+            restrictor = self.restrictor_captioner.caption(predication=rstr_body_predication, world=world)
             if restrictor is None:
                 return None
-            restrictor.apply_to_predication(predication=rstr_body_predication)
+
+            body_predication = predication.copy()
+            if not self.body_captioner.incorrect(caption=body, predication=body_predication, world=world):
+                return None
 
         else:
             body = self.body_captioner.caption(predication=rstr_body_predication, world=world)
@@ -244,55 +246,48 @@ class QuantifierCaptioner(WorldCaptioner):
             if restrictor is None:
                 return None
 
-        restrictor.apply_to_predication(predication=rstr_predication)
-        body.apply_to_predication(predication=body_predication)
-
-        if self.quantity < 0 and -(self.quantity + 1) > rstr_predication.num_agreeing:
-            return None
-
         # also for incorrect
         # if not self.pragmatical_tautology and not self.all_quantification and len(rstr_body_predication.agreeing) > 1 and (body_predication.equals(other=rstr_body_predication) or rstr_predication.equals(other=rstr_body_predication)):
         #     # all quantification is inherently tautological
         #     return None
 
-        return Quantifier(qtype=self.qtype, qrange=self.qrange, quantity=self.quantity, restrictor=restrictor, body=body)
+        quantifier = Quantifier(qtype=self.qtype, qrange=self.qrange, quantity=self.quantity, restrictor=restrictor, body=body)
+
+        if not self.correct(caption=quantifier, predication=predication):
+            return None
+
+        return quantifier
+
+    def correct(self, caption, predication):
+        rstr_predication, _ = caption.apply_to_predication(predication=predication)
+
+        return caption.quantity >= 0 or -(caption.quantity + 1) <= rstr_predication.num_agreeing
 
     def incorrect(self, caption, predication, world):
         assert predication.empty()
 
         if self.incorrect_mode == 0:  # 0: incorrect restrictor
-            rstr_predication = predication.sub_predication()
+            rstr_predication = predication.copy()
             if not self.restrictor_captioner.incorrect(caption=caption.restrictor, predication=rstr_predication, world=world):
                 return False
-            body_predication = predication.sub_predication()
-            caption.body.apply_to_predication(predication=body_predication)
-            rstr_body_predication = predication.sub_predication(predication=rstr_predication.copy())
-            caption.body.apply_to_predication(predication=rstr_body_predication)
 
         elif self.incorrect_mode == 1:  # 1: incorrect body
-            rstr_predication = predication.sub_predication()
-            caption.restrictor.apply_to_predication(predication=rstr_predication)
-            body_predication = predication.sub_predication()
-            rstr_body_predication = predication.sub_predication(predication=rstr_predication.copy())
+            body_predication = predication.copy()
+            # self.restrictor_captioner.correct(caption=caption.restrictor, predication=rstr_predication)
             if self.zero_quantification:
-                caption.body = self.body_captioner.caption(predication=rstr_body_predication, world=world)
+                caption.body = self.body_captioner.caption(predication=body_predication, world=world)
                 if caption.body is None:
                     return False
             else:
-                if not self.body_captioner.incorrect(caption=caption.body, predication=rstr_body_predication, world=world):
+                if not self.body_captioner.incorrect(caption=caption.body, predication=body_predication, world=world):
                     return False
-            caption.body.apply_to_predication(predication=body_predication)
 
         elif self.incorrect_mode >= 2:  # incorrect quantifier
             caption.qrange = self.incorrect_qrange
             caption.quantity = self.incorrect_quantity
-            rstr_predication, body_predication, _ = caption.apply_to_predication(predication=predication)
-
-        if caption.quantity < 0 and -(caption.quantity + 1) > rstr_predication.num_agreeing:
-            return None
 
         # if not self.pragmatical_tautology and not self.all_quantification and rstr_predication.equals(other=body_predication):
         #     # all quantification is inherently tautological
         #     return False
 
-        return True
+        return self.correct(caption=caption, predication=predication)

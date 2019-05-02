@@ -70,29 +70,40 @@ class Quantifier(Caption):
             body=self.body.model()
         )
 
-    def reverse_polish_notation(self):
-        if self.qtype == 'composed':
-            return self.restrictor.reverse_polish_notation() + \
-                self.body.reverse_polish_notation() + \
-                ['{}-{}-{}'.format(self, self.qtype, self.qrange)]
+    def polish_notation(self, reverse=False):
+        if reverse:
+            if self.qtype == 'composed':
+                return self.restrictor.polish_notation(reverse=reverse) + \
+                    self.body.polish_notation(reverse=reverse) + \
+                    ['{}-{}-{}'.format(self, self.qtype, self.qrange)]
+            else:
+                return self.restrictor.polish_notation(reverse=reverse) + \
+                    self.body.polish_notation(reverse=reverse) + \
+                    ['{}-{}-{}-{}'.format(self, self.qtype, self.qrange, self.quantity)]
         else:
-            return self.restrictor.reverse_polish_notation() + \
-                self.body.reverse_polish_notation() + \
-                ['{}-{}-{}-{}'.format(self, self.qtype, self.qrange, self.quantity)]
+            if self.qtype == 'composed':
+                return ['{}-{}-{}'.format(self, self.qtype, self.qrange)] + \
+                    self.restrictor.polish_notation(reverse=reverse) + \
+                    self.body.polish_notation(reverse=reverse)
+            else:
+                return ['{}-{}-{}-{}'.format(self, self.qtype, self.qrange, self.quantity)] + \
+                    self.restrictor.polish_notation(reverse=reverse) + \
+                    self.body.polish_notation(reverse=reverse)
 
     def apply_to_predication(self, predication):
+        assert predication.empty()
         rstr_predication = predication.sub_predication()
         self.restrictor.apply_to_predication(predication=rstr_predication)
         body_predication = predication.sub_predication()
         self.body.apply_to_predication(predication=body_predication)
         rstr_body_predication = predication.sub_predication(predication=rstr_predication.copy())
         self.body.apply_to_predication(predication=rstr_body_predication)
-        return rstr_predication, body_predication, rstr_body_predication
+        return rstr_predication, body_predication
 
     def agreement(self, predication, world):
         if self.qtype == 'composed':
             quantifiers = [Quantifier(qtype=quantifier[0], qrange=quantifier[1], quantity=quantifier[2], restrictor=self.restrictor, body=self.body) for quantifier in self.quantity]
-            return min(quantifier.agreement(predication=predication.copy(include_sub_predications=True), world=world) for quantifier in quantifiers)
+            return min(quantifier.agreement(predication=predication.copy(), world=world) for quantifier in quantifiers)
 
         rstr_predication = predication.get_sub_predication(0)
         body_predication = predication.get_sub_predication(1)
@@ -141,7 +152,7 @@ class Quantifier(Caption):
             tolerance = Settings.min_quantifier
 
         if qrange == 'lt':
-            if upper < upper_target + tolerance:
+            if upper < upper_target - tolerance:
                 return 1.0
             elif lower >= lower_target - tolerance:
                 return -1.0
@@ -151,7 +162,7 @@ class Quantifier(Caption):
         elif qrange == 'leq':
             if upper <= upper_target + tolerance:
                 return 1.0
-            elif lower > lower_target - tolerance:
+            elif lower > lower_target + tolerance:
                 return -1.0
             else:
                 return 0.0
@@ -191,13 +202,13 @@ class Quantifier(Caption):
         elif qrange == 'geq':
             if lower >= lower_target - tolerance:
                 return 1.0
-            elif upper < upper_target + tolerance:
+            elif upper < upper_target - tolerance:
                 return -1.0
             else:
                 return 0.0
 
         elif qrange == 'gt':
-            if lower > lower_target - tolerance:
+            if lower > lower_target + tolerance:
                 return 1.0
             elif upper <= upper_target + tolerance:
                 return -1.0

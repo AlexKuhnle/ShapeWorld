@@ -4,7 +4,7 @@ from shapeworld.captions import Settings, Predicate, EntityType
 
 class Selector(Predicate):
 
-    predtypes = {'unique', 'x-two', 'y-two', 'size-two', 'shade-two', 'x-max', 'y-max', 'proximity-two', 'proximity-max', 'size-max', 'shade-max'}
+    predtypes = {'unique', 'x-two', 'y-two', 'proximity-two', 'size-two', 'shade-two', 'x-max', 'y-max', 'proximity-max', 'size-max', 'shade-max'}
     comparison_selectors = {'proximity-two', 'proximity-max'}
 
     def __init__(self, predtype, value=None, scope=None, comparison=None):
@@ -45,21 +45,34 @@ class Selector(Predicate):
                 scope=self.scope.model()
             )
 
-    def reverse_polish_notation(self):
-        if self.predtype == 'unique':
-            return self.scope.reverse_polish_notation() + \
-                ['{}-{}'.format(self, self.predtype)]
-        elif self.predtype in Selector.comparison_selectors:
-            return self.scope.reverse_polish_notation() + \
-                self.comparison.reverse_polish_notation() + \
-                ['{}-{}-{}'.format(self, self.predtype, self.value)]
+    def polish_notation(self, reverse=False):
+        if reverse:
+            if self.predtype == 'unique':
+                return self.scope.polish_notation(reverse=reverse) + \
+                    ['{}-{}'.format(self, self.predtype)]
+            elif self.predtype in Selector.comparison_selectors:
+                return self.scope.polish_notation(reverse=reverse) + \
+                    self.comparison.polish_notation(reverse=reverse) + \
+                    ['{}-{}-{}'.format(self, self.predtype, self.value)]
+            else:
+                return self.scope.polish_notation(reverse=reverse) + \
+                    ['{}-{}-{}'.format(self, self.predtype, self.value)]
         else:
-            return self.scope.reverse_polish_notation() + \
-                ['{}-{}-{}'.format(self, self.predtype, self.value)]
+            if self.predtype == 'unique':
+                return ['{}-{}'.format(self, self.predtype)] + \
+                    self.scope.polish_notation(reverse=reverse)
+            elif self.predtype in Selector.comparison_selectors:
+                return ['{}-{}-{}'.format(self, self.predtype, self.value)] + \
+                    self.scope.polish_notation(reverse=reverse) + \
+                    self.comparison.polish_notation(reverse=reverse)
+            else:
+                return ['{}-{}-{}'.format(self, self.predtype, self.value)] + \
+                    self.scope.polish_notation(reverse=reverse)
 
     def apply_to_predication(self, predication):
         self.scope.apply_to_predication(predication=predication)
-        scope_predication = predication.copy()
+        scope_predication = predication.sub_predication(reset=True)
+        self.scope.apply_to_predication(predication=scope_predication)
         if self.predtype in Selector.comparison_selectors:
             comp_predication = predication.sub_predication(reset=True)
             self.comparison.apply_to_predication(predication=comp_predication)
@@ -108,7 +121,7 @@ class Selector(Predicate):
                 for comparison in comp_entities:
                     if other == comparison or entity == other or entity == comparison:
                         continue
-                    if ((entity.center - other.center).length() - (comparison.center - other.center).length()) * self.value > Settings.min_distance:
+                    if ((entity.center - comparison.center).length() - (other.center - comparison.center).length()) * self.value > Settings.min_distance:
                         return True
             return False
 
@@ -149,7 +162,7 @@ class Selector(Predicate):
                 for comparison in comp_entities:
                     if comparison == other:
                         continue
-                    if ((comparison.center - other.center).length() - (entity.center - other.center).length()) * self.value < Settings.min_distance:
+                    if ((other.center - comparison.center).length() - (entity.center - comparison.center).length()) * self.value < Settings.min_distance:
                         return False
             return True
 

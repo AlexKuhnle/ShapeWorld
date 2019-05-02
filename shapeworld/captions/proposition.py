@@ -18,32 +18,67 @@ class Proposition(Caption):
             clauses=[clause.model() for clause in self.clauses]
         )
 
-    def reverse_polish_notation(self):
-        return [rpn_symbol for clause in self.clauses for rpn_symbol in clause.reverse_polish_notation()] + \
-            [str(len(self.clauses)), '{}-{}'.format(self, self.proptype)]  # two separate arguments, no tuple?
+    def polish_notation(self, reverse=False):
+        if reverse:
+            return [rpn_symbol for clause in self.clauses for rpn_symbol in clause.polish_notation(reverse=reverse)] + \
+                ['{}-{}{}'.format(self, self.proptype, len(self.clauses))]
+
+        else:
+            return ['{}-{}{}'.format(self, self.proptype, len(self.clauses))] + \
+                [rpn_symbol for clause in self.clauses for rpn_symbol in clause.polish_notation(reverse=reverse)]
 
     def apply_to_predication(self, predication):
-        for clause in self.clauses:
-            clause_predication = predication.sub_predication()
-            clause.apply_to_predication(predication=clause_predication)
+        assert predication.empty()
+        predications = [predication]
+        next_predication = predication
+        for _ in range(len(self.clauses) - 1):
+            next_predication = next_predication.sub_predication()
+            predications.append(next_predication)
+        for n, (clause, predication) in enumerate(reversed(list(zip(self.clauses, predications)))):
+            clause.apply_to_predication(predication=predication)
+            if n > 0:
+                predication.sub_predications.append(predication.sub_predications.pop(0))
 
     def agreement(self, predication, world):
         if self.proptype == 'conjunction':
-            return min(clause.agreement(predication=predication.get_sub_predication(n), world=world) for n, clause in enumerate(self.clauses))
+            agreement = self.clauses[0].agreement(predication=predication, world=world)
+            next_predication = predication
+            for clause in self.clauses[1:]:
+                next_predication = next_predication.get_sub_predication(-1)
+                agreement = min(agreement, clause.agreement(predication=next_predication, world=world))
+            return agreement
 
         elif self.proptype == 'disjunction':
-            return max(clause.agreement(predication=predication.get_sub_predication(n), world=world) for n, clause in enumerate(self.clauses))
+            agreement = self.clauses[0].agreement(predication=predication, world=world)
+            next_predication = predication
+            for clause in self.clauses[1:]:
+                next_predication = next_predication.get_sub_predication(-1)
+                agreement = max(agreement, clause.agreement(predication=next_predication, world=world))
+            return agreement
 
         elif self.proptype == 'exclusive-disjunction':
-            return float(sum(clause.agreement(predication=predication.get_sub_predication(n), world=world) > 0.0 for n, clause in enumerate(self.clauses)) == 1) * 2.0 - 1.0
+            num_positive = int(self.clauses[0].agreement(predication=predication, world=world) > 0.0)
+            next_predication = predication
+            for clause in self.clauses[1:]:
+                next_predication = next_predication.get_sub_predication(-1)
+                num_positive += int(clause.agreement(predication=next_predication, world=world) > 0.0)
+            return float(num_positive == 1) * 2.0 - 1.0
 
         elif self.proptype == 'implication':
             assert len(self.clauses) == 2
             # 1 => 0
-            return max(self.clauses[0].agreement(predication=predication.get_sub_predication(0), world=world), -self.clauses[1].agreement(predication=predication.get_sub_predication(1), world=world))
+            next_predication = predication.get_sub_predication(-1)
+            return max(self.clauses[0].agreement(predication=predication, world=world), -self.clauses[1].agreement(predication=next_predication, world=world))
 
         elif self.proptype == 'equivalence':
-            return max(min(clause.agreement(predication=predication.get_sub_predication(n), world=world) for n, clause in enumerate(self.clauses)), min(-clause.agreement(predication=predication.get_sub_predication(n), world=world) for n, clause in enumerate(self.clauses)))
+            min_agreement = max_agreement = self.clauses[0].agreement(predication=predication, world=world)
+            next_predication = predication
+            for clause in self.clauses[1:]:
+                next_predication = next_predication.get_sub_predication(-1)
+                agreement = clause.agreement(predication=next_predication, world=world)
+                min_agreement = min(min_agreement, agreement)
+                max_agreement = min(max_agreement, agreement)
+            return max(min_agreement, -max_agreement)
 
         else:
             assert False

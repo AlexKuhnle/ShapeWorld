@@ -3,7 +3,7 @@
     "weight_decay": 1e-5,
     "clip_gradients": null,
     "dropout_rate": 0.5,
-    "cnn_size": 128,
+    "cnn_size": 32,
     "cnn_depth": 4,
     "cnn_block_depth": 1,
     "world_reduction": "max",

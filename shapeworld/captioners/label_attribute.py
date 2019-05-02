@@ -11,7 +11,7 @@ class LabelAttributeCaptioner(WorldCaptioner):
         label,
         pragmatical_redundancy_rate=1.0,
         pragmatical_tautology_rate=0.0,
-        logical_redundancy_rate=1.0,
+        logical_redundancy_rate=0.0,
         logical_tautology_rate=0.0,
         logical_contradiction_rate=0.0
     ):
@@ -37,14 +37,21 @@ class LabelAttributeCaptioner(WorldCaptioner):
 
         return True
 
-    def rpn_length(self):
+    def pn_length(self):
         return 1
 
-    def rpn_symbols(self):
-        return super(LabelAttributeCaptioner, self).rpn_symbols() | \
+    def pn_symbols(self):
+        return super(LabelAttributeCaptioner, self).pn_symbols() | \
             {'{}-{}-{}'.format(Attribute.__name__, 'shape', value) for value in self.shapes} | \
             {'{}-{}-{}'.format(Attribute.__name__, 'color', value) for value in self.colors} | \
             {'{}-{}-{}'.format(Attribute.__name__, 'texture', value) for value in self.textures}
+
+    def pn_arity(self):
+        arity = super(LabelAttributeCaptioner, self).pn_arity()
+        arity.update({'{}-{}-{}'.format(Attribute.__name__, 'shape', value): 0 for value in self.shapes})
+        arity.update({'{}-{}-{}'.format(Attribute.__name__, 'color', value): 0 for value in self.colors})
+        arity.update({'{}-{}-{}'.format(Attribute.__name__, 'texture', value): 0 for value in self.textures})
+        return arity
 
     def incorrect_possible(self):
         return True
@@ -66,14 +73,22 @@ class LabelAttributeCaptioner(WorldCaptioner):
             attribute = Attribute(predtype='texture', value=entity[2])
 
         if predication.contradictory(predicate=attribute):
-            assert False
+            raise NotImplementedError
         elif not self.pragmatical_redundancy and predication.num_entities > 1 and predication.redundant(predicate=attribute):
-            assert False
+            raise NotImplementedError
             return None
 
-        attribute.apply_to_predication(predication=predication)
+        if not self.correct(caption=attribute, predication=predication):
+            return None
 
         return attribute
+
+    def correct(self, caption, predication):
+        for sub_predication in predication.get_sub_predications():
+            if sub_predication.implies(predicate=caption) or sub_predication.implied_by(predicate=caption):
+                return False
+
+        return super().correct(caption=caption, predication=predication)
 
     def incorrect(self, caption, predication, world):
         if world.meta[self.label] == 'shape':  # random (existing) shape
@@ -88,6 +103,4 @@ class LabelAttributeCaptioner(WorldCaptioner):
         assert len(values) >= 1
         caption.value = choice(values)
 
-        caption.apply_to_predication(predication=predication)
-
-        return True
+        return self.correct(caption=caption, predication=predication)

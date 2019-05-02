@@ -16,7 +16,7 @@ class SelectorCaptioner(WorldCaptioner):
         comparison_captioner,
         pragmatical_redundancy_rate=1.0,
         pragmatical_tautology_rate=0.0,
-        logical_redundancy_rate=1.0,
+        logical_redundancy_rate=0.0,
         logical_tautology_rate=0.0,
         logical_contradiction_rate=0.0,
         selectors=None,
@@ -50,11 +50,18 @@ class SelectorCaptioner(WorldCaptioner):
 
         return True
 
-    def rpn_length(self):
-        return self.scope_captioner.rpn_length() + self.comparison_captioner.rpn_length() + 1
+    def pn_length(self):
+        return self.scope_captioner.pn_length() + self.comparison_captioner.pn_length() + 1
 
-    def rpn_symbols(self):
-        return super(SelectorCaptioner, self).rpn_symbols() | {'{}-{}-{}'.format(Selector.__name__, *selector) for selector in self.selectors}
+    def pn_symbols(self):
+        return super(SelectorCaptioner, self).pn_symbols() | {'{}-{}-{}'.format(Selector.__name__, *selector) for selector in self.selectors}
+
+    def pn_arity(self):
+        arity = super(SelectorCaptioner, self).pn_arity()
+        arity.update({
+            '{}-{}-{}'.format(Selector.__name__, *selector): 2 if selector[0] in Selector.comparison_selectors else 1 for selector in self.selectors
+        })
+        return arity
 
     def sample_values(self, mode, predication):
         if not super(SelectorCaptioner, self).sample_values(mode=mode, predication=predication):
@@ -62,11 +69,25 @@ class SelectorCaptioner(WorldCaptioner):
 
         for _ in range(self.__class__.MAX_SAMPLE_ATTEMPTS):
             self.predtype, self.value = choice(self.selectors)
-            if self.predtype in ('size-two', 'size-max') and predication.redundant(predicate='shape'):
+            if self.predtype in ('size-two', 'size-max') and not self.logical_contradiction and predication.blocked(predicate='shape'):
                 continue
-            elif self.predtype in ('shade-two', 'shade-max') and predication.redundant(predicate='color'):
+            elif self.predtype in ('shade-two', 'shade-max') and not self.logical_contradiction and predication.blocked(predicate='color'):
                 continue
             break
+
+        for _ in range(self.__class__.MAX_SAMPLE_ATTEMPTS):
+            scope_predication = predication.copy()
+            if not self.scope_captioner.sample_values(mode=mode, predication=scope_predication):
+                continue
+            elif self.predtype in ('size-two', 'size-max') and ((not predication.redundant(predicate='shape') and not scope_predication.redundant(predicate='shape')) or (not self.logical_redundancy and predication.redundant(predicate='shape') and scope_predication.redundant(predicate='shape')) or (not self.logical_contradiction and scope_predication.blocked(predicate='shape'))):
+                continue
+            elif self.predtype in ('shade-two', 'shade-max') and ((not predication.redundant(predicate='color') and not scope_predication.redundant(predicate='color')) or (not self.logical_redundancy and predication.redundant(predicate='color') and scope_predication.redundant(predicate='color')) or (not self.logical_contradiction and scope_predication.blocked(predicate='color'))):
+                continue
+            predication.predicates.update(scope_predication.predicates)
+            predication.blocked_preds.update(scope_predication.blocked_preds)
+            break
+        else:
+            return False
 
         self.incorrect_mode = util.sample(self.incorrect_distribution)
 
@@ -78,16 +99,16 @@ class SelectorCaptioner(WorldCaptioner):
                 self.incorrect_predtype, self.incorrect_value = choice(self.selectors)
                 if self.incorrect_predtype == self.predtype and self.incorrect_value == self.value:
                     continue
-                elif self.incorrect_predtype in ('size-two', 'size-max') and predication.redundant(predicate='shape'):
+                elif self.incorrect_predtype in ('size-two', 'size-max') and not self.logical_contradiction and (predication.blocked(predicate='shape') or scope_predication.blocked(predicate='shape')):
                     continue
-                elif self.incorrect_predtype in ('shade-two', 'shade-max') and predication.redundant(predicate='color'):
+                elif self.incorrect_predtype in ('shade-two', 'shade-max')and not self.logical_contradiction and (predication.blocked(predicate='color') or scope_predication.blocked(predicate='color')):
                     continue
                 break
             else:
                 return False
 
-        if not self.scope_captioner.sample_values(mode=mode, predication=predication):
-            return False
+        # if not self.scope_captioner.sample_values(mode=mode, predication=predication):
+        #     return False
 
         if self.predtype in Selector.comparison_selectors or self.incorrect_predtype in Selector.comparison_selectors:
             comp_predication = predication.copy(reset=True)
@@ -96,8 +117,12 @@ class SelectorCaptioner(WorldCaptioner):
 
         if self.predtype in ('size-two', 'size-max') or self.incorrect_predtype in ('size-two', 'size-max'):
             predication.apply(predicate='shape')
+            if not self.logical_redundancy or (not self.logical_contradiction and scope_predication.redundant(predicate='shape') and self.incorrect_predtype in ('size-two', 'size-max')):
+                predication.block(predicate='shape')
         elif self.predtype in ('shade-two', 'shade-max') or self.incorrect_predtype in ('shade-two', 'shade-max'):
             predication.apply(predicate='color')
+            if not self.logical_redundancy or (not self.logical_contradiction and scope_predication.redundant(predicate='color') and self.incorrect_predtype in ('shade-two', 'shade-max')):
+                predication.block(predicate='color')
 
         return True
 
@@ -124,41 +149,28 @@ class SelectorCaptioner(WorldCaptioner):
         return model
 
     def caption(self, predication, world):
-        scope_predication = predication.sub_predication(reset=True)
-
-        scope = self.scope_captioner.caption(predication=predication, world=world)
-        if scope is None:
-            return None
-        scope.apply_to_predication(predication=scope_predication)
-
         if self.predtype in Selector.comparison_selectors or self.incorrect_predtype in Selector.comparison_selectors:
-            comp_predication = predication.sub_predication(reset=True)
+            comp_predication = predication.copy(reset=True)
             comparison = self.comparison_captioner.caption(predication=comp_predication, world=world)
             if comparison is None:
-                return None
-            if not comp_predication.disjoint(other=scope_predication):
                 return None
         else:
             comp_predication = None
             comparison = None
 
+        scope_predication = predication.copy()
+        scope = self.scope_captioner.caption(predication=scope_predication, world=world)
+        if scope is None:
+            return None
+
         selector = Selector(predtype=self.predtype, value=self.value, scope=scope, comparison=comparison)
 
-        predication.apply(predicate=selector, scope_predication=scope_predication, comp_predication=comp_predication)
+        if not self.correct(caption=selector, predication=predication):
+            return None
 
         return selector
 
     def incorrect(self, caption, predication, world):
-        scope_predication = predication.sub_predication(reset=True)
-        caption.scope.apply_to_predication(predication=predication)
-        caption.scope.apply_to_predication(predication=scope_predication)
-
-        if self.predtype in Selector.comparison_selectors or self.incorrect_predtype in Selector.comparison_selectors:
-            comp_predication = predication.sub_predication(reset=True)
-            caption.comparison.apply_to_predication(predication=comp_predication)
-        else:
-            comp_predication = None
-
         if self.incorrect_mode == 0:  # 0: incorrect selector
             caption.predtype = self.incorrect_predtype
             caption.value = self.incorrect_value
@@ -168,9 +180,4 @@ class SelectorCaptioner(WorldCaptioner):
             if (caption.predtype, caption.value) not in self.selectors:
                 return False
 
-        else:
-            assert False
-
-        predication.apply(predicate=caption, scope_predication=scope_predication, comp_predication=comp_predication)
-
-        return True
+        return self.correct(caption=caption, predication=predication)

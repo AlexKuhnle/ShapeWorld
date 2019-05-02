@@ -357,10 +357,10 @@ class Dataset(object):
             yield self.generate(n=n, mode=mode, include_model=include_model, alternatives=alternatives)
             i += 1
 
-    def get_html(self, generated, image_format='bmp'):
+    def get_html(self, generated, image_format='bmp', image_dir=''):
         return None
 
-    def serialize(self, path, generated, additional=None, filename=None, archive=None, html=False, image_format='bmp', concat_worlds=False):
+    def serialize(self, path, generated, additional=None, filename=None, archive=None, html=False, numpy_formats=(), image_format='bmp', concat_worlds=False):
         assert not additional or all(value_name not in self.values for value_name in additional)
         if not os.path.isdir(os.path.dirname(path)):
             os.makedirs(os.path.dirname(path))
@@ -372,6 +372,7 @@ class Dataset(object):
                     value=value,
                     value_name=value_name,
                     write_file=write_file,
+                    numpy_format=(value_name in numpy_formats),
                     image_format=image_format,
                     concat_worlds=concat_worlds
                 )
@@ -383,6 +384,7 @@ class Dataset(object):
                         value_name=value_name,
                         write_file=write_file,
                         value_type=value_type,
+                        numpy_format=(value_name in numpy_formats),
                         image_format=image_format,
                         concat_worlds=concat_worlds
                     )
@@ -391,44 +393,52 @@ class Dataset(object):
                 assert html is not None
                 write_file(filename='data.html', value=html)
 
-    def serialize_value(self, path, value, value_name, write_file, value_type=None, image_format='bmp', concat_worlds=False):
+    def serialize_value(self, path, value, value_name, write_file, value_type=None, numpy_format=False, image_format='bmp', concat_worlds=False):
         if value_type is None:
             value_type = self.values[value_name]
         value_type, alts = util.alternatives_type(value_type=value_type)
         if value_name == 'alternatives':
             assert value_type == 'int'
+            assert not numpy_format
             value = '\n'.join(str(int(x)) for x in value) + '\n'
             write_file('alternatives.txt', value)
         elif value_type == 'int':
+            assert not numpy_format
             if alts:
                 value = '\n'.join(';'.join(str(x)for x in xs) for xs in value) + '\n'
             else:
                 value = '\n'.join(str(x) for x in value) + '\n'
             write_file(value_name + '.txt', value)
         elif value_type == 'float':
+            assert not numpy_format
             if alts:
                 value = '\n'.join(';'.join(str(round(x, 3))for x in xs) for xs in value) + '\n'
             else:
                 value = '\n'.join(str(round(x, 3)) for x in value) + '\n'
             write_file(value_name + '.txt', value)
         elif value_type == 'vector(int)':
-            if alts:
+            if numpy_format:
+                np.save(path + '-' + value_name + '.npy', value)
+            elif alts:
                 value = '\n'.join(';'.join(','.join(str(x) for x in vector.flatten()) for vector in vectors) for vectors in value) + '\n'
+                write_file(value_name + '.txt', value)
             else:
                 value = '\n'.join(','.join(str(x) for x in vector.flatten()) for vector in value) + '\n'
-            write_file(value_name + '.txt', value)
+                write_file(value_name + '.txt', value)
         elif value_type == 'vector(float)':
-            if value.ndim > 1:
+            if numpy_format:
                 np.save(path + '-' + value_name + '.npy', value)
+            elif alts:
+                value = '\n'.join(';'.join(','.join(str(round(x, 3)) for x in vector.flatten()) for vector in vectors) for vectors in value) + '\n'
+                write_file(value_name + '.txt', value)
             else:
-                if alts:
-                    value = '\n'.join(';'.join(','.join(str(round(x, 3)) for x in vector.flatten()) for vector in vectors) for vectors in value) + '\n'
-                else:
-                    value = '\n'.join(','.join(str(round(x, 3)) for x in vector.flatten()) for vector in value) + '\n'
+                value = '\n'.join(','.join(str(round(x, 3)) for x in vector.flatten()) for vector in value) + '\n'
                 write_file(value_name + '.txt', value)
         elif value_type == 'world':
             from shapeworld.world import World
-            if concat_worlds:
+            if numpy_format:
+                np.save(path + '-' + value_name + '.npy', value)
+            elif concat_worlds:
                 assert not alts
                 size = ceil(sqrt(len(value)))
                 worlds = []
@@ -459,9 +469,11 @@ class Dataset(object):
                         write_file('{}-{}.{}'.format(value_name, n, image_format), image_bytes.getvalue(), binary=True)
                         image_bytes.close()
         elif value_type == 'model':
+            assert not numpy_format
             value = json.dumps(obj=value, indent=2, sort_keys=True)
             write_file(value_name + '.json', value)
         else:
+            assert not numpy_format
             id2word = self.vocabulary(value_type=value_type)
             if alts:
                 value = '\n\n'.join('\n'.join(' '.join(id2word[word_id] for word_id in words if word_id) for words in words_alts) for words_alts in value) + '\n\n'
@@ -469,15 +481,17 @@ class Dataset(object):
                 value = '\n'.join(' '.join(id2word[word_id] for word_id in words if word_id) for words in value) + '\n'
             write_file(value_name + '.txt', value)
 
-    def deserialize_value(self, path, value_name, read_file, value_type=None, image_format='bmp', num_concat_worlds=0):
+    def deserialize_value(self, path, value_name, read_file, value_type=None, numpy_format=False, image_format='bmp', num_concat_worlds=0):
         if value_type is None:
             value_type = self.values[value_name]
         value_type, alts = util.alternatives_type(value_type=value_type)
         if value_name == 'alternatives':
             assert value_type == 'int'
+            assert not numpy_format
             value = read_file('alternatives.txt')
             return [int(x) for x in value.split('\n')[:-1]]
         elif value_type == 'int':
+            assert not numpy_format
             value = read_file(value_name + '.txt')
             if alts:
                 value = [[int(x) for x in xs.split(';')] for xs in value.split('\n')[:-1]]
@@ -485,6 +499,7 @@ class Dataset(object):
                 value = [int(x) for x in value.split('\n')[:-1]]
             return value
         elif value_type == 'float':
+            assert not numpy_format
             value = read_file(value_name + '.txt')
             if alts:
                 value = [[float(x) for x in xs.split(';')] for xs in value.split('\n')[:-1]]
@@ -492,19 +507,28 @@ class Dataset(object):
                 value = [float(x) for x in value.split('\n')[:-1]]
             return value
         elif value_type == 'vector(int)':
-            value = read_file(value_name + '.txt')
-            shape = self.vector_shape(value_name=value_name)
-            if alts:
-                value = [[np.array(object=[int(x) for x in vector.split(',')], dtype=np.int32).reshape(shape) for vector in vectors.split(';')] for vectors in value.split('\n')[:-1]]
-            else:
-                value = [np.array(object=[int(x) for x in vector.split(',')], dtype=np.int32).reshape(shape) for vector in value.split('\n')[:-1]]
-            return value
-        elif value_type == 'vector(float)':
-            shape = self.vector_shape(value_name=value_name)
-            if len(shape) > 1:
-                value = np.load(path[:path.index('.', path.rindex('/'))] + '-' + value_name + '.npy')
+            if numpy_format:
+                path, extension = os.path.splitext(path)
+                while extension != '':
+                    path, extension = os.path.splitext(path)
+                value = np.load(path + '-' + value_name + '.npy')
             else:
                 value = read_file(value_name + '.txt')
+                shape = self.vector_shape(value_name=value_name)
+                if alts:
+                    value = [[np.array(object=[int(x) for x in vector.split(',')], dtype=np.int32).reshape(shape) for vector in vectors.split(';')] for vectors in value.split('\n')[:-1]]
+                else:
+                    value = [np.array(object=[int(x) for x in vector.split(',')], dtype=np.int32).reshape(shape) for vector in value.split('\n')[:-1]]
+            return value
+        elif value_type == 'vector(float)':
+            if numpy_format:
+                path, extension = os.path.splitext(path)
+                while extension != '':
+                    path, extension = os.path.splitext(path)
+                value = np.load(path + '-' + value_name + '.npy')
+            else:
+                value = read_file(value_name + '.txt')
+                shape = self.vector_shape(value_name=value_name)
                 if alts:
                     value = [[np.array(object=[float(x) for x in vector.split(',')], dtype=np.float32).reshape(shape) for vector in vectors.split(';')] for vectors in value.split('\n')[:-1]]
                 else:
@@ -512,7 +536,12 @@ class Dataset(object):
             return value
         elif value_type == 'world':
             from shapeworld.world import World
-            if num_concat_worlds:
+            if numpy_format:
+                path, extension = os.path.splitext(path)
+                while extension != '':
+                    path, extension = os.path.splitext(path)
+                value = np.load(path + '-' + value_name + '.npy')
+            elif num_concat_worlds:
                 assert not alts
                 size = ceil(sqrt(num_concat_worlds))
                 image_bytes = read_file('{}.{}'.format(value_name, image_format), binary=True)
@@ -554,10 +583,12 @@ class Dataset(object):
                     n += 1
             return value
         elif value_type == 'model':
+            assert not numpy_format
             value = read_file(value_name + '.json')
             value = json.loads(s=value)
             return value
         else:
+            assert not numpy_format
             word2id = self.vocabularies.get(value_type)
             value = read_file(value_name + '.txt')
             if alts:
@@ -569,7 +600,7 @@ class Dataset(object):
 
 class LoadedDataset(Dataset):
 
-    def __init__(self, specification, random_sampling=True, pixel_noise_stddev=None):
+    def __init__(self, specification, random_sampling=True, pixel_noise_stddev=None, exclude_values=()):
         self._type = specification.pop('type')
         self._name = specification.pop('name')
         self.variant = specification.pop('variant', None)
@@ -579,23 +610,28 @@ class LoadedDataset(Dataset):
             self.directory = os.path.join(self.directory, relative_directory)
         self.archive = specification.pop('archive', None)
         self.include_model = specification.pop('include_model', False)
+        self.numpy_formats = tuple(specification.pop('numpy_formats', ()))
         self.image_format = specification.pop('image_format', 'bmp')
         self.num_concat_worlds = specification.pop('num_concat_worlds', 0)
         self._specification = specification
         self.random_sampling = random_sampling
+
+        values = specification.pop('values')
+        for value in exclude_values:
+            values.pop(value, None)
 
         if pixel_noise_stddev is None:
             pixel_noise_stddev = specification.pop('pixel_noise_stddev', None)
         else:
             assert 'pixel_noise_stddev' not in specification
 
-        super(LoadedDataset, self).__init__(values=specification.pop('values'), world_size=specification.pop('world_size'), pixel_noise_stddev=pixel_noise_stddev, vectors=specification.pop('vectors', None), vocabularies=specification.pop('vocabularies', None), language=specification.pop('language', None))
+        super(LoadedDataset, self).__init__(values=values, world_size=specification.pop('world_size'), pixel_noise_stddev=pixel_noise_stddev, vectors=specification.pop('vectors', None), vocabularies=specification.pop('vocabularies', None), language=specification.pop('language', None))
 
         self.shards = None
         self.records_shards = None
         for root, dirs, files in os.walk(self.directory):
             if root == self.directory:
-                dirs = sorted(d for d in dirs if d[0] != '.')
+                dirs = sorted(d for d in dirs if d[0] != '.' and not d.startswith('temp-'))
                 files = sorted(f for f in files if f[0] != '.' and not f.endswith('.npy'))
                 if len(dirs) == 0:
                     assert all(f[:5] == 'shard' or f[:4] == 'part' for f in files)
@@ -614,7 +650,7 @@ class LoadedDataset(Dataset):
                         assert all((f[:5] == 'shard' or f[:4] == 'part') and f[-13:] == '.tfrecords.gz' for f in files)
                         self.records_shards = [os.path.join(root, f) for f in files]
             elif root[len(self.directory) + 1:] in ('train', 'validation', 'test'):
-                dirs = sorted(d for d in dirs if d[0] != '.')
+                dirs = sorted(d for d in dirs if d[0] != '.' and not d.startswith('temp-'))
                 files = sorted(f for f in files if f[0] != '.' and not f.endswith('.npy'))
                 mode = root[len(self.directory) + 1:]
                 if len(dirs) > 0:
@@ -629,7 +665,11 @@ class LoadedDataset(Dataset):
                         self.shards[mode] = [os.path.join(root, f) for f in files if f[-13:] != '.tfrecords.gz']
                     if any(f[-13:] == '.tfrecords.gz' for f in files):
                         self.records_shards[mode] = [os.path.join(root, f) for f in files if f[-13:] == '.tfrecords.gz']
-        self.mode = -1
+
+        self.loaded = dict()
+        self.shard = dict()
+        self.num_instances = dict()
+        self.num_alternatives = dict()
 
     def __str__(self):
         name = '{} {}'.format(self.type, self.name)
@@ -679,78 +719,79 @@ class LoadedDataset(Dataset):
         assert (mode is None and self.shards is not None) or mode in self.shards
         assert not include_model or self.include_model
 
-        if self.mode != mode:
-            self.mode = mode
-            if mode is None:
-                self.mode_shards = self.shards
-            else:
-                self.mode_shards = self.shards[mode]
-            self.shard = -1
-            self.loaded = dict()
+        if mode is None:
+            mode_shards = self.shards
+        else:
+            mode_shards = self.shards[mode]
+
+        if mode not in self.loaded:
+            self.loaded[mode] = dict()
+            self.shard[mode] = -1
+            self.num_instances[mode] = 0
+            self.num_alternatives[mode] = 0
             for value_name, value_type in self.values.items():
                 value_type, alts = util.alternatives_type(value_type=value_type)
                 if value_type != 'model' or self.include_model:
-                    self.loaded[value_name] = list()
-            self.num_instances = 0
-            self.num_alternatives = 0
+                    self.loaded[mode][value_name] = list()
 
-        while (self.num_instances < n) if (self.random_sampling or alternatives) else (self.num_alternatives < n):
+        while (self.num_instances[mode] < n) if (self.random_sampling or alternatives) else (self.num_alternatives[mode] < n):
             if self.random_sampling:
-                next_shard = self.shard
-                while len(self.mode_shards) > 1 and next_shard == self.shard:
-                    next_shard = randrange(len(self.mode_shards))
-                self.shard = next_shard
+                next_shard = self.shard[mode]
+                while len(mode_shards) > 1 and next_shard == self.shard[mode]:
+                    next_shard = randrange(len(mode_shards))
+                self.shard[mode] = next_shard
             else:
-                self.shard = (self.shard + 1) % len(self.mode_shards)
-            self.num_instances = 0
-            with util.Archive(path=self.mode_shards[self.shard], mode='r', archive=self.archive) as read_file:
-                for value_name, value in self.loaded.items():
+                self.shard[mode] = (self.shard[mode] + 1) % len(mode_shards)
+            self.num_instances[mode] = 0
+            with util.Archive(path=mode_shards[self.shard[mode]], mode='r', archive=self.archive) as read_file:
+                for value_name, value in self.loaded[mode].items():
                     value.extend(self.deserialize_value(
-                        path=self.mode_shards[self.shard],
+                        path=mode_shards[self.shard[mode]],
                         value_name=value_name,
                         read_file=read_file,
+                        numpy_format=(value_name in self.numpy_formats),
                         image_format=self.image_format,
                         num_concat_worlds=self.num_concat_worlds
                     ))
-                    if self.num_instances == 0:
-                        self.num_instances = self.num_alternatives = len(value)
+                    if self.num_instances[mode] == 0:
+                        self.num_instances[mode] = self.num_alternatives[mode] = len(value)
                     else:
-                        assert len(value) == self.num_instances
+                        assert len(value) == self.num_instances[mode]
                     if value_name == 'alternatives':
-                        self.num_alternatives = sum(value)
+                        self.num_alternatives[mode] = sum(value)
 
         batch = self.zero_batch(n, include_model=include_model, alternatives=alternatives)
 
         for i in range(n):
             if self.random_sampling:
-                index = randrange(self.num_instances)
+                index = randrange(self.num_instances[mode])
             else:
                 index = 0
             if 'alternatives' not in self.values:
                 alt_index = -1
-                self.num_instances -= 1
-                self.num_alternatives -= 1
-            elif alternatives or self.loaded['alternatives'][index] == 1:
+                self.num_instances[mode] -= 1
+                self.num_alternatives[mode] -= 1
+            elif alternatives or self.loaded[mode]['alternatives'][index] == 1:
                 alt_index = -1
-                self.num_instances -= 1
-                self.num_alternatives -= self.loaded['alternatives'][index]
+                self.num_instances[mode] -= 1
+                self.num_alternatives[mode] -= self.loaded[mode]['alternatives'][index]
             elif self.random_sampling:
-                alt_index = randrange(self.loaded['alternatives'][index])
-                self.num_instances -= 1
-                self.num_alternatives -= self.loaded['alternatives'][index]
+                alt_index = randrange(self.loaded[mode]['alternatives'][index])
+                self.num_instances[mode] -= 1
+                self.num_alternatives[mode] -= self.loaded[mode]['alternatives'][index]
             else:
                 alt_index = 0
-                self.loaded['alternatives'][index] -= 1
-                self.num_alternatives -= 1
+                self.loaded[mode]['alternatives'][index] -= 1
+                self.num_alternatives[mode] -= 1
 
             for value_name, value_type in self.values.items():
                 value_type, alts = util.alternatives_type(value_type=value_type)
                 if value_type == 'model' and not self.include_model:
                     continue
                 if self.random_sampling or alt_index == -1:
-                    value = self.loaded[value_name].pop(index)
+                    value = self.loaded[mode][value_name].pop(index)
                 else:
-                    value = self.loaded[value_name][index]
+                    value = self.loaded[mode][value_name][index]
                 if value_type == 'model' and not include_model:
                     continue
                 if not alternatives and alts:
@@ -800,6 +841,7 @@ class LoadedDataset(Dataset):
                         path=mode_shards[shard],
                         value_name=value_name,
                         read_file=read_file,
+                        numpy_format=(value_name in self.numpy_formats),
                         image_format=self.image_format,
                         num_concat_worlds=self.num_concat_worlds
                     ))
@@ -873,13 +915,13 @@ class LoadedDataset(Dataset):
 
         assert num_instances == 0 and num_alternatives == 0
 
-    def get_html(self, generated, image_format='bmp'):
+    def get_html(self, generated, image_format='bmp', image_dir=''):
         module = import_module('shapeworld.datasets.{}.{}'.format(self.type, self.name))
         class_name = util.class_name(self.name) + 'Dataset'
         for key, dclass in module.__dict__.items():
             if key == class_name:
                 break
-        return dclass.get_html(self, generated=generated, image_format=image_format)
+        return dclass.get_html(self, generated=generated, image_format=image_format, image_dir=image_dir)
 
 
 class DatasetMixer(Dataset):
@@ -1022,11 +1064,11 @@ class ClassificationDataset(Dataset):
 
         return batch
 
-    def get_html(self, generated, image_format='bmp'):
+    def get_html(self, generated, image_format='bmp', image_dir=''):
         classifications = generated['classification']
         data_html = list()
         for n, classification in enumerate(classifications):
-            data_html.append('<div class="instance"><div class="world"><img src="world-{world}.{format}" alt="world-{world}.{format}"></div><div class="num"><p><b>({num})</b></p></div><div class="classification"><p>'.format(world=n, format=image_format, num=(n + 1)))
+            data_html.append('<div class="instance"><div class="world"><img src="{image_dir}world-{world}.{format}" alt="world-{world}.{format}"></div><div class="num"><p><b>({num})</b></p></div><div class="classification"><p>'.format(image_dir=image_dir, world=n, format=image_format, num=(n + 1)))
             comma = False
             for c, count in enumerate(classification):
                 if count == 0.0:
@@ -1065,9 +1107,9 @@ class CaptionAgreementDataset(Dataset):
         else:
             values.update(world='world', world_model='model')
         if captions_per_instance > 1:
-            values.update(caption='alternatives(language)', caption_length='alternatives(int)', caption_rpn='alternatives(rpn)', caption_rpn_length='alternatives(int)', caption_model='alternatives(model)', alternatives='int')
+            values.update(caption='alternatives(language)', caption_length='alternatives(int)', caption_pn='alternatives(pn)', caption_pn_length='alternatives(int)', caption_rpn='alternatives(pn)', caption_rpn_length='alternatives(int)', caption_model='alternatives(model)', alternatives='int')
         else:
-            values.update(caption='language', caption_length='int', caption_rpn='rpn', caption_rpn_length='int', caption_model='model')
+            values.update(caption='language', caption_length='int', caption_pn='pn', caption_pn_length='int', caption_rpn='pn', caption_rpn_length='int', caption_model='model')
         assert isinstance(caption_size, int) and caption_size > 0
         vocabulary = list(vocabulary)
         assert len(vocabulary) > 0 and vocabulary == sorted(vocabulary), sorted(vocabulary)  # [(w1, w2) for w1, w2 in zip(vocabulary, sorted(vocabulary)) if w1 != w2]
@@ -1085,11 +1127,12 @@ class CaptionAgreementDataset(Dataset):
         self.world_captioner.set_realizer(self.caption_realizer)
         vectors = dict(
             caption=caption_size,
-            caption_rpn=self.world_captioner.rpn_length()
+            caption_pn=self.world_captioner.pn_length(),
+            caption_rpn=self.world_captioner.pn_length()
         )
         vocabularies = dict(
             language=vocabulary,
-            rpn=sorted(self.world_captioner.rpn_symbols())
+            pn=sorted(self.world_captioner.pn_symbols())
         )
         super(CaptionAgreementDataset, self).__init__(
             values=values,
@@ -1106,6 +1149,9 @@ class CaptionAgreementDataset(Dataset):
         self.train_correct_ratio = util.value_or_default(train_correct_ratio, self.correct_ratio)
         self.validation_correct_ratio = util.value_or_default(validation_correct_ratio, self.correct_ratio)
         self.test_correct_ratio = util.value_or_default(test_correct_ratio, self.correct_ratio)
+        self.pn_arity = self.world_captioner.pn_arity()
+        self.pn_arity[''] = 1
+        self.pn_arity['[UNKNOWN]'] = 1
 
     @property
     def type(self):
@@ -1115,6 +1161,7 @@ class CaptionAgreementDataset(Dataset):
         specification = super(CaptionAgreementDataset, self).specification()
         specification['worlds_per_instance'] = self.worlds_per_instance
         specification['captions_per_instance'] = self.captions_per_instance
+        specification['pn_arity'] = self.pn_arity
         return specification
 
     def generate(self, n, mode=None, include_model=False, alternatives=False):
@@ -1129,14 +1176,15 @@ class CaptionAgreementDataset(Dataset):
         else:
             correct_ratio = self.correct_ratio
 
-        rpn2id = self.vocabularies['rpn']
-        unknown = rpn2id['[UNKNOWN]']
-        rpn_size = self.vector_shape('caption_rpn')[0]
+        pn2id = self.vocabularies['pn']
+        unknown = pn2id['[UNKNOWN]']
+        pn_size = self.vector_shape('caption_pn')[0]
 
         batch = self.zero_batch(n, include_model=include_model, alternatives=alternatives)
         captions = list()
         for i in range(n):
             correct = random() < correct_ratio
+            # print(i, correct, flush=True)
             # print(i, correct, end=', ', flush=True)
 
             resample = 0
@@ -1153,7 +1201,7 @@ class CaptionAgreementDataset(Dataset):
                 if resample % self.__class__.CAPTIONER_INIT_FREQUENCY == 0:
                     if resample // self.__class__.CAPTIONER_INIT_FREQUENCY >= 1:
                         # print(i, 'caption')
-                        # print(i, 'caption', correct, self.world_captioner.model())
+                        # print(i, resample, 'caption', correct, self.world_captioner.model())
                         # assert False
                         pass
                     if self.worlds_per_instance > 1:
@@ -1164,7 +1212,7 @@ class CaptionAgreementDataset(Dataset):
                         while not self.world_captioner.initialize(mode=mode, correct=correct):
                             pass
                         assert self.world_captioner.incorrect_possible()
-                    # print(self.world_captioner.model())
+                    # print(self.world_captioner.model(), flush=True)
 
                 resample += 1
 
@@ -1192,13 +1240,20 @@ class CaptionAgreementDataset(Dataset):
             if alternatives and self.captions_per_instance > 1:
                 batch['alternatives'][i] = self.captions_per_instance
                 batch['caption'][i].extend(batch['caption'][i][0].copy() for _ in range(self.captions_per_instance - 1))
+                batch['caption_pn'][i].extend(batch['caption_pn'][i][0].copy() for _ in range(self.captions_per_instance - 1))
                 batch['caption_rpn'][i].extend(batch['caption_rpn'][i][0].copy() for _ in range(self.captions_per_instance - 1))
                 captions.append(caption)
-                rpn = caption.reverse_polish_notation()
-                assert len(rpn) <= rpn_size, (len(rpn), rpn_size, rpn)
-                for k, rpn_symbol in enumerate(rpn):
-                    assert rpn_symbol in rpn2id, (rpn_symbol, rpn2id)
-                    batch['caption_rpn'][i][0][k] = rpn2id.get(rpn_symbol, unknown)
+                pn = caption.polish_notation()
+                assert len(pn) <= pn_size, (len(pn), pn_size, pn)
+                for k, pn_symbol in enumerate(pn):
+                    assert pn_symbol in pn2id, (pn_symbol, pn2id)
+                    batch['caption_pn'][i][0][k] = pn2id.get(pn_symbol, unknown)
+                batch['caption_pn_length'][i].append(len(pn))
+                rpn = caption.polish_notation(reverse=True)
+                assert len(rpn) <= pn_size, (len(rpn), pn_size, rpn)
+                for k, pn_symbol in enumerate(rpn):
+                    assert pn_symbol in pn2id, (pn_symbol, pn2id)
+                    batch['caption_rpn'][i][0][k] = pn2id.get(pn_symbol, unknown)
                 batch['caption_rpn_length'][i].append(len(rpn))
                 if include_model:
                     batch['caption_model'][i].append(caption.model())
@@ -1218,11 +1273,17 @@ class CaptionAgreementDataset(Dataset):
                         if caption is not None:
                             break
                     captions.append(caption)
-                    rpn = caption.reverse_polish_notation()
-                    assert len(rpn) <= rpn_size, (len(rpn), rpn_size, rpn)
-                    for k, rpn_symbol in enumerate(rpn):
-                        assert rpn_symbol in rpn2id, (rpn_symbol, rpn2id)
-                        batch['caption_rpn'][i][j][k] = rpn2id.get(rpn_symbol, unknown)
+                    pn = caption.polish_notation()
+                    assert len(pn) <= pn_size, (len(pn), pn_size, pn)
+                    for k, pn_symbol in enumerate(pn):
+                        assert pn_symbol in pn2id, (pn_symbol, pn2id)
+                        batch['caption_pn'][i][j][k] = pn2id.get(pn_symbol, unknown)
+                    batch['caption_pn_length'][i].append(len(pn))
+                    rpn = caption.polish_notation(reverse=True)
+                    assert len(rpn) <= pn_size, (len(rpn), pn_size, rpn)
+                    for k, pn_symbol in enumerate(rpn):
+                        assert pn_symbol in pn2id, (pn_symbol, pn2id)
+                        batch['caption_rpn'][i][j][k] = pn2id.get(pn_symbol, unknown)
                     batch['caption_rpn_length'][i].append(len(rpn))
                     if include_model:
                         batch['caption_model'][i].append(caption.model())
@@ -1230,11 +1291,17 @@ class CaptionAgreementDataset(Dataset):
 
             else:
                 captions.append(caption)
-                rpn = caption.reverse_polish_notation()
-                assert len(rpn) <= rpn_size
-                for k, rpn_symbol in enumerate(rpn):
-                    assert rpn_symbol in rpn2id
-                    batch['caption_rpn'][i][k] = rpn2id.get(rpn_symbol, unknown)
+                pn = caption.polish_notation()
+                assert len(pn) <= pn_size, (len(pn), pn_size, pn)
+                for k, pn_symbol in enumerate(pn):
+                    assert pn_symbol in pn2id, (pn_symbol, pn2id)
+                    batch['caption_pn'][i][k] = pn2id.get(pn_symbol, unknown)
+                batch['caption_pn_length'][i] = len(pn)
+                rpn = caption.polish_notation(reverse=True)
+                assert len(rpn) <= pn_size, (len(rpn), pn_size, rpn)
+                for k, pn_symbol in enumerate(rpn):
+                    assert pn_symbol in pn2id, (pn_symbol, pn2id)
+                    batch['caption_rpn'][i][k] = pn2id.get(pn_symbol, unknown)
                 batch['caption_rpn_length'][i] = len(rpn)
                 if include_model:
                     batch['caption_model'][i] = caption.model()
@@ -1329,7 +1396,7 @@ class CaptionAgreementDataset(Dataset):
 
         return batch
 
-    def get_html(self, generated, image_format='bmp'):
+    def get_html(self, generated, image_format='bmp', image_dir=''):
         id2word = self.vocabulary(value_type='language')
         worlds = generated['world']
         captions = generated['caption']
@@ -1358,14 +1425,15 @@ class CaptionAgreementDataset(Dataset):
                         agreement = 'incorrect'
                     else:
                         agreement = 'ambiguous'
-                    data_html.append('<div class="{agreement}" style="padding: 5px;"><div class="world"><img src="world-{world}-{alt}.{format}" alt="world-{world}-{alt}.{format}"></div></div>'.format(
+                    data_html.append('<div class="{agreement}" style="padding: 5px;"><div class="world"><img src="{image_dir}world-{world}-{alt}.{format}" alt="world-{world}-{alt}.{format}"></div></div>'.format(
                         agreement=agreement,
+                        image_dir=image_dir,
                         world=n,
                         format=image_format,
                         alt=i
                     ))
             else:
-                data_html.append('<div class="world"><img src="world-{world}.{format}" alt="world-{world}.{format}"></div>'.format(world=n, format=image_format))
+                data_html.append('<div class="world"><img src="{image_dir}world-{world}.{format}" alt="world-{world}.{format}"></div>'.format(image_dir=image_dir, world=n, format=image_format))
 
             data_html.append('<div class="num"><b>({num})</b></div>'.format(num=(n + 1)))
 

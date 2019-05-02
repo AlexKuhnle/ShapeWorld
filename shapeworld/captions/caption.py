@@ -9,7 +9,7 @@ class Caption(object):
     def model(self):
         raise NotImplementedError
 
-    def reverse_polish_notation(self):
+    def polish_notation(self, reverse=False):
         raise NotImplementedError
 
     def apply_to_predication(self, predication):

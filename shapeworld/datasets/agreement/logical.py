@@ -119,9 +119,7 @@ class LogicalDataset(CaptionAgreementDataset):
         restrictor_captioner = CaptionerMixer(
             captioners=(
                 EmptyTypeCaptioner(),
-                RegularTypeCaptioner(
-                    hypernym_rate=1.0
-                )
+                RegularTypeCaptioner(hypernym_rate=1.0)
             )
         )
 
@@ -129,9 +127,7 @@ class LogicalDataset(CaptionAgreementDataset):
             attribute_type_captioner=CaptionerMixer(
                 captioners=(
                     RegularAttributeCaptioner(),
-                    RegularTypeCaptioner(
-                        hypernym_rate=0.0
-                    )
+                    RegularTypeCaptioner(hypernym_rate=0.0)
                 )
             )
         )
@@ -141,13 +137,19 @@ class LogicalDataset(CaptionAgreementDataset):
         if captioners is None or 'existential' in captioners:
             existential_captioner = CaptionerMixer(
                 captioners=(
-                    RegularTypeCaptioner(),
+                    RegularTypeCaptioner(existing_attribute_rate=0.0),
                     ExistentialCaptioner(
                         restrictor_captioner=restrictor_captioner,
-                        body_captioner=body_captioner
+                        body_captioner=AttributeTypeRelationCaptioner(
+                            attribute_type_captioner=CaptionerMixer(
+                                captioners=(
+                                    RegularAttributeCaptioner(existing_attribute_rate=0.0),
+                                    RegularTypeCaptioner(hypernym_rate=0.0, existing_attribute_rate=0.0)
+                                )
+                            )
+                        )
                     )
-                ),
-                distribution=(1, 2)
+                )
             )
             captioner_list.append(existential_captioner)
 

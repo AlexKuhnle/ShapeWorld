@@ -28,20 +28,24 @@ class PragmaticalPredication(object):
     def num_not_disagreeing(self):
         return len(self.not_disagreeing)
 
-    def copy(self, reset=False, include_sub_predications=False):
+    def copy(self, reset=False, exclude_sub_predications=False):
         if reset:
             return PragmaticalPredication(agreeing=self.entities)
-        elif include_sub_predications:
-            return PragmaticalPredication(agreeing=self.agreeing, ambiguous=self.ambiguous, disagreeing=self.disagreeing, sub_predications=[predication.copy(include_sub_predications=True) for predication in self.sub_predications])
-        else:
+        elif exclude_sub_predications:
             return PragmaticalPredication(agreeing=self.agreeing, ambiguous=self.ambiguous, disagreeing=self.disagreeing)
+        else:
+            return PragmaticalPredication(agreeing=self.agreeing, ambiguous=self.ambiguous, disagreeing=self.disagreeing, sub_predications=[predication.copy(exclude_sub_predications=False) for predication in self.sub_predications])
 
     def empty(self):
         return len(self.ambiguous) == 0 and len(self.disagreeing) == 0
 
-    def redundant(self, predicate, **kwargs):
+    def implies(self, predicate, **kwargs):
         assert isinstance(predicate, Predicate)
-        return util.all_and_any(predicate.pred_agreement(entity=entity, **kwargs) for entity in self.agreeing)
+        return util.all_and_any(predicate.pred_agreement(entity=entity, **kwargs) for entity in self.agreeing) and all(not predicate.pred_disagreement(entity=entity, **kwargs) for entity in self.ambiguous)
+
+    def implied_by(self, predicate, **kwargs):
+        assert isinstance(predicate, Predicate)
+        return len(self.agreeing) > 0 and any(predicate.pred_agreement(entity=entity, **kwargs) for entity in self.entities) and util.all_and_any(predicate.pred_disagreement(entity=entity, **kwargs) for entity in self.disagreeing) and all(not predicate.pred_agreement(entity=entity, **kwargs) for entity in self.ambiguous)
 
     def tautological(self, predicate, **kwargs):
         assert isinstance(predicate, Predicate)
@@ -51,6 +55,11 @@ class PragmaticalPredication(object):
     def contradictory(self, predicate, **kwargs):
         assert isinstance(predicate, Predicate)
         return util.all_and_any(predicate.pred_disagreement(entity=entity, **kwargs) for entity in self.agreeing)
+
+    def get_sub_predications(self):
+        for predication in self.sub_predications:
+            yield predication
+            yield from predication.get_sub_predications()
 
     # def redundant_sub_predications(self):
     #     for m in range(len(self.sub_predications)):

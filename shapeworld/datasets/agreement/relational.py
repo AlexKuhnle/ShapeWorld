@@ -34,6 +34,7 @@ class RelationalDataset(CaptionAgreementDataset):
         max_provoke_collision_rate=0.33,
         relations=None,
         negation=True,
+        existing_attribute_rate=1.0,
         caption_size=15,
         vocabulary=('.', 'a', 'above', 'an', 'as', 'behind', 'below', 'besides', 'bigger', 'blue', 'circle', 'closer', 'color', 'cross', 'cyan', 'darker', 'different', 'does', 'ellipse', 'exist', 'exists', 'farther', 'from', 'front', 'gray', 'green', 'in', 'is', 'left', 'lighter', 'magenta', 'not', 'of', 'pentagon', 'rectangle', 'red', 'right', 'same', 'semicircle', 'shape', 'smaller', 'square', 'than', 'the', 'to', 'triangle', 'yellow'),
         correct_ratio=0.5,
@@ -77,7 +78,7 @@ class RelationalDataset(CaptionAgreementDataset):
         )
 
         relation_captioner = RelationCaptioner(
-            reference_captioner=RegularTypeCaptioner(),
+            reference_captioner=RegularTypeCaptioner(existing_attribute_rate=existing_attribute_rate),
             comparison_captioner=UniqueTypeCaptioner(),
             relations=relations
         )
@@ -87,7 +88,7 @@ class RelationalDataset(CaptionAgreementDataset):
             )
 
         world_captioner = ExistentialCaptioner(
-            restrictor_captioner=RegularTypeCaptioner(),
+            restrictor_captioner=RegularTypeCaptioner(existing_attribute_rate=existing_attribute_rate),
             body_captioner=relation_captioner
         )
 

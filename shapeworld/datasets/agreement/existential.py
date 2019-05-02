@@ -76,23 +76,19 @@ class ExistentialDataset(CaptionAgreementDataset):
 
         world_captioner = CaptionerMixer(
             captioners=(
-                RegularTypeCaptioner(),
+                RegularTypeCaptioner(existing_attribute_rate=0.0),
                 ExistentialCaptioner(
                     restrictor_captioner=CaptionerMixer(
                         captioners=(
                             EmptyTypeCaptioner(),
-                            RegularTypeCaptioner(
-                                hypernym_rate=1.0
-                            )
+                            RegularTypeCaptioner(hypernym_rate=1.0)
                         )
                     ),
                     body_captioner=AttributeTypeRelationCaptioner(
                         attribute_type_captioner=CaptionerMixer(
                             captioners=(
-                                RegularAttributeCaptioner(),
-                                RegularTypeCaptioner(
-                                    hypernym_rate=0.0
-                                )
+                                RegularAttributeCaptioner(existing_attribute_rate=0.0),
+                                RegularTypeCaptioner(hypernym_rate=0.0, existing_attribute_rate=0.0)
                             )
                         )
                     )

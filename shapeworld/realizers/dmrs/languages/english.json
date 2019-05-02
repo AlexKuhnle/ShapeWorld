@@ -92,26 +92,6 @@
         "proximity-max": {
             "-1": {"key": "closest", "dmrs": "superl e? =1=> [sel]:_close_a_to e? =1=> [scope]:pred x?[num=s] <-- [quant]:_the_q; :sel -2-> [comp]:node"},
             "1": {"key": "farthest", "dmrs": "superl e? =1=> [sel]:_far_a_from e? =1=> [scope]:pred x?[num=s] <-- [quant]:_the_q; :sel -2-> [comp]:node"}
-        },
-
-        "size-two": {
-            "-1": {"key": "smaller", "dmrs": "more_comp e? =1=> [sel]:_small_a_1 e? =1=> [scope]:pred x?[num=s] <-- [quant]:_the_q"},
-            "1": {"key": "bigger", "dmrs": "more_comp e? =1=> [sel]:_big_a_1 e? =1=> [scope]:pred x?[num=s] <-- [quant]:_the_q"}
-        },
-
-        "size-max": {
-            "-1": {"key": "smallest", "dmrs": "superl e? =1=> [sel]:_small_a_1 e? =1=> [scope]:pred x?[num=s] <-- [quant]:_the_q"},
-            "1": {"key": "biggest", "dmrs": "superl e? =1=> [sel]:_big_a_1 e? =1=> [scope]:pred x?[num=s] <-- [quant]:_the_q"}
-        },
-
-        "shade-two": {
-            "-1": {"key": "darker", "dmrs": "more_comp e? =1=> [sel]:_dark_a_1 e? =1=> [scope]:pred x?[num=s] <-- [quant]:_the_q"},
-            "1": {"key": "lighter", "dmrs": "more_comp e? =1=> [sel]:_light_a_1 e? =1=> [scope]:pred x?[num=s] <-- [quant]:_the_q"}
-        },
-
-        "shade-max": {
-            "-1": {"key": "darkest", "dmrs": "superl e? =1=> [sel]:_dark_a_1 e? =1=> [scope]:pred x?[num=s] <-- [quant]:_the_q"},
-            "1": {"key": "lightest", "dmrs": "superl e? =1=> [sel]:_light_a_1 e? =1=> [scope]:pred x?[num=s] <-- [quant]:_the_q"}
         }
     },
 

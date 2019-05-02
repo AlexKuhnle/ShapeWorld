@@ -5,13 +5,16 @@ import torch.utils.data
 
 class ShapeWorldDataset(torch.utils.data.Dataset):
 
-    def __init__(self, dataset, mode=None, include_model=False, epoch=False, is_channels_first=True):
+    def __init__(self, dataset, mode=None, include_model=False, epoch=False, is_channels_first=True, preprocessing=None):
         super(ShapeWorldDataset, self).__init__()
         self.dataset = dataset
         self.mode = mode
         self.include_model = include_model
         self.epoch = epoch
+        if self.epoch:
+            self.dataset.random_sampling = False
         self.is_channels_first = is_channels_first
+        self.preprocessing = dict() if preprocessing is None else preprocessing
         self.initialize_iterator()
         self.index = -1
 
@@ -23,13 +26,17 @@ class ShapeWorldDataset(torch.utils.data.Dataset):
 
     def __getitem__(self, index):
         self.index += 1
-        assert index == self.index, 'random shuffling invalid'
+        assert index == self.index, 'random shuffling invalid: ' + str((index, self.index, self, self.mode))
         try:
             generated = next(self.iterator)
-            for value_name in generated:
-                if self.is_channels_first and (self.dataset.values[value_name] == 'world' or (value_name.endswith('_features') and self.dataset.values[value_name[:-9]] == 'world')):
-                    generated[value_name] = np.transpose(generated[value_name], axes=(0, 3, 1, 2))
-            return {value_name: value[0] for value_name, value in generated.items()}
+            for value_name, value in generated.items():
+                if self.is_channels_first and (self.dataset.values[value_name] == 'world' or value_name.endswith('_features')):
+                    generated[value_name] = np.transpose(value[0], axes=(2, 0, 1))
+                else:
+                    generated[value_name] = value[0]
+            for value_name, preprocessing in self.preprocessing.items():
+                generated[value_name] = preprocessing(generated[value_name])
+            return {value_name: value for value_name, value in generated.items()}
         except StopIteration:
             self.initialize_iterator()
             self.index = -1
@@ -44,9 +51,9 @@ class ShapeWorldDataset(torch.utils.data.Dataset):
 
 class ShapeWorldDataLoader(torch.utils.data.DataLoader):
 
-    def __init__(self, dataset, batch_size=1):
+    def __init__(self, dataset, batch_size=1, num_workers=0):
         assert isinstance(dataset, ShapeWorldDataset)
-        super(ShapeWorldDataLoader, self).__init__(dataset=dataset, batch_size=batch_size)
+        super(ShapeWorldDataLoader, self).__init__(dataset=dataset, batch_size=batch_size, num_workers=num_workers)
 
     def __iter__(self):
         self.sample_iter = iter(self.batch_sampler)

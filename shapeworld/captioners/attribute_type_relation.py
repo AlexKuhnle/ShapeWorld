@@ -10,7 +10,7 @@ class AttributeTypeRelationCaptioner(WorldCaptioner):
         attribute_type_captioner,
         pragmatical_redundancy_rate=1.0,
         pragmatical_tautology_rate=0.0,
-        logical_redundancy_rate=1.0,
+        logical_redundancy_rate=0.0,
         logical_tautology_rate=0.0,
         logical_contradiction_rate=0.0
     ):
@@ -25,12 +25,18 @@ class AttributeTypeRelationCaptioner(WorldCaptioner):
 
         self.attribute_type_captioner = attribute_type_captioner
 
-    def rpn_length(self):
-        return self.attribute_type_captioner.rpn_length() + 1
+    def pn_length(self):
+        return self.attribute_type_captioner.pn_length() + 1
 
-    def rpn_symbols(self):
-        return super(AttributeTypeRelationCaptioner, self).rpn_symbols() | \
+    def pn_symbols(self):
+        return super(AttributeTypeRelationCaptioner, self).pn_symbols() | \
             {'{}-{}'.format(Relation.__name__, 'attribute'), '{}-{}'.format(Relation.__name__, 'type')}
+
+    def pn_arity(self):
+        arity = super(AttributeTypeRelationCaptioner, self).pn_arity()
+        arity['{}-{}'.format(Relation.__name__, 'attribute')] = 1
+        arity['{}-{}'.format(Relation.__name__, 'type')] = 1
+        return arity
 
     def sample_values(self, mode, predication):
         if not super(AttributeTypeRelationCaptioner, self).sample_values(mode=mode, predication=predication):
@@ -61,7 +67,7 @@ class AttributeTypeRelationCaptioner(WorldCaptioner):
             return Relation(predtype='type', value=caption)
 
         else:
-            assert False
+            raise NotImplementedError
 
     def incorrect(self, caption, predication, world):
         return self.attribute_type_captioner.incorrect(caption=caption.value, predication=predication, world=world)

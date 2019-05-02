@@ -19,10 +19,14 @@ class NumberBound(Caption):
             quantifier=self.quantifier.model()
         )
 
-    def reverse_polish_notation(self):
-        return self.quantifier.reverse_polish_notation() + ['{}-{}'.format(self, self.bound)]
+    def polish_notation(self, reverse=False):
+        if reverse:
+            return self.quantifier.polish_notation(reverse=reverse) + ['{}-{}'.format(self, self.bound)]
+        else:
+            return ['{}-{}'.format(self, self.bound)] + self.quantifier.polish_notation(reverse=reverse)
 
     def apply_to_predication(self, predication):
+        assert predication.empty()
         quant_predication = predication.sub_predication()
         self.quantifier.apply_to_predication(predication=quant_predication)
         num_predication = predication.sub_predication()

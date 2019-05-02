@@ -33,7 +33,8 @@ if __name__ == '__main__':
     parser.add_argument('-T', '--tf-records', action='store_true', help='Additionally store data as TensorFlow records')
     parser.add_argument('-F', '--features', action='store_true', help='Additionally extract image features (conv4 of resnet_v2_101)')
     parser.add_argument('-C', '--clevr-format', action='store_true', help='Output in CLEVR format')
-    parser.add_argument('-N', '--png-format', action='store_true', help='Store images in PNG as opposed to bitmap format')
+    parser.add_argument('-N', '--numpy-format', action='store_true', help='Store images in NumPy as opposed to image format')
+    parser.add_argument('-G', '--png-format', action='store_true', help='Store images in PNG as opposed to bitmap format')
     parser.add_argument('-O', '--concatenate-images', action='store_true', help='Concatenate images per part into one image file')
 
     parser.add_argument('-Y', '--yes', action='store_true', help='Confirm all questions with yes')
@@ -76,6 +77,12 @@ if __name__ == '__main__':
         elif util.negative_response(sys.stdin.readline()[:-1]):
             exit(0)
 
+    numpy_formats = list()
+    if args.numpy_format:
+        for value_name, value_type in list(dataset.values.items()):
+            if value_type == 'world':
+                numpy_formats.append(value_name)
+
     if args.features:
         from pretrained import PretrainedModel
         pretrained_model = PretrainedModel(image_shape=dataset.world_shape())
@@ -87,6 +94,7 @@ if __name__ == '__main__':
                 else:
                     dataset.values[value_name + '_features'] = 'vector(float)'
                 dataset.vectors[value_name + '_features'] = pretrained_model.features_shape
+                numpy_formats.append(value_name + '_features')
 
     specification = dataset.specification()
     specification['generated'] = True
@@ -100,6 +108,8 @@ if __name__ == '__main__':
         dataset.pixel_noise_stddev = None
     if args.include_model:
         specification['include_model'] = args.include_model
+    if len(numpy_formats) > 0:
+        specification['numpy_formats'] = numpy_formats
     if args.png_format:
         specification['image_format'] = 'png'
     if args.concatenate_images:
@@ -276,7 +286,8 @@ if __name__ == '__main__':
                             features = pretrained_model.features(images=generated[value_name])
                             generated[value_name + '_features'] = features
 
-                dataset.serialize(path=path, generated=generated, archive=args.archive, html=args.html, image_format=('png' if args.png_format else 'bmp'), concat_worlds=args.concatenate_images)
+                dataset.serialize(path=path, generated=generated, archive=args.archive, html=args.html, numpy_formats=numpy_formats, image_format=('png' if args.png_format else 'bmp'), concat_worlds=args.concatenate_images)
+
                 if args.tf_records:
                     tf_util.write_records(dataset=dataset, records=generated, path=path)
 

@@ -277,10 +277,14 @@ class Archive(object):
         self.mode = mode
         if not os.path.isdir(self.archive[:self.archive.rindex('/')]):
             os.mkdir(self.archive[:self.archive.rindex('/')])
-        if not os.path.isdir('/tmp/shapeworld'):
-            os.makedirs('/tmp/shapeworld')
-        self.temp_directory = os.path.join('/tmp/shapeworld', str(time.time()))
-        os.mkdir(self.temp_directory)
+        try:
+            if not os.path.isdir('/tmp/shapeworld'):
+                os.makedirs('/tmp/shapeworld')
+            self.temp_directory = os.path.join('/tmp/shapeworld', 'temp-' + str(time.time()))
+            os.mkdir(self.temp_directory)
+        except PermissionError:
+            self.temp_directory = os.path.join(self.archive[:self.archive.rindex('/')], 'temp-' + str(time.time()))
+            os.mkdir(self.temp_directory)
         if archive is None:
             self.archive_type = None
             if not os.path.isdir(self.archive):

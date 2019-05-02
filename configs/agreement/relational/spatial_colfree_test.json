@@ -1,0 +1,15 @@
+{
+    "type": "agreement",
+    "name": "relational",
+    "relations": [["x-rel", "*"], ["y-rel", "*"], ["proximity-rel", "*"]],
+    "negation": false,
+    "collision_tolerance": 0.0,
+    "train_entity_counts": [4, 6, 7, 8, 9],
+    "test_entity_counts": [5, 10],
+    "test_combinations": [
+        ["square", "red", "solid"], ["triangle", "green", "solid"], ["circle", "blue", "solid"],
+        ["rectangle", "yellow", "solid"], ["cross", "magenta", "solid"], ["ellipse", "cyan", "solid"],
+        ["pentagon", "red", "solid"], ["pentagon", "green", "solid"], ["pentagon", "blue", "solid"], ["pentagon", "gray", "solid"],
+        ["square", "gray", "solid"], ["triangle", "gray", "solid"], ["circle", "gray", "solid"], ["pentagon", "gray", "solid"]
+    ]
+}

@@ -15,10 +15,12 @@ class WorldCaptioner(object):
         internal_captioners,
         pragmatical_redundancy_rate=1.0,
         pragmatical_tautology_rate=0.0,
-        logical_redundancy_rate=1.0,
+        logical_redundancy_rate=0.0,
         logical_tautology_rate=0.0,
         logical_contradiction_rate=0.0
     ):
+        assert logical_tautology_rate <= logical_redundancy_rate
+        assert pragmatical_tautology_rate <= pragmatical_redundancy_rate
         self.internal_captioners = list(internal_captioners)
         self.pragmatical_redundancy_rate = pragmatical_redundancy_rate
         self.pragmatical_tautology_rate = pragmatical_tautology_rate
@@ -38,14 +40,17 @@ class WorldCaptioner(object):
             captioner.set_realizer(realizer)
         return True
 
-    def rpn_length(self):
-        return max(captioner.rpn_length() for captioner in self.internal_captioners)
+    def pn_length(self):
+        return max(captioner.pn_length() for captioner in self.internal_captioners)
 
-    def rpn_symbols(self):
-        return set(rpn_symbol for captioner in self.internal_captioners for rpn_symbol in captioner.rpn_symbols())
+    def pn_symbols(self):
+        return set(pn_symbol for captioner in self.internal_captioners for pn_symbol in captioner.pn_symbols())
+
+    def pn_arity(self):
+        return {pn_symbol: arity for captioner in self.internal_captioners for pn_symbol, arity in captioner.pn_arity().items()}
 
     def initialize(self, mode, correct):
-        self.correct = correct
+        self.is_correct = correct
         return self.sample_values(mode=mode, predication=LogicalPredication())
 
     def sample_values(self, mode, predication):
@@ -54,13 +59,6 @@ class WorldCaptioner(object):
 
         self.mode = mode
 
-        if self.pragmatical_redundancy_rate == 0.0:
-            self.pragmatical_redundancy = False
-        elif self.pragmatical_redundancy_rate == 1.0:
-            self.pragmatical_redundancy = True
-        else:
-            self.pragmatical_redundancy = random() < self.pragmatical_redundancy_rate
-
         if self.pragmatical_tautology_rate == 0.0:
             self.pragmatical_tautology = False
         elif self.pragmatical_tautology_rate == 1.0:
@@ -68,12 +66,14 @@ class WorldCaptioner(object):
         else:
             self.pragmatical_tautology = random() < self.pragmatical_tautology_rate
 
-        if self.logical_redundancy_rate == 0.0:
-            self.logical_redundancy = False
-        elif self.logical_redundancy_rate == 1.0:
-            self.logical_redundancy = True
+        if self.pragmatical_redundancy_rate == 0.0:
+            self.pragmatical_redundancy = False
+        elif self.pragmatical_redundancy_rate == 1.0:
+            self.pragmatical_redundancy = True
+        elif self.pragmatical_tautology:
+            self.pragmatical_redundancy = True
         else:
-            self.logical_redundancy = random() < self.logical_redundancy_rate
+            self.pragmatical_redundancy = random() < (self.pragmatical_redundancy_rate - self.pragmatical_tautology_rate) / (1.0 - self.pragmatical_tautology_rate)
 
         if self.logical_tautology_rate == 0.0:
             self.logical_tautology = False
@@ -81,6 +81,15 @@ class WorldCaptioner(object):
             self.logical_tautology = True
         else:
             self.logical_tautology = random() < self.logical_tautology_rate
+
+        if self.logical_redundancy_rate == 0.0:
+            self.logical_redundancy = False
+        elif self.logical_redundancy_rate == 1.0:
+            self.logical_redundancy = True
+        elif self.logical_tautology:
+            self.logical_redundancy = True
+        else:
+            self.logical_redundancy = random() < (self.logical_redundancy_rate - self.logical_tautology_rate) / (1.0 - self.logical_tautology_rate)
 
         if self.logical_contradiction_rate == 0.0:
             self.logical_contradiction = False
@@ -106,6 +115,10 @@ class WorldCaptioner(object):
     def caption(self, predication, world):
         raise NotImplementedError
 
+    def correct(self, caption, predication):
+        caption.apply_to_predication(predication=predication)
+        return True
+
     def incorrect(self, caption, predication, world):
         raise NotImplementedError
 
@@ -118,32 +131,42 @@ class WorldCaptioner(object):
 
             caption = self.caption(predication=predication, world=world)
             if caption is None:
+                # print(1, flush=True)
                 continue
 
             agreement = caption.agreement(predication=predication, world=world)
-            if agreement > 0.0:
-                break
+            if agreement <= 0.0:
+                # print(2, flush=True)
+                continue
+
+            break
 
         else:
+            # print('!!!', flush=True)
             return None
 
         self.correct_caption = deepcopy(caption)
 
-        if not self.correct:
+        if not self.is_correct:
 
             for _ in range(self.__class__.MAX_ATTEMPTS):
                 predication = PragmaticalPredication(agreeing=world.entities)
 
                 inc_caption = deepcopy(caption)
                 if not self.incorrect(caption=inc_caption, predication=predication, world=world):
+                    # print(3, flush=True)
                     continue
 
                 agreement = inc_caption.agreement(predication=predication, world=world)
-                if agreement < 0.0:
-                    caption = inc_caption
-                    break
+                if agreement >= 0.0:
+                    # print(4, flush=True)
+                    continue
+
+                caption = inc_caption
+                break
 
             else:
+                # print('!!!!!', flush=True)
                 return None
 
         return caption
@@ -159,7 +182,7 @@ class CaptionerMixer(WorldCaptioner):
         captioners,
         pragmatical_redundancy_rate=1.0,
         pragmatical_tautology_rate=0.0,
-        logical_redundancy_rate=1.0,
+        logical_redundancy_rate=0.0,
         logical_tautology_rate=0.0,
         logical_contradiction_rate=0.0,
         distribution=None,

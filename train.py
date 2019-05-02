@@ -28,6 +28,7 @@ if __name__ == '__main__':
     parser.add_argument('-f', '--evaluation-frequency', type=util.parse_int_with_factor, default=100, help='Evaluation frequency')
     parser.add_argument('-q', '--query', default=None, help='Additional values to query (separated by commas)')
     parser.add_argument('-T', '--tf-records', action='store_true', help='Use TensorFlow records')
+    parser.add_argument('-F', '--features', action='store_true', help='Use image features (conv4 of resnet_v2_101) instead of raw image')
 
     parser.add_argument('--model-dir', default=None, help='TensorFlow model directory, storing the model computation graph and parameters')
     parser.add_argument('--save-frequency', type=int, default=3, help='Save frequency (in hours)')
@@ -53,7 +54,8 @@ if __name__ == '__main__':
         os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
     # dataset
-    dataset = Dataset.create(dtype=args.type, name=args.name, variant=args.variant, language=args.language, config=args.config, **args.config_values)
+    exclude_values = ('world',) if args.features else ('world_features',)
+    dataset = Dataset.create(dtype=args.type, name=args.name, variant=args.variant, language=args.language, config=args.config, exclude_values=exclude_values, **args.config_values)
 
     # information about dataset and model
     if args.verbosity >= 1:

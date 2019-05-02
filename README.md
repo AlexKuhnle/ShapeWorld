@@ -167,7 +167,8 @@ The following command line arguments are available:
 * `-T`, `--tf-records`:  Additionally store data as TensorFlow records
 * `-F`, `--features`:  Additionally extract image features (`conv4` of `resnet_v2_101`)
 * `-C`, `--clevr-format`:  Output in CLEVR format
-* `-N`, `--png-format`:  Store images in PNG as opposed to bitmap format
+* `-N`, `--numpy-format`: Store images in NumPy as opposed to image format
+* `-G`, `--png-format`:  Store images in PNG as opposed to bitmap format
 * `-O`, `--concatenate-images`:  Concatenate images per part into one image file
 * `-Y`, `--yes`:  Confirm all questions with yes
 * `--config-values`:  Additional dataset configuration values passed as command line arguments (`--[key] [value]` with `[value]` being a string or in JSON format, put in single quotes `'...'` if necessary, see [dataset arguments](https://github.com/AlexKuhnle/ShapeWorld/tree/master/shapeworld/datasets) for details)

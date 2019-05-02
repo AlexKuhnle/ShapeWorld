@@ -34,9 +34,12 @@ class Attribute(Predicate):
             value=value
         )
 
-    def reverse_polish_notation(self):
+    def polish_notation(self, reverse=False):
         if self.predtype == 'relation':
-            return self.value.reverse_polish_notation() + ['{}-{}'.format(self, self.predtype)]
+            if reverse:
+                return self.value.polish_notation(reverse=reverse) + ['{}-{}'.format(self, self.predtype)]
+            else:
+                return ['{}-{}'.format(self, self.predtype)] + self.value.polish_notation(reverse=reverse)
         else:
             return ['{}-{}-{}'.format(self, self.predtype, self.value)]
 
