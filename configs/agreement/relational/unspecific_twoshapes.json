@@ -3,7 +3,7 @@
     "name": "relational",
     "relations": [["unspecific", "*"]],
     "negation": false,
-    "existing_attribute_rate": 0.0,
+    "type_existing_attribute_rate": 0.0,
     "collision_tolerance": 0.0,
     "entity_counts": [2]
 }

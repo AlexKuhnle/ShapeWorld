@@ -141,6 +141,10 @@ class Selector(Predicate):
             # print('i', len(scope_entities), len(scope_predication.agreeing))
             return False
 
+        elif all(other != entity for other in scope_predication.not_disagreeing):
+            print('!!!!!!')
+            return True
+
         elif self.predtype == 'x-two' or self.predtype == 'x-max':
             return any((other.center.x - entity.center.x) * self.value > Settings.min_axis_distance for other in scope_entities)
 

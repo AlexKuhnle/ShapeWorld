@@ -71,14 +71,15 @@ class Proposition(Caption):
             return max(self.clauses[0].agreement(predication=predication, world=world), -self.clauses[1].agreement(predication=next_predication, world=world))
 
         elif self.proptype == 'equivalence':
-            min_agreement = max_agreement = self.clauses[0].agreement(predication=predication, world=world)
+            pos_agreement = self.clauses[0].agreement(predication=predication, world=world)
+            neg_agreement = -pos_agreement
             next_predication = predication
             for clause in self.clauses[1:]:
                 next_predication = next_predication.get_sub_predication(-1)
                 agreement = clause.agreement(predication=next_predication, world=world)
-                min_agreement = min(min_agreement, agreement)
-                max_agreement = min(max_agreement, agreement)
-            return max(min_agreement, -max_agreement)
+                pos_agreement = min(pos_agreement, agreement)
+                neg_agreement = min(neg_agreement, -agreement)
+            return max(pos_agreement, neg_agreement)
 
         else:
             assert False

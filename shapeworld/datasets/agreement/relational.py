@@ -34,7 +34,10 @@ class RelationalDataset(CaptionAgreementDataset):
         max_provoke_collision_rate=0.33,
         relations=None,
         negation=True,
-        existing_attribute_rate=1.0,
+        existential_incorrect_distribution=(1, 1),
+        relation_incorrect_distribution=(2, 1, 1),
+        type_existing_attribute_rate=1.0,
+        type_incorrect_distribution=(1, 1, 1, 1),
         caption_size=15,
         vocabulary=('.', 'a', 'above', 'an', 'as', 'behind', 'below', 'besides', 'bigger', 'blue', 'circle', 'closer', 'color', 'cross', 'cyan', 'darker', 'different', 'does', 'ellipse', 'exist', 'exists', 'farther', 'from', 'front', 'gray', 'green', 'in', 'is', 'left', 'lighter', 'magenta', 'not', 'of', 'pentagon', 'rectangle', 'red', 'right', 'same', 'semicircle', 'shape', 'smaller', 'square', 'than', 'the', 'to', 'triangle', 'yellow'),
         correct_ratio=0.5,
@@ -78,9 +81,13 @@ class RelationalDataset(CaptionAgreementDataset):
         )
 
         relation_captioner = RelationCaptioner(
-            reference_captioner=RegularTypeCaptioner(existing_attribute_rate=existing_attribute_rate),
+            reference_captioner=RegularTypeCaptioner(
+                existing_attribute_rate=type_existing_attribute_rate,
+                incorrect_distribution=type_incorrect_distribution
+            ),
             comparison_captioner=UniqueTypeCaptioner(),
-            relations=relations
+            relations=relations,
+            incorrect_distribution=relation_incorrect_distribution
         )
         if negation:
             relation_captioner = NegationRelationCaptioner(
@@ -88,8 +95,12 @@ class RelationalDataset(CaptionAgreementDataset):
             )
 
         world_captioner = ExistentialCaptioner(
-            restrictor_captioner=RegularTypeCaptioner(existing_attribute_rate=existing_attribute_rate),
-            body_captioner=relation_captioner
+            restrictor_captioner=RegularTypeCaptioner(
+                existing_attribute_rate=type_existing_attribute_rate,
+                incorrect_distribution=type_incorrect_distribution
+            ),
+            body_captioner=relation_captioner,
+            incorrect_distribution=existential_incorrect_distribution
         )
 
         super(RelationalDataset, self).__init__(

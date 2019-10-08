@@ -81,9 +81,7 @@ class SelectionDataset(CaptionAgreementDataset):
             scope_captioners.append(EmptyTypeCaptioner())
         world_captioner = ExistentialCaptioner(
             restrictor_captioner=SelectorCaptioner(
-                scope_captioner=CaptionerMixer(
-                    captioners=scope_captioners
-                ),
+                scope_captioner=CaptionerMixer(captioners=scope_captioners),
                 comparison_captioner=UniqueTypeCaptioner(),
                 selectors=selectors
             ),
@@ -91,9 +89,7 @@ class SelectionDataset(CaptionAgreementDataset):
                 attribute_type_captioner=CaptionerMixer(
                     captioners=(
                         RegularAttributeCaptioner(),
-                        RegularTypeCaptioner(
-                            hypernym_rate=0.0
-                        )
+                        RegularTypeCaptioner(hypernym_rate=0.0)
                     )
                 )
             )
