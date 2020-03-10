@@ -4,7 +4,7 @@
 
 ```bash
 git clone --recursive https://github.com/AlexKuhnle/ShapeWorld.git
-pip3 install -e ShapeWorld  # optional: ShapeWorld[full] or ShapeWorld[full-gpu]
+pip3 install -e .  # optional: .[full] or .[full-gpu]
 ```
 
 
@@ -48,7 +48,7 @@ ShapeWorld is a framework which allows to specify generators for abstract, visua
 
 The main motivation behind ShapeWorld is to provide a new testbed and evaluation methodology for visually grounded language understanding, particularly aimed at deep learning models. It differs from standard evaluation datasets in two ways: Firstly, data is randomly sampled during training and evaluation according to constraints specified by the experimenter. Secondly, its focus of evaluation is on linguistic understanding capabilities of the type investigated by formal semantics. In this context, the ShapeWorld tasks can be thought of as unit-testing multimodal models for specific linguistic generalization abilities -- similar to, for instance, the [bAbI tasks](https://research.fb.com/projects/babi/) of [Weston et al. (2015)](https://arxiv.org/abs/1502.05698) for text-only understanding.
 
-The code is written in Python 3 (but should be compatible to Python 2). The data can either be obtained within a Python module as [NumPy](http://www.numpy.org/) arrays, and hence integrates into deep learning projects based on common frameworks like [TensorFlow](https://www.tensorflow.org/), [PyTorch](http://pytorch.org/) or [Theano](http://deeplearning.net/software/theano/), or it can be extracted into separate files. Both options are described further below. For language generation, the Python package [pydmrs](https://github.com/delph-in/pydmrs) [(Copestake et al., 2016)](http://www.lrec-conf.org/proceedings/lrec2016/pdf/634_Paper.pdf) is required.
+The code is written in Python 3. The data can either be obtained within a Python module as [NumPy](http://www.numpy.org/) arrays, and hence integrates into deep learning projects based on common frameworks like [TensorFlow](https://www.tensorflow.org/), [PyTorch](http://pytorch.org/) or [Theano](http://deeplearning.net/software/theano/), or it can be extracted into separate files. Both options are described further below. For language generation, the Python package [pydmrs](https://github.com/delph-in/pydmrs) [(Copestake et al., 2016)](http://www.lrec-conf.org/proceedings/lrec2016/pdf/634_Paper.pdf) is required.
 
 **The ShapeWorld framework is still under active development.**
 
