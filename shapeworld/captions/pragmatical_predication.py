@@ -59,7 +59,7 @@ class PragmaticalPredication(object):
     def get_sub_predications(self):
         for predication in self.sub_predications:
             yield predication
-            yield from predication.get_sub_predications()
+            yield predication.get_sub_predications()
 
     # def redundant_sub_predications(self):
     #     for m in range(len(self.sub_predications)):
