@@ -178,4 +178,4 @@ class UniqueTypeCaptioner(WorldCaptioner):
                 raise NotImplementedError
                 return None
 
-        return super().correct(caption=caption, predication=predication)
+        return super(UniqueTypeCaptioner, self).correct(caption=caption, predication=predication)

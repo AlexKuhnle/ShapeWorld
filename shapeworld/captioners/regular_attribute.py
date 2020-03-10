@@ -133,7 +133,7 @@ class RegularAttributeCaptioner(WorldCaptioner):
             if sub_predication.implies(predicate=caption) or sub_predication.implied_by(predicate=caption):
                 return False
 
-        return super().correct(caption=caption, predication=predication)
+        return super(RegularAttributeCaptioner, self).correct(caption=caption, predication=predication)
 
     def incorrect(self, caption, predication, world):
         if self.attribute == 'shape':  # random (existing) shape

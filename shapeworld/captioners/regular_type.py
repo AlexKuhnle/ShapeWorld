@@ -236,7 +236,7 @@ class RegularTypeCaptioner(WorldCaptioner):
             if sub_predication.implies(predicate=caption) or sub_predication.implied_by(predicate=caption):
                 return False
 
-        return super().correct(caption=caption, predication=predication)
+        return super(RegularTypeCaptioner, self).correct(caption=caption, predication=predication)
 
     def incorrect(self, caption, predication, world):
         if self.incorrect_mode == 0:  # random (existing) shape
