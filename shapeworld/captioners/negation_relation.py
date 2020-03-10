@@ -36,7 +36,7 @@ class NegationRelationCaptioner(WorldCaptioner):
         if not super(NegationRelationCaptioner, self).set_realizer(realizer):
             return False
 
-        assert 'negation' in realizer.relations and -1 in realizer.relations['negation'] and 1 in realizer.relations['negation']
+        assert 'negation' in realizer.relations and 1 in realizer.relations['negation']
 
         return True
 
@@ -45,11 +45,10 @@ class NegationRelationCaptioner(WorldCaptioner):
 
     def pn_symbols(self):
         return super(NegationRelationCaptioner, self).pn_symbols() | \
-            {'{}-{}-{}'.format(Relation.__name__, 'negation', -1), '{}-{}-{}'.format(Relation.__name__, 'negation', 1)}
+            {'{}-{}-{}'.format(Relation.__name__, 'negation', 1)}
 
     def pn_arity(self):
         arity = super(NegationRelationCaptioner, self).pn_arity()
-        arity['{}-{}-{}'.format(Relation.__name__, 'negation', -1)] = 1
         arity['{}-{}-{}'.format(Relation.__name__, 'negation', 1)] = 1
         return arity
 

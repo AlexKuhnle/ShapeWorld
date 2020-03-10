@@ -3,7 +3,7 @@ from shapeworld import util
 from shapeworld.dataset import LoadedDataset
 
 
-options = tf.python_io.TFRecordOptions(compression_type=tf.python_io.TFRecordCompressionType.GZIP)
+options = tf.io.TFRecordOptions()  # compression_type='GZIP'
 
 
 def read_record(dataset, serialized_record):
@@ -13,32 +13,32 @@ def read_record(dataset, serialized_record):
         value_type, alts = util.alternatives_type(value_type=value_type)
         if value_type == 'int':
             if alts:
-                feature_lists[value_name] = tf.FixedLenSequenceFeature(shape=(), dtype=tf.int64)
+                feature_lists[value_name] = tf.io.FixedLenSequenceFeature(shape=(), dtype=tf.int64)
             else:
-                features[value_name] = tf.FixedLenFeature(shape=(), dtype=tf.int64)
+                features[value_name] = tf.io.FixedLenFeature(shape=(), dtype=tf.int64)
         elif value_type == 'float':
             if alts:
-                feature_lists[value_name] = tf.FixedLenSequenceFeature(shape=(), dtype=tf.float32)
+                feature_lists[value_name] = tf.io.FixedLenSequenceFeature(shape=(), dtype=tf.float32)
             else:
-                features[value_name] = tf.FixedLenFeature(shape=(), dtype=tf.float32)
+                features[value_name] = tf.io.FixedLenFeature(shape=(), dtype=tf.float32)
         elif value_type == 'vector(int)' or value_type in dataset.vocabularies:
             if alts:
-                feature_lists[value_name] = tf.FixedLenSequenceFeature(shape=dataset.vector_shape(value_name=value_name), dtype=tf.int64)
+                feature_lists[value_name] = tf.io.FixedLenSequenceFeature(shape=dataset.vector_shape(value_name=value_name), dtype=tf.int64)
             else:
-                features[value_name] = tf.FixedLenFeature(shape=dataset.vector_shape(value_name=value_name), dtype=tf.int64)
+                features[value_name] = tf.io.FixedLenFeature(shape=dataset.vector_shape(value_name=value_name), dtype=tf.int64)
         elif value_type == 'vector(float)':
             if alts:
-                feature_lists[value_name] = tf.FixedLenSequenceFeature(shape=dataset.vector_shape(value_name=value_name), dtype=tf.float32)
+                feature_lists[value_name] = tf.io.FixedLenSequenceFeature(shape=dataset.vector_shape(value_name=value_name), dtype=tf.float32)
             else:
-                features[value_name] = tf.FixedLenFeature(shape=dataset.vector_shape(value_name=value_name), dtype=tf.float32)
+                features[value_name] = tf.io.FixedLenFeature(shape=dataset.vector_shape(value_name=value_name), dtype=tf.float32)
         elif value_type == 'world':
             if alts:
-                feature_lists[value_name] = tf.FixedLenSequenceFeature(shape=dataset.world_shape(), dtype=tf.float32)
+                feature_lists[value_name] = tf.io.FixedLenSequenceFeature(shape=dataset.world_shape(), dtype=tf.float32)
             else:
-                features[value_name] = tf.FixedLenFeature(shape=dataset.world_shape(), dtype=tf.float32)
+                features[value_name] = tf.io.FixedLenFeature(shape=dataset.world_shape(), dtype=tf.float32)
         else:
             pass
-    record, sequence_record = tf.parse_single_sequence_example(serialized=serialized_record, context_features=features, sequence_features=feature_lists)
+    record, sequence_record = tf.io.parse_single_sequence_example(serialized=serialized_record, context_features=features, sequence_features=feature_lists)
     return record, sequence_record
 
 
@@ -134,7 +134,10 @@ def write_record(dataset, record):
 
 def write_records(dataset, records, path):
     num_records = len(next(iter(records.values())))
-    with tf.python_io.TFRecordWriter(path=(path + '.tfrecords.gz'), options=options) as writer:
+    path = str(path)
+    if not path.endswith('.tfrecords'):
+        path += '.tfrecords'
+    with tf.io.TFRecordWriter(path=path, options=options) as writer:
         for n in range(num_records):
             record = {value_name: value[n] for value_name, value in records.items()}
             serialized_record = write_record(dataset=dataset, record=record)
