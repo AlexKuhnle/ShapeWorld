@@ -54,7 +54,7 @@ The code is written in Python 3. The data can either be obtained within a Python
 
 I am interested in hearing about any applications you plan to use the ShapeWorld data for. In particular, let me know if you have a great idea in mind that you are interested in investigating with such abstract data, but which the current setup does not allow to realize -- I am happy to collaboratively find a way to make it happen.
 
-Contact: aok25 (at) cam.ac.uk
+Contact: alexkuhnle (at) t-online.de
 
 If you use ShapeWorld in your work, please cite:
 

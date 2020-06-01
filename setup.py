@@ -7,7 +7,7 @@ setup(
     url='https://github.com/AlexKuhnle/ShapeWorld',
     download_url='',
     author='Alexander Kuhnle',
-    author_email='aok25@cam.ac.uk',
+    author_email='alexkuhnle@t-online.de',
     license='MIT',
     description='Configurable abstract data generation with a focus on visually grounded language data for deep learning evaluation.',
     long_description='Configurable abstract data generation with a focus on visually grounded language data for deep learning evaluation.',
