@@ -45,12 +45,12 @@ class Ace:
         self.gen_final1_regex = re.compile(pattern=r'^NOTE: generated [0-9]+ / [1-9][0-9]* sentences, avg [0-9]+k, time [0-9]+.[0-9]+s$')
         self.gen_final2_regex = re.compile(pattern=r'^NOTE: transfer did [0-9]+ successful unifies and [0-9]+ failed ones$')
 
-    def parse(self, sentence=None, sentence_list=None, print_notes=True):
+    def parse(self, sentence=None, sentence_list=None, print_notes=False):
         assert (sentence is None) != (sentence_list is None)
         if sentence is not None:
             sentence_list = [sentence]
 
-        parses_iter = self.parse_iter(sentence_list=sentence_list, print_notes=True)
+        parses_iter = self.parse_iter(sentence_list=sentence_list, print_notes=print_notes)
 
         if sentence is None:
             return parses_iter
@@ -63,7 +63,7 @@ class Ace:
                 pass
             return parses
 
-    def parse_iter(self, sentence_list=None, print_notes=True):
+    def parse_iter(self, sentence_list=None, print_notes=False):
         sentence_list = list(sentence_list)
         num_sentences = len(sentence_list)
         ace_input = '\n'.join(sentence_list) + '\n'
@@ -129,7 +129,7 @@ class Ace:
         except StopIteration:
             pass
 
-    def parse_item(self, line, print_notes=True):
+    def parse_item(self, line, print_notes=False):
         try:
             if self.trees:
                 mrs = Mrs.from_string(line[:line.index(' ; ')])
@@ -156,12 +156,12 @@ class Ace:
             else:
                 raise exc
 
-    def generate(self, mrs=None, mrs_list=None, print_notes=True):
+    def generate(self, mrs=None, mrs_list=None, print_notes=False):
         assert (mrs is None) != (mrs_list is None)
         if mrs is not None:
             mrs_list = [mrs]
 
-        generated_iter = self.generate_iter(mrs_list=mrs_list, print_notes=True)
+        generated_iter = self.generate_iter(mrs_list=mrs_list, print_notes=print_notes)
 
         if mrs is None:
             return generated_iter
@@ -174,7 +174,7 @@ class Ace:
                 pass
             return generated
 
-    def generate_iter(self, mrs=None, mrs_list=None, print_notes=True):
+    def generate_iter(self, mrs=None, mrs_list=None, print_notes=False):
         num_mrs = len(mrs_list)
         ace_input = '\n'.join(str(mrs) for mrs in mrs_list) + '\n'
 
