@@ -1,6 +1,15 @@
 from collections import namedtuple
-from shapeworld.realizers.dmrs.pydmrs.pydmrs.components import Pred, GPred, Sortinfo, EventSortinfo, InstanceSortinfo
+import os
+import sys
 from shapeworld.realizers.dmrs.pydmrs.pydmrs.core import Link, Node, Dmrs
+
+
+# add pydmrs submodule to Python path
+directory = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'realizers', 'dmrs', 'pydmrs')
+sys.path.insert(1, directory)
+
+
+from pydmrs.components import Pred, GPred, Sortinfo, EventSortinfo, InstanceSortinfo
 
 
 class Reference(namedtuple('ReferenceTuple', ('sort', 'index'))):

@@ -1,5 +1,15 @@
+import os
+import sys
 from shapeworld.analyzers.mrs import Reference, Variable, ElemPred, Mrs
-from shapeworld.realizers.dmrs.pydmrs.pydmrs.components import Pred, GPred, RealPred, Sortinfo, EventSortinfo, InstanceSortinfo
+
+
+# add pydmrs submodule to Python path
+directory = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'realizers', 'dmrs', 'pydmrs')
+print(directory)
+sys.path.insert(1, directory)
+
+
+from pydmrs.components import Pred, GPred, RealPred, Sortinfo, EventSortinfo, InstanceSortinfo
 
 
 def find_next(string, start=None, end=None, whitespace=False):

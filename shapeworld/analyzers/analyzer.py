@@ -236,7 +236,7 @@ class DmrsAnalyzer(object):
                     continue
                 try:
                     dmrs = mrs.convert_to(cls=Dmrs, copy_nodes=True)
-                except Exception as exc:
+                except Exception:
                     continue
                 analyses = self.analyze2(dmrs=dmrs)
                 try:
