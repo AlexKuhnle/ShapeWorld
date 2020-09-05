@@ -3,7 +3,7 @@ from shapeworld.generators import ReinforcedAttributesGenerator
 from shapeworld.captioners import SingleAttributeTypeCaptioner, RelationCaptioner, NegationRelationCaptioner, ExistentialCaptioner
 
 
-class RelationalDataset(CaptionAgreementDataset):
+class RelationalSingleAttributeDataset(CaptionAgreementDataset):
 
     def __init__(
         self,
@@ -102,7 +102,7 @@ class RelationalDataset(CaptionAgreementDataset):
             incorrect_distribution=existential_incorrect_distribution
         )
 
-        super(RelationalDataset, self).__init__(
+        super(RelationalSingleAttributeDataset, self).__init__(
             world_generator=world_generator,
             world_captioner=world_captioner,
             caption_size=caption_size,
