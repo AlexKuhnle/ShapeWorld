@@ -14,7 +14,7 @@ setup(
     keywords=[],
     platforms=['linux', 'mac'],
     packages=['shapeworld'],
-    install_requires=['numpy', 'pillow'],
+    install_requires=['numpy', 'pillow', 'six'],
     extras_require={
         'full': ['tensorflow', 'wget'],
         'full-gpu': ['tensorflow-gpu', 'wget']

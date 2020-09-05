@@ -1,7 +1,4 @@
 
-# stringlib
-
-# nonw
 def find_next(string, start=None, end=None, whitespace=False):
     if start is None or start < 0:
         start = 0
@@ -258,76 +255,3 @@ class Leaf(DerivTree):
     @property
     def leaves(self):
         yield self
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# from ace import Ace
-# from derivtree import DerivTree
-# #from delphin.mrs import simplemrs, dmrx
-# #from dmrs import core
-
-
-# def distance(derivtree, parsetree):
-#     distance = 0
-#     for node in parsetree:
-#         node_leaf = derivtree.get_leaf(parsetree[node][0])
-#         if parsetree[node][2] in ptb_conv:
-#             rule_start = parsetree[node][0] + '_' + ptb_conv[parsetree[node][2]]
-#             if node_leaf.parent.name[:-1] == rule_start:
-#                 distance -= 1
-#         parent = parsetree[node][1]
-#         if parent != 0:
-#             parent_leaf = derivtree.get_leaf(parsetree[parent][0])
-#             #print(parsetree[parent][0], '->', parsetree[node][0], ':', parent_leaf.collapsed_distance(parsetree[node][0]))
-#             distance += parent_leaf.collapsed_distance(parsetree[node][0])
-#     return distance
-
-
-
-# ace = Ace('/home/aok25/bin/ace-0.9.22/ace', '/home/aok25/bin/erg/erg.dat', informal=True, tree=True)
-
-# sentence = 'His hunch about the morals of blackmailing photographers was right'
-# parse = ('1   His his _   PRP$    _   2   poss    _   _   _   _   _   _\n'
-#          '2   hunch   hunch   _   NN  _   9   subj    _   _   _   _   _   _\n'
-#          '3   about   about   _   IN  _   2   prep    _   _   _   _   _   _\n'
-#          '4   the the _   DT  _   5   det _   _   _   _   _   _\n'
-#          '5   morals  morals  _   NNS _   3   pcomp   _   _   _   _   _   _\n'
-#          '6   of  of  _   IN  _   5   prep    _   _   _   _   _   _\n'
-#          '7   blackmailing    blackmail   _   VBG _   8   amod    _   _   _   _   _   _\n'
-#          '8   photographers   photographer    _   NNS _   6   pcomp   _   _   _   _   _   _\n'
-#          '9   was be  _   VBD _   0   ROOT    _   _   _   _   _   _\n'
-#          '10  right   right   _   JJ  _   9   arg1    _   _   _   _   _   _')
-#          #'11  .   .   _   .   _   9   punct   _   _   _   _   _   _')
-
-# ptb_conv = {'NN': 'n', 'NNS': 'n', 'JJ': 'a'}
-
-# parsetree = {}
-# root = 0
-# lines = parse.split('\n')
-# for line in lines:
-#     strs = line.split()
-#     index = int(strs[0])
-#     parent = int(strs[6])
-#     parsetree[index] = (strs[1].lower(), parent, strs[4], strs[7])
-#     if parent == 0:
-#         root = index
-
-# mrss, derivs = ace.parse(sentence)
-
-# for n in range(len(derivs)):
-#     print(n, distance(derivs[n], parsetree))
-#     #print(' '.join(leaf.parent.name for leaf in derivs[n].leaves))
-#     #print(derivs[n].collapsed_str())
-#     #print(mrss[n])
-# print(min(range(len(derivs)), key=lambda n: distance(derivs[n], parsetree)))

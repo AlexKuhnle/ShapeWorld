@@ -1,8 +1,15 @@
 from collections import namedtuple
+import os
 import sys
-from shapeworld.realizers.dmrs.pydmrs.pydmrs.components import Pred, GPred, Sortinfo, EventSortinfo, InstanceSortinfo
-from shapeworld.realizers.dmrs.pydmrs.pydmrs.core import Link, Node, Dmrs, ListDmrs
-# from dmrs_check import dmrs_check
+from shapeworld.realizers.dmrs.pydmrs.pydmrs.core import Link, Node, Dmrs
+
+
+# add pydmrs submodule to Python path
+directory = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'realizers', 'dmrs', 'pydmrs')
+sys.path.insert(1, directory)
+
+
+from pydmrs.components import Pred, GPred, Sortinfo, EventSortinfo, InstanceSortinfo
 
 
 class Reference(namedtuple('ReferenceTuple', ('sort', 'index'))):
@@ -654,157 +661,5 @@ class Mrs(Dmrs):
 
     @staticmethod
     def from_string(string):
-        from mrs_load import read_mrs
+        from shapeworld.analyzers.mrs_load import read_mrs
         return read_mrs(string)
-
-# expensive realisable() check ??????????????????????????????????????????????????
-
-
-
-if __name__ == "__main__":
-    erg = 'shapeworld/realizers/dmrs/languages/english.dat'
-    # erg = '/home/aok25/bin/erg-0.9.24/erg.dat'
-    # erg = '/home/aok25/bin/erg-1214-x86-64-0.9.23/erg-1214-x86-64-0.9.23.dat'
-    if len(sys.argv) > 1:
-        if sys.argv[1] == '-1':
-            only_first = True
-            args = [' '.join(sys.argv[2:])]
-        else:
-            only_first = False
-            args = [' '.join(sys.argv[1:])]
-    else:
-        args = (line[:-1] if line[-1] == '\n' else line for line in sys.stdin)
-    for arg in args:
-        from ace import Ace
-        a = Ace('shapeworld/realizers/dmrs/resources/ace', erg, num_outputs=25, trees=False, informal=True)
-        # a = Ace('/home/aok25/bin/ace-0.9.24/ace', erg, tree=False, count=25, informal=True)
-        #mrs = Mrs.from_string(arg.strip())
-        # use sys.stdout.write
-
-        from delphin.interfaces import ace
-        from delphin.mrs import simplemrs, dmrx
-        mrs_strs = iter(x['MRS'] for x in ace.parse(erg, arg, cmdargs=['-r', 'root_informal'])['RESULTS'])
-
-        for mrs in next(a.parse([arg])):
-            print(0, arg)
-            try:
-                results = next(a.generate([next(mrs_strs)]))
-                if not results:
-                    print(1, 'Could not re-generate.')
-                else:
-                    print(1, min(results, key=len))
-            except StopIteration:
-                print(1, 'Could not re-generate.')
-            try:
-                results = next(a.generate([mrs]))
-                if not results:
-                    print(2, 'Could not re-generate.')
-                    continue
-                else:
-                    print(2, min(results, key=len))
-            except StopIteration:
-                print(2, 'Could not re-generate.')
-                continue
-            xmrs = simplemrs.loads_one(str(mrs))
-            mrs_str = simplemrs.dumps_one(xmrs)
-            dmrx_str = dmrx.dumps_one(xmrs)
-            dmrx_str = dmrx_str[11:-12]
-            dmrs = ListDmrs.loads_xml(dmrx_str)
-            # assert dmrs_check(dmrs)
-            dmrx_str = '<dmrs-list>' + dmrx_str + '</dmrs-list>'
-            xmrs = dmrx.loads_one(dmrx_str)
-            mrs_str = simplemrs.dumps_one(xmrs)
-            try:
-                print(3, min(next(a.generate([mrs_str])), key=len))
-            except StopIteration:
-                print(3, 'Could not re-generate.')
-            if len(mrs) != len(dmrs):
-                print(4, 'Inequal node count.')
-                print(' '.join(str(node) for node in mrs.iter_nodes()))
-                print()
-                print(' '.join(str(node) for node in dmrs.iter_nodes()))
-                assert False
-            else:
-                from pydmrs.matching.exact_matching import dmrs_exact_matching
-                # print(mrs.dumps_xml())
-                # print(dmrs.dumps_xml())
-                mrs_dmrs = mrs.convert_to(ListDmrs)
-                mrs_dmrs.visualise(filehandle=open('dmrs.dot', 'wb'))
-                count = len(list(dmrs_exact_matching(dmrs, mrs_dmrs)))
-                print('4, matches:', count)
-                if count != 1:
-                    print('WTF?')
-                    # assert False
-
-
-
-
-# To transform an RMRS into a DMRS:
-
-# 1. Each predicate in the RMRS becomes a node in the DMRS graph.
-
-# 2. Each variable y in the RMRS is associated with a unique
-# predicate which owns it (call this predicate charp(y)).
-
-# steps 1 and 2 - extract-rmrs-nodes (checked by check-char-vars)
-# anchors are used as ids.
-
-# 3. For every non-characteristic argument A (except BV arguments)
-#    in the RMRS which is anchored to a predicate P and has a variable
-#    value y, such that \charp(y) is P', an arc exists in the DMRS
-#    from P to P'.  The arcs will be referred to as `variable
-#      arcs'.  The preslash label on that arc is equal to the argument
-# type of A (e.g., ARG1).
-
-# done by extract-rmrs-var-links
-
-# If the labels of P and P' are
-# equated, then the post-slash label is =.  If P has a hole argument
-# which is qeq the label of P', then the post-slash label is h.
-# If the hole argument is eq the label of P', then heq. If
-# P and P' have labels which are unrelated in the RMRS, the
-# post-slash label is neq.
-
-# 4. For every case where a set S of predicates in the RMRS have equal
-# labels and the linkages are not fully represented by equalities on
-# variable arcs (taking transitive connections into account), we define
-# an ordering P0 to PN on S by character position of the
-# predicates.  There is a non-directional /= link between P0 and each
-# other predicate in P1 to PN considered successively which is
-# not linked by previous operations.
-
-# the second part of 3 and step 4 are done by determine-label-equality-sets
-# (which sets up the sets, and also finds the `targets' (5)) and
-# make-dmrs-eq-links, which adds labels to existing variable arcs
-# and creates /eq arcs if no arcs exist.
-
-# 5. If a label lb labels a set of predicates, then
-#    the head predicates in that set are defined as those which
-# have no outgoing variable arcs to other elements in the set.
-
-# done by determine-label-equality-sets
-
-# 6. If the RMRS LTOP has value lb labelling a set of predicates, then the
-# LTOP node in the DMRS is linked to each head predicate in that set.
-
-# make-dmrs-ltop-links
-
-# 7. For every argument A which is anchored to a predicate P and has
-# a hole value h, such that h is qeq (or =) a label lb which
-# labels a set of predicates S:
-
-# a) If P has exactly one argument A' with a value y such that P' = \charp(y)
-# is a member of S, then there is an ARG/h (or ARG/heq) arc from
-# P to P', where ARG is the argument type of A. (Note that
-# this covers the RSTR case because there will be a BV argument.)
-
-# this condition is checked by char-var-selects
-
-# b) Otherwise, there are ARG/h (or ARG/heq) arcs from P to each of the
-# head predicates in S.
-
-# make-dmrs-handel-links
-
-# 8 If the preslash label on the arc uniquely determines the
-#    postslash label, the slash and the postslash label may be omitted.
-# (e.g., we write RSTR, rather than RSTR/h).FIX - not done (output only)
