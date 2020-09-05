@@ -1,5 +1,5 @@
 from shapeworld.dataset import CaptionAgreementDataset
-from shapeworld.generators import ReinforcedAttributesGenerator
+from shapeworld.generators import RandomAttributesGenerator
 from shapeworld.captioners import SingleAttributeTypeCaptioner, RelationCaptioner, NegationRelationCaptioner, ExistentialCaptioner
 
 
@@ -51,7 +51,7 @@ class RelationalSingleAttributeDataset(CaptionAgreementDataset):
         language=None
     ):
 
-        world_generator = ReinforcedAttributesGenerator(
+        world_generator = RandomAttributesGenerator(
             world_size=world_size,
             world_colors=world_colors,
             shapes=shapes,
@@ -76,8 +76,7 @@ class RelationalSingleAttributeDataset(CaptionAgreementDataset):
             test_combinations=test_combinations,
             test_space_rate_range=test_space_rate_range,
             test_combination_rate=test_combination_rate,
-            max_provoke_collision_rate=max_provoke_collision_rate,
-            reinforcement_range=(1, 1)
+            max_provoke_collision_rate=max_provoke_collision_rate
         )
 
         relation_captioner = RelationCaptioner(
