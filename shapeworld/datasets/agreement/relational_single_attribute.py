@@ -85,7 +85,8 @@ class RelationalSingleAttributeDataset(CaptionAgreementDataset):
                 existing_attribute_rate=type_existing_attribute_rate
             ),
             relations=relations,
-            incorrect_distribution=relation_incorrect_distribution
+            incorrect_distribution=relation_incorrect_distribution,
+            comparison_captioner=UniqueTypeCaptioner()
         )
         if negation:
             relation_captioner = NegationRelationCaptioner(
