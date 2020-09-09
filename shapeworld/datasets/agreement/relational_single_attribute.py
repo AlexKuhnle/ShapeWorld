@@ -1,6 +1,6 @@
 from shapeworld.dataset import CaptionAgreementDataset
 from shapeworld.generators import RandomAttributesGenerator
-from shapeworld.captioners import SingleAttributeTypeCaptioner, RelationCaptioner, NegationRelationCaptioner, ExistentialCaptioner
+from shapeworld.captioners import SingleAttributeTypeCaptioner, RelationCaptioner, NegationRelationCaptioner, ExistentialCaptioner, UniqueTypeCaptioner
 
 
 class RelationalSingleAttributeDataset(CaptionAgreementDataset):
