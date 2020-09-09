@@ -79,9 +79,11 @@ class SelectorCaptioner(WorldCaptioner):
             scope_predication = predication.copy()
             if not self.scope_captioner.sample_values(mode=mode, predication=scope_predication):
                 continue
-            elif self.predtype in ('size-two', 'size-max') and ((not predication.redundant(predicate='shape') and not scope_predication.redundant(predicate='shape')) or (not self.logical_redundancy and predication.redundant(predicate='shape') and scope_predication.redundant(predicate='shape')) or (not self.logical_contradiction and scope_predication.blocked(predicate='shape'))):
+            elif self.predtype in ('size-two', 'size-max') and ((not predication.redundant(predicate='shape') and not scope_predication.redundant(predicate='shape')) or (not self.logical_redundancy and predication.redundant(predicate='shape') and scope_predication.redundant(predicate='shape'))):
+                # or (not self.logical_contradiction and scope_predication.blocked(predicate='shape'))
                 continue
-            elif self.predtype in ('shade-two', 'shade-max') and ((not predication.redundant(predicate='color') and not scope_predication.redundant(predicate='color')) or (not self.logical_redundancy and predication.redundant(predicate='color') and scope_predication.redundant(predicate='color')) or (not self.logical_contradiction and scope_predication.blocked(predicate='color'))):
+            elif self.predtype in ('shade-two', 'shade-max') and ((not predication.redundant(predicate='color') and not scope_predication.redundant(predicate='color')) or (not self.logical_redundancy and predication.redundant(predicate='color') and scope_predication.redundant(predicate='color'))):
+                # or (not self.logical_contradiction and scope_predication.blocked(predicate='color'))
                 continue
             predication.predicates.update(scope_predication.predicates)
             predication.blocked_preds.update(scope_predication.blocked_preds)
@@ -101,7 +103,7 @@ class SelectorCaptioner(WorldCaptioner):
                     continue
                 elif self.incorrect_predtype in ('size-two', 'size-max') and not self.logical_contradiction and (predication.blocked(predicate='shape') or scope_predication.blocked(predicate='shape')):
                     continue
-                elif self.incorrect_predtype in ('shade-two', 'shade-max')and not self.logical_contradiction and (predication.blocked(predicate='color') or scope_predication.blocked(predicate='color')):
+                elif self.incorrect_predtype in ('shade-two', 'shade-max') and not self.logical_contradiction and (predication.blocked(predicate='color') or scope_predication.blocked(predicate='color')):
                     continue
                 break
             else:
