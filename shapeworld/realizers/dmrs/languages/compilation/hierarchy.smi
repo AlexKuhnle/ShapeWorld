@@ -1,0 +1,31 @@
+
+  ;;
+  ;; ShapeWorld
+  ;;
+
+  _shape_n_sw < type_n.
+
+  _square_n_sw < shape_n.
+  _rectangle_n_sw < shape_n.
+  _triangle_n_sw < shape_n.
+  _pentagon_n_sw < shape_n.
+  _cross_n_sw < shape_n.
+  _circle_n_sw < shape_n.
+  _semicircle_n_sw < shape_n.
+  _ellipse_n_sw < shape_n.
+
+  _red_a_sw < color_a.
+  _green_a_sw < color_a.
+  _blue_a_sw < color_a.
+  _yellow_a_sw < color_a.
+  _magenta_a_sw < color_a.
+  _cyan_a_sw < color_a.
+  _gray_a_sw < color_a.
+
+  ;;  default_q < abstract_q.
+  ;;  _a_q < default_q.
+  ;;  udef_q < default_q.
+
+  ;;  part_of < fraction_n.
+  ;;  _quarter_n_of < fraction_n.
+  ;;  _third_n_of < fraction_n.

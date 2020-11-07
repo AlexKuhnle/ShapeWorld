@@ -1,0 +1,130 @@
+
+
+
+
+;;
+;; ShapeWorld
+;;
+
+shape_sw := n_-_c_le &
+ [ ORTH < "shape" >,
+   SYNSEM [ LKEYS.KEYREL.PRED "_shape_n_sw_rel",
+            PHON.ONSET con ] ].
+
+square_sw := n_-_c_le &
+ [ ORTH < "square" >,
+   SYNSEM [ LKEYS.KEYREL.PRED "_square_n_sw_rel",
+            PHON.ONSET con ] ].
+
+rectangle_sw := n_-_c_le &
+ [ ORTH < "rectangle" >,
+   SYNSEM [ LKEYS.KEYREL.PRED "_rectangle_n_sw_rel",
+            PHON.ONSET con ] ].
+
+triangle_sw := n_-_c_le &
+ [ ORTH < "triangle" >,
+   SYNSEM [ LKEYS.KEYREL.PRED "_triangle_n_sw_rel",
+            PHON.ONSET con ] ].
+
+pentagon_sw := n_-_c_le &
+ [ ORTH < "pentagon" >,
+   SYNSEM [ LKEYS.KEYREL.PRED "_pentagon_n_sw_rel",
+            PHON.ONSET con ] ].
+
+cross_sw := n_-_c_le &
+ [ ORTH < "cross" >,
+   SYNSEM [ LKEYS.KEYREL.PRED "_cross_n_sw_rel",
+            PHON.ONSET con ] ].
+
+circle_sw := n_-_c_le &
+ [ ORTH < "circle" >,
+   SYNSEM [ LKEYS.KEYREL.PRED "_circle_n_sw_rel",
+            PHON.ONSET con ] ].
+
+semicircle_sw := n_-_c_le &
+ [ ORTH < "semicircle" >,
+   SYNSEM [ LKEYS.KEYREL.PRED "_semicircle_n_sw_rel",
+            PHON.ONSET con ] ].
+
+ellipse_sw := n_-_c_le &
+ [ ORTH < "ellipse" >,
+   SYNSEM [ LKEYS.KEYREL.PRED "_ellipse_n_sw_rel",
+            PHON.ONSET voc ] ].
+
+
+
+red_sw := aj_-_i-color-er_le &
+ [ ORTH < "red" >,
+   SYNSEM [ LKEYS.KEYREL.PRED "_red_a_sw_rel",
+            PHON.ONSET con ] ].
+
+green_sw := aj_-_i-color-er_le &
+ [ ORTH < "green" >,
+   SYNSEM [ LKEYS.KEYREL.PRED "_green_a_sw_rel",
+            PHON.ONSET con ] ].
+
+blue_sw := aj_-_i-color-er_le &
+ [ ORTH < "blue" >,
+   SYNSEM [ LKEYS.KEYREL.PRED "_blue_a_sw_rel",
+            PHON.ONSET con ] ].
+
+yellow_sw := aj_-_i-color-er_le &
+ [ ORTH < "yellow" >,
+   SYNSEM [ LKEYS.KEYREL.PRED "_yellow_a_sw_rel",
+            PHON.ONSET con ] ].
+
+magenta_sw := aj_-_i-color-er_le &
+ [ ORTH < "magenta" >,
+   SYNSEM [ LKEYS.KEYREL.PRED "_magenta_a_sw_rel",
+            PHON.ONSET con ] ].
+
+cyan_sw := aj_-_i-color-er_le &
+ [ ORTH < "cyan" >,
+   SYNSEM [ LKEYS.KEYREL.PRED "_cyan_a_sw_rel",
+            PHON.ONSET con ] ].
+
+gray_sw := aj_-_i-color-er_le &
+ [ ORTH < "gray" >,
+   SYNSEM [ LKEYS.KEYREL.PRED "_gray_a_sw_rel",
+            PHON.ONSET con ] ].
+
+
+
+third_n4 := n_pp_c-of_le &
+ [ ORTH < "third" >,
+   SYNSEM [ LKEYS.KEYREL.PRED "_third_n_of_rel",
+            PHON.ONSET con ] ].
+
+
+
+lower_a2 := aj_-_i-er_le &
+ [ ORTH < "lower" >,
+   SYNSEM [ LKEYS.KEYREL.PRED "_lower_a_1_rel",
+            PHON.ONSET con ] ].
+
+upper_a1 := aj_-_i-er_le &
+ [ ORTH < "upper" >,
+   SYNSEM [ LKEYS.KEYREL.PRED "_upper_a_1_rel",
+            PHON.ONSET voc ] ].
+
+
+
+left_a1 := aj_-_i-er_le &
+ [ ORTH < "left" >,
+   SYNSEM [ LKEYS.KEYREL.PRED "_left_a_2_rel",
+            PHON.ONSET con ] ].
+
+leftmost_a3 := aj_-_i-sup_le &
+ [ ORTH < "leftmost" >,
+   SYNSEM [ LKEYS.KEYREL.PRED "_left_a_2_rel",
+            PHON.ONSET con ] ].
+
+right_a3 := aj_-_i-er_le &
+ [ ORTH < "right" >,
+   SYNSEM [ LKEYS.KEYREL.PRED "_right_a_3_rel",
+            PHON.ONSET con ] ].
+
+rightmost_a3 := aj_-_i-sup_le &
+ [ ORTH < "rightmost" >,
+   SYNSEM [ LKEYS.KEYREL.PRED "_right_a_3_rel",
+            PHON.ONSET con ] ].

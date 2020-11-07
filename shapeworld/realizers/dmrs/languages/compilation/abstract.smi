@@ -1,0 +1,13 @@
+
+  ;;
+  ;; ShapeWorld
+  ;;
+
+  shape_n : ARG0 x { PERS 3, IND + }.
+  color_a : ARG0 i, ARG1 i.
+
+  ;;  default_q : ARG0 i, RSTR h, BODY h.
+  ;;  fraction_n : ARG0 x { IND + }, [ ARG1 i ].
+
+  one+less_a : ARG0 i, ARG1 i.
+  one+more_a : ARG0 i, ARG1 i.

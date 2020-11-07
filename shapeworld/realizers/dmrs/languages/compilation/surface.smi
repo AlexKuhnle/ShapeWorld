@@ -1,0 +1,25 @@
+
+  ;;
+  ;; ShapeWorld
+  ;;
+
+  _shape_n_sw : ARG0 x { PERS 3, IND + }.
+  _square_n_sw : ARG0 x { PERS 3, IND + }.
+  _rectangle_n_sw : ARG0 x { PERS 3, IND + }.
+  _triangle_n_sw : ARG0 x { PERS 3, IND + }.
+  _pentagon_n_sw : ARG0 x { PERS 3, IND + }.
+  _cross_n_sw : ARG0 x { PERS 3, IND + }.
+  _circle_n_sw : ARG0 x { PERS 3, IND + }.
+  _semicircle_n_sw : ARG0 x { PERS 3, IND + }.
+  _ellipse_n_sw : ARG0 x { PERS 3, IND + }.
+
+  _red_a_sw : ARG0 i, ARG1 i.
+  _green_a_sw : ARG0 i, ARG1 i.
+  _blue_a_sw : ARG0 i, ARG1 i.
+  _yellow_a_sw : ARG0 i, ARG1 i.
+  _magenta_a_sw : ARG0 i, ARG1 i.
+  _cyan_a_sw : ARG0 i, ARG1 i.
+  _gray_a_sw : ARG0 i, ARG1 i.
+
+  _left_a_2 : ARG0 i, ARG1 u.
+  _right_a_3 : ARG0 i, ARG1 u.
