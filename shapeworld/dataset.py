@@ -560,13 +560,15 @@ class Dataset(object):
             else:
                 value = list()
                 n = 0
-                while True:
+                flag = True
+                while flag:
                     if alts:
                         i = 0
                         v = list()
                         while True:
                             image_bytes = read_file('{}-{}-{}.{}'.format(value_name, n, i, image_format), binary=True)
                             if image_bytes is None:
+                                flag = False
                                 break
                             image_bytes = BytesIO(image_bytes)
                             image = Image.open(image_bytes)
