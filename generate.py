@@ -9,6 +9,8 @@ from shapeworld import Dataset, util
 
 
 if __name__ == '__main__':
+    if os.uname()[0] == 'Darwin':
+        raise Exception('Mac not currently supported. See https://github.com/AlexKuhnle/ShapeWorld/issues/27 for more information.')
     parser = argparse.ArgumentParser(description='Generate example data')
 
     parser.add_argument('-d', '--directory', help='Directory for generated data (with automatically created sub-directories, unless --unmanaged)')
